@@ -1,13 +1,17 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.5 2005-01-29 12:12:53 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.6 2005-02-15 15:58:53 gzins Exp $"
 #
 # Makefile of the sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.5  2005/01/29 12:12:53  gzins
+# Added CVS log as modification history
+# Removed creation of library, all files are compiled to build binary
+#
 # sccmgr    23-Nov-2004  Created
 #
 #*******************************************************************************
@@ -175,9 +179,5 @@ man   : do_man
 
 install : install_all
 	@echo " . . . installation done"
-
-db : db_all
-	@echo " . . . ../DB done"
-
 
 #___oOo___
