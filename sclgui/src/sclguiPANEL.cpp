@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.7 2005-02-08 21:03:38 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.7 2005-02-08 21:03:38 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -174,13 +174,17 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
    
     // Get the value in the request in order to view constraints on the panel
     ostringstream out;
-    out << "NAME\tRAJ2000\tDEJ2000\tmag";
+    out << "NAME\tRAJ2000\tDEJ2000\tMag";
     out << _request.GetSearchBand();
-    out << "\tBase_min\tBase_max\tLambda\tDiamVK\tVisi2\tErrVisi2\n";
+    out << "\tBase-min\tBase-max\tWlen\tDiamVK\tVis2\tVis2Err\n";
     out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
-    out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
-    out << _request.GetMinBaselineLength() << "\t" << _request.GetMaxBaselineLength() << "\t" << _request.GetObservingWlen() << "\t" << "----\t";
-    out << _request.GetExpectedVisibility() << "\t" << _request.GetExpectedVisibilityError();
+    out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
+        << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
+    out << _request.GetMinBaselineLength() << "\t" 
+        << _request.GetMaxBaselineLength() << "\t" 
+        << _request.GetObservingWlen() << "\t" << "----\t";
+    out << _request.GetExpectedVisibility() << "\t" 
+        << _request.GetExpectedVisibilityError();
     _scienceStarTextarea->SetText(out.str());
 
     // The results table presents the entry number, the calibrator properties
@@ -926,7 +930,7 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
     // list without multiplicity if authorized is mcsFALSE for the choice 
     // of "show all result" button later.
     _coherentDiameterList.Clear();
-    _currentList.GetCoherentDiameter(&_coherentDiameterList);
+    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
    
     // if necessary, it need to remove star with multiplicity from the coherent
     // diameter list
@@ -934,7 +938,7 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
     
     // it need to re-create the visibility ok list    
     _visibilityOkList.Clear();    
-    _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
+    _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
     
     _multWindow->Hide();
     _displayList.FilterByMultiplicity(authorized);
@@ -1065,7 +1069,7 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     // list without variability if authorized is mcsFALSE for the choice 
     // of "show all result" button later.
     _coherentDiameterList.Clear();
-    _currentList.CopyIn(&_coherentDiameterList, mcsTRUE);
+    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
    
     // if necessary, it need to remove star with varibility from the coherent
     // diameter list
@@ -1073,7 +1077,7 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     
     // it need to re-create the visibility ok list    
     _visibilityOkList.Clear();    
-    _coherentDiameterList.CopyIn(&_visibilityOkList, mcsFALSE, mcsTRUE);
+    _visibilityOkList.Copy(_currentList, mcsFALSE, mcsTRUE);
             
     _variabilityWindow->Hide();
     _displayList.FilterByVariability(authorized);
