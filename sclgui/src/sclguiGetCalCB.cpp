@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.19 2005-03-03 16:50:31 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.20 2005-03-04 09:53:43 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2005/03/03 16:50:31  scetre
+ * Add user message for out of range parameter
+ *
  * Revision 1.18  2005/02/28 13:50:01  scetre
  * Changed height of the result table
  *
@@ -68,7 +71,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.19 2005-03-03 16:50:31 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.20 2005-03-04 09:53:43 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -262,11 +265,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             BuildMainWindow();
             _mainWindow->Show();
            
-            if (strcmp(_request.GetSaveFileName(), "") != 0)
-            {
-                logTest("file = %s", _request.GetSaveFileName());
-                _currentList.Save(_request.GetSaveFileName());
-            }
             // Prepare message reply
             _msg.SetBody("Request OK.");
             break;
