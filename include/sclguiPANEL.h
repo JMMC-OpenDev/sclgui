@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.8 2005-02-04 14:24:06 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.9 2005-02-08 07:25:18 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2005/02/04 14:24:06  scetre
+ * Used sort method of sclsvr
+ *
  * Revision 1.7  2005/02/04 08:08:55  scetre
  * affect Call back method
  *
@@ -64,7 +67,7 @@ protected:
     virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
     
 private:
-    vobsREQUEST _request;
+    sclsvrREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
     sclsvrCALIBRATOR_LIST _coherentDiameterList;
     sclsvrCALIBRATOR_LIST _visibilityOkList;
