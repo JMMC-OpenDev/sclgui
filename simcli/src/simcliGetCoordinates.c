@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 * 
-* "@(#) $Id: simcliGetCoordinates.c,v 1.2 2005-02-03 06:06:32 gzins Exp $"
+* "@(#) $Id: simcliGetCoordinates.c,v 1.3 2005-02-03 07:52:52 gzins Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -16,7 +16,7 @@
  * 
  */
 
-static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.2 2005-02-03 06:06:32 gzins Exp $"; 
+static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.3 2005-02-03 07:52:52 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -61,12 +61,26 @@ int simcliGetCoordinates (char *name,
     char sign;
     int nitems=0, ndata;
 
+    /* Replace blank by '_', and add '!' at end of the star name */
+    char starName[256] ;
+    char *p;
+    memset(starName, '\0', 256); 
+    strcpy(starName, name);
+    strcat(starName,"!") ; 
+    p=strchr(starName, '_');
+    while (p != NULL) 
+    {
+        *p = ' ';
+        p=strchr(starName, '_');  
+    }
+
+    /* Call simbad */
     hh = simbad_connect(NULL,NULL,userid,passwd) ;
     if (hh < 0)
     {
         return -1;
     }
-    nitems = simbad_query(hh,name,"") ;
+    nitems = simbad_query(hh,starName,"") ;
     if (nitems >= 1)
     {
         simbad_retrieve(hh,0) ;  /* retrieve 1st object */
