@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.16 2005-02-24 13:14:46 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.17 2005-02-24 17:05:56 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2005/02/24 13:14:46  scetre
+ * Get user error in order to show him the problem
+ *
  * Revision 1.15  2005/02/23 17:06:27  scetre
  * Added list of ucd name to manage the display of the colum name
  *
@@ -59,7 +62,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.16 2005-02-24 13:14:46 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.17 2005-02-24 17:05:56 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -185,8 +188,16 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             // Fixed by default forbidden multiplicity and variability
             _varAuthorized = mcsFALSE;
             _multAuthorized = mcsFALSE;
-            // Retreive the returned calibrator list
-            _currentList.UnPack(msg.GetBody());
+            // Retreive the returned calibrator list. Check whether calibrators
+            // have been found or not.
+            if (miscIsSpaceStr(msg.GetBody()) == mcsFALSE)
+            {
+                _currentList.UnPack(msg.GetBody());
+            }
+            else
+            {
+                _currentList.Clear();
+            }
             // Fix the number of CDS return
             _found = _currentList.Size();
             /// Extract from the CDS return the list of coherent diameter
