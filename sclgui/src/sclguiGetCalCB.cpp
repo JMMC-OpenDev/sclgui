@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.16 2005-02-24 13:14:46 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2005/02/23 17:06:27  scetre
+ * Added list of ucd name to manage the display of the colum name
+ *
  * Revision 1.14  2005/02/18 11:50:28  scetre
  * Changed behavior of gui in oder to filter by defautl on variability and visibility
  *
@@ -56,7 +59,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.16 2005-02-24 13:14:46 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -97,7 +100,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
     }
     else
     {
-            _mainWindow->Hide();
+        _mainWindow->Hide();
         _theGui->SetStatus(true, "Looking for calibrators in star catalogs...");
 
         // Defines callback to handle reply
@@ -152,6 +155,10 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
     {
         case msgTYPE_ERROR_REPLY:
         {
+            if (errIsInStack("msg", 35) == mcsTRUE)
+            {
+                errUserAdd(sclguiERR_SERVER_CRASH);
+            }
             // Report error
             _theGui->SetStatus(false, errUserGet());
             errCloseStack();
