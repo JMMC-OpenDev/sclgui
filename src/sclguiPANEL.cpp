@@ -1,21 +1,22 @@
 /*******************************************************************************
-* JMMC project
-*
-* "@(#) $Id: sclguiPANEL.cpp,v 1.38 2005-03-07 17:50:03 gzins Exp $"
-*
-* History
-* --------  -----------  -------------------------------------------------------
-* mella     25-Nov-2004  Created
-* gzins     09-Dec-2004  Fixed cast problem with new mcsLOGICAL enumerate
-*
-*******************************************************************************/
+ * JMMC project
+ *
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.39 2005-03-07 17:51:44 gzins Exp $"
+ *
+ * History
+ * -------
+ * $Log: not supported by cvs2svn $
+ * mella     25-Nov-2004  Created
+ * gzins     09-Dec-2004  Fixed cast problem with new mcsLOGICAL enumerate
+ *
+ ******************************************************************************/
 
 /**
  * \file
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.38 2005-03-07 17:50:03 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.39 2005-03-07 17:51:44 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
