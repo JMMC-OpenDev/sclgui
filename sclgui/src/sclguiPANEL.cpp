@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.2 2005-02-04 08:08:55 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.2 2005-02-04 08:08:55 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -159,9 +159,9 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
 
     // Prepare widgets
     _showAllResultsButton = new gwtBUTTON
-        ("SHOW ALL RESULTS", "Display of all results without sort");
+        ("SHOW ALL RESULTS", "Display of all results with coherent diameter.");
     _showAllResultsButton->PlaceAtTop(mcsTRUE);
-    _resetButton = new gwtBUTTON("RESET", "No Help");
+    _resetButton = new gwtBUTTON("RESET", "This button reset the star list. It will show the list with visibility OK.");
     _resetButton->PlaceAtTop(mcsTRUE);
     _printButton = new gwtBUTTON("PRINT", "No Help");
     _printButton->PlaceAtTop(mcsTRUE);
@@ -171,10 +171,33 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Place science star information
     _scienceStarTextarea = new gwtTEXTAREA("--", 4, 50, "No Help");
     _scienceStarTextarea->SetLabel("Science star");
-    // \todo place text according the command line
+    // Get the value in the request in order to view constraints on the panel
     mcsSTRING256 starName;
+    mcsSTRING256 observedBand;
+    mcsSTRING256 mag;
+    mcsSTRING256 ra, dec;
+    mcsSTRING256 baseMin, baseMax;
+    mcsSTRING256 lambda, vis, visErr;
     _request.GetConstraint(STAR_NAME_ID, starName);
-    _scienceStarTextarea->SetText("...");
+    _request.GetConstraint(OBSERVED_BAND_ID, observedBand);
+    _request.GetConstraint(RA_ID, ra);
+    _request.GetConstraint(DEC_ID, dec);
+    _request.GetConstraint(STAR_MAGNITUDE_ID, mag);    
+    _request.GetConstraint(BASEMIN_ID, baseMin);
+    _request.GetConstraint(BASEMAX_ID, baseMax);
+    _request.GetConstraint(STAR_WLEN_ID, lambda);    
+    _request.GetConstraint(STAR_EXPECTED_VIS_ID, vis);
+    _request.GetConstraint(STAR_MAX_ERR_VIS_ID, visErr);
+    ostringstream out;
+    out << "NAME\tRAJ2000\tDEJ2000\tmag";
+    out << observedBand;
+    out << "\tBase_min\tBase_max\tLambda\tDiamVK\tVisi2\tErrVisi2\n";
+    out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
+    out << starName << "\t" << ra << "\t" << dec << "\t" << mag << "\t";
+    out << baseMin << "\t" << baseMax << "\t" << lambda << "\t" << "----\t";
+    out << vis << "\t" << visErr;
+    string scienceStarText = out.str();
+    _scienceStarTextarea->SetText(scienceStarText);
 
     // The results table presents the entry number, the calibrator properties
     // followed by star ones. 
@@ -184,7 +207,15 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Insert resume textfield
     _resumeTextfield = new gwtTEXTFIELD();
     _resumeTextfield->SetLabel("Resume");
-    _resumeTextfield->SetText("CDS Return ... Coherent Diameter ... Visibility OK ...");
+    string cdsReturn(" CDS Return ");
+    string coherentDiam(" Coherent Diameter ");
+    string visOk(" Visibility OK ");
+    ostringstream output;
+    output << cdsReturn << _currentList.Size() << coherentDiam 
+        << _coherentDiameterList.Size() << visOk << _visibilityOkList.Size();
+    string resumeLine = output.str();
+    
+    _resumeTextfield->SetText(resumeLine);
 
     // Prepare subpanels
     _selectPanel = new gwtSUBPANEL("SELECT CALIBRATORS");
@@ -636,8 +667,10 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     s.append("-");
     _deleteTextfield->SetText(s);
     cout << "Show all results :" << _deleteTextfield->GetText() << endl;
-    _displayList.Copy(_currentList);
+    _displayList.Clear();
+    _displayList.Copy(_coherentDiameterList);
     _mainWindow->Hide();
+    BuildMainWindow();
     _mainWindow->Show();
 
     _theGui->SetStatus(true, "Show all result button pressed");
@@ -654,10 +687,8 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 
     // Clear the display
     _displayList.Clear();
-    _displayList.Copy(_currentList);
+    _displayList.Copy(_visibilityOkList);
 
-    // Fill the result table
-    FillResultsTable(&_displayList);
     // Update main window
     _mainWindow->Hide();
     BuildMainWindow();
@@ -739,6 +770,26 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
 {
     logExtDbg("sclguiPANEL::DeletePanelCB()");
     cout << "Delete star nb :" << _deleteTextfield->GetText() << endl;
+    // Get the line number as an integer
+    mcsUINT32 starNumber;
+    if (sscanf((_deleteTextfield->GetText()).c_str(), "%d", &starNumber) != 1)
+    {
+        if (starNumber > _displayList.Size())
+        {
+            cout << "the value should be a positive integer lower than ";
+            cout << _displayList.Size();
+        }
+    }
+    else
+    {
+        // if te value is ok, delete star
+        _displayList.Delete(starNumber);
+
+        // Update main window
+        _mainWindow->Hide();
+        BuildMainWindow();
+        _mainWindow->Show();
+    }
     return mcsSUCCESS;
 }
 
@@ -759,6 +810,9 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
 {
     logExtDbg("sclguiPANEL::SavePanelCB()");
     cout << "Save :" << _saveTextfield->GetText() << endl;
+    mcsSTRING256 fileName;
+    strcpy(fileName, (_saveTextfield->GetText()).c_str());
+    _displayList.Save(fileName);
     return mcsSUCCESS;
 }
 
@@ -770,9 +824,15 @@ mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
     logExtDbg("sclguiPANEL::AccuracyButtonCB()");
     cout << "data: " <<_accuracyTextfield->GetText() <<endl;
     _accuracyWindow->Hide();
-    _displayList.GetMaximalExpectedRelativeAccuracy();
-    // Fill the result table
-    FillResultsTable(&_displayList);
+    mcsFLOAT visMax;
+    // Get the value of the magnitude range
+    sscanf((_accuracyTextfield->GetText()).c_str(), "%f", &visMax);
+    
+    // changed vis from % to value between 0 and 1
+    visMax = visMax/100;
+    
+    _displayList.GetMaximalExpectedRelativeAccuracy(visMax);
+    
     // Update main window
     _mainWindow->Hide();
     BuildMainWindow();
@@ -850,7 +910,11 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
     _request.GetConstraint(STAR_MAGNITUDE_ID, magStr);
     mcsFLOAT magnitude;
     // convert magnitude from char to float value
-    sscanf(magStr, "%f", &magnitude);
+    if (sscanf(magStr, "%f", &magnitude) != 1)
+    {
+        // todo err
+        return mcsFAILURE;
+    }
     _displayList.GetMaximalMagnitudeSeparation(band, magnitude, magRange);
     // Update main window
     _mainWindow->Hide();
@@ -867,10 +931,33 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::MultButtonCB()");
     cout << "data: " <<_multChoice->GetSelectedItemValue() <<endl;
+
+    // check if multiplicity is authorized or not. By default, multiplicity are
+    // authorized
+    mcsLOGICAL authorized = mcsTRUE;
+    // if multiplicity are forbidden, authorized variable becomes mcsFALSE
+    if (strcmp((_multChoice->GetSelectedItemValue()).c_str(), 
+               "Forbidden") == 0)
+    {
+        authorized = mcsFALSE;
+    }
+   
+    // re-create Coherent diameter list in order to show the coherent diameter
+    // list without multiplicity if authorized is mcsFALSE for the choice 
+    // of "show all result" button later.
+    _coherentDiameterList.Clear();
+    _currentList.GetCoherentDiameter(&_coherentDiameterList);
+   
+    // if necessary, it need to remove star with multiplicity from the coherent
+    // diameter list
+    _coherentDiameterList.GetMultiplicity(authorized);
+    
+    // it need to re-create the visibility ok list    
+    _visibilityOkList.Clear();    
+    _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
+    
     _multWindow->Hide();
-    _displayList.GetMultiplicity();
-    // Fill the result table
-    FillResultsTable(&_displayList);
+    _displayList.GetMultiplicity(authorized);
 
     // Update main window
     _mainWindow->Hide();
@@ -892,13 +979,24 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
     mcsSTRING256 ra, dec;
     mcsFLOAT raRange, decRange;
     // Get Value of raRange and decRange
-    sscanf((_raDecTextfieldRa->GetText()).c_str(), "%f", &raRange);
-    sscanf((_raDecTextfieldDec->GetText()).c_str(), "%f", &decRange);
+    if (sscanf((_raDecTextfieldRa->GetText()).c_str(), "%f", &raRange) != 1)
+    {
+        // todo err
+        return mcsFAILURE;
+    }
+    if (sscanf((_raDecTextfieldDec->GetText()).c_str(), "%f", &decRange) != 1)
+    {
+        // todo err
+        return mcsFAILURE;
+    }
     // get the value of ra dec in user request
     _request.GetConstraint(RA_ID, ra);
     _request.GetConstraint(DEC_ID, dec);
+    miscReplaceChrByChr(ra, ':', ' ');
+    miscReplaceChrByChr(dec, ':', ' ');
+    
     // removed star which are not in the box
-    _displayList.GetScienceObjectSeparation("03 47 29.08", "+24 06 18.5",
+    _displayList.GetScienceObjectSeparation(ra, dec,
                                             raRange,
                                             decRange);
     // todo put the value from GetText instead of 0.1
@@ -976,10 +1074,32 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
 
     cout << "data: " <<_variabilityChoice->GetSelectedItemValue() <<endl;
 
+    // check if variability is authorized or not. By default, variability are
+    // authorized
+    mcsLOGICAL authorized = mcsTRUE;
+    // if variability are forbidden, authorized variable becomes mcsFALSE
+    if (strcmp((_variabilityChoice->GetSelectedItemValue()).c_str(), 
+               "Forbidden") == 0)
+    {
+        authorized = mcsFALSE;
+    }
+   
+    // re-create Coherent diameter list in order to show the coherent diameter
+    // list without variability if authorized is mcsFALSE for the choice 
+    // of "show all result" button later.
+    _coherentDiameterList.Clear();
+    _currentList.GetCoherentDiameter(&_coherentDiameterList);
+   
+    // if necessary, it need to remove star with varibility from the coherent
+    // diameter list
+    _coherentDiameterList.GetVariability(authorized);
+    
+    // it need to re-create the visibility ok list    
+    _visibilityOkList.Clear();    
+    _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
+            
     _variabilityWindow->Hide();
-    _displayList.GetVariability();
-    // Fill the result table
-    FillResultsTable(&_displayList);
+    _displayList.GetVariability(authorized);
 
     // Update main window
     _mainWindow->Hide();

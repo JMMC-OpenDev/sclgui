@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.2 2005-02-04 08:08:41 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/02/04 08:08:41  scetre
+ * Added command read
+ *
  * Revision 1.1  2005/01/28 10:32:57  gzins
  * Created
  *
@@ -16,7 +19,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.2 2005-02-04 08:08:41 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -238,14 +241,20 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         }
         case msgTYPE_REPLY:
         {
+            // Clear list
+            _currentList.Clear();
+            _displayList.Clear();
+            _visibilityOkList.Clear();
+            _coherentDiameterList.Clear();
             // Retreive the returned calibrator list
             miscDYN_BUF dynBuf;
             miscDynBufInit(&dynBuf);
             miscDynBufAppendString(&dynBuf, msg.GetBody());
             
             _currentList.UnPack(&dynBuf);
-            _displayList.UnPack(&dynBuf);
-            
+            _currentList.GetCoherentDiameter(&_coherentDiameterList);
+            _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
+            _displayList.Copy(_visibilityOkList);
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
             {
@@ -258,15 +267,17 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
                 // Inform user
                 _theGui->SetStatus(false, "No calibrator found.");
                 
-                // Clear result table
+                // Clear list
                 _currentList.Clear();
                 _displayList.Clear();
+                _visibilityOkList.Clear();
+                _coherentDiameterList.Clear();
             }
             else
             {
                 // Inform user
                 mcsSTRING64 usrMsg;
-                sprintf(usrMsg, "CDS Return %d ", _displayList.Size());
+                sprintf(usrMsg, "CDS Return %d ", _currentList.Size());
                 _theGui->SetStatus(false, usrMsg);
             
                 // Fill the result table

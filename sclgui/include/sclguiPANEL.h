@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.7 2005-02-04 08:08:55 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.8 2005-02-04 14:24:06 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/02/04 08:08:55  scetre
+ * affect Call back method
+ *
  * Revision 1.6  2005/01/28 10:05:52  gzins
  * Added callbacks for command reply
  *
@@ -63,6 +66,8 @@ protected:
 private:
     vobsREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
+    sclsvrCALIBRATOR_LIST _coherentDiameterList;
+    sclsvrCALIBRATOR_LIST _visibilityOkList;
     sclsvrCALIBRATOR_LIST _displayList;
     void FillResultsTable(sclsvrCALIBRATOR_LIST *list);
 
