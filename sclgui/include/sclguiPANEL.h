@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.11 2005-02-18 11:49:49 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.12 2005-02-23 17:06:27 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2005/02/18 11:49:49  scetre
+ * Added mcsLOGICAL state for filter on variability and multiplicity
+ *
  * Revision 1.10  2005/02/17 09:25:43  scetre
  * Added 3 interger in the class in order to store CDS return, coherent diameter and visibility list size
  *
@@ -46,6 +49,9 @@
 
 #include "sclsvr.h"
 
+
+#include <list>
+
 /*
  * Class declaration
  */
@@ -65,6 +71,9 @@ public:
     virtual ~sclguiPANEL();
     virtual mcsCOMPL_STAT AppInit();
 
+    /** typedef of UCD order list*/
+    typedef std::list<char *> UCD_NAME_ORDER;
+    
 protected:
     // Command callbacks
     virtual evhCB_COMPL_STAT GetCalCB(msgMESSAGE &msg, void*);
@@ -73,11 +82,21 @@ protected:
     virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
     
 private:
+    UCD_NAME_ORDER _ucdNameforKV;
+    UCD_NAME_ORDER _ucdNameforN;
+    UCD_NAME_ORDER _ucdNameforNComplete;
+    UCD_NAME_ORDER _ucdNameDisplay;
+
     sclsvrREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
     sclsvrCALIBRATOR_LIST _coherentDiameterList;
     sclsvrCALIBRATOR_LIST _visibilityOkList;
     sclsvrCALIBRATOR_LIST _displayList;
+
+    void BuildResultsTableLabelKV();
+    void BuildResultsTableLabelN();
+    void BuildResultsTableLabelNComplete();    
+    
     void FillResultsTable(sclsvrCALIBRATOR_LIST *list);
 
     // number of cds return, diameter coherent and visibility
