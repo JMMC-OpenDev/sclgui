@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.20 2005-02-28 13:50:01 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.21 2005-03-02 08:38:03 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.20 2005-02-28 13:50:01 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.21 2005-03-02 08:38:03 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -675,7 +675,19 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             _resultsTable->SetCell(el, i+1, propvalue);
             if (strcmp(property->GetOrigin(), vobsSTAR_COMPUTED_PROP) == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#ffd0a2");
+                if (property->GetConfidenceIndex() == vobsCONFIDENCE_LOW)
+                {
+                    _resultsTable->SetCellBackground(el, i+1, "#6e6e6e");
+                }
+                else if (property->GetConfidenceIndex() ==
+                         vobsCONFIDENCE_MEDIUM)
+                {
+                    _resultsTable->SetCellBackground(el, i+1, "#d8d8d8");
+                }
+                else if (property->GetConfidenceIndex() == vobsCONFIDENCE_HIGH)
+                {
+                    _resultsTable->SetCellBackground(el, i+1, "#ffffff");
+                }
             }
             if (strcmp(property->GetOrigin(), "I/280") == 0)
             {
@@ -709,24 +721,29 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     } // End for each calibrators
     
     // build legend table
-    _legendTable = new gwtTABLE(1, 7);
+    _legendTable = new gwtTABLE(1, 9);
     _legendTable->SetHeight(7);
     _legendTable->SetVerticalOrientation(mcsTRUE);
     _legendTable->SetLabel("Origin");
-    _legendTable->SetCell(0, 0, "COMPUTED");
-    _legendTable->SetCellBackground(0, 0, "#ffd0a2");
-    _legendTable->SetCell(0, 1, "I/280");
-    _legendTable->SetCellBackground(0, 1, "#f5878e");
-    _legendTable->SetCell(0, 2, "II/225");
-    _legendTable->SetCellBackground(0, 2, "#dabbf8");
-    _legendTable->SetCell(0, 3, "II/7A");
-    _legendTable->SetCellBackground(0, 3, "#afb1e9");
-    _legendTable->SetCell(0, 4, "II/246");
-    _legendTable->SetCellBackground(0, 4, "#afdbe9");
-    _legendTable->SetCell(0, 5, "V/50");
-    _legendTable->SetCellBackground(0, 5, "#afe9d5");
-    _legendTable->SetCell(0, 6, "charm");
-    _legendTable->SetCellBackground(0, 6, "#bee9af");
+    _legendTable->SetCell(0, 0, "LOW");
+    _legendTable->SetCellBackground(0, 0, "#6e6e6e");
+    _legendTable->SetCell(0, 1, "MEDIUM");
+    _legendTable->SetCellBackground(0, 1, "#d8d8d8");
+    _legendTable->SetCell(0, 2, "HIGH");
+    _legendTable->SetCellBackground(0, 2, "#ffffff");
+    
+    _legendTable->SetCell(0, 3, "I/280");
+    _legendTable->SetCellBackground(0, 3, "#f5878e");
+    _legendTable->SetCell(0, 4, "II/225");
+    _legendTable->SetCellBackground(0, 4, "#dabbf8");
+    _legendTable->SetCell(0, 5, "II/7A");
+    _legendTable->SetCellBackground(0, 5, "#afb1e9");
+    _legendTable->SetCell(0, 6, "II/246");
+    _legendTable->SetCellBackground(0, 6, "#afdbe9");
+    _legendTable->SetCell(0, 7, "V/50");
+    _legendTable->SetCellBackground(0, 7, "#afe9d5");
+    _legendTable->SetCell(0, 8, "charm");
+    _legendTable->SetCellBackground(0, 8, "#bee9af");
 }
 
 /**
