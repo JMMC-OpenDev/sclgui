@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.26 2005-03-04 15:54:47 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.27 2005-03-04 16:42:16 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.26 2005-03-04 15:54:47 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.27 2005-03-04 16:42:16 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -206,7 +206,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Prepare window
     _mainWindow = new gwtWINDOW();
     _mainWindow->AttachAGui(_theGui);
-    _mainWindow->SetTitle("JMMC Calibrators Group V?.?");
+    _mainWindow->SetTitle("JMMC Calibrators Group V3.0-Beta");
     _mainWindow->SetHelp(windowHelp);
 
     // Prepare widgets
