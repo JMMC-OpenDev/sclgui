@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.31 2005-03-07 13:42:35 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.32 2005-03-07 14:28:24 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.31 2005-03-07 13:42:35 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.32 2005-03-07 14:28:24 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -123,6 +123,7 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     BuildResultsTableLabelKV();
     BuildResultsTableLabelN();
     BuildResultsTableLabelNComplete();
+
 }
 
 
@@ -182,6 +183,64 @@ const char *sclguiPANEL::GetSwVersion()
     return sclsvrVERSION;
 }
 
+/**
+ * Build the confirm window
+ *
+ * \returns an MCS completion status code (mcsSUCCESS or mcsFAILURE)
+ */
+mcsCOMPL_STAT sclguiPANEL::BuildConfirmWindow()
+{
+    logExtDbg("sclguiPANEL::BuildConfirmWindow()");
+   
+    // Build the windows
+    _confirmWindow = new gwtWINDOW();
+    _confirmWindow->AttachAGui(_theGui);
+   
+    _confirmLabel = new gwtLABEL("File already exist, Would you like to overwrite it ?", "No Help");
+    
+    // Create overwrite button and cancel button
+    _overwriteButton = new gwtBUTTON("Overwrite");
+    _overwriteButton->PlaceAtTop(mcsTRUE);
+
+    _confirmWindow->Add(_confirmLabel);
+    _confirmWindow->Add(_overwriteButton);
+   
+    // Associate callbacks
+    _overwriteButton->AttachCB
+        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::OverwriteButtonCB);
+    
+    return mcsSUCCESS;
+}
+
+/**
+ * Overwrite button callback
+ */
+mcsCOMPL_STAT sclguiPANEL::OverwriteButtonCB()
+{
+    logExtDbg("sclguiPANEL::OverwriteButtonCB()");
+   
+    // Save the display list in the specified file
+    mcsSTRING64 usrMsg;
+    if (_displayList.Save(_fileName, _ucdName, _request, _saveFlag) ==
+        mcsFAILURE)
+    {
+        // if save failed, send user message and close the popup
+        sprintf(usrMsg, "Saving in file '%s' failed", _fileName);
+        _theGui->SetStatus(false, usrMsg, errUserGet());
+        errCloseStack();
+        _confirmWindow->Hide();
+        return mcsFAILURE;
+    }
+    // if failed succeed, send user message and close the popup
+    sprintf(usrMsg, "Save in file '%s' succeed", _fileName);
+    _theGui->SetStatus(true, usrMsg);
+
+    _confirmWindow->Hide();
+    
+    return mcsSUCCESS;
+
+}
+
 /** 
  *  Build the main window.
  *
@@ -213,7 +272,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Prepare window
     _mainWindow = new gwtWINDOW();
     _mainWindow->AttachAGui(_theGui);
-    _mainWindow->SetTitle("JMMC Calibrators Group " sclsvrVERSION);
+    _mainWindow->SetTitle("JMMC Calibrator Group " sclsvrVERSION);
     _mainWindow->SetHelp(windowHelp);
 
     // Prepare widgets
@@ -670,7 +729,6 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
 
     sclsvrCALIBRATOR tmpCalibrator;
     
-    printf(" _request.GetObjectName() = %s\n",  _request.GetObjectName()); 
     // Get the value in the request in order to view constraints on the panel
     ostringstream out;
     out << "NAME\tRAJ2000\tDEJ2000\tMag";
@@ -842,8 +900,9 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     // Update resume textfield
     ostringstream output;
     output << "Number of stars: " << _found << " found, "  
-        << _diam << " with coherent diameter and "
-        << _vis << " with expected visibility.";
+        << _diam << " with coherent diameter, "
+        << _vis << " with expected visibility and "
+        << _withNoVarMult << " without variability and multiplicity";
     _resumeTextArea->SetText(output.str());
     
 }
@@ -1059,23 +1118,26 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
 {
     logExtDbg("sclguiPANEL::SavePanelCB()");
     
+    _saveFlag=mcsTRUE;    
     // Get the name of the textfield
-    mcsSTRING256 fileName;
-    strcpy(fileName, (_saveTextfield->GetText()).c_str());
-   
-    mcsSTRING64 usrMsg;
-    if (_currentList.Save(fileName, _ucdName, _request, mcsTRUE) ==
-        mcsFAILURE)
+    strcpy(_fileName, (_saveTextfield->GetText()).c_str());
+
+    // Check if the file already exist
+    if (miscFileExists(_fileName, mcsFALSE) == mcsTRUE)
     {
-        sprintf(usrMsg, "Saving in file '%s' failed", fileName);
-        _theGui->SetStatus(false, usrMsg, errUserGet());
-        errCloseStack();
-        return mcsFAILURE;
+        // if file already exist, create a confirm button
+        BuildConfirmWindow();
+        _confirmWindow->Show();
     }
-    sprintf(usrMsg, "Save in file '%s' succeed", fileName);
-    _theGui->SetStatus(true, usrMsg);
-
-
+    // if it is not an existing file, write in it
+    else
+    {
+        if (OverwriteButtonCB() == mcsFAILURE)
+        {
+            return mcsFAILURE;
+        }
+    }
+    
     return mcsSUCCESS;
 }
 
@@ -1085,23 +1147,27 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::ExportPanelCB()");
-    
-    // Get the name of the textfield
-    mcsSTRING256 fileName;
-    strcpy(fileName, (_exportTextfield->GetText()).c_str());
-   
-    mcsSTRING64 usrMsg;
-    if (_displayList.Save(fileName,_ucdNameDisplay, _request,  mcsFALSE) ==
-        mcsFAILURE)
-    {
-        sprintf(usrMsg, "Export in file '%s' failed", fileName);
-        _theGui->SetStatus(false, usrMsg), errUserGet();
-        errCloseStack();
-        return mcsFAILURE;
-    }
-    sprintf(usrMsg, "Export in file '%s' succeed", fileName);
-    _theGui->SetStatus(true, usrMsg);
 
+    _saveFlag=mcsFALSE;
+    // Get the name of the textfield
+    strcpy(_fileName, (_exportTextfield->GetText()).c_str());
+  
+    // Check if the file already exist
+    if (miscFileExists(_fileName, mcsFALSE) == mcsTRUE)
+    {
+        // if file already exist, create a confirm button
+        BuildConfirmWindow();
+        _confirmWindow->Show();
+    }
+    // if it is not an existing file, write in it
+    else
+    {
+        if (OverwriteButtonCB() == mcsFAILURE)
+        {
+            return mcsFAILURE;
+        }
+    }
+   
     return mcsSUCCESS;
 }
 
