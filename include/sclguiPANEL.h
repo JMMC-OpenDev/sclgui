@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.20 2005-03-08 10:58:03 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.21 2005-03-08 14:06:07 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2005/03/08 10:58:03  scetre
+ * Re Added abort ("QUIT") button
+ *
  * Revision 1.19  2005/03/07 16:01:20  scetre
  * Removed Abort button
  *
@@ -124,7 +127,9 @@ protected:
 
     // Command reply callbacks
     virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
-    
+   
+    // Command exit callbacks
+    virtual evhCB_COMPL_STAT ExitCB(msgMESSAGE &msg, void *);
 private:
     vobsSTAR_PROPERTY_ID_LIST _ucdName;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameforKV;
