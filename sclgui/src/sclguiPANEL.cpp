@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.32 2005-03-07 14:28:24 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.33 2005-03-07 14:35:38 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.32 2005-03-07 14:28:24 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.33 2005-03-07 14:35:38 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -195,8 +195,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildConfirmWindow()
     // Build the windows
     _confirmWindow = new gwtWINDOW();
     _confirmWindow->AttachAGui(_theGui);
-   
-    _confirmLabel = new gwtLABEL("File already exist, Would you like to overwrite it ?", "No Help");
+  
+    ostringstream out;
+    out << _fileName;
+    out << " already exist, Would you like to overwrite this file ?";
+    _confirmLabel = new gwtLABEL(out.str(), "No Help");
     
     // Create overwrite button and cancel button
     _overwriteButton = new gwtBUTTON("Overwrite");
