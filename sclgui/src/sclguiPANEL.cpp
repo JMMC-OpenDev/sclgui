@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.11 2005-02-17 09:26:06 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.12 2005-02-17 15:35:13 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.11 2005-02-17 09:26:06 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.12 2005-02-17 15:35:13 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -812,7 +812,7 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
 
     _currentList.Clear();
     
-    if (_currentList.Load(fileName, mcsTRUE, "saveFile") == mcsFAILURE)
+    if (_currentList.Load(fileName, mcsTRUE, &_request) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
@@ -825,6 +825,14 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
     _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
     _displayList.Copy(_visibilityOkList);
 
+    _found = _currentList.Size();
+    _diam = _coherentDiameterList.Size();
+    _vis = _visibilityOkList.Size();
+
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
 
     return mcsSUCCESS;
 }
@@ -841,7 +849,7 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     mcsSTRING256 fileName;
     strcpy(fileName, (_saveTextfield->GetText()).c_str());
     
-    if (_displayList.Save(fileName, mcsTRUE) == mcsFAILURE)
+    if (_displayList.Save(fileName, mcsTRUE, &_request) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
@@ -984,7 +992,7 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     
     // it need to re-create the visibility ok list    
     _visibilityOkList.Clear();    
-    _visibilityOkList.Copy(_coherentDiameterList, mcsFALSE, mcsTRUE);
+    _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
             
     _variabilityWindow->Hide();
     _displayList.FilterByVariability(authorized);
