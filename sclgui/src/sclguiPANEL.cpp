@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.46 2005-03-08 15:31:23 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.47 2005-03-08 17:07:08 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.46  2005/03/08 15:31:23  scetre
+ * Updated user message
+ *
  * Revision 1.45  2005/03/08 15:10:46  gluck
  * Update user messages
  *
@@ -38,7 +41,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.46 2005-03-08 15:31:23 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.47 2005-03-08 17:07:08 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -1025,30 +1028,37 @@ mcsCOMPL_STAT sclguiPANEL::SelectPanelCB(void *)
         case 0:
             BuildRaDecWindow();
             _raDecWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
         case 1:
             BuildMagWindow();
             _magWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
         case 2:
             BuildSpectralTypeWindow();
             _spectralTypeWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
         case 3:
             BuildLumWindow();
             _lumWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
         case 4:
             BuildAccuracyWindow();
             _accuracyWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
         case 5:
             BuildVariabilityWindow();
             _variabilityWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
         case 6:
             BuildMultWindow();
             _multWindow->Show();
+            _theGui->SetStatus(true,"");
             break;
     }
     return mcsSUCCESS;
@@ -1129,17 +1139,19 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
     mcsSTRING256 fileName;
     strcpy(fileName, (_loadTextfield->GetText()).c_str());
 
-    _currentList.Clear();
-    
+    sclsvrCALIBRATOR_LIST loadedList;
     mcsSTRING64 usrMsg;
     
-    if (_currentList.Load(fileName, _request) == mcsFAILURE)
+    if (loadedList.Load(fileName, _request) == mcsFAILURE)
     {
         sprintf(usrMsg, "'%s' file HAS NOT been loaded", fileName);
         _theGui->SetStatus(false, usrMsg, errUserGet());
         errCloseStack();
         return mcsFAILURE;
     }
+    
+    _currentList.Clear();
+    _currentList.Copy(loadedList);
     sprintf(usrMsg, "'%s' file has been loaded", fileName);
     _theGui->SetStatus(true, usrMsg);
 
@@ -1182,6 +1194,7 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
         // if file already exist, create a confirm button
         BuildConfirmWindow();
         _confirmWindow->Show();
+        _theGui->SetStatus(true,"");
     }
     // if it is not an existing file, write in it
     else
@@ -1213,6 +1226,7 @@ mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
         // if file already exist, create a confirm button
         BuildConfirmWindow();
         _confirmWindow->Show();
+        _theGui->SetStatus(true,"");
     }
     // if it is not an existing file, write in it
     else
