@@ -1,12 +1,12 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.5 2004-12-03 14:06:39 mella Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.6 2004-12-09 06:44:46 gzins Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
 * mella     25-Nov-2004  Created
-*
+* gzins     09-Dec-2004  Fixed cast problem with new mcsLOGICAL enumerate
 *
 *******************************************************************************/
 
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.5 2004-12-03 14:06:39 mella Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.6 2004-12-09 06:44:46 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -589,7 +589,7 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             elStr << el;
             _resultsTable->SetCell(el,0,elStr.str());
 
-            calibrator = (sclsvrCALIBRATOR*)list->GetNextStar((el==0));
+            calibrator = (sclsvrCALIBRATOR*)list->GetNextStar((mcsLOGICAL)(el==0));
             int i;
             
             // add calibrator properties raws
