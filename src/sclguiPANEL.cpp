@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.9 2005-02-14 14:23:36 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.10 2005-02-15 15:59:33 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.9 2005-02-14 14:23:36 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.10 2005-02-15 15:59:33 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -823,7 +823,7 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     
     if (_displayList.Save(fileName, mcsTRUE) == mcsFAILURE)
     {
-        return FAILURE;
+        return mcsFAILURE;
     }
 
     return mcsSUCCESS;
