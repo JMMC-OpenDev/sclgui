@@ -3,7 +3,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.h,v 1.4 2004-12-02 10:06:24 mella Exp $"
+* "@(#) $Id: sclguiPANEL.h,v 1.5 2004-12-03 14:06:37 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -30,6 +30,8 @@
 #include "mcs.h"
 #include "gwt.h"
 
+#include "sclsvr.h"
+
 /*
  * Class declaration
  */
@@ -46,20 +48,20 @@ class sclguiPANEL : public evhSERVER
 {
 
 public:
-    sclguiPANEL();
+    sclguiPANEL(string hostname, mcsINT32 port);
     virtual ~sclguiPANEL();
     virtual mcsCOMPL_STAT AppInit();
 
 protected:
     
 private:
-    // Declaration of copy constructor and assignment operator as private
-    // methods, in order to hide them from the users.
-    sclguiPANEL(const sclguiPANEL&);
-    sclguiPANEL& operator=(const sclguiPANEL&);
+    sclsvrCALIBRATOR_LIST *_currentList;
+    void FillResultsTable(sclsvrCALIBRATOR_LIST *list);
 
     // central point for exchange with the remote GUI 
     gwtGUI *_theGui;
+    string _guiHostname;
+    mcsINT32 _guiPort;
     evhCB_COMPL_STAT GuiSocketCB(const int sd, void *obj);
 
     // _mainWindow and its widgets with associated callbacks
