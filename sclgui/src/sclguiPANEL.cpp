@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.45 2005-03-08 15:10:46 gluck Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.46 2005-03-08 15:31:23 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.45  2005/03/08 15:10:46  gluck
+ * Update user messages
+ *
  * Revision 1.44  2005/03/08 14:34:39  scetre
  * Removed abort button
  *
@@ -35,7 +38,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.45 2005-03-08 15:10:46 gluck Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.46 2005-03-08 15:31:23 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -980,8 +983,6 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
-    _theGui->SetStatus(true, "Show all stars with coherent diameter and " 
-                       "without variability and multiplicity");
     
     _varAuthorized = mcsFALSE;
     _multAuthorized = mcsFALSE;
@@ -1006,6 +1007,9 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     FillResultsTable(&_displayList);
     _mainWindow->Update();
     
+    _theGui->SetStatus(true, "Show all stars with coherent diameter and " 
+                       "without variability and multiplicity");
+
     return mcsSUCCESS;
 }
 
