@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.18 2005-02-24 15:29:08 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.19 2005-02-28 10:01:58 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.18 2005-02-24 15:29:08 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.19 2005-02-28 10:01:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -260,6 +260,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Add widgets to the main window 
     _mainWindow->Add(_scienceStarTextarea);
     _mainWindow->Add(_resultsTable);
+    _mainWindow->Add(_legendTable);    
     _mainWindow->Add(_resumeTextfield);
     _mainWindow->AddContainer(_selectPanel); 
     _mainWindow->AddContainer(_deletePanel); 
@@ -658,22 +659,72 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
 
         calibrator = (sclsvrCALIBRATOR*)list->GetNextStar((mcsLOGICAL)(el==0));
         int i=0;
-
+        
         // Add calibrator properties raws
         ucdNameOrderIterator = _ucdNameDisplay.begin();
         while(ucdNameOrderIterator != _ucdNameDisplay.end())
         {
             string propvalue;
+            vobsSTAR_PROPERTY *property;
+            property = calibrator->GetProperty(*ucdNameOrderIterator);
+            
             propvalue.append
                 (calibrator->GetPropertyValue(*ucdNameOrderIterator));
             _resultsTable->SetCell(el, i+1, propvalue);
+            printf("property->GetOrigin() = %s\n", property->GetOrigin());
+            if (strcmp(property->GetOrigin(), vobsSTAR_COMPUTED_PROP) == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#ffd0a2");
+            }
+            if (strcmp(property->GetOrigin(), "I/280") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#f5878e");
+            }
+            if (strcmp(property->GetOrigin(), "II/225/catalog") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#dabbf8");
+            }
+            if (strcmp(property->GetOrigin(), "II/7A/catalog") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#afb1e9");
+            }
+            if (strcmp(property->GetOrigin(), "II/246/out") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#afdbe9");
+            }
+            if (strcmp(property->GetOrigin(), "V/50/catalog") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#afe9d5");
+            }
+            if (strcmp(property->GetOrigin(), "J/A+A/386/492/charm") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#bee9af");
+            }
             i++;
             ucdNameOrderIterator++;
 
         } // End for each properties
 
     } // End for each calibrators
-
+    
+    // build legend table
+    _legendTable = new gwtTABLE(1, 7);
+    _legendTable->SetVerticalOrientation(mcsTRUE);
+    _legendTable->SetLabel("Origin");
+    _legendTable->SetCell(0, 0, "COMPUTED");
+    _legendTable->SetCellBackground(0, 0, "#ffd0a2");
+    _legendTable->SetCell(0, 1, "I/280");
+    _legendTable->SetCellBackground(0, 1, "#f5878e");
+    _legendTable->SetCell(0, 2, "II/225");
+    _legendTable->SetCellBackground(0, 2, "#dabbf8");
+    _legendTable->SetCell(0, 3, "II/7A");
+    _legendTable->SetCellBackground(0, 3, "#afb1e9");
+    _legendTable->SetCell(0, 4, "II/246");
+    _legendTable->SetCellBackground(0, 4, "#afdbe9");
+    _legendTable->SetCell(0, 5, "V/50");
+    _legendTable->SetCellBackground(0, 5, "#afe9d5");
+    _legendTable->SetCell(0, 6, "charm");
+    _legendTable->SetCellBackground(0, 6, "#bee9af");
 }
 
 /**
