@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.16 2005-02-23 17:25:30 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.17 2005-02-24 13:16:27 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.16 2005-02-23 17:25:30 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.17 2005-02-24 13:16:27 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -159,20 +159,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
          "R.A. and/or Range in DEC.in the Search Calib panel.\n  Solution 2: "
          "Increase the Magnitude Range in the Search Calib panel.");
 
-    if (_varAuthorized == mcsFALSE)
-    {
-        cout << "false" << endl;
-    }
-    else if (_varAuthorized == mcsTRUE)
-    {
-        cout << "true" << endl;
-    }
-    else
-    {
-        cout << "unknown" << endl;
-    }
-
-    
     // Prepare window
     _mainWindow = new gwtWINDOW();
     _mainWindow->AttachAGui(_theGui);
@@ -261,8 +247,13 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _savePanel = new gwtSUBPANEL("SAVE");
     _savePanel->SetLabel("Save File");
     _savePanel->SetHelp("Save file in directory /Resultats/");
+    mcsSTRING256 fileName;
+    strcpy(fileName, _request.GetObjectName());
+    strcat(fileName, "_");
+    strcat(fileName, _request.GetSearchBand());
+    strcat(fileName, ".txt");
     _saveTextfield = new gwtTEXTFIELD
-        ("*.txt", "File name to save current list of calibrators");
+        (fileName, "File name to save current list of calibrators");
     _saveTextfield->SetLabel("File Name to save");
     _savePanel->Add(_saveTextfield);
 
@@ -834,16 +825,19 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
     cout << "Delete star nb :" << _deleteTextfield->GetText() << endl;
     // Get the line number as an integer
     mcsUINT32 starNumber;
+    // Inform user
+    mcsSTRING64 usrMsg;
+    
     if (sscanf((_deleteTextfield->GetText()).c_str(), "%d", &starNumber) != 1)
     {
-        cout << "not a valib number";
-        cout << _displayList.Size();
+        _theGui->SetStatus(false, "Not a valid number");
         return mcsFAILURE;
     }
     if ((starNumber > _displayList.Size()) || (starNumber<=0))
     {
-        cout << "the value should be a positive integer lower than ";
-        cout << _displayList.Size();
+        sprintf(usrMsg, "the value should be a positive integer lower than %d",
+                _displayList.Size());
+        _theGui->SetStatus(false, usrMsg); 
         return mcsFAILURE;
     }
     else
@@ -873,10 +867,16 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
 
     _currentList.Clear();
     
+    mcsSTRING64 usrMsg;
+    
     if (_currentList.Load(fileName, mcsTRUE, &_request) == mcsFAILURE)
     {
+        sprintf(usrMsg, "Load file '%s' failed : The file is not present in the repository", fileName);
+        _theGui->SetStatus(false, "LOAD FAILED", usrMsg);
         return mcsFAILURE;
     }
+    sprintf(usrMsg, "Load file '%s' succeed", fileName);
+        _theGui->SetStatus(true, usrMsg);
 
     _coherentDiameterList.Clear();
     _visibilityOkList.Clear();
@@ -909,11 +909,17 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     // Get the name of the textfield
     mcsSTRING256 fileName;
     strcpy(fileName, (_saveTextfield->GetText()).c_str());
-    
+   
+    mcsSTRING64 usrMsg;
     if (_displayList.Save(fileName, mcsTRUE, &_request) == mcsFAILURE)
     {
+        sprintf(usrMsg, "Save in file '%s' failed", fileName);
+        _theGui->SetStatus(false, usrMsg);
         return mcsFAILURE;
     }
+    sprintf(usrMsg, "Save in file '%s' succeed", fileName);
+    _theGui->SetStatus(true, usrMsg);
+
 
     return mcsSUCCESS;
 }
