@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.13 2005-02-17 09:25:43 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.14 2005-02-18 11:50:28 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2005/02/17 09:25:43  scetre
+ * Added 3 interger in the class in order to store CDS return, coherent diameter and visibility list size
+ *
  * Revision 1.12  2005/02/17 07:51:10  scetre
  * Replace old unused method SetObjectName by Parse method
  *
@@ -50,7 +53,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.13 2005-02-17 09:25:43 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.14 2005-02-18 11:50:28 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -159,15 +162,30 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         }
         case msgTYPE_REPLY:
         {
+            // Fixed by default forbidden multiplicity and variability
+            _varAuthorized = mcsFALSE;
+            _multAuthorized = mcsFALSE;
             // Retreive the returned calibrator list
             _currentList.UnPack(msg.GetBody());
-            _currentList.Display();
-            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
-            _displayList.Copy(_visibilityOkList);
+            // Fix the number of CDS return
             _found = _currentList.Size();
-            _diam = _coherentDiameterList.Size();
+            /// Extract from the CDS return the list of coherent diameter
+            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
+            // Extract from te list of coherernt diameter the list 
+            // of visibility ok
+            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+            // Fix the number of coherent diameter
+            _diam = _coherentDiameterList.Size(); 
+            // Fix the number of visibility ok
             _vis = _visibilityOkList.Size();
+            // Filter the coherent diameter list
+            _coherentDiameterList.FilterByVariability(_varAuthorized);
+            _coherentDiameterList.FilterByMultiplicity(_multAuthorized);
+            // Filter the visibility ok list
+            _visibilityOkList.FilterByVariability(_varAuthorized);
+            _visibilityOkList.FilterByMultiplicity(_multAuthorized);
+            
+            _displayList.Copy(_visibilityOkList);
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
             {

@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.12 2005-02-17 15:35:13 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.13 2005-02-18 11:50:28 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.12 2005-02-17 15:35:13 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.13 2005-02-18 11:50:28 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -71,10 +71,11 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     logExtDbg("sclguiPANEL::sclguiPANEL");
     _guiHostname = hostname;
     _guiPort = port;
-
     _found = _currentList.Size();
     _diam = _coherentDiameterList.Size();
     _vis = _visibilityOkList.Size();
+    _varAuthorized = mcsFALSE;
+    _multAuthorized = mcsFALSE;
 }
 
 
@@ -155,6 +156,20 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
          "R.A. and/or Range in DEC.in the Search Calib panel.\n  Solution 2: "
          "Increase the Magnitude Range in the Search Calib panel.");
 
+    if (_varAuthorized == mcsFALSE)
+    {
+        cout << "false" << endl;
+    }
+    else if (_varAuthorized == mcsTRUE)
+    {
+        cout << "true" << endl;
+    }
+    else
+    {
+        cout << "unknown" << endl;
+    }
+
+    
     // Prepare window
     _mainWindow = new gwtWINDOW();
     _mainWindow->AttachAGui(_theGui);
@@ -435,8 +450,16 @@ mcsCOMPL_STAT sclguiPANEL::BuildMultWindow()
     // Prepare widgets 
     _multChoice = new gwtCHOICE();
     _multChoice->SetLabel("Multiplicity");
-    _multChoice->Add("Authorised");
-    _multChoice->Add("Forbidden");
+    if (_multAuthorized == mcsFALSE)
+    {
+        _multChoice->Add("Forbidden");
+        _multChoice->Add("Authorised");
+    }
+    else
+    {
+        _multChoice->Add("Authorised");        
+        _multChoice->Add("Forbidden");
+    }
     _multWindow->Add(_multChoice);
 
     _multButton = new gwtBUTTON("Ok","Start the process");
@@ -564,8 +587,16 @@ mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
     // Prepare widgets 
     _variabilityChoice = new gwtCHOICE();
     _variabilityChoice->SetLabel("Variability");
-    _variabilityChoice->Add("Authorised");
-    _variabilityChoice->Add("Forbidden");
+    if (_varAuthorized == mcsFALSE)
+    {
+        _variabilityChoice->Add("Forbidden");
+        _variabilityChoice->Add("Authorised");
+    }
+    else
+    {
+        _variabilityChoice->Add("Authorised");
+        _variabilityChoice->Add("Forbidden");
+    }
     _variabilityWindow->Add(_variabilityChoice);
 
     _variabilityButton = new gwtBUTTON("Ok","Start the process");
@@ -666,6 +697,8 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
+    _varAuthorized = mcsTRUE;
+    _multAuthorized = mcsTRUE;
     _mainWindow->Hide();
     BuildMainWindow();
     _mainWindow->Show();
@@ -681,13 +714,29 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
     _theGui->SetStatus(true, "Reset button pressed");
-
-    // Clear the display
+    
+    _varAuthorized = mcsFALSE;
+    _multAuthorized = mcsFALSE;
+    
     _coherentDiameterList.Clear();
-    _visibilityOkList.Clear();
-    _displayList.Clear();
+    // Extract from the CDS return the list of coherent diameter
     _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
+    _visibilityOkList.Clear();                
+    // Extract from te list of coherernt diameter the list 
+    // of visibility ok
     _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+    
+    // Filter the coherent diameter list
+    _coherentDiameterList.FilterByVariability(_varAuthorized);
+    // Filter the coherent diameter list
+    _coherentDiameterList.FilterByMultiplicity(_varAuthorized);
+    
+    // Filter the visibility ok list
+    _visibilityOkList.FilterByVariability(_varAuthorized); 
+    // Filter the visibility ok list
+    _visibilityOkList.FilterByMultiplicity(_varAuthorized);
+            
+    _displayList.Clear();
     _displayList.Copy(_visibilityOkList);
 
     // Update main window
@@ -970,32 +1019,49 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
 
     cout << "data: " <<_variabilityChoice->GetSelectedItemValue() <<endl;
 
-    // check if variability is authorized or not. By default, variability are
-    // authorized
-    mcsLOGICAL authorized = mcsTRUE;
-    // if variability are forbidden, authorized variable becomes mcsFALSE
+    // if variability are authorized variable, recreate list with variability
+    // flag because by default, variability flag are forbidden.
+    if (strcmp((_variabilityChoice->GetSelectedItemValue()).c_str(), 
+               "Authorised") == 0)
+    {
+        if (_varAuthorized == mcsFALSE)
+        {
+            _varAuthorized = mcsTRUE;
+        }
+        _variabilityWindow->Hide();
+        return mcsSUCCESS;
+    }
+    // if the wanted state is forbidden and if the variability flag is
+    // authorized, it' like a reset. Else, do nothing, the state is ever
+    // forbidden
     if (strcmp((_variabilityChoice->GetSelectedItemValue()).c_str(), 
                "Forbidden") == 0)
     {
-        authorized = mcsFALSE;
+        if (_varAuthorized == mcsTRUE)
+        {
+            _varAuthorized = mcsFALSE;
+            _coherentDiameterList.Clear();
+            // Extract from the CDS return the list of coherent diameter
+            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
+            _visibilityOkList.Clear();                
+            // Extract from te list of coherernt diameter the list 
+            // of visibility ok
+            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+            // Filter the coherent diameter list
+            _coherentDiameterList.FilterByVariability(_varAuthorized);
+            // Filter the visibility ok list
+            _visibilityOkList.FilterByVariability(_varAuthorized); 
+            _displayList.Clear();
+            _displayList.Copy(_visibilityOkList);
+        }
+        else 
+        {
+            _variabilityWindow->Hide();
+            return mcsSUCCESS;
+        }
     }
-   
-    // re-create Coherent diameter list in order to show the coherent diameter
-    // list without variability if authorized is mcsFALSE for the choice 
-    // of "show all result" button later.
-    _coherentDiameterList.Clear();
-    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-   
-    // if necessary, it need to remove star with varibility from the coherent
-    // diameter list
-    _coherentDiameterList.FilterByVariability(authorized);
-    
-    // it need to re-create the visibility ok list    
-    _visibilityOkList.Clear();    
-    _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
-            
+
     _variabilityWindow->Hide();
-    _displayList.FilterByVariability(authorized);
 
     // Update main window
     _mainWindow->Hide();
@@ -1012,32 +1078,49 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
     logExtDbg("sclguiPANEL::MultButtonCB()");
     cout << "data: " <<_multChoice->GetSelectedItemValue() <<endl;
 
-    // check if multiplicity is authorized or not. By default, multiplicity are
-    // authorized
-    mcsLOGICAL authorized = mcsTRUE;
-    // if multiplicity are forbidden, authorized variable becomes mcsFALSE
+    // if variability are authorized variable, recreate list with variability
+    // flag because by default, variability flag are forbidden.
+    if (strcmp((_multChoice->GetSelectedItemValue()).c_str(), 
+               "Authorised") == 0)
+    {
+        if (_multAuthorized == mcsFALSE)
+        {
+            _multAuthorized = mcsTRUE;
+        }
+        _multWindow->Hide();
+        return mcsSUCCESS;
+    }
+    // if the wanted state is forbidden and if the variability flag is
+    // authorized, it' like a reset. Else, do nothing, the state is ever
+    // forbidden
     if (strcmp((_multChoice->GetSelectedItemValue()).c_str(), 
                "Forbidden") == 0)
     {
-        authorized = mcsFALSE;
+        if (_multAuthorized == mcsTRUE)
+        {
+            _multAuthorized = mcsFALSE;
+            _coherentDiameterList.Clear();
+            // Extract from the CDS return the list of coherent diameter
+            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
+            _visibilityOkList.Clear();                
+            // Extract from te list of coherernt diameter the list 
+            // of visibility ok
+            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+            // Filter the coherent diameter list
+            _coherentDiameterList.FilterByMultiplicity(_varAuthorized);
+            // Filter the visibility ok list
+            _visibilityOkList.FilterByMultiplicity(_varAuthorized); 
+            _displayList.Clear();
+            _displayList.Copy(_visibilityOkList);
+        }
+        else
+        {
+            _multWindow->Hide();
+            return mcsSUCCESS;
+        }
     }
-   
-    // re-create Coherent diameter list in order to show the coherent diameter
-    // list without multiplicity if authorized is mcsFALSE for the choice 
-    // of "show all result" button later.
-    _coherentDiameterList.Clear();
-    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-   
-    // if necessary, it need to remove star with multiplicity from the coherent
-    // diameter list
-    _coherentDiameterList.FilterByMultiplicity(authorized);
-    
-    // it need to re-create the visibility ok list    
-    _visibilityOkList.Clear();    
-    _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
     
     _multWindow->Hide();
-    _displayList.FilterByMultiplicity(authorized);
 
     // Update main window
     _mainWindow->Hide();
