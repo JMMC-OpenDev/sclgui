@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.50 2005-03-10 14:51:23 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.51 2005-03-10 15:04:52 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.50  2005/03/10 14:51:23  scetre
+ * Added "SHOW DETAILS" and "HIDE DETAILS"
+ * Changed Show all results and reset behavior
+ *
  * Revision 1.49  2005/03/10 14:01:48  scetre
  * Added list of ucd for less detail in K and V band
  *
@@ -50,7 +54,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.50 2005-03-10 14:51:23 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.51 2005-03-10 15:04:52 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -467,7 +471,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
 mcsCOMPL_STAT sclguiPANEL::AbortButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::AbortButtonCB()");
-    _theGui->SetStatus(true, "Bye bye");
+    _theGui->SetStatus(true, "Search Calibrators results panel closed");
 
     _mainWindow->Hide();
     exit(EXIT_SUCCESS);
