@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.41 2005-03-08 10:58:03 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.42 2005-03-08 11:21:27 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.41  2005/03/08 10:58:03  scetre
+ * Re Added abort ("QUIT") button
+ *
  * Revision 1.40  2005/03/08 07:14:41  scetre
  * changed reset behaviour
  *
@@ -22,7 +25,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.41 2005-03-08 10:58:03 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.42 2005-03-08 11:21:27 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -1169,6 +1172,7 @@ mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::ExportPanelCB()");
 
+    _ucdName = _ucdNameDisplay;
     _saveFlag=mcsFALSE;
     // Get the name of the textfield
     strcpy(_fileName, (_exportTextfield->GetText()).c_str());
