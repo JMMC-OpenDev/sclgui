@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPanel.cpp,v 1.4 2005-02-15 15:57:24 gzins Exp $"
+ * "@(#) $Id: sclguiPanel.cpp,v 1.5 2005-03-06 10:51:00 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/02/15 15:57:24  gzins
+ * Added CVS log as file modification history
+ *
  * mella     25-Nov-2004  Created
  *
  ******************************************************************************/
@@ -15,7 +18,7 @@
  * Entry point for SearchCalib graphical application. 
  */
 
-static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.4 2005-02-15 15:57:24 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.5 2005-03-06 10:51:00 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /**
@@ -76,7 +79,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    cout << "Starting " << argv[0] << ":" << port << endl;
     sclguiPANEL scalibPanel("localhost",port);
 
     // Init server
