@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.8 2005-02-10 08:23:48 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.9 2005-02-14 14:23:19 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2005/02/10 08:23:48  gzins
+ * Updated message informing about the number of found stars
+ *
  * Revision 1.7  2005/02/08 21:02:38  gzins
  * Used _request class member instead of local instance
  * Used new sclsvrCALIBRATOR_LIST::Copy() method
@@ -35,7 +38,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.8 2005-02-10 08:23:48 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.9 2005-02-14 14:23:19 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -251,11 +254,10 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         case msgTYPE_REPLY:
         {
             // Retreive the returned calibrator list
-            miscDYN_BUF dynBuf;
-            miscDynBufInit(&dynBuf);
-            miscDynBufAppendString(&dynBuf, msg.GetBody());
-            
+            miscoDYN_BUF dynBuf;
+            dynBuf.AppendString(msg.GetBody());
             _currentList.UnPack(&dynBuf);
+            _currentList.Display();
             _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
             _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
             _displayList.Copy(_visibilityOkList);
