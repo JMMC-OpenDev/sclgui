@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.23 2005-03-02 15:22:58 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.24 2005-03-02 16:59:46 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.23 2005-03-02 15:22:58 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.24 2005-03-02 16:59:46 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -83,28 +83,28 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     //_legendTable->SetVerticalOrientation(mcsTRUE);
     _legendTable->SetLabel("Origin");
     _legendTable->SetCell(0, 0, "I/280");
-    _legendTable->SetCellBackground(0, 0, "#ffb6b6");
+    _legendTable->SetCellBackground(0, 0, sclguiI_280_COLOR);
     _legendTable->SetCell(0, 1, "II/225");
-    _legendTable->SetCellBackground(0, 1, "#f6b6ff");
+    _legendTable->SetCellBackground(0, 1, sclguiII_225_COLOR);
     _legendTable->SetCell(0, 2, "II/7A");
-    _legendTable->SetCellBackground(0, 2, "#b9b6ff");
+    _legendTable->SetCellBackground(0, 2, sclguiII_7A_COLOR);
     _legendTable->SetCell(0, 3, "II/246");
-    _legendTable->SetCellBackground(0, 3, "#b6e8ff");
+    _legendTable->SetCellBackground(0, 3, sclguiII_246_COLOR);
     _legendTable->SetCell(0, 4, "V/50");
-    _legendTable->SetCellBackground(0, 4, "#b6ffe6");
+    _legendTable->SetCellBackground(0, 4, sclguiV_50_COLOR);
     _legendTable->SetCell(0, 5, "charm");
-    _legendTable->SetCellBackground(0, 5, "#dfffb6");
+    _legendTable->SetCellBackground(0, 5, sclguiCHARM_COLOR);
     
     _legendTable->SetCell(0, 6, "B/denis");
-    _legendTable->SetCellBackground(0, 6, "#fff4b6");
-    _legendTable->SetCell(0, 7, "I/196/main");
-    _legendTable->SetCellBackground(0, 7, "#78fb8b");
-    _legendTable->SetCell(0, 8, "J/A+A/393/183/catalog");
-    _legendTable->SetCellBackground(0, 8, "#9778fb");
-    _legendTable->SetCell(0, 9, "V/36B/bsc4s");
-    _legendTable->SetCellBackground(0, 9, "#88a0a6");
+    _legendTable->SetCellBackground(0, 6, sclguiDENIS_COLOR);
+    _legendTable->SetCell(0, 7, "I/196");
+    _legendTable->SetCellBackground(0, 7, sclguiI_196_COLOR);
+    _legendTable->SetCell(0, 8, "Cohen");
+    _legendTable->SetCellBackground(0, 8, sclguiCOHEN_COLOR);
+    _legendTable->SetCell(0, 9, "V/36B");
+    _legendTable->SetCellBackground(0, 9, sclguiV_36B_COLOR);
     _legendTable->SetCell(0, 10, "MIDI");
-    _legendTable->SetCellBackground(0, 10, "#c994ca");
+    _legendTable->SetCellBackground(0, 10, sclgui_MIDI_COLOR);
 
 
 
@@ -112,11 +112,11 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     _confidenceTable->SetHeight(14);
     _confidenceTable->SetLabel("Confidence Index");
     _confidenceTable->SetCell(0, 0, "Low");
-    _confidenceTable->SetCellBackground(0, 0, "#6e6e6e");
+    _confidenceTable->SetCellBackground(0, 0, sclguiCONFIDENCE_LOW_COLOR);
     _confidenceTable->SetCell(0, 1, "Medium");           
-    _confidenceTable->SetCellBackground(0, 1, "#d8d8d8");
+    _confidenceTable->SetCellBackground(0, 1, sclguiCONFIDENCE_MEDIUM_COLOR);
     _confidenceTable->SetCell(0, 2, "High");             
-    _confidenceTable->SetCellBackground(0, 2, "#ffffff");
+    _confidenceTable->SetCellBackground(0, 2, sclguiCONFIDENCE_HIGH_COLOR);
     
     _varAuthorized = mcsFALSE;
     _multAuthorized = mcsFALSE;
@@ -215,8 +215,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _showAllResultsButton->PlaceAtTop(mcsTRUE);
     _resetButton = new gwtBUTTON("RESET", "This button reset the star list. It will show the list with visibility OK.");
     _resetButton->PlaceAtTop(mcsTRUE);
-    _printButton = new gwtBUTTON("PRINT", "No Help");
-    _printButton->PlaceAtTop(mcsTRUE);
     _abortButton = new gwtBUTTON("ABORT", "No Help");
     _abortButton->PlaceAtTop(mcsTRUE);
 
@@ -317,7 +315,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // \todo find a solution to get element from map unsorted
     _mainWindow->Add(_showAllResultsButton);
     _mainWindow->Add(_resetButton);
-    _mainWindow->Add(_printButton);
     _mainWindow->Add(_abortButton);
 
     // Associate callbacks
@@ -325,8 +322,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ShowAllResultsButtonCB);
     _resetButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ResetButtonCB);
-    _printButton->AttachCB
-        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::PrintButtonCB);
     _abortButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::AbortButtonCB);
     _selectPanel->AttachCB
@@ -718,66 +713,73 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             propvalue.append
                 (calibrator->GetPropertyValue(*ucdNameOrderIterator));
             _resultsTable->SetCell(el, i+1, propvalue);
+            _resultsTable->SetCellBackground(el, i+1, "#ffffff");
             if (strcmp(property->GetOrigin(), vobsSTAR_COMPUTED_PROP) == 0)
             {
                 if (property->GetConfidenceIndex() == vobsCONFIDENCE_LOW)
                 {
-                    _resultsTable->SetCellBackground(el, i+1, "#6e6e6e");
+                    _resultsTable->
+                        SetCellBackground(el, i+1,
+                                          sclguiCONFIDENCE_LOW_COLOR);
                 }
                 else if (property->GetConfidenceIndex() ==
                          vobsCONFIDENCE_MEDIUM)
                 {
-                    _resultsTable->SetCellBackground(el, i+1, "#d8d8d8");
+                    _resultsTable->
+                        SetCellBackground(el, i+1,
+                                          sclguiCONFIDENCE_MEDIUM_COLOR);
                 }
                 else if (property->GetConfidenceIndex() == vobsCONFIDENCE_HIGH)
                 {
-                    _resultsTable->SetCellBackground(el, i+1, "#ffffff");
+                    _resultsTable->
+                        SetCellBackground(el, i+1,
+                                          sclguiCONFIDENCE_HIGH_COLOR);
                 }
             }
             if (strcmp(property->GetOrigin(), "I/280") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#ffb6b6");
+                _resultsTable->SetCellBackground(el, i+1, sclguiI_280_COLOR);
             }
             if (strcmp(property->GetOrigin(), "II/225/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#f6b6ff");
+                _resultsTable->SetCellBackground(el, i+1, sclguiII_225_COLOR);
             }
             if (strcmp(property->GetOrigin(), "II/7A/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#b9b6ff");
+                _resultsTable->SetCellBackground(el, i+1, sclguiII_7A_COLOR);
             }
             if (strcmp(property->GetOrigin(), "II/246/out") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#b6e8ff");
+                _resultsTable->SetCellBackground(el, i+1, sclguiII_246_COLOR);
             }
             if (strcmp(property->GetOrigin(), "V/50/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#b6ffe6");
+                _resultsTable->SetCellBackground(el, i+1, sclguiV_50_COLOR);
             }
             if (strcmp(property->GetOrigin(), "J/A+A/386/492/charm") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#dfffb6");
+                _resultsTable->SetCellBackground(el, i+1, sclguiCHARM_COLOR);
             }
             /**/
             if (strcmp(property->GetOrigin(), "B/denis") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#fff4b6");
+                _resultsTable->SetCellBackground(el, i+1, sclguiDENIS_COLOR);
             }
             if (strcmp(property->GetOrigin(), "I/196/main") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#78fb8b");
+                _resultsTable->SetCellBackground(el, i+1, sclguiI_196_COLOR);
             }
             if (strcmp(property->GetOrigin(), "J/A+A/393/183/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#9778fb");
+                _resultsTable->SetCellBackground(el, i+1, sclguiCOHEN_COLOR);
             }
             if (strcmp(property->GetOrigin(), "MIDI") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#c994ca");
+                _resultsTable->SetCellBackground(el, i+1, sclgui_MIDI_COLOR);
             }
             if (strcmp(property->GetOrigin(), "V/36B/bsc4s") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#88a0a6");
+                _resultsTable->SetCellBackground(el, i+1, sclguiV_36B_COLOR);
             }
 
             i++;
@@ -858,16 +860,6 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     FillResultsTable(&_displayList);
     _mainWindow->Update();
 
-    return mcsSUCCESS;
-}
-
-/**
- *  User callback associated to the Print button.
- */
-mcsCOMPL_STAT sclguiPANEL::PrintButtonCB(void *)
-{
-    logExtDbg("sclguiPANEL::PrintButtonCB()");
-    _theGui->SetStatus(true, "Print button pressed");
     return mcsSUCCESS;
 }
 
