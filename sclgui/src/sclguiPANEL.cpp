@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.4 2005-02-07 10:07:30 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.4 2005-02-07 10:07:30 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -831,7 +831,7 @@ mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
     // changed vis from % to value between 0 and 1
     visMax = visMax/100;
     
-    _displayList.GetMaximalExpectedRelativeAccuracy(visMax);
+    _displayList.FilterByVisibility(visMax);
     
     // Update main window
     _mainWindow->Hide();
@@ -883,7 +883,7 @@ mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
         LumList.push_back("VI");
     }
     
-    _displayList.GetLuminosityClass(LumList);
+    _displayList.FilterByLuminosityClass(LumList);
     // Update main window
     _mainWindow->Hide();
     BuildMainWindow();
@@ -915,7 +915,7 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
         // todo err
         return mcsFAILURE;
     }
-    _displayList.GetMaximalMagnitudeSeparation(band, magnitude, magRange);
+    _displayList.FilterByMagnitude(band, magnitude, magRange);
     // Update main window
     _mainWindow->Hide();
     BuildMainWindow();
@@ -950,14 +950,14 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
    
     // if necessary, it need to remove star with multiplicity from the coherent
     // diameter list
-    _coherentDiameterList.GetMultiplicity(authorized);
+    _coherentDiameterList.FilterByMultiplicity(authorized);
     
     // it need to re-create the visibility ok list    
     _visibilityOkList.Clear();    
     _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
     
     _multWindow->Hide();
-    _displayList.GetMultiplicity(authorized);
+    _displayList.FilterByMultiplicity(authorized);
 
     // Update main window
     _mainWindow->Hide();
@@ -996,7 +996,7 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
     miscReplaceChrByChr(dec, ':', ' ');
     
     // removed star which are not in the box
-    _displayList.GetScienceObjectSeparation(ra, dec,
+    _displayList.FilterByDistanceSeparation(ra, dec,
                                             raRange,
                                             decRange);
     // todo put the value from GetText instead of 0.1
@@ -1056,7 +1056,7 @@ mcsCOMPL_STAT sclguiPANEL::SpectralTypeButtonCB(void *)
     }
 
     
-    _displayList.GetSpectralType(SpectTypeList);
+    _displayList.FilterBySpectralType(SpectTypeList);
     // Update main window
     _mainWindow->Hide();
     BuildMainWindow();
@@ -1092,14 +1092,14 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
    
     // if necessary, it need to remove star with varibility from the coherent
     // diameter list
-    _coherentDiameterList.GetVariability(authorized);
+    _coherentDiameterList.FilterByVariability(authorized);
     
     // it need to re-create the visibility ok list    
     _visibilityOkList.Clear();    
     _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
             
     _variabilityWindow->Hide();
-    _displayList.GetVariability(authorized);
+    _displayList.FilterByVariability(authorized);
 
     // Update main window
     _mainWindow->Hide();
