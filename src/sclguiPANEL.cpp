@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.36 2005-03-07 16:09:41 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.37 2005-03-07 17:23:07 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.36 2005-03-07 16:09:41 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.37 2005-03-07 17:23:07 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -122,7 +122,6 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     BuildResultsTableLabelKV();
     BuildResultsTableLabelN();
     BuildResultsTableLabelNComplete();
-
 }
 
 
@@ -169,6 +168,11 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
 
     BuildMainWindow();
 
+    strcpy(_fileName, "");
+    _confirmWindow = NULL;
+    _overwriteButton = NULL;
+    _confirmLabel = NULL;
+    BuildConfirmWindow();
     //_mainWindow->Show();
 
     return mcsSUCCESS;
@@ -190,26 +194,34 @@ const char *sclguiPANEL::GetSwVersion()
 mcsCOMPL_STAT sclguiPANEL::BuildConfirmWindow()
 {
     logExtDbg("sclguiPANEL::BuildConfirmWindow()");
-   
     // Build the windows
-    _confirmWindow = new gwtWINDOW();
-    _confirmWindow->AttachAGui(_theGui);
-  
+    if (_confirmWindow == NULL)
+    {
+        _confirmWindow = new gwtWINDOW();
+        _confirmWindow->AttachAGui(_theGui);
+    }
+
+    if (_confirmLabel != NULL)
+    {
+        delete _confirmLabel;
+    }
     ostringstream out;
     out << _fileName;
     out << " already exist, Would you like to overwrite this file ?";
     _confirmLabel = new gwtLABEL(out.str(), "No Help");
-    
-    // Create overwrite button and cancel button
-    _overwriteButton = new gwtBUTTON("Overwrite");
-    _overwriteButton->PlaceAtTop(mcsTRUE);
 
-    _confirmWindow->Add(_confirmLabel);
-    _confirmWindow->Add(_overwriteButton);
-   
-    // Associate callbacks
-    _overwriteButton->AttachCB
-        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::OverwriteButtonCB);
+    // Create overwrite button and cancel button
+    if (_overwriteButton == NULL)
+    {
+        _overwriteButton = new gwtBUTTON("Overwrite");
+        _overwriteButton->PlaceAtTop(mcsTRUE);
+        _confirmWindow->Add(_confirmLabel);
+        _confirmWindow->Add(_overwriteButton);
+
+        // Associate callbacks
+        _overwriteButton->AttachCB
+            (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::OverwriteButtonCB);
+    }
     
     return mcsSUCCESS;
 }
