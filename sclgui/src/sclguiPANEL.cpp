@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.19 2005-02-28 10:01:58 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.20 2005-02-28 13:50:01 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.19 2005-02-28 10:01:58 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.20 2005-02-28 13:50:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -632,6 +632,8 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
 
     nbOfRows = list->Size();
     _resultsTable = new gwtTABLE(nbOfRows, nbOfProperties);
+    _resultsTable->SetHeight(160);
+
     _resultsTable->SetVerticalOrientation(mcsTRUE);
     _resultsTable->SetLabel("Results");
 
@@ -671,7 +673,6 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             propvalue.append
                 (calibrator->GetPropertyValue(*ucdNameOrderIterator));
             _resultsTable->SetCell(el, i+1, propvalue);
-            printf("property->GetOrigin() = %s\n", property->GetOrigin());
             if (strcmp(property->GetOrigin(), vobsSTAR_COMPUTED_PROP) == 0)
             {
                 _resultsTable->SetCellBackground(el, i+1, "#ffd0a2");
@@ -709,6 +710,7 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     
     // build legend table
     _legendTable = new gwtTABLE(1, 7);
+    _legendTable->SetHeight(7);
     _legendTable->SetVerticalOrientation(mcsTRUE);
     _legendTable->SetLabel("Origin");
     _legendTable->SetCell(0, 0, "COMPUTED");

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.17 2005-02-24 17:05:56 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.18 2005-02-28 13:50:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2005/02/24 17:05:56  scetre
+ * Checked whether calibrators have been found or not before unpacking reply
+ *
  * Revision 1.16  2005/02/24 13:14:46  scetre
  * Get user error in order to show him the problem
  *
@@ -62,7 +65,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.17 2005-02-24 17:05:56 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.18 2005-02-28 13:50:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -251,7 +254,12 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             _mainWindow->Hide();
             BuildMainWindow();
             _mainWindow->Show();
-            
+           
+            if (strcmp(_request.GetSaveFileName(), "") != 0)
+            {
+                printf("file = %s\n", _request.GetSaveFileName());
+                _currentList.Save(_request.GetSaveFileName());
+            }
             // Prepare message reply
             _msg.SetBody("Request OK.");
             break;
