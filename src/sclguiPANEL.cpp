@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.39 2005-03-07 17:51:44 gzins Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.40 2005-03-08 07:14:41 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.39  2005/03/07 17:51:44  gzins
+ * Added CVS log as file modification history
+ *
  * mella     25-Nov-2004  Created
  * gzins     09-Dec-2004  Fixed cast problem with new mcsLOGICAL enumerate
  *
@@ -16,7 +19,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.39 2005-03-07 17:51:44 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.40 2005-03-08 07:14:41 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -948,8 +951,8 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     logExtDbg("sclguiPANEL::ResetButtonCB()");
     _theGui->SetStatus(true, "'Reset' button has been pressed");
     
-    _varAuthorized = mcsTRUE;
-    _multAuthorized = mcsTRUE;
+    _varAuthorized = mcsFALSE;
+    _multAuthorized = mcsFALSE;
     
     _coherentDiameterList.Clear();
     // Extract from the CDS return the list of coherent diameter
