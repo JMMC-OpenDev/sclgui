@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.22 2005-03-02 15:02:09 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.23 2005-03-02 15:22:58 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.22 2005-03-02 15:02:09 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.23 2005-03-02 15:22:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -1247,7 +1247,7 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
         return mcsFAILURE;
     }
     // convert raRange from min to degree
-    //raRange=raRange/60;
+    raRange=raRange*15/60;
     if (sscanf((_raDecTextfieldDec->GetText()).c_str(), "%f", &decRange) != 1)
     {
         // todo err
