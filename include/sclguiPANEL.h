@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.21 2005-03-08 14:06:07 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.22 2005-03-08 14:34:39 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2005/03/08 14:06:07  scetre
+ * Added exit callback
+ *
  * Revision 1.20  2005/03/08 10:58:03  scetre
  * Re Added abort ("QUIT") button
  *
@@ -180,9 +183,7 @@ private:
     mcsCOMPL_STAT ShowAllResultsButtonCB(void *);
     gwtBUTTON *_resetButton;
     mcsCOMPL_STAT ResetButtonCB(void *);
-    gwtBUTTON *_abortButton;
     mcsCOMPL_STAT AbortButtonCB(void *);
-    mcsCOMPL_STAT Exit();
      
     gwtLABEL *_resultsLabel;
     gwtTEXTAREA *_scienceStarTextarea;
