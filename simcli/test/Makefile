@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.2 2004-11-17 10:12:54 scetre Exp $"
+# "@(#) $Id: Makefile,v 1.3 2005-02-03 06:05:12 gzins Exp $"
 #
 # Makefile of ........
 #
@@ -52,35 +52,35 @@ EXECUTABLES_L   =
 # <brief description of xxxxx program>
 simbadclient_OBJECTS   = simbadclient
 simbadclient_LDFLAGS   =
-simbadclient_LIBS      = simcli
+simbadclient_LIBS      = mcs log simcli
 
 clibib_OBJECTS   = clibib
 clibib_LDFLAGS   =
-clibib_LIBS      = simcli
+clibib_LIBS      = mcs log simcli
 
 clicoord_OBJECTS   = clicoord
 clicoord_LDFLAGS   =
-clicoord_LIBS      = simcli
+clicoord_LIBS      = mcs log simcli
 
 clifct_OBJECTS   = clifct
 clifct_LDFLAGS   =
-clifct_LIBS      = simcli
+clifct_LIBS      = mcs log simcli
 
 cliname_OBJECTS   = cliname
 cliname_LDFLAGS   =
-cliname_LIBS      = simcli
+cliname_LIBS      = mcs log simcli
 
 clitest_OBJECTS   = clitest
 clitest_LDFLAGS   =
-clitest_LIBS      = simcli
+clitest_LIBS      = mcs log simcli
 
 clitime_OBJECTS   = clitime
 clitime_LDFLAGS   =
-clitime_LIBS      = simcli
+clitime_LIBS      = mcs log simcli
 
 simcliTestGetCoordinates_OBJECTS   = simcliTestGetCoordinates
 simcliTestGetCoordinates_LDFLAGS   =
-simcliTestGetCoordinates_LIBS      = simcli
+simcliTestGetCoordinates_LIBS      = mcs log simcli
 #
 # special compilation flags for single c sources
 #yyyyy_CFLAGS   = 
