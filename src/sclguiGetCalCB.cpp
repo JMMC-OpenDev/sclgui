@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.23 2005-03-04 17:30:19 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.24 2005-03-07 14:19:40 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2005/03/04 17:30:19  scetre
+ * Return 'Done' when command is completed successfully
+ *
  * Revision 1.22  2005/03/04 17:10:40  scetre
  * Improved error message intended to user
  *
@@ -80,7 +83,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.23 2005-03-04 17:30:19 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.24 2005-03-07 14:19:40 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -234,6 +237,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             _visibilityOkList.FilterByMultiplicity(_multAuthorized);
             
             _displayList.Copy(_visibilityOkList);
+            _withNoVarMult=_displayList.Size();
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
             {
