@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPanel.cpp,v 1.2 2005-02-07 17:37:39 scetre Exp $"
+* "@(#) $Id: sclguiPanel.cpp,v 1.3 2005-02-10 08:24:52 gzins Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * Entry point for SearchCalib graphical application. 
  */
 
-static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.2 2005-02-07 17:37:39 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.3 2005-02-10 08:24:52 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /**
@@ -82,13 +82,14 @@ int main(int argc, char *argv[])
     // Init server
     if (scalibPanel.Init(argc, argv) == mcsFAILURE)
     {
+        errCloseStack();
         exit (EXIT_FAILURE);
     }
 
     // Main loop
     while (scalibPanel.MainLoop() == mcsFAILURE)
     {
-        errDisplayStack();
+        errCloseStack();
     }
 
     // Close MCS services
