@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.9 2005-02-08 07:25:18 gzins Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.10 2005-02-17 09:25:43 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2005/02/08 07:25:18  gzins
+ * Replaced vosREQUEST by sclsvrREQUEST
+ *
  * Revision 1.8  2005/02/04 14:24:06  scetre
  * Used sort method of sclsvr
  *
@@ -74,6 +77,11 @@ private:
     sclsvrCALIBRATOR_LIST _displayList;
     void FillResultsTable(sclsvrCALIBRATOR_LIST *list);
 
+    // number of cds return, diameter coherent and visibility
+    mcsINT32 _found;
+    mcsINT32 _diam;
+    mcsINT32 _vis;
+    
     // central point for exchange with the remote GUI 
     gwtGUI *_theGui;
     string _guiHostname;
