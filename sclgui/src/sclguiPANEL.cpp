@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.30 2005-03-06 20:40:19 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.31 2005-03-07 13:42:35 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.30 2005-03-06 20:40:19 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.31 2005-03-07 13:42:35 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -675,12 +675,11 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     ostringstream out;
     out << "NAME\tRAJ2000\tDEJ2000\tMag";
     out << _request.GetSearchBand();
-    out << "\tBase-min\tBase-max\tLambda\tDiamVK\tVis2\tVis2Err\n";
-    out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
+    out << "\tBase-max\tLambda\tDiamVK\tVis2\tVis2Err\n";
+    out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
     out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
         << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
-    out << _request.GetMinBaselineLength() << "\t" 
-        << _request.GetMaxBaselineLength() << "\t" 
+    out << _request.GetMaxBaselineLength() << "\t" 
         << _request.GetObservingWlen() << "\t";
    
     // Build science object with his coordinates
