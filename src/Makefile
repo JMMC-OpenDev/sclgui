@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.3 2004-12-03 14:06:39 mella Exp $"
+# "@(#) $Id: Makefile,v 1.4 2005-01-28 10:33:19 gzins Exp $"
 #
 # Makefile of ........
 #
@@ -26,7 +26,7 @@
 
 #
 # additional include and library search paths
-USER_INC = -I/usr/include/libxml2/ -I/usr/include/libgdome -I/usr/lib/glib-2.0/include/ -I/usr/include/glib-2.0
+USER_INC = 
 #USER_LIB = 
 
 #
@@ -43,9 +43,9 @@ EXECUTABLES_L   =
 
 #
 # Main searchcalib graphical program
-sclguiPanel_OBJECTS   = sclguiPanel
+sclguiPanel_OBJECTS   = sclguiPanel sclguiGetCalCB
 sclguiPanel_LDFLAGS   =
-sclguiPanel_LIBS      = MCS C++ sclgui gwt sclsvr msg vobs alx simcli
+sclguiPanel_LIBS      = MCS C++ sclgui sclsvr msg vobs alx simcli
 
 #
 # <brief description of xxxxx program>
