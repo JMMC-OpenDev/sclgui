@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.10 2005-02-17 09:25:43 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.11 2005-02-18 11:49:49 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2005/02/17 09:25:43  scetre
+ * Added 3 interger in the class in order to store CDS return, coherent diameter and visibility list size
+ *
  * Revision 1.9  2005/02/08 07:25:18  gzins
  * Replaced vosREQUEST by sclsvrREQUEST
  *
@@ -81,6 +84,10 @@ private:
     mcsINT32 _found;
     mcsINT32 _diam;
     mcsINT32 _vis;
+   
+    // flag of the gui state (with or without variablity and multiplicity)
+    mcsLOGICAL _varAuthorized;
+    mcsLOGICAL _multAuthorized;
     
     // central point for exchange with the remote GUI 
     gwtGUI *_theGui;
