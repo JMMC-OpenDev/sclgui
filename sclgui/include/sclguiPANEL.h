@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.18 2005-03-07 15:56:35 gzins Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.19 2005-03-07 16:01:20 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2005/03/07 15:56:35  gzins
+ * Removed filtering on visibility
+ *
  * Revision 1.17  2005/03/07 14:19:16  scetre
  * Added _withNoVarMult to know how many star of the resulting list are without variability and multiplicity
  *
@@ -165,8 +168,6 @@ private:
     mcsCOMPL_STAT OverwriteButtonCB();
     gwtLABEL *_confirmLabel;
     
-    gwtBUTTON *_abortButton;
-    mcsCOMPL_STAT AbortButtonCB(void *);
     gwtBUTTON *_showAllResultsButton;
     mcsCOMPL_STAT ShowAllResultsButtonCB(void *);
     gwtBUTTON *_resetButton;
