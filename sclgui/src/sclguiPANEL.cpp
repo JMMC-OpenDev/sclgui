@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.5 2005-02-07 11:11:24 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.5 2005-02-07 11:11:24 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -171,33 +171,17 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Place science star information
     _scienceStarTextarea = new gwtTEXTAREA("--", 4, 50, "No Help");
     _scienceStarTextarea->SetLabel("Science star");
+   
     // Get the value in the request in order to view constraints on the panel
-    mcsSTRING256 starName;
-    mcsSTRING256 observedBand;
-    mcsSTRING256 mag;
-    mcsSTRING256 ra, dec;
-    mcsSTRING256 baseMin, baseMax;
-    mcsSTRING256 lambda, vis, visErr;
-    _request.GetConstraint(STAR_NAME_ID, starName);
-    _request.GetConstraint(OBSERVED_BAND_ID, observedBand);
-    _request.GetConstraint(RA_ID, ra);
-    _request.GetConstraint(DEC_ID, dec);
-    _request.GetConstraint(STAR_MAGNITUDE_ID, mag);    
-    _request.GetConstraint(BASEMIN_ID, baseMin);
-    _request.GetConstraint(BASEMAX_ID, baseMax);
-    _request.GetConstraint(STAR_WLEN_ID, lambda);    
-    _request.GetConstraint(STAR_EXPECTED_VIS_ID, vis);
-    _request.GetConstraint(STAR_MAX_ERR_VIS_ID, visErr);
     ostringstream out;
     out << "NAME\tRAJ2000\tDEJ2000\tmag";
-    out << observedBand;
+    out << _request.GetSearchBand();
     out << "\tBase_min\tBase_max\tLambda\tDiamVK\tVisi2\tErrVisi2\n";
     out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
-    out << starName << "\t" << ra << "\t" << dec << "\t" << mag << "\t";
-    out << baseMin << "\t" << baseMax << "\t" << lambda << "\t" << "----\t";
-    out << vis << "\t" << visErr;
-    string scienceStarText = out.str();
-    _scienceStarTextarea->SetText(scienceStarText);
+    out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
+    out << _request.GetMinBaselineLength() << "\t" << _request.GetMaxBaselineLength() << "\t" << _request.GetObservingWlen() << "\t" << "----\t";
+    out << _request.GetExpectedVisibility() << "\t" << _request.GetExpectedVisibilityError();
+    _scienceStarTextarea->SetText(out.str());
 
     // The results table presents the entry number, the calibrator properties
     // followed by star ones. 
@@ -904,17 +888,13 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
     mcsFLOAT magRange;
     // Get the value of the magnitude range
     sscanf((_magTextfield->GetText()).c_str(), "%f", &magRange);    
-    mcsSTRING256 band, magStr;
-    // get the observed band and the magnitude
-    _request.GetConstraint(OBSERVED_BAND_ID, band);
-    _request.GetConstraint(STAR_MAGNITUDE_ID, magStr);
+    
+    // Get the observed band and the magnitude
+    const char *band;
+    band = _request.GetSearchBand();
     mcsFLOAT magnitude;
-    // convert magnitude from char to float value
-    if (sscanf(magStr, "%f", &magnitude) != 1)
-    {
-        // todo err
-        return mcsFAILURE;
-    }
+    magnitude = _request.GetObjectMag();
+    
     _displayList.FilterByMagnitude(band, magnitude, magRange);
     // Update main window
     _mainWindow->Hide();
@@ -973,10 +953,8 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::RaDecButtonCB()");
-    cout << "data: Ra " <<_raDecTextfieldRa->GetText() <<endl;
-    cout << "data: Dec " <<_raDecTextfieldDec->GetText() <<endl;
+
     _raDecWindow->Hide();
-    mcsSTRING256 ra, dec;
     mcsFLOAT raRange, decRange;
     // Get Value of raRange and decRange
     if (sscanf((_raDecTextfieldRa->GetText()).c_str(), "%f", &raRange) != 1)
@@ -989,13 +967,12 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
         // todo err
         return mcsFAILURE;
     }
-    // get the value of ra dec in user request
-    _request.GetConstraint(RA_ID, ra);
-    _request.GetConstraint(DEC_ID, dec);
-    miscReplaceChrByChr(ra, ':', ' ');
-    miscReplaceChrByChr(dec, ':', ' ');
+    // Get the value of ra dec in user request
+    const char *ra, *dec;
+    ra  = _request.GetObjectRa();
+    dec = _request.GetObjectDec();
     
-    // removed star which are not in the box
+    // Remove stars which are not in the box
     _displayList.FilterByDistanceSeparation(ra, dec,
                                             raRange,
                                             decRange);

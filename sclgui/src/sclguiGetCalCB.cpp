@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.5 2005-02-07 17:37:39 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/02/07 17:37:39  scetre
+ * *** empty log message ***
+ *
  * Revision 1.4  2005/02/07 11:11:24  scetre
  * minor change
  *
@@ -25,7 +28,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.5 2005-02-07 17:37:39 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -82,8 +85,8 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         }
 
         // Object name
-        char *objName;
-        if (getCalCmd.GetObjectName(&objName) == mcsFAILURE)
+        char *objectName;
+        if (getCalCmd.GetObjectName(&objectName) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
@@ -93,8 +96,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        mcsSTRING256 magnitudeStr;
-        sprintf(magnitudeStr, "%lf", magnitude);
         // band
         char *band;
         if (getCalCmd.GetBand(&band) == mcsFAILURE)
@@ -119,81 +120,71 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        mcsSTRING256 baseMinStr;
-        sprintf(baseMinStr, "%lf", baseMin);
         // baseMax
         mcsDOUBLE baseMax;
         if (getCalCmd.GetBaseMax(&baseMax) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        mcsSTRING256 baseMaxStr;    
-        sprintf(baseMaxStr, "%lf", baseMax);
-        // lambda
-        mcsDOUBLE lambda;
-        if (getCalCmd.GetLambda(&lambda) == mcsFAILURE)
+        // wlen
+        mcsDOUBLE wlen;
+        if (getCalCmd.GetWlen(&wlen) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        mcsSTRING256 lambdaStr;
-        sprintf(lambdaStr, "%lf", lambda);
         // visibility
         mcsDOUBLE vis;
         if (getCalCmd.GetVis(&vis) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        mcsSTRING256 visStr;
-        sprintf(visStr, "%lf", vis);
         // visibility error
         mcsDOUBLE visErr;
         if (getCalCmd.GetVisErr(&visErr) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        mcsSTRING256 visErrStr;
-        sprintf(visErrStr, "%lf", visErr);
 
-        // affect in the request object the value get by the user
-        if (_request.SetConstraint(STAR_NAME_ID, objName) == mcsFAILURE)
+        // Build the request object from the parameters of the command
+        sclsvrREQUEST request;
+
+        // Affect the reference object name
+        if (request.SetObjectName(objectName) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(RA_ID, ra) == mcsFAILURE)
+        // Affect the right ascension position
+        if (request.SetObjectRa(ra) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(DEC_ID, dec) == mcsFAILURE)
+        // Affect the declinaison position
+        if (request.SetObjectDec(dec) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(OBSERVED_BAND_ID, band) == mcsFAILURE)
+        // Affect the wavelength
+        if (request.SetObservingWlen(wlen) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(STAR_MAGNITUDE_ID, magnitudeStr) 
-            == mcsFAILURE)
+        // Affect the magnitude
+        if (request.SetObjectMag(magnitude) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(BASEMIN_ID, baseMinStr) == mcsFAILURE)
+        // Affect the expected visibility
+        if (request.SetExpectedVisibility(vis, visErr) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(BASEMAX_ID, baseMaxStr) == mcsFAILURE)
+        // Affect the observed band
+        if (request.SetSearchBand(band) ==  mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-        if (_request.SetConstraint(STAR_WLEN_ID, lambdaStr) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        if (_request.SetConstraint(STAR_EXPECTED_VIS_ID, visStr) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        if (_request.SetConstraint(STAR_MAX_ERR_VIS_ID, visErrStr) 
-            == mcsFAILURE)
+        // Affect the baseline length
+        if (request.SetBaseline(baseMin, baseMax) ==  mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
