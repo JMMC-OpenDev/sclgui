@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.12 2005-02-23 17:06:27 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.13 2005-02-28 10:01:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2005/02/23 17:06:27  scetre
+ * Added list of ucd name to manage the display of the colum name
+ *
  * Revision 1.11  2005/02/18 11:49:49  scetre
  * Added mcsLOGICAL state for filter on variability and multiplicity
  *
@@ -129,6 +132,7 @@ private:
     
     gwtTEXTAREA *_scienceStarTextarea;
     gwtTABLE *_resultsTable;
+    gwtTABLE *_legendTable;
     gwtTEXTFIELD * _resumeTextfield;
     
     gwtSUBPANEL *_selectPanel;
