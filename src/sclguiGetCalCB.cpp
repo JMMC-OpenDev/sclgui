@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.22 2005-03-04 17:10:40 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.23 2005-03-04 17:30:19 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2005/03/04 17:10:40  scetre
+ * Improved error message intended to user
+ *
  * Revision 1.21  2005/03/04 15:08:05  gzins
  * No longer reset error stack before sending reply when an error occured
  *
@@ -77,7 +80,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.22 2005-03-04 17:10:40 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.23 2005-03-04 17:30:19 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -267,7 +270,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             _mainWindow->Show();
            
             // Prepare message reply
-            _msg.SetBody("Request OK.");
+            _msg.SetBody("Done.");
             break;
         }
         default:
