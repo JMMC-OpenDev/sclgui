@@ -1,21 +1,21 @@
 /*******************************************************************************
-* JMMC project
-*
-* "@(#) $Id: sclguiPanel.cpp,v 1.3 2005-02-10 08:24:52 gzins Exp $"
-*
-* who       when         what
-* --------  -----------  -------------------------------------------------------
-* mella     25-Nov-2004  Created
-*
-*
-*******************************************************************************/
+ * JMMC project
+ *
+ * "@(#) $Id: sclguiPanel.cpp,v 1.4 2005-02-15 15:57:24 gzins Exp $"
+ *
+ * History
+ * -------
+ * $Log: not supported by cvs2svn $
+ * mella     25-Nov-2004  Created
+ *
+ ******************************************************************************/
 
 /**
  * \file
  * Entry point for SearchCalib graphical application. 
  */
 
-static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.3 2005-02-10 08:24:52 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.4 2005-02-15 15:57:24 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /**
