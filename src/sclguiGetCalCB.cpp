@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.7 2005-02-08 21:02:38 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/02/08 07:25:18  gzins
+ * Replaced vosREQUEST by sclsvrREQUEST
+ *
  * Revision 1.5  2005/02/07 17:37:39  scetre
  * *** empty log message ***
  *
@@ -28,7 +31,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.6 2005-02-08 07:25:18 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.7 2005-02-08 21:02:38 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -146,45 +149,43 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         }
 
         // Build the request object from the parameters of the command
-        sclsvrREQUEST request;
-
         // Affect the reference object name
-        if (request.SetObjectName(objectName) == mcsFAILURE)
+        if (_request.SetObjectName(objectName) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the right ascension position
-        if (request.SetObjectRa(ra) == mcsFAILURE)
+        if (_request.SetObjectRa(ra) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the declinaison position
-        if (request.SetObjectDec(dec) == mcsFAILURE)
+        if (_request.SetObjectDec(dec) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the wavelength
-        if (request.SetObservingWlen(wlen) == mcsFAILURE)
+        if (_request.SetObservingWlen(wlen) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the magnitude
-        if (request.SetObjectMag(magnitude) == mcsFAILURE)
+        if (_request.SetObjectMag(magnitude) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the expected visibility
-        if (request.SetExpectedVisibility(vis, visErr) == mcsFAILURE)
+        if (_request.SetExpectedVisibility(vis, visErr) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the observed band
-        if (request.SetSearchBand(band) ==  mcsFAILURE)
+        if (_request.SetSearchBand(band) ==  mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         // Affect the baseline length
-        if (request.SetBaseline(baseMin, baseMax) ==  mcsFAILURE)
+        if (_request.SetBaseline(baseMin, baseMax) ==  mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
@@ -251,8 +252,8 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             miscDynBufAppendString(&dynBuf, msg.GetBody());
             
             _currentList.UnPack(&dynBuf);
-            _currentList.CopyIn(&_coherentDiameterList, mcsTRUE, mcsFALSE);
-            _currentList.CopyIn(&_visibilityOkList, mcsFALSE, mcsTRUE);
+            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
+            _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
             _displayList.Copy(_visibilityOkList);
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
