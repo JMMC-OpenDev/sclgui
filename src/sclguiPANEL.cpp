@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.29 2005-03-06 10:52:40 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.30 2005-03-06 20:40:19 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.29 2005-03-06 10:52:40 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.30 2005-03-06 20:40:19 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -174,6 +174,14 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
     return mcsSUCCESS;
 }
 
+/**
+ * Return the version number of the software.
+ */
+const char *sclguiPANEL::GetSwVersion()
+{
+    return sclsvrVERSION;
+}
+
 /** 
  *  Build the main window.
  *
@@ -205,7 +213,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Prepare window
     _mainWindow = new gwtWINDOW();
     _mainWindow->AttachAGui(_theGui);
-    _mainWindow->SetTitle("JMMC Calibrators Group V3.0-Beta");
+    _mainWindow->SetTitle("JMMC Calibrators Group " sclsvrVERSION);
     _mainWindow->SetHelp(windowHelp);
 
     // Prepare widgets
@@ -222,65 +230,15 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _scienceStarTextarea->SetVerticalOrientation(mcsTRUE);
     _scienceStarTextarea->SetLabel("Science star");
    
-    // Get the value in the request in order to view constraints on the panel
-    ostringstream out;
-    out << "NAME\tRAJ2000\tDEJ2000\tMag";
-    out << _request.GetSearchBand();
-    out << "\tBase-min\tBase-max\tLambda\tDiamVK\tVis2\tVis2Err\n";
-    out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
-    out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
-        << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
-    out << _request.GetMinBaselineLength() << "\t" 
-        << _request.GetMaxBaselineLength() << "\t" 
-        << _request.GetObservingWlen() << "\t";
-   
-    // Build science object with his coordinates
-    sclsvrCALIBRATOR scienceObject;
-    // Get ra coordinates
-    scienceObject.SetPropertyValue(vobsSTAR_POS_EQ_RA_MAIN,
-                                   _request.GetObjectRa(), "none");
-    // Get dec coordinates
-    scienceObject.SetPropertyValue(vobsSTAR_POS_EQ_DEC_MAIN,
-                                   _request.GetObjectDec(), "none");
-    // Get the science object if it is in the list
-    if (_currentList.GetScienceObject(scienceObject) == mcsFAILURE)
-    {
-        // if not, write ---- in the Science object panel information under diam
-        // v_k
-        out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
-    }
-    else
-    {
-        // if dian v-k is not affected  write ---- in the Science object 
-        // panel information under diam v_k
-        if (scienceObject.IsPropertySet(sclsvrCALIBRATOR_DIAM_VK) == mcsTRUE)
-        {
-            out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
-        }
-        else
-        {
-            out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
-        }
-    }
-    out << "\t" << _request.GetExpectedVisibility() << "\t" 
-        << _request.GetExpectedVisibilityError();
-    _scienceStarTextarea->SetText(out.str());
+    // Insert resume textfield
+    _resumeTextArea = new gwtTEXTAREA("--", 1, 50, "No Help");
+    _resumeTextArea->SetLabel("Results");
+    _resumeTextArea->SetVerticalOrientation(mcsTRUE);
 
     // The results table presents the entry number, the calibrator properties
     // followed by star ones. 
     // The table is empty but should be filled with first result of SEARCH 
     FillResultsTable(&_displayList);
-
-    // Insert resume textfield
-    _resumeTextArea = new gwtTEXTAREA("--", 1, 50, "No Help");
-    _resumeTextArea->SetLabel("Results");
-    _resumeTextArea->SetVerticalOrientation(mcsTRUE);
-    ostringstream output;
-    output << "Number of stars: " << _found << " found, "  
-        << _diam << " with coherent diameter and "
-        << _vis << " with expected visibility.";
-    
-    _resumeTextArea->SetText(output.str());
 
     // Prepare subpanels
     _selectPanel = new gwtSUBPANEL("SELECT CALIBRATORS");
@@ -712,6 +670,51 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
 
     sclsvrCALIBRATOR tmpCalibrator;
     
+    printf(" _request.GetObjectName() = %s\n",  _request.GetObjectName()); 
+    // Get the value in the request in order to view constraints on the panel
+    ostringstream out;
+    out << "NAME\tRAJ2000\tDEJ2000\tMag";
+    out << _request.GetSearchBand();
+    out << "\tBase-min\tBase-max\tLambda\tDiamVK\tVis2\tVis2Err\n";
+    out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
+    out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
+        << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
+    out << _request.GetMinBaselineLength() << "\t" 
+        << _request.GetMaxBaselineLength() << "\t" 
+        << _request.GetObservingWlen() << "\t";
+   
+    // Build science object with his coordinates
+    sclsvrCALIBRATOR scienceObject;
+    // Get ra coordinates
+    scienceObject.SetPropertyValue(vobsSTAR_POS_EQ_RA_MAIN,
+                                   _request.GetObjectRa(), "none");
+    // Get dec coordinates
+    scienceObject.SetPropertyValue(vobsSTAR_POS_EQ_DEC_MAIN,
+                                   _request.GetObjectDec(), "none");
+    // Get the science object if it is in the list
+    if (_currentList.GetScienceObject(scienceObject) == mcsFAILURE)
+    {
+        // if not, write ---- in the Science object panel information under diam
+        // v_k
+        out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
+    }
+    else
+    {
+        // if dian v-k is not affected  write ---- in the Science object 
+        // panel information under diam v_k
+        if (scienceObject.IsPropertySet(sclsvrCALIBRATOR_DIAM_VK) == mcsTRUE)
+        {
+            out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
+        }
+        else
+        {
+            out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
+        }
+    }
+    out << "\t" << _request.GetExpectedVisibility() << "\t" 
+        << _request.GetExpectedVisibilityError();
+    _scienceStarTextarea->SetText(out.str());
+
     // Add 1 for the number column
     int nbOfProperties = _ucdNameDisplay.size() + 1 ;
     int nbOfRows;
@@ -721,7 +724,6 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     _resultsTable->SetHeight(160);
 
     _resultsTable->SetVerticalOrientation(mcsTRUE);
-    //_resultsTable->SetLabel("Results");
 
     // Insert first column Header
     _resultsTable->SetColumnHeader(0, "Number");
@@ -732,7 +734,9 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     ucdNameOrderIterator = _ucdNameDisplay.begin();
     while(ucdNameOrderIterator != _ucdNameDisplay.end())
     {
-        _resultsTable->SetColumnHeader(propIdx+1, tmpCalibrator.GetProperty(*ucdNameOrderIterator)->GetName());
+        _resultsTable->SetColumnHeader
+            (propIdx+1, 
+             tmpCalibrator.GetProperty((char *)(*ucdNameOrderIterator).data())->GetName());
         propIdx++;
         ucdNameOrderIterator++;
     }
@@ -754,10 +758,10 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
         {
             string propvalue;
             vobsSTAR_PROPERTY *property;
-            property = calibrator->GetProperty(*ucdNameOrderIterator);
+            property = calibrator->GetProperty((char *)(*ucdNameOrderIterator).data());
             
             propvalue.append
-                (calibrator->GetPropertyValue(*ucdNameOrderIterator));
+                (calibrator->GetPropertyValue((char *)(*ucdNameOrderIterator).data()));
             _resultsTable->SetCell(el, i+1, propvalue);
             _resultsTable->SetCellBackground(el, i+1, "#ffffff");
             if (strcmp(property->GetOrigin(), vobsSTAR_COMPUTED_PROP) == 0)
@@ -834,6 +838,14 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
         } // End for each properties
 
     } // End for each calibrators
+
+
+    // Update resume textfield
+    ostringstream output;
+    output << "Number of stars: " << _found << " found, "  
+        << _diam << " with coherent diameter and "
+        << _vis << " with expected visibility.";
+    _resumeTextArea->SetText(output.str());
     
 }
 
@@ -1012,7 +1024,7 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
     
     mcsSTRING64 usrMsg;
     
-    if (_currentList.Load(fileName, mcsTRUE, &_request) == mcsFAILURE)
+    if (_currentList.Load(fileName, _request) == mcsFAILURE)
     {
         sprintf(usrMsg, "Loading file '%s' failed", fileName);
         _theGui->SetStatus(false, usrMsg, errUserGet());
@@ -1053,7 +1065,7 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     strcpy(fileName, (_saveTextfield->GetText()).c_str());
    
     mcsSTRING64 usrMsg;
-    if (_currentList.Save(fileName, _ucdName, mcsTRUE,  &_request) ==
+    if (_currentList.Save(fileName, _ucdName, _request, mcsTRUE) ==
         mcsFAILURE)
     {
         sprintf(usrMsg, "Saving in file '%s' failed", fileName);
@@ -1080,7 +1092,7 @@ mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
     strcpy(fileName, (_exportTextfield->GetText()).c_str());
    
     mcsSTRING64 usrMsg;
-    if (_displayList.Save(fileName,_ucdNameDisplay,  mcsFALSE, &_request) ==
+    if (_displayList.Save(fileName,_ucdNameDisplay, _request,  mcsFALSE) ==
         mcsFAILURE)
     {
         sprintf(usrMsg, "Export in file '%s' failed", fileName);
@@ -1502,4 +1514,5 @@ void sclguiPANEL::BuildResultsTableLabelNComplete()
     _ucdNameforNComplete.push_back(vobsSTAR_CHI2_QUALITY);   
     _ucdNameforNComplete.push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);   
 }
+
 /*___oOo___*/
