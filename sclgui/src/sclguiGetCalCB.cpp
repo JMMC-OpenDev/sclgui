@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.4 2005-02-07 11:11:24 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/02/04 14:24:06  scetre
+ * Used sort method of sclsvr
+ *
  * Revision 1.2  2005/02/04 08:08:41  scetre
  * Added command read
  *
@@ -19,7 +22,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.3 2005-02-04 14:24:06 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.4 2005-02-07 11:11:24 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -252,8 +255,8 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             miscDynBufAppendString(&dynBuf, msg.GetBody());
             
             _currentList.UnPack(&dynBuf);
-            _currentList.GetCoherentDiameter(&_coherentDiameterList);
-            _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
+            _currentList.CopyIn(&_coherentDiameterList, mcsTRUE);
+            _coherentDiameterList.CopyIn(&_visibilityOkList, mcsFALSE, mcsTRUE);
             _displayList.Copy(_visibilityOkList);
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)

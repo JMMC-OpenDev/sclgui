@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.4 2005-02-07 10:07:30 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.5 2005-02-07 11:11:24 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.4 2005-02-07 10:07:30 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.5 2005-02-07 11:11:24 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -1088,7 +1088,7 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     // list without variability if authorized is mcsFALSE for the choice 
     // of "show all result" button later.
     _coherentDiameterList.Clear();
-    _currentList.GetCoherentDiameter(&_coherentDiameterList);
+    _currentList.CopyIn(&_coherentDiameterList, mcsTRUE);
    
     // if necessary, it need to remove star with varibility from the coherent
     // diameter list
@@ -1096,7 +1096,7 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     
     // it need to re-create the visibility ok list    
     _visibilityOkList.Clear();    
-    _coherentDiameterList.GetVisibilityOk(&_visibilityOkList);
+    _coherentDiameterList.CopyIn(&_visibilityOkList, mcsFALSE, mcsTRUE);
             
     _variabilityWindow->Hide();
     _displayList.FilterByVariability(authorized);
