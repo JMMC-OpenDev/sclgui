@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.18 2005-02-28 13:50:01 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.19 2005-03-03 16:50:31 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2005/02/28 13:50:01  scetre
+ * Changed height of the result table
+ *
  * Revision 1.17  2005/02/24 17:05:56  scetre
  * Checked whether calibrators have been found or not before unpacking reply
  *
@@ -65,7 +68,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.18 2005-02-28 13:50:01 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.19 2005-03-03 16:50:31 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -116,6 +119,10 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         // Build the request object from the parameters of the command
         if (_request.Parse(msg.GetBody()) == mcsFAILURE)
         {
+            // Report error
+            _theGui->SetStatus(false, "Parameter out of Range...",
+                               errUserGet());
+            errCloseStack();
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         
@@ -257,7 +264,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
            
             if (strcmp(_request.GetSaveFileName(), "") != 0)
             {
-                printf("file = %s\n", _request.GetSaveFileName());
+                logTest("file = %s", _request.GetSaveFileName());
                 _currentList.Save(_request.GetSaveFileName());
             }
             // Prepare message reply
