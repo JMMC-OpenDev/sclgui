@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.16 2005-03-06 20:35:28 gzins Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.17 2005-03-07 14:19:16 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2005/03/06 20:35:28  gzins
+ * Added GetSwVersion
+ *
  * Revision 1.15  2005/03/04 15:52:02  scetre
  * Added export button
  *
@@ -119,7 +122,7 @@ private:
     vobsSTAR_PROPERTY_ID_LIST _ucdNameforN;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameforNComplete;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameDisplay;
-
+    mcsSTRING256 _fileName;
     sclsvrREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
     sclsvrCALIBRATOR_LIST _coherentDiameterList;
@@ -136,7 +139,11 @@ private:
     mcsINT32 _found;
     mcsINT32 _diam;
     mcsINT32 _vis;
-   
+    mcsINT32 _withNoVarMult;
+    // falg to know if the wanted file is SAVE or EXPORT, if it is equal to
+    // false -> export
+    mcsLOGICAL _saveFlag;
+
     // flag of the gui state (with or without variablity and multiplicity)
     mcsLOGICAL _varAuthorized;
     mcsLOGICAL _multAuthorized;
@@ -150,6 +157,12 @@ private:
     // _mainWindow and its widgets with associated callbacks
     mcsCOMPL_STAT BuildMainWindow();
     gwtWINDOW *_mainWindow;
+  
+    mcsCOMPL_STAT BuildConfirmWindow();
+    gwtWINDOW *_confirmWindow;
+    gwtBUTTON *_overwriteButton;
+    mcsCOMPL_STAT OverwriteButtonCB();
+    gwtLABEL *_confirmLabel;
     
     gwtBUTTON *_abortButton;
     mcsCOMPL_STAT AbortButtonCB(void *);
