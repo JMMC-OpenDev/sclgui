@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.12 2005-02-17 07:51:10 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.13 2005-02-17 09:25:43 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2005/02/17 07:51:10  scetre
+ * Replace old unused method SetObjectName by Parse method
+ *
  * Revision 1.11  2005/02/16 17:35:06  gzins
  * Updated call to sclsvrCALIBRATOR_LIST::UnPack
  *
@@ -47,7 +50,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.12 2005-02-17 07:51:10 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.13 2005-02-17 09:25:43 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -160,8 +163,11 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             _currentList.UnPack(msg.GetBody());
             _currentList.Display();
             _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-            _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
+            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
             _displayList.Copy(_visibilityOkList);
+            _found = _currentList.Size();
+            _diam = _coherentDiameterList.Size();
+            _vis = _visibilityOkList.Size();
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
             {
