@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.14 2005-03-02 16:58:19 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.15 2005-03-04 15:52:02 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2005/03/02 16:58:19  scetre
+ * Added #define for color
+ *
  * Revision 1.13  2005/02/28 10:01:58  scetre
  * Add color table for origin legend and color in results table
  *
@@ -97,7 +100,6 @@ public:
     virtual mcsCOMPL_STAT AppInit();
 
     /** typedef of UCD order list*/
-    typedef std::list<char *> UCD_NAME_ORDER;
     
 protected:
     // Command callbacks
@@ -107,10 +109,11 @@ protected:
     virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
     
 private:
-    UCD_NAME_ORDER _ucdNameforKV;
-    UCD_NAME_ORDER _ucdNameforN;
-    UCD_NAME_ORDER _ucdNameforNComplete;
-    UCD_NAME_ORDER _ucdNameDisplay;
+    vobsSTAR_PROPERTY_ID_LIST _ucdName;
+    vobsSTAR_PROPERTY_ID_LIST _ucdNameforKV;
+    vobsSTAR_PROPERTY_ID_LIST _ucdNameforN;
+    vobsSTAR_PROPERTY_ID_LIST _ucdNameforNComplete;
+    vobsSTAR_PROPERTY_ID_LIST _ucdNameDisplay;
 
     sclsvrREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
@@ -149,12 +152,13 @@ private:
     mcsCOMPL_STAT ShowAllResultsButtonCB(void *);
     gwtBUTTON *_resetButton;
     mcsCOMPL_STAT ResetButtonCB(void *);
-    
+   
+    gwtLABEL *_resultsLabel;
     gwtTEXTAREA *_scienceStarTextarea;
     gwtTABLE *_resultsTable;
     gwtTABLE *_legendTable;
     gwtTABLE *_confidenceTable;
-    gwtTEXTFIELD * _resumeTextfield;
+    gwtTEXTAREA * _resumeTextArea;
     
     gwtSUBPANEL *_selectPanel;
     mcsCOMPL_STAT SelectPanelCB(void *);
@@ -171,6 +175,11 @@ private:
     gwtSUBPANEL *_savePanel;
     mcsCOMPL_STAT SavePanelCB(void *);
     gwtTEXTFIELD *_saveTextfield;
+
+    gwtSUBPANEL *_exportPanel;
+    mcsCOMPL_STAT ExportPanelCB(void *);
+    gwtTEXTFIELD *_exportTextfield;
+
 
     // Sort windows 
     mcsCOMPL_STAT BuildAccuracyWindow();
