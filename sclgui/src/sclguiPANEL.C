@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.8 2004-12-22 10:03:01 mella Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.9 2005-01-07 10:21:41 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.8 2004-12-22 10:03:01 mella Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.9 2005-01-07 10:21:41 mella Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -571,7 +571,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 
     msgMANAGER_IF manager;
     
-    if ( SendCommand("SEARCH", "sclsvrServer", "-objectName ETA_TAU -mag 2.96 -maxReturn 50 -diffRa 3600 -diffDec 300 -band K -minMagRange 1 -maxMagRange 5 -ra 03:47:29.08 -dec 24:06:18.50 -baseMin 46.64762 -baseMax 102.45 -lambda 0.65 -vis 0.922 -visErr 0.09", 0) == FAILURE )
+    if ( SendCommand("SEAiRCH", "sclsvrServer", "-objectName ETA_TAU -mag 2.96 -maxReturn 50 -diffRa 3600 -diffDec 300 -band K -minMagRange 1 -maxMagRange 5 -ra 03:47:29.08 -dec 24:06:18.50 -baseMin 46.64762 -baseMax 102.45 -lambda 0.65 -vis 0.922 -visErr 0.09") == FAILURE )
     {
         errDisplayStack();
         errCloseStack();
@@ -579,7 +579,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
         _theGui->SetStatus(false, "Problem while sending data");
     }
     else
-    {
+    {      
         msgMESSAGE    msg;
         // wait 2 min max
         if ( manager.Receive(msg ,120000) == FAILURE )
@@ -591,23 +591,37 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
         }
         else
         {
-            cout <<" the result was received"<<endl;
-            _theGui->SetStatus(true, "Reset button pressed");
+            switch (msg.GetType())
+            {
+                case msgTYPE_REPLY:
+                    cout <<" the result was received"<<endl;
+                    _theGui->SetStatus(true, "Reset button pressed");
 
-            _currentList = new sclsvrCALIBRATOR_LIST();
+                    _currentList = new sclsvrCALIBRATOR_LIST();
 
-            miscDYN_BUF dynBuf;
-            miscDynBufInit(&dynBuf);
+                    miscDYN_BUF dynBuf;
+                    miscDynBufInit(&dynBuf);
 
-            miscDynBufAppendString(&dynBuf, msg.GetBody());
-            _currentList->UnPack(&dynBuf);
-            _currentList->Display();
-            _theGui->SetStatus(true, "Calibrator list was successfully built");
+                    miscDynBufAppendString(&dynBuf, msg.GetBody());
+                    _currentList->UnPack(&dynBuf);
+                    _currentList->Display();
+                    _theGui->SetStatus(true, "Calibrator list was successfully built");
 
-            FillResultsTable(_currentList);
-            _mainWindow->Hide();
-            BuildMainWindow();
-            _mainWindow->Show();
+                    FillResultsTable(_currentList);
+                    _mainWindow->Hide();
+                    BuildMainWindow();
+                    _mainWindow->Show();
+                    break;
+
+                case msgTYPE_ERROR_REPLY:
+                    errUnpackStack(msg.GetBody(), msg.GetBodySize());
+                    _theGui->SetStatus(false, "Sorry, a problem occured, can't get result");
+                    break;
+
+                default:
+                    break;
+            }
+
         }
     }
 
