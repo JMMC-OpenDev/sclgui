@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.8 2005-02-10 08:25:40 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.9 2005-02-14 14:23:36 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.8 2005-02-10 08:25:40 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.9 2005-02-14 14:23:36 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -785,6 +785,27 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::LoadPanelCB()");
     cout << "Load :" << _loadTextfield->GetText() << endl;
+
+    // Get the name of the textfield
+    mcsSTRING256 fileName;
+    strcpy(fileName, (_loadTextfield->GetText()).c_str());
+
+    _currentList.Clear();
+    
+    if (_currentList.Load(fileName, mcsTRUE, "saveFile") == mcsFAILURE)
+    {
+        return mcsFAILURE;
+    }
+
+    _coherentDiameterList.Clear();
+    _visibilityOkList.Clear();
+    _displayList.Clear();
+    
+    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
+    _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
+    _displayList.Copy(_visibilityOkList);
+
+
     return mcsSUCCESS;
 }
 
@@ -795,9 +816,16 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
 {
     logExtDbg("sclguiPANEL::SavePanelCB()");
     cout << "Save :" << _saveTextfield->GetText() << endl;
+    
+    // Get the name of the textfield
     mcsSTRING256 fileName;
     strcpy(fileName, (_saveTextfield->GetText()).c_str());
-    _displayList.Save(fileName);
+    
+    if (_displayList.Save(fileName, mcsTRUE) == mcsFAILURE)
+    {
+        return FAILURE;
+    }
+
     return mcsSUCCESS;
 }
 
