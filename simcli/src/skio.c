@@ -174,7 +174,7 @@ FILE *sk_getlog()
 FILE *sk_setlog(f)
 /*++++++++++++++++
 .PURPOSE  Set the logfile (where to write errors)
-.RETURNS  The previous DEBUG logfile
+.RETURNS  The previous TEST logfile
 .REMARKS  Default is no debugging log
 -----------------*/
   FILE *f;	/* IN: New log file	*/
@@ -185,14 +185,17 @@ FILE *sk_setlog(f)
 #else
     o = logfile;
 #endif
-    logfile = f;
+    /* FIXED BUG - logfile corresponds to stderr. It MUST NEVER BE set */
+    /* *logfile = f; */
+    /* END OF FIXED BUG */
+
     return(o);
 }
 
 FILE *sk_iolog(f)
 /*++++++++++++++++
-.PURPOSE  Set the DEBUG logfile
-.RETURNS  The previous DEBUG logfile
+.PURPOSE  Set the TEST logfile
+.RETURNS  The previous TEST logfile
 .REMARKS  Default is no debugging log
 -----------------*/
   FILE *f;	/* IN: New log file; value -1 to get only current */
