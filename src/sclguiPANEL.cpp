@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.27 2005-03-04 16:42:16 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.28 2005-03-04 17:38:09 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.27 2005-03-04 16:42:16 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.28 2005-03-04 17:38:09 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -985,7 +985,7 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
     }
     if ((starNumber > _displayList.Size()) || (starNumber<=0))
     {
-        sprintf(usrMsg, "the value should be a positive integer lower than %d",
+        sprintf(usrMsg, "The value should be a positive integer lower than %d",
                 _displayList.Size());
         _theGui->SetStatus(false, usrMsg); 
         return mcsFAILURE;
@@ -1020,8 +1020,9 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
     
     if (_currentList.Load(fileName, mcsTRUE, &_request) == mcsFAILURE)
     {
-        sprintf(usrMsg, "Load file '%s' failed : The file is not present in the repository", fileName);
-        _theGui->SetStatus(false, "LOAD FAILED", usrMsg);
+        sprintf(usrMsg, "Loading file '%s' failed", fileName);
+        _theGui->SetStatus(false, usrMsg, errUserGet());
+        errCloseStack();
         return mcsFAILURE;
     }
     sprintf(usrMsg, "Load file '%s' succeed", fileName);
@@ -1062,8 +1063,9 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     if (_currentList.Save(fileName, _ucdName, mcsTRUE,  &_request) ==
         mcsFAILURE)
     {
-        sprintf(usrMsg, "Save in file '%s' failed", fileName);
-        _theGui->SetStatus(false, usrMsg);
+        sprintf(usrMsg, "Saving in file '%s' failed", fileName);
+        _theGui->SetStatus(false, usrMsg, errUserGet());
+        errCloseStack();
         return mcsFAILURE;
     }
     sprintf(usrMsg, "Save in file '%s' succeed", fileName);
@@ -1090,7 +1092,8 @@ mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
         mcsFAILURE)
     {
         sprintf(usrMsg, "Export in file '%s' failed", fileName);
-        _theGui->SetStatus(false, usrMsg);
+        _theGui->SetStatus(false, usrMsg), errUserGet();
+        errCloseStack();
         return mcsFAILURE;
     }
     sprintf(usrMsg, "Export in file '%s' succeed", fileName);
