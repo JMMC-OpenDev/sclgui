@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.3 2004-11-17 10:12:54 scetre Exp $"
+# "@(#) $Id: Makefile,v 1.4 2004-12-01 08:21:19 scetre Exp $"
 #
 # Makefile of ........
 #
@@ -54,7 +54,7 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = simcli.h
 
 #
 # Libraries (public and local)
