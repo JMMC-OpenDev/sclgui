@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.7 2005-02-08 21:03:38 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.8 2005-02-10 08:25:40 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.7 2005-02-08 21:03:38 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.8 2005-02-10 08:25:40 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -195,15 +195,12 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // Insert resume textfield
     _resumeTextfield = new gwtTEXTFIELD();
     _resumeTextfield->SetLabel("Resume");
-    string cdsReturn(" CDS Return ");
-    string coherentDiam(" Coherent Diameter ");
-    string visOk(" Visibility OK ");
     ostringstream output;
-    output << cdsReturn << _currentList.Size() << coherentDiam 
-        << _coherentDiameterList.Size() << visOk << _visibilityOkList.Size();
-    string resumeLine = output.str();
+    output << "Number of stars: " << _currentList.Size() << " found, "  
+        << _coherentDiameterList.Size() << " with coherent diameter and "
+        << _visibilityOkList.Size() << " with expected visibility.";
     
-    _resumeTextfield->SetText(resumeLine);
+    _resumeTextfield->SetText(output.str());
 
     // Prepare subpanels
     _selectPanel = new gwtSUBPANEL("SELECT CALIBRATORS");
