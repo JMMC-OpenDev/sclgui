@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.1 2004-11-17 08:06:49 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.2 2004-11-17 10:12:54 scetre Exp $"
 #
 # Makefile of ........
 #
@@ -44,7 +44,8 @@ EXECUTABLES     = simbadclient  \
 				  clifct       	\
 				  cliname       \
 				  clitest       \
-				  clitime
+				  clitime		\
+				  simcliTestGetCoordinates \
 EXECUTABLES_L   = 
 
 #
@@ -77,6 +78,9 @@ clitime_OBJECTS   = clitime
 clitime_LDFLAGS   =
 clitime_LIBS      = simcli
 
+simcliTestGetCoordinates_OBJECTS   = simcliTestGetCoordinates
+simcliTestGetCoordinates_LDFLAGS   =
+simcliTestGetCoordinates_LIBS      = simcli
 #
 # special compilation flags for single c sources
 #yyyyy_CFLAGS   = 

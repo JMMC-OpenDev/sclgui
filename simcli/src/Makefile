@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.2 2004-11-17 08:06:49 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.3 2004-11-17 10:12:54 scetre Exp $"
 #
 # Makefile of ........
 #
@@ -69,7 +69,8 @@ simcli_OBJECTS   = cliopt    \
 				   simcli    \
 				   skclient  \
 				   skio      \
-				   uifclient
+				   uifclient \
+				   simcliGetCoordinates
 
 #
 # Scripts (public and local)

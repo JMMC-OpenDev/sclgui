@@ -30,4 +30,9 @@ char *simbad_telldata  _PARAMS((int handle )) ;
 char *simbad_error     _PARAMS((int handle )) ;
 
 void cliopt            _PARAMS((int n,char **v,char *h,char *s,char *u,char *p)) ;
+
+int simcliGetCoordinates (char *name,
+                          char *ra,
+                          char *dec);
+
 #endif /* SIMCLI_DEF */
