@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.25 2005-03-07 15:56:17 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.26 2005-03-08 14:05:59 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2005/03/07 15:56:17  gzins
+ * Removed filtering on visibility
+ *
  * Revision 1.24  2005/03/07 14:19:40  scetre
  * Added _withNoVarMult to know how many star of the resulting list are without variability and multiplicity
  *
@@ -86,7 +89,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.25 2005-03-07 15:56:17 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.26 2005-03-08 14:05:59 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -282,6 +285,17 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
     SetSubState(evhSUBSTATE_IDLE);
 
     return evhCB_DELETE;
+}
+
+evhCB_COMPL_STAT sclguiPANEL::ExitCB(msgMESSAGE &msg, void *userData)
+{
+    logExtDbg("sclguiPANEL::ExitCB()");
+    
+    _theGui->SetStatus(true, "Bye bye");
+
+    _mainWindow->Hide();
+    
+    return evhSERVER::ExitCB(msg, userData);
 }
 
 /*___oOo___*/
