@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 * 
-* "@(#) $Id: simcliGetCoordinates.c,v 1.3 2005-02-03 07:52:52 gzins Exp $"
+* "@(#) $Id: simcliGetCoordinates.c,v 1.4 2005-02-03 16:03:08 gzins Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -16,7 +16,7 @@
  * 
  */
 
-static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.3 2005-02-03 07:52:52 gzins Exp $"; 
+static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.4 2005-02-03 16:03:08 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -42,9 +42,9 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 /*
  * Public functions definition
  */
-int simcliGetCoordinates (char *name,
-                          char *ra,
-                          char *dec)
+mcsCOMPL_STAT simcliGetCoordinates (char *name,
+                                    char *ra,
+                                    char *dec)
 {
     logExtDbg("simcliGetCoordinates()"); 
     char  
@@ -75,6 +75,7 @@ int simcliGetCoordinates (char *name,
     }
 
     /* Call simbad */
+    mcsCOMPL_STAT status = mcsSUCCESS; 
     hh = simbad_connect(NULL,NULL,userid,passwd) ;
     if (hh < 0)
     {
@@ -113,12 +114,15 @@ int simcliGetCoordinates (char *name,
         sprintf(ra, "%02d %02d %07.4f", HH, MM, SS );
         sprintf(dec,"%c%d %02d %06.3f",sign,DH,DM,DS);
     }
-    simbad_disconnect(hh) ;
-    if (strlen(dec)==0)
+    else
     {
-        return -1;
+        status = mcsFAILURE;
+        strcpy(ra, "");
+        strcpy(dec, "");
     }
-    return 0;
+    simbad_disconnect(hh) ;
+
+    return status;
 }
 
 
