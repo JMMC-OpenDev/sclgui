@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.6 2005-01-28 10:05:52 gzins Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.7 2005-02-04 08:08:55 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/01/28 10:05:52  gzins
+ * Added callbacks for command reply
+ *
  * mella     25-Nov-2004  Created
  *
  ******************************************************************************/
@@ -58,7 +61,9 @@ protected:
     virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
     
 private:
+    vobsREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
+    sclsvrCALIBRATOR_LIST _displayList;
     void FillResultsTable(sclsvrCALIBRATOR_LIST *list);
 
     // central point for exchange with the remote GUI 
