@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.13 2005-02-18 11:50:28 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.14 2005-02-21 15:17:10 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.13 2005-02-18 11:50:28 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.14 2005-02-21 15:17:10 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -689,7 +689,9 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     s.append("-");
     _deleteTextfield->SetText(s);
     cout << "Show all results :" << _deleteTextfield->GetText() << endl;
-    
+    _varAuthorized = mcsTRUE;
+    _multAuthorized = mcsTRUE;
+
     _coherentDiameterList.Clear();
     _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
     _visibilityOkList.Clear();
@@ -697,8 +699,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
-    _varAuthorized = mcsTRUE;
-    _multAuthorized = mcsTRUE;
+    
     _mainWindow->Hide();
     BuildMainWindow();
     _mainWindow->Show();
@@ -715,8 +716,8 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     logExtDbg("sclguiPANEL::ResetButtonCB()");
     _theGui->SetStatus(true, "Reset button pressed");
     
-    _varAuthorized = mcsFALSE;
-    _multAuthorized = mcsFALSE;
+    _varAuthorized = mcsTRUE;
+    _multAuthorized = mcsTRUE;
     
     _coherentDiameterList.Clear();
     // Extract from the CDS return the list of coherent diameter
@@ -726,16 +727,6 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     // of visibility ok
     _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
     
-    // Filter the coherent diameter list
-    _coherentDiameterList.FilterByVariability(_varAuthorized);
-    // Filter the coherent diameter list
-    _coherentDiameterList.FilterByMultiplicity(_varAuthorized);
-    
-    // Filter the visibility ok list
-    _visibilityOkList.FilterByVariability(_varAuthorized); 
-    // Filter the visibility ok list
-    _visibilityOkList.FilterByMultiplicity(_varAuthorized);
-            
     _displayList.Clear();
     _displayList.Copy(_visibilityOkList);
 
@@ -1040,19 +1031,9 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
         if (_varAuthorized == mcsTRUE)
         {
             _varAuthorized = mcsFALSE;
-            _coherentDiameterList.Clear();
-            // Extract from the CDS return the list of coherent diameter
-            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-            _visibilityOkList.Clear();                
-            // Extract from te list of coherernt diameter the list 
-            // of visibility ok
-            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
-            // Filter the coherent diameter list
-            _coherentDiameterList.FilterByVariability(_varAuthorized);
             // Filter the visibility ok list
-            _visibilityOkList.FilterByVariability(_varAuthorized); 
-            _displayList.Clear();
-            _displayList.Copy(_visibilityOkList);
+            _displayList.FilterByVariability(_varAuthorized); 
+
         }
         else 
         {
@@ -1099,19 +1080,8 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
         if (_multAuthorized == mcsTRUE)
         {
             _multAuthorized = mcsFALSE;
-            _coherentDiameterList.Clear();
-            // Extract from the CDS return the list of coherent diameter
-            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-            _visibilityOkList.Clear();                
-            // Extract from te list of coherernt diameter the list 
-            // of visibility ok
-            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
-            // Filter the coherent diameter list
-            _coherentDiameterList.FilterByMultiplicity(_varAuthorized);
             // Filter the visibility ok list
-            _visibilityOkList.FilterByMultiplicity(_varAuthorized); 
-            _displayList.Clear();
-            _displayList.Copy(_visibilityOkList);
+            _displayList.FilterByMultiplicity(_multAuthorized); 
         }
         else
         {
