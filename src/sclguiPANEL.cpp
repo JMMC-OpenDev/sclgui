@@ -1,9 +1,9 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.1 2005-01-28 10:34:11 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.2 2005-02-04 08:08:55 scetre Exp $"
 *
-* who       when         what
+* History
 * --------  -----------  -------------------------------------------------------
 * mella     25-Nov-2004  Created
 * gzins     09-Dec-2004  Fixed cast problem with new mcsLOGICAL enumerate
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.1 2005-01-28 10:34:11 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.2 2005-02-04 08:08:55 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -65,7 +65,7 @@ using namespace std;
  *  \returns an MCS completion status code (mcsSUCCESS or mcsFAILURE)
  */
 sclguiPANEL::sclguiPANEL(string hostname, mcsINT32 port): 
-    _sclServer("Search-calibrator server", "sclsvrServer", 120000)
+_sclServer("Search-calibrator server", "sclsvrServer", 120000)
 
 {
     logExtDbg("sclguiPANEL::sclguiPANEL");
@@ -84,7 +84,7 @@ sclguiPANEL::sclguiPANEL(string hostname, mcsINT32 port):
 sclguiPANEL::~sclguiPANEL()
 {
     logExtDbg("sclguiPANEL::~sclguiPANEL");
-    
+
 }
 
 /*
@@ -98,13 +98,13 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
     // \todo make it adjustable giving parameters to the constructor
     _theGui = new gwtGUI();
     if (_theGui->ConnectToRemoteGui(_guiHostname , _guiPort,
-                                         mcsGetProcName()) == mcsFAILURE)
+                                    mcsGetProcName()) == mcsFAILURE)
     {
         /* \todo errAdd */
         cout << "connection on " << _guiHostname << ":" << _guiPort << " failed" << endl;
         return mcsFAILURE;
     }
-    
+
     // Prepare Event Handling for reception of messages from the gui
     evhIOSTREAM_CALLBACK ioStreamCB
         (this, (evhIOSTREAM_CB_METHOD)&sclguiPANEL::GuiSocketCB);
@@ -117,9 +117,9 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
     AddCallback(cmdKey, cmdCB);
 
     BuildMainWindow();
-  
+
     _mainWindow->Show();
-      
+
     return mcsSUCCESS;
 }
 
@@ -131,7 +131,7 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
 mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
 {
     logExtDbg("sclguiPANEL::BuildMainWindow()");
-    
+
     static string windowHelp
         ("The purpose of this panel is to present the result of the "
          "calibrators research and\nto allow a manual selection of the best "
@@ -150,7 +150,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
          "angular\ndistance and magnitude.\n  Solution 1: Increase Range in "
          "R.A. and/or Range in DEC.in the Search Calib panel.\n  Solution 2: "
          "Increase the Magnitude Range in the Search Calib panel.");
-    
+
     // Prepare window
     _mainWindow = new gwtWINDOW();
     _mainWindow->AttachAGui(_theGui);
@@ -172,18 +172,20 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _scienceStarTextarea = new gwtTEXTAREA("--", 4, 50, "No Help");
     _scienceStarTextarea->SetLabel("Science star");
     // \todo place text according the command line
-    // _scienceStarTextarea->SetText("...");
-    
+    mcsSTRING256 starName;
+    _request.GetConstraint(STAR_NAME_ID, starName);
+    _scienceStarTextarea->SetText("...");
+
     // The results table presents the entry number, the calibrator properties
     // followed by star ones. 
     // The table is empty but should be filled with first result of SEARCH 
-    FillResultsTable(&_currentList);
- 
+    FillResultsTable(&_displayList);
+
     // Insert resume textfield
     _resumeTextfield = new gwtTEXTFIELD();
     _resumeTextfield->SetLabel("Resume");
-    _resumeTextfield->SetText("...");
-    
+    _resumeTextfield->SetText("CDS Return ... Coherent Diameter ... Visibility OK ...");
+
     // Prepare subpanels
     _selectPanel = new gwtSUBPANEL("SELECT CALIBRATORS");
     _selectPanel->SetLabel("Sort above list...");
@@ -202,14 +204,14 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _selectChoice->Add("Variability");
     _selectChoice->Add("Multiplicity");
     _selectPanel->Add(_selectChoice);
-    
+
     _deletePanel = new gwtSUBPANEL("DELETE");
     _deletePanel->SetLabel("Delete Star");
     _deletePanel->SetHelp("Deleting of star");
     _deleteTextfield = new gwtTEXTFIELD("1","Line number to delete");
     _deleteTextfield->SetLabel("Star number");
     _deletePanel->Add(_deleteTextfield);
-    
+
     _loadPanel = new gwtSUBPANEL("LOAD");
     _loadPanel->SetLabel("Load File");
     _loadPanel->SetHelp("Loading of star");
@@ -224,7 +226,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
         ("*.txt", "File name to save current list of calibrators");
     _saveTextfield->SetLabel("File Name to save");
     _savePanel->Add(_saveTextfield);
-   
+
     // Add widgets to the main window 
     _mainWindow->Add(_scienceStarTextarea);
     _mainWindow->Add(_resultsTable);
@@ -233,7 +235,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _mainWindow->AddContainer(_deletePanel); 
     _mainWindow->AddContainer(_loadPanel); 
     _mainWindow->AddContainer(_savePanel); 
-    
+
     // Following elements are placed here because 11th element is placed
     // before the 2nd one
     // \todo find a solution to get element from map unsorted
@@ -262,7 +264,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
 
     // Associate the _abortButton action to the window closing event
     _mainWindow->SetCloseCommand(_abortButton->GetWidgetId());
-    
+
     return mcsSUCCESS;
 }
 
@@ -274,11 +276,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
 mcsCOMPL_STAT sclguiPANEL::BuildAccuracyWindow()
 {
     logExtDbg("sclguiPANEL::BuilAccuracydWindow()");
-    
+
     static string windowHelp
         ("Allows to fixed the maximum expected relative accuracy of the "
          "Calibrators squared visibility.");
-    
+
     // Prepare window
     _accuracyWindow = new gwtWINDOW();
     _accuracyWindow->AttachAGui(_theGui);
@@ -298,7 +300,9 @@ mcsCOMPL_STAT sclguiPANEL::BuildAccuracyWindow()
     _accuracyButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::AccuracyButtonCB);
     _accuracyWindow->Add(_accuracyButton);
-    
+
+
+
     return mcsSUCCESS;
 }
 
@@ -314,7 +318,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildLumWindow()
     static string windowHelp
         ("Allows to select the luminosity class of the Calibrators\nAll "
          "luminosity class allowed by default.");
-   
+
     // Prepare window
     _lumWindow = new gwtWINDOW();
     _lumWindow->AttachAGui(_theGui);
@@ -341,12 +345,14 @@ mcsCOMPL_STAT sclguiPANEL::BuildLumWindow()
     _lumWindow->Add(_lumCheckboxIV);
     _lumWindow->Add(_lumCheckboxV);
     _lumWindow->Add(_lumCheckboxVI);
- 
+
     _lumButton = new gwtBUTTON("Ok","Start the process");
     _lumButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::LumButtonCB);
     _lumWindow->Add(_lumButton);
-   
+
+
+
     return mcsSUCCESS;
 }
 
@@ -359,11 +365,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildLumWindow()
 mcsCOMPL_STAT sclguiPANEL::BuildMagWindow()
 {
     logExtDbg("sclguiPANEL::BuildMagWindow()");
-    
+
     static string windowHelp 
         ("Allows to reduce the magnitude difference between the Calibrators "
          "and the Science Object.");
-   
+
     // Prepare window
     _magWindow = new gwtWINDOW();
     _magWindow->AttachAGui(_theGui);
@@ -375,13 +381,15 @@ mcsCOMPL_STAT sclguiPANEL::BuildMagWindow()
     _magTextfield->SetLabel("Maximal Magnitude Separation (mag)");
     _magTextfield->SetText("0");
     _magWindow->Add(_magTextfield);
- 
+
     _magButton = new gwtBUTTON("Ok","Start the process");
     _magButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::MagButtonCB);
     _magWindow->Add(_magButton);
-   
-     return mcsSUCCESS;
+
+
+
+    return mcsSUCCESS;
 }
 
 /** 
@@ -392,7 +400,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMagWindow()
 mcsCOMPL_STAT sclguiPANEL::BuildMultWindow()
 {
     logExtDbg("sclguiPANEL::BuildMultWindow()");
-    
+
     static string windowHelp
         ("Allows to select stars using the multiplicity flag from All-sky "
          "Compiled Catalogue of 2.5 million stars (Kharchenko 2001).");
@@ -409,13 +417,14 @@ mcsCOMPL_STAT sclguiPANEL::BuildMultWindow()
     _multChoice->Add("Authorised");
     _multChoice->Add("Forbidden");
     _multWindow->Add(_multChoice);
- 
+
     _multButton = new gwtBUTTON("Ok","Start the process");
     _multButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::MultButtonCB);
     _multWindow->Add(_multButton);
-   
-     return mcsSUCCESS;
+
+
+    return mcsSUCCESS;
 }
 
 /** 
@@ -426,12 +435,12 @@ mcsCOMPL_STAT sclguiPANEL::BuildMultWindow()
 mcsCOMPL_STAT sclguiPANEL::BuildRaDecWindow()
 {
     logExtDbg("sclguiPANEL::BuildRaDecWindow()");
-    
+
     static string windowHelp
         ("Allows to reduce the size of the field around the Science Object by "
          "the choice of the maximum distance of the Calibrators to the Science "
          "Object in R.A. and DEC.");
-   
+
     // Prepare window
     _raDecWindow = new gwtWINDOW();
     _raDecWindow->AttachAGui(_theGui);
@@ -448,12 +457,14 @@ mcsCOMPL_STAT sclguiPANEL::BuildRaDecWindow()
     _raDecTextfieldDec->SetLabel("Maximal DEC Separation (degree)");
     _raDecTextfieldDec->SetText("0");
     _raDecWindow->Add(_raDecTextfieldDec);
- 
+
     _raDecButton = new gwtBUTTON("Ok","Start the process");
     _raDecButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::RaDecButtonCB);
     _raDecWindow->Add(_raDecButton);
-      
+
+
+
     return mcsSUCCESS;
 }
 
@@ -465,11 +476,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildRaDecWindow()
 mcsCOMPL_STAT sclguiPANEL::BuildSpectralTypeWindow()
 {
     logExtDbg("sclguiPANEL::BuildSpectralTypeWindow()");
-    
+
     static string windowHelp
         ("Allows to select the spectral type of the Calibrators.\nAll "
          "spectral type allowed by default.");
-   
+
     // Prepare window
     _spectralTypeWindow = new gwtWINDOW();
     _spectralTypeWindow->AttachAGui(_theGui);
@@ -491,7 +502,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildSpectralTypeWindow()
     _spectralTypeCheckboxK->SetLabel("K");
     _spectralTypeCheckboxM = new gwtCHECKBOX();
     _spectralTypeCheckboxM->SetLabel("M");
-    
+
     _spectralTypeWindow->Add(_spectralTypeCheckboxO);
     _spectralTypeWindow->Add(_spectralTypeCheckboxB);
     _spectralTypeWindow->Add(_spectralTypeCheckboxA);
@@ -499,13 +510,15 @@ mcsCOMPL_STAT sclguiPANEL::BuildSpectralTypeWindow()
     _spectralTypeWindow->Add(_spectralTypeCheckboxG);
     _spectralTypeWindow->Add(_spectralTypeCheckboxK);
     _spectralTypeWindow->Add(_spectralTypeCheckboxM);
- 
+
     _spectralTypeButton = new gwtBUTTON("Ok","Start the process");
     _spectralTypeButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::SpectralTypeButtonCB);
     _spectralTypeWindow->Add(_spectralTypeButton);
- 
-     return mcsSUCCESS;
+
+
+
+    return mcsSUCCESS;
 }
 
 /** 
@@ -516,7 +529,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildSpectralTypeWindow()
 mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
 {
     logExtDbg("sclguiPANEL::BuildVariabilityWindow()");
-    
+
     static string windowHelp
         ("Allows to select stars using the variability flag from All-sky "
          "Compiled Catalogue of 2.5 million stars (Kharchenko 2001).");
@@ -533,13 +546,14 @@ mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
     _variabilityChoice->Add("Authorised");
     _variabilityChoice->Add("Forbidden");
     _variabilityWindow->Add(_variabilityChoice);
- 
+
     _variabilityButton = new gwtBUTTON("Ok","Start the process");
     _variabilityButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::VariabilityButtonCB);
     _variabilityWindow->Add(_variabilityButton);
-   
-     return mcsSUCCESS;
+
+
+    return mcsSUCCESS;
 }
 
 
@@ -572,10 +586,10 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     nbOfRows = list->Size();
     _resultsTable = new gwtTABLE(nbOfRows, nbOfProperties);
     _resultsTable->SetLabel("Results");
-    
+
     // Insert first column Header
     _resultsTable->SetColumnHeader(0, "Number");
-    
+
     // Insert headers for calibrator properties
     int propIdx;
     for (propIdx = 0; propIdx < tmpCalibrator.NbProperties(); propIdx++)
@@ -622,9 +636,10 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     s.append("-");
     _deleteTextfield->SetText(s);
     cout << "Show all results :" << _deleteTextfield->GetText() << endl;
+    _displayList.Copy(_currentList);
     _mainWindow->Hide();
     _mainWindow->Show();
-    
+
     _theGui->SetStatus(true, "Show all result button pressed");
     return mcsSUCCESS;
 }
@@ -636,6 +651,17 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
     _theGui->SetStatus(true, "Reset button pressed");
+
+    // Clear the display
+    _displayList.Clear();
+    _displayList.Copy(_currentList);
+
+    // Fill the result table
+    FillResultsTable(&_displayList);
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
 
     return mcsSUCCESS;
 }
@@ -657,7 +683,7 @@ mcsCOMPL_STAT sclguiPANEL::AbortButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::AbortButtonCB()");
     _theGui->SetStatus(true, "Bye bye");
-   
+
     _mainWindow->Hide();
     exit (EXIT_SUCCESS);
     return mcsSUCCESS;
@@ -671,7 +697,7 @@ mcsCOMPL_STAT sclguiPANEL::SelectPanelCB(void *)
     logExtDbg("sclguiPANEL::SelectPanelCB()");
     cout << "sorting by : "<< _selectChoice->GetSelectedItemValue() <<endl;
     //cout << "index is : "<< _selectChoice->GetSelectedItem() <<endl;
-  
+
     switch(_selectChoice->GetSelectedItem())
     {
         case 0:
@@ -744,6 +770,14 @@ mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
     logExtDbg("sclguiPANEL::AccuracyButtonCB()");
     cout << "data: " <<_accuracyTextfield->GetText() <<endl;
     _accuracyWindow->Hide();
+    _displayList.GetMaximalExpectedRelativeAccuracy();
+    // Fill the result table
+    FillResultsTable(&_displayList);
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
+
     return mcsSUCCESS;
 }
 
@@ -760,6 +794,41 @@ mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
     cout << "data: V " <<(int) _lumCheckboxV->GetValue() <<endl;
     cout << "data: VI " <<(int) _lumCheckboxVI->GetValue() <<endl;
     _lumWindow->Hide();
+    
+    std::list<char *> LumList;
+    // for each spectral type, check if it is wanted by the user
+    // if wanted, put it in the list of spectral type
+    if ((int) _lumCheckboxI->GetValue() == 1)
+    {
+        LumList.push_back("I");
+    }
+    if ((int) _lumCheckboxII->GetValue() == 1)
+    {
+        LumList.push_back("II");
+    }
+    if ((int) _lumCheckboxIII->GetValue() == 1)
+    {
+        LumList.push_back("III");
+    }
+    if ((int) _lumCheckboxIV->GetValue() == 1)
+    {
+        LumList.push_back("IV");
+    }
+    if ((int) _lumCheckboxV->GetValue() == 1)
+    {
+        LumList.push_back("V");
+    }
+    if ((int) _lumCheckboxVI->GetValue() == 1)
+    {
+        LumList.push_back("VI");
+    }
+    
+    _displayList.GetLuminosityClass(LumList);
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
+
     return mcsSUCCESS;
 }
 
@@ -771,6 +840,23 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
     logExtDbg("sclguiPANEL::MagButtonCB()");
     cout << "data: " <<_magTextfield->GetText() <<endl;
     _magWindow->Hide();
+   
+    mcsFLOAT magRange;
+    // Get the value of the magnitude range
+    sscanf((_magTextfield->GetText()).c_str(), "%f", &magRange);    
+    mcsSTRING256 band, magStr;
+    // get the observed band and the magnitude
+    _request.GetConstraint(OBSERVED_BAND_ID, band);
+    _request.GetConstraint(STAR_MAGNITUDE_ID, magStr);
+    mcsFLOAT magnitude;
+    // convert magnitude from char to float value
+    sscanf(magStr, "%f", &magnitude);
+    _displayList.GetMaximalMagnitudeSeparation(band, magnitude, magRange);
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
+
     return mcsSUCCESS;
 }
 
@@ -782,6 +868,14 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
     logExtDbg("sclguiPANEL::MultButtonCB()");
     cout << "data: " <<_multChoice->GetSelectedItemValue() <<endl;
     _multWindow->Hide();
+    _displayList.GetMultiplicity();
+    // Fill the result table
+    FillResultsTable(&_displayList);
+
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
     return mcsSUCCESS;
 }
 
@@ -795,6 +889,23 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
     cout << "data: Ra " <<_raDecTextfieldRa->GetText() <<endl;
     cout << "data: Dec " <<_raDecTextfieldDec->GetText() <<endl;
     _raDecWindow->Hide();
+    mcsSTRING256 ra, dec;
+    mcsFLOAT raRange, decRange;
+    // Get Value of raRange and decRange
+    sscanf((_raDecTextfieldRa->GetText()).c_str(), "%f", &raRange);
+    sscanf((_raDecTextfieldDec->GetText()).c_str(), "%f", &decRange);
+    // get the value of ra dec in user request
+    _request.GetConstraint(RA_ID, ra);
+    _request.GetConstraint(DEC_ID, dec);
+    // removed star which are not in the box
+    _displayList.GetScienceObjectSeparation("03 47 29.08", "+24 06 18.5",
+                                            raRange,
+                                            decRange);
+    // todo put the value from GetText instead of 0.1
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
     return mcsSUCCESS;
 }
 
@@ -813,6 +924,45 @@ mcsCOMPL_STAT sclguiPANEL::SpectralTypeButtonCB(void *)
     cout << "data: K " <<(int) _spectralTypeCheckboxK->GetValue() <<endl;
     cout << "data: M " <<(int) _spectralTypeCheckboxM->GetValue() <<endl;
     _spectralTypeWindow->Hide();
+
+    std::list<char *> SpectTypeList;
+    // for each spectral type, check if it is wanted by the user
+    // if wanted, put it in the list of spectral type
+    if ((int) _spectralTypeCheckboxO->GetValue() == 1)
+    {
+        SpectTypeList.push_back("O");
+    }
+    if ((int) _spectralTypeCheckboxB->GetValue() == 1)
+    {
+        SpectTypeList.push_back("B");
+    }
+    if ((int) _spectralTypeCheckboxA->GetValue() == 1)
+    {
+        SpectTypeList.push_back("A");
+    }
+    if ((int) _spectralTypeCheckboxF->GetValue() == 1)
+    {
+        SpectTypeList.push_back("F");
+    }
+    if ((int) _spectralTypeCheckboxG->GetValue() == 1)
+    {
+        SpectTypeList.push_back("G");
+    }
+    if ((int) _spectralTypeCheckboxK->GetValue() == 1)
+    {
+        SpectTypeList.push_back("K");
+    }
+    if ((int) _spectralTypeCheckboxM->GetValue() == 1)
+    {
+        SpectTypeList.push_back("M");
+    }
+
+    
+    _displayList.GetSpectralType(SpectTypeList);
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
     return mcsSUCCESS;
 }
 
@@ -825,8 +975,16 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     logExtDbg("sclguiPANEL::VariabilityButtonCB()");
 
     cout << "data: " <<_variabilityChoice->GetSelectedItemValue() <<endl;
-    
+
     _variabilityWindow->Hide();
+    _displayList.GetVariability();
+    // Fill the result table
+    FillResultsTable(&_displayList);
+
+    // Update main window
+    _mainWindow->Hide();
+    BuildMainWindow();
+    _mainWindow->Show();
     return mcsSUCCESS;
 }
 
