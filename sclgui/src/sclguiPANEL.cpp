@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.44 2005-03-08 14:34:39 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.45 2005-03-08 15:10:46 gluck Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.44  2005/03/08 14:34:39  scetre
+ * Removed abort button
+ *
  * Revision 1.43  2005/03/08 14:07:01  scetre
  * Removed quit button
  * Changed order paralax and paralax error in band N
@@ -32,7 +35,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.44 2005-03-08 14:34:39 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.45 2005-03-08 15:10:46 gluck Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -967,7 +970,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     FillResultsTable(&_displayList);
     _mainWindow->Update();
 
-    _theGui->SetStatus(true, "'Show all result' button has been pressed");
+    _theGui->SetStatus(true, "Show all stars with coherent diameter");
     return mcsSUCCESS;
 }
 
@@ -977,7 +980,8 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
-    _theGui->SetStatus(true, "'Reset' button has been pressed");
+    _theGui->SetStatus(true, "Show all stars with coherent diameter and " 
+                       "without variability and multiplicity");
     
     _varAuthorized = mcsFALSE;
     _multAuthorized = mcsFALSE;
@@ -1001,7 +1005,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     // Update main window
     FillResultsTable(&_displayList);
     _mainWindow->Update();
-
+    
     return mcsSUCCESS;
 }
 
@@ -1076,8 +1080,32 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
     }
     else
     {
+        // Get star to delete HD number and build user message
+        sclsvrCALIBRATOR *calibrator = NULL;
+        // Find star to delete
+        for (unsigned int el = 0; el < starNumber; el++)
+        {
+            calibrator = (sclsvrCALIBRATOR *)
+                _displayList.GetNextStar((mcsLOGICAL)(el==0));
+        }
+        // Convert star number to string
+        mcsSTRING32 starNumberBuffer;
+        sprintf(starNumberBuffer, "%d", starNumber);
+        // Build message
+        string statusMsg("Star number ");
+        statusMsg.append(starNumberBuffer);
+        if (calibrator != NULL)
+        {
+            statusMsg.append(" (HD ");
+            statusMsg.append(calibrator->GetPropertyValue(vobsSTAR_ID_HD));
+            statusMsg.append(")");
+        }
+        statusMsg.append(" has been deleted");
+
         // if te value is ok, delete star
         _displayList.Delete(starNumber);
+        // Display message
+        _theGui->SetStatus(true, statusMsg); 
 
         // Update main window
         FillResultsTable(&_displayList);
@@ -1109,7 +1137,7 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
         return mcsFAILURE;
     }
     sprintf(usrMsg, "'%s' file has been loaded", fileName);
-        _theGui->SetStatus(true, usrMsg);
+    _theGui->SetStatus(true, usrMsg);
 
     _coherentDiameterList.Clear();
     _displayList.Clear();
@@ -1143,7 +1171,7 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     _saveFlag=mcsTRUE;    
     // Get the name of the textfield
     strcpy(_fileName, (_saveTextfield->GetText()).c_str());
-
+        
     // Check if the file already exist
     if (miscFileExists(_fileName, mcsFALSE) == mcsTRUE)
     {
@@ -1213,6 +1241,13 @@ mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
     // Update main window
     FillResultsTable(&_displayList);
     _mainWindow->Update();
+    
+    // Display user message
+    mcsSTRING256 usrMsg;
+    sprintf(usrMsg, "Star list filtered out by accuracy on squared visibility:"
+            "[%.1f]", visMax * 100);
+    _theGui->SetStatus(true, usrMsg);
+
 
     return mcsSUCCESS;
 }
@@ -1260,6 +1295,11 @@ mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
     FillResultsTable(&_displayList);
     _mainWindow->Update();
 
+    // Display user message
+    mcsSTRING256 usrMsg;
+    sprintf(usrMsg, "Star list filtered out by luminosity class");
+    _theGui->SetStatus(true, usrMsg);
+
     return mcsSUCCESS;
 }
 
@@ -1282,6 +1322,12 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
     magnitude = _request.GetObjectMag();
     
     _displayList.FilterByMagnitude(band, magnitude, magRange);
+
+    // Display user message
+    mcsSTRING256 usrMsg;
+    sprintf(usrMsg, "Star list filtered out by magnitude: [%.1f]", magRange);
+    _theGui->SetStatus(true, usrMsg);
+    
     // Update main window
     FillResultsTable(&_displayList);
     _mainWindow->Update();
@@ -1306,6 +1352,7 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
             _varAuthorized = mcsTRUE;
         }
         _variabilityWindow->Hide();
+        _theGui->SetStatus(true, "Already done");
         return mcsSUCCESS;
     }
     // if the wanted state is forbidden and if the variability flag is
@@ -1319,15 +1366,30 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
             _varAuthorized = mcsFALSE;
             // Filter the visibility ok list
             _displayList.FilterByVariability(_varAuthorized); 
-
         }
         else 
         {
             _variabilityWindow->Hide();
+            _theGui->SetStatus(true, "Already done");
             return mcsSUCCESS;
         }
     }
-
+    
+    // Display user message
+    mcsSTRING256 authorizedFlag;
+    mcsSTRING256 usrMsg;
+    if (_varAuthorized == mcsTRUE)
+    {
+        sprintf(authorizedFlag, "Authorized");
+    }
+    else
+    {
+        sprintf(authorizedFlag, "Forbidden");
+    }
+    sprintf(usrMsg, "Star list filtered out by variability: [%s]", 
+            authorizedFlag);
+    _theGui->SetStatus(true, usrMsg);
+    
     _variabilityWindow->Hide();
 
     // Update main window
@@ -1353,6 +1415,7 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
             _multAuthorized = mcsTRUE;
         }
         _multWindow->Hide();
+        _theGui->SetStatus(true, "Already done");
         return mcsSUCCESS;
     }
     // if the wanted state is forbidden and if the variability flag is
@@ -1370,9 +1433,25 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
         else
         {
             _multWindow->Hide();
+            _theGui->SetStatus(true, "Already done");
             return mcsSUCCESS;
         }
     }
+    
+    // Display user message
+    mcsSTRING256 multiplicityFlag;
+    mcsSTRING256 usrMsg;
+    if (_varAuthorized == mcsTRUE)
+    {
+        sprintf(multiplicityFlag, "Authorized");
+    }
+    else
+    {
+        sprintf(multiplicityFlag, "Forbidden");
+    }
+    sprintf(usrMsg, "Star list filtered out by variability: [%s]", 
+            multiplicityFlag);
+    _theGui->SetStatus(true, usrMsg);
     
     _multWindow->Hide();
 
@@ -1400,6 +1479,7 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
     }
     // convert raRange from min to degree
     raRange=raRange*15/60;
+
     if (sscanf((_raDecTextfieldDec->GetText()).c_str(), "%f", &decRange) != 1)
     {
         // todo err
@@ -1415,6 +1495,12 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
     _displayList.FilterByDistanceSeparation(ra, dec,
                                             raRange,
                                             decRange);
+    // Display user message
+    mcsSTRING256 usrMsg;
+    sprintf(usrMsg, "Star list filtered out by RA/DEC distance: [%.1f, %.1f]", 
+            raRange * 60 /15, decRange);
+    _theGui->SetStatus(true, usrMsg);
+    
     // todo put the value from GetText instead of 0.1
     // Update main window
     FillResultsTable(&_displayList);
@@ -1463,13 +1549,21 @@ mcsCOMPL_STAT sclguiPANEL::SpectralTypeButtonCB(void *)
     {
         tempClassList[idx++] = "M";
     }
-    tempClassList[idx++] = NULL;
+    tempClassList[idx] = NULL;
     
     _displayList.FilterBySpectralType(tempClassList, NULL);
+    
     // Update main window
     FillResultsTable(&_displayList);
+    
     _mainWindow->Update();
-    return mcsSUCCESS;
+ 
+    // Display user message
+    mcsSTRING256 usrMsg;
+    sprintf(usrMsg, "Star list filtered out by spectral type");
+    _theGui->SetStatus(true, usrMsg);
+    
+   return mcsSUCCESS;
 }
 
 /**
