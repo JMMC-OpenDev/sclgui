@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.2 2004-12-01 15:33:54 mella Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.3 2004-12-02 08:49:48 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.2 2004-12-01 15:33:54 mella Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.3 2004-12-02 08:49:48 mella Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -315,6 +315,10 @@ mcsCOMPL_STAT sclguiPANEL::BuildAccuracyWindow()
     _accuracyTextfield->SetText("100");
     _accuracyWindow->Add(_accuracyTextfield);
 
+    _accuracyButton = new gwtBUTTON("Ok","Start the process");
+    _accuracyButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::AccuracyButtonCB);
+    _accuracyWindow->Add(_accuracyButton);
+    
     return SUCCESS;
 }
 
@@ -354,7 +358,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildLumWindow()
     _lumWindow->Add(_lumCheckboxIV);
     _lumWindow->Add(_lumCheckboxV);
     _lumWindow->Add(_lumCheckboxVI);
-    
+ 
+    _lumButton = new gwtBUTTON("Ok","Start the process");
+    _lumButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::LumButtonCB);
+    _lumWindow->Add(_lumButton);
+   
     return SUCCESS;
 }
 
@@ -380,7 +388,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildMagWindow()
     _magTextfield->SetLabel("Maximal Magnitude Separation (mag)");
     _magTextfield->SetText("0");
     _magWindow->Add(_magTextfield);
-
+ 
+    _magButton = new gwtBUTTON("Ok","Start the process");
+    _magButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::MagButtonCB);
+    _magWindow->Add(_magButton);
+   
      return SUCCESS;
 }
 
@@ -406,7 +418,12 @@ mcsCOMPL_STAT sclguiPANEL::BuildMultWindow()
     _multChoice->Add("Authorised");
     _multChoice->Add("Forbidden");
     _multWindow->Add(_multChoice);
-
+ 
+    _multButton = new gwtBUTTON("Ok","Start the process");
+    _multButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::MultButtonCB);
+    _multWindow->Add(_multButton);
+   
+ 
      return SUCCESS;
 }
 
@@ -436,7 +453,12 @@ mcsCOMPL_STAT sclguiPANEL::BuildRaDecWindow()
     _raDecTextfield->SetLabel("Maximal DEC Separation (degree)");
     _raDecTextfield->SetText("0");
     _raDecWindow->Add(_raDecTextfield);
-     
+ 
+    _raDecButton = new gwtBUTTON("Ok","Start the process");
+    _raDecButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::RaDecButtonCB);
+    _raDecWindow->Add(_raDecButton);
+   
+      
     return SUCCESS;
 }
 
@@ -479,7 +501,12 @@ mcsCOMPL_STAT sclguiPANEL::BuildSpectralTypeWindow()
     _spectralTypeWindow->Add(_spectralTypeCheckboxG);
     _spectralTypeWindow->Add(_spectralTypeCheckboxK);
     _spectralTypeWindow->Add(_spectralTypeCheckboxM);
-
+ 
+    _spectralTypeButton = new gwtBUTTON("Ok","Start the process");
+    _spectralTypeButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::SpectralTypeButtonCB);
+    _spectralTypeWindow->Add(_spectralTypeButton);
+   
+ 
      return SUCCESS;
 }
 
@@ -505,7 +532,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
     _variabilityChoice->Add("Authorised");
     _variabilityChoice->Add("Forbidden");
     _variabilityWindow->Add(_variabilityChoice);
-
+ 
+    _variabilityButton = new gwtBUTTON("Ok","Start the process");
+    _variabilityButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::VariabilityButtonCB);
+    _variabilityWindow->Add(_variabilityButton);
+   
      return SUCCESS;
 }
 
@@ -525,6 +556,8 @@ mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
 mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ShowAllResultsButtonCB()");
+    cout << "Show all result  button pressed" <<endl;
+    // this stupid callback update one widget and show the window again
     string s;
     s.append(_deleteTextfield->GetText());
     s.append("-");
@@ -541,6 +574,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
+    cout << "Reset  button pressed" <<endl;
     return SUCCESS;
 }
 
@@ -550,6 +584,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::PrintButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::PrintButtonCB()");
+    cout << "Print  button pressed" <<endl;
     return SUCCESS;
 }
 
@@ -559,6 +594,7 @@ mcsCOMPL_STAT sclguiPANEL::PrintButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::AbortButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::AbortButtonCB()");
+    cout << "Abort  button pressed" <<endl;
    
     _mainWindow->Hide();
     exit (EXIT_SUCCESS);
@@ -572,7 +608,7 @@ mcsCOMPL_STAT sclguiPANEL::SelectPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::SelectPanelCB()");
     cout << "sorting by : "<< _selectChoice->GetSelectedItemValue() <<endl;
-    cout << "index is : "<< _selectChoice->GetSelectedItem() <<endl;
+    //cout << "index is : "<< _selectChoice->GetSelectedItem() <<endl;
   
     switch(_selectChoice->GetSelectedItem())
     {
@@ -638,15 +674,99 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     return SUCCESS;
 }
 
-
 /**
- *  User callback associated to the  button.
-mcsCOMPL_STAT sclguiPANEL::ButtonCB(void *)
+ *  User callback associated to the Accuracy button.
+ */
+mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
 {
-    logExtDbg("sclguiPANEL::ButtonCB()");
+    logExtDbg("sclguiPANEL::AccuracyButtonCB()");
+    cout << "data: " <<_accuracyTextfield->GetText() <<endl;
+    _accuracyWindow->Hide();
     return SUCCESS;
 }
+
+/**
+ *  User callback associated to the Lum button.
  */
+mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::LumButtonCB()");
+    cout << "data: I " <<(int) _lumCheckboxI->GetValue() <<endl;
+    cout << "data: II " <<(int) _lumCheckboxII->GetValue() <<endl;
+    cout << "data: III " <<(int) _lumCheckboxIII->GetValue() <<endl;
+    cout << "data: IV " <<(int) _lumCheckboxIV->GetValue() <<endl;
+    cout << "data: V " <<(int) _lumCheckboxV->GetValue() <<endl;
+    cout << "data: VI " <<(int) _lumCheckboxVI->GetValue() <<endl;
+    _lumWindow->Hide();
+    return SUCCESS;
+}
+
+/**
+ *  User callback associated to the Mag button.
+ */
+mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::MagButtonCB()");
+    cout << "data: " <<_magTextfield->GetText() <<endl;
+    _magWindow->Hide();
+    return SUCCESS;
+}
+
+/**
+ *  User callback associated to the Mult button.
+ */
+mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::MultButtonCB()");
+    cout << "data: " <<_multChoice->GetSelectedItemValue() <<endl;
+    _multWindow->Hide();
+    return SUCCESS;
+}
+
+
+/**
+ *  User callback associated to the RaDec button.
+ */
+mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::RaDecButtonCB()");
+    cout << "data: " <<_raDecTextfield->GetText() <<endl;
+    _raDecWindow->Hide();
+    return SUCCESS;
+}
+
+
+/**
+ *  User callback associated to the SpectralType button.
+ */
+mcsCOMPL_STAT sclguiPANEL::SpectralTypeButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::SpectralTypeButtonCB()");
+    cout << "data: O " <<(int) _spectralTypeCheckboxO->GetValue() <<endl;
+    cout << "data: B " <<(int) _spectralTypeCheckboxB->GetValue() <<endl;
+    cout << "data: A " <<(int) _spectralTypeCheckboxA->GetValue() <<endl;
+    cout << "data: F " <<(int) _spectralTypeCheckboxF->GetValue() <<endl;
+    cout << "data: G " <<(int) _spectralTypeCheckboxG->GetValue() <<endl;
+    cout << "data: K " <<(int) _spectralTypeCheckboxK->GetValue() <<endl;
+    cout << "data: M " <<(int) _spectralTypeCheckboxM->GetValue() <<endl;
+    _spectralTypeWindow->Hide();
+    return SUCCESS;
+}
+
+
+/**
+ *  User callback associated to the Variability button.
+ */
+mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::VariabilityButtonCB()");
+
+    cout << "data: " <<_variabilityChoice->GetSelectedItemValue() <<endl;
+    
+    _variabilityWindow->Hide();
+    return SUCCESS;
+}
+
 
 /**
  *  Main callback used to get back events from the GUI. Actually there must be
