@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.23 2005-03-10 14:01:48 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.24 2005-03-10 14:51:23 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2005/03/10 14:01:48  scetre
+ * Added list of ucd for less detail in K and V band
+ *
  * Revision 1.22  2005/03/08 14:34:39  scetre
  * Removed abort button
  *
@@ -189,7 +192,13 @@ private:
     gwtBUTTON *_resetButton;
     mcsCOMPL_STAT ResetButtonCB(void *);
     mcsCOMPL_STAT AbortButtonCB(void *);
-     
+    
+    // Button to show or not all columns
+    gwtBUTTON *_showDetailsButton;
+    mcsCOMPL_STAT ShowDetailsCB(void *);
+    gwtBUTTON *_hideDetailsButton;    
+    mcsCOMPL_STAT HideDetailsCB(void *);
+    
     gwtLABEL *_resultsLabel;
     gwtTEXTAREA *_scienceStarTextarea;
     gwtTABLE *_resultsTable;

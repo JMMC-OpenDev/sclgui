@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.49 2005-03-10 14:01:48 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.50 2005-03-10 14:51:23 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.49  2005/03/10 14:01:48  scetre
+ * Added list of ucd for less detail in K and V band
+ *
  * Revision 1.48  2005/03/10 11:32:10  scetre
  * Reorder properties in table
  *
@@ -47,7 +50,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.49 2005-03-10 14:01:48 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.50 2005-03-10 14:51:23 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -328,6 +331,13 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _showAllResultsButton->PlaceAtTop(mcsTRUE);
     _resetButton = new gwtBUTTON("RESET", "This button reset the star list. It will show the list with visibility OK.");
     _resetButton->PlaceAtTop(mcsTRUE);
+    _showDetailsButton = new gwtBUTTON
+        ("SHOW DETAILS", "Show all properties of a star");
+    _showDetailsButton->PlaceAtTop(mcsTRUE);
+    _hideDetailsButton = new gwtBUTTON
+        ("HIDE DETAILS", "Show only some specific properties");
+        _hideDetailsButton->PlaceAtTop(mcsTRUE);
+    
     
     // Place science star information
     _scienceStarTextarea = new gwtTEXTAREA("--", 4, 50, "No Help");
@@ -421,12 +431,18 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // \todo find a solution to get element from map unsorted
     _mainWindow->Add(_showAllResultsButton);
     _mainWindow->Add(_resetButton);
-
+    _mainWindow->Add(_showDetailsButton);
+    _mainWindow->Add(_hideDetailsButton);
+    
     // Associate callbacks
     _showAllResultsButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ShowAllResultsButtonCB);
     _resetButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ResetButtonCB);
+    _showDetailsButton->AttachCB
+        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ShowDetailsCB);
+    _hideDetailsButton->AttachCB
+        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::HideDetailsCB);
     _selectPanel->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::SelectPanelCB);
     _deletePanel->AttachCB
@@ -974,15 +990,6 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
     
-    // if the observed band is N, Show All Result button show all property
-    if (strcmp(_request.GetSearchBand(), "N") == 0)
-    {
-        _ucdNameDisplay = _ucdNameforNComplete;
-    }
-    else
-    {
-        _ucdNameDisplay = _ucdNameforKVComplete;
-    }
     FillResultsTable(&_displayList);
     _mainWindow->Update();
 
@@ -1010,6 +1017,49 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
     
+    // Update main window
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
+    
+    _theGui->SetStatus(true, "Show all stars with coherent diameter and " 
+                       "without variability and multiplicity");
+
+    return mcsSUCCESS;
+}
+
+/**
+ * User callback associated to the show details button
+ */
+mcsCOMPL_STAT sclguiPANEL::ShowDetailsCB(void *)
+{
+    logExtDbg("sclguiPANEL::ShowDetailsCB()");
+    
+    // if the observed band is N, reset button show principal property
+    if (strcmp(_request.GetSearchBand(), "N") == 0)
+    {
+        _ucdNameDisplay = _ucdNameforNComplete;
+    }
+    else
+    {
+        _ucdNameDisplay = _ucdNameforKVComplete;
+    }
+
+    // Update main window
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
+
+     _theGui->SetStatus(true, "Show all details");
+
+    return mcsSUCCESS;
+}
+
+/**
+ * User callback associated to the hide details button
+ */
+mcsCOMPL_STAT sclguiPANEL::HideDetailsCB(void *)
+{
+    logExtDbg("sclguiPANEL::HideDetailsCB()");
+    
     // if the observed band is N, reset button show principal property
     if (strcmp(_request.GetSearchBand(), "N") == 0)
     {
@@ -1024,9 +1074,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     FillResultsTable(&_displayList);
     _mainWindow->Update();
     
-    _theGui->SetStatus(true, "Show all stars with coherent diameter and " 
-                       "without variability and multiplicity");
-
+    _theGui->SetStatus(true, "Show less details");
     return mcsSUCCESS;
 }
 
