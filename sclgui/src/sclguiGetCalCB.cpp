@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.20 2005-03-04 09:53:43 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.21 2005-03-04 15:08:05 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2005/03/04 09:53:43  gzins
+ * Removed handling of -file option. Done by sclsrv.
+ *
  * Revision 1.19  2005/03/03 16:50:31  scetre
  * Add user message for out of range parameter
  *
@@ -71,7 +74,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.20 2005-03-04 09:53:43 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.21 2005-03-04 15:08:05 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -123,9 +126,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         if (_request.Parse(msg.GetBody()) == mcsFAILURE)
         {
             // Report error
-            _theGui->SetStatus(false, "Parameter out of Range...",
-                               errUserGet());
-            errCloseStack();
+            _theGui->SetStatus(false, errUserGet());
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         
@@ -136,7 +137,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         {
             // Report error
             _theGui->SetStatus(false, errUserGet());
-            errCloseStack();
 
             // Clear result table
             _currentList.Clear();
@@ -144,9 +144,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
             _visibilityOkList.Clear();
             _coherentDiameterList.Clear();
 
-            // Send reply
-            msg.SetBody("Request FAILED.");
-            SendReply(msg);
+            return evhCB_NO_DELETE | evhCB_FAILURE;
         }
 
         // Set server sub-state to BUSY
@@ -177,7 +175,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             }
             // Report error
             _theGui->SetStatus(false, errUserGet());
-            errCloseStack();
 
             // Clear result table
             _currentList.Clear();
