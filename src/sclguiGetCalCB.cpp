@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.9 2005-02-14 14:23:19 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.10 2005-02-16 16:58:34 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2005/02/14 14:23:19  scetre
+ * used of miscoDYN_BUF instead of miscDYN_BUF
+ *
  * Revision 1.8  2005/02/10 08:23:48  gzins
  * Updated message informing about the number of found stars
  *
@@ -38,7 +41,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.9 2005-02-14 14:23:19 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.10 2005-02-16 16:58:34 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -85,114 +88,8 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         evhCMD_CALLBACK cmdReplyCB
             (this, (evhCMD_CB_METHOD)&sclguiPANEL::GetCalReplyCB);
 
-        // Get the command
-        sclsvrGETCAL_CMD getCalCmd(msg.GetCommand(), msg.GetBody());
-
-        // Parse command
-        if (getCalCmd.Parse() == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-
-        // Object name
-        char *objectName;
-        if (getCalCmd.GetObjectName(&objectName) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Observed magnitude
-        mcsDOUBLE magnitude;
-        if (getCalCmd.GetMag(&magnitude) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // band
-        char *band;
-        if (getCalCmd.GetBand(&band) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // ra
-        char *ra;
-        if (getCalCmd.GetRa(&ra) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // dec
-        char *dec;
-        if (getCalCmd.GetDec(&dec) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // baseMin
-        mcsDOUBLE baseMin;
-        if (getCalCmd.GetBaseMin(&baseMin) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // baseMax
-        mcsDOUBLE baseMax;
-        if (getCalCmd.GetBaseMax(&baseMax) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // wlen
-        mcsDOUBLE wlen;
-        if (getCalCmd.GetWlen(&wlen) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // visibility
-        mcsDOUBLE vis;
-        if (getCalCmd.GetVis(&vis) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // visibility error
-        mcsDOUBLE visErr;
-        if (getCalCmd.GetVisErr(&visErr) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-
         // Build the request object from the parameters of the command
-        // Affect the reference object name
-        if (_request.SetObjectName(objectName) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the right ascension position
-        if (_request.SetObjectRa(ra) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the declinaison position
-        if (_request.SetObjectDec(dec) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the wavelength
-        if (_request.SetObservingWlen(wlen) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the magnitude
-        if (_request.SetObjectMag(magnitude) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the expected visibility
-        if (_request.SetExpectedVisibility(vis, visErr) == mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the observed band
-        if (_request.SetSearchBand(band) ==  mcsFAILURE)
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Affect the baseline length
-        if (_request.SetBaseline(baseMin, baseMax) ==  mcsFAILURE)
+        if (_request.SetObjectName(msg.GetBody()) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
