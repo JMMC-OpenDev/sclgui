@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.10 2005-02-16 16:58:34 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.11 2005-02-16 17:35:06 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2005/02/16 16:58:34  gzins
+ * Used new vobsREQUEST::Parse() method
+ *
  * Revision 1.9  2005/02/14 14:23:19  scetre
  * used of miscoDYN_BUF instead of miscDYN_BUF
  *
@@ -41,7 +44,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.10 2005-02-16 16:58:34 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.11 2005-02-16 17:35:06 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -151,9 +154,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         case msgTYPE_REPLY:
         {
             // Retreive the returned calibrator list
-            miscoDYN_BUF dynBuf;
-            dynBuf.AppendString(msg.GetBody());
-            _currentList.UnPack(&dynBuf);
+            _currentList.UnPack(msg.GetBody());
             _currentList.Display();
             _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
             _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
