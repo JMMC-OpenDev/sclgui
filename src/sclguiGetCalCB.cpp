@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.14 2005-02-18 11:50:28 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2005/02/18 11:50:28  scetre
+ * Changed behavior of gui in oder to filter by defautl on variability and visibility
+ *
  * Revision 1.13  2005/02/17 09:25:43  scetre
  * Added 3 interger in the class in order to store CDS return, coherent diameter and visibility list size
  *
@@ -53,7 +56,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.14 2005-02-18 11:50:28 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -94,6 +97,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
     }
     else
     {
+            _mainWindow->Hide();
         _theGui->SetStatus(true, "Looking for calibrators in star catalogs...");
 
         // Defines callback to handle reply
@@ -105,7 +109,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
-
+        
         // Forward command; i.e. do not wait for reply. The GetCalReplyCB()
         // method will be called when reply is received.
         if (_sclServer.Forward(msg.GetCommand(), msg.GetBody(),
@@ -162,6 +166,15 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         }
         case msgTYPE_REPLY:
         {
+            if (strcmp(_request.GetSearchBand(), "N") == 0)
+            {
+                _ucdNameDisplay = _ucdNameforN;
+            }
+            else
+            {
+                _ucdNameDisplay = _ucdNameforKV;
+            }
+
             // Fixed by default forbidden multiplicity and variability
             _varAuthorized = mcsFALSE;
             _multAuthorized = mcsFALSE;

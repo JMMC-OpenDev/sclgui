@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.14 2005-02-21 15:17:10 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.14 2005-02-21 15:17:10 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -76,6 +76,9 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     _vis = _visibilityOkList.Size();
     _varAuthorized = mcsFALSE;
     _multAuthorized = mcsFALSE;
+    BuildResultsTableLabelKV();
+    BuildResultsTableLabelN();
+    BuildResultsTableLabelNComplete();
 }
 
 
@@ -123,7 +126,7 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
 
     BuildMainWindow();
 
-    _mainWindow->Show();
+    //_mainWindow->Show();
 
     return mcsSUCCESS;
 }
@@ -630,9 +633,9 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     logExtDbg("sclguiPANEL::FillResultsTable()");
 
     sclsvrCALIBRATOR tmpCalibrator;
-
+    
     // Add 1 for the number column
-    int nbOfProperties = tmpCalibrator.NbProperties() + 1 ;
+    int nbOfProperties = _ucdNameDisplay.size() + 1 ;
     int nbOfRows;
 
     nbOfRows = list->Size();
@@ -644,14 +647,16 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     _resultsTable->SetColumnHeader(0, "Number");
 
     // Insert headers for calibrator properties
-    int propIdx;
-    for (propIdx = 0; propIdx < tmpCalibrator.NbProperties(); propIdx++)
+    int propIdx=0;
+    UCD_NAME_ORDER::iterator ucdNameOrderIterator;
+    ucdNameOrderIterator = _ucdNameDisplay.begin();
+    while(ucdNameOrderIterator != _ucdNameDisplay.end())
     {
-        _resultsTable->SetColumnHeader
-            (propIdx+1,
-             tmpCalibrator.GetNextProperty((mcsLOGICAL)(propIdx==0))->GetName());
+        _resultsTable->SetColumnHeader(propIdx+1, tmpCalibrator.GetProperty(*ucdNameOrderIterator)->GetName());
+        propIdx++;
+        ucdNameOrderIterator++;
     }
-
+    
     // End to fill the table
     for (unsigned int el = 0; el < list->Size(); el++)
     {
@@ -661,15 +666,19 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
         _resultsTable->SetCell(el,0,elStr.str());
 
         calibrator = (sclsvrCALIBRATOR*)list->GetNextStar((mcsLOGICAL)(el==0));
-        int i;
+        int i=0;
 
         // Add calibrator properties raws
-        for (i=0; i < calibrator->NbProperties() ; i++)
+        ucdNameOrderIterator = _ucdNameDisplay.begin();
+        while(ucdNameOrderIterator != _ucdNameDisplay.end())
         {
             string propvalue;
             propvalue.append
-                ((calibrator->GetNextProperty((mcsLOGICAL)(i==0)))->GetValue());
+                (calibrator->GetPropertyValue(*ucdNameOrderIterator));
             _resultsTable->SetCell(el, i+1, propvalue);
+            i++;
+            ucdNameOrderIterator++;
+
         } // End for each properties
 
     } // End for each calibrators
@@ -696,10 +705,11 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
     _visibilityOkList.Clear();
     _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
-    
+
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
-    
+
+    _ucdNameDisplay = _ucdNameforNComplete;
     _mainWindow->Hide();
     BuildMainWindow();
     _mainWindow->Show();
@@ -729,6 +739,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     
     _displayList.Clear();
     _displayList.Copy(_visibilityOkList);
+    _ucdNameDisplay = _ucdNameforN;
 
     // Update main window
     _mainWindow->Hide();
@@ -1217,5 +1228,111 @@ evhCB_COMPL_STAT sclguiPANEL::GuiSocketCB (const int sd,void* obj)
     return evhCB_SUCCESS;
 }
 
+void sclguiPANEL::BuildResultsTableLabelKV()
+{
+    // build ucdNameforKV list
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VIS2            );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VIS2_ERROR      );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_BV         );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VR         );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VK         );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR   );
+    _ucdNameforKV.push_back(vobsSTAR_ID_HIP                  );
+    _ucdNameforKV.push_back(vobsSTAR_ID_HD                   );
+    _ucdNameforKV.push_back(vobsSTAR_ID_DM                   );
+    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_RA_MAIN          );
+    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_DEC_MAIN         );
+    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_PMDEC            );
+    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_PMRA             );
+    _ucdNameforKV.push_back(vobsSTAR_POS_PARLX_TRIG          );
+    _ucdNameforKV.push_back(vobsSTAR_SPECT_TYPE_MK           );
+    _ucdNameforKV.push_back(vobsSTAR_CODE_VARIAB             );
+    _ucdNameforKV.push_back(vobsSTAR_CODE_MULT_FLAG          );
+    _ucdNameforKV.push_back(vobsSTAR_POS_GAL_LAT             );
+    _ucdNameforKV.push_back(vobsSTAR_POS_GAL_LON             );
+    _ucdNameforKV.push_back(vobsSTAR_VELOC_HC                );
+    _ucdNameforKV.push_back(vobsSTAR_LD_DIAM                 );
+    _ucdNameforKV.push_back(vobsSTAR_LD_DIAM_ERROR           );
+    _ucdNameforKV.push_back(vobsSTAR_UD_DIAM                 );
+    _ucdNameforKV.push_back(vobsSTAR_UD_DIAM_ERROR           );
+    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM               );
+    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM_ERROR         );
+    _ucdNameforKV.push_back(vobsSTAR_OBS_METHOD              );
+    _ucdNameforKV.push_back(vobsSTAR_INST_WAVELENGTH_VALUE   );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_U              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_B              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_V              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_R              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_I              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_J              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_H              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_K              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_L              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_M              );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_N              );
+    _ucdNameforKV.push_back(vobsSTAR_VELOC_ROTAT             );
+    _ucdNameforKV.push_back(vobsSTAR_PHOT_COLOR_EXCESS       );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_MO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_LO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_KO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_HO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_JO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_IO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_RO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VO              );
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_BO              );
 
+}
+
+void sclguiPANEL::BuildResultsTableLabelN()
+{
+    _ucdNameforN.push_back(vobsSTAR_ID_HD);
+    _ucdNameforN.push_back(vobsSTAR_POS_EQ_RA_MAIN );
+    _ucdNameforN.push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+    _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2      );
+    _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+    _ucdNameforN.push_back(vobsSTAR_DIAM12      );
+    _ucdNameforN.push_back(vobsSTAR_DIAM12_ERROR);
+    _ucdNameforN.push_back(vobsSTAR_PHOT_FLUX_IR_12);
+    _ucdNameforN.push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
+    _ucdNameforN.push_back(vobsSTAR_PHOT_JHN_N);
+    _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_8       );
+    _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
+    _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_13      );
+    _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
+
+}
+
+void sclguiPANEL::BuildResultsTableLabelNComplete()
+{
+    _ucdNameforNComplete.push_back(vobsSTAR_ID_HD);
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_EQ_RA_MAIN );
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+    _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2      );
+    _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+    _ucdNameforNComplete.push_back(vobsSTAR_DIAM12      );
+    _ucdNameforNComplete.push_back(vobsSTAR_DIAM12_ERROR);
+    _ucdNameforNComplete.push_back(vobsSTAR_IR_FLUX_ORIGIN);
+    _ucdNameforNComplete.push_back(vobsSTAR_PHOT_FLUX_IR_12);
+    _ucdNameforNComplete.push_back(vobsSTAR_PHOT_FLUX_IR_12_ERROR);
+    _ucdNameforNComplete.push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
+    _ucdNameforNComplete.push_back(vobsSTAR_PHOT_JHN_N);
+    _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_8       );
+    _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
+    _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_13      );
+    _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
+    
+    _ucdNameforNComplete.push_back(vobsSTAR_REF_STAR);
+    _ucdNameforNComplete.push_back(vobsSTAR_CODE_MULT_FLAG);
+    _ucdNameforNComplete.push_back(vobsSTAR_CODE_VARIAB);
+    _ucdNameforNComplete.push_back(vobsSTAR_PHOT_JHN_V);
+    _ucdNameforNComplete.push_back(vobsSTAR_PHOT_JHN_H);
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_PARLX_TRIG_ERROR);
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_PARLX_TRIG);
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_EQ_PMRA);
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_EQ_PMDEC);
+    _ucdNameforNComplete.push_back(vobsSTAR_PHOT_EXTINCTION_TOTAL);
+    _ucdNameforNComplete.push_back(vobsSTAR_CHI2_QUALITY);   
+    _ucdNameforNComplete.push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);   
+}
 /*___oOo___*/
