@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.17 2005-02-24 13:16:27 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.18 2005-02-24 15:29:08 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.17 2005-02-24 13:16:27 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.18 2005-02-24 15:29:08 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -185,7 +185,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     ostringstream out;
     out << "NAME\tRAJ2000\tDEJ2000\tMag";
     out << _request.GetSearchBand();
-    out << "\tBase-min\tBase-max\tWlen\tDiamVK\tVis2\tVis2Err\n";
+    out << "\tBase-min\tBase-max\tLambda\tDiamVK\tVis2\tVis2Err\n";
     out << "---------\t-----------\t------------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
     out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
         << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
@@ -1310,7 +1310,7 @@ void sclguiPANEL::BuildResultsTableLabelN()
     _ucdNameforN.push_back(vobsSTAR_DIAM12      );
     _ucdNameforN.push_back(vobsSTAR_DIAM12_ERROR);
     _ucdNameforN.push_back(vobsSTAR_PHOT_FLUX_IR_12);
-    _ucdNameforN.push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
+    _ucdNameforN.push_back(vobsSTAR_SPECT_TYPE_MK);
     _ucdNameforN.push_back(vobsSTAR_PHOT_JHN_N);
     _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_8       );
     _ucdNameforN.push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
@@ -1331,7 +1331,7 @@ void sclguiPANEL::BuildResultsTableLabelNComplete()
     _ucdNameforNComplete.push_back(vobsSTAR_IR_FLUX_ORIGIN);
     _ucdNameforNComplete.push_back(vobsSTAR_PHOT_FLUX_IR_12);
     _ucdNameforNComplete.push_back(vobsSTAR_PHOT_FLUX_IR_12_ERROR);
-    _ucdNameforNComplete.push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
+    _ucdNameforNComplete.push_back(vobsSTAR_SPECT_TYPE_MK);
     _ucdNameforNComplete.push_back(vobsSTAR_PHOT_JHN_N);
     _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_8       );
     _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
