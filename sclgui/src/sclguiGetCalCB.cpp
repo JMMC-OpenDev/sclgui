@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.21 2005-03-04 15:08:05 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.22 2005-03-04 17:10:40 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2005/03/04 15:08:05  gzins
+ * No longer reset error stack before sending reply when an error occured
+ *
  * Revision 1.20  2005/03/04 09:53:43  gzins
  * Removed handling of -file option. Done by sclsrv.
  *
@@ -74,7 +77,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.21 2005-03-04 15:08:05 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.22 2005-03-04 17:10:40 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -126,7 +129,8 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
         if (_request.Parse(msg.GetBody()) == mcsFAILURE)
         {
             // Report error
-            _theGui->SetStatus(false, errUserGet());
+            _theGui->SetStatus(false, "Invalid command parameter list", 
+                               errUserGet());
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
         
