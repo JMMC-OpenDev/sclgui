@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.19 2005-03-07 16:01:20 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.20 2005-03-08 10:58:03 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2005/03/07 16:01:20  scetre
+ * Removed Abort button
+ *
  * Revision 1.18  2005/03/07 15:56:35  gzins
  * Removed filtering on visibility
  *
@@ -172,7 +175,10 @@ private:
     mcsCOMPL_STAT ShowAllResultsButtonCB(void *);
     gwtBUTTON *_resetButton;
     mcsCOMPL_STAT ResetButtonCB(void *);
-   
+    gwtBUTTON *_abortButton;
+    mcsCOMPL_STAT AbortButtonCB(void *);
+    mcsCOMPL_STAT Exit();
+     
     gwtLABEL *_resultsLabel;
     gwtTEXTAREA *_scienceStarTextarea;
     gwtTABLE *_resultsTable;

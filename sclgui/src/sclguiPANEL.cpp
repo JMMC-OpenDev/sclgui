@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.40 2005-03-08 07:14:41 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.41 2005-03-08 10:58:03 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.40  2005/03/08 07:14:41  scetre
+ * changed reset behaviour
+ *
  * Revision 1.39  2005/03/07 17:51:44  gzins
  * Added CVS log as file modification history
  *
@@ -19,7 +22,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.40 2005-03-08 07:14:41 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.41 2005-03-08 10:58:03 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -299,7 +302,11 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _showAllResultsButton->PlaceAtTop(mcsTRUE);
     _resetButton = new gwtBUTTON("RESET", "This button reset the star list. It will show the list with visibility OK.");
     _resetButton->PlaceAtTop(mcsTRUE);
+    
+    _abortButton = new gwtBUTTON("QUIT", "no help");
+    _abortButton->PlaceAtTop(mcsTRUE);
 
+    
     // Place science star information
     _scienceStarTextarea = new gwtTEXTAREA("--", 4, 50, "No Help");
     _scienceStarTextarea->SetVerticalOrientation(mcsTRUE);
@@ -392,6 +399,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // \todo find a solution to get element from map unsorted
     _mainWindow->Add(_showAllResultsButton);
     _mainWindow->Add(_resetButton);
+    _mainWindow->Add(_abortButton);
 
     // Associate callbacks
     _showAllResultsButton->AttachCB
@@ -408,7 +416,25 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::SavePanelCB);
     _exportPanel->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ExportPanelCB);
+    _abortButton->AttachCB
+        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::AbortButtonCB);
+    
+    // Associate the close button cb
+    _mainWindow->SetCloseCommand(_abortButton->GetWidgetId());
 
+    return mcsSUCCESS;
+}
+
+/**
+ * Callback associated to abort button and window's close button
+ */
+mcsCOMPL_STAT sclguiPANEL::AbortButtonCB(void *)
+{
+    logExtDbg("sclguiPANEL::AbortButtonCB()");
+    _theGui->SetStatus(true, "Bye bye");
+
+    _mainWindow->Hide();
+    exit(EXIT_SUCCESS);
     return mcsSUCCESS;
 }
 
@@ -444,7 +470,8 @@ mcsCOMPL_STAT sclguiPANEL::BuildAccuracyWindow()
     _accuracyButton->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::AccuracyButtonCB);
     _accuracyWindow->Add(_accuracyButton);
-
+    
+    _abortButton = new gwtBUTTON("ABORT", "no help");
 
 
     return mcsSUCCESS;
