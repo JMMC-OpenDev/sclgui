@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.42 2005-03-08 11:21:27 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.43 2005-03-08 14:07:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.42  2005/03/08 11:21:27  scetre
+ * Changed export in order to have in the file just the view properties
+ *
  * Revision 1.41  2005/03/08 10:58:03  scetre
  * Re Added abort ("QUIT") button
  *
@@ -25,7 +28,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.42 2005-03-08 11:21:27 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.43 2005-03-08 14:07:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -402,7 +405,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // \todo find a solution to get element from map unsorted
     _mainWindow->Add(_showAllResultsButton);
     _mainWindow->Add(_resetButton);
-    _mainWindow->Add(_abortButton);
+    //_mainWindow->Add(_abortButton);
 
     // Associate callbacks
     _showAllResultsButton->AttachCB
@@ -774,7 +777,7 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     out << "NAME\tRAJ2000\tDEJ2000\tMag";
     out << _request.GetSearchBand();
     out << "\tBase-max\tLambda\tDiamVK\n";
-    out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\t--------\n";
+    out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\n";
     out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
         << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
     out << _request.GetMaxBaselineLength() << "\t" 
@@ -1596,8 +1599,8 @@ void sclguiPANEL::BuildResultsTableLabelNComplete()
     _ucdNameforNComplete.push_back(vobsSTAR_CODE_VARIAB);
     _ucdNameforNComplete.push_back(vobsSTAR_PHOT_JHN_V);
     _ucdNameforNComplete.push_back(vobsSTAR_PHOT_JHN_H);
-    _ucdNameforNComplete.push_back(vobsSTAR_POS_PARLX_TRIG_ERROR);
     _ucdNameforNComplete.push_back(vobsSTAR_POS_PARLX_TRIG);
+    _ucdNameforNComplete.push_back(vobsSTAR_POS_PARLX_TRIG_ERROR);
     _ucdNameforNComplete.push_back(vobsSTAR_POS_EQ_PMRA);
     _ucdNameforNComplete.push_back(vobsSTAR_POS_EQ_PMDEC);
     _ucdNameforNComplete.push_back(vobsSTAR_PHOT_EXTINCTION_TOTAL);
