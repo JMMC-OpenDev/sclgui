@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.3 2004-12-02 08:49:48 mella Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.4 2004-12-02 10:06:26 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.3 2004-12-02 08:49:48 mella Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.4 2004-12-02 10:06:26 mella Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -273,7 +273,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _mainWindow->Add(_resetButton);
     _mainWindow->Add(_printButton);
     _mainWindow->Add(_abortButton);
-   
 
     // associate callbacks
     _showAllResultsButton->AttachCB(this,
@@ -288,7 +287,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
 
     // associate the _abortButton action to the window closing event
     _mainWindow->SetCloseCommand(_abortButton->GetWidgetId());
-
     
     return SUCCESS;
 }
@@ -423,7 +421,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildMultWindow()
     _multButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::MultButtonCB);
     _multWindow->Add(_multButton);
    
- 
      return SUCCESS;
 }
 
@@ -444,20 +441,19 @@ mcsCOMPL_STAT sclguiPANEL::BuildRaDecWindow()
     _raDecWindow->SetHelp(windowHelp);
 
     // prepare widgets 
-   _raDecTextfield = new gwtTEXTFIELD();
-    _raDecTextfield->SetLabel("Maximal RA Separation (mn)");
-    _raDecTextfield->SetText("0");
-    _raDecWindow->Add(_raDecTextfield);
+    _raDecTextfieldRa = new gwtTEXTFIELD();
+    _raDecTextfieldRa->SetLabel("Maximal RA Separation (mn)");
+    _raDecTextfieldRa->SetText("0");
+    _raDecWindow->Add(_raDecTextfieldRa);
 
-   _raDecTextfield = new gwtTEXTFIELD();
-    _raDecTextfield->SetLabel("Maximal DEC Separation (degree)");
-    _raDecTextfield->SetText("0");
-    _raDecWindow->Add(_raDecTextfield);
+    _raDecTextfieldDec = new gwtTEXTFIELD();
+    _raDecTextfieldDec->SetLabel("Maximal DEC Separation (degree)");
+    _raDecTextfieldDec->SetText("0");
+    _raDecWindow->Add(_raDecTextfieldDec);
  
     _raDecButton = new gwtBUTTON("Ok","Start the process");
     _raDecButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::RaDecButtonCB);
     _raDecWindow->Add(_raDecButton);
-   
       
     return SUCCESS;
 }
@@ -505,7 +501,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildSpectralTypeWindow()
     _spectralTypeButton = new gwtBUTTON("Ok","Start the process");
     _spectralTypeButton->AttachCB(this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::SpectralTypeButtonCB);
     _spectralTypeWindow->Add(_spectralTypeButton);
-   
  
      return SUCCESS;
 }
@@ -556,7 +551,6 @@ mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
 mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ShowAllResultsButtonCB()");
-    cout << "Show all result  button pressed" <<endl;
     // this stupid callback update one widget and show the window again
     string s;
     s.append(_deleteTextfield->GetText());
@@ -565,6 +559,8 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     cout << "Show all results :" << _deleteTextfield->GetText() << endl;
     _mainWindow->Hide();
     _mainWindow->Show();
+    
+    _theGui->SetStatus(true, "Show all result button pressed");
     return SUCCESS;
 }
 
@@ -574,7 +570,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
-    cout << "Reset  button pressed" <<endl;
+    _theGui->SetStatus(true, "Reset button pressed");
     return SUCCESS;
 }
 
@@ -584,7 +580,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::PrintButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::PrintButtonCB()");
-    cout << "Print  button pressed" <<endl;
+    _theGui->SetStatus(true, "Print button pressed");
     return SUCCESS;
 }
 
@@ -594,7 +590,7 @@ mcsCOMPL_STAT sclguiPANEL::PrintButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::AbortButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::AbortButtonCB()");
-    cout << "Abort  button pressed" <<endl;
+    _theGui->SetStatus(true, "Bye bye");
    
     _mainWindow->Hide();
     exit (EXIT_SUCCESS);
@@ -730,7 +726,8 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::RaDecButtonCB()");
-    cout << "data: " <<_raDecTextfield->GetText() <<endl;
+    cout << "data: Ra " <<_raDecTextfieldRa->GetText() <<endl;
+    cout << "data: Dec " <<_raDecTextfieldDec->GetText() <<endl;
     _raDecWindow->Hide();
     return SUCCESS;
 }

@@ -3,7 +3,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.h,v 1.3 2004-12-02 08:49:45 mella Exp $"
+* "@(#) $Id: sclguiPANEL.h,v 1.4 2004-12-02 10:06:24 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -36,6 +36,10 @@
 
 /**
  * This class aims to build the gui for search calib application.
+ * One main window is builded with associated widgets. Sub panels contain
+ * parameters for specific actions. The first subpanel is used to sort one 7
+ * different ways. For each choice, one window is open and the real process is
+ * done in the ok associated callback.
  * 
  */
 class sclguiPANEL : public evhSERVER
@@ -123,7 +127,8 @@ private:
 
     mcsCOMPL_STAT BuildRaDecWindow();
     gwtWINDOW *_raDecWindow;
-    gwtTEXTFIELD *_raDecTextfield;
+    gwtTEXTFIELD *_raDecTextfieldRa;
+    gwtTEXTFIELD *_raDecTextfieldDec;
     gwtBUTTON *_raDecButton;
     mcsCOMPL_STAT RaDecButtonCB(void *);
 
@@ -146,7 +151,6 @@ private:
     mcsCOMPL_STAT VariabilityButtonCB(void *);
     
 };
-
 
 #endif /*!sclguiPANEL_H*/
 
