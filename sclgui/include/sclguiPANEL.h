@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.15 2005-03-04 15:52:02 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.16 2005-03-06 20:35:28 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2005/03/04 15:52:02  scetre
+ * Added export button
+ *
  * Revision 1.14  2005/03/02 16:58:19  scetre
  * Added #define for color
  *
@@ -98,6 +101,8 @@ public:
     sclguiPANEL(string hostname, mcsINT32 port);
     virtual ~sclguiPANEL();
     virtual mcsCOMPL_STAT AppInit();
+
+    const char *GetSwVersion();
 
     /** typedef of UCD order list*/
     
