@@ -1,22 +1,21 @@
 #ifndef sclguiPANEL_H
 #define sclguiPANEL_H
 /*******************************************************************************
-* JMMC project
-*
-* "@(#) $Id: sclguiPANEL.h,v 1.5 2004-12-03 14:06:37 mella Exp $"
-*
-* who       when         what
-* --------  -----------  -------------------------------------------------------
-* mella     25-Nov-2004  Created
-*
-*
-*******************************************************************************/
+ * JMMC project
+ *
+ * "@(#) $Id: sclguiPANEL.h,v 1.6 2005-01-28 10:05:52 gzins Exp $"
+ *
+ * History
+ * -------
+ * $Log: not supported by cvs2svn $
+ * mella     25-Nov-2004  Created
+ *
+ ******************************************************************************/
 
 /**
  * \file
- * sclguiPANEL class declaration.
+ * Declaration of sclguiPANEL class.
  */
-
 
 #ifndef __cplusplus
 #error This is a C++ include file and cannot be used from plain C
@@ -42,7 +41,6 @@
  * parameters for specific actions. The first subpanel is used to sort one 7
  * different ways. For each choice, one window is open and the real process is
  * done in the ok associated callback.
- * 
  */
 class sclguiPANEL : public evhSERVER
 {
@@ -53,9 +51,14 @@ public:
     virtual mcsCOMPL_STAT AppInit();
 
 protected:
+    // Command callbacks
+    virtual evhCB_COMPL_STAT GetCalCB(msgMESSAGE &msg, void*);
+
+    // Command reply callbacks
+    virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
     
 private:
-    sclsvrCALIBRATOR_LIST *_currentList;
+    sclsvrCALIBRATOR_LIST _currentList;
     void FillResultsTable(sclsvrCALIBRATOR_LIST *list);
 
     // central point for exchange with the remote GUI 
@@ -152,8 +155,12 @@ private:
     gwtBUTTON *_variabilityButton;
     mcsCOMPL_STAT VariabilityButtonCB(void *);
     
-};
+    // Interface with search-calibrator server
+    evhINTERFACE _sclServer;
 
+    // Received message which is currently processed
+    msgMESSAGE _msg;
+};
 #endif /*!sclguiPANEL_H*/
 
 /*___oOo___*/
