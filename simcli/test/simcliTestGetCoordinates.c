@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: simcliTestGetCoordinates.c,v 1.2 2005-02-03 06:05:57 gzins Exp $"
+* "@(#) $Id: simcliTestGetCoordinates.c,v 1.3 2005-02-03 07:53:38 gzins Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -16,7 +16,7 @@
  * 
  */
 
-static char *rcsId="@(#) $Id: simcliTestGetCoordinates.c,v 1.2 2005-02-03 06:05:57 gzins Exp $"; 
+static char *rcsId="@(#) $Id: simcliTestGetCoordinates.c,v 1.3 2005-02-03 07:53:38 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -47,41 +47,30 @@ int main (int argc, char *argv[])
     char name[256];
     char ra[256];
     char dec[256];
-    char *p;
     int i;
 
-    if (argc==1) 
+    /* Get star name */
+    memset(name, '\0', 256); 
+    if (argc >= 2) 
     {
-        exit(0);
-    }
-    *name=0;
-    if (argc==2) 
-    {
-        strcat(name,argv[1]);
-        p=strchr(name,'_');
-        while ( p !=NULL) 
+        for (i=1; i < argc; i++) 
         {
-            *p = ' ';
-            p=strchr(name,'_');
+            strcat(name, argv[i]);
+            if (i != (argc-1))
+            {
+                strcat(name," ");
+            }
         }
     }
     else 
     {
-        for (i=1; i<argc-1; i++) 
-        {
-            strcat(name,argv[i]);
-            strcat(name," ");
-        } 
-        strcat(name,argv[i]);
-    }
-    if (name[0] == '\0') 
-    {
+        printf ("Usage %s <star name>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
-    strcat(name,"!") ; 
 
     if (simcliGetCoordinates(name, ra, dec) == -1)
     {
+        printf ("Star '%s' not found in Simbad\n", name);
         exit (EXIT_FAILURE);    
     }
     printf("ra  =  %s\n", ra);
