@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.17 2005-03-07 14:19:16 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.18 2005-03-07 15:56:35 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2005/03/07 14:19:16  scetre
+ * Added _withNoVarMult to know how many star of the resulting list are without variability and multiplicity
+ *
  * Revision 1.16  2005/03/06 20:35:28  gzins
  * Added GetSwVersion
  *
@@ -126,7 +129,6 @@ private:
     sclsvrREQUEST _request;
     sclsvrCALIBRATOR_LIST _currentList;
     sclsvrCALIBRATOR_LIST _coherentDiameterList;
-    sclsvrCALIBRATOR_LIST _visibilityOkList;
     sclsvrCALIBRATOR_LIST _displayList;
 
     void BuildResultsTableLabelKV();
@@ -138,7 +140,6 @@ private:
     // number of cds return, diameter coherent and visibility
     mcsINT32 _found;
     mcsINT32 _diam;
-    mcsINT32 _vis;
     mcsINT32 _withNoVarMult;
     // falg to know if the wanted file is SAVE or EXPORT, if it is equal to
     // false -> export

@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.33 2005-03-07 14:35:38 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.34 2005-03-07 15:56:17 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.33 2005-03-07 14:35:38 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.34 2005-03-07 15:56:17 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -73,7 +73,6 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     _guiPort = port;
     _found = _currentList.Size();
     _diam = _coherentDiameterList.Size();
-    _vis = _visibilityOkList.Size();
 
     int nbOfProperties = _ucdNameDisplay.size() + 1 ;
     _resultsTable = new gwtTABLE(0, nbOfProperties);
@@ -736,8 +735,8 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     ostringstream out;
     out << "NAME\tRAJ2000\tDEJ2000\tMag";
     out << _request.GetSearchBand();
-    out << "\tBase-max\tLambda\tDiamVK\tVis2\tVis2Err\n";
-    out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\t--------\t--------\t--------\n";
+    out << "\tBase-max\tLambda\tDiamVK\n";
+    out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\t--------\n";
     out << _request.GetObjectName() << "\t" << _request.GetObjectRa() << "\t" 
         << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
     out << _request.GetMaxBaselineLength() << "\t" 
@@ -771,8 +770,6 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
         }
     }
-    out << "\t" << _request.GetExpectedVisibility() << "\t" 
-        << _request.GetExpectedVisibilityError();
     _scienceStarTextarea->SetText(out.str());
 
     // Add 1 for the number column
@@ -903,8 +900,7 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     // Update resume textfield
     ostringstream output;
     output << "Number of stars: " << _found << " found, "  
-        << _diam << " with coherent diameter, "
-        << _vis << " with expected visibility and "
+        << _diam << " with coherent diameter and "
         << _withNoVarMult << " without variability and multiplicity";
     _resumeTextArea->SetText(output.str());
     
@@ -926,9 +922,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     _multAuthorized = mcsTRUE;
 
     _coherentDiameterList.Clear();
-    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-    _visibilityOkList.Clear();
-    _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+    _coherentDiameterList.Copy(_currentList, mcsFALSE);
 
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
@@ -959,14 +953,13 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     
     _coherentDiameterList.Clear();
     // Extract from the CDS return the list of coherent diameter
-    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-    _visibilityOkList.Clear();                
-    // Extract from te list of coherernt diameter the list 
-    // of visibility ok
-    _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+    _coherentDiameterList.Copy(_currentList, mcsFALSE);
+    // Filter the coherent diameter list
+    _coherentDiameterList.FilterByVariability(_varAuthorized);
+    _coherentDiameterList.FilterByMultiplicity(_multAuthorized);
     
     _displayList.Clear();
-    _displayList.Copy(_visibilityOkList);
+    _displayList.Copy(_coherentDiameterList);
     
     // if the observed band is N, reset button show principal property
     if (strcmp(_request.GetSearchBand(), "N") == 0)
@@ -1096,16 +1089,19 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
         _theGui->SetStatus(true, usrMsg);
 
     _coherentDiameterList.Clear();
-    _visibilityOkList.Clear();
     _displayList.Clear();
     
-    _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-    _visibilityOkList.Copy(_currentList, mcsTRUE, mcsFALSE);
-    _displayList.Copy(_visibilityOkList);
-
-    _found = _currentList.Size();
+    _coherentDiameterList.Copy(_currentList, mcsFALSE);
     _diam = _coherentDiameterList.Size();
-    _vis = _visibilityOkList.Size();
+
+    // Filter the coherent diameter list
+    _coherentDiameterList.FilterByVariability(_varAuthorized);
+    _coherentDiameterList.FilterByMultiplicity(_multAuthorized);
+
+    _displayList.Copy(_coherentDiameterList);
+
+    _withNoVarMult=_displayList.Size();
+    _found = _currentList.Size();
 
     // Update main window
     FillResultsTable(&_displayList);
