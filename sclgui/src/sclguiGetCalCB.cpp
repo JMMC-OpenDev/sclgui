@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.4 2005-02-07 11:11:24 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.5 2005-02-07 17:37:39 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/02/07 11:11:24  scetre
+ * minor change
+ *
  * Revision 1.3  2005/02/04 14:24:06  scetre
  * Used sort method of sclsvr
  *
@@ -22,7 +25,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.4 2005-02-07 11:11:24 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.5 2005-02-07 17:37:39 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -206,6 +209,9 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
 
             // Clear result table
             _currentList.Clear();
+            _displayList.Clear();
+            _visibilityOkList.Clear();
+            _coherentDiameterList.Clear();
 
             // Send reply
             msg.SetBody("Request FAILED.");
@@ -224,7 +230,11 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
 evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
 {
     logExtDbg("sclguiPANEL::GetCalReplyCB()");
-
+    // Clear list
+    _currentList.Clear();
+    _displayList.Clear();
+    _visibilityOkList.Clear();
+    _coherentDiameterList.Clear();
     // If an error reply is received
     switch (msg.GetType())
     {
@@ -244,19 +254,14 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         }
         case msgTYPE_REPLY:
         {
-            // Clear list
-            _currentList.Clear();
-            _displayList.Clear();
-            _visibilityOkList.Clear();
-            _coherentDiameterList.Clear();
             // Retreive the returned calibrator list
             miscDYN_BUF dynBuf;
             miscDynBufInit(&dynBuf);
             miscDynBufAppendString(&dynBuf, msg.GetBody());
             
             _currentList.UnPack(&dynBuf);
-            _currentList.CopyIn(&_coherentDiameterList, mcsTRUE);
-            _coherentDiameterList.CopyIn(&_visibilityOkList, mcsFALSE, mcsTRUE);
+            _currentList.CopyIn(&_coherentDiameterList, mcsTRUE, mcsFALSE);
+            _currentList.CopyIn(&_visibilityOkList, mcsFALSE, mcsTRUE);
             _displayList.Copy(_visibilityOkList);
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
@@ -304,7 +309,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
     
     // Send reply to the requestor
     SendReply(_msg);
-
+    
     // Reset sub-state to IDLE
     SetSubState(evhSUBSTATE_IDLE);
 
