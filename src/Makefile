@@ -1,14 +1,14 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.4 2005-01-28 10:33:19 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.5 2005-01-29 12:12:53 gzins Exp $"
 #
-# Makefile of ........
+# Makefile of the sclgui module
 #
-# who       when         what
-# --------  -----------  -------------------------------------------------------
+# History
+# -------
+# $Log: not supported by cvs2svn $
 # sccmgr    23-Nov-2004  Created
-#
 #
 #*******************************************************************************
 # REMARKS
@@ -43,9 +43,9 @@ EXECUTABLES_L   =
 
 #
 # Main searchcalib graphical program
-sclguiPanel_OBJECTS   = sclguiPanel sclguiGetCalCB
+sclguiPanel_OBJECTS   = sclguiPanel sclguiGetCalCB sclguiPANEL
 sclguiPanel_LDFLAGS   =
-sclguiPanel_LIBS      = MCS C++ sclgui sclsvr msg vobs alx simcli
+sclguiPanel_LIBS      = MCS C++ sclsvr msg vobs alx simcli
 
 #
 # <brief description of xxxxx program>
@@ -66,12 +66,12 @@ INCLUDES        = sclgui.h \
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       = sclgui
+LIBRARIES       =
 LIBRARIES_L     =
 
 #
 # the sclgui Library
-sclgui_OBJECTS   = sclguiPANEL
+llllll_OBJECTS   = 
 
 #
 # <brief description of lllll library>
