@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.21 2005-03-02 08:38:03 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.22 2005-03-02 15:02:09 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.21 2005-03-02 08:38:03 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.22 2005-03-02 15:02:09 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -74,6 +74,50 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     _found = _currentList.Size();
     _diam = _coherentDiameterList.Size();
     _vis = _visibilityOkList.Size();
+
+    int nbOfProperties = _ucdNameDisplay.size() + 1 ;
+    _resultsTable = new gwtTABLE(0, nbOfProperties);
+    // build legend table
+    _legendTable = new gwtTABLE(1, 11);
+    _legendTable->SetHeight(14);
+    //_legendTable->SetVerticalOrientation(mcsTRUE);
+    _legendTable->SetLabel("Origin");
+    _legendTable->SetCell(0, 0, "I/280");
+    _legendTable->SetCellBackground(0, 0, "#ffb6b6");
+    _legendTable->SetCell(0, 1, "II/225");
+    _legendTable->SetCellBackground(0, 1, "#f6b6ff");
+    _legendTable->SetCell(0, 2, "II/7A");
+    _legendTable->SetCellBackground(0, 2, "#b9b6ff");
+    _legendTable->SetCell(0, 3, "II/246");
+    _legendTable->SetCellBackground(0, 3, "#b6e8ff");
+    _legendTable->SetCell(0, 4, "V/50");
+    _legendTable->SetCellBackground(0, 4, "#b6ffe6");
+    _legendTable->SetCell(0, 5, "charm");
+    _legendTable->SetCellBackground(0, 5, "#dfffb6");
+    
+    _legendTable->SetCell(0, 6, "B/denis");
+    _legendTable->SetCellBackground(0, 6, "#fff4b6");
+    _legendTable->SetCell(0, 7, "I/196/main");
+    _legendTable->SetCellBackground(0, 7, "#78fb8b");
+    _legendTable->SetCell(0, 8, "J/A+A/393/183/catalog");
+    _legendTable->SetCellBackground(0, 8, "#9778fb");
+    _legendTable->SetCell(0, 9, "V/36B/bsc4s");
+    _legendTable->SetCellBackground(0, 9, "#88a0a6");
+    _legendTable->SetCell(0, 10, "MIDI");
+    _legendTable->SetCellBackground(0, 10, "#c994ca");
+
+
+
+    _confidenceTable = new gwtTABLE(1,3);
+    _confidenceTable->SetHeight(14);
+    _confidenceTable->SetLabel("Confidence Index");
+    _confidenceTable->SetCell(0, 0, "Low");
+    _confidenceTable->SetCellBackground(0, 0, "#6e6e6e");
+    _confidenceTable->SetCell(0, 1, "Medium");           
+    _confidenceTable->SetCellBackground(0, 1, "#d8d8d8");
+    _confidenceTable->SetCell(0, 2, "High");             
+    _confidenceTable->SetCellBackground(0, 2, "#ffffff");
+    
     _varAuthorized = mcsFALSE;
     _multAuthorized = mcsFALSE;
     BuildResultsTableLabelKV();
@@ -261,6 +305,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _mainWindow->Add(_scienceStarTextarea);
     _mainWindow->Add(_resultsTable);
     _mainWindow->Add(_legendTable);    
+    _mainWindow->Add(_confidenceTable);    
     _mainWindow->Add(_resumeTextfield);
     _mainWindow->AddContainer(_selectPanel); 
     _mainWindow->AddContainer(_deletePanel); 
@@ -631,7 +676,7 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     int nbOfRows;
 
     nbOfRows = list->Size();
-    _resultsTable = new gwtTABLE(nbOfRows, nbOfProperties);
+    _resultsTable->SetDimension(nbOfRows, nbOfProperties);
     _resultsTable->SetHeight(160);
 
     _resultsTable->SetVerticalOrientation(mcsTRUE);
@@ -691,28 +736,50 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             }
             if (strcmp(property->GetOrigin(), "I/280") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#f5878e");
+                _resultsTable->SetCellBackground(el, i+1, "#ffb6b6");
             }
             if (strcmp(property->GetOrigin(), "II/225/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#dabbf8");
+                _resultsTable->SetCellBackground(el, i+1, "#f6b6ff");
             }
             if (strcmp(property->GetOrigin(), "II/7A/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#afb1e9");
+                _resultsTable->SetCellBackground(el, i+1, "#b9b6ff");
             }
             if (strcmp(property->GetOrigin(), "II/246/out") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#afdbe9");
+                _resultsTable->SetCellBackground(el, i+1, "#b6e8ff");
             }
             if (strcmp(property->GetOrigin(), "V/50/catalog") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#afe9d5");
+                _resultsTable->SetCellBackground(el, i+1, "#b6ffe6");
             }
             if (strcmp(property->GetOrigin(), "J/A+A/386/492/charm") == 0)
             {
-                _resultsTable->SetCellBackground(el, i+1, "#bee9af");
+                _resultsTable->SetCellBackground(el, i+1, "#dfffb6");
             }
+            /**/
+            if (strcmp(property->GetOrigin(), "B/denis") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#fff4b6");
+            }
+            if (strcmp(property->GetOrigin(), "I/196/main") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#78fb8b");
+            }
+            if (strcmp(property->GetOrigin(), "J/A+A/393/183/catalog") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#9778fb");
+            }
+            if (strcmp(property->GetOrigin(), "MIDI") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#c994ca");
+            }
+            if (strcmp(property->GetOrigin(), "V/36B/bsc4s") == 0)
+            {
+                _resultsTable->SetCellBackground(el, i+1, "#88a0a6");
+            }
+
             i++;
             ucdNameOrderIterator++;
 
@@ -720,30 +787,6 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
 
     } // End for each calibrators
     
-    // build legend table
-    _legendTable = new gwtTABLE(1, 9);
-    _legendTable->SetHeight(7);
-    _legendTable->SetVerticalOrientation(mcsTRUE);
-    _legendTable->SetLabel("Origin");
-    _legendTable->SetCell(0, 0, "LOW");
-    _legendTable->SetCellBackground(0, 0, "#6e6e6e");
-    _legendTable->SetCell(0, 1, "MEDIUM");
-    _legendTable->SetCellBackground(0, 1, "#d8d8d8");
-    _legendTable->SetCell(0, 2, "HIGH");
-    _legendTable->SetCellBackground(0, 2, "#ffffff");
-    
-    _legendTable->SetCell(0, 3, "I/280");
-    _legendTable->SetCellBackground(0, 3, "#f5878e");
-    _legendTable->SetCell(0, 4, "II/225");
-    _legendTable->SetCellBackground(0, 4, "#dabbf8");
-    _legendTable->SetCell(0, 5, "II/7A");
-    _legendTable->SetCellBackground(0, 5, "#afb1e9");
-    _legendTable->SetCell(0, 6, "II/246");
-    _legendTable->SetCellBackground(0, 6, "#afdbe9");
-    _legendTable->SetCell(0, 7, "V/50");
-    _legendTable->SetCellBackground(0, 7, "#afe9d5");
-    _legendTable->SetCell(0, 8, "charm");
-    _legendTable->SetCellBackground(0, 8, "#bee9af");
 }
 
 /**
@@ -776,9 +819,8 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
         _ucdNameDisplay = _ucdNameforNComplete;
     }
     
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
 
     _theGui->SetStatus(true, "Show all result button pressed");
     return mcsSUCCESS;
@@ -813,9 +855,8 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     }
 
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
 
     return mcsSUCCESS;
 }
@@ -916,9 +957,8 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
         _displayList.Delete(starNumber);
 
         // Update main window
-        _mainWindow->Hide();
-        BuildMainWindow();
-        _mainWindow->Show();
+        FillResultsTable(&_displayList);
+        _mainWindow->Update();
     }
     return mcsSUCCESS;
 }
@@ -961,9 +1001,8 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
     _vis = _visibilityOkList.Size();
 
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
 
     return mcsSUCCESS;
 }
@@ -1012,9 +1051,8 @@ mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
     _displayList.FilterByVisibility(visMax);
     
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
 
     return mcsSUCCESS;
 }
@@ -1063,9 +1101,8 @@ mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
     
     _displayList.FilterByLuminosityClass(LumList);
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
 
     return mcsSUCCESS;
 }
@@ -1091,9 +1128,8 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
     
     _displayList.FilterByMagnitude(band, magnitude, magRange);
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
 
     return mcsSUCCESS;
 }
@@ -1142,9 +1178,8 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
     _variabilityWindow->Hide();
 
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
     return mcsSUCCESS;
 }
 
@@ -1190,9 +1225,8 @@ mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
     _multWindow->Hide();
 
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
     return mcsSUCCESS;
 }
 
@@ -1212,11 +1246,14 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
         // todo err
         return mcsFAILURE;
     }
+    // convert raRange from min to degree
+    //raRange=raRange/60;
     if (sscanf((_raDecTextfieldDec->GetText()).c_str(), "%f", &decRange) != 1)
     {
         // todo err
         return mcsFAILURE;
     }
+    
     // Get the value of ra dec in user request
     const char *ra, *dec;
     ra  = _request.GetObjectRa();
@@ -1228,9 +1265,8 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
                                             decRange);
     // todo put the value from GetText instead of 0.1
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
     return mcsSUCCESS;
 }
 
@@ -1285,9 +1321,8 @@ mcsCOMPL_STAT sclguiPANEL::SpectralTypeButtonCB(void *)
     
     _displayList.FilterBySpectralType(SpectTypeList);
     // Update main window
-    _mainWindow->Hide();
-    BuildMainWindow();
-    _mainWindow->Show();
+    FillResultsTable(&_displayList);
+    _mainWindow->Update();
     return mcsSUCCESS;
 }
 
