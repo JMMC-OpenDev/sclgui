@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPanel.cpp,v 1.5 2005-03-06 10:51:00 gzins Exp $"
+ * "@(#) $Id: sclguiPanel.cpp,v 1.6 2005-03-07 17:50:03 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/03/06 10:51:00  gzins
+ * Removed debug messages on cout
+ *
  * Revision 1.4  2005/02/15 15:57:24  gzins
  * Added CVS log as file modification history
  *
@@ -18,13 +21,13 @@
  * Entry point for SearchCalib graphical application. 
  */
 
-static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.5 2005-03-06 10:51:00 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPanel.cpp,v 1.6 2005-03-07 17:50:03 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /**
  * Defines
  */
-#define DEFAULTGUIPORT 1234
+#define DEFAULTGUIPORT 1357
 
 
 /* 

@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.37 2005-03-07 17:23:07 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.38 2005-03-07 17:50:03 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.37 2005-03-07 17:23:07 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.38 2005-03-07 17:50:03 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -207,7 +207,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildConfirmWindow()
     }
     ostringstream out;
     out << _fileName;
-    out << " already exist, Would you like to overwrite this file ?";
+    out << " already exists. Do you want to overwrite it?";
     _confirmLabel = new gwtLABEL(out.str(), "No Help");
 
     // Create overwrite button and cancel button
@@ -239,14 +239,14 @@ mcsCOMPL_STAT sclguiPANEL::OverwriteButtonCB()
         mcsFAILURE)
     {
         // if save failed, send user message and close the popup
-        sprintf(usrMsg, "Saving in file '%s' failed", _fileName);
+        sprintf(usrMsg, "'%s' file HAS NOT been created", _fileName);
         _theGui->SetStatus(false, usrMsg, errUserGet());
         errCloseStack();
         _confirmWindow->Hide();
         return mcsFAILURE;
     }
     // if failed succeed, send user message and close the popup
-    sprintf(usrMsg, "Save in file '%s' succeed", _fileName);
+    sprintf(usrMsg, "'%s' file has been created", _fileName);
     _theGui->SetStatus(true, usrMsg);
 
     _confirmWindow->Hide();
@@ -935,7 +935,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     FillResultsTable(&_displayList);
     _mainWindow->Update();
 
-    _theGui->SetStatus(true, "Show all result button pressed");
+    _theGui->SetStatus(true, "'Show all result' button has been pressed");
     return mcsSUCCESS;
 }
 
@@ -945,7 +945,7 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
-    _theGui->SetStatus(true, "Reset button pressed");
+    _theGui->SetStatus(true, "'Reset' button has been pressed");
     
     _varAuthorized = mcsTRUE;
     _multAuthorized = mcsTRUE;
@@ -1024,17 +1024,22 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
     mcsUINT32 starNumber;
     // Inform user
     mcsSTRING64 usrMsg;
+    // Dummy buffer
+    // Used with sscanf to know if a value is an integer or not
+    mcsSTRING32 dummyBuffer;
     
-    if (sscanf((_deleteTextfield->GetText()).c_str(), "%d", &starNumber) != 1)
+    if (sscanf((_deleteTextfield->GetText()).c_str(), "%d%s", 
+               &starNumber, dummyBuffer) != 1)
     {
-        _theGui->SetStatus(false, "Not a valid number");
+        _theGui->SetStatus(false, "Invalid star number", 
+                           "Value should be an integer");
         return mcsFAILURE;
     }
     if ((starNumber > _displayList.Size()) || (starNumber<=0))
     {
-        sprintf(usrMsg, "The value should be a positive integer lower than %d",
+        sprintf(usrMsg, "Value should be a positive integer lower than %d",
                 _displayList.Size());
-        _theGui->SetStatus(false, usrMsg); 
+        _theGui->SetStatus(false, "Invalid star number", usrMsg); 
         return mcsFAILURE;
     }
     else
@@ -1066,12 +1071,12 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
     
     if (_currentList.Load(fileName, _request) == mcsFAILURE)
     {
-        sprintf(usrMsg, "Loading file '%s' failed", fileName);
+        sprintf(usrMsg, "'%s' file HAS NOT been loaded", fileName);
         _theGui->SetStatus(false, usrMsg, errUserGet());
         errCloseStack();
         return mcsFAILURE;
     }
-    sprintf(usrMsg, "Load file '%s' succeed", fileName);
+    sprintf(usrMsg, "'%s' file has been loaded", fileName);
         _theGui->SetStatus(true, usrMsg);
 
     _coherentDiameterList.Clear();
@@ -1122,7 +1127,7 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
             return mcsFAILURE;
         }
     }
-    
+
     return mcsSUCCESS;
 }
 
@@ -1152,7 +1157,7 @@ mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
             return mcsFAILURE;
         }
     }
-   
+
     return mcsSUCCESS;
 }
 
