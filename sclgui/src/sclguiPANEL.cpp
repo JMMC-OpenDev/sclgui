@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.25 2005-03-03 16:51:19 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.26 2005-03-04 15:54:47 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.25 2005-03-03 16:51:19 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.26 2005-03-04 15:54:47 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -81,7 +81,7 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     _legendTable = new gwtTABLE(1, 11);
     _legendTable->SetHeight(14);
     //_legendTable->SetVerticalOrientation(mcsTRUE);
-    _legendTable->SetLabel("Origin");
+    _legendTable->SetLabel("Catalog Origin");
     _legendTable->SetCell(0, 0, "I/280");
     _legendTable->SetCellBackground(0, 0, sclguiI_280_COLOR);
     _legendTable->SetCell(0, 1, "II/225");
@@ -273,14 +273,15 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     FillResultsTable(&_displayList);
 
     // Insert resume textfield
-    _resumeTextfield = new gwtTEXTFIELD();
-    _resumeTextfield->SetLabel("Resume");
+    _resumeTextArea = new gwtTEXTAREA("--", 1, 50, "No Help");
+    _resumeTextArea->SetLabel("Results");
+    _resumeTextArea->SetVerticalOrientation(mcsTRUE);
     ostringstream output;
     output << "Number of stars: " << _found << " found, "  
         << _diam << " with coherent diameter and "
         << _vis << " with expected visibility.";
     
-    _resumeTextfield->SetText(output.str());
+    _resumeTextArea->SetText(output.str());
 
     // Prepare subpanels
     _selectPanel = new gwtSUBPANEL("SELECT CALIBRATORS");
@@ -311,7 +312,7 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     _loadPanel = new gwtSUBPANEL("LOAD");
     _loadPanel->SetLabel("Load File");
     _loadPanel->SetHelp("Loading of star");
-    _loadTextfield = new gwtTEXTFIELD("*.txt", "File Name to load");
+    _loadTextfield = new gwtTEXTFIELD("*.scl", "File Name to load");
     _loadTextfield->SetLabel("File Name to load");
     _loadPanel->Add(_loadTextfield);
 
@@ -322,22 +323,37 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     strcpy(fileName, _request.GetObjectName());
     strcat(fileName, "_");
     strcat(fileName, _request.GetSearchBand());
-    strcat(fileName, ".txt");
+    strcat(fileName, ".scl");
     _saveTextfield = new gwtTEXTFIELD
         (fileName, "File name to save current list of calibrators");
     _saveTextfield->SetLabel("File Name to save");
     _savePanel->Add(_saveTextfield);
 
+    _exportPanel = new gwtSUBPANEL("EXPORT");
+    _exportPanel->SetLabel("Export File");
+    _exportPanel->SetHelp("Export file in directory /Resultats/");
+    mcsSTRING256 exportFileName;
+    strcpy(exportFileName, _request.GetObjectName());
+    strcat(exportFileName, "_");
+    strcat(exportFileName, _request.GetSearchBand());
+    strcat(exportFileName, ".txt");
+    _exportTextfield = new gwtTEXTFIELD
+        (exportFileName, "File name to export current list of calibrators");
+    _exportTextfield->SetLabel("File Name to export");
+    _exportPanel->Add(_exportTextfield);
+
+
     // Add widgets to the main window 
     _mainWindow->Add(_scienceStarTextarea);
+    _mainWindow->Add(_resumeTextArea);
     _mainWindow->Add(_resultsTable);
     _mainWindow->Add(_legendTable);    
     _mainWindow->Add(_confidenceTable);    
-    _mainWindow->Add(_resumeTextfield);
     _mainWindow->AddContainer(_selectPanel); 
     _mainWindow->AddContainer(_deletePanel); 
     _mainWindow->AddContainer(_loadPanel); 
     _mainWindow->AddContainer(_savePanel); 
+    _mainWindow->AddContainer(_exportPanel); 
 
     // Following elements are placed here because 11th element is placed
     // before the 2nd one
@@ -361,6 +377,8 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::LoadPanelCB);
     _savePanel->AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::SavePanelCB);
+    _exportPanel->AttachCB
+        (this, (gwtCOMMAND::CB_METHOD) &sclguiPANEL::ExportPanelCB);
 
     // Associate the _abortButton action to the window closing event
     _mainWindow->SetCloseCommand(_abortButton->GetWidgetId());
@@ -704,14 +722,14 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     _resultsTable->SetHeight(160);
 
     _resultsTable->SetVerticalOrientation(mcsTRUE);
-    _resultsTable->SetLabel("Results");
+    //_resultsTable->SetLabel("Results");
 
     // Insert first column Header
     _resultsTable->SetColumnHeader(0, "Number");
 
     // Insert headers for calibrator properties
     int propIdx=0;
-    UCD_NAME_ORDER::iterator ucdNameOrderIterator;
+    vobsSTAR_PROPERTY_ID_LIST::iterator ucdNameOrderIterator;
     ucdNameOrderIterator = _ucdNameDisplay.begin();
     while(ucdNameOrderIterator != _ucdNameDisplay.end())
     {
@@ -1041,7 +1059,8 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     strcpy(fileName, (_saveTextfield->GetText()).c_str());
    
     mcsSTRING64 usrMsg;
-    if (_displayList.Save(fileName, mcsTRUE, &_request) == mcsFAILURE)
+    if (_currentList.Save(fileName, _ucdName, mcsTRUE,  &_request) ==
+        mcsFAILURE)
     {
         sprintf(usrMsg, "Save in file '%s' failed", fileName);
         _theGui->SetStatus(false, usrMsg);
@@ -1050,6 +1069,32 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
     sprintf(usrMsg, "Save in file '%s' succeed", fileName);
     _theGui->SetStatus(true, usrMsg);
 
+
+    return mcsSUCCESS;
+}
+
+/**
+ *  User callback associated to the Export Panel.
+ */
+mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
+{
+    logExtDbg("sclguiPANEL::ExportPanelCB()");
+    cout << "Export :" << _exportTextfield->GetText() << endl;
+    
+    // Get the name of the textfield
+    mcsSTRING256 fileName;
+    strcpy(fileName, (_exportTextfield->GetText()).c_str());
+   
+    mcsSTRING64 usrMsg;
+    if (_displayList.Save(fileName,_ucdNameDisplay,  mcsFALSE, &_request) ==
+        mcsFAILURE)
+    {
+        sprintf(usrMsg, "Export in file '%s' failed", fileName);
+        _theGui->SetStatus(false, usrMsg);
+        return mcsFAILURE;
+    }
+    sprintf(usrMsg, "Export in file '%s' succeed", fileName);
+    _theGui->SetStatus(true, usrMsg);
 
     return mcsSUCCESS;
 }
