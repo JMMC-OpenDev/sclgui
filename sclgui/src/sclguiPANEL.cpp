@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.47 2005-03-08 17:07:08 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.48 2005-03-10 11:32:10 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.47  2005/03/08 17:07:08  scetre
+ * Added user message
+ *
  * Revision 1.46  2005/03/08 15:31:23  scetre
  * Updated user message
  *
@@ -41,7 +44,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.47 2005-03-08 17:07:08 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.48 2005-03-10 11:32:10 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -1630,14 +1633,15 @@ void sclguiPANEL::BuildResultsTableLabelKV()
     _ucdNameforKV.push_back(vobsSTAR_POS_GAL_LAT             );
     _ucdNameforKV.push_back(vobsSTAR_POS_GAL_LON             );
     _ucdNameforKV.push_back(vobsSTAR_VELOC_HC                );
+    _ucdNameforKV.push_back(vobsSTAR_VELOC_ROTAT             );
     _ucdNameforKV.push_back(vobsSTAR_LD_DIAM                 );
     _ucdNameforKV.push_back(vobsSTAR_LD_DIAM_ERROR           );
     _ucdNameforKV.push_back(vobsSTAR_UD_DIAM                 );
     _ucdNameforKV.push_back(vobsSTAR_UD_DIAM_ERROR           );
-    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM               );
-    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM_ERROR         );
     _ucdNameforKV.push_back(vobsSTAR_OBS_METHOD              );
     _ucdNameforKV.push_back(vobsSTAR_INST_WAVELENGTH_VALUE   );
+    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM               );
+    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM_ERROR         );
     _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_U              );
     _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_B              );
     _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_V              );
@@ -1649,8 +1653,6 @@ void sclguiPANEL::BuildResultsTableLabelKV()
     _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_L              );
     _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_M              );
     _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_N              );
-    _ucdNameforKV.push_back(vobsSTAR_VELOC_ROTAT             );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_COLOR_EXCESS       );
     _ucdNameforKV.push_back(sclsvrCALIBRATOR_MO              );
     _ucdNameforKV.push_back(sclsvrCALIBRATOR_LO              );
     _ucdNameforKV.push_back(sclsvrCALIBRATOR_KO              );
