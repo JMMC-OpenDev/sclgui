@@ -28,6 +28,7 @@
 #include <simclic.h>
 #include <simcli.h>
 #include <simcliPrivate.h>
+#include "log.h"
 
 #ifndef _PARAMS
 #ifdef __STDC__
@@ -435,7 +436,7 @@ static char *GetData(data, number)
     t = data->type + data->otype;
     if (number == 0) data->oline += 1;
     else data->oline = *t + number;
-#ifdef DEBUG
+#ifdef TEST
     printf(".... GetData number=%d (oline=%d), limites=[%d,%d]\n", 
 	number, data->oline, t[0], t[1]);
 #endif
@@ -443,7 +444,7 @@ static char *GetData(data, number)
     if (data->oline > t[1]) return(NULL);
     p = data->buf + data->line[data->oline-1];
     if (CompareTypes(data->dtype, p)) {
-#ifdef DEBUG
+#ifdef TEST
 	printf("++++ GetData, type disagree dtype=%s, found=%s\n", 
 		data->dtype, p);
 #endif
@@ -478,7 +479,7 @@ static int simbad_send(hand,str)
 {
   int st;
 	st = ClientTreat(smb_handle[hand].sock,str,noresult);
-#ifdef DEBUG
+#ifdef TEST
        	printf("SENT    <%s> st=%d, code=%d, length=%d. Received Text:\n%s\n",
 		    str, st, srv_code,srv_len,srv_txt);
 #endif
@@ -491,7 +492,7 @@ static int simbad_exch(hand,str)
 {
   char *msg;
   int st;
-#ifdef DEBUG
+#ifdef TEST
 	printf("EXCH: handle=%d (socket=%d)\n%s\n",
 		hand,smb_handle[hand].sock,str) ;
 #endif
@@ -499,7 +500,7 @@ static int simbad_exch(hand,str)
 	for (msg=str; msg; ) {
 	    st = ClientTreat(smb_handle[hand].sock,msg,fresult);
 
-#ifdef DEBUG
+#ifdef TEST
        	printf("RECV to <%s> st=%d, code=%d, length=%d. Text:\n%s(Hit Return)",
 		    msg, st, srv_code,srv_len,srv_txt);
 	getchar();
@@ -541,8 +542,10 @@ static int simbad_open(hand,node,service,userid,passwd,appli)
 	char *passwd ;
 	char *appli ;
 {
+
 	int s ;
 
+    logExtDbg("simbad_open()"); 
 	s = ClientOpen(noresult,node,service,userid,passwd,appli) ;
 
 	if (s > 0)
@@ -558,6 +561,7 @@ static int simbad_open(hand,node,service,userid,passwd,appli)
 static int simbad_close(hand)
 	int hand ;
 {
+    logExtDbg("simbad_close()"); 
 	ClientClose(smb_handle[hand].sock) ;
 	return(OK) ;
 }
@@ -565,6 +569,7 @@ static int simbad_close(hand)
 static int simbad_endquery(hand)
 	int hand ;
 {
+    logExtDbg("simbad_endquery()"); 
 	if (! isopen(hand))
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -603,6 +608,7 @@ int simbad_connect(node,service,userid,passwd)
 	char *userid ;
 	char *passwd ;
 {
+    logExtDbg("simbad_connect()"); 
 	int i ;
 	int hand ;
 	int stat ;
@@ -640,6 +646,7 @@ int simbad_connect(node,service,userid,passwd)
 	/* open the connection */
 	NODE = (node==NULL || *node==EOS) ? DEFAULT_NODE : node ;
 	SERVICE = (service==NULL || *service==EOS) ? DEFAULT_SERVICE : service ;
+
 	simbad_appli(NULL) ;
 	if ((stat = simbad_open(hand,NODE,SERVICE,userid,passwd,appli_name)) < 0)
 	{
@@ -662,6 +669,7 @@ int simbad_disconnect(hand)
 {
 	int stat ;
 
+    logExtDbg("simbad_disconnect()"); 
 	if (! isopen(hand))
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -701,6 +709,7 @@ int simbad_query(hand,question,options)
 {
 	int minlg ;
 
+    logExtDbg("simbad_query()"); 
 	if (! isopen(hand))
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -788,7 +797,7 @@ int simbad_retrieve(hand,num)
 	int num ;
 {
 	char str[32] ;
-
+    logExtDbg("simbad_retrieve()");
 	if (! isopen(hand) || ! existdata(hand)) 
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -801,8 +810,7 @@ int simbad_retrieve(hand,num)
 	else          smb_handle[hand].objnum = num ;
 	if (smb_handle[hand].objnum <= 0 || 
 	    smb_handle[hand].objnum > smb_handle[hand].nbobj) return(0) ;
-#ifdef DEBUG
-	printf("RETRIEVE: objnum=%d, status=%d\n",
+#ifdef TEST
 		smb_handle[hand].objnum,smb_handle[hand].status) ;
 #endif
 
@@ -840,6 +848,7 @@ int simbad_retrieve(hand,num)
 char *simbad_telldata(hand)
   int hand;		/* IN: Simbad Connection number */
 {
+    logExtDbg("simbad_telldata()"); 
     if (! isopen(hand) || ! existdata(hand)) return(NULL) ;
     TellData(smb_handle[hand].answer);
     return((smb_handle[hand].answer)->tell);
@@ -850,6 +859,7 @@ int simbad_findata(hand, astrotype, options)
   char *astrotype;	/* IN: Data type to look at */
   char *options;	/* IN: Option string        */
 {
+    logExtDbg("simbad_findata()"); 
     if (! isopen(hand) || ! existdata(hand))
     {
 	ERRNO(ERR_CLIENT) ;
@@ -869,6 +879,7 @@ char *simbad_getdata(hand, number)
   int hand;		/* IN: Simbad Connection number */
   int number;		/* IN: Number (0 = Next)    */
 {
+    logExtDbg("simbad_getdata()"); 
     if (! isopen(hand) || ! existdata(hand))
     {
 	ERRNO(ERR_CLIENT) ;
@@ -881,6 +892,7 @@ char *simbad_getdata(hand, number)
 char *simbad_error(h)
 	int h ;
 {
+    logExtDbg("simbad_error()"); 
 	switch(simbad_errno_value)
 	{
 		case ERR_TELECOM:
@@ -898,6 +910,7 @@ char *simbad_error(h)
 
 int simbad_errno()
 {
+    logExtDbg("simbad_errno()"); 
 	return(simbad_errno_value) ;
 }
 
@@ -907,6 +920,7 @@ void simbad_appli(str)
 {
 	char *p ;
 
+    logExtDbg("simbad_appli()"); 
 	if (str && *str)
 		p = str ;
 	else 

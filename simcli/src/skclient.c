@@ -154,7 +154,7 @@ int sk_kill(plug, sig)
   int stat;
 
     bsig[0] = sig ? sig : SIGINT;
-#ifdef DEBUG
+#ifdef TEST
     fprintf(stderr, "send(%d, ^%c, 1, %d)\n", plug, bsig[0]|0100, MSG_OOB);
 #endif
     stat = send(plug, bsig, 1, MSG_OOB);
@@ -197,7 +197,7 @@ int sk_obeyserver(plug, digest, more)
     for (eof=bufop=0; !eof; ) {
 	if (bufop) {    /* Get in BUFFER mode */
 	    stat = sk_getl(plug);    /* Size  */
-#ifdef DEBUG
+#ifdef TEST
 	    fprintf(stderr, "\nHave to read %d bytes\n", stat);
 #endif
 	    if (stat < 0) break;
@@ -333,7 +333,7 @@ static int open_digest(buf, len)
 {
     if (len <= 0) return(len);
     buf[len] = 0;
-#ifdef DEBUG
+#ifdef TEST
 	printf("++++open_digest, received <%s>\n", buf);
 #endif
     err2(buf, (char *)0);
@@ -349,7 +349,7 @@ static int open_more(buf, len)
   int  len;	/* IN: Size of  buf	 */
 {
   int n;
-#ifdef DEBUG
+#ifdef TEST
 	printf("++++open_more called\n");
 #endif
     n = pswd ? strlen(pswd) : 0;
