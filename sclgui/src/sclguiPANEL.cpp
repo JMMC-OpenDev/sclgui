@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.16 2005-02-23 17:25:30 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.15 2005-02-23 17:06:27 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.16 2005-02-23 17:25:30 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -708,8 +708,13 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 
     _displayList.Clear();
     _displayList.Copy(_coherentDiameterList);
-
-    _ucdNameDisplay = _ucdNameforNComplete;
+    
+    // if the observed band is N, Show All Result button show all property
+    if (strcmp(_request.GetSearchBand(), "N") == 0)
+    {
+        _ucdNameDisplay = _ucdNameforNComplete;
+    }
+    
     _mainWindow->Hide();
     BuildMainWindow();
     _mainWindow->Show();
@@ -739,7 +744,12 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     
     _displayList.Clear();
     _displayList.Copy(_visibilityOkList);
-    _ucdNameDisplay = _ucdNameforN;
+    
+    // if the observed band is N, reset button show principal property
+    if (strcmp(_request.GetSearchBand(), "N") == 0)
+    {
+        _ucdNameDisplay = _ucdNameforN;
+    }
 
     // Update main window
     _mainWindow->Hide();
