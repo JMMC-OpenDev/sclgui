@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.4 2004-12-02 10:06:26 mella Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.5 2004-12-03 14:06:39 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.4 2004-12-02 10:06:26 mella Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.5 2004-12-03 14:06:39 mella Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -23,6 +23,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
  * System Headers 
  */
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 
@@ -30,6 +31,8 @@ using namespace std;
  * MCS Headers 
  */
 #include "mcs.h"
+#include "misc.h"
+#include "msg.h"
 #include "log.h"
 #include "err.h"
 
@@ -105,10 +108,18 @@ static char *starProperties[] =
 
 /**
  * Constructs a new sclguiPANEL.
+ *
+ * \param hostname The host name of the remote xml display.
+ * \param port  The port of the remote xml display.
+ *
+ *  \returns an MCS completion status code (SUCCESS or FAILURE)
  */
-sclguiPANEL::sclguiPANEL()
+sclguiPANEL::sclguiPANEL(string hostname, mcsINT32 port)
 {
     logExtDbg("sclguiPANEL::sclguiPANEL");
+    _guiHostname = hostname;
+    _guiPort = port;
+    _currentList = NULL;
 }
 
 
@@ -136,12 +147,12 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
     // init by default on localhost:1234
     // \todo make it adjustable giving parameters to the constructor
     _theGui = new gwtGUI();
-    status = _theGui->ConnectToRemoteGui("localhost",1234, mcsGetProcName());
+    status = _theGui->ConnectToRemoteGui(_guiHostname , _guiPort, mcsGetProcName());
     
     if (status == FAILURE)
     {
         /* \todo errAdd */
-        cout << "connection on localhost:1234 failed" << endl;
+        cout << "connection on " << _guiHostname << ":" << _guiPort << " failed" << endl;
         return FAILURE;
     }
     
@@ -190,31 +201,9 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
     // _scienceStarTextarea->SetText("...");
     
     // the results table presents the entry number, the calibrator properties followed by star ones. 
-    // the table is empty at the beginning
-    int nbOfProperties = sclguiNB_CALIBRATOR_PROPERTIES+sclguiNB_STAR_PROPERTIES + 1 ;
-    _resultsTable = new gwtTABLE(0,nbOfProperties);
-    _resultsTable->SetLabel("Results");
-    
-    // insert first comulmn Header
-    _resultsTable->SetColumnHeader(0, "Number");
-    
-    // insert headers for calibrator properties
-    int columnsIdx=1;
-    while(columnsIdx < sclguiNB_CALIBRATOR_PROPERTIES)
-    {
-        _resultsTable->SetColumnHeader(columnsIdx, calibratorProperties[columnsIdx]);
-        columnsIdx++;
-    }
-
-    // insert headers for calibrator properties
-    columnsIdx=0;
-    while(columnsIdx < sclguiNB_STAR_PROPERTIES)
-    {
-        _resultsTable->SetColumnHeader(columnsIdx + sclguiNB_CALIBRATOR_PROPERTIES,
-                                       starProperties[columnsIdx]);
-        columnsIdx++;
-    }
-
+    // the table is empty but should be filled with first result of SEARCH 
+    FillResultsTable(_currentList);
+ 
     // insert resume textfield
     _resumeTextfield = new gwtTEXTFIELD();
     _resumeTextfield->SetLabel("Resume");
@@ -545,6 +534,99 @@ mcsCOMPL_STAT sclguiPANEL::BuildVariabilityWindow()
  * Private methods
  */
 
+/** 
+ *  Fill the _resultsTable taking information from the given calibrator list.
+ *
+ * \param list the list of calibrator to place into the table. 
+ * If the list is NULL, the table is filled only with the headers.
+ *
+ */
+void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
+{
+    logExtDbg("sclguiPANEL::FillResultsTable()");
+
+    int nbOfProperties = sclguiNB_CALIBRATOR_PROPERTIES+sclguiNB_STAR_PROPERTIES + 1 ;
+    int nbOfRows;
+
+    if(list == NULL)
+    {
+        nbOfRows=0;
+    }
+    else
+    {
+        nbOfRows = list->Size();
+    }
+    _resultsTable = new gwtTABLE(nbOfRows, nbOfProperties);
+    _resultsTable->SetLabel("Results");
+    
+    // insert first comulmn Header
+    _resultsTable->SetColumnHeader(0, "Number");
+    
+    // insert headers for calibrator properties
+    int columnsIdx=1;
+    while(columnsIdx <= sclguiNB_CALIBRATOR_PROPERTIES)
+    {
+        _resultsTable->SetColumnHeader(columnsIdx, calibratorProperties[columnsIdx-1]);
+        columnsIdx++;
+    }
+
+    // insert headers for calibrator properties
+    columnsIdx=0;
+    while(columnsIdx < sclguiNB_STAR_PROPERTIES)
+    {
+        _resultsTable->SetColumnHeader(columnsIdx + sclguiNB_CALIBRATOR_PROPERTIES + 1,
+                                       starProperties[columnsIdx]);
+        columnsIdx++;
+    }
+
+    // end to fill the table
+    if(list != NULL)
+    {
+        for (unsigned int el = 0; el < list->Size(); el++)
+        {
+            sclsvrCALIBRATOR *calibrator;
+            ostringstream elStr;
+            elStr << el;
+            _resultsTable->SetCell(el,0,elStr.str());
+
+            calibrator = (sclsvrCALIBRATOR*)list->GetNextStar((el==0));
+            int i;
+            
+            // add calibrator properties raws
+            for (i=ANGULAR_DIAMETER_ID; i <= VISIBILITY_ERROR_ID ; i++)
+            {
+                mcsSTRING64 value;
+                if( calibrator->GetProperty((sclsvrPROPERTY_ID)(i),value) == FAILURE )
+                {
+                    // \todo errAdd
+                    _resultsTable->SetCell(el,i+1,"error");
+                }
+                else
+                {
+                    _resultsTable->SetCell(el,i+1,value);
+                }
+            }
+
+            // add calibrator properties raws
+            for ( int j = DATA_LINK_ID ; j <= PHOT_COLOR_EXCESS_ID ; j++)
+            {
+                mcsSTRING64 value;
+                if( calibrator->GetProperty((vobsUCD_ID)j,value) == FAILURE )
+                {
+                    // \todo errAdd
+                    _resultsTable->SetCell(el,j+1+i,"error");
+                }
+                else
+                {
+                    _resultsTable->SetCell(el,j+1+i,value);
+                }
+            }
+        }
+    }
+
+    
+}
+
 /**
  *  User callback associated to the  ShowAllResults button.
  */
@@ -570,7 +652,51 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ResetButtonCB()");
-    _theGui->SetStatus(true, "Reset button pressed");
+    //_theGui->SetStatus(true, "Reset button pressed");
+
+    msgMANAGER_IF manager;
+    
+    if ( SendCommand("SEARCH", "sclsvrServer", "-objetName ETA_TAU -mag 2.96 -maxReturn 50 -diffRa 3600 -diffDec 300 -band K -minMagRange 1 -maxMagRange 5 -ra 03:47:29.08 -dec 24:06:18.50 -baseMin 46.64762 -baseMax 102.45 -lambda 0.65 -vis 0.922 -visErr 0.09", 0) == FAILURE )
+    {
+        errDisplayStack();
+        errCloseStack();
+        _currentList=NULL;
+        _theGui->SetStatus(false, "Problem while sending data");
+    }
+    else
+    {
+        msgMESSAGE    msg;
+        // wait 2 min max
+        if ( manager.Receive(msg ,120000) == FAILURE )
+        {
+            errDisplayStack();
+            errCloseStack();
+            _currentList=NULL;
+            _theGui->SetStatus(false, "Problem while waiting data");
+        }
+        else
+        {
+            cout <<" the result was received"<<endl;
+            _theGui->SetStatus(true, "Reset button pressed");
+
+            _currentList = new sclsvrCALIBRATOR_LIST();
+
+            miscDYN_BUF dynBuf;
+            miscDynBufInit(&dynBuf);
+
+            miscDynBufAppendString(&dynBuf, msg.GetBodyPtr());
+            _currentList->UnPack(&dynBuf);
+            _currentList->Display();
+            _theGui->SetStatus(true, "Calibrator list was successfully built");
+
+            FillResultsTable(_currentList);
+            _mainWindow->Hide();
+            BuildMainWindow();
+            _mainWindow->Show();
+        }
+    }
+
+
     return SUCCESS;
 }
 

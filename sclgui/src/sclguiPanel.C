@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPanel.C,v 1.1 2004-12-01 07:25:55 mella Exp $"
+* "@(#) $Id: sclguiPanel.C,v 1.2 2004-12-03 14:06:39 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,8 +15,13 @@
  * Entry point for SearchCalib graphical application. 
  */
 
-static char *rcsId="@(#) $Id: sclguiPanel.C,v 1.1 2004-12-01 07:25:55 mella Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPanel.C,v 1.2 2004-12-03 14:06:39 mella Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
+/**
+ * Defines
+ */
+#define DEFAULTGUIPORT 1234
 
 
 /* 
@@ -58,7 +63,21 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    sclguiPANEL scalibPanel;
+    
+    mcsINT32 port = DEFAULTGUIPORT ;
+    char * guiPortEnvVar;
+    
+    guiPortEnvVar = getenv("GILDASGUIPORT");
+    if ( guiPortEnvVar != NULL )
+    {
+        if (!sscanf( guiPortEnvVar, "%d", &port))
+        {
+            port = DEFAULTGUIPORT ;
+        }
+    }
+
+    cout << "Starting " << argv[0] << ":" << port << endl;
+    sclguiPANEL scalibPanel("localhost",port);
 
     // Init server
     if (scalibPanel.Init(argc, argv) == FAILURE)
