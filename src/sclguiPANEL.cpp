@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.48 2005-03-10 11:32:10 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.49 2005-03-10 14:01:48 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.48  2005/03/10 11:32:10  scetre
+ * Reorder properties in table
+ *
  * Revision 1.47  2005/03/08 17:07:08  scetre
  * Added user message
  *
@@ -44,7 +47,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.48 2005-03-10 11:32:10 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.49 2005-03-10 14:01:48 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -149,6 +152,7 @@ _sclServer("Search-calibrator server", "sclsvrServer", 120000)
     _varAuthorized = mcsFALSE;
     _multAuthorized = mcsFALSE;
     BuildResultsTableLabelKV();
+    BuildResultsTableLabelKVComplete();
     BuildResultsTableLabelN();
     BuildResultsTableLabelNComplete();
 }
@@ -975,7 +979,10 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     {
         _ucdNameDisplay = _ucdNameforNComplete;
     }
-    
+    else
+    {
+        _ucdNameDisplay = _ucdNameforKVComplete;
+    }
     FillResultsTable(&_displayList);
     _mainWindow->Update();
 
@@ -1007,6 +1014,10 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
     if (strcmp(_request.GetSearchBand(), "N") == 0)
     {
         _ucdNameDisplay = _ucdNameforN;
+    }
+    else
+    {
+        _ucdNameDisplay = _ucdNameforKV;
     }
 
     // Update main window
@@ -1610,59 +1621,75 @@ evhCB_COMPL_STAT sclguiPANEL::GuiSocketCB (const int sd,void* obj)
     return evhCB_SUCCESS;
 }
 
-void sclguiPANEL::BuildResultsTableLabelKV()
+void sclguiPANEL::BuildResultsTableLabelKVComplete()
 {
     // build ucdNameforKV list
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VIS2            );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VIS2_ERROR      );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_BV         );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VR         );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VK         );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR   );
-    _ucdNameforKV.push_back(vobsSTAR_ID_HIP                  );
-    _ucdNameforKV.push_back(vobsSTAR_ID_HD                   );
-    _ucdNameforKV.push_back(vobsSTAR_ID_DM                   );
-    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_RA_MAIN          );
-    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_DEC_MAIN         );
-    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_PMDEC            );
-    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_PMRA             );
-    _ucdNameforKV.push_back(vobsSTAR_POS_PARLX_TRIG          );
-    _ucdNameforKV.push_back(vobsSTAR_SPECT_TYPE_MK           );
-    _ucdNameforKV.push_back(vobsSTAR_CODE_VARIAB             );
-    _ucdNameforKV.push_back(vobsSTAR_CODE_MULT_FLAG          );
-    _ucdNameforKV.push_back(vobsSTAR_POS_GAL_LAT             );
-    _ucdNameforKV.push_back(vobsSTAR_POS_GAL_LON             );
-    _ucdNameforKV.push_back(vobsSTAR_VELOC_HC                );
-    _ucdNameforKV.push_back(vobsSTAR_VELOC_ROTAT             );
-    _ucdNameforKV.push_back(vobsSTAR_LD_DIAM                 );
-    _ucdNameforKV.push_back(vobsSTAR_LD_DIAM_ERROR           );
-    _ucdNameforKV.push_back(vobsSTAR_UD_DIAM                 );
-    _ucdNameforKV.push_back(vobsSTAR_UD_DIAM_ERROR           );
-    _ucdNameforKV.push_back(vobsSTAR_OBS_METHOD              );
-    _ucdNameforKV.push_back(vobsSTAR_INST_WAVELENGTH_VALUE   );
-    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM               );
-    _ucdNameforKV.push_back(vobsSTAR_UDDK_DIAM_ERROR         );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_U              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_B              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_V              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_R              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_I              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_J              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_H              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_K              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_L              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_M              );
-    _ucdNameforKV.push_back(vobsSTAR_PHOT_JHN_N              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_MO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_LO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_KO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_HO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_JO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_IO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_RO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VO              );
-    _ucdNameforKV.push_back(sclsvrCALIBRATOR_BO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_VIS2            );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_VIS2_ERROR      );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_DIAM_BV         );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_DIAM_VR         );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_DIAM_VK         );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR   );
+    _ucdNameforKVComplete.push_back(vobsSTAR_ID_HIP                  );
+    _ucdNameforKVComplete.push_back(vobsSTAR_ID_HD                   );
+    _ucdNameforKVComplete.push_back(vobsSTAR_ID_DM                   );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_EQ_RA_MAIN          );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_EQ_DEC_MAIN         );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_EQ_PMDEC            );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_EQ_PMRA             );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_PARLX_TRIG          );
+    _ucdNameforKVComplete.push_back(vobsSTAR_SPECT_TYPE_MK           );
+    _ucdNameforKVComplete.push_back(vobsSTAR_CODE_VARIAB             );
+    _ucdNameforKVComplete.push_back(vobsSTAR_CODE_MULT_FLAG          );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_GAL_LAT             );
+    _ucdNameforKVComplete.push_back(vobsSTAR_POS_GAL_LON             );
+    _ucdNameforKVComplete.push_back(vobsSTAR_VELOC_HC                );
+    _ucdNameforKVComplete.push_back(vobsSTAR_VELOC_ROTAT             );
+    _ucdNameforKVComplete.push_back(vobsSTAR_LD_DIAM                 );
+    _ucdNameforKVComplete.push_back(vobsSTAR_LD_DIAM_ERROR           );
+    _ucdNameforKVComplete.push_back(vobsSTAR_UD_DIAM                 );
+    _ucdNameforKVComplete.push_back(vobsSTAR_UD_DIAM_ERROR           );
+    _ucdNameforKVComplete.push_back(vobsSTAR_OBS_METHOD              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_INST_WAVELENGTH_VALUE   );
+    _ucdNameforKVComplete.push_back(vobsSTAR_UDDK_DIAM               );
+    _ucdNameforKVComplete.push_back(vobsSTAR_UDDK_DIAM_ERROR         );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_U              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_B              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_V              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_R              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_I              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_J              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_H              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_K              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_L              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_M              );
+    _ucdNameforKVComplete.push_back(vobsSTAR_PHOT_JHN_N              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_MO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_LO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_KO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_HO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_JO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_IO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_RO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_VO              );
+    _ucdNameforKVComplete.push_back(sclsvrCALIBRATOR_BO              );
 
+}
+
+void sclguiPANEL::BuildResultsTableLabelKV()
+{
+    _ucdNameforKV.push_back(vobsSTAR_ID_HD);
+    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_RA_MAIN);
+    _ucdNameforKV.push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VIS2);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VK);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR);
+    _ucdNameforKV.push_back(vobsSTAR_SPECT_TYPE_MK);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_VO);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_JO);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_HO);
+    _ucdNameforKV.push_back(sclsvrCALIBRATOR_KO);
 }
 
 void sclguiPANEL::BuildResultsTableLabelN()
@@ -1702,7 +1729,6 @@ void sclguiPANEL::BuildResultsTableLabelNComplete()
     _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
     _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_13      );
     _ucdNameforNComplete.push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
-    
     _ucdNameforNComplete.push_back(vobsSTAR_REF_STAR);
     _ucdNameforNComplete.push_back(vobsSTAR_CODE_MULT_FLAG);
     _ucdNameforNComplete.push_back(vobsSTAR_CODE_VARIAB);

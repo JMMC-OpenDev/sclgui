@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.22 2005-03-08 14:34:39 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.23 2005-03-10 14:01:48 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2005/03/08 14:34:39  scetre
+ * Removed abort button
+ *
  * Revision 1.21  2005/03/08 14:06:07  scetre
  * Added exit callback
  *
@@ -136,6 +139,7 @@ protected:
 private:
     vobsSTAR_PROPERTY_ID_LIST _ucdName;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameforKV;
+    vobsSTAR_PROPERTY_ID_LIST _ucdNameforKVComplete;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameforN;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameforNComplete;
     vobsSTAR_PROPERTY_ID_LIST _ucdNameDisplay;
@@ -146,6 +150,7 @@ private:
     sclsvrCALIBRATOR_LIST _displayList;
 
     void BuildResultsTableLabelKV();
+    void BuildResultsTableLabelKVComplete();
     void BuildResultsTableLabelN();
     void BuildResultsTableLabelNComplete();    
     
