@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.28 2005-03-04 17:38:09 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.29 2005-03-06 10:52:40 gzins Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.28 2005-03-04 17:38:09 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.29 2005-03-06 10:52:40 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -153,7 +153,6 @@ mcsCOMPL_STAT sclguiPANEL::AppInit()
                                     mcsGetProcName()) == mcsFAILURE)
     {
         /* \todo errAdd */
-        cout << "connection on " << _guiHostname << ":" << _guiPort << " failed" << endl;
         return mcsFAILURE;
     }
 
@@ -850,7 +849,6 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
     s.append(_deleteTextfield->GetText());
     s.append("-");
     _deleteTextfield->SetText(s);
-    cout << "Show all results :" << _deleteTextfield->GetText() << endl;
     _varAuthorized = mcsTRUE;
     _multAuthorized = mcsTRUE;
 
@@ -929,8 +927,6 @@ mcsCOMPL_STAT sclguiPANEL::AbortButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::SelectPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::SelectPanelCB()");
-    cout << "sorting by : "<< _selectChoice->GetSelectedItemValue() <<endl;
-    //cout << "index is : "<< _selectChoice->GetSelectedItem() <<endl;
 
     switch(_selectChoice->GetSelectedItem())
     {
@@ -972,7 +968,6 @@ mcsCOMPL_STAT sclguiPANEL::SelectPanelCB(void *)
 mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
 {
     logExtDbg("sclguiPANEL::DeletePanelCB()");
-    cout << "Delete star nb :" << _deleteTextfield->GetText() << endl;
     // Get the line number as an integer
     mcsUINT32 starNumber;
     // Inform user
@@ -1008,7 +1003,6 @@ mcsCOMPL_STAT sclguiPANEL::DeletePanelCB(void *)
 mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::LoadPanelCB()");
-    cout << "Load :" << _loadTextfield->GetText() << endl;
 
     // Get the name of the textfield
     mcsSTRING256 fileName;
@@ -1053,7 +1047,6 @@ mcsCOMPL_STAT sclguiPANEL::LoadPanelCB(void *)
 mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
 {
     logExtDbg("sclguiPANEL::SavePanelCB()");
-    cout << "Save :" << _saveTextfield->GetText() << endl;
     
     // Get the name of the textfield
     mcsSTRING256 fileName;
@@ -1081,7 +1074,6 @@ mcsCOMPL_STAT sclguiPANEL::SavePanelCB(void *)
 mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
 {
     logExtDbg("sclguiPANEL::ExportPanelCB()");
-    cout << "Export :" << _exportTextfield->GetText() << endl;
     
     // Get the name of the textfield
     mcsSTRING256 fileName;
@@ -1108,7 +1100,6 @@ mcsCOMPL_STAT sclguiPANEL::ExportPanelCB(void *)
 mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::AccuracyButtonCB()");
-    cout << "data: " <<_accuracyTextfield->GetText() <<endl;
     _accuracyWindow->Hide();
     mcsFLOAT visMax;
     // Get the value of the magnitude range
@@ -1132,43 +1123,39 @@ mcsCOMPL_STAT sclguiPANEL::AccuracyButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::LumButtonCB()");
-    cout << "data: I " <<(int) _lumCheckboxI->GetValue() <<endl;
-    cout << "data: II " <<(int) _lumCheckboxII->GetValue() <<endl;
-    cout << "data: III " <<(int) _lumCheckboxIII->GetValue() <<endl;
-    cout << "data: IV " <<(int) _lumCheckboxIV->GetValue() <<endl;
-    cout << "data: V " <<(int) _lumCheckboxV->GetValue() <<endl;
-    cout << "data: VI " <<(int) _lumCheckboxVI->GetValue() <<endl;
     _lumWindow->Hide();
     
-    std::list<char *> LumList;
     // for each spectral type, check if it is wanted by the user
     // if wanted, put it in the list of spectral type
+    char     *lumClassList[7];
+    mcsINT32 idx = 0;
     if ((int) _lumCheckboxI->GetValue() == 1)
     {
-        LumList.push_back("I");
+        lumClassList[idx++] = "I";
     }
     if ((int) _lumCheckboxII->GetValue() == 1)
     {
-        LumList.push_back("II");
+        lumClassList[idx++] = "II";
     }
     if ((int) _lumCheckboxIII->GetValue() == 1)
     {
-        LumList.push_back("III");
+        lumClassList[idx++] = "III";
     }
     if ((int) _lumCheckboxIV->GetValue() == 1)
     {
-        LumList.push_back("IV");
+        lumClassList[idx++] = "IV";
     }
     if ((int) _lumCheckboxV->GetValue() == 1)
     {
-        LumList.push_back("V");
+        lumClassList[idx++] = "V";
     }
     if ((int) _lumCheckboxVI->GetValue() == 1)
     {
-        LumList.push_back("VI");
+        lumClassList[idx++] = "VI";
     }
+    lumClassList[idx++] = NULL;
     
-    _displayList.FilterByLuminosityClass(LumList);
+    _displayList.FilterBySpectralType(NULL, lumClassList);
     // Update main window
     FillResultsTable(&_displayList);
     _mainWindow->Update();
@@ -1182,7 +1169,6 @@ mcsCOMPL_STAT sclguiPANEL::LumButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::MagButtonCB()");
-    cout << "data: " <<_magTextfield->GetText() <<endl;
     _magWindow->Hide();
    
     mcsFLOAT magRange;
@@ -1209,8 +1195,6 @@ mcsCOMPL_STAT sclguiPANEL::MagButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::VariabilityButtonCB()");
-
-    cout << "data: " <<_variabilityChoice->GetSelectedItemValue() <<endl;
 
     // if variability are authorized variable, recreate list with variability
     // flag because by default, variability flag are forbidden.
@@ -1258,7 +1242,6 @@ mcsCOMPL_STAT sclguiPANEL::VariabilityButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::MultButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::MultButtonCB()");
-    cout << "data: " <<_multChoice->GetSelectedItemValue() <<endl;
 
     // if variability are authorized variable, recreate list with variability
     // flag because by default, variability flag are forbidden.
@@ -1346,49 +1329,43 @@ mcsCOMPL_STAT sclguiPANEL::RaDecButtonCB(void *)
 mcsCOMPL_STAT sclguiPANEL::SpectralTypeButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::SpectralTypeButtonCB()");
-    cout << "data: O " <<(int) _spectralTypeCheckboxO->GetValue() <<endl;
-    cout << "data: B " <<(int) _spectralTypeCheckboxB->GetValue() <<endl;
-    cout << "data: A " <<(int) _spectralTypeCheckboxA->GetValue() <<endl;
-    cout << "data: F " <<(int) _spectralTypeCheckboxF->GetValue() <<endl;
-    cout << "data: G " <<(int) _spectralTypeCheckboxG->GetValue() <<endl;
-    cout << "data: K " <<(int) _spectralTypeCheckboxK->GetValue() <<endl;
-    cout << "data: M " <<(int) _spectralTypeCheckboxM->GetValue() <<endl;
     _spectralTypeWindow->Hide();
 
-    std::list<char *> SpectTypeList;
+    char     *tempClassList[8];
+    mcsINT32 idx = 0;
     // for each spectral type, check if it is wanted by the user
     // if wanted, put it in the list of spectral type
     if ((int) _spectralTypeCheckboxO->GetValue() == 1)
     {
-        SpectTypeList.push_back("O");
+        tempClassList[idx++] = "O";
     }
     if ((int) _spectralTypeCheckboxB->GetValue() == 1)
     {
-        SpectTypeList.push_back("B");
+        tempClassList[idx++] = "B";
     }
     if ((int) _spectralTypeCheckboxA->GetValue() == 1)
     {
-        SpectTypeList.push_back("A");
+        tempClassList[idx++] = "A";
     }
     if ((int) _spectralTypeCheckboxF->GetValue() == 1)
     {
-        SpectTypeList.push_back("F");
+        tempClassList[idx++] = "F";
     }
     if ((int) _spectralTypeCheckboxG->GetValue() == 1)
     {
-        SpectTypeList.push_back("G");
+        tempClassList[idx++] = "G";
     }
     if ((int) _spectralTypeCheckboxK->GetValue() == 1)
     {
-        SpectTypeList.push_back("K");
+        tempClassList[idx++] = "K";
     }
     if ((int) _spectralTypeCheckboxM->GetValue() == 1)
     {
-        SpectTypeList.push_back("M");
+        tempClassList[idx++] = "M";
     }
-
+    tempClassList[idx++] = NULL;
     
-    _displayList.FilterBySpectralType(SpectTypeList);
+    _displayList.FilterBySpectralType(tempClassList, NULL);
     // Update main window
     FillResultsTable(&_displayList);
     _mainWindow->Update();
