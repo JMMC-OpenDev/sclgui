@@ -3,7 +3,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.h,v 1.2 2004-12-01 15:34:08 mella Exp $"
+* "@(#) $Id: sclguiPANEL.h,v 1.3 2004-12-02 08:49:45 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -95,6 +95,8 @@ private:
     mcsCOMPL_STAT BuildAccuracyWindow();
     gwtWINDOW *_accuracyWindow;
     gwtTEXTFIELD *_accuracyTextfield;
+    gwtBUTTON *_accuracyButton;
+    mcsCOMPL_STAT AccuracyButtonCB(void *);
 
     mcsCOMPL_STAT BuildLumWindow();
     gwtWINDOW *_lumWindow;
@@ -104,18 +106,26 @@ private:
     gwtCHECKBOX *_lumCheckboxIV;
     gwtCHECKBOX *_lumCheckboxV;
     gwtCHECKBOX *_lumCheckboxVI;
+    gwtBUTTON *_lumButton;
+    mcsCOMPL_STAT LumButtonCB(void *);
 
     mcsCOMPL_STAT BuildMagWindow();
     gwtWINDOW *_magWindow;
     gwtTEXTFIELD *_magTextfield;
+    gwtBUTTON *_magButton;
+    mcsCOMPL_STAT MagButtonCB(void *);
 
     mcsCOMPL_STAT BuildMultWindow();
     gwtWINDOW *_multWindow;
     gwtCHOICE *_multChoice;
+    gwtBUTTON *_multButton;
+    mcsCOMPL_STAT MultButtonCB(void *);
 
     mcsCOMPL_STAT BuildRaDecWindow();
     gwtWINDOW *_raDecWindow;
     gwtTEXTFIELD *_raDecTextfield;
+    gwtBUTTON *_raDecButton;
+    mcsCOMPL_STAT RaDecButtonCB(void *);
 
     mcsCOMPL_STAT BuildSpectralTypeWindow();
     gwtWINDOW *_spectralTypeWindow;
@@ -126,10 +136,14 @@ private:
     gwtCHECKBOX *_spectralTypeCheckboxG;
     gwtCHECKBOX *_spectralTypeCheckboxK;
     gwtCHECKBOX *_spectralTypeCheckboxM;
+    gwtBUTTON *_spectralTypeButton;
+    mcsCOMPL_STAT SpectralTypeButtonCB(void *);
 
     mcsCOMPL_STAT BuildVariabilityWindow();
     gwtWINDOW *_variabilityWindow;
     gwtCHOICE *_variabilityChoice;
+    gwtBUTTON *_variabilityButton;
+    mcsCOMPL_STAT VariabilityButtonCB(void *);
     
 };
 
