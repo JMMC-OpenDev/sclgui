@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.7 2005-02-08 21:02:38 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.8 2005-02-10 08:23:48 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/02/08 21:02:38  gzins
+ * Used _request class member instead of local instance
+ * Used new sclsvrCALIBRATOR_LIST::Copy() method
+ *
  * Revision 1.6  2005/02/08 07:25:18  gzins
  * Replaced vosREQUEST by sclsvrREQUEST
  *
@@ -31,7 +35,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.7 2005-02-08 21:02:38 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.8 2005-02-10 08:23:48 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -277,8 +281,9 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             {
                 // Inform user
                 mcsSTRING64 usrMsg;
-                sprintf(usrMsg, "CDS Return %d ", _currentList.Size());
-                _theGui->SetStatus(false, usrMsg);
+                sprintf(usrMsg, "%d star(s) found in CDS catalogs",
+                        _currentList.Size());
+                _theGui->SetStatus(true, usrMsg);
             
                 // Fill the result table
                 FillResultsTable(&_displayList);
