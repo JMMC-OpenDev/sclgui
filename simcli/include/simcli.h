@@ -20,6 +20,8 @@
 
 #define MAX_USERID 16
 
+#include "mcs.h"
+
 int  simbad_connect   _PARAMS((char *node, char *serv, char *uname, char *pwd));
 int  simbad_disconnect _PARAMS((int handle)) ;
 int  simbad_query      _PARAMS((int handle, char *question, char *options)) ;
@@ -31,7 +33,7 @@ char *simbad_error     _PARAMS((int handle )) ;
 
 void cliopt            _PARAMS((int n,char **v,char *h,char *s,char *u,char *p)) ;
 
-int simcliGetCoordinates (char *name,
+mcsCOMPL_STAT simcliGetCoordinates (char *name,
                           char *ra,
                           char *dec);
 
