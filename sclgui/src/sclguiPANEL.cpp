@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.24 2005-03-02 16:59:46 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.25 2005-03-03 16:51:19 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.24 2005-03-02 16:59:46 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.25 2005-03-03 16:51:19 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -233,8 +233,37 @@ mcsCOMPL_STAT sclguiPANEL::BuildMainWindow()
         << _request.GetObjectDec() << "\t" << _request.GetObjectMag() << "\t";
     out << _request.GetMinBaselineLength() << "\t" 
         << _request.GetMaxBaselineLength() << "\t" 
-        << _request.GetObservingWlen() << "\t" << "----\t";
-    out << _request.GetExpectedVisibility() << "\t" 
+        << _request.GetObservingWlen() << "\t";
+   
+    // Build science object with his coordinates
+    sclsvrCALIBRATOR scienceObject;
+    // Get ra coordinates
+    scienceObject.SetPropertyValue(vobsSTAR_POS_EQ_RA_MAIN,
+                                   _request.GetObjectRa(), "none");
+    // Get dec coordinates
+    scienceObject.SetPropertyValue(vobsSTAR_POS_EQ_DEC_MAIN,
+                                   _request.GetObjectDec(), "none");
+    // Get the science object if it is in the list
+    if (_currentList.GetScienceObject(scienceObject) == mcsFAILURE)
+    {
+        // if not, write ---- in the Science object panel information under diam
+        // v_k
+        out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
+    }
+    else
+    {
+        // if dian v-k is not affected  write ---- in the Science object 
+        // panel information under diam v_k
+        if (scienceObject.IsPropertySet(sclsvrCALIBRATOR_DIAM_VK) == mcsTRUE)
+        {
+            out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
+        }
+        else
+        {
+            out << scienceObject.GetPropertyValue(sclsvrCALIBRATOR_DIAM_VK);
+        }
+    }
+    out << "\t" << _request.GetExpectedVisibility() << "\t" 
         << _request.GetExpectedVisibilityError();
     _scienceStarTextarea->SetText(out.str());
 
