@@ -1,14 +1,14 @@
 /*******************************************************************************
-* JMMC project
-* 
-* "@(#) $Id: simcliGetCoordinates.c,v 1.4 2005-02-03 16:03:08 gzins Exp $"
-*
-* who       when         what
-* --------  -----------  -------------------------------------------------------
-* scetre    17-Nov-2004  Created
-*
-*
-*******************************************************************************/
+ * JMMC project
+ * 
+ * "@(#) $Id: simcliGetCoordinates.c,v 1.5 2005-02-15 14:50:51 gzins Exp $"
+ *
+ * History
+ * -------
+ * $Log: not supported by cvs2svn $
+ * scetre    17-Nov-2004  Created
+ *
+ ******************************************************************************/
 
 /**
  * \file
@@ -16,7 +16,7 @@
  * 
  */
 
-static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.4 2005-02-03 16:03:08 gzins Exp $"; 
+static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.5 2005-02-15 14:50:51 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
