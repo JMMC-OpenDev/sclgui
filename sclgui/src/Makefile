@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.1 2004-11-23 09:22:15 sccmgr Exp $"
+# "@(#) $Id: Makefile,v 1.2 2004-12-01 07:25:55 mella Exp $"
 #
 # Makefile of ........
 #
@@ -38,8 +38,14 @@
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     =
+EXECUTABLES     = sclguiPanel
 EXECUTABLES_L   = 
+
+#
+# Main searchcalib graphical program
+sclguiPanel_OBJECTS   = sclguiPanel
+sclguiPanel_LDFLAGS   =
+sclguiPanel_LIBS      = MCS C++ sclgui gwt
 
 #
 # <brief description of xxxxx program>
@@ -54,13 +60,18 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =
+INCLUDES        = sclgui.h \
+				  sclguiPANEL.h
 
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = sclgui
 LIBRARIES_L     =
+
+#
+# the sclgui Library
+sclgui_OBJECTS   = sclguiPANEL
 
 #
 # <brief description of lllll library>
