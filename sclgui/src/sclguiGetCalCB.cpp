@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.11 2005-02-16 17:35:06 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.12 2005-02-17 07:51:10 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2005/02/16 17:35:06  gzins
+ * Updated call to sclsvrCALIBRATOR_LIST::UnPack
+ *
  * Revision 1.10  2005/02/16 16:58:34  gzins
  * Used new vobsREQUEST::Parse() method
  *
@@ -44,7 +47,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.11 2005-02-16 17:35:06 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.12 2005-02-17 07:51:10 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -92,7 +95,7 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
             (this, (evhCMD_CB_METHOD)&sclguiPANEL::GetCalReplyCB);
 
         // Build the request object from the parameters of the command
-        if (_request.SetObjectName(msg.GetBody()) == mcsFAILURE)
+        if (_request.Parse(msg.GetBody()) == mcsFAILURE)
         {
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
