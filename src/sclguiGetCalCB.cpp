@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.24 2005-03-07 14:19:40 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.25 2005-03-07 15:56:17 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2005/03/07 14:19:40  scetre
+ * Added _withNoVarMult to know how many star of the resulting list are without variability and multiplicity
+ *
  * Revision 1.23  2005/03/04 17:30:19  scetre
  * Return 'Done' when command is completed successfully
  *
@@ -83,7 +86,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.24 2005-03-07 14:19:40 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.25 2005-03-07 15:56:17 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -151,7 +154,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
             // Clear result table
             _currentList.Clear();
             _displayList.Clear();
-            _visibilityOkList.Clear();
             _coherentDiameterList.Clear();
 
             return evhCB_NO_DELETE | evhCB_FAILURE;
@@ -172,7 +174,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
     // Clear list
     _currentList.Clear();
     _displayList.Clear();
-    _visibilityOkList.Clear();
     _coherentDiameterList.Clear();
     // If an error reply is received
     switch (msg.GetType())
@@ -221,22 +222,14 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             // Fix the number of CDS return
             _found = _currentList.Size();
             /// Extract from the CDS return the list of coherent diameter
-            _coherentDiameterList.Copy(_currentList, mcsFALSE, mcsTRUE);
-            // Extract from te list of coherernt diameter the list 
-            // of visibility ok
-            _visibilityOkList.Copy(_coherentDiameterList, mcsTRUE, mcsFALSE);
+            _coherentDiameterList.Copy(_currentList, mcsFALSE);
             // Fix the number of coherent diameter
             _diam = _coherentDiameterList.Size(); 
-            // Fix the number of visibility ok
-            _vis = _visibilityOkList.Size();
             // Filter the coherent diameter list
             _coherentDiameterList.FilterByVariability(_varAuthorized);
             _coherentDiameterList.FilterByMultiplicity(_multAuthorized);
-            // Filter the visibility ok list
-            _visibilityOkList.FilterByVariability(_varAuthorized);
-            _visibilityOkList.FilterByMultiplicity(_multAuthorized);
             
-            _displayList.Copy(_visibilityOkList);
+            _displayList.Copy(_coherentDiameterList);
             _withNoVarMult=_displayList.Size();
             // Display list of calibrators
             if (logGetStdoutLogLevel() >= logTEST)
@@ -253,7 +246,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
                 // Clear list
                 _currentList.Clear();
                 _displayList.Clear();
-                _visibilityOkList.Clear();
                 _coherentDiameterList.Clear();
             }
             else
