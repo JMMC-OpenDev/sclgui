@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.h,v 1.13 2005-02-28 10:01:58 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.h,v 1.14 2005-03-02 16:58:19 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2005/02/28 10:01:58  scetre
+ * Add color table for origin legend and color in results table
+ *
  * Revision 1.12  2005/02/23 17:06:27  scetre
  * Added list of ucd name to manage the display of the colum name
  *
@@ -54,6 +57,25 @@
 
 
 #include <list>
+
+/**
+ * Define color value for catalog
+ */
+#define sclguiWHITE_COLOR               "#ffffff"
+#define sclguiCONFIDENCE_LOW_COLOR      "#6e6e6e"
+#define sclguiCONFIDENCE_MEDIUM_COLOR   "#d8d8d8"
+#define sclguiCONFIDENCE_HIGH_COLOR     "#ffffff"
+#define sclguiI_280_COLOR               "#ffb6b6"
+#define sclguiII_225_COLOR              "#f6b6ff"
+#define sclguiII_7A_COLOR               "#b9b6ff"
+#define sclguiII_246_COLOR              "#b6e8ff"
+#define sclguiV_50_COLOR                "#b6ffe6"
+#define sclguiCHARM_COLOR               "#dfffb6"
+#define sclguiDENIS_COLOR               "#fff4b6"
+#define sclguiI_196_COLOR               "#78fb8b"
+#define sclguiCOHEN_COLOR               "#9778fb"
+#define sclguiV_36B_COLOR               "#88a0a6"
+#define sclgui_MIDI_COLOR               "#c994ca"
 
 /*
  * Class declaration
@@ -127,12 +149,11 @@ private:
     mcsCOMPL_STAT ShowAllResultsButtonCB(void *);
     gwtBUTTON *_resetButton;
     mcsCOMPL_STAT ResetButtonCB(void *);
-    gwtBUTTON *_printButton;
-    mcsCOMPL_STAT PrintButtonCB(void *);
     
     gwtTEXTAREA *_scienceStarTextarea;
     gwtTABLE *_resultsTable;
     gwtTABLE *_legendTable;
+    gwtTABLE *_confidenceTable;
     gwtTEXTFIELD * _resumeTextfield;
     
     gwtSUBPANEL *_selectPanel;
