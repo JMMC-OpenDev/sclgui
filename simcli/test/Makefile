@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.2 2004-11-17 08:06:49 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.1 2004-11-17 08:06:49 gzins Exp $"
 #
 # Makefile of ........
 #
@@ -28,7 +28,7 @@
 # additional include and library search paths
 #USER_INC = 
 #USER_LIB = 
-OPTIMIZE='on'
+
 #
 # MODULE CODE DESCRIPTION:
 # ------------------------
@@ -38,14 +38,44 @@ OPTIMIZE='on'
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     =
+EXECUTABLES     = simbadclient  \
+				  clibib      	\
+				  clicoord      \
+				  clifct       	\
+				  cliname       \
+				  clitest       \
+				  clitime
 EXECUTABLES_L   = 
 
 #
 # <brief description of xxxxx program>
-xxxxx_OBJECTS   =
-xxxxx_LDFLAGS   =
-xxxxx_LIBS      =
+simbadclient_OBJECTS   = simbadclient
+simbadclient_LDFLAGS   =
+simbadclient_LIBS      = simcli
+
+clibib_OBJECTS   = clibib
+clibib_LDFLAGS   =
+clibib_LIBS      = simcli
+
+clicoord_OBJECTS   = clicoord
+clicoord_LDFLAGS   =
+clicoord_LIBS      = simcli
+
+clifct_OBJECTS   = clifct
+clifct_LDFLAGS   =
+clifct_LIBS      = simcli
+
+cliname_OBJECTS   = cliname
+cliname_LDFLAGS   =
+cliname_LIBS      = simcli
+
+clitest_OBJECTS   = clitest
+clitest_LDFLAGS   =
+clitest_LIBS      = simcli
+
+clitime_OBJECTS   = clitime
+clitime_LDFLAGS   =
+clitime_LIBS      = simcli
 
 #
 # special compilation flags for single c sources
@@ -59,17 +89,13 @@ INCLUDES        =
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       = simcli
+LIBRARIES       = 
 LIBRARIES_L     =
 
 
 #
 # <brief description of lllll library>
-simcli_OBJECTS   = cliopt    \
-				   simcli    \
-				   skclient  \
-				   skio      \
-				   uifclient
+llll_OBJECTS   = 
 
 #
 # Scripts (public and local)

@@ -3,7 +3,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: simcliPrivate.h,v 1.1 2004-11-16 17:10:02 sccmgr Exp $"
+* "@(#) $Id: simcliPrivate.h,v 1.2 2004-11-17 08:06:49 gzins Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -31,8 +31,36 @@ extern "C" {
  */
 #define MODULE_ID "simcli"
 
+typedef void (*FCT)();
  
+/* Local functions */
+int sk_setb();
+int sk_iosave();
+int sk_read();
+int sk_get();
+int sk_gets();
+int sk_getl();
+int sk_write();
+int sk_put();
+int sk_puts();
+int sk_putl();
+int sk_close();
+FCT sk_errfct();
+FILE *sk_setlog();
+int sk_fromserver();
 
+int ClientOpen();
+int ClientTreat();
+int ClientSendFile();
+int ClientRcvFile();
+void ClientClose();
+
+void simbad_appli();
+int simbad_errno();
+
+int TestVersionAppli();
+
+int gethostname();
 #ifdef __cplusplus
 }
 #endif
