@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.7 2004-12-13 14:03:15 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.8 2004-12-22 10:03:01 mella Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.7 2004-12-13 14:03:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.8 2004-12-22 10:03:01 mella Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -46,61 +46,6 @@ using namespace std;
 /*
  * Local Variables
  */
-#define sclguiNB_CALIBRATOR_PROPERTIES 14
-static char *calibratorProperties[] =
-{
-    "diamAngul",
-    "diamAngulError",
-    "Mo",
-    "Lo",
-    "Ko",
-    "Ho",
-    "Jo",
-    "Io",
-    "Ro",
-    "Vo",
-    "Bo",
-    "mult",
-    "vis",
-    "visError",
-    NULL
-};
-#define sclguiNB_STAR_PROPERTIES 31
-static char *starProperties[] =
-{
-   "hd",
-   "hip",
-   "ra",
-   "dec",
-   "pmdec",
-   "pmra",
-   "plx",
-   "tsp",
-   "varflag",
-   "multflag",
-   "glat",
-   "glon",
-   "radvel",
-   "diam",
-   "meth",
-   "wlen",
-   "photflux",
-   "units",
-   "U",
-   "B",
-   "V",
-   "R",
-   "I",
-   "J",
-   "H",
-   "K",
-   "L",
-   "M",
-   "N",
-   "velocrotat",
-   "color",
-   NULL
-};
 
 /*
  * Class constructor
@@ -545,7 +490,9 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
 {
     logExtDbg("sclguiPANEL::FillResultsTable()");
 
-    int nbOfProperties = sclguiNB_CALIBRATOR_PROPERTIES+sclguiNB_STAR_PROPERTIES + 1 ;
+    sclsvrCALIBRATOR tmpCalibrator;
+    // Add 1 for the number column
+    int nbOfProperties = tmpCalibrator.NbProperties() + 1 ;
     int nbOfRows;
 
     if(list == NULL)
@@ -563,22 +510,12 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
     _resultsTable->SetColumnHeader(0, "Number");
     
     // insert headers for calibrator properties
-    int columnsIdx=1;
-    while(columnsIdx <= sclguiNB_CALIBRATOR_PROPERTIES)
+    int columnsIdx;
+    for (columnsIdx = 0; columnsIdx < tmpCalibrator.NbProperties(); columnsIdx++)
     {
-        _resultsTable->SetColumnHeader(columnsIdx, calibratorProperties[columnsIdx-1]);
-        columnsIdx++;
+        _resultsTable->SetColumnHeader(columnsIdx+1, tmpCalibrator.GetNextProperty((mcsLOGICAL)(columnsIdx==0))->GetName() );
     }
-
-    // insert headers for calibrator properties
-    columnsIdx=0;
-    while(columnsIdx < sclguiNB_STAR_PROPERTIES)
-    {
-        _resultsTable->SetColumnHeader(columnsIdx + sclguiNB_CALIBRATOR_PROPERTIES + 1,
-                                       starProperties[columnsIdx]);
-        columnsIdx++;
-    }
-
+    
     // end to fill the table
     if(list != NULL)
     {
@@ -593,37 +530,15 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             int i;
             
             // add calibrator properties raws
-            for (i=ANGULAR_DIAMETER_ID; i <= VISIBILITY_ERROR_ID ; i++)
+            for (i=0; i < calibrator->NbProperties() ; i++)
             {
-                mcsSTRING64 value;
-                if( calibrator->GetProperty((sclsvrPROPERTY_ID)(i),value) == FAILURE )
-                {
-                    // \todo errAdd
-                    _resultsTable->SetCell(el,i+1,"error");
-                }
-                else
-                {
-                    _resultsTable->SetCell(el,i+1,value);
-                }
-            }
+                string propvalue;
+                propvalue.append( (calibrator->GetNextProperty( (mcsLOGICAL)(i==0) ))->GetValue() );
+                 _resultsTable->SetCell(el, i+1, propvalue);
+            } // end for each properties
 
-            // add calibrator properties raws
-            for ( int j = ID_MAIN_ID ; j <= PHOT_COLOR_EXCESS_ID ; j++)
-            {
-                mcsSTRING64 value;
-                if( calibrator->GetProperty((vobsUCD_ID)j,value) == FAILURE )
-                {
-                    // \todo errAdd
-                    _resultsTable->SetCell(el,j+1+i,"error");
-                }
-                else
-                {
-                    _resultsTable->SetCell(el,j+1+i,value);
-                }
-            }
-        }
+        } // end for each calibrators
     }
-
     
 }
 
@@ -656,7 +571,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
 
     msgMANAGER_IF manager;
     
-    if ( SendCommand("SEARCH", "sclsvrServer", "-objetName ETA_TAU -mag 2.96 -maxReturn 50 -diffRa 3600 -diffDec 300 -band K -minMagRange 1 -maxMagRange 5 -ra 03:47:29.08 -dec 24:06:18.50 -baseMin 46.64762 -baseMax 102.45 -lambda 0.65 -vis 0.922 -visErr 0.09", 0) == FAILURE )
+    if ( SendCommand("SEARCH", "sclsvrServer", "-objectName ETA_TAU -mag 2.96 -maxReturn 50 -diffRa 3600 -diffDec 300 -band K -minMagRange 1 -maxMagRange 5 -ra 03:47:29.08 -dec 24:06:18.50 -baseMin 46.64762 -baseMax 102.45 -lambda 0.65 -vis 0.922 -visErr 0.09", 0) == FAILURE )
     {
         errDisplayStack();
         errCloseStack();
@@ -684,7 +599,7 @@ mcsCOMPL_STAT sclguiPANEL::ResetButtonCB(void *)
             miscDYN_BUF dynBuf;
             miscDynBufInit(&dynBuf);
 
-            miscDynBufAppendString(&dynBuf, msg.GetBodyPtr());
+            miscDynBufAppendString(&dynBuf, msg.GetBody());
             _currentList->UnPack(&dynBuf);
             _currentList->Display();
             _theGui->SetStatus(true, "Calibrator list was successfully built");
