@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.cpp,v 1.35 2005-03-07 16:01:20 scetre Exp $"
+* "@(#) $Id: sclguiPANEL.cpp,v 1.36 2005-03-07 16:09:41 scetre Exp $"
 *
 * History
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.35 2005-03-07 16:01:20 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.36 2005-03-07 16:09:41 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -905,11 +905,6 @@ mcsCOMPL_STAT sclguiPANEL::ShowAllResultsButtonCB(void *)
 {
     logExtDbg("sclguiPANEL::ShowAllResultsButtonCB()");
 
-    // This stupid callback update one widget and show the window again
-    string s;
-    s.append(_deleteTextfield->GetText());
-    s.append("-");
-    _deleteTextfield->SetText(s);
     _varAuthorized = mcsTRUE;
     _multAuthorized = mcsTRUE;
 
