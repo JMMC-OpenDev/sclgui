@@ -1,7 +1,7 @@
 /*******************************************************************************
 * JMMC project
 *
-* "@(#) $Id: sclguiPANEL.C,v 1.6 2004-12-09 06:44:46 gzins Exp $"
+* "@(#) $Id: sclguiPANEL.C,v 1.7 2004-12-13 14:03:15 scetre Exp $"
 *
 * who       when         what
 * --------  -----------  -------------------------------------------------------
@@ -15,7 +15,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.6 2004-12-09 06:44:46 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.C,v 1.7 2004-12-13 14:03:15 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -608,7 +608,7 @@ void sclguiPANEL::FillResultsTable(sclsvrCALIBRATOR_LIST *list)
             }
 
             // add calibrator properties raws
-            for ( int j = DATA_LINK_ID ; j <= PHOT_COLOR_EXCESS_ID ; j++)
+            for ( int j = ID_MAIN_ID ; j <= PHOT_COLOR_EXCESS_ID ; j++)
             {
                 mcsSTRING64 value;
                 if( calibrator->GetProperty((vobsUCD_ID)j,value) == FAILURE )
