@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPANEL.cpp,v 1.51 2005-03-10 15:04:52 scetre Exp $"
+ * "@(#) $Id: sclguiPANEL.cpp,v 1.52 2005-05-19 12:51:51 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.51  2005/03/10 15:04:52  scetre
+ * minor change
+ *
  * Revision 1.50  2005/03/10 14:51:23  scetre
  * Added "SHOW DETAILS" and "HIDE DETAILS"
  * Changed Show all results and reset behavior
@@ -54,7 +57,7 @@
  * sclguiPANEL class definition.
  */
 
-static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.51 2005-03-10 15:04:52 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiPANEL.cpp,v 1.52 2005-05-19 12:51:51 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -104,7 +107,7 @@ using namespace std;
  *  \returns an MCS completion status code (mcsSUCCESS or mcsFAILURE)
  */
 sclguiPANEL::sclguiPANEL(string hostname, mcsINT32 port): 
-_sclServer("Search-calibrator server", "sclsvrServer", 120000)
+_sclServer("Search-calibrator server", "sclsvrServer", 600000)
 
 {
     logExtDbg("sclguiPANEL::sclguiPANEL");
