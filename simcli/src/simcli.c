@@ -545,7 +545,7 @@ static int simbad_open(hand,node,service,userid,passwd,appli)
 
 	int s ;
 
-    logExtDbg("simbad_open()"); 
+    logTrace("simbad_open()"); 
 	s = ClientOpen(noresult,node,service,userid,passwd,appli) ;
 
 	if (s > 0)
@@ -561,7 +561,7 @@ static int simbad_open(hand,node,service,userid,passwd,appli)
 static int simbad_close(hand)
 	int hand ;
 {
-    logExtDbg("simbad_close()"); 
+    logTrace("simbad_close()"); 
 	ClientClose(smb_handle[hand].sock) ;
 	return(OK) ;
 }
@@ -569,7 +569,7 @@ static int simbad_close(hand)
 static int simbad_endquery(hand)
 	int hand ;
 {
-    logExtDbg("simbad_endquery()"); 
+    logTrace("simbad_endquery()"); 
 	if (! isopen(hand))
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -608,7 +608,7 @@ int simbad_connect(node,service,userid,passwd)
 	char *userid ;
 	char *passwd ;
 {
-    logExtDbg("simbad_connect()"); 
+    logTrace("simbad_connect()"); 
 	int i ;
 	int hand ;
 	int stat ;
@@ -669,7 +669,7 @@ int simbad_disconnect(hand)
 {
 	int stat ;
 
-    logExtDbg("simbad_disconnect()"); 
+    logTrace("simbad_disconnect()"); 
 	if (! isopen(hand))
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -709,7 +709,7 @@ int simbad_query(hand,question,options)
 {
 	int minlg ;
 
-    logExtDbg("simbad_query()"); 
+    logTrace("simbad_query()"); 
 	if (! isopen(hand))
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -797,7 +797,7 @@ int simbad_retrieve(hand,num)
 	int num ;
 {
 	char str[32] ;
-    logExtDbg("simbad_retrieve()");
+    logTrace("simbad_retrieve()");
 	if (! isopen(hand) || ! existdata(hand)) 
 	{
 		ERRNO(ERR_CLIENT) ;
@@ -848,7 +848,7 @@ int simbad_retrieve(hand,num)
 char *simbad_telldata(hand)
   int hand;		/* IN: Simbad Connection number */
 {
-    logExtDbg("simbad_telldata()"); 
+    logTrace("simbad_telldata()"); 
     if (! isopen(hand) || ! existdata(hand)) return(NULL) ;
     TellData(smb_handle[hand].answer);
     return((smb_handle[hand].answer)->tell);
@@ -859,7 +859,7 @@ int simbad_findata(hand, astrotype, options)
   char *astrotype;	/* IN: Data type to look at */
   char *options;	/* IN: Option string        */
 {
-    logExtDbg("simbad_findata()"); 
+    logTrace("simbad_findata()"); 
     if (! isopen(hand) || ! existdata(hand))
     {
 	ERRNO(ERR_CLIENT) ;
@@ -879,7 +879,7 @@ char *simbad_getdata(hand, number)
   int hand;		/* IN: Simbad Connection number */
   int number;		/* IN: Number (0 = Next)    */
 {
-    logExtDbg("simbad_getdata()"); 
+    logTrace("simbad_getdata()"); 
     if (! isopen(hand) || ! existdata(hand))
     {
 	ERRNO(ERR_CLIENT) ;
@@ -892,7 +892,7 @@ char *simbad_getdata(hand, number)
 char *simbad_error(h)
 	int h ;
 {
-    logExtDbg("simbad_error()"); 
+    logTrace("simbad_error()"); 
 	switch(simbad_errno_value)
 	{
 		case ERR_TELECOM:
@@ -910,7 +910,7 @@ char *simbad_error(h)
 
 int simbad_errno()
 {
-    logExtDbg("simbad_errno()"); 
+    logTrace("simbad_errno()"); 
 	return(simbad_errno_value) ;
 }
 
@@ -920,7 +920,7 @@ void simbad_appli(str)
 {
 	char *p ;
 
-    logExtDbg("simbad_appli()"); 
+    logTrace("simbad_appli()"); 
 	if (str && *str)
 		p = str ;
 	else 

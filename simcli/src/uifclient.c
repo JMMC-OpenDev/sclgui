@@ -132,7 +132,7 @@ static int ClientSend( ear, askstring )
     int
         asksize;
 
-    logExtDbg("ClientSend()"); 
+    logTrace("ClientSend()"); 
     asksize = strlen( askstring );
     if( asksize + HEAD_BUF + 1 >= stringsize )
     {
@@ -188,7 +188,7 @@ static int ClientGet( ear, getstruct )
 	int
 		lenght = 0;
 
-    logExtDbg("ClientGet()"); 
+    logTrace("ClientGet()"); 
 	getstruct->msg = 0;
 
 	if( sk_get( ear, head_string, HEAD_BUF ) == ERROR )
@@ -276,7 +276,7 @@ static int ClientConnect( display_fct, host, service, name, passwd )
 	SimDatStruct
 		teststruct;
 
-    logExtDbg("ClientConnect()"); 
+    logTrace("ClientConnect()"); 
 	teststruct.code = 0;
 	teststruct.msg = 0;
 	teststruct.length = 0;
@@ -332,7 +332,7 @@ int ClientOpen( display_fct, host, service, name, passwd, appli )
 	int
 		ear;
 
-    logExtDbg("ClientOpen()"); 
+    logTrace("ClientOpen()"); 
 	strcpy( statname, name);
 	strcpy( statpasswd, passwd);
 	strcpy( statserveur, host);
@@ -427,7 +427,7 @@ int ClientTreat( ear, askstring, display_fct, code )
 	SimDatStruct
 		getstruct;
 
-    logExtDbg("ClientTreat()"); 
+    logTrace("ClientTreat()"); 
 	if( strcmp( askstring, "" ) == 0 )
 	{
 		askstring = OKSUITE;
@@ -475,7 +475,7 @@ void ClientClose( ear )
 	int
 		ear;
 {
-    logExtDbg("ClientClose()"); 
+    logTrace("ClientClose()"); 
 #if 1
 	sk_close( ear );
 #else
@@ -512,7 +512,7 @@ int ClientSendFile( display_fct, fullname, name, appli )
 	char
 		newname[256];
 
-    logExtDbg("ClientSendFile()"); 
+    logTrace("ClientSendFile()"); 
 	errormsg.code = 0;
 	errormsg.msg = 0;
 	errormsg.length = 0;
@@ -590,7 +590,7 @@ int ClientRcvFile(datatype, display_fct, localfile, distantfile, appli )
 	char
 		newname[256] ;
 
-    logExtDbg("ClientRcvFile()"); 
+    logTrace("ClientRcvFile()"); 
 	errormsg.code = 0;
 	errormsg.msg = 0;
 	errormsg.length = 0;
@@ -656,7 +656,7 @@ int TestVersionAppli(ear,display_fct,appli)
         ctrl_str_lg,
     version_ack_lg ;
 
-    logExtDbg("TestVersionAppli()"); 
+    logTrace("TestVersionAppli()"); 
     /* Envoi "version;appli" et test du numero de version */
     version_ack_lg = sizeof(version_ack) ;
     strcpy(ctrl_str,VERSION) ;

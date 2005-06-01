@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  * 
- * "@(#) $Id: simcliGetCoordinates.c,v 1.5 2005-02-15 14:50:51 gzins Exp $"
+ * "@(#) $Id: simcliGetCoordinates.c,v 1.6 2005-06-01 14:13:09 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/02/15 14:50:51  gzins
+ * Added CVS log as file modification history
+ *
  * scetre    17-Nov-2004  Created
  *
  ******************************************************************************/
@@ -16,7 +19,7 @@
  * 
  */
 
-static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.5 2005-02-15 14:50:51 gzins Exp $"; 
+static char *rcsId="@(#) $Id: simcliGetCoordinates.c,v 1.6 2005-06-01 14:13:09 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -46,7 +49,7 @@ mcsCOMPL_STAT simcliGetCoordinates (char *name,
                                     char *ra,
                                     char *dec)
 {
-    logExtDbg("simcliGetCoordinates()"); 
+    logTrace("simcliGetCoordinates()"); 
     char  
     userid[MAX_USERID+1]={"t039ga"}, 
     passwd[MAX_USERID+1]={"codeporte"} ;
