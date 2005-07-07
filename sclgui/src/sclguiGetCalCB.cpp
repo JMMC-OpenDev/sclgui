@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.26 2005-03-08 14:05:59 scetre Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.27 2005-07-07 05:09:27 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2005/03/08 14:05:59  scetre
+ * Added exit callback
+ *
  * Revision 1.25  2005/03/07 15:56:17  gzins
  * Removed filtering on visibility
  *
@@ -89,7 +92,7 @@
  * Definition of GetCalCB method.
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.26 2005-03-08 14:05:59 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.27 2005-07-07 05:09:27 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -113,13 +116,13 @@ using namespace std;
 /*
  * Local Headers 
  */
-#include "sclguiPANEL.h"
+#include "sclguiDISPLAY.h"
 #include "sclguiPrivate.h"
 #include "sclguiErrors.h"
 
-evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
+evhCB_COMPL_STAT sclguiDISPLAY::GetCalCB(msgMESSAGE &msg, void*)
 {
-    logExtDbg("sclguiPANEL::GetCalCB()");
+    logTrace("sclguiDISPLAY::GetCalCB()");
 
     // Check server is IDLE (no command is currently been processed)
     if (GetSubState() != evhSUBSTATE_IDLE)
@@ -132,13 +135,15 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
     {
         _mainWindow->Hide();
         _theGui->SetStatus(true, "Looking for calibrators in star catalogs...");
-
+        
+        //Initialize the model
+        _model.Init();
+        
         // Defines callback to handle reply
         evhCMD_CALLBACK cmdReplyCB
-            (this, (evhCMD_CB_METHOD)&sclguiPANEL::GetCalReplyCB);
+            (this, (evhCMD_CB_METHOD)&sclguiDISPLAY::GetCalReplyCB);
 
-        // Build the request object from the parameters of the command
-        if (_request.Parse(msg.GetBody()) == mcsFAILURE)
+        if (_model.SetRequest(msg) == mcsFAILURE)
         {
             // Report error
             _theGui->SetStatus(false, "Invalid command parameter list", 
@@ -154,11 +159,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
             // Report error
             _theGui->SetStatus(false, errUserGet());
 
-            // Clear result table
-            _currentList.Clear();
-            _displayList.Clear();
-            _coherentDiameterList.Clear();
-
             return evhCB_NO_DELETE | evhCB_FAILURE;
         }
 
@@ -171,13 +171,10 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalCB(msgMESSAGE &msg, void*)
     return evhCB_NO_DELETE;
 }
 
-evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
+evhCB_COMPL_STAT sclguiDISPLAY::GetCalReplyCB(msgMESSAGE &msg, void*)
 {
-    logExtDbg("sclguiPANEL::GetCalReplyCB()");
+    logTrace("sclguiDISPLAY::GetCalReplyCB()");
     // Clear list
-    _currentList.Clear();
-    _displayList.Clear();
-    _coherentDiameterList.Clear();
     // If an error reply is received
     switch (msg.GetType())
     {
@@ -191,7 +188,6 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
             _theGui->SetStatus(false, errUserGet());
 
             // Clear result table
-            _currentList.Clear();
 
             // Prepare message reply
             _msg.SetBody("Request FAILED.");
@@ -200,69 +196,9 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
         }
         case msgTYPE_REPLY:
         {
-            if (strcmp(_request.GetSearchBand(), "N") == 0)
-            {
-                _ucdNameDisplay = _ucdNameforN;
-            }
-            else
-            {
-                _ucdNameDisplay = _ucdNameforKV;
-            }
-
-            // Fixed by default forbidden multiplicity and variability
-            _varAuthorized = mcsFALSE;
-            _multAuthorized = mcsFALSE;
-            // Retreive the returned calibrator list. Check whether calibrators
-            // have been found or not.
-            if (miscIsSpaceStr(msg.GetBody()) == mcsFALSE)
-            {
-                _currentList.UnPack(msg.GetBody());
-            }
-            else
-            {
-                _currentList.Clear();
-            }
-            // Fix the number of CDS return
-            _found = _currentList.Size();
-            /// Extract from the CDS return the list of coherent diameter
-            _coherentDiameterList.Copy(_currentList, mcsFALSE);
-            // Fix the number of coherent diameter
-            _diam = _coherentDiameterList.Size(); 
-            // Filter the coherent diameter list
-            _coherentDiameterList.FilterByVariability(_varAuthorized);
-            _coherentDiameterList.FilterByMultiplicity(_multAuthorized);
+            // if reply success, set list in the model
+            _model.SetList(msg);
             
-            _displayList.Copy(_coherentDiameterList);
-            _withNoVarMult=_displayList.Size();
-            // Display list of calibrators
-            if (logGetStdoutLogLevel() >= logTEST)
-            {
-                _currentList.Display();
-            }
-
-            // If there is no calibrator
-            if (_currentList.Size() == 0)
-            {
-                // Inform user
-                _theGui->SetStatus(false, "No calibrator found.");
-                
-                // Clear list
-                _currentList.Clear();
-                _displayList.Clear();
-                _coherentDiameterList.Clear();
-            }
-            else
-            {
-                // Inform user
-                mcsSTRING64 usrMsg;
-                sprintf(usrMsg, "%d star(s) found in CDS catalogs",
-                        _currentList.Size());
-                _theGui->SetStatus(true, usrMsg);
-            
-                // Fill the result table
-                FillResultsTable(&_displayList);
-            }
-
             // Update main window
             _mainWindow->Hide();
             BuildMainWindow();
@@ -287,9 +223,9 @@ evhCB_COMPL_STAT sclguiPANEL::GetCalReplyCB(msgMESSAGE &msg, void*)
     return evhCB_DELETE;
 }
 
-evhCB_COMPL_STAT sclguiPANEL::ExitCB(msgMESSAGE &msg, void *userData)
+evhCB_COMPL_STAT sclguiDISPLAY::ExitCB(msgMESSAGE &msg, void *userData)
 {
-    logExtDbg("sclguiPANEL::ExitCB()");
+    logTrace("sclguiDISPLAY::ExitCB()");
     
     _theGui->SetStatus(true, "Bye bye");
 
