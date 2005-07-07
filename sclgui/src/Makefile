@@ -1,19 +1,13 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.6 2005-02-15 15:58:53 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.7 2005-07-07 05:09:41 gzins Exp $"
 #
-# Makefile of the sclgui module
+# Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
-# Revision 1.5  2005/01/29 12:12:53  gzins
-# Added CVS log as modification history
-# Removed creation of library, all files are compiled to build binary
-#
-# sccmgr    23-Nov-2004  Created
-#
 #*******************************************************************************
 # REMARKS
 #    Makefile based on the VLT/ALMA Makefile
@@ -30,7 +24,7 @@
 
 #
 # additional include and library search paths
-USER_INC = 
+#USER_INC = 
 #USER_LIB = 
 
 #
@@ -42,20 +36,28 @@ USER_INC =
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     = sclguiPanel
+EXECUTABLES     = sclguiDisplay
 EXECUTABLES_L   = 
 
 #
-# Main searchcalib graphical program
-sclguiPanel_OBJECTS   = sclguiPanel sclguiGetCalCB sclguiPANEL
-sclguiPanel_LDFLAGS   =
-sclguiPanel_LIBS      = MCS C++ sclsvr msg vobs alx simcli
-
-#
 # <brief description of xxxxx program>
-xxxxx_OBJECTS   =
-xxxxx_LDFLAGS   =
-xxxxx_LIBS      =
+sclguiDisplay_OBJECTS   = sclguiDisplay						\
+						  sclguiGetCalCB 					\
+						  sclguiDISPLAY 					\
+						  sclguiMODEL						\
+						  sclguiREQUEST_VIEW				\
+						  sclguiRESUME_VIEW					\
+						  sclguiTABLE_VIEW					\
+						  sclguiFILTER_VIEW					\
+						  sclguiVISIBILITY_FILTER_VIEW		\
+						  sclguiMAGNITUDE_FILTER_VIEW		\
+						  sclguiDISTANCE_FILTER_VIEW		\
+						  sclguiLUMINOSITY_FILTER_VIEW		\
+						  sclguiSPTYPE_FILTER_VIEW			\
+						  sclguiVARIABILITY_FILTER_VIEW		\
+						  sclguiMULTIPLICITY_FILTER_VIEW
+sclguiDisplay_LDFLAGS   =
+sclguiDisplay_LIBS      = MCS C++ sclsvr vobs alx simcli 
 
 #
 # special compilation flags for single c sources
@@ -64,22 +66,29 @@ xxxxx_LIBS      =
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        = sclgui.h \
-				  sclguiPANEL.h
-
+INCLUDES        =  sclgui.h 						\
+				   sclguiDISPLAY.h					\
+				   sclguiMODEL.h					\
+				   sclguiREQUEST_VIEW.h				\
+				   sclguiRESUME_VIEW.h				\
+				   sclguiTABLE_VIEW.h				\
+				   sclguiFILTER_VIEW.h				\
+				   sclguiVISIBILITY_FILTER_VIEW.h	\
+				   sclguiMAGNITUDE_FILTER_VIEW.h	\
+				   sclguiDISTANCE_FILTER_VIEW.h		\
+				   sclguiLUMINOSITY_FILTER_VIEW.h	\
+				   sclguiSPTYPE_FILTER_VIEW.h		\
+				   sclguiVARIABILITY_FILTER_VIEW.h	\
+				   sclguiMULTIPLICITY_FILTER_VIEW.h
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       =
+LIBRARIES       = 
 LIBRARIES_L     =
 
 #
-# the sclgui Library
-llllll_OBJECTS   = 
-
-#
 # <brief description of lllll library>
-lllll_OBJECTS   =
+llllll_OBJECTS   = 
 
 #
 # Scripts (public and local)
@@ -133,6 +142,11 @@ JAVA_EXECUTABLES=
 #
 # <brief description of jjjjjj java program>
 jjjjjj_CLASS    =
+
+#
+# Command Definition Files (CDF)
+# ---------------------------------
+CDF_FILES       =
 
 #
 # man pages to be done
