@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiDISPLAY.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiDISPLAY.cpp,v 1.2 2005-09-13 12:26:50 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiDISPLAY class.
  */
 
-static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.2 2005-09-13 12:26:50 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -45,7 +48,7 @@ using namespace std;
  *  \returns an MCS completion status code (mcsSUCCESS or mcsFAILURE)
  */
 sclguiDISPLAY::sclguiDISPLAY(string hostname, mcsINT32 port): 
-_sclServer("Search-calibrator server", "sclsvrServer", 120000)
+_sclServer("Search-calibrator server", "sclsvrServer", 600000)
 
 {
     logTrace("sclguiDISPLAY::sclguiDISPLAY");
