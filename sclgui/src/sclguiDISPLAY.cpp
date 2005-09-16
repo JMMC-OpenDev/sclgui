@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiDISPLAY.cpp,v 1.2 2005-09-13 12:26:50 scetre Exp $"
+ * "@(#) $Id: sclguiDISPLAY.cpp,v 1.3 2005-09-16 13:44:55 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/09/13 12:26:50  scetre
+ * Changed reply cmd wait from 2 minutes to 10 minutes
+ *
  * Revision 1.1  2005/07/07 05:07:21  gzins
  * Added - Applied Model-View-Controller (MVC) design
  *
@@ -16,7 +19,7 @@
  *  Definition of sclguiDISPLAY class.
  */
 
-static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.2 2005-09-13 12:26:50 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.3 2005-09-16 13:44:55 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -631,6 +634,9 @@ mcsCOMPL_STAT sclguiDISPLAY::DistanceButtonCB(void *)
     sscanf((_distanceFilterView->GetRaRange()).c_str(), "%f", &raRange);
     sscanf((_distanceFilterView->GetDecRange()).c_str(), "%f", &decRange);
     
+    // convert raRange from min to degree
+    raRange=raRange*15/60;
+
     // Enable distance filter with the previous parameters
     _model.EnableFilterDistance(raRef, decRef, raRange, decRange);     
     
@@ -1059,12 +1065,12 @@ mcsCOMPL_STAT sclguiDISPLAY::BuildButtons()
     // Place at top "SHOW ALL RESULTS" button
     _showAllResultsButton->PlaceAtTop(mcsTRUE);
     // Created "RESET" button
-    _resetButton = new gwtBUTTON("RESET", "This button reset the star list. It will show the list with visibility OK.");
+    _resetButton = new gwtBUTTON("RESET", "This button reset the star list. It will show the list without variability and multiplicity flag.");
     // Place at top "RESET" button
     _resetButton->PlaceAtTop(mcsTRUE);
     // Created "SHOW DETAILS" button
     _showDetailsButton = new gwtBUTTON
-        ("SHOW DETAILS", "Show all properties of a star");
+        ("SHOW DETAILS", "Show all properties of the stars");
     // Place at top "SHOW DETAILS" button
     _showDetailsButton->PlaceAtTop(mcsTRUE);
     // Created "HIDE DETAILS" button 
@@ -1126,6 +1132,7 @@ mcsCOMPL_STAT sclguiDISPLAY::BuildFilterInterface()
     // Create filter choice
     _filterChoice = new gwtCHOICE();
     _filterChoice->SetLabel("Selection parameters");
+    _filterChoice->SetHelp("Choose the filter you want to apply on the list");
     _filterChoice->Add("Maximal distance in RA and DEC");
     _filterChoice->Add("Maximal Magnitude Separation (mag)");
     _filterChoice->Add("Spectral Type");
