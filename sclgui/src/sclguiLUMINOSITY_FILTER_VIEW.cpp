@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiLUMINOSITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -235,16 +238,22 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::BuildMainFilterView()
     // Prepare widgets 
     _lumCheckboxI = new gwtCHECKBOX();
     _lumCheckboxI->SetLabel("I");
+    _lumCheckboxI->SetHelp("Check the box if you want this luminosity class");
     _lumCheckboxII = new gwtCHECKBOX();
     _lumCheckboxII->SetLabel("II");
+    _lumCheckboxII->SetHelp("Check the box if you want this luminosity class");
     _lumCheckboxIII = new gwtCHECKBOX();
     _lumCheckboxIII->SetLabel("III");
+    _lumCheckboxIII->SetHelp("Check the box if you want this luminosity class");
     _lumCheckboxIV = new gwtCHECKBOX();
     _lumCheckboxIV->SetLabel("IV");
+    _lumCheckboxIV->SetHelp("Check the box if you want this luminosity class");
     _lumCheckboxV = new gwtCHECKBOX();
     _lumCheckboxV->SetLabel("V");
+    _lumCheckboxV->SetHelp("Check the box if you want this luminosity class");
     _lumCheckboxVI = new gwtCHECKBOX();
     _lumCheckboxVI->SetLabel("VI");
+    _lumCheckboxVI->SetHelp("Check the box if you want this luminosity class");
     
     // Add widgets
     ownWindow->Add(_lumCheckboxI);

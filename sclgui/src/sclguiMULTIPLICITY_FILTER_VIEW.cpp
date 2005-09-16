@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiMULTIPLICITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -164,6 +167,7 @@ mcsCOMPL_STAT sclguiMULTIPLICITY_FILTER_VIEW::BuildMainFilterView()
     // Prepare widgets 
     _multiplicityChoice = new gwtCHOICE();
     _multiplicityChoice->SetLabel("Multiplicity");    
+    _multiplicityChoice->SetHelp("Choose if you want to authorize or to forbid the multiplicity");    
     // Prepare widgets 
     if (IsMultiplicityAuthorized() == mcsTRUE)
     {

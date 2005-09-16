@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiSPTYPE_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiSPTYPE_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiSPTYPE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiSPTYPE_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiSPTYPE_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -253,18 +256,25 @@ mcsCOMPL_STAT sclguiSPTYPE_FILTER_VIEW::BuildMainFilterView()
     // Prepare widgets 
     _spectralTypeCheckboxO = new gwtCHECKBOX();
     _spectralTypeCheckboxO->SetLabel("O");
+    _spectralTypeCheckboxO->SetHelp("Check the box if you want this temperature class");
     _spectralTypeCheckboxB = new gwtCHECKBOX();
     _spectralTypeCheckboxB->SetLabel("B");
+    _spectralTypeCheckboxB->SetHelp("Check the box if you want this temperature class");
     _spectralTypeCheckboxA = new gwtCHECKBOX();
     _spectralTypeCheckboxA->SetLabel("A");
+    _spectralTypeCheckboxA->SetHelp("Check the box if you want this temperature class");
     _spectralTypeCheckboxF = new gwtCHECKBOX();
     _spectralTypeCheckboxF->SetLabel("F");
+    _spectralTypeCheckboxF->SetHelp("Check the box if you want this temperature class");
     _spectralTypeCheckboxG = new gwtCHECKBOX();
     _spectralTypeCheckboxG->SetLabel("G");
+    _spectralTypeCheckboxG->SetHelp("Check the box if you want this temperature class");
     _spectralTypeCheckboxK = new gwtCHECKBOX();
     _spectralTypeCheckboxK->SetLabel("K");
+    _spectralTypeCheckboxK->SetHelp("Check the box if you want this temperature class");
     _spectralTypeCheckboxM = new gwtCHECKBOX();
     _spectralTypeCheckboxM->SetLabel("M");
+    _spectralTypeCheckboxM->SetHelp("Check the box if you want this temperature class");
     
     // Add widget
     ownWindow->Add(_spectralTypeCheckboxO);
