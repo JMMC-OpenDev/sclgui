@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiREQUEST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -48,6 +51,7 @@ sclguiREQUEST_VIEW::sclguiREQUEST_VIEW(sclguiMODEL *model)
     _requestTextArea = new gwtTEXTAREA("--", 4, 50, "No Help");
     _requestTextArea->SetVerticalOrientation(mcsTRUE);
     _requestTextArea->SetLabel("Science star");
+    _requestTextArea->SetHelp("Resume of the research request");
 }
 
 /**

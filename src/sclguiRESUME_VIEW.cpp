@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiRESUME_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiRESUME_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiRESUME_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiRESUME_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiRESUME_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -45,6 +48,7 @@ sclguiRESUME_VIEW::sclguiRESUME_VIEW(sclguiMODEL *model)
     _model = model;
 
     _resumeTextArea = new gwtTEXTAREA("--", 1, 50, "No Help");
+    _resumeTextArea->SetHelp("Resume of the research result");
     _resumeTextArea->SetLabel("Results");
     _resumeTextArea->SetVerticalOrientation(mcsTRUE);
 }

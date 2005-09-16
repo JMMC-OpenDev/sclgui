@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiTABLE_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiTABLE_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiTABLE_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiTABLE_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiTABLE_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -67,12 +70,14 @@ sclguiTABLE_VIEW::sclguiTABLE_VIEW(sclguiMODEL *model)
     _model = model;
     
     _listTable = new gwtTABLE(0, 0);
+    _listTable->SetHelp("Results of the research");
     _listTable->SetHeight(160);
     _listTable->SetVerticalOrientation(mcsTRUE);
 
     // build legend table
     _legendTable = new gwtTABLE(1, 14);
     _legendTable->SetHeight(14);
+    _legendTable->SetHelp("Color legend of properties origin");
     //_legendTable->SetVerticalOrientation(mcsTRUE);
     _legendTable->SetLabel("Catalog Origin");
     _legendTable->SetCell(0, 0, "I/280");
@@ -106,6 +111,7 @@ sclguiTABLE_VIEW::sclguiTABLE_VIEW(sclguiMODEL *model)
     
     // build confidence index table
     _confidenceTable = new gwtTABLE(1,3);
+    _confidenceTable->SetHelp("confidence index color of computing propeties");
     _confidenceTable->SetHeight(14);
     _confidenceTable->SetLabel("Confidence Index");
     _confidenceTable->SetCell(0, 0, "Low");
