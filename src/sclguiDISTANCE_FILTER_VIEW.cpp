@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiDISTANCE_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiDISTANCE_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:55 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiDISTANCE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiDISTANCE_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiDISTANCE_FILTER_VIEW.cpp,v 1.2 2005-09-16 13:44:55 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -88,7 +91,10 @@ mcsCOMPL_STAT sclguiDISTANCE_FILTER_VIEW::Update()
         mcsFLOAT raRange;
         mcsFLOAT decRange;
         distFilter->GetDistanceValue(&raRef, &decRef, &raRange, &decRange);
-
+        
+        // reconvert ra from degree to minute
+        raRange = raRange*60/15;
+        
         string raValueString;
         string decValueString;
         ostringstream ostrRa;
