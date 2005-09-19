@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiDISPLAY.cpp,v 1.4 2005-09-19 07:45:24 scetre Exp $"
+ * "@(#) $Id: sclguiDISPLAY.cpp,v 1.5 2005-09-19 12:52:53 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/09/19 07:45:24  scetre
+ * Changed conversion of expected visibility
+ *
  * Revision 1.3  2005/09/16 13:44:55  scetre
  * added conversion from min to deg and from deg to min when get and set ra in calibrators model
  *
@@ -22,7 +25,7 @@
  *  Definition of sclguiDISPLAY class.
  */
 
-static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.4 2005-09-19 07:45:24 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.5 2005-09-19 12:52:53 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -128,7 +131,6 @@ mcsCOMPL_STAT sclguiDISPLAY::AppInit()
     AddCallback(cmdKey, cmdCB);
 
     BuildMainWindow();
-    _mainWindow->Show();
     
     BuildConfirmWindow();
 
