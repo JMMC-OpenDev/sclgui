@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiDISPLAY.cpp,v 1.3 2005-09-16 13:44:55 scetre Exp $"
+ * "@(#) $Id: sclguiDISPLAY.cpp,v 1.4 2005-09-19 07:45:24 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/09/16 13:44:55  scetre
+ * added conversion from min to deg and from deg to min when get and set ra in calibrators model
+ *
  * Revision 1.2  2005/09/13 12:26:50  scetre
  * Changed reply cmd wait from 2 minutes to 10 minutes
  *
@@ -19,7 +22,7 @@
  *  Definition of sclguiDISPLAY class.
  */
 
-static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.3 2005-09-16 13:44:55 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.4 2005-09-19 07:45:24 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -562,6 +565,9 @@ mcsCOMPL_STAT sclguiDISPLAY::VisibilityButtonCB(void *)
     mcsFLOAT visMax;
     sscanf((_visibilityFilterView->GetVisFilterValue()).c_str(), "%f", &visMax);
     
+    // changed vis from % to value between 0 and 1
+    visMax = visMax/100;
+
     // Enable visibility filter with the user entry
     _model.EnableFilterVisibility(visMax);
     

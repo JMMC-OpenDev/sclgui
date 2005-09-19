@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.2 2005-09-19 07:45:25 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/07 05:07:21  gzins
+ * Added - Applied Model-View-Controller (MVC) design
+ *
  ******************************************************************************/
 
 /**
@@ -13,7 +16,7 @@
  *  Definition of sclguiVISIBILITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.2 2005-09-19 07:45:25 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -83,7 +86,10 @@ mcsCOMPL_STAT sclguiVISIBILITY_FILTER_VIEW::Update()
     {
         mcsFLOAT filterValue;
         visFilter->GetVisibilityValue(&filterValue);
-
+       
+        // convert accuracy expected to %
+        filterValue = 100 * filterValue;
+        
         string filterValueString;
         ostringstream ostr;
         
