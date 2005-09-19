@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiDISPLAY.cpp,v 1.5 2005-09-19 12:52:53 scetre Exp $"
+ * "@(#) $Id: sclguiDISPLAY.cpp,v 1.6 2005-09-19 13:44:56 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/09/19 12:52:53  scetre
+ * Removed th open of the window at the beginning of the research
+ *
  * Revision 1.4  2005/09/19 07:45:24  scetre
  * Changed conversion of expected visibility
  *
@@ -25,7 +28,7 @@
  *  Definition of sclguiDISPLAY class.
  */
 
-static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.5 2005-09-19 12:52:53 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiDISPLAY.cpp,v 1.6 2005-09-19 13:44:56 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -383,7 +386,13 @@ mcsCOMPL_STAT sclguiDISPLAY::DeletePanelCB(void *)
         return mcsFAILURE;
     }
     // if the integer is not positive or lower than zero, inform the user
-    if ((calibratorNumber>list->Size())||(calibratorNumber<=0))
+    if (list->Size() == 0)
+    {
+        sprintf(usrMsg, "Can't delete, no star in the list");
+        _theGui->SetStatus(false, "Invalid star number", usrMsg);         
+        return mcsFAILURE;
+    }
+    else if ((calibratorNumber>list->Size())||(calibratorNumber<=0))
     {
         sprintf(usrMsg, "Value should be a positive integer lower than %d",
                 list->Size());
@@ -417,7 +426,8 @@ mcsCOMPL_STAT sclguiDISPLAY::DeletePanelCB(void *)
         statusMsg.append(")");
     }
     statusMsg.append(" has been deleted");
-
+    _theGui->SetStatus(true, statusMsg);
+    
     // Update main window
     _mainWindow->Update();
 
