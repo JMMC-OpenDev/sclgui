@@ -3,7 +3,7 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_VIEW.h,v 1.1 2005-07-07 05:10:54 gzins Exp $"
+ * "@(#) $Id: sclguiFILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -27,48 +27,45 @@
 #include "fnd.h"
 #include "gwt.h"
 
-#include "sclguiMODEL.h"
-#include "sclsvr.h"
+/*
+ * Local header
+ */
+#include "sclguiFILTER_LIST_MODEL.h"
 
 /*
  * Class declaration
  */
 
 /**
- * Mother class of all filter view 
+ * Filter view.
+ *
+ * This clas is the mother class of the filter view class need to see the state
+ * of the filters. It provides generic methods to register it at a main gui. 
+ * 
  */
-class sclguiFILTER_VIEW : public fndMVC_VIEW
+class sclguiFILTER_VIEW : public fndMVC_VIEW, public gwtCONTAINER
 {
 
 public:
     // Class constructor
     sclguiFILTER_VIEW();
-    sclguiFILTER_VIEW(sclguiMODEL *model);
 
     // Class destructor
     virtual ~sclguiFILTER_VIEW();
 
-    virtual mcsCOMPL_STAT Show();
-    virtual mcsCOMPL_STAT Hide();
-    
-    virtual gwtWINDOW * GetWindowLink();
-    virtual gwtBUTTON * GetApplyButtonLink();
+    virtual mcsCOMPL_STAT SetApplyCB(fndOBJECT &eventHandler,
+                                     gwtCOMMAND::CB_METHOD cbMethod);
+   
+    virtual mcsCOMPL_STAT AttachModel(sclguiFILTER_LIST_MODEL &filterList);
 protected:
-    virtual mcsCOMPL_STAT BuildWindow();
-    virtual mcsCOMPL_STAT CompleteWindowInformation();
-    virtual mcsCOMPL_STAT BuildMainFilterView();
+    sclguiFILTER_LIST_MODEL *_filterList;
+
+    gwtBUTTON _applyFilterButton;
 private:
     // Declaration of copy constructor and assignment operator as private
     // methods, in order to hide them from the users.
     sclguiFILTER_VIEW(const sclguiFILTER_VIEW&);
     sclguiFILTER_VIEW& operator=(const sclguiFILTER_VIEW&);
-
-    sclguiMODEL *_model;
-
-    gwtWINDOW *_filterWindow;
-    gwtBUTTON *_applyFilterButton;
-
-    virtual mcsCOMPL_STAT BuildApplyFilterButton();    
 };
 
 #endif /*!sclguiFILTER_VIEW_H*/

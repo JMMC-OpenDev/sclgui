@@ -1,14 +1,11 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
+ * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
- * Revision 1.1  2005/07/07 05:07:21  gzins
- * Added - Applied Model-View-Controller (MVC) design
- *
  ******************************************************************************/
 
 /**
@@ -16,7 +13,7 @@
  *  Definition of sclguiREQUEST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -42,16 +39,35 @@ using namespace std;
 /**
  * Class constructor
  */
-sclguiREQUEST_VIEW::sclguiREQUEST_VIEW(sclguiMODEL *model)
+sclguiREQUEST_VIEW::sclguiREQUEST_VIEW()
 {
-    // attach to the model
-    _model = model;
+    // Create the text Area
+    _requestTextArea.SetRows(4);
+    _requestTextArea.SetColumns(50);
+    _requestTextArea.SetHelp("No Help");
+    _requestTextArea.SetVerticalOrientation(mcsTRUE);
+    _requestTextArea.SetLabel("Science star");
 
-    // Place science star information
-    _requestTextArea = new gwtTEXTAREA("--", 4, 50, "No Help");
-    _requestTextArea->SetVerticalOrientation(mcsTRUE);
-    _requestTextArea->SetLabel("Science star");
-    _requestTextArea->SetHelp("Resume of the research request");
+    // Add widget in the widget map
+    Add(&_requestTextArea);
+}
+
+sclguiREQUEST_VIEW::sclguiREQUEST_VIEW(sclguiREQUEST_MODEL &requestModel)
+{
+    // Attach to the request model
+    AttachModel(requestModel);
+    
+    // Create the text Area
+    _requestTextArea.SetRows(4);
+    _requestTextArea.SetColumns(50);
+    _requestTextArea.SetHelp("No Help");
+    _requestTextArea.SetVerticalOrientation(mcsTRUE);
+    _requestTextArea.SetLabel("Science star");
+
+    // Add widget in the widget map
+    Add(&_requestTextArea);
+
+    Update();
 }
 
 /**
@@ -65,46 +81,49 @@ sclguiREQUEST_VIEW::~sclguiREQUEST_VIEW()
  * Public methods
  */
 /**
- * Update view method
+ * Update method
  *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
  */
 mcsCOMPL_STAT sclguiREQUEST_VIEW::Update()
 {
     logTrace("sclguiREQUEST_VIEW::Update()");
-   
-    sclsvrREQUEST *request;
-
-    // Get the request of the model associated to this view
-    request = _model->GetRequest();
 
     // Get the value in the request in order to view constraints on the panel
     ostringstream out;
     out << "NAME\tRAJ2000\tDEJ2000\tMag";
-    out << request->GetSearchBand();
+    out << _requestModel->GetSearchBand();
     out << "\tBase-max\tLambda\tDiamVK\n";
     out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\n";
-    out << request->GetObjectName() << "\t" << request->GetObjectRa() << "\t" 
-        << request->GetObjectDec() << "\t" << request->GetObjectMag() << "\t";
-    out << request->GetMaxBaselineLength() << "\t" 
-        << request->GetObservingWlen() << "\t";
+    out << _requestModel->GetObjectName();
+    out << "\t" << _requestModel->GetObjectRa() << "\t" ;
+    out << _requestModel->GetObjectDec() << "\t";
+    out << _requestModel->GetObjectMag() << "\t";
+    out << _requestModel->GetMaxBaselineLength() << "\t";
+    out << _requestModel->GetObservingWlen() << "\t";
 
-    _requestTextArea->SetText(out.str());
-    
+    _requestTextArea.SetText(out.str());
+    cout << "request" << out << endl;
     return mcsSUCCESS;
 }
 
 /**
- * Return the text area associated to this view
+ * Attach model in the request view
  *
- * @return text area
+ * @ request the model to attach
+ *
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
  */
-gwtTEXTAREA * sclguiREQUEST_VIEW::GetRequestTextArea()
+mcsCOMPL_STAT sclguiREQUEST_VIEW::AttachModel(sclguiREQUEST_MODEL &requestModel)
 {
-    logTrace("sclguiREQUEST_VIEW::GetRequestTextArea()");
+    logTrace("sclguiREQUEST_VIEW::AddRequestModel()");
 
-    return _requestTextArea;
+     // Attach to the request model
+    _requestModel = &requestModel;
+
+    return mcsSUCCESS;
 }
 
 /*

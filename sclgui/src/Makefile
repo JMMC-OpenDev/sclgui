@@ -1,7 +1,7 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.7 2005-07-07 05:09:41 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.8 2005-10-11 15:24:15 scetre Exp $"
 #
 # Makefile of sclgui module
 #
@@ -36,28 +36,31 @@
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     = sclguiDisplay
+EXECUTABLES     = sclguiControl
 EXECUTABLES_L   = 
 
 #
 # <brief description of xxxxx program>
-sclguiDisplay_OBJECTS   = sclguiDisplay						\
-						  sclguiGetCalCB 					\
-						  sclguiDISPLAY 					\
-						  sclguiMODEL						\
-						  sclguiREQUEST_VIEW				\
-						  sclguiRESUME_VIEW					\
-						  sclguiTABLE_VIEW					\
-						  sclguiFILTER_VIEW					\
-						  sclguiVISIBILITY_FILTER_VIEW		\
-						  sclguiMAGNITUDE_FILTER_VIEW		\
-						  sclguiDISTANCE_FILTER_VIEW		\
-						  sclguiLUMINOSITY_FILTER_VIEW		\
-						  sclguiSPTYPE_FILTER_VIEW			\
-						  sclguiVARIABILITY_FILTER_VIEW		\
-						  sclguiMULTIPLICITY_FILTER_VIEW
-sclguiDisplay_LDFLAGS   =
-sclguiDisplay_LIBS      = MCS C++ sclsvr vobs alx simcli 
+sclguiControl_OBJECTS   = sclguiControl					\
+						  sclguiCALIBRATOR_LIST_MODEL				\
+                          sclguiREQUEST_MODEL					\
+                          sclguiFILTER_LIST_MODEL				\
+                          sclguiBUTTONS_SUBPANEL			\
+                          sclguiACTIONS_VIEW			\
+                          sclguiFILTER_VIEW				\
+                          sclguiDISTANCE_FILTER_VIEW	\
+                          sclguiVISIBILITY_FILTER_VIEW	\
+                          sclguiVARIABILITY_FILTER_VIEW	\
+                          sclguiMULTIPLICITY_FILTER_VIEW\
+                          sclguiLUMINOSITY_FILTER_VIEW	\
+                          sclguiMAGNITUDE_FILTER_VIEW	\
+                          sclguiSPECTRAL_TYPE_FILTER_VIEW		\
+                          sclguiCALIBRATOR_LIST_VIEW   		\
+                          sclguiREQUEST_VIEW		   	\
+                          sclguiCONFIRM_SUBPANEL	   		\
+                          sclguiCONTROLLER			   		
+sclguiControl_LDFLAGS   =
+sclguiControl_LIBS      = MCS C++ sclsvr vobs alx simcli 
 
 #
 # special compilation flags for single c sources
@@ -66,29 +69,50 @@ sclguiDisplay_LIBS      = MCS C++ sclsvr vobs alx simcli
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        =  sclgui.h 						\
-				   sclguiDISPLAY.h					\
-				   sclguiMODEL.h					\
-				   sclguiREQUEST_VIEW.h				\
-				   sclguiRESUME_VIEW.h				\
-				   sclguiTABLE_VIEW.h				\
-				   sclguiFILTER_VIEW.h				\
-				   sclguiVISIBILITY_FILTER_VIEW.h	\
-				   sclguiMAGNITUDE_FILTER_VIEW.h	\
-				   sclguiDISTANCE_FILTER_VIEW.h		\
-				   sclguiLUMINOSITY_FILTER_VIEW.h	\
-				   sclguiSPTYPE_FILTER_VIEW.h		\
-				   sclguiVARIABILITY_FILTER_VIEW.h	\
-				   sclguiMULTIPLICITY_FILTER_VIEW.h
+INCLUDES        = sclgui.h 							\
+				  sclguiCALIBRATOR_LIST_MODEL.h				\
+				  sclguiREQUEST_MODEL.h					\
+				  sclguiFILTER_LIST_MODEL.h				\
+				  sclguiBUTTONS_SUBPANEL.h				\
+				  sclguiACTIONS_VIEW.h			\
+				  sclguiFILTER_VIEW.h				\
+				  sclguiDISTANCE_FILTER_VIEW.h		\
+				  sclguiVISIBILITY_FILTER_VIEW.h	\
+				  sclguiMULTIPLICITY_FILTER_VIEW.h	\
+				  sclguiLUMINOSITY_FILTER_VIEW.h	\
+				  sclguiMAGNITUDE_FILTER_VIEW.h		\
+				  sclguiSPECTRAL_TYPE_FILTER_VIEW.h		\
+				  sclguiCALIBRATOR_LIST_VIEW.h			\
+				  sclguiREQUEST_VIEW.h				\
+				  sclguiCONFIRM_SUBPANEL.h			\
+				  sclguiCONTROLLER.h					\
+
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       = 
+LIBRARIES       = sclgui
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-llllll_OBJECTS   = 
+sclgui_OBJECTS   =  sclguiCALIBRATOR_LIST_MODEL				\
+				    sclguiREQUEST_MODEL					\
+				    sclguiFILTER_LIST_MODEL				\
+				    sclguiBUTTONS_SUBPANEL				\
+				    sclguiACTIONS_VIEW				\
+				    sclguiFILTER_VIEW				\
+				    sclguiDISTANCE_FILTER_VIEW		\
+				    sclguiVISIBILITY_FILTER_VIEW	\
+				    sclguiVARIABILITY_FILTER_VIEW	\
+				    sclguiMULTIPLICITY_FILTER_VIEW	\
+				    sclguiLUMINOSITY_FILTER_VIEW	\
+				    sclguiMAGNITUDE_FILTER_VIEW		\
+				    sclguiSPECTRAL_TYPE_FILTER_VIEW		\
+				    sclguiCALIBRATOR_LIST_VIEW   		\
+				    sclguiREQUEST_VIEW		   		\
+				    sclguiCONFIRM_SUBPANEL	   		\
+				    sclguiCONTROLLER			   		\
+
 
 #
 # Scripts (public and local)

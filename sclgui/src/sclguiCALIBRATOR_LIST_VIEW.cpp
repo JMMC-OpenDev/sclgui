@@ -1,22 +1,19 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiTABLE_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
- * Revision 1.1  2005/07/07 05:07:21  gzins
- * Added - Applied Model-View-Controller (MVC) design
- *
  ******************************************************************************/
 
 /**
  * \file
- *  Definition of sclguiTABLE_VIEW class.
+ *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiTABLE_VIEW.cpp,v 1.2 2005-09-16 13:44:01 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -36,7 +33,7 @@ using namespace std;
 /*
  * Local Headers 
  */
-#include "sclguiTABLE_VIEW.h"
+#include "sclguiCALIBRATOR_LIST_VIEW.h"
 #include "sclguiPrivate.h"
 
 /**
@@ -64,21 +61,23 @@ using namespace std;
 /**
  * Class constructor
  */
-sclguiTABLE_VIEW::sclguiTABLE_VIEW(sclguiMODEL *model)
+sclguiCALIBRATOR_LIST_VIEW::sclguiCALIBRATOR_LIST_VIEW()
 {
-    // attach to the model
-    _model = model;
-    
+    // Create the widget
+    // resume text area
+    _resumeTextArea.SetText("--");
+    _resumeTextArea.SetRows(1);
+    _resumeTextArea.SetColumns(50);
+    _resumeTextArea.SetHelp("No Help");
+    _resumeTextArea.SetLabel("Results");
+    _resumeTextArea.SetVerticalOrientation(mcsTRUE); 
+    // list table
     _listTable = new gwtTABLE(0, 0);
-    _listTable->SetHelp("Results of the research");
     _listTable->SetHeight(160);
     _listTable->SetVerticalOrientation(mcsTRUE);
-
-    // build legend table
+    // legend table
     _legendTable = new gwtTABLE(1, 14);
     _legendTable->SetHeight(14);
-    _legendTable->SetHelp("Color legend of properties origin");
-    //_legendTable->SetVerticalOrientation(mcsTRUE);
     _legendTable->SetLabel("Catalog Origin");
     _legendTable->SetCell(0, 0, "I/280");
     _legendTable->SetCellBackground(0, 0, sclguiI_280_COLOR);
@@ -108,10 +107,8 @@ sclguiTABLE_VIEW::sclguiTABLE_VIEW(sclguiMODEL *model)
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
     _legendTable->SetCell(0, 13, "MIDI");
     _legendTable->SetCellBackground(0, 13, sclgui_MIDI_COLOR);
-    
-    // build confidence index table
+    // confidence table
     _confidenceTable = new gwtTABLE(1,3);
-    _confidenceTable->SetHelp("confidence index color of computing propeties");
     _confidenceTable->SetHeight(14);
     _confidenceTable->SetLabel("Confidence Index");
     _confidenceTable->SetCell(0, 0, "Low");
@@ -121,34 +118,122 @@ sclguiTABLE_VIEW::sclguiTABLE_VIEW(sclguiMODEL *model)
     _confidenceTable->SetCell(0, 2, "High");             
     _confidenceTable->SetCellBackground(0, 2, sclguiCONFIDENCE_HIGH_COLOR);
 
-    // By default the view is with less details
+    // Add widget in the widget map
+    Add(&_resumeTextArea);
+    Add(_listTable);
+    Add(_legendTable);
+    Add(_confidenceTable);
+
     _details = mcsFALSE;
+}
+
+sclguiCALIBRATOR_LIST_VIEW::
+sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
+                       sclguiREQUEST_MODEL &requestModel)
+{
+    // Attach model
+    AttachModel(calibratorsModel, requestModel);
+    
+    // Create the widget
+    // resume text area
+    _resumeTextArea.SetText("--");
+    _resumeTextArea.SetRows(1);
+    _resumeTextArea.SetColumns(50);
+    _resumeTextArea.SetHelp("No Help");
+    _resumeTextArea.SetLabel("Results");
+    _resumeTextArea.SetVerticalOrientation(mcsTRUE); 
+    // list table
+    _listTable = new gwtTABLE(0, 0);
+    _listTable->SetHeight(160);
+    _listTable->SetVerticalOrientation(mcsTRUE);
+    // legend table
+    _legendTable = new gwtTABLE(1, 14);
+    _legendTable->SetHeight(14);
+    _legendTable->SetLabel("Catalog Origin");
+    _legendTable->SetCell(0, 0, "I/280");
+    _legendTable->SetCellBackground(0, 0, sclguiI_280_COLOR);
+    _legendTable->SetCell(0, 1, "II/225");
+    _legendTable->SetCellBackground(0, 1, sclguiII_225_COLOR);
+    _legendTable->SetCell(0, 2, "II/7A");
+    _legendTable->SetCellBackground(0, 2, sclguiII_7A_COLOR);
+    _legendTable->SetCell(0, 3, "II/246");
+    _legendTable->SetCellBackground(0, 3, sclguiII_246_COLOR);
+    _legendTable->SetCell(0, 4, "V/50");
+    _legendTable->SetCellBackground(0, 4, sclguiV_50_COLOR);
+    _legendTable->SetCell(0, 5, "Borde");
+    _legendTable->SetCellBackground(0, 5, sclguiBORDE_COLOR);
+    _legendTable->SetCell(0, 6, "Merand");
+    _legendTable->SetCellBackground(0, 6, sclguiMERAND_COLOR);
+    _legendTable->SetCell(0, 7, "charm");
+    _legendTable->SetCellBackground(0, 7, sclguiCHARM_COLOR);
+    _legendTable->SetCell(0, 8, "charm2");
+    _legendTable->SetCellBackground(0, 8, sclguiCHARM2_COLOR);
+    _legendTable->SetCell(0, 9, "B/denis");
+    _legendTable->SetCellBackground(0, 9, sclguiDENIS_COLOR);
+    _legendTable->SetCell(0, 10, "denis J-K");
+    _legendTable->SetCellBackground(0, 10, sclguiDENIS_JK_COLOR);
+    _legendTable->SetCell(0, 11, "I/196");
+    _legendTable->SetCellBackground(0, 11, sclguiI_196_COLOR);
+    _legendTable->SetCell(0, 12, "V/36B");
+    _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
+    _legendTable->SetCell(0, 13, "MIDI");
+    _legendTable->SetCellBackground(0, 13, sclgui_MIDI_COLOR);
+    // confidence table
+    _confidenceTable = new gwtTABLE(1,3);
+    _confidenceTable->SetHeight(14);
+    _confidenceTable->SetLabel("Confidence Index");
+    _confidenceTable->SetCell(0, 0, "Low");
+    _confidenceTable->SetCellBackground(0, 0, sclguiCONFIDENCE_LOW_COLOR);
+    _confidenceTable->SetCell(0, 1, "Medium");           
+    _confidenceTable->SetCellBackground(0, 1, sclguiCONFIDENCE_MEDIUM_COLOR);
+    _confidenceTable->SetCell(0, 2, "High");             
+    _confidenceTable->SetCellBackground(0, 2, sclguiCONFIDENCE_HIGH_COLOR);
+
+    // Add widget in the widget map
+    Add(&_resumeTextArea);
+    Add(_listTable);
+    Add(_legendTable);
+    Add(_confidenceTable);
+
+    Update();
 }
 
 /**
  * Class destructor
  */
-sclguiTABLE_VIEW::~sclguiTABLE_VIEW()
+sclguiCALIBRATOR_LIST_VIEW::~sclguiCALIBRATOR_LIST_VIEW()
 {
+    delete _listTable;
+    delete _legendTable;
+    delete _confidenceTable;
 }
 
 /*
  * Public methods
  */
 /**
- * Update view method
+ * Update method
  *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
  */
-mcsCOMPL_STAT sclguiTABLE_VIEW::Update()
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
 {
-    logTrace("sclguiTABLE_VIEW::Update()");
-  
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::Update()");
+
+    // Update resume textfield
+    ostringstream output;
+    output << "Number of stars: " << _calibratorListModel->GetNbCDSReturn()
+        << " found, "  
+        << _calibratorListModel->GetNbCoherentDiamFound() 
+        << " with coherent diameter and "
+        << _calibratorListModel->GetNbWithoutVarMult() 
+        << " without variability and multiplicity";
+    _resumeTextArea.SetText(output.str());
+    
     // retrieve calibrator list from the model
     sclsvrCALIBRATOR_LIST *calibratorList;
-    calibratorList = _model->GetCalibratorList();
-    
+    calibratorList = _calibratorListModel->GetCalibratorList();
     // Build looking label
     BuildLabel(&_label, _details);
 
@@ -156,8 +241,8 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::Update()
     int nbOfProperties ;
     nbOfProperties = _label.size() + 1 ;
     int nbOfRows;
-    nbOfRows = calibratorList->Size(); 
-    
+    nbOfRows = calibratorList->Size();
+
     _listTable->SetDimension(nbOfRows, nbOfProperties);
     _listTable->SetHeight(160);
     _listTable->SetVerticalOrientation(mcsTRUE);
@@ -299,9 +384,9 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::Update()
  *
  * @return always mcsSUCCESS;
  */
-mcsCOMPL_STAT sclguiTABLE_VIEW::Details(mcsLOGICAL state)
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Details(mcsLOGICAL state)
 {
-    logTrace("sclguiTABLE_VIEW::Details()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::Details()");
 
     _details = state; 
    
@@ -309,47 +394,11 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::Details(mcsLOGICAL state)
 }
 
 /**
- * Return the table associated to this view
- *
- * @return table
- */
-gwtTABLE * sclguiTABLE_VIEW::GetListTable()
-{
-    logTrace("sclguiRESUME_VIEW::GetListTable()");
-
-    return _listTable;
-}
-
-/**
- * Return the color table associated to this view
- *
- * @return  color table
- */
-gwtTABLE * sclguiTABLE_VIEW::GetColorTable()
-{
-    logTrace("sclguiRESUME_VIEW::GetColorTable()");
-
-    return _legendTable;
-}
-
-/**
- * Return the confidence index table associated to this view
- *
- * @return confidence index
- */
-gwtTABLE * sclguiTABLE_VIEW::GetConfIdxTable()
-{
-    logTrace("sclguiRESUME_VIEW::GetConfIdxTable()");
-
-    return _confidenceTable;
-}
-
-/**
  * Return the labels
  *
  * @return labels
  */
-vobsSTAR_PROPERTY_ID_LIST sclguiTABLE_VIEW::GetLabel(mcsLOGICAL details)
+vobsSTAR_PROPERTY_ID_LIST sclguiCALIBRATOR_LIST_VIEW::GetLabel(mcsLOGICAL details)
 {
     logTrace("sclguiTABLE_VIEW::GetLabel()");
     
@@ -364,17 +413,34 @@ vobsSTAR_PROPERTY_ID_LIST sclguiTABLE_VIEW::GetLabel(mcsLOGICAL details)
  *
  * @return mcsTRUE if it is a details state, otherwise mcsFALSE is returned
  */
-mcsLOGICAL sclguiTABLE_VIEW::IsDetailsView()
+mcsLOGICAL sclguiCALIBRATOR_LIST_VIEW::IsDetailsView()
 {
-    logTrace("sclguiTABLE_VIEW::IsDetailsView()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::IsDetailsView()");
     
     return _details;
 }
 
-/*
- * Protected methods
+/**
+ * Attach model in the request view
+ *
+ * @ request the model to attach
+ *
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
  */
+mcsCOMPL_STAT 
+sclguiCALIBRATOR_LIST_VIEW::AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
+                                      sclguiREQUEST_MODEL &requestModel)
+{
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::AttachModel()");
 
+     // Attach to the calibrators model
+    _calibratorListModel = &calibratorsModel;
+    // Attach to the request model
+    _requestModel = &requestModel;
+
+    return mcsSUCCESS;
+}
 
 /*
  * Private methods
@@ -384,9 +450,9 @@ mcsLOGICAL sclguiTABLE_VIEW::IsDetailsView()
  *
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT sclguiTABLE_VIEW::ResetLabel()
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::ResetLabel()
 {
-    logTrace("sclguiTABLE_VIEW::ResetWantedUcdList()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::ResetLabel()");
 
     _label.erase(_label.begin(), _label.end());
     
@@ -401,20 +467,17 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::ResetLabel()
  * 
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT sclguiTABLE_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
-                                           mcsLOGICAL details)
+mcsCOMPL_STAT 
+sclguiCALIBRATOR_LIST_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
+                                    mcsLOGICAL details)
 {
-    logTrace("sclguiTABLE_VIEW::BuildLabel()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabel()");
 
     // ResetLabel
     ResetLabel();
 
-    // According to the request write the correct label
-    sclsvrREQUEST *request;
-    request = _model->GetRequest();
-
-    // Build label accordinf to the research band
-    if (strcmp(request->GetSearchBand(), "N") == 0)
+    // Build label according to the research band
+    if (strcmp(_requestModel->GetSearchBand(), "N") == 0)
     {
         if (details == mcsFALSE)
         {
@@ -447,9 +510,10 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
  * 
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT sclguiTABLE_VIEW::BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label)
+mcsCOMPL_STAT 
+sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label)
 {
-    logTrace("sclguiTABLE_VIEW::BuildLabelKV()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV()");
     
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
@@ -475,9 +539,9 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label)
  * @return always mcsSUCCESS
  */
 mcsCOMPL_STAT
-sclguiTABLE_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label)
+sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label)
 {
-    logTrace("sclguiTABLE_VIEW::BuildLabelKVComplete()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete()");
 
     // build ucdNameforKV list
     label->push_back(sclsvrCALIBRATOR_VIS2            );
@@ -540,9 +604,10 @@ sclguiTABLE_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label)
  * 
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT sclguiTABLE_VIEW::BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label)
+mcsCOMPL_STAT 
+sclguiCALIBRATOR_LIST_VIEW::BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label)
 {
-    logTrace("sclguiTABLE_VIEW::BuildLabelN()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelN()");
 
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
@@ -570,9 +635,9 @@ mcsCOMPL_STAT sclguiTABLE_VIEW::BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label)
  * @return always mcsSUCCESS
  */
 mcsCOMPL_STAT 
-sclguiTABLE_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label)
+sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label)
 {
-    logTrace("sclguiTABLE_VIEW::BuildLabelNComplete()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete()");
 
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
@@ -605,6 +670,5 @@ sclguiTABLE_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label)
     
     return mcsSUCCESS;
 }
-
 
 /*___oOo___*/

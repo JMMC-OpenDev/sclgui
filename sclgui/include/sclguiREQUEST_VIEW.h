@@ -3,7 +3,7 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_VIEW.h,v 1.1 2005-07-07 05:10:54 gzins Exp $"
+ * "@(#) $Id: sclguiREQUEST_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -24,39 +24,31 @@
  * MCS header
  */
 #include "mcs.h"
-#include "fnd.h"
+#include "sclguiREQUEST_MODEL.h"
 #include "gwt.h"
 
-#include "sclguiMODEL.h"
 /*
  * Class declaration
  */
 
 /**
- * Table view of the model list.
+ * View of the request model 
  * 
- * This class derived from a virtual fndMVC_VIEW class wich offer the generic
- * method to register it with a model. The class is composed by a widget defined
- * in the gwt library.
- *
- * \sa fnd library.
- * \sa gwt library.
- *
  */
-class sclguiREQUEST_VIEW : public fndMVC_VIEW
+class sclguiREQUEST_VIEW : public gwtCONTAINER, public fndMVC_VIEW
 {
 
 public:
     // Class constructor
-    sclguiREQUEST_VIEW(sclguiMODEL *model);
+    sclguiREQUEST_VIEW();
+    sclguiREQUEST_VIEW(sclguiREQUEST_MODEL &requestModel);
 
     // Class destructor
     virtual ~sclguiREQUEST_VIEW();
 
     virtual mcsCOMPL_STAT Update();
     
-    gwtTEXTAREA * GetRequestTextArea();
-    
+    virtual mcsCOMPL_STAT AttachModel(sclguiREQUEST_MODEL &requestModel);
 protected:
     
 private:
@@ -64,10 +56,10 @@ private:
     // methods, in order to hide them from the users.
     sclguiREQUEST_VIEW(const sclguiREQUEST_VIEW&);
     sclguiREQUEST_VIEW& operator=(const sclguiREQUEST_VIEW&);
-    
-    sclguiMODEL *_model;
 
-    gwtTEXTAREA *_requestTextArea;    
+    sclguiREQUEST_MODEL *_requestModel;
+
+    gwtTEXTAREA _requestTextArea;
 };
 
 #endif /*!sclguiREQUEST_VIEW_H*/

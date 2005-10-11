@@ -1,9 +1,9 @@
-#ifndef sclguiPOP_UP_FILTER_H
-#define sclguiPOP_UP_FILTER_H
+#ifndef sclguiCONFIRM_SUBPANEL_H
+#define sclguiCONFIRM_SUBPANEL_H
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiPOP_UP_FILTER.h,v 1.1 2005-07-07 05:10:54 gzins Exp $"
+ * "@(#) $Id: sclguiCONFIRM_SUBPANEL.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -12,7 +12,7 @@
 
 /**
  * \file
- * Declaration of sclguiPOP_UP_FILTER class.
+ * Declaration of sclguiCONFIRM_SUBPANEL class.
  */
 
 #ifndef __cplusplus
@@ -25,7 +25,6 @@
  */
 #include "mcs.h"
 #include "gwt.h"
-
 
 /*
  * Class declaration
@@ -71,25 +70,33 @@
  * \todo add other methods, dealing with operations.
  * 
  */
-class sclguiPOP_UP_FILTER : public gwtWINDOW
+class sclguiCONFIRM_SUBPANEL : public gwtCONTAINER
 {
 
 public:
     // Class constructor
-    sclguiPOP_UP_FILTER();
+    sclguiCONFIRM_SUBPANEL();
 
     // Class destructor
-    virtual ~sclguiPOP_UP_FILTER();
+    virtual ~sclguiCONFIRM_SUBPANEL();
 
+    virtual mcsCOMPL_STAT SetOverwriteCB(fndOBJECT &eventHandler,
+                                         gwtCOMMAND::CB_METHOD cbMethod);
+
+    virtual mcsCOMPL_STAT SetPopUpText(string text);
 protected:
     
 private:
     // Declaration of copy constructor and assignment operator as private
     // methods, in order to hide them from the users.
-    sclguiPOP_UP_FILTER(const sclguiPOP_UP_FILTER&);
-    sclguiPOP_UP_FILTER& operator=(const sclguiPOP_UP_FILTER&);
+    sclguiCONFIRM_SUBPANEL(const sclguiCONFIRM_SUBPANEL&);
+    sclguiCONFIRM_SUBPANEL& operator=(const sclguiCONFIRM_SUBPANEL&);
+
+    // Confirm object
+    gwtBUTTON _overwriteButton;
+    gwtLABEL _confirmLabel;
 };
 
-#endif /*!sclguiPOP_UP_FILTER_H*/
+#endif /*!sclguiCONFIRM_SUBPANEL_H*/
 
 /*___oOo___*/

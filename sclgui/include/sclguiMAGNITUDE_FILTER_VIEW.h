@@ -3,7 +3,7 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.h,v 1.1 2005-07-07 05:10:54 gzins Exp $"
+ * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -25,17 +25,14 @@
  */
 #include "mcs.h"
 
-/*
- * Local header
- */
 #include "sclguiFILTER_VIEW.h"
-
 /*
  * Class declaration
  */
 
 /**
- * Magnitude filter view
+ * Magnitude filter view 
+ * 
  */
 class sclguiMAGNITUDE_FILTER_VIEW : public sclguiFILTER_VIEW
 {
@@ -43,7 +40,6 @@ class sclguiMAGNITUDE_FILTER_VIEW : public sclguiFILTER_VIEW
 public:
     // Class constructor
     sclguiMAGNITUDE_FILTER_VIEW();
-    sclguiMAGNITUDE_FILTER_VIEW(sclguiMODEL *model);
 
     // Class destructor
     virtual ~sclguiMAGNITUDE_FILTER_VIEW();
@@ -51,20 +47,17 @@ public:
     virtual mcsCOMPL_STAT Update();
     
     virtual string GetMagRange();
-
+    
 protected:
-    virtual mcsCOMPL_STAT CompleteWindowInformation();
-    virtual mcsCOMPL_STAT BuildMainFilterView();
-
+    
 private:
     // Declaration of copy constructor and assignment operator as private
     // methods, in order to hide them from the users.
     sclguiMAGNITUDE_FILTER_VIEW(const sclguiMAGNITUDE_FILTER_VIEW&);
     sclguiMAGNITUDE_FILTER_VIEW& operator=(const sclguiMAGNITUDE_FILTER_VIEW&);
 
-    sclguiMODEL *_model;
-
-    gwtTEXTFIELD *_magRangeTextfield;
+    gwtTEXTFIELD _magRangeTextfield;
+    
 };
 
 #endif /*!sclguiMAGNITUDE_FILTER_VIEW_H*/
