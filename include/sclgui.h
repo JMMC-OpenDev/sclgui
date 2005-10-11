@@ -3,26 +3,40 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclgui.h,v 1.4 2005-08-08 11:51:00 scetre Exp $"
+ * "@(#) $Id: sclgui.h,v 1.5 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
- * Revision 1.2  2005/02/15 15:57:24  gzins
- * Added CVS log as file modification history
- *
- * mella     25-Nov-2004  Created
- *
  ******************************************************************************/
 
 /**
  * \file
- * Summary header file for the sclgui module.
+ * sclgui general header file.
  */
 
+
 /*
- * List Cpp class declaration files.
+ * Local headers
  */
+#include "sclgui.h"
+#include "sclguiCONTROLLER.h"
+#include "sclguiACTIONS_VIEW.h"
+#include "sclguiCALIBRATOR_LIST_MODEL.h"
+#include "sclguiCALIBRATOR_LIST_VIEW.h"
+#include "sclguiDISTANCE_FILTER_VIEW.h"
+#include "sclguiFILTER_LIST_MODEL.h"
+#include "sclguiFILTER_VIEW.h"
+#include "sclguiLUMINOSITY_FILTER_VIEW.h"
+#include "sclguiMAGNITUDE_FILTER_VIEW.h"
+#include "sclguiBUTTONS_SUBPANEL.h"
+#include "sclguiMULTIPLICITY_FILTER_VIEW.h"
+#include "sclguiREQUEST_MODEL.h"
+#include "sclguiREQUEST_VIEW.h"
+#include "sclguiSPECTRAL_TYPE_FILTER_VIEW.h"
+#include "sclguiVARIABILITY_FILTER_VIEW.h"
+#include "sclguiVISIBILITY_FILTER_VIEW.h"
+ 
 
 #endif /*!sclgui_H*/
 

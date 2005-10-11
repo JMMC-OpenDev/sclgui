@@ -1,9 +1,9 @@
-#ifndef sclguiTABLE_VIEW_H
-#define sclguiTABLE_VIEW_H
+#ifndef sclguiCALIBRATOR_LIST_VIEW_H
+#define sclguiCALIBRATOR_LIST_VIEW_H
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiTABLE_VIEW.h,v 1.1 2005-07-07 05:10:54 gzins Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -12,7 +12,7 @@
 
 /**
  * \file
- * Declaration of sclguiTABLE_VIEW class.
+ * Declaration of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
 #ifndef __cplusplus
@@ -27,62 +27,70 @@
 #include "fnd.h"
 #include "gwt.h"
 
-#include "sclguiMODEL.h"
-#include "sclsvr.h"
+
+#include "sclguiCALIBRATOR_LIST_MODEL.h"
+#include "sclguiREQUEST_MODEL.h"
+#include "sclguiFILTER_LIST_MODEL.h"
+
 /*
  * Class declaration
  */
 
 /**
- * View of the model calibrators list 
+ * View associated to the calibrators model.
+ *
+ * It derives from the mega widget class.
  */
-class sclguiTABLE_VIEW : public fndMVC_VIEW
+class sclguiCALIBRATOR_LIST_VIEW : public gwtCONTAINER, public fndMVC_VIEW
 {
 
 public:
     // Class constructor
-    sclguiTABLE_VIEW(sclguiMODEL *model);
+    sclguiCALIBRATOR_LIST_VIEW();
+    sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
+                           sclguiREQUEST_MODEL &requestModel);
 
     // Class destructor
-    virtual ~sclguiTABLE_VIEW();
+    virtual ~sclguiCALIBRATOR_LIST_VIEW();
 
     virtual mcsCOMPL_STAT Update();
-   
+
     virtual mcsCOMPL_STAT Details(mcsLOGICAL state);
     
-    gwtTABLE * GetListTable();
-    gwtTABLE * GetColorTable();
-    gwtTABLE * GetConfIdxTable();
     vobsSTAR_PROPERTY_ID_LIST GetLabel(mcsLOGICAL details = mcsTRUE);
+    
     virtual mcsLOGICAL IsDetailsView();
+
+    virtual mcsCOMPL_STAT AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
+                                      sclguiREQUEST_MODEL &requestModel);
 protected:
     
 private:
     // Declaration of copy constructor and assignment operator as private
     // methods, in order to hide them from the users.
-    sclguiTABLE_VIEW(const sclguiTABLE_VIEW&);
-    sclguiTABLE_VIEW& operator=(const sclguiTABLE_VIEW&);
+    sclguiCALIBRATOR_LIST_VIEW(const sclguiCALIBRATOR_LIST_VIEW&);
+    sclguiCALIBRATOR_LIST_VIEW& operator=(const sclguiCALIBRATOR_LIST_VIEW&);
 
-    sclguiMODEL *_model;
+    sclguiCALIBRATOR_LIST_MODEL *_calibratorListModel;
+    sclguiREQUEST_MODEL *_requestModel;
     
+    gwtTEXTAREA _resumeTextArea;    
     gwtTABLE *_listTable;
     gwtTABLE *_legendTable;
     gwtTABLE *_confidenceTable;
 
     mcsLOGICAL _details;
-
     vobsSTAR_PROPERTY_ID_LIST _label;
 
     mcsCOMPL_STAT ResetLabel();
     mcsCOMPL_STAT BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
-                             mcsLOGICAL details);
+                             mcsLOGICAL details=mcsFALSE);
     mcsCOMPL_STAT BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label);
     mcsCOMPL_STAT BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label);
     mcsCOMPL_STAT BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label);
     mcsCOMPL_STAT BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label);
-    
 };
 
-#endif /*!sclguiTABLE_VIEW_H*/
+#endif /*!sclguiCALIBRATOR_LIST_VIEW_H*/
 
 /*___oOo___*/

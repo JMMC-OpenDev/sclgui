@@ -1,7 +1,7 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"
+ * "@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.2 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -13,7 +13,7 @@
  *  Definition of sclguiFILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.1 2005-07-07 05:07:21 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.2 2005-10-11 15:24:15 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -40,12 +40,9 @@ using namespace std;
  */
 sclguiFILTER_VIEW::sclguiFILTER_VIEW()
 {
-}
-sclguiFILTER_VIEW::sclguiFILTER_VIEW(sclguiMODEL *model)
-{
-    // attach to the model
-    _model = model;
-    BuildWindow();
+    // Create the button
+    _applyFilterButton.SetText("Ok");
+    _applyFilterButton.SetHelp("Start the process");
 }
 
 /**
@@ -59,130 +56,51 @@ sclguiFILTER_VIEW::~sclguiFILTER_VIEW()
  * Public methods
  */
 /**
- * Show the window
+ * Set apply CB
  *
- * @return always mcsSUCCESS
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
+ * returned.
  */
-mcsCOMPL_STAT sclguiFILTER_VIEW::Show()
+mcsCOMPL_STAT 
+sclguiFILTER_VIEW::SetApplyCB(fndOBJECT &eventHandler,
+                                     gwtCOMMAND::CB_METHOD cbMethod)
 {
-    logTrace("sclguiFILTER_VIEW::Show()");
-    
-    // show filter window
-    _filterWindow->Show();
-    Update(); 
+    logTrace("sclguiFILTER_VIEW::SetApplyCB()");
+
+    _applyFilterButton.
+        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
 
     return mcsSUCCESS;
 }
 
 /**
- * Hide the Window
- * 
- * @return always mcsSUCCESS
+ * Attach model in the request view
+ *
+ * @filterListModel the model to attach
+ *
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
  */
-mcsCOMPL_STAT sclguiFILTER_VIEW::Hide()
+mcsCOMPL_STAT 
+sclguiFILTER_VIEW::AttachModel(sclguiFILTER_LIST_MODEL &filterListModel)
 {
-    logTrace("sclguiFILTER_VIEW::Hide()");
-    
-    _filterWindow->Hide();
+    logTrace("sclguiFILTER_VIEW::AttachModel()");
+
+    // Attach to the filter list model
+    _filterList = &filterListModel;
 
     return mcsSUCCESS;
 }
 
-/**
- * Get a link on the filter window
- *
- * @return link on the filter window
- */
-gwtWINDOW * sclguiFILTER_VIEW::GetWindowLink()
-{
-    logTrace("sclguiFILTER_VIEW::GetWindowLink()");
-
-    return _filterWindow;
-}
-
-/**
- * Get a link on the apply button
- *
- * @return link on the apply button
- */
-gwtBUTTON * sclguiFILTER_VIEW::GetApplyButtonLink()
-{
-    logTrace("sclguiFILTER_VIEW::GetApplyButtonLink()");
-
-    return _applyFilterButton;
-}
 
 /*
  * Protected methods
  */
-/**
- * Build window filter
- *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
- * returned.
- */
-mcsCOMPL_STAT sclguiFILTER_VIEW::BuildWindow()
-{
-    logTrace("sclguiFILTER_VIEW::BuildWindow()");
 
-    // Create the window
-    _filterWindow = new gwtWINDOW();
-    CompleteWindowInformation();
-    BuildMainFilterView();
-    BuildApplyFilterButton();
-    
-    return mcsSUCCESS;
-}
-
-
-/**
- * Complete Window information (title, help)
- *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
- * returned.
- */
-mcsCOMPL_STAT sclguiFILTER_VIEW::CompleteWindowInformation()
-{
-    logTrace("sclguiFILTER_VIEW::CompleteWindowInformation()");
-
-    _filterWindow->SetTitle("default filter window");
-    _filterWindow->SetHelp("No help avaible");
-
-    return mcsSUCCESS;
-}
-
-/**
- * Build main filter view
- *
- * @return always mcsSUCCESS
- */
-mcsCOMPL_STAT sclguiFILTER_VIEW::BuildMainFilterView()
-{
-    logTrace("sclguiFILTER_VIEW::BuildMainFilterView()");
-    
-    return mcsSUCCESS;
-}
 
 /*
  * Private methods
  */
 
-/**
- * Build the apply filter button
- *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
- * returned.
- */
-mcsCOMPL_STAT sclguiFILTER_VIEW::BuildApplyFilterButton()
-{
-    logTrace("sclguiFILTER_VIEW::BuildApplyFilterButton()");
-   
-    // Create the button
-    _applyFilterButton = new gwtBUTTON("Ok","Start the process");
-    // Add it in the window
-    _filterWindow->Add(_applyFilterButton);
-
-    return mcsSUCCESS;
-}
 
 /*___oOo___*/

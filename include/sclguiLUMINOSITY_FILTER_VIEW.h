@@ -3,7 +3,7 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.h,v 1.1 2005-07-07 05:10:54 gzins Exp $"
+ * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
  *
  * History
  * -------
@@ -25,17 +25,14 @@
  */
 #include "mcs.h"
 
-/*
- * Local header
- */
 #include "sclguiFILTER_VIEW.h"
-
 /*
  * Class declaration
  */
 
 /**
- * Luminosity filter View
+ * Luminosity filter view 
+ * 
  */
 class sclguiLUMINOSITY_FILTER_VIEW : public sclguiFILTER_VIEW
 {
@@ -43,7 +40,6 @@ class sclguiLUMINOSITY_FILTER_VIEW : public sclguiFILTER_VIEW
 public:
     // Class constructor
     sclguiLUMINOSITY_FILTER_VIEW();
-    sclguiLUMINOSITY_FILTER_VIEW(sclguiMODEL *model);
 
     // Class destructor
     virtual ~sclguiLUMINOSITY_FILTER_VIEW();
@@ -53,21 +49,19 @@ public:
     virtual mcsCOMPL_STAT 
         GetLuminosityClass(std::list<char *> *lumClass);
 protected:
-    virtual mcsCOMPL_STAT CompleteWindowInformation();
-    virtual mcsCOMPL_STAT BuildMainFilterView();
+    
 private:
     // Declaration of copy constructor and assignment operator as private
     // methods, in order to hide them from the users.
     sclguiLUMINOSITY_FILTER_VIEW(const sclguiLUMINOSITY_FILTER_VIEW&);
     sclguiLUMINOSITY_FILTER_VIEW& operator=(const sclguiLUMINOSITY_FILTER_VIEW&);
-    sclguiMODEL *_model;
 
-    gwtCHECKBOX *_lumCheckboxI;
-    gwtCHECKBOX *_lumCheckboxII;
-    gwtCHECKBOX *_lumCheckboxIII;
-    gwtCHECKBOX *_lumCheckboxIV;
-    gwtCHECKBOX *_lumCheckboxV;
-    gwtCHECKBOX *_lumCheckboxVI;
+    gwtCHECKBOX _lumCheckboxI;
+    gwtCHECKBOX _lumCheckboxII;
+    gwtCHECKBOX _lumCheckboxIII;
+    gwtCHECKBOX _lumCheckboxIV;
+    gwtCHECKBOX _lumCheckboxV;
+    gwtCHECKBOX _lumCheckboxVI;
 
     mcsLOGICAL 
         IsDisableLuminosity(std::list<char *> luminosityList,
