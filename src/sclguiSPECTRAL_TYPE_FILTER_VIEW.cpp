@@ -1,20 +1,24 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiSPTYPE_FILTER_VIEW class.
+ * @file
+ * Definition of sclguiSPTYPE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
@@ -23,6 +27,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <sstream>
 using namespace std;
 
+
 /*
  * MCS Headers 
  */
@@ -30,11 +35,13 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiSPECTRAL_TYPE_FILTER_VIEW.h"
 #include "sclguiPrivate.h"
+
 
 /**
  * Class constructor
@@ -60,7 +67,6 @@ sclguiSPTYPE_FILTER_VIEW() : sclguiFILTER_VIEW()
     Add(&_spectralTypeCheckboxK);
     Add(&_spectralTypeCheckboxM);
     Add(&_applyFilterButton);
-
 }
 
 /**
@@ -69,6 +75,7 @@ sclguiSPTYPE_FILTER_VIEW() : sclguiFILTER_VIEW()
 sclguiSPTYPE_FILTER_VIEW::~sclguiSPTYPE_FILTER_VIEW()
 {
 }
+
 
 /*
  * Public methods
@@ -83,84 +90,91 @@ mcsCOMPL_STAT sclguiSPTYPE_FILTER_VIEW::Update()
 {
     logTrace("sclguiSPTYPE_FILTER_VIEW::Update()");
 
-    // get spectral type  filter
+    // Get spectral type  filter
     vobsSPECTRAL_TYPE_FILTER * spTypeFilter =
         (vobsSPECTRAL_TYPE_FILTER *)
-        _filterList->GetFilter(vobsSPECTRAL_TYPE_FILTER_NAME);
+        _filterListModel->GetFilter(vobsSPECTRAL_TYPE_FILTER_NAME);
 
-    // if the filter is enable
+    // If the filter is enabled
     if (spTypeFilter->IsEnabled() == mcsTRUE)
     {
-        // get the list of enable spectral type
+        // Get the list of enabled spectral type
         std::list<char *> * tempClass= spTypeFilter->GetSpectralType();
-       // Check if temp class O is enable at this time
-       if (IsDisableTemperature(*tempClass, "O") == mcsTRUE)
-       {
-           _spectralTypeCheckboxO.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxO.SetValue(mcsFALSE);
-       }
-       // Check if temp class B is enable at this time
-       if (IsDisableTemperature(*tempClass, "B") == mcsTRUE)
-       {
-           _spectralTypeCheckboxB.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxB.SetValue(mcsFALSE);
-       }
-       // Check if temp class A is enable at this time
-       if (IsDisableTemperature(*tempClass, "A") == mcsTRUE)
-       {
-           _spectralTypeCheckboxA.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxA.SetValue(mcsFALSE);
-       }
-       // Check if temp class F is enable at this time
-       if (IsDisableTemperature(*tempClass, "F") == mcsTRUE)
-       {
-           _spectralTypeCheckboxF.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxF.SetValue(mcsFALSE);
-       }
-       // Check if temp class G is enable at this time
-       if (IsDisableTemperature(*tempClass, "G") == mcsTRUE)
-       {
+
+        // Check if temp class O is enabled at this time
+        if (IsDisableTemperature(*tempClass, "O") == mcsTRUE)
+        {
+            _spectralTypeCheckboxO.SetValue(mcsTRUE);
+        }
+        else
+        {
+            _spectralTypeCheckboxO.SetValue(mcsFALSE);
+        }
+
+        // Check if temp class B is enabled at this time
+        if (IsDisableTemperature(*tempClass, "B") == mcsTRUE)
+        {
+            _spectralTypeCheckboxB.SetValue(mcsTRUE);
+        }
+        else
+        {
+            _spectralTypeCheckboxB.SetValue(mcsFALSE);
+        }
+
+        // Check if temp class A is enabled at this time
+        if (IsDisableTemperature(*tempClass, "A") == mcsTRUE)
+        {
+            _spectralTypeCheckboxA.SetValue(mcsTRUE);
+        }
+        else
+        {
+            _spectralTypeCheckboxA.SetValue(mcsFALSE);
+        }
+
+        // Check if temp class F is enabled at this time
+        if (IsDisableTemperature(*tempClass, "F") == mcsTRUE)
+        {
+            _spectralTypeCheckboxF.SetValue(mcsTRUE);
+        }
+        else
+        {
+            _spectralTypeCheckboxF.SetValue(mcsFALSE);
+        }
+
+        // Check if temp class G is enabled at this time
+        if (IsDisableTemperature(*tempClass, "G") == mcsTRUE)
+        {
            _spectralTypeCheckboxG.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxG.SetValue(mcsFALSE);
-       }
-       // Check if temp class K is enable at this time
-       if (IsDisableTemperature(*tempClass, "K") == mcsTRUE)
-       {
-           _spectralTypeCheckboxK.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxK.SetValue(mcsFALSE);
-       }
-       // Check if temp class M is enable at this time
-       if (IsDisableTemperature(*tempClass, "M") == mcsTRUE)
-       {
-           _spectralTypeCheckboxM.SetValue(mcsTRUE);
-       }
-       else
-       {
-           _spectralTypeCheckboxM.SetValue(mcsFALSE);
-       }
+        }
+        else
+        {
+            _spectralTypeCheckboxG.SetValue(mcsFALSE);
+        }
+
+        // Check if temp class K is enabled at this time
+        if (IsDisableTemperature(*tempClass, "K") == mcsTRUE)
+        {
+            _spectralTypeCheckboxK.SetValue(mcsTRUE);
+        }
+        else
+        {
+            _spectralTypeCheckboxK.SetValue(mcsFALSE);
+        }
+
+        // Check if temp class M is enabled at this time
+        if (IsDisableTemperature(*tempClass, "M") == mcsTRUE)
+        {
+            _spectralTypeCheckboxM.SetValue(mcsTRUE);
+        }
+        else
+        {
+            _spectralTypeCheckboxM.SetValue(mcsFALSE);
+        }
     }
-    // if the filter is disable, that's meaning that all spectral type are
-    // wanted
+    // else if the filter is disable
     else
     {
+        // All spectral types are wantedwanted
         _spectralTypeCheckboxO.SetValue(mcsTRUE);
         _spectralTypeCheckboxB.SetValue(mcsTRUE);
         _spectralTypeCheckboxA.SetValue(mcsTRUE);
@@ -190,31 +204,37 @@ GetTemperatureClass(std::list<char*> *tempClass)
     {
         tempClass->push_back("O");
     }
+
     // Ckeck if temperature B is activated
     if (_spectralTypeCheckboxB.GetValue() == mcsTRUE)
     {
         tempClass->push_back("B");
     }
+
     // Ckeck if temperature A is activated
     if (_spectralTypeCheckboxA.GetValue() == mcsTRUE)
     {
         tempClass->push_back("A");
     }
+
     // Ckeck if temperature F is activated
     if (_spectralTypeCheckboxF.GetValue() == mcsTRUE)
     {
         tempClass->push_back("F");
     }
+
     // Ckeck if temperature G is activated
     if (_spectralTypeCheckboxG.GetValue() == mcsTRUE)
     {
         tempClass->push_back("G");
     }
+
     // Ckeck if temperature K is activated
     if (_spectralTypeCheckboxK.GetValue() == mcsTRUE)
     {
         tempClass->push_back("K");
     }
+
     // Ckeck if temperature M is activated
     if (_spectralTypeCheckboxM.GetValue() == mcsTRUE)
     {
@@ -233,7 +253,7 @@ GetTemperatureClass(std::list<char*> *tempClass)
  * Private methods
  */
 /**
- * Say if spectralType is enable
+ * Return wether the spectral type filter is enabled or not.
  *
  * @param temperatureList temperature class list
  * @param temperatureClass temperature class
@@ -260,6 +280,7 @@ IsDisableTemperature(std::list<char *> temperatureList,
             return mcsTRUE;
         }
     }
+
     // if the temperature class has not been found, return false
     return mcsFALSE;
 }

@@ -1,19 +1,22 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiACTIONS_VIEW class.
+ * @file
+ * Definition of sclguiACTIONS_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -140,8 +143,7 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetLoadButtonCB(fndOBJECT &eventHandler,
 {
     logTrace("sclguiACTIONS_VIEW::SetLoadButtonCB()");
 
-    _loadPanel.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _loadPanel.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
 
     return mcsSUCCESS;
 }
@@ -160,8 +162,7 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetSaveButtonCB(fndOBJECT &eventHandler,
 {
     logTrace("sclguiACTIONS_VIEW::SetSaveButtonCB()");
 
-    _savePanel.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _savePanel.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
 
     return mcsSUCCESS;
 }
@@ -180,8 +181,7 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetExportCB(fndOBJECT &eventHandler,
 {
     logTrace("sclguiACTIONS_VIEW::SetExportCB()");
 
-    _exportPanel.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _exportPanel.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
 
     return mcsSUCCESS;
 }
@@ -254,7 +254,7 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::AttachModel(sclguiREQUEST_MODEL &requestModel)
     logTrace("sclguiACTIONS_VIEW::AddRequestModel()");
 
      // Attach to the request model
-    _requestModel = &requestModel;
+    _requestModelModel = &requestModel;
 
     BuildFilterInterface();
     BuildInOutFileInterface();
@@ -289,16 +289,18 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::BuildFilterInterface()
         ("Select a sorting criterium in the list below, click on SORT "
          "CALIBRATORS. A popup panel will open, allowing to enter adequate "
          "sorting parameters.");
+
     // Create filter choice
     _filterChoice.SetLabel("Selection parameters");
     _filterChoice.Add("Maximal distance in RA and DEC");
     _filterChoice.Add("Maximal Magnitude Separation (mag)");
     _filterChoice.Add("Spectral Type");
     _filterChoice.Add("Luminosity Class");
-    _filterChoice.Add
-        ("Maximal expected accuracy on the calibrator squared visibility (%)");
+    _filterChoice.Add(
+          "Maximal expected accuracy on the calibrator squared visibility (%)");
     _filterChoice.Add("Variability");
     _filterChoice.Add("Multiplicity");
+
     // Add filter choice in the panel
     _filterPanel.Add(&_filterChoice);
 
@@ -372,18 +374,18 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetDefaultIOFileName()
 
     // Create default save file name
     mcsSTRING256 fileName;
-    strcpy(fileName, _requestModel->GetObjectName());
+    strcpy(fileName, _requestModelModel->GetObjectName());
     strcat(fileName, "_");
-    strcat(fileName, _requestModel->GetSearchBand());
+    strcat(fileName, _requestModelModel->GetSearchBand());
     strcat(fileName, ".scl");
     // Create textfield associated to the save subpanel
     _saveTextfield.SetText(fileName);
 
     // Create default export file name
     mcsSTRING256 exportFileName;
-    strcpy(exportFileName, _requestModel->GetObjectName());
+    strcpy(exportFileName, _requestModelModel->GetObjectName());
     strcat(exportFileName, "_");
-    strcat(exportFileName, _requestModel->GetSearchBand());
+    strcat(exportFileName, _requestModelModel->GetSearchBand());
     strcat(exportFileName, ".txt");
     // Create textfield associated to the export subpanel
     _exportTextfield.SetText(exportFileName);

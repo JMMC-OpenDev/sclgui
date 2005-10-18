@@ -1,20 +1,24 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiVARIABILITY_FILTER_VIEW class.
+ * @file
+ * Definition of sclguiVARIABILITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
@@ -23,6 +27,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <sstream>
 using namespace std;
 
+
 /*
  * MCS Headers 
  */
@@ -30,12 +35,14 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiVARIABILITY_FILTER_VIEW.h"
 #include "sclguiPrivate.h"
 #include "sclguiErrors.h"
+
 
 /**
  * Class constructor
@@ -45,6 +52,7 @@ sclguiVARIABILITY_FILTER_VIEW::
 {
     // Prepare widgets
     _variabilityChoice.SetLabel("Variability"); 
+
     // Add widget in widget map
     Add(&_variabilityChoice);
     Add(&_applyFilterButton);  
@@ -56,6 +64,7 @@ sclguiVARIABILITY_FILTER_VIEW::
 sclguiVARIABILITY_FILTER_VIEW::~sclguiVARIABILITY_FILTER_VIEW()
 {
 }
+
 
 /*
  * Public methods
@@ -103,6 +112,7 @@ string sclguiVARIABILITY_FILTER_VIEW::GetChoice()
     return _variabilityChoice.GetSelectedItemValue();
 }
 
+
 /*
  * Protected methods
  */
@@ -112,7 +122,7 @@ string sclguiVARIABILITY_FILTER_VIEW::GetChoice()
  * Private methods
  */
 /**
- * Say if the user choice authorized or not the variability
+ * Return wether the user authorized the variability or not.
  *
  * @return mcsTRUE if variability are authorized otherwise mcsFALSE is
  * returned
@@ -121,8 +131,7 @@ mcsLOGICAL sclguiVARIABILITY_FILTER_VIEW::IsVariabilityAuthorized()
 {
     logTrace("sclguiVARIABILITY_FILTER_VIEW::IsVariabilityAuthorized()");
     
-    vobsFILTER *filter = _filterList->GetFilter(vobsVARIABILITY_FILTER_NAME);
-
+    vobsFILTER *filter = _filterListModel->GetFilter(vobsVARIABILITY_FILTER_NAME);
     
     if (filter->IsEnabled() == mcsFALSE)
     {
@@ -131,6 +140,5 @@ mcsLOGICAL sclguiVARIABILITY_FILTER_VIEW::IsVariabilityAuthorized()
     
     return mcsFALSE;
 }
-
 
 /*___oOo___*/

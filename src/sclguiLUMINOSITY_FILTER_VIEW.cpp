@@ -1,20 +1,24 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiLUMINOSITY_FILTER_VIEW class.
+ * @file
+ * Definition of sclguiLUMINOSITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
@@ -23,6 +27,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <sstream>
 using namespace std;
 
+
 /*
  * MCS Headers 
  */
@@ -30,17 +35,18 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiLUMINOSITY_FILTER_VIEW.h"
 #include "sclguiPrivate.h"
 
+
 /**
  * Class constructor
  */
-sclguiLUMINOSITY_FILTER_VIEW::
-sclguiLUMINOSITY_FILTER_VIEW() : sclguiFILTER_VIEW()
+sclguiLUMINOSITY_FILTER_VIEW::sclguiLUMINOSITY_FILTER_VIEW():sclguiFILTER_VIEW()
 {
     // Prepare widgets 
     _lumCheckboxI.SetLabel("I");
@@ -58,7 +64,6 @@ sclguiLUMINOSITY_FILTER_VIEW() : sclguiFILTER_VIEW()
     Add(&_lumCheckboxV);
     Add(&_lumCheckboxVI);
     Add(&_applyFilterButton);
-    
 }
 
 /**
@@ -68,11 +73,12 @@ sclguiLUMINOSITY_FILTER_VIEW::~sclguiLUMINOSITY_FILTER_VIEW()
 {
 }
 
+
 /*
  * Public methods
  */
 /**
- * Update method
+ * Update method.
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
@@ -84,15 +90,16 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
     // Get luminosity filter
     vobsLUMINOSITY_FILTER * lumfilter =
         (vobsLUMINOSITY_FILTER *)
-        _filterList->GetFilter(vobsLUMINOSITY_FILTER_NAME);
+        _filterListModel->GetFilter(vobsLUMINOSITY_FILTER_NAME);
 
-    // if the filter is enable
+    // If the filter is enable
     if (lumfilter->IsEnabled() == mcsTRUE)
     {
-        // get the list of enable luminosity
+        // Get the list of enable luminosity
         std::list<char *> * lumClass = lumfilter->GetLuminosity();
+
         // Check if lum class I are enable at this time
-        if (IsDisableLuminosity(*lumClass, "I") == mcsTRUE)
+        if (IsLuminosityDisabled(*lumClass, "I") == mcsTRUE)
         {
             _lumCheckboxI.SetValue(mcsTRUE);           
         }
@@ -100,8 +107,9 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
         {
             _lumCheckboxI.SetValue(mcsFALSE);
         }
+
         // Check if lum class II are enable at this time
-        if (IsDisableLuminosity(*lumClass, "II") == mcsTRUE)
+        if (IsLuminosityDisabled(*lumClass, "II") == mcsTRUE)
         {
             _lumCheckboxII.SetValue(mcsTRUE);
         }
@@ -109,8 +117,9 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
         {
             _lumCheckboxII.SetValue(mcsFALSE);            
         }
+
         // Check if lum class III are enable at this time
-        if (IsDisableLuminosity(*lumClass, "III") == mcsTRUE)
+        if (IsLuminosityDisabled(*lumClass, "III") == mcsTRUE)
         {
             _lumCheckboxIII.SetValue(mcsTRUE);
         }
@@ -118,8 +127,9 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
         {
             _lumCheckboxIII.SetValue(mcsFALSE);            
         }
+
         // Check if lum class IV are enable at this time
-        if (IsDisableLuminosity(*lumClass, "IV") == mcsTRUE)
+        if (IsLuminosityDisabled(*lumClass, "IV") == mcsTRUE)
         {
             _lumCheckboxIV.SetValue(mcsTRUE);
         }
@@ -127,8 +137,9 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
         {
             _lumCheckboxIV.SetValue(mcsFALSE);            
         }
+
         // Check if lum class V are enable at this time        
-        if (IsDisableLuminosity(*lumClass, "V") == mcsTRUE)
+        if (IsLuminosityDisabled(*lumClass, "V") == mcsTRUE)
         {
             _lumCheckboxV.SetValue(mcsTRUE);
         }
@@ -136,8 +147,9 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
         {
             _lumCheckboxV.SetValue(mcsFALSE);
         }
+
         // Check if lum class VI are enable at this time
-        if (IsDisableLuminosity(*lumClass, "VI") == mcsTRUE)
+        if (IsLuminosityDisabled(*lumClass, "VI") == mcsTRUE)
         {
             _lumCheckboxVI.SetValue(mcsTRUE);
         }
@@ -161,15 +173,15 @@ mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::Update()
 }
 
 /**
- * Get luminosity class
+ * Get luminosity class.
  *
  * @param lumClass luminosity class list to return
  * 
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiLUMINOSITY_FILTER_VIEW::
-GetLuminosityClass(std::list<char*> *lumClass)
+mcsCOMPL_STAT
+sclguiLUMINOSITY_FILTER_VIEW::GetLuminosityClass(std::list<char*> *lumClass)
 {
     logTrace("sclguiLUMINOSITY_FILTER_VIEW::GetLuminosityClass()");
 
@@ -207,6 +219,7 @@ GetLuminosityClass(std::list<char*> *lumClass)
     return mcsSUCCESS;
 }
 
+
 /*
  * Protected methods
  */
@@ -216,21 +229,20 @@ GetLuminosityClass(std::list<char*> *lumClass)
  * Private methods
  */
 /**
- * Say if a luminosityClass is enable 
+ * Return wether the given luminosity class is enabled or not.
  *
  * @param luminosityList luminosity class list
  * @param luminosityClass luminosity class
  * 
- * @return mcsTRUE if the luminosity class had been found, else returned
- * mcsFALSE
+ * @return mcsTRUE if the luminosity class is disabled, mcsFALSE otherwise.
  */
-mcsLOGICAL sclguiLUMINOSITY_FILTER_VIEW::
-IsDisableLuminosity(std::list<char *> luminosityList,
-                   char *luminosityClass)
+mcsLOGICAL sclguiLUMINOSITY_FILTER_VIEW::IsLuminosityDisabled(
+                                            std::list<char *> luminosityList,
+                                            char *luminosityClass)
 {
-    logTrace("sclguiLUMINOSITY_FILTER_VIEW::IsDisableLuminosity()");
+    logTrace("sclguiLUMINOSITY_FILTER_VIEW::IsLuminosityDisabled()");
 
-    // Check all element of the luminosity class list gave as parameters
+    // Check all element of the luminosity class list given as parameter
     std::list<char *>::iterator luminosityListIterator;
     for (luminosityListIterator = luminosityList.begin();
          luminosityListIterator != luminosityList.end();

@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiFILTER_VIEW.h,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiFILTER_VIEW class.
  */
 
@@ -27,21 +30,21 @@
 #include "fnd.h"
 #include "gwt.h"
 
+
 /*
  * Local header
  */
 #include "sclguiFILTER_LIST_MODEL.h"
 
+
 /*
  * Class declaration
  */
-
 /**
  * Filter view.
  *
- * This clas is the mother class of the filter view class need to see the state
- * of the filters. It provides generic methods to register it at a main gui. 
- * 
+ * This class is the mother class of each filter view classes. It is used to
+ * show the state of any filter. It provides generic methods to register it at a main gui. 
  */
 class sclguiFILTER_VIEW : public fndMVC_VIEW, public gwtCONTAINER
 {
@@ -53,14 +56,16 @@ public:
     // Class destructor
     virtual ~sclguiFILTER_VIEW();
 
-    virtual mcsCOMPL_STAT SetApplyCB(fndOBJECT &eventHandler,
-                                     gwtCOMMAND::CB_METHOD cbMethod);
+    // Class callback
+    virtual mcsCOMPL_STAT SetApplyCB  (fndOBJECT &eventHandler,
+                                       gwtCOMMAND::CB_METHOD callbackMethod);
    
-    virtual mcsCOMPL_STAT AttachModel(sclguiFILTER_LIST_MODEL &filterList);
-protected:
-    sclguiFILTER_LIST_MODEL *_filterList;
+    virtual mcsCOMPL_STAT AttachModel (sclguiFILTER_LIST_MODEL &filterList);
 
+protected:
+    sclguiFILTER_LIST_MODEL *_filterListModel;
     gwtBUTTON _applyFilterButton;
+
 private:
     // Declaration of copy constructor and assignment operator as private
     // methods, in order to hide them from the users.

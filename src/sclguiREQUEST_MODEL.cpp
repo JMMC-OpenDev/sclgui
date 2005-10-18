@@ -1,19 +1,22 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  *  Definition of sclguiREQUEST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -64,7 +67,7 @@ mcsCOMPL_STAT sclguiREQUEST_MODEL::BuildFromMessage(msgMESSAGE &msg)
 {
     logTrace("sclguiREQUEST_MODEL::BuildFromMessage()");
 
-    // Build the request object from the parameters of the command
+    // Build the request object from the parameters of the received command
     if (Parse(msg.GetBody()) == mcsFAILURE)
     {
         return mcsFAILURE;
@@ -85,8 +88,9 @@ mcsCOMPL_STAT sclguiREQUEST_MODEL::BuildFromMessage(msgMESSAGE &msg)
  * It retrieves the GETCAL command parameter values and set its corresponding
  * members according.
  *
- * \param cmdParamLine GETCAL command parameters
- * \return Always mcsSUCCESS.
+ * @param cmdParamLine GETCAL command parameters
+ *
+ * @return Always mcsSUCCESS.
  */
 mcsCOMPL_STAT sclguiREQUEST_MODEL::Parse(const char *cmdParamLine)
 {

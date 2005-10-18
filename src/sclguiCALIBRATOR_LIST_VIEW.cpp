@@ -1,19 +1,22 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -23,6 +26,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <sstream>
 using namespace std;
 
+
 /*
  * MCS Headers 
  */
@@ -30,11 +34,13 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiCALIBRATOR_LIST_VIEW.h"
 #include "sclguiPrivate.h"
+
 
 /**
  * Define color value for catalog
@@ -71,10 +77,12 @@ sclguiCALIBRATOR_LIST_VIEW::sclguiCALIBRATOR_LIST_VIEW()
     _resumeTextArea.SetHelp("No Help");
     _resumeTextArea.SetLabel("Results");
     _resumeTextArea.SetVerticalOrientation(mcsTRUE); 
+
     // list table
     _listTable = new gwtTABLE(0, 0);
     _listTable->SetHeight(160);
     _listTable->SetVerticalOrientation(mcsTRUE);
+
     // legend table
     _legendTable = new gwtTABLE(1, 14);
     _legendTable->SetHeight(14);
@@ -107,6 +115,7 @@ sclguiCALIBRATOR_LIST_VIEW::sclguiCALIBRATOR_LIST_VIEW()
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
     _legendTable->SetCell(0, 13, "MIDI");
     _legendTable->SetCellBackground(0, 13, sclgui_MIDI_COLOR);
+
     // confidence table
     _confidenceTable = new gwtTABLE(1,3);
     _confidenceTable->SetHeight(14);
@@ -142,10 +151,12 @@ sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
     _resumeTextArea.SetHelp("No Help");
     _resumeTextArea.SetLabel("Results");
     _resumeTextArea.SetVerticalOrientation(mcsTRUE); 
+
     // list table
     _listTable = new gwtTABLE(0, 0);
     _listTable->SetHeight(160);
     _listTable->SetVerticalOrientation(mcsTRUE);
+
     // legend table
     _legendTable = new gwtTABLE(1, 14);
     _legendTable->SetHeight(14);
@@ -178,6 +189,7 @@ sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
     _legendTable->SetCell(0, 13, "MIDI");
     _legendTable->SetCellBackground(0, 13, sclgui_MIDI_COLOR);
+
     // confidence table
     _confidenceTable = new gwtTABLE(1,3);
     _confidenceTable->SetHeight(14);
@@ -221,23 +233,23 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::Update()");
 
-    // Update resume textfield
+    // Update the 'resume' textfield
     ostringstream output;
     output << "Number of stars: " << _calibratorListModel->GetNbCDSReturn()
-        << " found, "  
-        << _calibratorListModel->GetNbCoherentDiamFound() 
-        << " with coherent diameter and "
-        << _calibratorListModel->GetNbWithoutVarMult() 
-        << " without variability and multiplicity";
+           << " found, " << _calibratorListModel->GetNbCoherentDiamFound() 
+           << " with coherent diameter and "
+           << _calibratorListModel->GetNbWithoutVarMult() 
+           << " without variability and multiplicity";
     _resumeTextArea.SetText(output.str());
     
-    // retrieve calibrator list from the model
+    // Retrieve the calibrator list from the model
     sclsvrCALIBRATOR_LIST *calibratorList;
     calibratorList = _calibratorListModel->GetCalibratorList();
+
     // Build looking label
     BuildLabel(&_label, _details);
 
-    // Get number of label and number of calibrators to set the table size
+    // Get the number of labels and calibrators to set the table size
     int nbOfProperties ;
     nbOfProperties = _label.size() + 1 ;
     int nbOfRows;
@@ -249,9 +261,9 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
     // Insert first column Header
     _listTable->SetColumnHeader(0, "Number");
 
-    sclsvrCALIBRATOR tmpCalibrator;    
     // Insert headers for calibrator properties
-    int propIdx=0;
+    sclsvrCALIBRATOR tmpCalibrator;    
+    int propIdx = 0;
     vobsSTAR_PROPERTY_ID_LIST::iterator labelIterator;
     labelIterator = _label.begin();
     while(labelIterator != _label.end())
@@ -276,7 +288,7 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
             (sclsvrCALIBRATOR*)calibratorList->GetNextStar((mcsLOGICAL)(el==0));
         int i=0;
         
-        // Add calibrator properties raws
+        // Add calibrator properties rows
         labelIterator = _label.begin();
         while(labelIterator != _label.end())
         {
@@ -310,6 +322,7 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
                                           sclguiCONFIDENCE_HIGH_COLOR);
                 }
             }
+
             // set table background collor according to the catalog origin
             if (strcmp(property->GetOrigin(), "I/280") == 0)
             {
@@ -370,23 +383,24 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
 
             i++;
             labelIterator++;
-
         } // End for each properties
 
     } // End for each calibrators
+
     return mcsSUCCESS;
 }
 
 /**
- * Details or not the view
+ * Update the view in detailed mode according to the given logical flag
  *
  * @param state the logical to known the detail state
  *
- * @return always mcsSUCCESS;
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
+ * returned.
  */
-mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Details(mcsLOGICAL state)
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Detail(mcsLOGICAL state)
 {
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::Details()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::Detail()");
 
     _details = state; 
    
@@ -409,13 +423,13 @@ vobsSTAR_PROPERTY_ID_LIST sclguiCALIBRATOR_LIST_VIEW::GetLabel(mcsLOGICAL detail
 }
 
 /**
- * Say if the actual view is details or not
+ * Return wether the view is in detailed mode or not
  *
- * @return mcsTRUE if it is a details state, otherwise mcsFALSE is returned
+ * @return mcsTRUE if the view is detailed, mcsFALSE otherwise
  */
-mcsLOGICAL sclguiCALIBRATOR_LIST_VIEW::IsDetailsView()
+mcsLOGICAL sclguiCALIBRATOR_LIST_VIEW::IsDetailed()
 {
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::IsDetailsView()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::IsDetailed()");
     
     return _details;
 }
@@ -425,8 +439,7 @@ mcsLOGICAL sclguiCALIBRATOR_LIST_VIEW::IsDetailsView()
  *
  * @ request the model to attach
  *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
- * returned.
+ * @return always mcsSUCCESS
  */
 mcsCOMPL_STAT 
 sclguiCALIBRATOR_LIST_VIEW::AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
@@ -437,7 +450,7 @@ sclguiCALIBRATOR_LIST_VIEW::AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibrators
      // Attach to the calibrators model
     _calibratorListModel = &calibratorsModel;
     // Attach to the request model
-    _requestModel = &requestModel;
+    _requestModelModel = &requestModel;
 
     return mcsSUCCESS;
 }
@@ -460,7 +473,7 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::ResetLabel()
 }
 
 /**
- * Build Result table label
+ * Build result table label
  *
  * @param label label of the table
  * @param details boolean to know if it is a detail view or not
@@ -477,7 +490,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
     ResetLabel();
 
     // Build label according to the research band
-    if (strcmp(_requestModel->GetSearchBand(), "N") == 0)
+    if (strcmp(_requestModelModel->GetSearchBand(), "N") == 0)
     {
         if (details == mcsFALSE)
         {
@@ -532,7 +545,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label)
 }
 
 /**
- * Build label for K and V bands for detail view
+ * Build detailed label for K and V bands
  *
  * @param label label list to build
  * 
@@ -544,55 +557,55 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *labe
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete()");
 
     // build ucdNameforKV list
-    label->push_back(sclsvrCALIBRATOR_VIS2            );
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR      );
-    label->push_back(sclsvrCALIBRATOR_DIAM_BV         );
-    label->push_back(sclsvrCALIBRATOR_DIAM_VR         );
-    label->push_back(sclsvrCALIBRATOR_DIAM_VK         );
-    label->push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR   );
-    label->push_back(vobsSTAR_ID_HIP                  );
-    label->push_back(vobsSTAR_ID_HD                   );
-    label->push_back(vobsSTAR_ID_DM                   );
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN          );
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN         );
-    label->push_back(vobsSTAR_POS_EQ_PMDEC            );
-    label->push_back(vobsSTAR_POS_EQ_PMRA             );
-    label->push_back(vobsSTAR_POS_PARLX_TRIG          );
-    label->push_back(vobsSTAR_SPECT_TYPE_MK           );
-    label->push_back(vobsSTAR_CODE_VARIAB             );
-    label->push_back(vobsSTAR_CODE_MULT_FLAG          );
-    label->push_back(vobsSTAR_POS_GAL_LAT             );
-    label->push_back(vobsSTAR_POS_GAL_LON             );
-    label->push_back(vobsSTAR_VELOC_HC                );
-    label->push_back(vobsSTAR_VELOC_ROTAT             );
-    label->push_back(vobsSTAR_LD_DIAM                 );
-    label->push_back(vobsSTAR_LD_DIAM_ERROR           );
-    label->push_back(vobsSTAR_UD_DIAM                 );
-    label->push_back(vobsSTAR_UD_DIAM_ERROR           );
-    label->push_back(vobsSTAR_OBS_METHOD              );
-    label->push_back(vobsSTAR_INST_WAVELENGTH_VALUE   );
-    label->push_back(vobsSTAR_UDDK_DIAM               );
-    label->push_back(vobsSTAR_UDDK_DIAM_ERROR         );
-    label->push_back(vobsSTAR_PHOT_JHN_U              );
-    label->push_back(vobsSTAR_PHOT_JHN_B              );
-    label->push_back(vobsSTAR_PHOT_JHN_V              );
-    label->push_back(vobsSTAR_PHOT_JHN_R              );
-    label->push_back(vobsSTAR_PHOT_JHN_I              );
-    label->push_back(vobsSTAR_PHOT_JHN_J              );
-    label->push_back(vobsSTAR_PHOT_JHN_H              );
-    label->push_back(vobsSTAR_PHOT_JHN_K              );
-    label->push_back(vobsSTAR_PHOT_JHN_L              );
-    label->push_back(vobsSTAR_PHOT_JHN_M              );
-    label->push_back(vobsSTAR_PHOT_JHN_N              );
-    label->push_back(sclsvrCALIBRATOR_MO              );
-    label->push_back(sclsvrCALIBRATOR_LO              );
-    label->push_back(sclsvrCALIBRATOR_KO              );
-    label->push_back(sclsvrCALIBRATOR_HO              );
-    label->push_back(sclsvrCALIBRATOR_JO              );
-    label->push_back(sclsvrCALIBRATOR_IO              );
-    label->push_back(sclsvrCALIBRATOR_RO              );
-    label->push_back(sclsvrCALIBRATOR_VO              );
-    label->push_back(sclsvrCALIBRATOR_BO              );
+    label->push_back(sclsvrCALIBRATOR_VIS2);
+    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+    label->push_back(sclsvrCALIBRATOR_DIAM_BV);
+    label->push_back(sclsvrCALIBRATOR_DIAM_VR);
+    label->push_back(sclsvrCALIBRATOR_DIAM_VK);
+    label->push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR);
+    label->push_back(vobsSTAR_ID_HIP);
+    label->push_back(vobsSTAR_ID_HD);
+    label->push_back(vobsSTAR_ID_DM);
+    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+    label->push_back(vobsSTAR_POS_EQ_PMDEC);
+    label->push_back(vobsSTAR_POS_EQ_PMRA);
+    label->push_back(vobsSTAR_POS_PARLX_TRIG);
+    label->push_back(vobsSTAR_SPECT_TYPE_MK);
+    label->push_back(vobsSTAR_CODE_VARIAB);
+    label->push_back(vobsSTAR_CODE_MULT_FLAG);
+    label->push_back(vobsSTAR_POS_GAL_LAT);
+    label->push_back(vobsSTAR_POS_GAL_LON);
+    label->push_back(vobsSTAR_VELOC_HC);
+    label->push_back(vobsSTAR_VELOC_ROTAT);
+    label->push_back(vobsSTAR_LD_DIAM);
+    label->push_back(vobsSTAR_LD_DIAM_ERROR);
+    label->push_back(vobsSTAR_UD_DIAM);
+    label->push_back(vobsSTAR_UD_DIAM_ERROR);
+    label->push_back(vobsSTAR_OBS_METHOD);
+    label->push_back(vobsSTAR_INST_WAVELENGTH_VALUE);
+    label->push_back(vobsSTAR_UDDK_DIAM);
+    label->push_back(vobsSTAR_UDDK_DIAM_ERROR);
+    label->push_back(vobsSTAR_PHOT_JHN_U);
+    label->push_back(vobsSTAR_PHOT_JHN_B);
+    label->push_back(vobsSTAR_PHOT_JHN_V);
+    label->push_back(vobsSTAR_PHOT_JHN_R);
+    label->push_back(vobsSTAR_PHOT_JHN_I);
+    label->push_back(vobsSTAR_PHOT_JHN_J);
+    label->push_back(vobsSTAR_PHOT_JHN_H);
+    label->push_back(vobsSTAR_PHOT_JHN_K);
+    label->push_back(vobsSTAR_PHOT_JHN_L);
+    label->push_back(vobsSTAR_PHOT_JHN_M);
+    label->push_back(vobsSTAR_PHOT_JHN_N);
+    label->push_back(sclsvrCALIBRATOR_MO);
+    label->push_back(sclsvrCALIBRATOR_LO);
+    label->push_back(sclsvrCALIBRATOR_KO);
+    label->push_back(sclsvrCALIBRATOR_HO);
+    label->push_back(sclsvrCALIBRATOR_JO);
+    label->push_back(sclsvrCALIBRATOR_IO);
+    label->push_back(sclsvrCALIBRATOR_RO);
+    label->push_back(sclsvrCALIBRATOR_VO);
+    label->push_back(sclsvrCALIBRATOR_BO);
     
     return mcsSUCCESS;
 }
@@ -610,25 +623,25 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label)
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelN()");
 
     label->push_back(vobsSTAR_ID_HD);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
+    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(sclsvrCALIBRATOR_VIS2      );
+    label->push_back(sclsvrCALIBRATOR_VIS2);
     label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(vobsSTAR_DIAM12      );
+    label->push_back(vobsSTAR_DIAM12);
     label->push_back(vobsSTAR_DIAM12_ERROR);
     label->push_back(vobsSTAR_PHOT_FLUX_IR_12);
     label->push_back(vobsSTAR_SPECT_TYPE_MK);
     label->push_back(vobsSTAR_PHOT_JHN_N);
-    label->push_back(sclsvrCALIBRATOR_VIS2_8       );
-    label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
-    label->push_back(sclsvrCALIBRATOR_VIS2_13      );
+    label->push_back(sclsvrCALIBRATOR_VIS2_8);
+    label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR);
+    label->push_back(sclsvrCALIBRATOR_VIS2_13);
     label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
     
     return mcsSUCCESS;
 }
 
 /**
- * Build label for N band for detail view
+ * Build detailed label for N band
  *
  * @param label label list to build
  * 
@@ -642,18 +655,18 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(sclsvrCALIBRATOR_VIS2      );
+    label->push_back(sclsvrCALIBRATOR_VIS2);
     label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(vobsSTAR_DIAM12      );
+    label->push_back(vobsSTAR_DIAM12);
     label->push_back(vobsSTAR_DIAM12_ERROR);
     label->push_back(vobsSTAR_IR_FLUX_ORIGIN);
     label->push_back(vobsSTAR_PHOT_FLUX_IR_12);
     label->push_back(vobsSTAR_PHOT_FLUX_IR_12_ERROR);
     label->push_back(vobsSTAR_SPECT_TYPE_MK);
     label->push_back(vobsSTAR_PHOT_JHN_N);
-    label->push_back(sclsvrCALIBRATOR_VIS2_8       );
-    label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR );
-    label->push_back(sclsvrCALIBRATOR_VIS2_13      );
+    label->push_back(sclsvrCALIBRATOR_VIS2_8);
+    label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR);
+    label->push_back(sclsvrCALIBRATOR_VIS2_13);
     label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
     label->push_back(vobsSTAR_REF_STAR);
     label->push_back(vobsSTAR_CODE_MULT_FLAG);

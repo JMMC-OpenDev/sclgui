@@ -1,20 +1,24 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.2 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiMAGNITUDE_FILTER_VIEW class.
+ * @file
+ * Definition of sclguiMAGNITUDE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.2 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
@@ -22,6 +26,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <iostream>
 #include <sstream>
 using namespace std;
+
 
 /*
  * MCS Headers 
@@ -36,13 +41,12 @@ using namespace std;
 #include "sclguiMAGNITUDE_FILTER_VIEW.h"
 #include "sclguiPrivate.h"
 
+
 /**
  * Class constructor
  */
-sclguiMAGNITUDE_FILTER_VIEW::
-sclguiMAGNITUDE_FILTER_VIEW() : sclguiFILTER_VIEW()
+sclguiMAGNITUDE_FILTER_VIEW::sclguiMAGNITUDE_FILTER_VIEW() : sclguiFILTER_VIEW()
 {
-    // Prepare widgets 
     // Create textfield
     _magRangeTextfield.SetLabel("Maximal Magnitude Separation (mag)");
     _magRangeTextfield.SetText("0");
@@ -50,7 +54,6 @@ sclguiMAGNITUDE_FILTER_VIEW() : sclguiFILTER_VIEW()
     // Add widget in widget map
     Add(&_magRangeTextfield);
     Add(&_applyFilterButton);
- 
 }
 
 /**
@@ -59,6 +62,7 @@ sclguiMAGNITUDE_FILTER_VIEW() : sclguiFILTER_VIEW()
 sclguiMAGNITUDE_FILTER_VIEW::~sclguiMAGNITUDE_FILTER_VIEW()
 {
 }
+
 
 /*
  * Public methods
@@ -76,12 +80,12 @@ mcsCOMPL_STAT sclguiMAGNITUDE_FILTER_VIEW::Update()
     // Get magnitude filter
     vobsMAGNITUDE_FILTER *magFilter =
         (vobsMAGNITUDE_FILTER *)
-        _filterList->GetFilter(vobsMAGNITUDE_FILTER_NAME);
+        _filterListModel->GetFilter(vobsMAGNITUDE_FILTER_NAME);
 
-    // if the magnitude filter is enabled
+    // If the magnitude filter is enabled
     if (magFilter->IsEnabled() == mcsTRUE)
     {
-        // Get filter value
+        // Get the filter value
         mcsSTRING32 band;
         mcsFLOAT magnitude;
         mcsFLOAT magnitudeRange;
@@ -92,6 +96,7 @@ mcsCOMPL_STAT sclguiMAGNITUDE_FILTER_VIEW::Update()
         
         ostr << magnitudeRange;
         magnitudeValueString = ostr.str();
+
         // write them in the widget
         _magRangeTextfield.SetText(magnitudeValueString);
     }
@@ -115,6 +120,7 @@ string sclguiMAGNITUDE_FILTER_VIEW::GetMagRange()
 
     return _magRangeTextfield.GetText();
 }
+
 
 /*
  * Protected methods

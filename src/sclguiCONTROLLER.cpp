@@ -1,19 +1,22 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiCONTROLLER class.
+ * @file
+ * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -37,17 +40,14 @@ using namespace std;
 #include "sclguiPrivate.h"
 #include "sclguiErrors.h"
 
-/**
- * Constructs a sclguiCONTROLLER.
+/*
+ * Class constructor
  *
- * \param hostname The host name of the remote xml display.
- * \param port  The port of the remote xml display.
- *
- *  \returns an MCS completion status code (mcsSUCCESS or mcsFAILURE)
+ * @param hostname The host name of the remote MCS XMLBasedGUI server.
+ * @param port The port of the remote MCS XMLBasedGUI server.
  */
 sclguiCONTROLLER::sclguiCONTROLLER(): 
 _sclServer("Search-calibrator server", "sclsvrServer", 120000)
-
 {
     logTrace("sclguiCONTROLLER::sclguiCONTROLLER");
 }
@@ -62,6 +62,7 @@ sclguiCONTROLLER::~sclguiCONTROLLER()
 /*
  * Public methods
  */
+
 /**
  * Initialize evh Server
  *
@@ -74,11 +75,11 @@ mcsCOMPL_STAT sclguiCONTROLLER::AppInit()
 
     // Add callback for GETCAL command
     evhCMD_KEY cmdKey(sclsvrGETCAL_CMD_NAME);
-    evhCMD_CALLBACK cmdCB(this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalCB);
+    evhCMD_CALLBACK cmdCB(this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalCommandCB);
     AddCallback(cmdKey, cmdCB);
 
     // Build general GUI
-    if (BuildGui() == mcsFAILURE)
+    if (BuildGUI() == mcsFAILURE)
     {
         return mcsSUCCESS;
     }
@@ -93,9 +94,9 @@ mcsCOMPL_STAT sclguiCONTROLLER::AppInit()
 /**
  * Return the version number of the software.
  *
- * @return version number of the software
+ * @return version number of the software as a null-terminated char array
  */
-const char *sclguiCONTROLLER::GetSwVersion()
+const char* sclguiCONTROLLER::GetSwVersion()
 {
     return sclsvrVERSION;
 }
@@ -104,115 +105,117 @@ const char *sclguiCONTROLLER::GetSwVersion()
  * Protected methods
  */
 /**
- * GETCAL call back method
+ * GETCAL callback method
  *
  * @param msg message
  */
-evhCB_COMPL_STAT sclguiCONTROLLER::GetCalCB(msgMESSAGE &msg, void*)
+evhCB_COMPL_STAT sclguiCONTROLLER::GetCalCommandCB(msgMESSAGE &msg, void*)
 {
-    logTrace("sclguiCONTROLLER::GetCalCB()");
+    logTrace("sclguiCONTROLLER::GetCalCommandCB()");
 
-    // Check server is IDLE (no command is currently been processed)
+    // If the server is NOT idle (i.e. a command is currently been processed)
     if (GetSubState() != evhSUBSTATE_IDLE)
     {
+        // Report error
         errAdd(sclguiERR_SERVER_BUSY, msg.GetCommand());
         SendReply(msg);
         return evhCB_NO_DELETE;
     }
-    else
+
+    _mainWindow.Hide();
+    SetStatus(true, "Looking for calibrators in star catalogs...");
+    
+    // Initialize the filter model
+    if (_filterListModel.ResetFilters() == mcsFAILURE)
     {
-        _mainWindow.Hide();
-        SetStatus(true, "Looking for calibrators in star catalogs...");
-        
-        // Initialize the filter model
-        if (_filterList.ResetFilters() == mcsFAILURE)
-        {
-            // Report error
-            SetStatus(false, "failed to init filters", 
-                               errUserGet());
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // enable variability filter
-        if (_filterList.SetFilterVariability(mcsTRUE) == mcsFAILURE)
-        {
-            // Report error
-            SetStatus(false, "failed to enable var filter", 
-                               errUserGet());
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // enable multiplicity filter
-        if (_filterList.SetFilterMultiplicity(mcsTRUE) == mcsFAILURE)
-        {
-            // Report error
-            SetStatus(false, "failed to init mult filter", 
-                               errUserGet());
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Initialize the calibrators fiter
-        if ((_calibratorList.ResetCalibrators() == mcsFAILURE) ||
-            (_calibratorList.ResetDeletedCalibrators() == mcsFAILURE))
-        {
-            // Report error
-            SetStatus(false, "failed to init calibrators", 
-                               errUserGet());
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        // Attached the filter list to the calibrators model
-        if (_calibratorList.SetFilterList(&_filterList) == mcsFAILURE)    
-        {
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        
-        // Defines callback to handle reply
-        evhCMD_CALLBACK cmdReplyCB
-            (this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalReplyCB);
-
-        if (_request.BuildFromMessage(msg) == mcsFAILURE)
-        {
-            // Report error
-            SetStatus(false, "Invalid command parameter list", 
-                               errUserGet());
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-        
-        // Forward command; i.e. do not wait for reply. The GetCalReplyCB()
-        // method will be called when reply is received.
-        if (_sclServer.Forward(msg.GetCommand(), msg.GetBody(),
-                               cmdReplyCB) == mcsFAILURE )
-        {
-            // Report error
-            SetStatus(false, errUserGet());
-
-            return evhCB_NO_DELETE | evhCB_FAILURE;
-        }
-
-        // Set server sub-state to BUSY
-        SetSubState(evhSUBSTATE_BUSY);
-
-        // Save received message to be able to send reply to requestor
-        _msg = msg;
+        // Report error
+        SetStatus(false, "failed to init filters", errUserGet());
+        return evhCB_NO_DELETE | evhCB_FAILURE;
     }
+
+    // Enable variability filter
+    if (_filterListModel.SetFilterVariability(mcsTRUE) == mcsFAILURE)
+    {
+        // Report error
+        SetStatus(false, "failed to enable var filter", errUserGet());
+        return evhCB_NO_DELETE | evhCB_FAILURE;
+    }
+
+    // Enable multiplicity filter
+    if (_filterListModel.SetFilterMultiplicity(mcsTRUE) == mcsFAILURE)
+    {
+        // Report error
+        SetStatus(false, "failed to init mult filter", errUserGet());
+        return evhCB_NO_DELETE | evhCB_FAILURE;
+    }
+
+    // Initialize the calibrator list filter
+    if ((_calibratorListModel.ResetCalibrators() == mcsFAILURE) ||
+        (_calibratorListModel.ResetDeletedCalibrators() == mcsFAILURE))
+    {
+        // Report error
+        SetStatus(false, "failed to init calibrator list", errUserGet());
+        return evhCB_NO_DELETE | evhCB_FAILURE;
+    }
+
+    // Attached the filter list to the calibrator list model
+    if (_calibratorListModel.SetFilterList(&_filterListModel) == mcsFAILURE)    
+    {
+        return evhCB_NO_DELETE | evhCB_FAILURE;
+    }
+    
+    // Define the callback to be used for reply handling
+    evhCMD_CALLBACK cmdReplyCB
+        (this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalReplyCommandCB);
+
+    if (_requestModel.BuildFromMessage(msg) == mcsFAILURE)
+    {
+        // Report error
+        SetStatus(false, "Invalid command parameter list", errUserGet());
+        return evhCB_NO_DELETE | evhCB_FAILURE;
+    }
+    
+    // Forward command; i.e. do not wait for reply. The GetCalReplyCommandCB()
+    // method will be called when reply is received.
+    if (_sclServer.Forward(msg.GetCommand(), msg.GetBody(),
+                           cmdReplyCB) == mcsFAILURE )
+    {
+        // Report error
+        SetStatus(false, errUserGet());
+
+        return evhCB_NO_DELETE | evhCB_FAILURE;
+    }
+
+    // Set server sub-state to 'busy'
+    SetSubState(evhSUBSTATE_BUSY);
+
+    // Save the received message in order to reply later
+    _msg = msg;
+
     return evhCB_NO_DELETE;
 }
 
 /**
- * GETCAL call back reply method
+ * GETCAL callback reply method
  *
  * @param msg message
  */
-evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCB(msgMESSAGE &msg, void*)
+evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCommandCB(msgMESSAGE &msg, void*)
 {
-    logTrace("sclguiCONTROLLER::GetCalReplyCB()");
+    logTrace("sclguiCONTROLLER::GetCalReplyCommandCB()");
+
     // Clear list
-    // If an error reply is received
+    // Analyze received message type
     switch (msg.GetType())
     {
+        // Error message
         case msgTYPE_ERROR_REPLY:
         {
             if (errIsInStack("msg", 35) == mcsTRUE)
             {
                 errUserAdd(sclguiERR_SERVER_CRASH);
             }
+
             // Report error
             SetStatus(false, errUserGet());
 
@@ -223,10 +226,12 @@ evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCB(msgMESSAGE &msg, void*)
 
             break;
         }
+
+        // Valid reply
         case msgTYPE_REPLY:
         {
             // if reply success, set list in the model
-            _calibratorList.SetList(msg);
+            _calibratorListModel.SetList(msg);
             
             // Update main window
             _mainWindow.Hide();
@@ -236,6 +241,7 @@ evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCB(msgMESSAGE &msg, void*)
             _msg.SetBody("Done.");
             break;
         }
+
         default:
         {
             break;
@@ -245,16 +251,16 @@ evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCB(msgMESSAGE &msg, void*)
     // Send reply to the requestor
     SendReply(_msg);
     
-    // Reset sub-state to IDLE
+    // Set server sub-state back to 'idle'
     SetSubState(evhSUBSTATE_IDLE);
 
     return evhCB_DELETE;
 }
 
 /**
- * Exit CB
+ * Exit callback
  */
-evhCB_COMPL_STAT sclguiCONTROLLER::ExitCB(msgMESSAGE &msg, void *userData)
+evhCB_COMPL_STAT sclguiCONTROLLER::ExitCB(msgMESSAGE &msg, void* userData)
 {
     logTrace("sclguiCONTROLLER::ExitCB()");
     
@@ -274,11 +280,11 @@ evhCB_COMPL_STAT sclguiCONTROLLER::ExitCB(msgMESSAGE &msg, void *userData)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::BuildGui()
+mcsCOMPL_STAT sclguiCONTROLLER::BuildGUI()
 {
-    logTrace("sclguiCONTROLLER::BuildGui()");
+    logTrace("sclguiCONTROLLER::BuildGUI()");
 
-    // Build all window of the graphical User Interface
+    // Build all the necessary windows of the Graphical User Interface
     if (BuildMainWindow() == mcsFAILURE)
     {
         return mcsFAILURE;
@@ -291,26 +297,30 @@ mcsCOMPL_STAT sclguiCONTROLLER::BuildGui()
     {
         return mcsFAILURE;
     }
-    // Add view(s) of each model
-    _request.AddView(&_requestSubPanel);
-    _request.AddView(&_actionsSubPanel);
-    _request.AddView(&_calibratorListSubPanel);
-    _calibratorList.AddView(&_calibratorListSubPanel);    
-    _filterList.AddView(&_calibratorListSubPanel);
-    _filterList.AddView(&_visibilityFilterSubPanel);
-    _filterList.AddView(&_magnitudeFilterSubPanel);
-    _filterList.AddView(&_distanceFilterSubPanel);
-    _filterList.AddView(&_luminosityFilterSubPanel);
-    _filterList.AddView(&_spectralTypeFilterSubPanel);
-    _filterList.AddView(&_variabilityFilterSubPanel);
-    _filterList.AddView(&_multiplicityFilterSubPanel);
-    // Attach filter list to the model
-    _calibratorList.SetFilterList(&_filterList);
+
+    // Add view(s) to each model
+    _requestModel.AddView(&_requestSubPanel);
+    _requestModel.AddView(&_actionsSubPanel);
+    _requestModel.AddView(&_calibratorListModelSubPanel);
+
+    _calibratorListModel.AddView(&_calibratorListModelSubPanel);    
+
+    _filterListModel.AddView(&_calibratorListModelSubPanel);
+    _filterListModel.AddView(&_visibilityFilterSubPanel);
+    _filterListModel.AddView(&_magnitudeFilterSubPanel);
+    _filterListModel.AddView(&_distanceFilterSubPanel);
+    _filterListModel.AddView(&_luminosityFilterSubPanel);
+    _filterListModel.AddView(&_spectralTypeFilterSubPanel);
+    _filterListModel.AddView(&_variabilityFilterSubPanel);
+    _filterListModel.AddView(&_multiplicityFilterSubPanel);
+
+    // Attach filter list model to the calibrator list model
+    _calibratorListModel.SetFilterList(&_filterListModel);
     return mcsSUCCESS;
 }
 
 /**
- * Build Main Window
+ * Build main window
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
@@ -342,43 +352,47 @@ mcsCOMPL_STAT sclguiCONTROLLER::BuildMainWindow()
     _mainWindow.AttachAGui(this);
     _mainWindow.SetTitle("JMMC Calibrator Group " sclsvrVERSION);
     _mainWindow.SetHelp(windowHelp);
-    // Associate the close button cb
+
+    // Associate the close button event to the corresponding callback
     _mainWindow.SetCloseCommand("Close SearchCalib");
     _mainWindow.AttachCB
         (this, (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::AbortButtonCB);
 
     // Create container of button Reset details, ...
-    // Set CB of this container
+    // Set callback of this container
     _buttonsSubPanel.SetResetCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::ResetButtonCB);
+                        &sclguiCONTROLLER::ResetButtonCB);
     _buttonsSubPanel.SetShowAllResultsCB(*this, (gwtCOMMAND::CB_METHOD)
-                                      &sclguiCONTROLLER::ShowAllResultsButtonCB);
+                        &sclguiCONTROLLER::ShowAllResultsButtonCB);
     _buttonsSubPanel.SetShowDetailsCB(*this, (gwtCOMMAND::CB_METHOD)
-                                   &sclguiCONTROLLER::ShowDetailsButtonCB);
+                        &sclguiCONTROLLER::ShowDetailsButtonCB);
     _buttonsSubPanel.SetHideDetailsCB(*this, (gwtCOMMAND::CB_METHOD)
-                                   &sclguiCONTROLLER::HideDetailsButtonCB);
+                        &sclguiCONTROLLER::HideDetailsButtonCB);
+
     // Add this container in the windows
     _mainWindow.Add(&_buttonsSubPanel);
 
     // Create container of models view
-    _requestSubPanel.AttachModel(_request);
-    _calibratorListSubPanel.AttachModel(_calibratorList, _request);
+    _requestSubPanel.AttachModel(_requestModel);
+    _calibratorListModelSubPanel.AttachModel(_calibratorListModel,
+                                             _requestModel);
     // Add this container in the windows
     _mainWindow.Add(&_requestSubPanel);
-    _mainWindow.Add(&_calibratorListSubPanel);
+    _mainWindow.Add(&_calibratorListModelSubPanel);
     
     // create filter choice subpanel container
-    _actionsSubPanel.AttachModel(_request);
+    _actionsSubPanel.AttachModel(_requestModel);
     _actionsSubPanel.SetFilterButtonCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::SelectButtonCB);
+                        &sclguiCONTROLLER::SelectButtonCB);
     _actionsSubPanel.SetDeleteButtonCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::DeleteButtonCB);
+                        &sclguiCONTROLLER::DeleteButtonCB);
     _actionsSubPanel.SetLoadButtonCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::LoadButtonCB);
+                        &sclguiCONTROLLER::LoadButtonCB);
     _actionsSubPanel.SetSaveButtonCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::SaveButtonCB);
+                        &sclguiCONTROLLER::SaveButtonCB);
     _actionsSubPanel.SetExportCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::ExportButtonCB);
+                        &sclguiCONTROLLER::ExportButtonCB);
+
     // Add this container in the windows
     _mainWindow.Add(&_actionsSubPanel);    
 
@@ -386,7 +400,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::BuildMainWindow()
 }
 
 /**
- * Build Filters Window
+ * Build filters windows
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
@@ -395,44 +409,36 @@ mcsCOMPL_STAT sclguiCONTROLLER::BuildFilterWindows()
 {
     logTrace("sclguiCONTROLLER::BuildFilterWindows()");
 
-    // Build all the view of each filter and attach associated CB
-    // Build
-    _visibilityFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+    // Build all the view of each filter, and attach associated callback
+    _visibilityFilterSubPanel.AttachModel(_filterListModel);
     _visibilityFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::VisibilityButtonCB);
-    // Build
-    _magnitudeFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+                                 &sclguiCONTROLLER::VisibilityButtonCB);
+
+    _magnitudeFilterSubPanel.AttachModel(_filterListModel);
     _magnitudeFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::MagnitudeButtonCB);
-    // Build
-    _distanceFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+                                &sclguiCONTROLLER::MagnitudeButtonCB);
+
+    _distanceFilterSubPanel.AttachModel(_filterListModel);
     _distanceFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::DistanceButtonCB);
-    // Build
-    _luminosityFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+                               &sclguiCONTROLLER::DistanceButtonCB);
+
+    _luminosityFilterSubPanel.AttachModel(_filterListModel);
     _luminosityFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::LuminosityButtonCB);
-    // Build
-    _spectralTypeFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+                                 &sclguiCONTROLLER::LuminosityButtonCB);
+
+    _spectralTypeFilterSubPanel.AttachModel(_filterListModel);
     _spectralTypeFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::SpectralTypeButtonCB);
-    // Build
-    _variabilityFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+                                   &sclguiCONTROLLER::SpectralTypeButtonCB);
+
+    _variabilityFilterSubPanel.AttachModel(_filterListModel);
     _variabilityFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::VariabilityButtonCB);
-    // Build
-    _multiplicityFilterSubPanel.AttachModel(_filterList);
-    // Associate CB
+                                  &sclguiCONTROLLER::VariabilityButtonCB);
+
+    _multiplicityFilterSubPanel.AttachModel(_filterListModel);
     _multiplicityFilterSubPanel.SetApplyCB(*this, (gwtCOMMAND::CB_METHOD)
-                             &sclguiCONTROLLER::MultiplicityButtonCB);
+                                   &sclguiCONTROLLER::MultiplicityButtonCB);
     
-    // Create all filter window and attached them at the GUI
+    // Create all filter window and attached them to the GUI
     _visibilityFilterWindow.AttachAGui(this);
     _magnitudeFilterWindow.AttachAGui(this);
     _distanceFilterWindow.AttachAGui(this);
@@ -477,7 +483,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::BuildConfirmPopUp()
  *
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT sclguiCONTROLLER::AbortButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::AbortButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::AbortButtonCB()");
     SetStatus(true, "Search Calibrators results panel closed");
@@ -493,25 +499,25 @@ mcsCOMPL_STAT sclguiCONTROLLER::AbortButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ShowAllResultsButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::ShowAllResultsButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::ShowAllResultsButtonCB()");
     
     // Reset all filter
-    if (_filterList.ResetFilters() == mcsFAILURE)
+    if (_filterListModel.ResetFilters() == mcsFAILURE)
     {
         return mcsFAILURE;
     }
-    _calibratorList.ResetDeletedCalibrators();
+    _calibratorListModel.ResetDeletedCalibrators();
     
     // Disable filter by variability and multipicity because the default state
     // of the model enabled mult and var
-    if (_filterList.DisableFilter(vobsVARIABILITY_FILTER_NAME) == mcsFAILURE)
+    if (_filterListModel.DisableFilter(vobsVARIABILITY_FILTER_NAME) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
     
-    if (_filterList.DisableFilter(vobsMULTIPLICITY_FILTER_NAME) == mcsFAILURE)
+    if (_filterListModel.DisableFilter(vobsMULTIPLICITY_FILTER_NAME) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
@@ -519,7 +525,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::ShowAllResultsButtonCB(void *)
     // Update main window
     _mainWindow.Update();
     
-    // Send message to the XmlBasedGui
+    // Send message to the XMLBasedGUI
     SetStatus(true, "Show all stars with coherent diameter");    
 
     return mcsSUCCESS;
@@ -531,22 +537,23 @@ mcsCOMPL_STAT sclguiCONTROLLER::ShowAllResultsButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ResetButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::ResetButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::ResetButtonCB()");
    
     // Reset all filter
-    if (_filterList.ResetFilters() == mcsFAILURE)
+    if (_filterListModel.ResetFilters() == mcsFAILURE)
     {
         return mcsFAILURE;
     }
+
     // Reset list of unwanted calibrators
-    _calibratorList.ResetDeletedCalibrators();
+    _calibratorListModel.ResetDeletedCalibrators();
     
     // Update main window
     _mainWindow.Update();
     
-    // Send message to the XmlBasedGui    
+    // Send message to the XMLBasedGUI server    
     SetStatus(true, "Show all stars with coherent diameter and " 
                        "without variability and multiplicity");
     
@@ -559,20 +566,20 @@ mcsCOMPL_STAT sclguiCONTROLLER::ResetButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ShowDetailsButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::ShowDetailsButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::ShowDetailsButtonCB()");
   
     // Say to the table view that details are OK
-    if (_calibratorListSubPanel.Details(mcsTRUE) == mcsFAILURE)
+    if (_calibratorListModelSubPanel.Detail(mcsTRUE) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
     
-    // update main window
+    // Update main window
     _mainWindow.Update();
     
-    // Send message to the XmlBasedGui    
+    // Send message to the XMLBasedGUI    
     SetStatus(true, "Show all details");
      
     return mcsSUCCESS;
@@ -584,20 +591,20 @@ mcsCOMPL_STAT sclguiCONTROLLER::ShowDetailsButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::HideDetailsButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::HideDetailsButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::HideDetailsButtonCB()");
   
     // Say to the table view that details are NOK
-    if (_calibratorListSubPanel.Details(mcsFALSE) == mcsFAILURE)
+    if (_calibratorListModelSubPanel.Detail(mcsFALSE) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
     
-    // update main window
+    // Update main window
      _mainWindow.Update();
     
-    // Send message to the XmlBasedGui    
+    // Send message to the XMLBasedGUI    
      SetStatus(true, "Show less details");
      
     return mcsSUCCESS;
@@ -609,7 +616,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::HideDetailsButtonCB(void *)
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::SelectButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::SelectButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::SelectButtonCB()");
 
@@ -617,40 +624,60 @@ mcsCOMPL_STAT sclguiCONTROLLER::SelectButtonCB(void *)
     switch(_actionsSubPanel.GetFilterChoice())
     {
         case sclguiDISTANCE_FILTER_NUMBER:
+        {
             // Show distance filter pop up
             _distanceFilterWindow.Show();
             SetStatus(true,"Distance filter panel open");
             break;
+        }
+
         case sclguiMAGNITUDE_FILTER_NUMBER:
+        {
             // Show magnitude filter pop up
             _magnitudeFilterWindow.Show();
             SetStatus(true,"Magnitude filter panel open");
             break;
+        }
+
         case sclguiSP_TYPE_FILTER_NUMBER:
+        {
             // Show temperature class filter pop up
             _spectralTypeFilterWindow.Show();
             SetStatus(true,"Temperature class filter panel open");
             break;
+        }
+
         case sclguiLUMINOSITY_FILTER_NUMBER:
+        {
             // Show luminosity class filter pop up
             _luminosityFilterWindow.Show();
-            SetStatus(true,"luminosity class filter panel open");
+            SetStatus(true,"Luminosity class filter panel open");
             break;
+        }
+
         case sclguiVISIBILITY_FILTER_NUMBER:
+        {
             // Show visibility filter pop_up
             _visibilityFilterWindow.Show();
             SetStatus(true,"Visibility filter panel open");
             break;
+        }
+
         case sclguiVARIABILITY_FILTER_NUMBER:
+        {
             // show variability filter pop up
             _variabilityFilterWindow.Show();
             SetStatus(true,"Variability filter panel open");
             break;
+        }
+
         case sclguiMULTIPLICITY_FILTER_NUMBER:
+        {
             // Show multiplicity filter pop up
             _multiplicityFilterWindow.Show();
             SetStatus(true,"Multiplicity filter panel open");
             break;
+        }
     }
     
     return mcsSUCCESS;
@@ -662,53 +689,53 @@ mcsCOMPL_STAT sclguiCONTROLLER::SelectButtonCB(void *)
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::DeleteButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::DeleteButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::DeleteButtonCB()");
 
     // Get the calibrator number to delete
     mcsUINT32 calibratorNumber;
-    // Inform user
-    mcsSTRING64 usrMsg;
-    // Dummy buffer
-    // Used with sscanf to know if a value is an integer or not
-    mcsSTRING32 dummyBuffer;
-    // if the number is not an integer, inform the user
+    // Status message buffer
+    mcsSTRING64 statusMessage;
+    // Buffer used with sscanf to test if a value is an integer or not
+    mcsSTRING32 buffer;
+
+    // If the number is not an integer, inform the user
     if (sscanf((_actionsSubPanel.GetDeletedStarNumber()).c_str(), "%d%s",
-               &calibratorNumber, dummyBuffer) != 1)
+               &calibratorNumber, buffer) != 1)
     {
-        SetStatus(false, "Invalid star number", 
-                           "Value should be an integer");
+        SetStatus(false, "Invalid star number", "Value should be an integer");
         return mcsFAILURE;
     }
-    // if the number of star in the filtered list is not positive or lower
+
+    // If the number of star in the filtered list is not positive or lower
     // than zero, inform the user
-    if (_calibratorList.GetNbInFilteredList() == 0)
+    if (_calibratorListModel.GetNbInFilteredList() == 0)
     {
-        sprintf(usrMsg, "Can't delete, no star in the list");
-        SetStatus(false, "Invalid star number", usrMsg);         
+        SetStatus(false, "Invalid star number",
+                  "Can't delete, no star in the list");
         return mcsFAILURE;
     }
-    else if ((calibratorNumber > _calibratorList.GetNbInFilteredList()) || 
+    else if ((calibratorNumber > _calibratorListModel.GetNbInFilteredList()) || 
              (calibratorNumber <= 0))
     {
-        sprintf(usrMsg, "Value should be a positive integer lower than %d",
-                _calibratorList.GetNbInFilteredList());
-        SetStatus(false, "Invalid star number", usrMsg); 
-
+        sprintf(statusMessage,
+                "Value should be a positive integer lower than %d",
+                _calibratorListModel.GetNbInFilteredList());
+        SetStatus(false, "Invalid star number", statusMessage); 
         return mcsFAILURE;
     }
     
+    // Delete the unwanted calibrator star in the model
     miscoDYN_BUF DeletedStarNameMsg;
-    // Add the unwanted star(calibrator) number in the model
-    if (_calibratorList.DeleteCalibrator(calibratorNumber,
-                                      DeletedStarNameMsg) == mcsFAILURE)
+    if (_calibratorListModel.DeleteCalibrator(calibratorNumber,
+                                              DeletedStarNameMsg) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
 
-    // create a status message with the deleted star name message
-    string statusMsg(DeletedStarNameMsg.GetBuffer());
+    // Display a status message containing the deleted star name
+    string statusMsg = DeletedStarNameMsg.GetBuffer();
     SetStatus(true, statusMsg);
     
     // Update main window
@@ -723,30 +750,29 @@ mcsCOMPL_STAT sclguiCONTROLLER::DeleteButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::LoadButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::LoadButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::LoadButtonCB()");
 
-    // Re Initialize the model
-    
-    // Get the name of the textfield
+    // Status message buffer
+    mcsSTRING64 statusMessage;
+   
+    // Get the file name from the corresponding textfield
     mcsSTRING256 fileName;
     strcpy(fileName, (_actionsSubPanel.GetLoadFileName()).c_str());
     
-    mcsSTRING64 usrMsg;
-   
     // Load list and request
-    if (_calibratorList.LoadFromFile(fileName, _request) == mcsFAILURE)
+    if (_calibratorListModel.LoadFromFile(fileName, _requestModel) ==mcsFAILURE)
     {
-        sprintf(usrMsg, "'%s' file HAS NOT been loaded", fileName);
-        SetStatus(false, usrMsg, errUserGet());
+        sprintf(statusMessage, "'%s' file HAS NOT been loaded", fileName);
+        SetStatus(false, statusMessage, errUserGet());
         errCloseStack();
         return mcsFAILURE;
     }
     
-    // Send message to the XmlBasedGui
-    sprintf(usrMsg, "'%s' file has been loaded", fileName);
-    SetStatus(true, usrMsg);
+    // Display a status message containing the load file name
+    sprintf(statusMessage, "'%s' file has been loaded", fileName);
+    SetStatus(true, statusMessage);
 
     // Update main window
     _mainWindow.Update();
@@ -760,29 +786,29 @@ mcsCOMPL_STAT sclguiCONTROLLER::LoadButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::SaveButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::SaveButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::SaveButtonCB()");
 
-    // Get the fileName enter by the user
-    mcsSTRING32 fileName;
+    // Get the file name from the corresponding textfield
+    mcsSTRING256 fileName;
     strcpy(fileName, (_actionsSubPanel.GetSaveFileName()).c_str());
     
-    // Check if the file already exist
+    // Check if the file already exist without error reporting
     if (miscFileExists(fileName, mcsFALSE) == mcsTRUE)
     {
-        // if file already exist, write name in the label
+        // If file already exist, write name in the label
         ostringstream out;
-        out << fileName;
-        out << " already exists. Do you want to overwrite it?";
+        out << fileName << " already exists. Do you want to overwrite it?";
         _confirmSupPanel.SetPopUpText(out.str());
+
         // Update the window
         _confirmWindow.Update();
+
         // Show it
         OpenPopUp(mcsTRUE);
         SetStatus(true,"");
     }
-    // if not
     else
     {
         // Call in all other case Overwrite method
@@ -791,6 +817,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveButtonCB(void *)
             return mcsFAILURE;
         }
     }
+
     return mcsSUCCESS;
 }
 
@@ -800,18 +827,18 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ExportButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::ExportButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::ExportButtonCB()");
 
-    // Get the fileName enter by the user
-    mcsSTRING32 fileName;
+    // Get the file name from the corresponding textfield
+    mcsSTRING256 fileName;
     strcpy(fileName, (_actionsSubPanel.GetExportFileName()).c_str());
     
     // Check if the file already exist
     if (miscFileExists(fileName, mcsFALSE) == mcsTRUE)
     {
-        // if file already exist, write name in the label
+        // If file already exist, write name in the label
         ostringstream out;
         out << fileName;
         out << " already exists. Do you want to overwrite it?";
@@ -822,7 +849,6 @@ mcsCOMPL_STAT sclguiCONTROLLER::ExportButtonCB(void *)
         OpenPopUp(mcsFALSE);
         SetStatus(true,"");
     }
-    // if not
     else
     {
         // Call in all other case Overwrite method
@@ -842,12 +868,12 @@ mcsCOMPL_STAT sclguiCONTROLLER::ExportButtonCB(void *)
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::SaveOverwriteButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::SaveOverwriteButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::OverwriteButtonCB()");
 
-    // Get the fileName enter by the user
-    mcsSTRING32 fileName;
+    // Get the file name from the corresponding textfield
+    mcsSTRING256 fileName;
     strcpy(fileName, (_actionsSubPanel.GetSaveFileName()).c_str());
 
     // Call overwrite method with previous name
@@ -869,12 +895,12 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveOverwriteButtonCB(void *)
  *   @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ExportOverwriteButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::ExportOverwriteButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::OverwriteButtonCB()");
 
-    // Get the fileName enter by the user
-    mcsSTRING32 fileName;
+    // Get the file name from the corresponding textfield
+    mcsSTRING256 fileName;
     strcpy(fileName, (_actionsSubPanel.GetExportFileName()).c_str());
 
     // Call overwrite method with previous name
@@ -896,7 +922,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::ExportOverwriteButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::VisibilityButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::VisibilityButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::VisibilityButtonCB()");
 
@@ -909,7 +935,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::VisibilityButtonCB(void *)
            "%f", &visMax);
     
     // Enable visibility filter with the user entry
-    _filterList.SetFilterVisibility(visMax, mcsTRUE);
+    _filterListModel.SetFilterVisibility(visMax, mcsTRUE);
     
     // Update main window
      _mainWindow.Update();
@@ -924,17 +950,17 @@ mcsCOMPL_STAT sclguiCONTROLLER::VisibilityButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::LuminosityButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::LuminosityButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::LuminosityButtonCB()");
 
     _luminosityFilterWindow.Hide(); 
     
     // Get user wanted luminosity
-    std::list<char *> lumClass;
+    std::list<char*> lumClass;
     _luminosityFilterSubPanel.GetLuminosityClass(&lumClass);
     // Enable luminosity filter with the previous parameters
-    _filterList.SetFilterLuminosityClass(lumClass, mcsTRUE);
+    _filterListModel.SetFilterLuminosityClass(lumClass, mcsTRUE);
     
     // update window
      _mainWindow.Update();
@@ -949,17 +975,17 @@ mcsCOMPL_STAT sclguiCONTROLLER::LuminosityButtonCB(void *)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::SpectralTypeButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::SpectralTypeButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::SpectralTypeButtonCB()");
 
     _spectralTypeFilterWindow.Hide(); 
     
     // Get user wanted luminosity
-    std::list<char *> tempClass;
+    std::list<char*> tempClass;
     _spectralTypeFilterSubPanel.GetTemperatureClass(&tempClass);
     // Enable luminosity filter with the previous parameters
-    _filterList.SetFilterTemperatureClass(tempClass, mcsTRUE);
+    _filterListModel.SetFilterTemperatureClass(tempClass, mcsTRUE);
     
     // update window
      _mainWindow.Update();
@@ -974,27 +1000,27 @@ mcsCOMPL_STAT sclguiCONTROLLER::SpectralTypeButtonCB(void *)
  *   @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::MagnitudeButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::MagnitudeButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::MagnitudeButtonCB()");
 
-    // hide magnitude window
+    // Hide magnitude window
     _magnitudeFilterWindow.Hide(); 
     
     // Get band of the request
     mcsSTRING32 band;
-    strcpy(band, _request.GetSearchBand());
+    strcpy(band, _requestModel.GetSearchBand());
     
     // get magnitude of the request
     mcsFLOAT magnitude;
-    magnitude = _request.GetObjectMag();
+    magnitude = _requestModel.GetObjectMag();
     
     // get usr magitude range
     mcsFLOAT magRange;
     sscanf((_magnitudeFilterSubPanel.GetMagRange()).c_str(), "%f", &magRange);
     
     // Enable magnitude filter with the previous parameters
-    _filterList.SetFilterMagnitude(band, magnitude, magRange, mcsTRUE);
+    _filterListModel.SetFilterMagnitude(band, magnitude, magRange, mcsTRUE);
     
     // update window
      _mainWindow.Update();
@@ -1009,7 +1035,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::MagnitudeButtonCB(void *)
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::MultiplicityButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::MultiplicityButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::MultiplicityButtonCB()");
 
@@ -1020,12 +1046,12 @@ mcsCOMPL_STAT sclguiCONTROLLER::MultiplicityButtonCB(void *)
     if (_multiplicityFilterSubPanel.GetChoice() == "Forbidden")
     {
         // if user don't want multiplicity, enable it
-        _filterList.SetFilterMultiplicity(mcsTRUE);
+        _filterListModel.SetFilterMultiplicity(mcsTRUE);
     }
     else
     {
         // if user wants multiplicity, disable it
-        _filterList.DisableFilter(vobsMULTIPLICITY_FILTER_NAME);
+        _filterListModel.DisableFilter(vobsMULTIPLICITY_FILTER_NAME);
     }
 
     // Update main window    
@@ -1041,29 +1067,29 @@ mcsCOMPL_STAT sclguiCONTROLLER::MultiplicityButtonCB(void *)
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::DistanceButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::DistanceButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::DistanceButtonCB()");
 
-    // hide distance window    
+    // Hide distance window    
     _distanceFilterWindow.Hide(); 
    
     mcsSTRING32 raRef;
     mcsSTRING32 decRef;
     // Get science object coordinates
-    strcpy(raRef, _request.GetObjectRa());
-    strcpy(decRef, _request.GetObjectDec());
+    strcpy(raRef, _requestModel.GetObjectRa());
+    strcpy(decRef, _requestModel.GetObjectDec());
     
+    // Get user range
     mcsFLOAT raRange;
     mcsFLOAT decRange;
-    // Get user range
     sscanf((_distanceFilterSubPanel.GetRaRange()).c_str(), "%f", &raRange);
     sscanf((_distanceFilterSubPanel.GetDecRange()).c_str(), "%f", &decRange);
     
     // Enable distance filter with the previous parameters
-    _filterList.SetFilterDistance(raRef, decRef, raRange, decRange, mcsTRUE);     
+    _filterListModel.SetFilterDistance(raRef, decRef, raRange, decRange, mcsTRUE);     
     
-    // update window
+    // Update window
     _mainWindow.Update();
     
     SetStatus(true, "Distance filter apply");
@@ -1076,7 +1102,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::DistanceButtonCB(void *)
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::VariabilityButtonCB(void *)
+mcsCOMPL_STAT sclguiCONTROLLER::VariabilityButtonCB(void*)
 {
     logTrace("sclguiCONTROLLER::VariabilityButtonCB()");
 
@@ -1087,12 +1113,12 @@ mcsCOMPL_STAT sclguiCONTROLLER::VariabilityButtonCB(void *)
     if (_variabilityFilterSubPanel.GetChoice() == "Forbidden")
     {
         // if user don't want variability, enable it
-        _filterList.SetFilterVariability(mcsTRUE);
+        _filterListModel.SetFilterVariability(mcsTRUE);
     }
     else
     {
         // if user wants variability, disable it
-        _filterList.DisableFilter(vobsVARIABILITY_FILTER_NAME);
+        _filterListModel.DisableFilter(vobsVARIABILITY_FILTER_NAME);
     }
 
     // Update main window
@@ -1105,8 +1131,8 @@ mcsCOMPL_STAT sclguiCONTROLLER::VariabilityButtonCB(void *)
 /**
  * Open the confirm pop up
  *
- * @param saveFlag flag to know if the CB re-associated in this method should
- * be with the CB for save or export
+ * @param saveFlag flag to know if the callback re-associated in this method should
+ * be with the callback for save or export
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
@@ -1115,20 +1141,22 @@ mcsCOMPL_STAT sclguiCONTROLLER::OpenPopUp(mcsLOGICAL saveFlag)
 {
     logTrace("sclguiCONTROLLER::OpenPopUp()");
 
-    // Attach CB according to the wanted save file (.scl or .txt)
+    // Attach callback according to the wanted save file (.scl or .txt)
     // if saveFlag is true, i.e for save file
     if (saveFlag == mcsTRUE)
     {
-        // attach CB on SaveOverwriteButtonCB method
+        // Attach callback on SaveOverwriteButtonCB method
         _confirmSupPanel.SetOverwriteCB
-        (*this, (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::SaveOverwriteButtonCB);
+           (*this,
+            (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::SaveOverwriteButtonCB);
     }
     // else if saveFlag is false, i.e for export file
     else
     {
-        // attach CB on ExportOverwriteButtonCB method        
+        // Attach callback on ExportOverwriteButtonCB method        
         _confirmSupPanel.SetOverwriteCB
-        (*this, (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::ExportOverwriteButtonCB);
+           (*this,
+            (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::ExportOverwriteButtonCB);
     }
 
     // Show confirm window
@@ -1152,16 +1180,20 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32 fileName,
     logTrace("sclguiCONTROLLER::Overwrite()");
 
     // Save the display list in the specified file
-    mcsSTRING64 usrMsg;
+
+    // Status message buffer
+    mcsSTRING64 statusMessage;
+
     // Get the list
-    sclsvrCALIBRATOR_LIST * list = _calibratorList.GetCalibratorList();
+    sclsvrCALIBRATOR_LIST* list = _calibratorListModel.GetCalibratorList();
     vobsSTAR_PROPERTY_ID_LIST label;    
+
     // Get the actual label
     // if it is for a save file
     if (saveFlag == mcsTRUE)
     {
         // Get label list
-        label = _calibratorListSubPanel.GetLabel(mcsTRUE);
+        label = _calibratorListModelSubPanel.GetLabel(mcsTRUE);
         // Add in the label list the "diameter ok flag"
         label.push_back(sclsvrCALIBRATOR_DIAM_FLAG);
     }
@@ -1169,23 +1201,24 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32 fileName,
     else
     {
         // Just Get the actual label
-        label = _calibratorListSubPanel.GetLabel(_calibratorListSubPanel.IsDetailsView());
+        label = _calibratorListModelSubPanel.GetLabel(
+                           _calibratorListModelSubPanel.IsDetailed());
     }
         
     // Call Save method of the list with the parameter specific for a save or an
     // export
-    if (list->Save(fileName, label, _request, saveFlag) ==
-        mcsFAILURE)
+    if (list->Save(fileName, label, _requestModel, saveFlag) == mcsFAILURE)
     {
         // if save failed, send user message and close the popup
-        sprintf(usrMsg, "'%s' file HAS NOT been created", fileName);
-        SetStatus(false, usrMsg, errUserGet());
+        sprintf(statusMessage, "'%s' file HAS NOT been created", fileName);
+        SetStatus(false, statusMessage, errUserGet());
         errCloseStack();
         return mcsFAILURE;
     }
+
     // if failed succeed, send user message and close the popup
-    sprintf(usrMsg, "'%s' file has been created", fileName);
-    SetStatus(true, usrMsg);
+    sprintf(statusMessage, "'%s' file has been created", fileName);
+    SetStatus(true, statusMessage);
 
     return mcsSUCCESS;
 }

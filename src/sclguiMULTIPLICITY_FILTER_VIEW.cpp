@@ -1,20 +1,24 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiMULTIPLICITY_FILTER_VIEW class.
+ * @file
+ * Definition of sclguiMULTIPLICITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
@@ -23,12 +27,14 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <sstream>
 using namespace std;
 
+
 /*
  * MCS Headers 
  */
 #include "mcs.h"
 #include "log.h"
 #include "err.h"
+
 
 /*
  * Local Headers 
@@ -37,11 +43,12 @@ using namespace std;
 #include "sclguiPrivate.h"
 #include "sclguiErrors.h"
 
+
 /**
  * Class constructor
  */
 sclguiMULTIPLICITY_FILTER_VIEW::
-sclguiMULTIPLICITY_FILTER_VIEW() : sclguiFILTER_VIEW()
+sclguiMULTIPLICITY_FILTER_VIEW():sclguiFILTER_VIEW()
 {
     // Prepare widgets
     _multiplicityChoice.SetLabel("Multiplicity"); 
@@ -49,7 +56,6 @@ sclguiMULTIPLICITY_FILTER_VIEW() : sclguiFILTER_VIEW()
     // Add widget in widget map
     Add(&_multiplicityChoice);
     Add(&_applyFilterButton);
-
 }
 
 /**
@@ -58,6 +64,7 @@ sclguiMULTIPLICITY_FILTER_VIEW() : sclguiFILTER_VIEW()
 sclguiMULTIPLICITY_FILTER_VIEW::~sclguiMULTIPLICITY_FILTER_VIEW()
 {
 }
+
 
 /*
  * Public methods
@@ -105,6 +112,7 @@ string sclguiMULTIPLICITY_FILTER_VIEW::GetChoice()
     return _multiplicityChoice.GetSelectedItemValue();
 }
 
+
 /*
  * Protected methods
  */
@@ -114,7 +122,7 @@ string sclguiMULTIPLICITY_FILTER_VIEW::GetChoice()
  * Private methods
  */
 /**
- * Say if the user choice authorized or not the multiplicity
+ * Retrun wether the user authorized the multiplicity, or not.
  *
  * @return mcsTRUE if multiplicity are authorized otherwise mcsFALSE is
  * returned
@@ -123,7 +131,7 @@ mcsLOGICAL sclguiMULTIPLICITY_FILTER_VIEW::IsMultiplicityAuthorized()
 {
     logTrace("sclguiMULTIPLICITY_FILTER_VIEW::IsMultiplicityAuthorized()");
     
-    vobsFILTER *filter = _filterList->GetFilter(vobsMULTIPLICITY_FILTER_NAME);
+    vobsFILTER* filter = _filterListModel->GetFilter(vobsMULTIPLICITY_FILTER_NAME);
 
     if (filter == NULL)
     {
@@ -138,6 +146,5 @@ mcsLOGICAL sclguiMULTIPLICITY_FILTER_VIEW::IsMultiplicityAuthorized()
     
     return mcsFALSE;
 }
-
 
 /*___oOo___*/

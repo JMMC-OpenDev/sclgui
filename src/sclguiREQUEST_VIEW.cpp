@@ -1,19 +1,22 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  *  Definition of sclguiREQUEST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -41,7 +44,7 @@ using namespace std;
  */
 sclguiREQUEST_VIEW::sclguiREQUEST_VIEW()
 {
-    // Create the text Area
+    // Set text area attributes
     _requestTextArea.SetRows(4);
     _requestTextArea.SetColumns(50);
     _requestTextArea.SetHelp("No Help");
@@ -54,10 +57,10 @@ sclguiREQUEST_VIEW::sclguiREQUEST_VIEW()
 
 sclguiREQUEST_VIEW::sclguiREQUEST_VIEW(sclguiREQUEST_MODEL &requestModel)
 {
-    // Attach to the request model
+    // Attach the view to the given request model
     AttachModel(requestModel);
     
-    // Create the text Area
+    // Set text area attributes
     _requestTextArea.SetRows(4);
     _requestTextArea.SetColumns(50);
     _requestTextArea.SetHelp("No Help");

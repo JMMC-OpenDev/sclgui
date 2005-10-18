@@ -1,26 +1,31 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONFIRM_SUBPANEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiCONFIRM_SUBPANEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  *  Definition of sclguiCONFIRM_SUBPANEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONFIRM_SUBPANEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONFIRM_SUBPANEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
  */
 #include <iostream>
 using namespace std;
+
 
 /*
  * MCS Headers 
@@ -29,28 +34,30 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiCONFIRM_SUBPANEL.h"
 #include "sclguiPrivate.h"
 
+
 /**
  * Class constructor
  */
 sclguiCONFIRM_SUBPANEL::sclguiCONFIRM_SUBPANEL()
 {
-    // Add empty label
+    // Create an empty label
     _confirmLabel.SetText("");
     _confirmLabel.SetHelp("No Help");
 
-    // Add confirm button
+    // Create an 'OVERWRITE' button
     _overwriteButton.SetText("Overwrite");
     _overwriteButton.PlaceAtTop(mcsTRUE);
 
+    // Add the newly created widgets to the sub-panel
     Add(&_confirmLabel);
     Add(&_overwriteButton);
-    
 }
 
 /**
@@ -60,26 +67,27 @@ sclguiCONFIRM_SUBPANEL::~sclguiCONFIRM_SUBPANEL()
 {
 }
 
+
 /*
  * Public methods
  */
 /**
- * Set call back associated to the overwrite button
+ * Attach the given callback method to the 'OVERWRITE' button-generated event.
  *
  * @param eventHandler event handler
- * @param cbMethod the associated CB
+ * @param callback the associated callback
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
  */
 mcsCOMPL_STAT 
 sclguiCONFIRM_SUBPANEL::SetOverwriteCB(fndOBJECT &eventHandler,
-                                     gwtCOMMAND::CB_METHOD cbMethod)
+                                       gwtCOMMAND::CB_METHOD callbackMethod)
 {
     logTrace("sclguiCONFIRM_SUBPANEL::SetOverwriteCB()");
 
-    _overwriteButton.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _overwriteButton.AttachCB(&eventHandler,
+                              (gwtCOMMAND::CB_METHOD) callbackMethod);
         
     return mcsSUCCESS;
 }
@@ -98,6 +106,8 @@ mcsCOMPL_STAT sclguiCONFIRM_SUBPANEL::SetPopUpText(string text)
     
     return mcsSUCCESS;
 }
+
+
 /*
  * Protected methods
  */

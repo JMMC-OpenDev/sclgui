@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONFIRM_SUBPANEL.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiCONFIRM_SUBPANEL.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiCONFIRM_SUBPANEL class.
  */
 
@@ -26,10 +29,10 @@
 #include "mcs.h"
 #include "gwt.h"
 
+
 /*
  * Class declaration
  */
-
 /**
  * Brief description of the class, which ends at this dot.
  * 
@@ -80,10 +83,12 @@ public:
     // Class destructor
     virtual ~sclguiCONFIRM_SUBPANEL();
 
+    // Class callback
     virtual mcsCOMPL_STAT SetOverwriteCB(fndOBJECT &eventHandler,
-                                         gwtCOMMAND::CB_METHOD cbMethod);
+                                         gwtCOMMAND::CB_METHOD callbackMethod);
 
     virtual mcsCOMPL_STAT SetPopUpText(string text);
+
 protected:
     
 private:
@@ -92,9 +97,9 @@ private:
     sclguiCONFIRM_SUBPANEL(const sclguiCONFIRM_SUBPANEL&);
     sclguiCONFIRM_SUBPANEL& operator=(const sclguiCONFIRM_SUBPANEL&);
 
-    // Confirm object
+    // Confirmation dialog widgets
     gwtBUTTON _overwriteButton;
-    gwtLABEL _confirmLabel;
+    gwtLABEL  _confirmLabel;
 };
 
 #endif /*!sclguiCONFIRM_SUBPANEL_H*/

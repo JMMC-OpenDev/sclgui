@@ -1,20 +1,24 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiVISIBILITY_FILTER_VIEW class.
+ * @file
+ * Definition of sclguiVISIBILITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.3 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
@@ -23,6 +27,7 @@ static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 #include <sstream>
 using namespace std;
 
+
 /*
  * MCS Headers 
  */
@@ -30,17 +35,18 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiVISIBILITY_FILTER_VIEW.h"
 #include "sclguiPrivate.h"
 
+
 /**
  * Class constructor
  */
-sclguiVISIBILITY_FILTER_VIEW::
-    sclguiVISIBILITY_FILTER_VIEW() : sclguiFILTER_VIEW()    
+sclguiVISIBILITY_FILTER_VIEW::sclguiVISIBILITY_FILTER_VIEW():sclguiFILTER_VIEW()    
 {
     // Prepare widgets
     _accuracyTextfield.SetLabel
@@ -76,7 +82,7 @@ mcsCOMPL_STAT sclguiVISIBILITY_FILTER_VIEW::Update()
     // Get visibility filter
     sclsvrVISIBILITY_FILTER *visFilter = 
         (sclsvrVISIBILITY_FILTER *)
-        _filterList->GetFilter(sclsvrVISIBILITY_FILTER_NAME);
+        _filterListModel->GetFilter(sclsvrVISIBILITY_FILTER_NAME);
 
     if (visFilter->IsEnabled() == mcsTRUE)
     {

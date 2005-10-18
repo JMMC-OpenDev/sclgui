@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiSPTYPE_FILTER_VIEW class.
  */
 
@@ -25,18 +28,21 @@
  */
 #include "mcs.h"
 
+
+/*
+ * Local header
+ */
 #include "sclguiFILTER_VIEW.h"
+
+
 /*
  * Class declaration
  */
-
 /**
  * Spectral type filter view 
- * 
  */
 class sclguiSPTYPE_FILTER_VIEW : public sclguiFILTER_VIEW
 {
-
 public:
     // Class constructor
     sclguiSPTYPE_FILTER_VIEW();
@@ -46,8 +52,8 @@ public:
 
     virtual mcsCOMPL_STAT Update();
     
-    virtual mcsCOMPL_STAT 
-        GetTemperatureClass(std::list<char *> *tempClass);
+    virtual mcsCOMPL_STAT GetTemperatureClass(std::list<char *> *tempClass);
+
 protected:
     
 private:
@@ -64,9 +70,8 @@ private:
     gwtCHECKBOX _spectralTypeCheckboxK;
     gwtCHECKBOX _spectralTypeCheckboxM;
 
-    mcsLOGICAL 
-        IsDisableTemperature(std::list<char *> temperatureList,
-                             char *temperatureClass);
+    mcsLOGICAL IsDisableTemperature(std::list<char *> temperatureList,
+                                    char *temperatureClass);
 };
 
 #endif /*!sclguiSPECTRAL_TYPE_FILTER_VIEW_H*/
