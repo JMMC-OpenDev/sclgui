@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
@@ -55,11 +58,11 @@ public:
 
     virtual mcsCOMPL_STAT Update();
 
-    virtual mcsCOMPL_STAT Details(mcsLOGICAL state);
+    virtual mcsCOMPL_STAT Detail(mcsLOGICAL state);
     
     vobsSTAR_PROPERTY_ID_LIST GetLabel(mcsLOGICAL details = mcsTRUE);
     
-    virtual mcsLOGICAL IsDetailsView();
+    virtual mcsLOGICAL IsDetailed();
 
     virtual mcsCOMPL_STAT AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
                                       sclguiREQUEST_MODEL &requestModel);
@@ -71,13 +74,13 @@ private:
     sclguiCALIBRATOR_LIST_VIEW(const sclguiCALIBRATOR_LIST_VIEW&);
     sclguiCALIBRATOR_LIST_VIEW& operator=(const sclguiCALIBRATOR_LIST_VIEW&);
 
-    sclguiCALIBRATOR_LIST_MODEL *_calibratorListModel;
-    sclguiREQUEST_MODEL *_requestModel;
+    sclguiCALIBRATOR_LIST_MODEL* _calibratorListModel;
+    sclguiREQUEST_MODEL* _requestModelModel;
     
     gwtTEXTAREA _resumeTextArea;    
-    gwtTABLE *_listTable;
-    gwtTABLE *_legendTable;
-    gwtTABLE *_confidenceTable;
+    gwtTABLE* _listTable;
+    gwtTABLE* _legendTable;
+    gwtTABLE* _confidenceTable;
 
     mcsLOGICAL _details;
     vobsSTAR_PROPERTY_ID_LIST _label;

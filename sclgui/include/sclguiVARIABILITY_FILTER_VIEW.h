@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.h,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiVARIABILITY_FILTER_VIEW class.
  */
 
@@ -25,19 +28,21 @@
  */
 #include "mcs.h"
 
+
+/*
+ * Local header
+ */
 #include "sclguiFILTER_VIEW.h"
+
 
 /*
  * Class declaration
  */
-
 /**
  * Variability filter view 
- * 
  */
 class sclguiVARIABILITY_FILTER_VIEW : public sclguiFILTER_VIEW
 {
-
 public:
     // Class constructor
     sclguiVARIABILITY_FILTER_VIEW();
@@ -48,6 +53,7 @@ public:
     virtual mcsCOMPL_STAT Update();
     
     virtual string GetChoice();
+
 protected:
     
 private:

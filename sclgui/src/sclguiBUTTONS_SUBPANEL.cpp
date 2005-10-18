@@ -1,26 +1,31 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiBUTTONS_SUBPANEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiBUTTONS_SUBPANEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  *  Definition of sclguiBUTTONS_SUBPANEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiBUTTONS_SUBPANEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiBUTTONS_SUBPANEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
  */
 #include <iostream>
 using namespace std;
+
 
 /*
  * MCS Headers 
@@ -29,40 +34,44 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
 /*
  * Local Headers 
  */
 #include "sclguiBUTTONS_SUBPANEL.h"
 #include "sclguiPrivate.h"
 
+
 /**
- * Class constructor
+ * Class constructor.
  */
 sclguiBUTTONS_SUBPANEL::sclguiBUTTONS_SUBPANEL()
 {
-    // Prepare button
-    // Created "SHOW ALL RESULTS" button
+    // Create the "SHOW ALL RESULTS" button
     _showAllResultsButton.SetText("SHOW ALL RESULTS");
     _showAllResultsButton.SetHelp("Display of all results with coherent diameter.");
-    // Place at top "SHOW ALL RESULTS" button
+    // Place it at the of the container
     _showAllResultsButton.PlaceAtTop(mcsTRUE);
-    // Created "RESET" button
+
+    // Create the "RESET" button
     _resetButton.SetText("RESET");
     _resetButton.SetHelp("This button reset the star list. It will show the list with visibility OK.");
-    // Place at top "RESET" button
+    // Place it at the of the container
     _resetButton.PlaceAtTop(mcsTRUE);
-    // Created "SHOW DETAILS" button
+
+    // Create the "SHOW DETAILS" button
     _showDetailsButton.SetText("SHOW DETAILS");
     _showDetailsButton.SetHelp("Show all properties of a star");
-    // Place at top "SHOW DETAILS" button
+    // Place it at the of the container
     _showDetailsButton.PlaceAtTop(mcsTRUE);
-    // Created "HIDE DETAILS" button 
+
+    // Create the "HIDE DETAILS" button 
     _hideDetailsButton.SetText("HIDE DETAILS");
     _hideDetailsButton.SetHelp("Show only some specific properties");
-    // Place at top "HIDE DETAILS" button
+    // Place it at the of the container
     _hideDetailsButton.PlaceAtTop(mcsTRUE);
     
-    // Add this button in the megaWidget map
+    // Add all these new buttons in the container
     Add(&_resetButton);
     Add(&_showAllResultsButton);
     Add(&_showDetailsButton);
@@ -70,98 +79,101 @@ sclguiBUTTONS_SUBPANEL::sclguiBUTTONS_SUBPANEL()
 }
 
 /**
- * Class destructor
+ * Class destructor.
  */
 sclguiBUTTONS_SUBPANEL::~sclguiBUTTONS_SUBPANEL()
 {
 }
 
+
 /*
  * Public methods
  */
-
 /**
- * Attach widget Reset to the approriate CB
+ * Attach the given callback method to the 'RESET' button-generated event.
  *
  * @param eventHandler event handler
- * @param cbMethod the associated CB
+ * @param callbackMethod the associated callback
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
 mcsCOMPL_STAT sclguiBUTTONS_SUBPANEL::SetResetCB(fndOBJECT &eventHandler,
-                                             gwtCOMMAND::CB_METHOD cbMethod)
+                                         gwtCOMMAND::CB_METHOD callbackMethod)
 {
     logTrace("sclguiBUTTONS_SUBPANEL::SetResetCB()");
 
-    _resetButton.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _resetButton.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD)callbackMethod);
 
     return mcsSUCCESS;
 }
 
 /**
- * Attach Show All Result widget to the approriate CB
+ * Attach the given callback method to the 'SHOW ALL RESULT' button-generated
+ * event.
  *
  * @param eventHandler event handler
- * @param cbMethod the associated CB
+ * @param callbackMethod the associated callback
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
 mcsCOMPL_STAT 
 sclguiBUTTONS_SUBPANEL::SetShowAllResultsCB(fndOBJECT &eventHandler,
-                                        gwtCOMMAND::CB_METHOD cbMethod)
+                                  gwtCOMMAND::CB_METHOD callbackMethod)
 {
     logTrace("sclguiBUTTONS_SUBPANEL::SetShowAllResultsCB()");
 
-    _showAllResultsButton.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _showAllResultsButton.AttachCB(&eventHandler,
+                                   (gwtCOMMAND::CB_METHOD) callbackMethod);
 
     return mcsSUCCESS;
 }
 
 /**
- * Attach Show Details widget to the approriate CB
+ * Attach the given callback method to the 'SHOW DETAILS' button-generated
+ * event.
  *
  * @param eventHandler event handler
- * @param cbMethod the associated CB
+ * @param callbackMethod the associated callback
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
 mcsCOMPL_STAT 
 sclguiBUTTONS_SUBPANEL::SetShowDetailsCB(fndOBJECT &eventHandler,
-                                     gwtCOMMAND::CB_METHOD cbMethod)
+                               gwtCOMMAND::CB_METHOD callbackMethod)
 {
     logTrace("sclguiBUTTONS_SUBPANEL::SetShowDetailsCB()");
 
-    _showDetailsButton.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _showDetailsButton.AttachCB(&eventHandler,
+                                (gwtCOMMAND::CB_METHOD) callbackMethod);
 
     return mcsSUCCESS;
 }
 
 /**
- * Attach Hide Details widget to the approriate CB
+ * Attach the given callback method to the 'HIDE DETAILS' button-generated
+ * event.
  *
  * @param eventHandler event handler
- * @param cbMethod the associated CB
+ * @param callbackMethod the associated callback
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
 mcsCOMPL_STAT 
 sclguiBUTTONS_SUBPANEL::SetHideDetailsCB(fndOBJECT &eventHandler,
-                                     gwtCOMMAND::CB_METHOD cbMethod)
+                               gwtCOMMAND::CB_METHOD callbackMethod)
 {
     logTrace("sclguiBUTTONS_SUBPANEL::SetHideDetailsCB()");
 
-    _hideDetailsButton.
-        AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _hideDetailsButton.AttachCB(&eventHandler,
+                                (gwtCOMMAND::CB_METHOD) callbackMethod);
 
     return mcsSUCCESS;
 }
+
 
 /*
  * Protected methods

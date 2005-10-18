@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.h,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiMAGNITUDE_FILTER_VIEW class.
  */
 
@@ -25,18 +28,21 @@
  */
 #include "mcs.h"
 
+
+/*
+ * Local header
+ */
 #include "sclguiFILTER_VIEW.h"
+
+
 /*
  * Class declaration
  */
-
 /**
  * Magnitude filter view 
- * 
  */
 class sclguiMAGNITUDE_FILTER_VIEW : public sclguiFILTER_VIEW
 {
-
 public:
     // Class constructor
     sclguiMAGNITUDE_FILTER_VIEW();
@@ -57,7 +63,6 @@ private:
     sclguiMAGNITUDE_FILTER_VIEW& operator=(const sclguiMAGNITUDE_FILTER_VIEW&);
 
     gwtTEXTFIELD _magRangeTextfield;
-    
 };
 
 #endif /*!sclguiMAGNITUDE_FILTER_VIEW_H*/

@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiCONTROLLER class.
  */
 
@@ -21,14 +24,21 @@
 
 
 /*
- * MCS header
+ * MCS Headers
  */
 #include "mcs.h"
 #include "evh.h"
 #include "gwt.h"
+
+/*
+ * SCALIB Headers
+ */
 #include "sclsvr.h"
 #include "vobs.h"
 
+/*
+ * Local Headers
+ */
 #include "sclguiACTIONS_VIEW.h"
 #include "sclguiCALIBRATOR_LIST_MODEL.h"
 #include "sclguiCALIBRATOR_LIST_VIEW.h"
@@ -49,12 +59,14 @@
 /*
  * Class declaration
  */
+
 /**
- * This class aims to build the gui for search calib application.
- * One main window is builded with associated widgets. Sub panels contain
- * parameters for specific actions. The first subpanel is used to sort one 7
- * different ways. For each choice, one window is open and the real process is
- * done in the ok associated callback.
+ * This class is the mediator between SCALIB model and view objects.
+ *
+ * It is responsible of:
+ * @li GUI building;
+ * @li event handling;
+ * @li model updates;
  */
 class sclguiCONTROLLER : public gwtGUI
 {
@@ -66,20 +78,20 @@ public:
     // Class destructor
     virtual ~sclguiCONTROLLER();
 
-    virtual mcsCOMPL_STAT AppInit();
+    virtual mcsCOMPL_STAT   AppInit();
    
-    const char            *GetSwVersion();
+    const   char           *GetSwVersion();
     
 protected:
     // Command callbacks
-    virtual evhCB_COMPL_STAT GetCalCB(msgMESSAGE &msg, void*);
+    virtual evhCB_COMPL_STAT GetCalCommandCB(msgMESSAGE &msg, void*);
     virtual evhCB_COMPL_STAT ExitCB(msgMESSAGE &msg, void *); 
 
     // Command reply callbacks
-    virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
+    virtual evhCB_COMPL_STAT GetCalReplyCommandCB(msgMESSAGE &msg, void*);
    
     // Building method of the general GUI
-    mcsCOMPL_STAT BuildGui();
+    mcsCOMPL_STAT BuildGUI();
     
     // Building method of the main window
     mcsCOMPL_STAT BuildMainWindow();
@@ -121,45 +133,50 @@ private:
     sclguiCONTROLLER& operator=(const sclguiCONTROLLER&);
 
     // Models
-    sclguiCALIBRATOR_LIST_MODEL _calibratorList;
-    sclguiREQUEST_MODEL         _request;
-    sclguiFILTER_LIST_MODEL     _filterList;
+    sclguiCALIBRATOR_LIST_MODEL _calibratorListModel;
+    sclguiREQUEST_MODEL         _requestModel;
+    sclguiFILTER_LIST_MODEL     _filterListModel;
 
     // Main window
-    gwtWINDOW               _mainWindow; 
+    gwtWINDOW _mainWindow; 
 
     // Sub-panels of the main window
     sclguiBUTTONS_SUBPANEL      _buttonsSubPanel;
     sclguiREQUEST_VIEW          _requestSubPanel;
-    sclguiCALIBRATOR_LIST_VIEW  _calibratorListSubPanel;
+    sclguiCALIBRATOR_LIST_VIEW  _calibratorListModelSubPanel;
     sclguiACTIONS_VIEW          _actionsSubPanel;
 
     // Windows of the filters and his attached sub-panels
     gwtWINDOW                      _visibilityFilterWindow;
     sclguiVISIBILITY_FILTER_VIEW   _visibilityFilterSubPanel;
+
     gwtWINDOW                      _magnitudeFilterWindow;
     sclguiMAGNITUDE_FILTER_VIEW    _magnitudeFilterSubPanel;
+
     gwtWINDOW                      _distanceFilterWindow;
     sclguiDISTANCE_FILTER_VIEW     _distanceFilterSubPanel;
+
     gwtWINDOW                      _luminosityFilterWindow;
     sclguiLUMINOSITY_FILTER_VIEW   _luminosityFilterSubPanel;
+
     gwtWINDOW                      _spectralTypeFilterWindow;
     sclguiSPTYPE_FILTER_VIEW       _spectralTypeFilterSubPanel;
+
     gwtWINDOW                      _variabilityFilterWindow;
     sclguiVARIABILITY_FILTER_VIEW  _variabilityFilterSubPanel;
+
     gwtWINDOW                      _multiplicityFilterWindow;
     sclguiMULTIPLICITY_FILTER_VIEW _multiplicityFilterSubPanel;
 
     // Confirm window
-    gwtWINDOW                      _confirmWindow;
-    sclguiCONFIRM_SUBPANEL         _confirmSupPanel;
+    gwtWINDOW              _confirmWindow;
+    sclguiCONFIRM_SUBPANEL _confirmSupPanel;
 
     // Interface with search-calibrator server
     evhINTERFACE _sclServer;
 
     // Received message which is currently processed
     msgMESSAGE _msg;
-
 };
 
 #endif /*!sclguiCONTROLLER_H*/

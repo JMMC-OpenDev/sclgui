@@ -1,26 +1,31 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
- *  Definition of sclguiFILTER_LIST_MODEL class.
+ * @file
+ * Definition of sclguiFILTER_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.1 2005-10-11 15:24:15 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+
 
 /* 
  * System Headers 
  */
 #include <iostream>
 using namespace std;
+
 
 /*
  * MCS Headers 
@@ -29,16 +34,23 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
+
+/*
+ * SCALIB Headers 
+ */
 #include "vobs.h"
 #include "sclsvr.h"
+
+
 /*
  * Local Headers 
  */
 #include "sclguiFILTER_LIST_MODEL.h"
 #include "sclguiPrivate.h"
 
+
 /**
- * Class constructor
+ * Class constructor.
  */
 sclguiFILTER_LIST_MODEL::sclguiFILTER_LIST_MODEL()
 {
@@ -46,7 +58,7 @@ sclguiFILTER_LIST_MODEL::sclguiFILTER_LIST_MODEL()
 }
 
 /**
- * Class destructor
+ * Class destructor.
  */
 sclguiFILTER_LIST_MODEL::~sclguiFILTER_LIST_MODEL()
 {
@@ -59,15 +71,16 @@ sclguiFILTER_LIST_MODEL::~sclguiFILTER_LIST_MODEL()
     }
 }
 
+
 /*
  * Public methods
  */
 /**
- * Initialize the model
+ * Initialize the model.
  *
  * Clear the list of the model, disable all filters exept variability and
- * multiplicity because by defautl, the soft should gave calibrators without
- * variability and multiplicity
+ * multiplicity (enabled by default because the soft should gave calibrators
+ * without variability and multiplicity).
  *
  * @return always mcsSUCCESS
  */
@@ -78,17 +91,23 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::Init()
     // Add variability filter
     Add(&_variabilityFilter);
     SetFilterVariability(mcsTRUE);
+
     // Add multiplicity filter
     Add(&_multiplicityFilter);
     SetFilterMultiplicity(mcsTRUE);
+
     // Add magnitude filter
     Add(&_magnitudeFilter);
+
     // Add visibility filter
     Add(&_visibilityFilter);
+
     // Add distance filter
     Add(&_distanceFilter);
+
     // Add spectral type filter
     Add(&_spectralTypeFilter);
+
     // Add luminosity filter
     Add(&_luminosityFilter);
     
@@ -96,7 +115,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::Init()
 }
 
 /**
- * Reset filter list model
+ * Reset the filter list.
  *
  * \return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
@@ -111,11 +130,11 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::ResetFilters(void)
         return mcsFAILURE;
     }
    
-    // Enable only the filter by variability and visibility
+    // Enable the ddefault filters (variability and visibility)
     SetFilterVariability(mcsTRUE);
     SetFilterMultiplicity(mcsTRUE);
     
-    // Notify attached views
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -125,38 +144,39 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::ResetFilters(void)
 }
 
 /**
- * Enabled the magnitude filter of the list
+ * Enable or disable the magnitude filter.
  *
- * @param band magnitude band
- * @param magValue magnitude value
- * @param magRange magnitude range
+ * @param band magnitude band to be filtered
+ * @param value magnitude value to be filtered
+ * @param range magnitude range to be filtered
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
  */
-mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32 band,
-                                                    mcsFLOAT magValue,
-                                                    mcsFLOAT magRange,
-                                                    mcsLOGICAL enable)
+mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32  band,
+                                                          mcsFLOAT     value,
+                                                          mcsFLOAT     range,
+                                                          mcsLOGICAL   enable)
 {
     logTrace("sclguiFILTER_LIST_MODEL::EnableFilterMagnitude()");
     
     // Get the magnitude filter from the list
-    vobsMAGNITUDE_FILTER *magFilter = 
-        (vobsMAGNITUDE_FILTER *)
-        GetFilter(vobsMAGNITUDE_FILTER_NAME);
+    vobsMAGNITUDE_FILTER *magFilter =
+        (vobsMAGNITUDE_FILTER *)GetFilter(vobsMAGNITUDE_FILTER_NAME);
 
-    // if the set enabled the filter
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-        // Set enable the magnitude filter
+        // Enable it
         if (magFilter->Enabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
 
-        // Set value in the magnitude filter
-        if (magFilter->SetMagnitudeValue(band, magValue, magRange) ==
+        // Set the filter parameters
+        if (magFilter->SetMagnitudeValue(band, value, range) ==
             mcsFAILURE)
         {
             return mcsFAILURE;
@@ -164,15 +184,14 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32 band,
     }
     else
     {
-        // Set disable the magnitude filter
+        // Disable the filter
         if (magFilter->Disabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
-
     }
 
-    // Notify attached views
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -182,53 +201,56 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32 band,
 }
 
 /**
- * Enabled the distance filter of the list
+ * Enable or disable the distance filter.
  *
- * @param raRef right ascension of the science object in hms
- * @param decRef declinaison of the science object in dms
+ * @param raValue right ascension of the science object in hms
+ * @param decValue declinaison of the science object in dms
  * @param raRange right ascension range
  * @param decRange declinaison range
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
  */
-mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterDistance(mcsSTRING32 raRef,
-                                                   mcsSTRING32 decRef,
-                                                   mcsFLOAT raRange,
-                                                   mcsFLOAT decRange,
-                                                   mcsLOGICAL enable)
+mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterDistance(mcsSTRING32  raValue,
+                                                         mcsSTRING32  decValue,
+                                                         mcsFLOAT     raRange,
+                                                         mcsFLOAT     decRange,
+                                                         mcsLOGICAL   enable)
 {
     logTrace("sclguiFILTER_LIST_MODEL::SetFilterDistance()");
 
     // Get the distance filter from the list
     vobsDISTANCE_FILTER *distanceFilter = 
-        (vobsDISTANCE_FILTER *) GetFilter(vobsDISTANCE_FILTER_NAME);
+        (vobsDISTANCE_FILTER *)GetFilter(vobsDISTANCE_FILTER_NAME);
 
-    // if the set enabled the filter
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-        // Set enable the distance filter
+        // Enable it
         if (distanceFilter->Enabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
 
-        // Set value in the distance filter
-        if (distanceFilter->
-            SetDistanceValue(raRef, decRef, raRange, decRange) == mcsFAILURE)
+        // Set the filter parameters
+        if (distanceFilter->SetDistanceValue(raValue, decValue, raRange,
+                                             decRange) == mcsFAILURE)
         {
             return mcsFAILURE;
         }
     }
     else
     {
-        // Set disable the magnitude filter
+        // Disable the filter
         if (distanceFilter->Disabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
     }
-    // Notify attached views
+
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -238,15 +260,17 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterDistance(mcsSTRING32 raRef,
 }
 
 /**
- * Enabled the visibility filter of the list
+ * Enable or disable the visibility filter.
  *
  * @param visMax the maximal accuracy
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
  */
-mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT visMax,
-                                                     mcsLOGICAL enable)
+mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT    visMax,
+                                                           mcsLOGICAL  enable)
 {
     logTrace("sclguiFILTER_LIST_MODEL::SetFilterVisibility()");
     
@@ -254,28 +278,31 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT visMax,
     sclsvrVISIBILITY_FILTER *visibilityFilter = 
         (sclsvrVISIBILITY_FILTER *)GetFilter(sclsvrVISIBILITY_FILTER_NAME);
    
-    // if the set enabled the filter
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-// Set enable the visibility filter
-    if (visibilityFilter->Enabled() == mcsFAILURE)
-    {
-        return mcsFAILURE;
-    }
-
-    // Set value in the visibility filter
-    if (visibilityFilter->
-        SetVisibilityValue(visMax) == mcsFAILURE)
-    {
-        return mcsFAILURE;
-    }
+        // Enable it
+        if (visibilityFilter->Enabled() == mcsFAILURE)
+        {
+            return mcsFAILURE;
+        }
+    
+        // Set the filter parameter
+        if (visibilityFilter->SetVisibilityValue(visMax) == mcsFAILURE)
+        {
+            return mcsFAILURE;
+        }
     }
     else
     {
-        visibilityFilter->Disabled();
+        // Disable the filter
+        if (visibilityFilter->Disabled() == mcsFAILURE)
+        {
+            return mcsFAILURE;
+        }
     }
    
-    // Notify attached views
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -285,16 +312,17 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT visMax,
 }
 
 /**
- * Enabled the spectral type filter of the list
+ * Enable or disable the spectral type filter.
  *
- * tempClassList a list of temperature class
+ * @param tempClassList a list of temperature class
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
  */
 mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::
-SetFilterTemperatureClass(std::list<char *> tempClassList,
-                          mcsLOGICAL enable)
+SetFilterTemperatureClass(std::list<char *> tempClassList,mcsLOGICAL enable)
 {
     logTrace("sclguiFILTER_LIST_MODEL::SetFilterSpectralType()");
 
@@ -302,15 +330,16 @@ SetFilterTemperatureClass(std::list<char *> tempClassList,
     vobsSPECTRAL_TYPE_FILTER *spectralTypeFilter = 
         (vobsSPECTRAL_TYPE_FILTER *)GetFilter(vobsSPECTRAL_TYPE_FILTER_NAME);
 
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-        // Set enable the spectral type filter
+        // Enable it
         if (spectralTypeFilter->Enabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
 
-        // Set value in the spectral type filter
+        // Set the filter parameter
         if (spectralTypeFilter->SetSpectralType(tempClassList) == mcsFAILURE)
         {
             return mcsFAILURE;
@@ -318,27 +347,28 @@ SetFilterTemperatureClass(std::list<char *> tempClassList,
     }
     else
     {
-        // Set disable the spectral type filter
+        // Disable the filter
         if (spectralTypeFilter->Disabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
-
     }
-    // Notify attached views
+
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
     }
 
-
     return mcsSUCCESS;
 }
 
 /**
- * Enabled the luminosity filter of the list
+ * Enable or disable the luminosity filter.
  *
  * @param lumClassList a list of luminosity class
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
@@ -353,15 +383,16 @@ SetFilterLuminosityClass(std::list<char *> lumClassList,
     vobsLUMINOSITY_FILTER *luminosityFilter = 
         (vobsLUMINOSITY_FILTER *)GetFilter(vobsLUMINOSITY_FILTER_NAME);
 
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-        // Set enable the luminosity filter
+        // Enable it
         if (luminosityFilter->Enabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
 
-        // Set value in the luminosity filter
+        // Set the filter parameter
         if (luminosityFilter->SetLuminosity(lumClassList) == mcsFAILURE)
         {
             return mcsFAILURE;
@@ -369,14 +400,14 @@ SetFilterLuminosityClass(std::list<char *> lumClassList,
     }
     else
     {
-        // Set disable the luminosity filter
+        // Disable the filter
         if (luminosityFilter->Disabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
     }
 
-    // Notify attached views
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -386,7 +417,10 @@ SetFilterLuminosityClass(std::list<char *> lumClassList,
 }
 
 /**
- * Enabled the variability filter of the list
+ * Enable or disable the variability filter.
+ *
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
@@ -399,9 +433,10 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVariability(mcsLOGICAL enable)
     vobsVARIABILITY_FILTER *variabilityFilter = 
         (vobsVARIABILITY_FILTER *)GetFilter(vobsVARIABILITY_FILTER_NAME);
 
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-        // Set enable the variability filter
+        // Enable it
         if (variabilityFilter->Enabled() == mcsFAILURE)
         {
             return mcsFAILURE;
@@ -409,14 +444,15 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVariability(mcsLOGICAL enable)
     }
     else
     {
-        // Set disable the variability filter
+        // Disable the filter
         if (variabilityFilter->Disabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
 
     }
-    // Notify attached views
+
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -426,7 +462,10 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVariability(mcsLOGICAL enable)
 }
 
 /**
- * Enabled the multiplicity filter of the list
+ * Enable or disable the multiplicity filter.
+ *
+ * @param enable logical flag specifying wether the filter should be enabled or
+ * disabled
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned. 
@@ -439,9 +478,10 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMultiplicity(mcsLOGICAL enable)
     vobsMULTIPLICITY_FILTER *multiplicityFilter = 
         (vobsMULTIPLICITY_FILTER *)GetFilter(vobsMULTIPLICITY_FILTER_NAME);
 
+    // if the filter must be enabled
     if (enable == mcsTRUE)
     {
-        // Set enable the multiplicity filter
+        // Enable it
         if (multiplicityFilter->Enabled() == mcsFAILURE)
         {
             return mcsFAILURE;
@@ -449,14 +489,14 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMultiplicity(mcsLOGICAL enable)
     }
     else
     {
-        // Set disable the multiplicity filter
+        // Disable the filter
         if (multiplicityFilter->Disabled() == mcsFAILURE)
         {
             return mcsFAILURE;
         } 
     }
 
-    // Notify attached views
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -466,7 +506,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMultiplicity(mcsLOGICAL enable)
 }
 
 /**
- * Disable the magnitude filter of the list
+ * Disable the filter of the given name
  *
  * @param name the name of the filter to disable
  *
@@ -477,16 +517,16 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::DisableFilter(mcsSTRING32 name)
 {
     logTrace("sclguiFILTER_LIST_MODEL::DisableFilter()");
 
-    // Get the filter from the list
+    // Get the filter from the list by its name
     vobsFILTER *filter = GetFilter(name);
     
-    // Set disable the filter
+    // Disable the filter
     if (filter->Disabled() == mcsFAILURE)
     {
         return mcsFAILURE;
     }
 
-    // Notify attached views
+    // Notify any attached views
     if (NotifyViews() == mcsFAILURE)
     { 
         return mcsFAILURE;
@@ -494,6 +534,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::DisableFilter(mcsSTRING32 name)
     
     return mcsSUCCESS;
 }
+
 
 /*
  * Protected methods

@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiACTIONS_VIEW.h,v 1.1 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiACTIONS_VIEW.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiACTIONS_VIEW class.
  */
 
@@ -27,7 +30,13 @@
 #include "fnd.h"
 #include "gwt.h"
 
+
+/*
+ * Local header
+ */
 #include "sclguiREQUEST_MODEL.h"
+
+
 
 /**
  * Define the order of the filter in the filter choice
@@ -63,24 +72,29 @@ public:
 
     virtual mcsCOMPL_STAT Update();
     
-    virtual mcsCOMPL_STAT SetFilterButtonCB(fndOBJECT &eventHandler,
-                                           gwtCOMMAND::CB_METHOD cbMethod);
-    virtual mcsCOMPL_STAT SetDeleteButtonCB(fndOBJECT &eventHandler,
-                                           gwtCOMMAND::CB_METHOD cbMethod);
-    virtual mcsCOMPL_STAT SetLoadButtonCB(fndOBJECT &eventHandler,
-                                         gwtCOMMAND::CB_METHOD cbMethod);
-    virtual mcsCOMPL_STAT SetSaveButtonCB(fndOBJECT &eventHandler,
-                                         gwtCOMMAND::CB_METHOD cbMethod);
-    virtual mcsCOMPL_STAT SetExportCB(fndOBJECT &eventHandler,
-                                      gwtCOMMAND::CB_METHOD cbMethod);
-    
-    virtual mcsINT32 GetFilterChoice(void);
-    virtual string GetDeletedStarNumber(void);
-    virtual string GetLoadFileName(void);
-    virtual string GetSaveFileName(void);
-    virtual string GetExportFileName(void);
+    virtual mcsCOMPL_STAT SetFilterButtonCB (fndOBJECT &eventHandler,
+                                             gwtCOMMAND::CB_METHOD cbMethod);
 
-    virtual mcsCOMPL_STAT AttachModel(sclguiREQUEST_MODEL &requestModel);
+    virtual mcsCOMPL_STAT SetDeleteButtonCB (fndOBJECT &eventHandler,
+                                             gwtCOMMAND::CB_METHOD cbMethod);
+
+    virtual mcsCOMPL_STAT SetLoadButtonCB   (fndOBJECT &eventHandler,
+                                             gwtCOMMAND::CB_METHOD cbMethod);
+
+    virtual mcsCOMPL_STAT SetSaveButtonCB   (fndOBJECT &eventHandler,
+                                             gwtCOMMAND::CB_METHOD cbMethod);
+
+    virtual mcsCOMPL_STAT SetExportCB       (fndOBJECT &eventHandler,
+                                             gwtCOMMAND::CB_METHOD cbMethod);
+    
+    virtual mcsINT32 GetFilterChoice        (void);
+    virtual string   GetDeletedStarNumber   (void);
+    virtual string   GetLoadFileName        (void);
+    virtual string   GetSaveFileName        (void);
+    virtual string   GetExportFileName      (void);
+
+    virtual mcsCOMPL_STAT AttachModel       (sclguiREQUEST_MODEL &requestModel);
+
 protected:
     
 private:
@@ -89,18 +103,22 @@ private:
     sclguiACTIONS_VIEW(const sclguiACTIONS_VIEW&);
     sclguiACTIONS_VIEW& operator=(const sclguiACTIONS_VIEW&);
 
-    sclguiREQUEST_MODEL *_requestModel;
-    
-    gwtSUBPANEL _filterPanel;
-    gwtCHOICE _filterChoice;     
-    gwtSUBPANEL _deletePanel;
-    gwtTEXTFIELD _deleteTextfield;
-    gwtSUBPANEL _loadPanel;
-    gwtTEXTFIELD _loadTextfield;
-    gwtSUBPANEL _savePanel;
-    gwtTEXTFIELD _saveTextfield;
-    gwtSUBPANEL _exportPanel;
-    gwtTEXTFIELD _exportTextfield;
+    sclguiREQUEST_MODEL *_requestModelModel;
+                  
+    gwtSUBPANEL   _filterPanel;
+    gwtCHOICE     _filterChoice;     
+
+    gwtSUBPANEL   _deletePanel;
+    gwtTEXTFIELD  _deleteTextfield;
+
+    gwtSUBPANEL   _loadPanel;
+    gwtTEXTFIELD  _loadTextfield;
+
+    gwtSUBPANEL   _savePanel;
+    gwtTEXTFIELD  _saveTextfield;
+
+    gwtSUBPANEL   _exportPanel;
+    gwtTEXTFIELD  _exportTextfield;
 
     mcsCOMPL_STAT BuildFilterInterface();
     mcsCOMPL_STAT BuildInOutFileInterface();

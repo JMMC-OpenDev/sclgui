@@ -3,15 +3,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.h,v 1.2 2005-10-11 15:24:15 scetre Exp $"
+ * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.h,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/11 15:24:15  scetre
+ * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+ *
  ******************************************************************************/
 
 /**
- * \file
+ * @file
  * Declaration of sclguiLUMINOSITY_FILTER_VIEW class.
  */
 
@@ -25,18 +28,21 @@
  */
 #include "mcs.h"
 
+
+/*
+ * Local header
+ */
 #include "sclguiFILTER_VIEW.h"
+
+
 /*
  * Class declaration
  */
-
 /**
  * Luminosity filter view 
- * 
  */
 class sclguiLUMINOSITY_FILTER_VIEW : public sclguiFILTER_VIEW
 {
-
 public:
     // Class constructor
     sclguiLUMINOSITY_FILTER_VIEW();
@@ -48,6 +54,7 @@ public:
     
     virtual mcsCOMPL_STAT 
         GetLuminosityClass(std::list<char *> *lumClass);
+
 protected:
     
 private:
@@ -63,9 +70,8 @@ private:
     gwtCHECKBOX _lumCheckboxV;
     gwtCHECKBOX _lumCheckboxVI;
 
-    mcsLOGICAL 
-        IsDisableLuminosity(std::list<char *> luminosityList,
-                           char *luminosityClass);
+    mcsLOGICAL IsLuminosityDisabled(std::list<char *> luminosityList,
+                                   char *luminosityClass);
 };
 
 #endif /*!sclguiLUMINOSITY_FILTER_VIEW_H*/
