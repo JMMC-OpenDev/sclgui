@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.3 2005-11-05 15:55:51 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  * Definition of sclguiFILTER_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.3 2005-11-05 15:55:51 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -170,7 +173,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32  band,
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (magFilter->Enabled() == mcsFAILURE)
+        if (magFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -185,7 +188,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32  band,
     else
     {
         // Disable the filter
-        if (magFilter->Disabled() == mcsFAILURE)
+        if (magFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -229,7 +232,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterDistance(mcsSTRING32  raValue,
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (distanceFilter->Enabled() == mcsFAILURE)
+        if (distanceFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -244,7 +247,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterDistance(mcsSTRING32  raValue,
     else
     {
         // Disable the filter
-        if (distanceFilter->Disabled() == mcsFAILURE)
+        if (distanceFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -282,7 +285,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT    visMax,
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (visibilityFilter->Enabled() == mcsFAILURE)
+        if (visibilityFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -296,7 +299,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT    visMax,
     else
     {
         // Disable the filter
-        if (visibilityFilter->Disabled() == mcsFAILURE)
+        if (visibilityFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -334,7 +337,7 @@ SetFilterTemperatureClass(std::list<char *> tempClassList,mcsLOGICAL enable)
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (spectralTypeFilter->Enabled() == mcsFAILURE)
+        if (spectralTypeFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -348,7 +351,7 @@ SetFilterTemperatureClass(std::list<char *> tempClassList,mcsLOGICAL enable)
     else
     {
         // Disable the filter
-        if (spectralTypeFilter->Disabled() == mcsFAILURE)
+        if (spectralTypeFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -387,7 +390,7 @@ SetFilterLuminosityClass(std::list<char *> lumClassList,
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (luminosityFilter->Enabled() == mcsFAILURE)
+        if (luminosityFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -401,7 +404,7 @@ SetFilterLuminosityClass(std::list<char *> lumClassList,
     else
     {
         // Disable the filter
-        if (luminosityFilter->Disabled() == mcsFAILURE)
+        if (luminosityFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -437,7 +440,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVariability(mcsLOGICAL enable)
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (variabilityFilter->Enabled() == mcsFAILURE)
+        if (variabilityFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -445,7 +448,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVariability(mcsLOGICAL enable)
     else
     {
         // Disable the filter
-        if (variabilityFilter->Disabled() == mcsFAILURE)
+        if (variabilityFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -482,7 +485,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMultiplicity(mcsLOGICAL enable)
     if (enable == mcsTRUE)
     {
         // Enable it
-        if (multiplicityFilter->Enabled() == mcsFAILURE)
+        if (multiplicityFilter->Enable() == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -490,7 +493,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMultiplicity(mcsLOGICAL enable)
     else
     {
         // Disable the filter
-        if (multiplicityFilter->Disabled() == mcsFAILURE)
+        if (multiplicityFilter->Disable() == mcsFAILURE)
         {
             return mcsFAILURE;
         } 
@@ -521,7 +524,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::DisableFilter(mcsSTRING32 name)
     vobsFILTER *filter = GetFilter(name);
     
     // Disable the filter
-    if (filter->Disabled() == mcsFAILURE)
+    if (filter->Disable() == mcsFAILURE)
     {
         return mcsFAILURE;
     }
