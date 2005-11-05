@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.3 2005-11-05 15:42:53 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  *  Definition of sclguiREQUEST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.3 2005-11-05 15:42:53 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -63,9 +66,9 @@ sclguiREQUEST_MODEL::~sclguiREQUEST_MODEL()
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiREQUEST_MODEL::BuildFromMessage(msgMESSAGE &msg)
+mcsCOMPL_STAT sclguiREQUEST_MODEL::Parse(msgMESSAGE &msg)
 {
-    logTrace("sclguiREQUEST_MODEL::BuildFromMessage()");
+    logTrace("sclguiREQUEST_MODEL::Parse()");
 
     // Build the request object from the parameters of the received command
     if (Parse(msg.GetBody()) == mcsFAILURE)
