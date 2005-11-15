@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.3 2005-11-05 15:42:53 gzins Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.4 2005-11-15 16:35:56 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/11/05 15:42:53  gzins
+ * Renamed BuildFromMessage to Parse
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,7 +22,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.3 2005-11-05 15:42:53 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.4 2005-11-15 16:35:56 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -1218,6 +1221,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32 fileName,
         errCloseStack();
         return mcsFAILURE;
     }
+    //list->SaveToVOTable("VOTable.xml");
 
     // if failed succeed, send user message and close the popup
     sprintf(statusMessage, "'%s' file has been created", fileName);
