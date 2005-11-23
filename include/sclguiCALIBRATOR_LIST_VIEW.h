@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.3 2005-11-23 08:42:27 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -92,6 +95,9 @@ private:
     mcsCOMPL_STAT BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label);
     mcsCOMPL_STAT BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label);
     mcsCOMPL_STAT BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label);
+    mcsCOMPL_STAT BuildLabelFaintK(vobsSTAR_PROPERTY_ID_LIST *label);
+    mcsCOMPL_STAT BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *label);
+    
 };
 
 #endif /*!sclguiCALIBRATOR_LIST_VIEW_H*/

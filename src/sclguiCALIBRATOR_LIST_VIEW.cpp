@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.3 2005-11-23 08:42:27 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.3 2005-11-23 08:42:27 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -572,7 +575,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *labe
     label->push_back(vobsSTAR_POS_EQ_PMRA);
     label->push_back(vobsSTAR_POS_PARLX_TRIG);
     label->push_back(vobsSTAR_SPECT_TYPE_MK);
-    label->push_back(vobsSTAR_CODE_VARIAB);
+    label->push_back(vobsSTAR_CODE_VARIAB_V3);
     label->push_back(vobsSTAR_CODE_MULT_FLAG);
     label->push_back(vobsSTAR_POS_GAL_LAT);
     label->push_back(vobsSTAR_POS_GAL_LON);
@@ -670,7 +673,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label
     label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
     label->push_back(vobsSTAR_REF_STAR);
     label->push_back(vobsSTAR_CODE_MULT_FLAG);
-    label->push_back(vobsSTAR_CODE_VARIAB);
+    label->push_back(vobsSTAR_CODE_VARIAB_V3);
     label->push_back(vobsSTAR_PHOT_JHN_V);
     label->push_back(vobsSTAR_PHOT_JHN_H);
     label->push_back(vobsSTAR_POS_PARLX_TRIG);
@@ -681,6 +684,76 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label
     label->push_back(vobsSTAR_CHI2_QUALITY);   
     label->push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
     
+    return mcsSUCCESS;
+}
+
+/**
+ * Build label for faint K band
+ *
+ * @param label label list to build
+ * 
+ * @return always mcsSUCCESS
+ */
+mcsCOMPL_STAT 
+sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK(vobsSTAR_PROPERTY_ID_LIST *label)
+{
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK()");
+    //TBD
+    return mcsSUCCESS;
+}
+
+/**
+ * Build complete label for faint K band
+ *
+ * @param label label list to build
+ * 
+ * @return always mcsSUCCESS
+ */
+mcsCOMPL_STAT 
+sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *label)
+{
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete()");
+    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+    label->push_back(vobsSTAR_POS_EQ_RA_OTHER);
+    label->push_back(vobsSTAR_POS_EQ_DEC_OTHER);
+    label->push_back(vobsSTAR_POS_GAL_LAT);
+    label->push_back(vobsSTAR_POS_GAL_LON);
+    label->push_back(vobsSTAR_PHOT_JHN_K);
+    label->push_back(vobsSTAR_PHOT_JHN_H);
+    label->push_back(vobsSTAR_PHOT_JHN_J);
+    label->push_back(vobsSTAR_PHOT_COUS_I);
+    label->push_back(vobsSTAR_PHOT_PHG_I);
+    label->push_back(vobsSTAR_PHOT_PHG_R);
+    label->push_back(vobsSTAR_PHOT_JHN_V);
+    label->push_back(vobsSTAR_PHOT_PHG_V);
+    label->push_back(vobsSTAR_PHOT_JHN_B);
+    label->push_back(vobsSTAR_PHOT_PHG_B);
+    label->push_back(vobsSTAR_ID_CATALOG);
+    //label->push_back(vobsSTAR_CODE_QUALITY);
+    label->push_back(vobsSTAR_ID_2MASS);
+    label->push_back(vobsSTAR_CODE_MISC_I);
+    label->push_back(vobsSTAR_CODE_MISC_J);
+    label->push_back(vobsSTAR_CODE_MISC_K);
+    label->push_back(vobsSTAR_ID_DENIS);
+    label->push_back(vobsSTAR_ID_DM);
+    label->push_back(vobsSTAR_ID_HIP);
+    //label->push_back(vobsSTAR_ID_TYC1);
+    label->push_back(vobsSTAR_POS_EQ_PMRA);
+    label->push_back(vobsSTAR_POS_EQ_PMDEC);
+    label->push_back(vobsSTAR_POS_PARLX_TRIG);
+    label->push_back(vobsSTAR_SPECT_TYPE_MK);
+    label->push_back(vobsSTAR_CODE_VARIAB_V1);
+    label->push_back(vobsSTAR_CODE_VARIAB_V2);
+    label->push_back(vobsSTAR_CODE_VARIAB_V3);
+    label->push_back(vobsSTAR_CODE_MULT_FLAG);
+    label->push_back(vobsSTAR_LD_DIAM);
+    label->push_back(vobsSTAR_LD_DIAM_ERROR);
+    label->push_back(vobsSTAR_UD_DIAM);
+    label->push_back(vobsSTAR_UD_DIAM_ERROR);
+    label->push_back(vobsSTAR_OBS_METHOD);
+    //label->push_back(vobsSTAR_SPECT_WAVELENGTH_MISC);
+
     return mcsSUCCESS;
 }
 
