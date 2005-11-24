@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.3 2005-11-05 15:55:51 gzins Exp $"
+ * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.4 2005-11-24 15:16:14 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/11/05 15:55:51  gzins
+ * Change Enabled and Disabled to Enable and Disable
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,7 +22,7 @@
  * Definition of sclguiFILTER_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.3 2005-11-05 15:55:51 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.4 2005-11-24 15:16:14 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -65,7 +68,7 @@ sclguiFILTER_LIST_MODEL::sclguiFILTER_LIST_MODEL()
  */
 sclguiFILTER_LIST_MODEL::~sclguiFILTER_LIST_MODEL()
 {
-    vobsFILTER * filter;
+    vobsBASE_FILTER * filter;
     // Delete all filter of the list
     for (unsigned int el = 0; el < Size(); el++)
     {
@@ -521,7 +524,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::DisableFilter(mcsSTRING32 name)
     logTrace("sclguiFILTER_LIST_MODEL::DisableFilter()");
 
     // Get the filter from the list by its name
-    vobsFILTER *filter = GetFilter(name);
+    vobsBASE_FILTER *filter = GetFilter(name);
     
     // Disable the filter
     if (filter->Disable() == mcsFAILURE)
