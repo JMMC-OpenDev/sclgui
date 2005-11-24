@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.3 2005-11-23 08:42:27 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.4 2005-11-24 15:17:03 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/11/23 08:42:27  scetre
+ * Added possibility to build label for faint K
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,7 +22,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.3 2005-11-23 08:42:27 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.4 2005-11-24 15:17:03 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -66,6 +69,7 @@ using namespace std;
 #define sclguiBORDE_COLOR               "#9778fb"
 #define sclguiV_36B_COLOR               "#88a0a6"
 #define sclgui_MIDI_COLOR               "#c994ca"
+#define sclguiUNSO_COLOR               "#c994ca"
 
 /**
  * Class constructor
@@ -87,7 +91,7 @@ sclguiCALIBRATOR_LIST_VIEW::sclguiCALIBRATOR_LIST_VIEW()
     _listTable->SetVerticalOrientation(mcsTRUE);
 
     // legend table
-    _legendTable = new gwtTABLE(1, 14);
+    _legendTable = new gwtTABLE(1, 15);
     _legendTable->SetHeight(14);
     _legendTable->SetLabel("Catalog Origin");
     _legendTable->SetCell(0, 0, "I/280");
@@ -116,9 +120,11 @@ sclguiCALIBRATOR_LIST_VIEW::sclguiCALIBRATOR_LIST_VIEW()
     _legendTable->SetCellBackground(0, 11, sclguiI_196_COLOR);
     _legendTable->SetCell(0, 12, "V/36B");
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
-    _legendTable->SetCell(0, 13, "MIDI");
-    _legendTable->SetCellBackground(0, 13, sclgui_MIDI_COLOR);
-
+    _legendTable->SetCell(0, 13, "UNSO");
+    _legendTable->SetCellBackground(0, 13, sclguiUNSO_COLOR);
+    _legendTable->SetCell(0, 14, "MIDI");
+    _legendTable->SetCellBackground(0, 14, sclgui_MIDI_COLOR);
+    
     // confidence table
     _confidenceTable = new gwtTABLE(1,3);
     _confidenceTable->SetHeight(14);
@@ -161,8 +167,8 @@ sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
     _listTable->SetVerticalOrientation(mcsTRUE);
 
     // legend table
-    _legendTable = new gwtTABLE(1, 14);
-    _legendTable->SetHeight(14);
+    _legendTable = new gwtTABLE(1, 15);
+    _legendTable->SetHeight(15);
     _legendTable->SetLabel("Catalog Origin");
     _legendTable->SetCell(0, 0, "I/280");
     _legendTable->SetCellBackground(0, 0, sclguiI_280_COLOR);
@@ -190,9 +196,11 @@ sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
     _legendTable->SetCellBackground(0, 11, sclguiI_196_COLOR);
     _legendTable->SetCell(0, 12, "V/36B");
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
-    _legendTable->SetCell(0, 13, "MIDI");
-    _legendTable->SetCellBackground(0, 13, sclgui_MIDI_COLOR);
-
+    _legendTable->SetCell(0, 13, "UNSO");
+    _legendTable->SetCellBackground(0, 13, sclguiUNSO_COLOR);
+    _legendTable->SetCell(0, 14, "MIDI");
+    _legendTable->SetCellBackground(0, 14, sclgui_MIDI_COLOR);
+    
     // confidence table
     _confidenceTable = new gwtTABLE(1,3);
     _confidenceTable->SetHeight(14);
@@ -330,6 +338,10 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
             if (strcmp(property->GetOrigin(), "I/280") == 0)
             {
                 _listTable->SetCellBackground(el, i+1, sclguiI_280_COLOR);
+            }
+            if (strcmp(property->GetOrigin(), "I/284") == 0)
+            {
+                _listTable->SetCellBackground(el, i+1, sclguiUNSO_COLOR);
             }
             if (strcmp(property->GetOrigin(), "II/225/catalog") == 0)
             {
@@ -492,27 +504,42 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
     // ResetLabel
     ResetLabel();
 
-    // Build label according to the research band
-    if (strcmp(_requestModelModel->GetSearchBand(), "N") == 0)
+    // Build label according to the research band and the faint or bright
+    // research
+    if (_requestModelModel->IsBright() == mcsTRUE)
     {
-        if (details == mcsFALSE)
+        if (strcmp(_requestModelModel->GetSearchBand(), "N") == 0)
         {
-            BuildLabelN(label);
+            if (details == mcsFALSE)
+            {
+                BuildLabelN(label);
+            }
+            else
+            {
+                BuildLabelNComplete(label);
+            }
         }
         else
         {
-            BuildLabelNComplete(label);
+            if (details == mcsFALSE)
+            {
+                BuildLabelKV(label);
+            }
+            else
+            {
+                BuildLabelKVComplete(label);
+            }
         }
     }
     else
     {
         if (details == mcsFALSE)
         {
-            BuildLabelKV(label);
+            BuildLabelFaintK(label);
         }
         else
         {
-            BuildLabelKVComplete(label);
+            BuildLabelFaintKComplete(label);
         }
     }
     
@@ -713,6 +740,7 @@ mcsCOMPL_STAT
 sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *label)
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete()");
+
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
     label->push_back(vobsSTAR_POS_EQ_RA_OTHER);
@@ -730,7 +758,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(vobsSTAR_PHOT_JHN_B);
     label->push_back(vobsSTAR_PHOT_PHG_B);
     label->push_back(vobsSTAR_ID_CATALOG);
-    //label->push_back(vobsSTAR_CODE_QUALITY);
+    label->push_back(vobsSTAR_CODE_QUALITY);
     label->push_back(vobsSTAR_ID_2MASS);
     label->push_back(vobsSTAR_CODE_MISC_I);
     label->push_back(vobsSTAR_CODE_MISC_J);
@@ -738,7 +766,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(vobsSTAR_ID_DENIS);
     label->push_back(vobsSTAR_ID_DM);
     label->push_back(vobsSTAR_ID_HIP);
-    //label->push_back(vobsSTAR_ID_TYC1);
+    label->push_back(vobsSTAR_ID_TYC1);
     label->push_back(vobsSTAR_POS_EQ_PMRA);
     label->push_back(vobsSTAR_POS_EQ_PMDEC);
     label->push_back(vobsSTAR_POS_PARLX_TRIG);
@@ -752,7 +780,6 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(vobsSTAR_UD_DIAM);
     label->push_back(vobsSTAR_UD_DIAM_ERROR);
     label->push_back(vobsSTAR_OBS_METHOD);
-    //label->push_back(vobsSTAR_SPECT_WAVELENGTH_MISC);
 
     return mcsSUCCESS;
 }
