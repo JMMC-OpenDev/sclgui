@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.5 2005-11-24 15:16:14 scetre Exp $"
+ * "@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.6 2005-11-29 10:39:51 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/11/24 15:16:14  scetre
+ * Used vobsBASE_FILTER instead of vobsFILTER
+ *
  * Revision 1.4  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,7 +22,7 @@
  * Definition of sclguiMULTIPLICITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.5 2005-11-24 15:16:14 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiMULTIPLICITY_FILTER_VIEW.cpp,v 1.6 2005-11-29 10:39:51 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -134,7 +137,7 @@ mcsLOGICAL sclguiMULTIPLICITY_FILTER_VIEW::IsMultiplicityAuthorized()
 {
     logTrace("sclguiMULTIPLICITY_FILTER_VIEW::IsMultiplicityAuthorized()");
     
-    vobsBASE_FILTER* filter = _filterListModel->GetFilter(vobsMULTIPLICITY_FILTER_NAME);
+    vobsFILTER* filter = _filterListModel->GetFilter(vobsMULTIPLICITY_FILTER_NAME);
 
     if (filter == NULL)
     {
