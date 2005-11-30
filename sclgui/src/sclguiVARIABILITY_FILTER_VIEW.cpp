@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.6 2005-11-29 10:39:51 gzins Exp $"
+ * "@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.7 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/11/29 10:39:51  gzins
+ * Chnaged vobsBASE_FILTER to vobsFILTER
+ *
  * Revision 1.5  2005/11/24 15:16:14  scetre
  * Used vobsBASE_FILTER instead of vobsFILTER
  *
@@ -22,7 +25,7 @@
  * Definition of sclguiVARIABILITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.6 2005-11-29 10:39:51 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiVARIABILITY_FILTER_VIEW.cpp,v 1.7 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -137,7 +140,7 @@ mcsLOGICAL sclguiVARIABILITY_FILTER_VIEW::IsVariabilityAuthorized()
 {
     logTrace("sclguiVARIABILITY_FILTER_VIEW::IsVariabilityAuthorized()");
     
-    vobsFILTER *filter = _filterListModel->GetFilter(vobsVARIABILITY_FILTER_NAME);
+    vobsFILTER *filter = _filterListModel->GetFilter("Variability Filter");
     
     if (filter->IsEnabled() == mcsFALSE)
     {

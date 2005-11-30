@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.5 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.3  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  * Definition of sclguiVISIBILITY_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.4 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiVISIBILITY_FILTER_VIEW.cpp,v 1.5 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -82,7 +85,7 @@ mcsCOMPL_STAT sclguiVISIBILITY_FILTER_VIEW::Update()
     // Get visibility filter
     sclsvrVISIBILITY_FILTER *visFilter = 
         (sclsvrVISIBILITY_FILTER *)
-        _filterListModel->GetFilter(sclsvrVISIBILITY_FILTER_NAME);
+        _filterListModel->GetFilter("Visibility Filter");
 
     if (visFilter->IsEnabled() == mcsTRUE)
     {

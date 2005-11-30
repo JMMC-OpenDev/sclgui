@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.3 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  * Definition of sclguiSPTYPE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiSPECTRAL_TYPE_FILTER_VIEW.cpp,v 1.3 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -93,7 +96,7 @@ mcsCOMPL_STAT sclguiSPTYPE_FILTER_VIEW::Update()
     // Get spectral type  filter
     vobsSPECTRAL_TYPE_FILTER * spTypeFilter =
         (vobsSPECTRAL_TYPE_FILTER *)
-        _filterListModel->GetFilter(vobsSPECTRAL_TYPE_FILTER_NAME);
+        _filterListModel->GetFilter("Spectral Type Filter");
 
     // If the filter is enabled
     if (spTypeFilter->IsEnabled() == mcsTRUE)
