@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.2  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  * Definition of sclguiMAGNITUDE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -80,7 +83,7 @@ mcsCOMPL_STAT sclguiMAGNITUDE_FILTER_VIEW::Update()
     // Get magnitude filter
     vobsMAGNITUDE_FILTER *magFilter =
         (vobsMAGNITUDE_FILTER *)
-        _filterListModel->GetFilter(vobsMAGNITUDE_FILTER_NAME);
+        _filterListModel->GetFilter("Magnitude Filter");
 
     // If the magnitude filter is enabled
     if (magFilter->IsEnabled() == mcsTRUE)

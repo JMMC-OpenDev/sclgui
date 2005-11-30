@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.3 2005-11-05 15:55:51 gzins Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/11/05 15:55:51  gzins
+ * Change Enabled and Disabled to Enable and Disable
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,7 +22,7 @@
  * Definition of sclguiCALIBRATOR_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.3 2005-11-05 15:55:51 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -325,12 +328,12 @@ mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbWithoutVarMult(void)
     // Add variability filter
     vobsVARIABILITY_FILTER variabilityFilter;
     variabilityFilter.Enable();
-    filterList.Add(&variabilityFilter);
+    filterList.Add(&variabilityFilter, "Variability Filter");
 
     // Add multiplicity filter
     vobsMULTIPLICITY_FILTER multiplicityFilter;
     multiplicityFilter.Enable();
-    filterList.Add(&multiplicityFilter);
+    filterList.Add(&multiplicityFilter, "Multiplicity Filter");
     
     // Create temporary calibrator list copy of the model list
     sclsvrCALIBRATOR_LIST list;

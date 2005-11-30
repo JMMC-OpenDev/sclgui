@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.5 2005-11-29 10:39:51 gzins Exp $"
+ * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.6 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/11/29 10:39:51  gzins
+ * Chnaged vobsBASE_FILTER to vobsFILTER
+ *
  * Revision 1.4  2005/11/24 15:16:14  scetre
  * Used vobsBASE_FILTER instead of vobsFILTER
  *
@@ -25,7 +28,7 @@
  * Definition of sclguiFILTER_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.5 2005-11-29 10:39:51 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.6 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -71,13 +74,13 @@ sclguiFILTER_LIST_MODEL::sclguiFILTER_LIST_MODEL()
  */
 sclguiFILTER_LIST_MODEL::~sclguiFILTER_LIST_MODEL()
 {
-    vobsFILTER *filter;
+    /*vobsFILTER *filter;
     // Delete all filter of the list
     for (unsigned int el = 0; el < Size(); el++)
     {
         filter = GetNextFilter((mcsLOGICAL)(el==0));
         delete filter;
-    }
+    }*/
 }
 
 
@@ -98,27 +101,27 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::Init()
     logTrace("sclguiFILTER_LIST_MODEL::Init()");
 
     // Add variability filter
-    Add(&_variabilityFilter);
+    Add(&_variabilityFilter, "Variability Filter");
     SetFilterVariability(mcsTRUE);
 
     // Add multiplicity filter
-    Add(&_multiplicityFilter);
+    Add(&_multiplicityFilter, "Multiplicity Filter");
     SetFilterMultiplicity(mcsTRUE);
 
     // Add magnitude filter
-    Add(&_magnitudeFilter);
+    Add(&_magnitudeFilter, "Magnitude Filter");
 
     // Add visibility filter
-    Add(&_visibilityFilter);
+    Add(&_visibilityFilter, "Visibility Filter");
 
     // Add distance filter
-    Add(&_distanceFilter);
+    Add(&_distanceFilter, "Distance Filter");
 
     // Add spectral type filter
-    Add(&_spectralTypeFilter);
+    Add(&_spectralTypeFilter, "Spectral Type Filter");
 
     // Add luminosity filter
-    Add(&_luminosityFilter);
+    Add(&_luminosityFilter, "Luminosity Filter");
     
     return mcsSUCCESS;
 }
@@ -173,7 +176,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMagnitude(mcsSTRING32  band,
     
     // Get the magnitude filter from the list
     vobsMAGNITUDE_FILTER *magFilter =
-        (vobsMAGNITUDE_FILTER *)GetFilter(vobsMAGNITUDE_FILTER_NAME);
+        (vobsMAGNITUDE_FILTER *)GetFilter("Magnitude Filter");
 
     // if the filter must be enabled
     if (enable == mcsTRUE)
@@ -232,7 +235,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterDistance(mcsSTRING32  raValue,
 
     // Get the distance filter from the list
     vobsDISTANCE_FILTER *distanceFilter = 
-        (vobsDISTANCE_FILTER *)GetFilter(vobsDISTANCE_FILTER_NAME);
+        (vobsDISTANCE_FILTER *)GetFilter("Distance Filter");
 
     // if the filter must be enabled
     if (enable == mcsTRUE)
@@ -285,7 +288,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVisibility(mcsFLOAT    visMax,
     
     // Get the visibility filter from the list
     sclsvrVISIBILITY_FILTER *visibilityFilter = 
-        (sclsvrVISIBILITY_FILTER *)GetFilter(sclsvrVISIBILITY_FILTER_NAME);
+        (sclsvrVISIBILITY_FILTER *)GetFilter("Visibility Filter");
    
     // if the filter must be enabled
     if (enable == mcsTRUE)
@@ -337,7 +340,7 @@ SetFilterTemperatureClass(std::list<char *> tempClassList,mcsLOGICAL enable)
 
     // Get the spectral type filter from the list
     vobsSPECTRAL_TYPE_FILTER *spectralTypeFilter = 
-        (vobsSPECTRAL_TYPE_FILTER *)GetFilter(vobsSPECTRAL_TYPE_FILTER_NAME);
+        (vobsSPECTRAL_TYPE_FILTER *)GetFilter("Spectral Type Filter");
 
     // if the filter must be enabled
     if (enable == mcsTRUE)
@@ -390,7 +393,7 @@ SetFilterLuminosityClass(std::list<char *> lumClassList,
 
     // Get the luminosity filter from the list
     vobsLUMINOSITY_FILTER *luminosityFilter = 
-        (vobsLUMINOSITY_FILTER *)GetFilter(vobsLUMINOSITY_FILTER_NAME);
+        (vobsLUMINOSITY_FILTER *)GetFilter("Luminosity Filter");
 
     // if the filter must be enabled
     if (enable == mcsTRUE)
@@ -440,7 +443,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterVariability(mcsLOGICAL enable)
 
     // Get the variability filter from the list
     vobsVARIABILITY_FILTER *variabilityFilter = 
-        (vobsVARIABILITY_FILTER *)GetFilter(vobsVARIABILITY_FILTER_NAME);
+        (vobsVARIABILITY_FILTER *)GetFilter("Variability Filter");
 
     // if the filter must be enabled
     if (enable == mcsTRUE)
@@ -485,7 +488,7 @@ mcsCOMPL_STAT sclguiFILTER_LIST_MODEL::SetFilterMultiplicity(mcsLOGICAL enable)
 
     // Get the multiplicity filter from the list
     vobsMULTIPLICITY_FILTER *multiplicityFilter = 
-        (vobsMULTIPLICITY_FILTER *)GetFilter(vobsMULTIPLICITY_FILTER_NAME);
+        (vobsMULTIPLICITY_FILTER *)GetFilter("Multiplicity Filter");
 
     // if the filter must be enabled
     if (enable == mcsTRUE)

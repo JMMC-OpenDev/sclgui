@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.4 2005-11-15 16:35:56 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.5 2005-11-30 10:35:58 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/11/15 16:35:56  lafrasse
+ * Added experimental VOTable export support (commented for safety reasons)
+ *
  * Revision 1.3  2005/11/05 15:42:53  gzins
  * Renamed BuildFromMessage to Parse
  *
@@ -22,7 +25,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.4 2005-11-15 16:35:56 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.5 2005-11-30 10:35:58 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -518,12 +521,12 @@ mcsCOMPL_STAT sclguiCONTROLLER::ShowAllResultsButtonCB(void*)
     
     // Disable filter by variability and multipicity because the default state
     // of the model enabled mult and var
-    if (_filterListModel.DisableFilter(vobsVARIABILITY_FILTER_NAME) == mcsFAILURE)
+    if (_filterListModel.DisableFilter("Variability Filter") == mcsFAILURE)
     {
         return mcsFAILURE;
     }
     
-    if (_filterListModel.DisableFilter(vobsMULTIPLICITY_FILTER_NAME) == mcsFAILURE)
+    if (_filterListModel.DisableFilter("Multiplicity Filter") == mcsFAILURE)
     {
         return mcsFAILURE;
     }
@@ -1057,7 +1060,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::MultiplicityButtonCB(void*)
     else
     {
         // if user wants multiplicity, disable it
-        _filterListModel.DisableFilter(vobsMULTIPLICITY_FILTER_NAME);
+        _filterListModel.DisableFilter("Multiplicity Filter");
     }
 
     // Update main window    
@@ -1124,7 +1127,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::VariabilityButtonCB(void*)
     else
     {
         // if user wants variability, disable it
-        _filterListModel.DisableFilter(vobsVARIABILITY_FILTER_NAME);
+        _filterListModel.DisableFilter("Variability Filter");
     }
 
     // Update main window
