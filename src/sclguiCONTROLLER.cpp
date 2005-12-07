@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.5 2005-11-30 10:35:58 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.6 2005-12-07 15:30:17 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/11/30 10:35:58  scetre
+ * Updated with new filter
+ *
  * Revision 1.4  2005/11/15 16:35:56  lafrasse
  * Added experimental VOTable export support (commented for safety reasons)
  *
@@ -25,7 +28,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.5 2005-11-30 10:35:58 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.6 2005-12-07 15:30:17 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -1224,11 +1227,18 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32 fileName,
         errCloseStack();
         return mcsFAILURE;
     }
-    //list->SaveToVOTable("VOTable.xml");
+
+    mcsSTRING32 softwareName;
+    sprintf(softwareName, "%s v%s", "SearchCal", GetSwVersion());
+
+    mcsSTRING256 cmdParamLine;
+    _requestModel.GetCmdParamLine(cmdParamLine);
+
+    list->SaveToVOTable("VOTable.xml", "SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)", softwareName, cmdParamLine);
 
     // if failed succeed, send user message and close the popup
     sprintf(statusMessage, "'%s' file has been created", fileName);
-    SetStatus(true, statusMessage);
+    SetStatus(true, statusMessage, cmdParamLine);
 
     return mcsSUCCESS;
 }
