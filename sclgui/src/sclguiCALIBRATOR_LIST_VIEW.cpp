@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.6 2005-12-06 08:39:12 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.7 2005-12-12 14:12:48 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/12/06 08:39:12  scetre
+ * Updated label for faint
+ *
  * Revision 1.5  2005/11/30 10:35:58  scetre
  * Updated with new filter
  *
@@ -29,7 +32,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.6 2005-12-06 08:39:12 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.7 2005-12-12 14:12:48 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -746,11 +749,11 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK(vobsSTAR_PROPERTY_ID_LIST *label)
     label->push_back(vobsSTAR_PHOT_COUS_I);
     label->push_back(vobsSTAR_PHOT_PHG_I);
     label->push_back(vobsSTAR_PHOT_JHN_J);
-    label->push_back(vobsSTAR_PHOT_COUS_J);
+    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_J);
     label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(vobsSTAR_PHOT_COUS_H);
+    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
     label->push_back(vobsSTAR_PHOT_JHN_K);
-    label->push_back(vobsSTAR_PHOT_COUS_K);
+    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
     
     return mcsSUCCESS;
 }
@@ -806,11 +809,11 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(vobsSTAR_PHOT_COUS_I);
     label->push_back(vobsSTAR_PHOT_PHG_I);
     label->push_back(vobsSTAR_PHOT_JHN_J);
-    label->push_back(vobsSTAR_PHOT_COUS_J);
+    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_J);
     label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(vobsSTAR_PHOT_COUS_H);
+    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
     label->push_back(vobsSTAR_PHOT_JHN_K);
-    label->push_back(vobsSTAR_PHOT_COUS_K);
+    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
     label->push_back(sclsvrCALIBRATOR_BO);
     label->push_back(sclsvrCALIBRATOR_VO);
     label->push_back(sclsvrCALIBRATOR_RO);
