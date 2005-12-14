@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_LIST_MODEL.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiFILTER_LIST_MODEL.h,v 1.3 2005-12-14 09:04:50 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -49,7 +52,7 @@ class sclguiFILTER_LIST_MODEL : public fndMVC_MODEL, public vobsFILTER_LIST
 {
 public:
     // Class constructor
-    sclguiFILTER_LIST_MODEL();
+    sclguiFILTER_LIST_MODEL(const char* filterId);
 
     // Class destructor
     virtual ~sclguiFILTER_LIST_MODEL();
