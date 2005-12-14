@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.5 2005-12-14 09:04:50 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/11/30 10:35:58  scetre
+ * Updated with new filter
+ *
  * Revision 1.3  2005/11/05 15:55:51  gzins
  * Change Enabled and Disabled to Enable and Disable
  *
@@ -22,7 +25,7 @@
  * Definition of sclguiCALIBRATOR_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.5 2005-12-14 09:04:50 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -323,15 +326,15 @@ mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbWithoutVarMult(void)
     logTrace("sclguiCALIBRATOR_LIST_MODEL::GetNbWithoutVarMult");
     
     // Temporary filter list
-    vobsFILTER_LIST filterList;
+    vobsFILTER_LIST filterList("Filter List");
 
     // Add variability filter
-    vobsVARIABILITY_FILTER variabilityFilter;
+    vobsVARIABILITY_FILTER variabilityFilter("Var filter");
     variabilityFilter.Enable();
     filterList.Add(&variabilityFilter, "Variability Filter");
 
     // Add multiplicity filter
-    vobsMULTIPLICITY_FILTER multiplicityFilter;
+    vobsMULTIPLICITY_FILTER multiplicityFilter("Mult filter");
     multiplicityFilter.Enable();
     filterList.Add(&multiplicityFilter, "Multiplicity Filter");
     

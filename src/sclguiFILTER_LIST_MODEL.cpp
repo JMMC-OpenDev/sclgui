@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.6 2005-11-30 10:35:58 scetre Exp $"
+ * "@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.7 2005-12-14 09:04:50 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/11/30 10:35:58  scetre
+ * Updated with new filter
+ *
  * Revision 1.5  2005/11/29 10:39:51  gzins
  * Chnaged vobsBASE_FILTER to vobsFILTER
  *
@@ -28,7 +31,7 @@
  * Definition of sclguiFILTER_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.6 2005-11-30 10:35:58 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_LIST_MODEL.cpp,v 1.7 2005-12-14 09:04:50 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -64,7 +67,15 @@ using namespace std;
 /**
  * Class constructor.
  */
-sclguiFILTER_LIST_MODEL::sclguiFILTER_LIST_MODEL()
+sclguiFILTER_LIST_MODEL::sclguiFILTER_LIST_MODEL(const char* filterId):
+vobsFILTER_LIST(filterId),
+_variabilityFilter("Variability Filter"),
+    _multiplicityFilter("Multiplicity Filter"),
+    _magnitudeFilter("Magnitude Filter"),
+    _visibilityFilter("Visibility Filter"),
+    _distanceFilter("Distance Filter"),
+    _spectralTypeFilter("Spectral type Filter"),
+    _luminosityFilter("Luminosity Filter")
 {
     Init();
 }

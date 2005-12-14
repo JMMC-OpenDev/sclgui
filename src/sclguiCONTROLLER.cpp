@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.6 2005-12-07 15:30:17 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.7 2005-12-14 09:04:50 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/12/07 15:30:17  lafrasse
+ * Added information in VOTable about software version and request
+ *
  * Revision 1.5  2005/11/30 10:35:58  scetre
  * Updated with new filter
  *
@@ -28,7 +31,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.6 2005-12-07 15:30:17 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.7 2005-12-14 09:04:50 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -59,7 +62,8 @@ using namespace std;
  * @param port The port of the remote MCS XMLBasedGUI server.
  */
 sclguiCONTROLLER::sclguiCONTROLLER(): 
-_sclServer("Search-calibrator server", "sclsvrServer", 120000)
+_filterListModel("Filter List of the GUI"),
+    _sclServer("Search-calibrator server", "sclsvrServer", 120000)
 {
     logTrace("sclguiCONTROLLER::sclguiCONTROLLER");
 }
