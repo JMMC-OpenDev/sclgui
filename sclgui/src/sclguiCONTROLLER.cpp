@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.7 2005-12-14 09:04:50 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.8 2005-12-21 10:24:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/12/14 09:04:50  scetre
+ * Used new filter constructor
+ *
  * Revision 1.6  2005/12/07 15:30:17  lafrasse
  * Added information in VOTable about software version and request
  *
@@ -31,7 +34,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.7 2005-12-14 09:04:50 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.8 2005-12-21 10:24:23 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -246,6 +249,16 @@ evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCommandCB(msgMESSAGE &msg, void*)
         // Valid reply
         case msgTYPE_REPLY:
         {
+            // If the received message is not the last
+            if (msg.IsLastReply() == mcsFALSE)
+            {
+                // Then it is containing the progression status to be displayed
+                SetStatus(true, msg.GetBody());
+
+                // Return until the next message arrives
+                return evhCB_NO_DELETE;
+            }
+
             // if reply success, set list in the model
             _calibratorListModel.SetList(msg);
             
@@ -270,6 +283,7 @@ evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCommandCB(msgMESSAGE &msg, void*)
     // Set server sub-state back to 'idle'
     SetSubState(evhSUBSTATE_IDLE);
 
+    // Return definitively
     return evhCB_DELETE;
 }
 
