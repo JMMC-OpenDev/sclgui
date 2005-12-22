@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.7 2005-12-12 14:12:48 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.8 2005-12-22 10:15:41 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/12/12 14:12:48  scetre
+ * Used cousin properties from sclsvr module instead of vobs
+ *
  * Revision 1.6  2005/12/06 08:39:12  scetre
  * Updated label for faint
  *
@@ -32,7 +35,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.7 2005-12-12 14:12:48 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.8 2005-12-22 10:15:41 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -568,6 +571,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label)
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV()");
     
+    label->push_back(sclsvrCALIBRATOR_DIST);
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
@@ -597,6 +601,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *labe
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete()");
 
     // build ucdNameforKV list
+    label->push_back(sclsvrCALIBRATOR_DIST);
     label->push_back(sclsvrCALIBRATOR_VIS2);
     label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
     label->push_back(sclsvrCALIBRATOR_DIAM_BV);
@@ -662,6 +667,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label)
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelN()");
 
+    label->push_back(sclsvrCALIBRATOR_DIST);
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
@@ -692,6 +698,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete()");
 
+    label->push_back(sclsvrCALIBRATOR_DIST);
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
@@ -736,6 +743,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK(vobsSTAR_PROPERTY_ID_LIST *label)
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK()");
     
+    label->push_back(sclsvrCALIBRATOR_DIST);
     label->push_back(vobsSTAR_ID_2MASS);
     label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
@@ -770,6 +778,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
 {
     logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete()");
 
+    label->push_back(sclsvrCALIBRATOR_DIST);
     label->push_back(sclsvrCALIBRATOR_VIS2);
     label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
     label->push_back(sclsvrCALIBRATOR_DIAM_IJ);
