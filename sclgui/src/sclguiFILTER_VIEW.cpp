@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.4 2005-12-22 13:03:22 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.2  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  *  Definition of sclguiFILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiFILTER_VIEW.cpp,v 1.4 2005-12-22 13:03:22 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 
@@ -67,7 +70,7 @@ sclguiFILTER_VIEW::~sclguiFILTER_VIEW()
  * Attach the given callback method to the 'Ok' button-generated event.
  *
  * @param eventHandler event handler
- * @param callback the associated callback
+ * @param callbackMethod the associated callback
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
