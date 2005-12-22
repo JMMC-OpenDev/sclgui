@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.5 2005-12-14 09:04:50 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.6 2005-12-22 13:03:22 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/12/14 09:04:50  scetre
+ * Used new filter constructor
+ *
  * Revision 1.4  2005/11/30 10:35:58  scetre
  * Updated with new filter
  *
@@ -25,7 +28,7 @@
  * Definition of sclguiCALIBRATOR_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.5 2005-12-14 09:04:50 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.6 2005-12-22 13:03:22 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -171,7 +174,8 @@ sclsvrCALIBRATOR_LIST* sclguiCALIBRATOR_LIST_MODEL::GetCalibratorList(void)
  * Removing a calibrator of the list is done by puting this star in the list of
  * the unwanted star.
  *
- * @param calibrator the unwanted calibrator
+ * @param unwantedStarNumber the unwanted calibrator number
+ * @param DeletedStarNameMsg message
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
@@ -365,7 +369,7 @@ mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbInFilteredList(void)
  * Load a calibrator list from a given file
  *
  * @param fileName the path to the file to be loaded
- * @param the request to build from the file
+ * @param request the request to build from the file
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
