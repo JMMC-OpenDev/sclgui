@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.8 2005-12-22 10:15:41 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.9 2006-01-18 09:07:22 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2005/12/22 10:15:41  scetre
+ * Added distance in table 'Show Details' and 'Hide Details' for all kind of object
+ *
  * Revision 1.7  2005/12/12 14:12:48  scetre
  * Used cousin properties from sclsvr module instead of vobs
  *
@@ -35,7 +38,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.8 2005-12-22 10:15:41 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.9 2006-01-18 09:07:22 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -631,7 +634,6 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *labe
     label->push_back(vobsSTAR_INST_WAVELENGTH_VALUE);
     label->push_back(vobsSTAR_UDDK_DIAM);
     label->push_back(vobsSTAR_UDDK_DIAM_ERROR);
-    label->push_back(vobsSTAR_PHOT_JHN_U);
     label->push_back(vobsSTAR_PHOT_JHN_B);
     label->push_back(vobsSTAR_PHOT_JHN_V);
     label->push_back(vobsSTAR_PHOT_JHN_R);
