@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.9 2006-01-18 09:07:22 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.10 2006-01-23 14:13:44 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/01/18 09:07:22  scetre
+ * Removed unused U magnitude
+ *
  * Revision 1.8  2005/12/22 10:15:41  scetre
  * Added distance in table 'Show Details' and 'Hide Details' for all kind of object
  *
@@ -38,7 +41,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.9 2006-01-18 09:07:22 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.10 2006-01-23 14:13:44 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -644,15 +647,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *labe
     label->push_back(vobsSTAR_PHOT_JHN_L);
     label->push_back(vobsSTAR_PHOT_JHN_M);
     label->push_back(vobsSTAR_PHOT_JHN_N);
-    label->push_back(sclsvrCALIBRATOR_MO);
-    label->push_back(sclsvrCALIBRATOR_LO);
-    label->push_back(sclsvrCALIBRATOR_KO);
-    label->push_back(sclsvrCALIBRATOR_HO);
-    label->push_back(sclsvrCALIBRATOR_JO);
-    label->push_back(sclsvrCALIBRATOR_IO);
-    label->push_back(sclsvrCALIBRATOR_RO);
-    label->push_back(sclsvrCALIBRATOR_VO);
-    label->push_back(sclsvrCALIBRATOR_BO);
+    label->push_back(sclsvrCALIBRATOR_EXTINCTION_RATIO);
     
     return mcsSUCCESS;
 }
@@ -825,13 +820,7 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
     label->push_back(vobsSTAR_PHOT_JHN_K);
     label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
-    label->push_back(sclsvrCALIBRATOR_BO);
-    label->push_back(sclsvrCALIBRATOR_VO);
-    label->push_back(sclsvrCALIBRATOR_RO);
-    label->push_back(sclsvrCALIBRATOR_IO);
-    label->push_back(sclsvrCALIBRATOR_JO);
-    label->push_back(sclsvrCALIBRATOR_HO);
-    label->push_back(sclsvrCALIBRATOR_KO);
+    label->push_back(sclsvrCALIBRATOR_EXTINCTION_RATIO);
 
     return mcsSUCCESS;
 }
