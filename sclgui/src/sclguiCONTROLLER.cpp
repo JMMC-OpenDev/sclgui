@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.8 2005-12-21 10:24:23 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.9 2006-02-20 10:37:34 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2005/12/21 10:24:23  lafrasse
+ * Added intermediate messages fetching for query progression status display
+ *
  * Revision 1.7  2005/12/14 09:04:50  scetre
  * Used new filter constructor
  *
@@ -34,7 +37,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.8 2005-12-21 10:24:23 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.9 2006-02-20 10:37:34 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -1252,7 +1255,8 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32 fileName,
     mcsSTRING256 cmdParamLine;
     _requestModel.GetCmdParamLine(cmdParamLine);
 
-    list->SaveToVOTable("VOTable.xml", "SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)", softwareName, cmdParamLine);
+    // @rem Disabled VOTable generation to conform to current documentation
+    // list->SaveToVOTable("VOTable.xml", "SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)", softwareName, cmdParamLine);
 
     // if failed succeed, send user message and close the popup
     sprintf(statusMessage, "'%s' file has been created", fileName);
