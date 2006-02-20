@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.9 2006-02-20 10:37:34 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.10 2006-02-20 12:52:05 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/02/20 10:37:34  lafrasse
+ * Disabled VOTable generation to conform to current documentation
+ *
  * Revision 1.8  2005/12/21 10:24:23  lafrasse
  * Added intermediate messages fetching for query progression status display
  *
@@ -37,7 +40,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.9 2006-02-20 10:37:34 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.10 2006-02-20 12:52:05 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -108,7 +111,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::AppInit()
 
     // Show the main window in order to be able to load without research a save
     // file
-    _mainWindow.Show();
+    //_mainWindow.Show();
     
     return mcsSUCCESS;
 }
