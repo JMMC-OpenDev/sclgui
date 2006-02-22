@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.10 2006-02-20 12:52:05 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.11 2006-02-22 13:28:02 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/02/20 12:52:05  scetre
+ * Remove Show of main window at the application start
+ *
  * Revision 1.9  2006/02/20 10:37:34  lafrasse
  * Disabled VOTable generation to conform to current documentation
  *
@@ -40,7 +43,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.10 2006-02-20 12:52:05 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.11 2006-02-22 13:28:02 gzins Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -100,7 +103,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::AppInit()
 
     // Add callback for GETCAL command
     evhCMD_KEY cmdKey(sclsvrGETCAL_CMD_NAME);
-    evhCMD_CALLBACK cmdCB(this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalCommandCB);
+    evhCMD_CALLBACK cmdCB(this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalCB);
     AddCallback(cmdKey, cmdCB);
 
     // Build general GUI
@@ -129,183 +132,6 @@ const char* sclguiCONTROLLER::GetSwVersion()
 /*
  * Protected methods
  */
-/**
- * GETCAL callback method
- *
- * @param msg message
- */
-evhCB_COMPL_STAT sclguiCONTROLLER::GetCalCommandCB(msgMESSAGE &msg, void*)
-{
-    logTrace("sclguiCONTROLLER::GetCalCommandCB()");
-
-    // If the server is NOT idle (i.e. a command is currently been processed)
-    if (GetSubState() != evhSUBSTATE_IDLE)
-    {
-        // Report error
-        errAdd(sclguiERR_SERVER_BUSY, msg.GetCommand());
-        SendReply(msg);
-        return evhCB_NO_DELETE;
-    }
-
-    _mainWindow.Hide();
-    SetStatus(true, "Looking for calibrators in star catalogs...");
-    
-    // Initialize the filter model
-    if (_filterListModel.ResetFilters() == mcsFAILURE)
-    {
-        // Report error
-        SetStatus(false, "failed to init filters", errUserGet());
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-
-    // Enable variability filter
-    if (_filterListModel.SetFilterVariability(mcsTRUE) == mcsFAILURE)
-    {
-        // Report error
-        SetStatus(false, "failed to enable var filter", errUserGet());
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-
-    // Enable multiplicity filter
-    if (_filterListModel.SetFilterMultiplicity(mcsTRUE) == mcsFAILURE)
-    {
-        // Report error
-        SetStatus(false, "failed to init mult filter", errUserGet());
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-
-    // Initialize the calibrator list filter
-    if ((_calibratorListModel.ResetCalibrators() == mcsFAILURE) ||
-        (_calibratorListModel.ResetDeletedCalibrators() == mcsFAILURE))
-    {
-        // Report error
-        SetStatus(false, "failed to init calibrator list", errUserGet());
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-
-    // Attached the filter list to the calibrator list model
-    if (_calibratorListModel.SetFilterList(&_filterListModel) == mcsFAILURE)    
-    {
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-    
-    // Define the callback to be used for reply handling
-    evhCMD_CALLBACK cmdReplyCB
-        (this, (evhCMD_CB_METHOD)&sclguiCONTROLLER::GetCalReplyCommandCB);
-
-    if (_requestModel.Parse(msg) == mcsFAILURE)
-    {
-        // Report error
-        SetStatus(false, "Invalid command parameter list", errUserGet());
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-    
-    // Forward command; i.e. do not wait for reply. The GetCalReplyCommandCB()
-    // method will be called when reply is received.
-    if (_sclServer.Forward(msg.GetCommand(), msg.GetBody(),
-                           cmdReplyCB) == mcsFAILURE )
-    {
-        // Report error
-        SetStatus(false, errUserGet());
-
-        return evhCB_NO_DELETE | evhCB_FAILURE;
-    }
-
-    // Set server sub-state to 'busy'
-    SetSubState(evhSUBSTATE_BUSY);
-
-    // Save the received message in order to reply later
-    _msg = msg;
-
-    return evhCB_NO_DELETE;
-}
-
-/**
- * GETCAL callback reply method
- *
- * @param msg message
- */
-evhCB_COMPL_STAT sclguiCONTROLLER::GetCalReplyCommandCB(msgMESSAGE &msg, void*)
-{
-    logTrace("sclguiCONTROLLER::GetCalReplyCommandCB()");
-
-    // Clear list
-    // Analyze received message type
-    switch (msg.GetType())
-    {
-        // Error message
-        case msgTYPE_ERROR_REPLY:
-        {
-            if (errIsInStack("msg", 35) == mcsTRUE)
-            {
-                errUserAdd(sclguiERR_SERVER_CRASH);
-            }
-
-            // Report error
-            SetStatus(false, errUserGet());
-
-            // Clear result table
-
-            // Prepare message reply
-            _msg.SetBody("Request FAILED.");
-
-            break;
-        }
-
-        // Valid reply
-        case msgTYPE_REPLY:
-        {
-            // If the received message is not the last
-            if (msg.IsLastReply() == mcsFALSE)
-            {
-                // Then it is containing the progression status to be displayed
-                SetStatus(true, msg.GetBody());
-
-                // Return until the next message arrives
-                return evhCB_NO_DELETE;
-            }
-
-            // if reply success, set list in the model
-            _calibratorListModel.SetList(msg);
-            
-            // Update main window
-            _mainWindow.Hide();
-            _mainWindow.Show();
-           
-            // Prepare message reply
-            _msg.SetBody("Done.");
-            break;
-        }
-
-        default:
-        {
-            break;
-        }
-    }
-    
-    // Send reply to the requestor
-    SendReply(_msg);
-    
-    // Set server sub-state back to 'idle'
-    SetSubState(evhSUBSTATE_IDLE);
-
-    // Return definitively
-    return evhCB_DELETE;
-}
-
-/**
- * Exit callback
- */
-evhCB_COMPL_STAT sclguiCONTROLLER::ExitCB(msgMESSAGE &msg, void* userData)
-{
-    logTrace("sclguiCONTROLLER::ExitCB()");
-    
-    SetStatus(true, "Bye bye");
-
-    _mainWindow.Hide();
-    
-    return evhSERVER::ExitCB(msg, userData);
-}
 
 /*
  * Private methods
