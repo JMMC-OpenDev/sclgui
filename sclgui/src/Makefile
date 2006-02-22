@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.8 2005-10-11 15:24:15 scetre Exp $"
+# "@(#) $Id: Makefile,v 1.9 2006-02-22 13:28:02 gzins Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.8  2005/10/11 15:24:15  scetre
+# New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
+#
 #*******************************************************************************
 # REMARKS
 #    Makefile based on the VLT/ALMA Makefile
@@ -41,24 +44,26 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-sclguiControl_OBJECTS   = sclguiControl					\
-						  sclguiCALIBRATOR_LIST_MODEL				\
-                          sclguiREQUEST_MODEL					\
-                          sclguiFILTER_LIST_MODEL				\
-                          sclguiBUTTONS_SUBPANEL			\
-                          sclguiACTIONS_VIEW			\
-                          sclguiFILTER_VIEW				\
-                          sclguiDISTANCE_FILTER_VIEW	\
-                          sclguiVISIBILITY_FILTER_VIEW	\
-                          sclguiVARIABILITY_FILTER_VIEW	\
-                          sclguiMULTIPLICITY_FILTER_VIEW\
-                          sclguiLUMINOSITY_FILTER_VIEW	\
-                          sclguiMAGNITUDE_FILTER_VIEW	\
-                          sclguiSPECTRAL_TYPE_FILTER_VIEW		\
+sclguiControl_OBJECTS   = sclguiControl				  		\
+                          sclguiCALIBRATOR_LIST_MODEL  		\
+                          sclguiREQUEST_MODEL		   		\
+                          sclguiFILTER_LIST_MODEL	   		\
+                          sclguiBUTTONS_SUBPANEL	   		\
+                          sclguiACTIONS_VIEW		   		\
+                          sclguiFILTER_VIEW			   		\
+                          sclguiDISTANCE_FILTER_VIEW   		\
+                          sclguiVISIBILITY_FILTER_VIEW 		\
+                          sclguiVARIABILITY_FILTER_VIEW		\
+                          sclguiMULTIPLICITY_FILTER_VIEW 	\
+                          sclguiLUMINOSITY_FILTER_VIEW		\
+                          sclguiMAGNITUDE_FILTER_VIEW		\
+                          sclguiSPECTRAL_TYPE_FILTER_VIEW	\
                           sclguiCALIBRATOR_LIST_VIEW   		\
-                          sclguiREQUEST_VIEW		   	\
+                          sclguiREQUEST_VIEW		   		\
                           sclguiCONFIRM_SUBPANEL	   		\
-                          sclguiCONTROLLER			   		
+                          sclguiCONTROLLER			   		\
+                          sclguiGetCalCB					\
+                          sclguiExitCB
 sclguiControl_LDFLAGS   =
 sclguiControl_LIBS      = MCS C++ sclsvr vobs alx simcli 
 
@@ -90,29 +95,12 @@ INCLUDES        = sclgui.h 							\
 #
 # Libraries (public and local)
 # ----------------------------
-LIBRARIES       = sclgui
+LIBRARIES       = 
 LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-sclgui_OBJECTS   =  sclguiCALIBRATOR_LIST_MODEL				\
-				    sclguiREQUEST_MODEL					\
-				    sclguiFILTER_LIST_MODEL				\
-				    sclguiBUTTONS_SUBPANEL				\
-				    sclguiACTIONS_VIEW				\
-				    sclguiFILTER_VIEW				\
-				    sclguiDISTANCE_FILTER_VIEW		\
-				    sclguiVISIBILITY_FILTER_VIEW	\
-				    sclguiVARIABILITY_FILTER_VIEW	\
-				    sclguiMULTIPLICITY_FILTER_VIEW	\
-				    sclguiLUMINOSITY_FILTER_VIEW	\
-				    sclguiMAGNITUDE_FILTER_VIEW		\
-				    sclguiSPECTRAL_TYPE_FILTER_VIEW		\
-				    sclguiCALIBRATOR_LIST_VIEW   		\
-				    sclguiREQUEST_VIEW		   		\
-				    sclguiCONFIRM_SUBPANEL	   		\
-				    sclguiCONTROLLER			   		\
-
+llllll_OBJECTS   =  			   		\
 
 #
 # Scripts (public and local)
