@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiACTIONS_VIEW.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiACTIONS_VIEW.h,v 1.3 2006-02-22 15:48:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -37,18 +40,28 @@
 #include "sclguiREQUEST_MODEL.h"
 
 
-
 /**
  * Define the order of the filter in the filter choice
  * the filter should be enter in this order
  */
-#define sclguiDISTANCE_FILTER_NUMBER 0
-#define sclguiMAGNITUDE_FILTER_NUMBER 1
-#define sclguiSP_TYPE_FILTER_NUMBER 2
-#define sclguiLUMINOSITY_FILTER_NUMBER 3
-#define sclguiVISIBILITY_FILTER_NUMBER 4
-#define sclguiVARIABILITY_FILTER_NUMBER 5
-#define sclguiMULTIPLICITY_FILTER_NUMBER 6
+#define sclguiDISTANCE_FILTER_NUMBER      0
+#define sclguiMAGNITUDE_FILTER_NUMBER     1
+#define sclguiSP_TYPE_FILTER_NUMBER       2
+#define sclguiLUMINOSITY_FILTER_NUMBER    3
+#define sclguiVISIBILITY_FILTER_NUMBER    4
+#define sclguiVARIABILITY_FILTER_NUMBER   5
+#define sclguiMULTIPLICITY_FILTER_NUMBER  6
+
+/**
+ * Define the different types of possible list save methods
+ */
+typedef enum
+{
+    sclguiSAVE_OVERWRITE,        /**< Exteneded proprietary save method */
+    sclguiCSV_EXPORT_OVERWRITE,  /**< CSV save method */
+    sclguiVOT_EXPORT_OVERWRITE   /**< VOTable 1.1 save method */
+} sclguiOVERWRITE_ACTION;
+
 
 /*
  * Class declaration
@@ -57,7 +70,6 @@
 /**
  * Specific Mega Widget dedicated to the file IO management and the open of the
  * filter
- *
  */
 class sclguiACTIONS_VIEW : public gwtCONTAINER, public fndMVC_VIEW 
 {
@@ -84,14 +96,18 @@ public:
     virtual mcsCOMPL_STAT SetSaveButtonCB   (fndOBJECT &eventHandler,
                                              gwtCOMMAND::CB_METHOD cbMethod);
 
-    virtual mcsCOMPL_STAT SetExportCB       (fndOBJECT &eventHandler,
+    virtual mcsCOMPL_STAT SetCSVExportCB    (fndOBJECT &eventHandler,
+                                             gwtCOMMAND::CB_METHOD cbMethod);
+    
+    virtual mcsCOMPL_STAT SetVOTExportCB    (fndOBJECT &eventHandler,
                                              gwtCOMMAND::CB_METHOD cbMethod);
     
     virtual mcsINT32 GetFilterChoice        (void);
     virtual string   GetDeletedStarNumber   (void);
     virtual string   GetLoadFileName        (void);
     virtual string   GetSaveFileName        (void);
-    virtual string   GetExportFileName      (void);
+    virtual string   GetCSVExportFileName   (void);
+    virtual string   GetVOTExportFileName   (void);
 
     virtual mcsCOMPL_STAT AttachModel       (sclguiREQUEST_MODEL &requestModel);
 
@@ -117,8 +133,11 @@ private:
     gwtSUBPANEL   _savePanel;
     gwtTEXTFIELD  _saveTextfield;
 
-    gwtSUBPANEL   _exportPanel;
-    gwtTEXTFIELD  _exportTextfield;
+    gwtSUBPANEL   _CSVExportPanel;
+    gwtTEXTFIELD  _CSVExportTextfield;
+
+    gwtSUBPANEL   _VOTExportPanel;
+    gwtTEXTFIELD  _VOTExportTextfield;
 
     mcsCOMPL_STAT BuildFilterInterface();
     mcsCOMPL_STAT BuildInOutFileInterface();

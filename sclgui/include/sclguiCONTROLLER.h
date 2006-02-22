@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.h,v 1.3 2006-02-22 13:28:52 gzins Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.h,v 1.4 2006-02-22 15:48:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/02/22 13:28:52  gzins
+ * Renamed command callbacks as <Command>CB
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -115,7 +118,8 @@ protected:
     mcsCOMPL_STAT DeleteButtonCB(void *);
     mcsCOMPL_STAT LoadButtonCB(void *);
     mcsCOMPL_STAT SaveButtonCB(void *);
-    mcsCOMPL_STAT ExportButtonCB(void *);
+    mcsCOMPL_STAT CSVExportButtonCB(void *);
+    mcsCOMPL_STAT VOTExportButtonCB(void *);
     mcsCOMPL_STAT VisibilityButtonCB(void *);
     mcsCOMPL_STAT LuminosityButtonCB(void *);
     mcsCOMPL_STAT SpectralTypeButtonCB(void *);
@@ -124,10 +128,12 @@ protected:
     mcsCOMPL_STAT DistanceButtonCB(void *);
     mcsCOMPL_STAT VariabilityButtonCB(void *);
     mcsCOMPL_STAT SaveOverwriteButtonCB(void *);
-    mcsCOMPL_STAT ExportOverwriteButtonCB(void *);
+    mcsCOMPL_STAT CSVExportOverwriteButtonCB(void *);
+    mcsCOMPL_STAT VOTExportOverwriteButtonCB(void *);
 
-    mcsCOMPL_STAT OpenPopUp(mcsLOGICAL saveFlag);
-    mcsCOMPL_STAT Overwrite(mcsSTRING32 fileName, mcsLOGICAL saveFlag);
+    mcsCOMPL_STAT OpenPopUp(sclguiOVERWRITE_ACTION  action);
+    mcsCOMPL_STAT Overwrite(mcsSTRING32             fileName,
+                            sclguiOVERWRITE_ACTION  action);
 
 private:
     // Declaration of copy constructor and assignment operator as private

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.3 2006-02-22 15:48:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -16,7 +19,7 @@
  * Definition of sclguiACTIONS_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"; 
+static char *rcsId="@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.3 2006-02-22 15:48:42 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -47,7 +50,8 @@ sclguiACTIONS_VIEW::sclguiACTIONS_VIEW()
     Add(&_deletePanel);
     Add(&_loadPanel);
     Add(&_savePanel);
-    Add(&_exportPanel);
+    Add(&_CSVExportPanel);
+    Add(&_VOTExportPanel);
 }
 
 sclguiACTIONS_VIEW::sclguiACTIONS_VIEW(sclguiREQUEST_MODEL &requestModel)
@@ -59,7 +63,8 @@ sclguiACTIONS_VIEW::sclguiACTIONS_VIEW(sclguiREQUEST_MODEL &requestModel)
     Add(&_deletePanel);
     Add(&_loadPanel);
     Add(&_savePanel);
-    Add(&_exportPanel);
+    Add(&_CSVExportPanel);
+    Add(&_VOTExportPanel);
 }
 
 /**
@@ -168,7 +173,7 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetSaveButtonCB(fndOBJECT &eventHandler,
 }
 
 /**
- * Attach widget export panel to the approriate CB
+ * Attach widget export SCL panel to the approriate CB
  *
  * @param eventHandler event handler 
  * @param cbMethod the associated CB
@@ -176,12 +181,31 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetSaveButtonCB(fndOBJECT &eventHandler,
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiACTIONS_VIEW::SetExportCB(fndOBJECT &eventHandler,
-                                             gwtCOMMAND::CB_METHOD cbMethod)
+mcsCOMPL_STAT sclguiACTIONS_VIEW::SetCSVExportCB(fndOBJECT &eventHandler,
+                                                 gwtCOMMAND::CB_METHOD cbMethod)
 {
-    logTrace("sclguiACTIONS_VIEW::SetExportCB()");
+    logTrace("sclguiACTIONS_VIEW::SetCSVExportCB()");
 
-    _exportPanel.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+    _CSVExportPanel.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
+
+    return mcsSUCCESS;
+}
+
+/**
+ * Attach widget export VOT panel to the approriate CB
+ *
+ * @param eventHandler event handler 
+ * @param cbMethod the associated CB
+ *
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
+ */
+mcsCOMPL_STAT sclguiACTIONS_VIEW::SetVOTExportCB(fndOBJECT &eventHandler,
+                                                 gwtCOMMAND::CB_METHOD cbMethod)
+{
+    logTrace("sclguiACTIONS_VIEW::SetVOTExportCB()");
+
+    _VOTExportPanel.AttachCB(&eventHandler, (gwtCOMMAND::CB_METHOD) cbMethod);
 
     return mcsSUCCESS;
 }
@@ -231,14 +255,25 @@ string sclguiACTIONS_VIEW::GetSaveFileName(void)
 }
 
 /**
- * Get export file
+ * Get SCL export file name
  */
-string sclguiACTIONS_VIEW::GetExportFileName(void)
+string sclguiACTIONS_VIEW::GetCSVExportFileName(void)
 {
-    logTrace("sclguiACTIONS_VIEW::GetExportFileName()");
+    logTrace("sclguiACTIONS_VIEW::GetSclExportFileName()");
 
     // return deleted star number choice
-    return _exportTextfield.GetText();
+    return _CSVExportTextfield.GetText();
+}
+
+/**
+ * Get VOT export file name
+ */
+string sclguiACTIONS_VIEW::GetVOTExportFileName(void)
+{
+    logTrace("sclguiACTIONS_VIEW::GetVotExportFileName()");
+
+    // return deleted star number choice
+    return _VOTExportTextfield.GetText();
 }
 
 /**
@@ -348,17 +383,29 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::BuildInOutFileInterface()
     // Add textfield in the subpanel    
     _savePanel.Add(&_saveTextfield);
 
-    // Create subpanel export
-    _exportPanel.SetText("EXPORT");
-    _exportPanel.SetLabel("Export File");
-    _exportPanel.SetHelp("Export file in directory /Resultats/");
+    // Create subpanel CSV export
+    _CSVExportPanel.SetText("EXPORT CSV");
+    _CSVExportPanel.SetLabel("Export CSV File");
+    _CSVExportPanel.SetHelp("Export CSV file in directory /Resultats/");
     
     // Create textfield associated to the export subpanel
-    _exportTextfield.SetText("*.scl");
-    _exportTextfield.SetHelp("File name to export current list of calibrators");
-    _exportTextfield.SetLabel("File Name to export");
+    _CSVExportTextfield.SetText("*.csv");
+    _CSVExportTextfield.SetHelp("File name to export current list of calibrators as CSV file");
+    _CSVExportTextfield.SetLabel("File Name to export");
     // Add textfield in the subpanel
-    _exportPanel.Add(&_exportTextfield);
+    _CSVExportPanel.Add(&_CSVExportTextfield);
+
+    // Create subpanel VOT export
+    _VOTExportPanel.SetText("EXPORT VOT");
+    _VOTExportPanel.SetLabel("Export VOT File");
+    _VOTExportPanel.SetHelp("Export VOT file in directory /Resultats/");
+    
+    // Create textfield associated to the export subpanel
+    _VOTExportTextfield.SetText("*.vot");
+    _VOTExportTextfield.SetHelp("File name to export current list of calibrators as VOTable");
+    _VOTExportTextfield.SetLabel("File Name to export");
+    // Add textfield in the subpanel
+    _VOTExportPanel.Add(&_VOTExportTextfield);
 
     return mcsSUCCESS;    
 }
@@ -372,23 +419,23 @@ mcsCOMPL_STAT sclguiACTIONS_VIEW::SetDefaultIOFileName()
 {
     logTrace("sclguiACTIONS_VIEW::SetDefaultIOFileName()");
 
-    // Create default save file name
-    mcsSTRING256 fileName;
-    strcpy(fileName, _requestModelModel->GetObjectName());
-    strcat(fileName, "_");
-    strcat(fileName, _requestModelModel->GetSearchBand());
-    strcat(fileName, ".scl");
-    // Create textfield associated to the save subpanel
-    _saveTextfield.SetText(fileName);
+    // Create default file name
+    mcsSTRING256 fileName, tempFileName;
+    snprintf(fileName, sizeof(fileName), "%s-%s",
+             _requestModelModel->GetObjectName(),
+             _requestModelModel->GetSearchBand());
 
-    // Create default export file name
-    mcsSTRING256 exportFileName;
-    strcpy(exportFileName, _requestModelModel->GetObjectName());
-    strcat(exportFileName, "_");
-    strcat(exportFileName, _requestModelModel->GetSearchBand());
-    strcat(exportFileName, ".txt");
-    // Create textfield associated to the export subpanel
-    _exportTextfield.SetText(exportFileName);
+    // Create textfield associated to the save subpanel
+    snprintf(tempFileName, sizeof(tempFileName), "%s.scl", fileName);
+    _saveTextfield.SetText(tempFileName);
+
+    // Create default CSV export file name
+    snprintf(tempFileName, sizeof(tempFileName), "%s.csv", fileName);
+    _CSVExportTextfield.SetText(tempFileName);
+
+    // Create textfield associated to the save subpanel
+    snprintf(tempFileName, sizeof(tempFileName), "%s.vot", fileName);
+    _VOTExportTextfield.SetText(tempFileName);
 
     return mcsSUCCESS;
 };

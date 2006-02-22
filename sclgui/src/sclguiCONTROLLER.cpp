@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.11 2006-02-22 13:28:02 gzins Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.12 2006-02-22 15:48:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/02/22 13:28:02  gzins
+ * Put command callbacks in separated source files
+ *
  * Revision 1.10  2006/02/20 12:52:05  scetre
  * Remove Show of main window at the application start
  *
@@ -43,7 +46,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.11 2006-02-22 13:28:02 gzins Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.12 2006-02-22 15:48:42 lafrasse Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -252,8 +255,10 @@ mcsCOMPL_STAT sclguiCONTROLLER::BuildMainWindow()
                         &sclguiCONTROLLER::LoadButtonCB);
     _actionsSubPanel.SetSaveButtonCB(*this, (gwtCOMMAND::CB_METHOD)
                         &sclguiCONTROLLER::SaveButtonCB);
-    _actionsSubPanel.SetExportCB(*this, (gwtCOMMAND::CB_METHOD)
-                        &sclguiCONTROLLER::ExportButtonCB);
+    _actionsSubPanel.SetCSVExportCB(*this, (gwtCOMMAND::CB_METHOD)
+                        &sclguiCONTROLLER::CSVExportButtonCB);
+    _actionsSubPanel.SetVOTExportCB(*this, (gwtCOMMAND::CB_METHOD)
+                        &sclguiCONTROLLER::VOTExportButtonCB);
 
     // Add this container in the windows
     _mainWindow.Add(&_actionsSubPanel);    
@@ -668,13 +673,13 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveButtonCB(void*)
         _confirmWindow.Update();
 
         // Show it
-        OpenPopUp(mcsTRUE);
+        OpenPopUp(sclguiSAVE_OVERWRITE);
         SetStatus(true,"");
     }
     else
     {
         // Call in all other case Overwrite method
-        if (Overwrite(fileName, mcsTRUE) == mcsFAILURE)
+        if (Overwrite(fileName, sclguiSAVE_OVERWRITE) == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -684,18 +689,19 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveButtonCB(void*)
 }
 
 /**
- * User callback associated to the Export button
+ * User callback associated to the CSV Export button
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ExportButtonCB(void*)
+mcsCOMPL_STAT sclguiCONTROLLER::CSVExportButtonCB(void*)
 {
-    logTrace("sclguiCONTROLLER::ExportButtonCB()");
+    logTrace("sclguiCONTROLLER::CSVExportButtonCB()");
 
     // Get the file name from the corresponding textfield
     mcsSTRING256 fileName;
-    strcpy(fileName, (_actionsSubPanel.GetExportFileName()).c_str());
+    strncpy(fileName, (_actionsSubPanel.GetCSVExportFileName()).c_str(),
+            sizeof(fileName));
     
     // Check if the file already exist
     if (miscFileExists(fileName, mcsFALSE) == mcsTRUE)
@@ -708,13 +714,55 @@ mcsCOMPL_STAT sclguiCONTROLLER::ExportButtonCB(void*)
         // Update the window
         _confirmWindow.Update();
         // Show it
-        OpenPopUp(mcsFALSE);
+        OpenPopUp(sclguiCSV_EXPORT_OVERWRITE);
         SetStatus(true,"");
     }
     else
     {
         // Call in all other case Overwrite method
-        if (Overwrite(fileName, mcsFALSE) == mcsFAILURE)
+        if (Overwrite(fileName, sclguiCSV_EXPORT_OVERWRITE) == mcsFAILURE)
+        {
+            return mcsFAILURE;
+        }
+    }
+
+    return mcsSUCCESS;
+}
+
+
+/**
+ * User callback associated to the VOT Export button
+ *
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
+ */
+mcsCOMPL_STAT sclguiCONTROLLER::VOTExportButtonCB(void*)
+{
+    logTrace("sclguiCONTROLLER::VOTExportButtonCB()");
+
+    // Get the file name from the corresponding textfield
+    mcsSTRING256 fileName;
+    strncpy(fileName, (_actionsSubPanel.GetVOTExportFileName()).c_str(),
+            sizeof(fileName));
+    
+    // Check if the file already exist
+    if (miscFileExists(fileName, mcsFALSE) == mcsTRUE)
+    {
+        // If file already exist, write name in the label
+        ostringstream out;
+        out << fileName;
+        out << " already exists. Do you want to overwrite it?";
+        _confirmSupPanel.SetPopUpText(out.str());
+        // Update the window
+        _confirmWindow.Update();
+        // Show it
+        OpenPopUp(sclguiVOT_EXPORT_OVERWRITE);
+        SetStatus(true,"");
+    }
+    else
+    {
+        // Call in all other case Overwrite method
+        if (Overwrite(fileName, sclguiVOT_EXPORT_OVERWRITE) == mcsFAILURE)
         {
             return mcsFAILURE;
         }
@@ -739,7 +787,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveOverwriteButtonCB(void*)
     strcpy(fileName, (_actionsSubPanel.GetSaveFileName()).c_str());
 
     // Call overwrite method with previous name
-    if (Overwrite(fileName, mcsTRUE) == mcsFAILURE)
+    if (Overwrite(fileName, sclguiSAVE_OVERWRITE) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
@@ -752,21 +800,50 @@ mcsCOMPL_STAT sclguiCONTROLLER::SaveOverwriteButtonCB(void*)
 }
 
 /**
- *  User callback associated to the ExportOverWrite button.
+ *  User callback associated to the CSVExportOverWrite button.
  *
  *   @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::ExportOverwriteButtonCB(void*)
+mcsCOMPL_STAT sclguiCONTROLLER::CSVExportOverwriteButtonCB(void*)
 {
-    logTrace("sclguiCONTROLLER::OverwriteButtonCB()");
+    logTrace("sclguiCONTROLLER::CSVExportOverwriteButtonCB()");
 
     // Get the file name from the corresponding textfield
     mcsSTRING256 fileName;
-    strcpy(fileName, (_actionsSubPanel.GetExportFileName()).c_str());
+    strncpy(fileName, _actionsSubPanel.GetCSVExportFileName().c_str(),
+            sizeof(fileName));
 
     // Call overwrite method with previous name
-    if (Overwrite(fileName, mcsFALSE) == mcsFAILURE)
+    if (Overwrite(fileName, sclguiCSV_EXPORT_OVERWRITE) == mcsFAILURE)
+    {
+        return mcsFAILURE;
+    }
+    
+    // Close confirm window    
+    _confirmWindow.Hide();
+     
+    SetStatus(true, "Export succeed");
+    return mcsSUCCESS;
+}
+
+/**
+ *  User callback associated to the VOTExportOverWrite button.
+ *
+ *   @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
+ */
+mcsCOMPL_STAT sclguiCONTROLLER::VOTExportOverwriteButtonCB(void*)
+{
+    logTrace("sclguiCONTROLLER::VOTExportOverwriteButtonCB()");
+
+    // Get the file name from the corresponding textfield
+    mcsSTRING256 fileName;
+    strncpy(fileName, _actionsSubPanel.GetVOTExportFileName().c_str(),
+            sizeof(fileName));
+
+    // Call overwrite method with previous name
+    if (Overwrite(fileName, sclguiVOT_EXPORT_OVERWRITE) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
@@ -999,26 +1076,42 @@ mcsCOMPL_STAT sclguiCONTROLLER::VariabilityButtonCB(void*)
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::OpenPopUp(mcsLOGICAL saveFlag)
+mcsCOMPL_STAT sclguiCONTROLLER::OpenPopUp(sclguiOVERWRITE_ACTION  action)
 {
     logTrace("sclguiCONTROLLER::OpenPopUp()");
 
     // Attach callback according to the wanted save file (.scl or .txt)
-    // if saveFlag is true, i.e for save file
-    if (saveFlag == mcsTRUE)
+    switch (action)
     {
-        // Attach callback on SaveOverwriteButtonCB method
-        _confirmSupPanel.SetOverwriteCB
-           (*this,
-            (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::SaveOverwriteButtonCB);
-    }
-    // else if saveFlag is false, i.e for export file
-    else
-    {
-        // Attach callback on ExportOverwriteButtonCB method        
-        _confirmSupPanel.SetOverwriteCB
-           (*this,
-            (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::ExportOverwriteButtonCB);
+        case sclguiSAVE_OVERWRITE :
+
+            _confirmSupPanel.SetOverwriteCB(*this,
+              (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::SaveOverwriteButtonCB);
+
+            break;
+
+
+        case sclguiCSV_EXPORT_OVERWRITE :
+
+            // Attach callback on ExportOverwriteButtonCB method        
+            _confirmSupPanel.SetOverwriteCB(*this,
+         (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::CSVExportOverwriteButtonCB);
+
+            break;
+
+
+        case sclguiVOT_EXPORT_OVERWRITE :
+
+            // Attach callback on ExportOverwriteButtonCB method        
+            _confirmSupPanel.SetOverwriteCB(*this,
+         (gwtCOMMAND::CB_METHOD) &sclguiCONTROLLER::VOTExportOverwriteButtonCB);
+
+            break;
+
+
+        default :
+            return mcsFAILURE;
+            break;
     }
 
     // Show confirm window
@@ -1028,70 +1121,108 @@ mcsCOMPL_STAT sclguiCONTROLLER::OpenPopUp(mcsLOGICAL saveFlag)
 }
 
 /**
- * Overwrite method
+ * Overwrite method to save the display list in the specified file
  *
  * @param fileName the file name to overwrite
- * @param saveFlag logical
+ * @param action the action to be performed, amongst 'save', 'export to CSV',
+ * and 'export to VOTable'
  *
  *  @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32 fileName,
-                                       mcsLOGICAL saveFlag)
+mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
+                                          sclguiOVERWRITE_ACTION  action)
 {
     logTrace("sclguiCONTROLLER::Overwrite()");
 
-    // Save the display list in the specified file
+    // Save status
+    mcsCOMPL_STAT status;
+
+    // Actual label
+    vobsSTAR_PROPERTY_ID_LIST label;
+
+    // Get the calibrator list
+    sclsvrCALIBRATOR_LIST* list = _calibratorListModel.GetCalibratorList();
+
+    // Get the user request parameters
+    mcsSTRING256 request;
+    _requestModel.GetCmdParamLine(request);
+        
+    // According to the desired action (save, export to CSV, or VOTable)
+    switch (action)
+    {
+        case sclguiSAVE_OVERWRITE :
+        {
+            // Get list label
+            label = _calibratorListModelSubPanel.GetLabel(mcsTRUE);
+    
+            // Add in the label list the "diameter ok flag"
+            label.push_back(sclsvrCALIBRATOR_DIAM_FLAG);
+
+            // Call Save method of the list for a save
+            status = list->Save(fileName, label, _requestModel, mcsTRUE);
+
+            break;
+        }
+
+        case sclguiCSV_EXPORT_OVERWRITE :
+        {
+            // Get actual label
+            label = _calibratorListModelSubPanel.GetLabel(
+                                     _calibratorListModelSubPanel.IsDetailed());
+
+            // Call Save method of the list for an export
+            status = list->Save(fileName, label, _requestModel, mcsFALSE);
+
+            break;
+        }
+
+
+        case sclguiVOT_EXPORT_OVERWRITE :
+        {
+            // Just Get the actual label
+            label = _calibratorListModelSubPanel.GetLabel(
+                                     _calibratorListModelSubPanel.IsDetailed());
+
+            char * header = "SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)";
+
+            // Get the software name and version
+            mcsSTRING32 software;
+            snprintf(software, sizeof(software), "%s v%s", "SearchCal",
+                     GetSwVersion());
+        
+            // Save the list as a VOTable v1.1
+            status = list->SaveToVOTable(fileName, header, software, request);
+
+            break;
+        }
+
+        default :
+        {
+            return mcsFAILURE;
+        }
+    }
 
     // Status message buffer
     mcsSTRING64 statusMessage;
-
-    // Get the list
-    sclsvrCALIBRATOR_LIST* list = _calibratorListModel.GetCalibratorList();
-    vobsSTAR_PROPERTY_ID_LIST label;    
-
-    // Get the actual label
-    // if it is for a save file
-    if (saveFlag == mcsTRUE)
+    if (status == mcsSUCCESS)
     {
-        // Get label list
-        label = _calibratorListModelSubPanel.GetLabel(mcsTRUE);
-        // Add in the label list the "diameter ok flag"
-        label.push_back(sclsvrCALIBRATOR_DIAM_FLAG);
+        // if everything succeed, send user message and close the popup
+        snprintf(statusMessage, sizeof(statusMessage),
+                 "'%s' file has been created", fileName);
+        SetStatus(true, statusMessage, request);
+        return mcsSUCCESS;
     }
-    // else if it is for an export file
     else
     {
-        // Just Get the actual label
-        label = _calibratorListModelSubPanel.GetLabel(
-                           _calibratorListModelSubPanel.IsDetailed());
-    }
-        
-    // Call Save method of the list with the parameter specific for a save or an
-    // export
-    if (list->Save(fileName, label, _requestModel, saveFlag) == mcsFAILURE)
-    {
         // if save failed, send user message and close the popup
-        sprintf(statusMessage, "'%s' file HAS NOT been created", fileName);
+        snprintf(statusMessage, sizeof(statusMessage),
+                 "'%s' file HAS NOT been created", fileName);
         SetStatus(false, statusMessage, errUserGet());
         errCloseStack();
         return mcsFAILURE;
     }
-
-    mcsSTRING32 softwareName;
-    sprintf(softwareName, "%s v%s", "SearchCal", GetSwVersion());
-
-    mcsSTRING256 cmdParamLine;
-    _requestModel.GetCmdParamLine(cmdParamLine);
-
-    // @rem Disabled VOTable generation to conform to current documentation
-    // list->SaveToVOTable("VOTable.xml", "SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)", softwareName, cmdParamLine);
-
-    // if failed succeed, send user message and close the popup
-    sprintf(statusMessage, "'%s' file has been created", fileName);
-    SetStatus(true, statusMessage, cmdParamLine);
-
-    return mcsSUCCESS;
 }
+
 
 /*___oOo___*/
