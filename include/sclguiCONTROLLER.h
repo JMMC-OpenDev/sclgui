@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.h,v 1.2 2005-10-18 12:52:48 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.h,v 1.3 2006-02-22 13:28:52 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/10/18 12:52:48  lafrasse
+ * First code revue
+ *
  * Revision 1.1  2005/10/11 15:24:15  scetre
  * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
  *
@@ -84,11 +87,11 @@ public:
     
 protected:
     // Command callbacks
-    virtual evhCB_COMPL_STAT GetCalCommandCB(msgMESSAGE &msg, void*);
+    virtual evhCB_COMPL_STAT GetCalCB(msgMESSAGE &msg, void*);
     virtual evhCB_COMPL_STAT ExitCB(msgMESSAGE &msg, void *); 
 
     // Command reply callbacks
-    virtual evhCB_COMPL_STAT GetCalReplyCommandCB(msgMESSAGE &msg, void*);
+    virtual evhCB_COMPL_STAT GetCalReplyCB(msgMESSAGE &msg, void*);
    
     // Building method of the general GUI
     mcsCOMPL_STAT BuildGUI();
