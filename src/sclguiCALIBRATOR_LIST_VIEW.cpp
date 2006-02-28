@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.10 2006-01-23 14:13:44 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.11 2006-02-28 13:08:28 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/01/23 14:13:44  scetre
+ * Removed corrected magnitude in the label.
+ * Added extinction ratio, Av in the details view of the list
+ *
  * Revision 1.9  2006/01/18 09:07:22  scetre
  * Removed unused U magnitude
  *
@@ -41,7 +45,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.10 2006-01-23 14:13:44 scetre Exp $"; 
+static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.11 2006-02-28 13:08:28 scetre Exp $"; 
 static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
 
 /* 
@@ -88,7 +92,7 @@ using namespace std;
 #define sclguiBORDE_COLOR               "#9778fb"
 #define sclguiV_36B_COLOR               "#88a0a6"
 #define sclgui_MIDI_COLOR               "#c994ca"
-#define sclguiUNSO_COLOR               "#c994ca"
+#define sclguiUNSO_COLOR                "#f1fb58"
 
 /**
  * Class constructor
