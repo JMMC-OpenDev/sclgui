@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.3 2005-11-05 15:42:53 gzins Exp $"
+ * "@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.4 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/11/05 15:42:53  gzins
+ * Renamed BuildFromMessage to Parse
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,8 +22,7 @@
  *  Definition of sclguiREQUEST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.3 2005-11-05 15:42:53 gzins Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiREQUEST_MODEL.cpp,v 1.4 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.29 2006-02-22 13:28:02 gzins Exp $"
+ * "@(#) $Id: sclguiGetCalCB.cpp,v 1.30 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2006/02/22 13:28:02  gzins
+ * Put command callbacks in separated source files
+ *
  *
  ******************************************************************************/
 
@@ -14,8 +17,7 @@
  * Definition of GetCalCB() method 
  */
 
-static char *rcsId="@(#) $Id: sclguiGetCalCB.cpp,v 1.29 2006-02-22 13:28:02 gzins Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiGetCalCB.cpp,v 1.30 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

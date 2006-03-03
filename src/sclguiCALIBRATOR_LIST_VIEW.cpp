@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.11 2006-02-28 13:08:28 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.12 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/02/28 13:08:28  scetre
+ * Changed USNO color
+ *
  * Revision 1.10  2006/01/23 14:13:44  scetre
  * Removed corrected magnitude in the label.
  * Added extinction ratio, Av in the details view of the list
@@ -45,8 +48,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.11 2006-02-28 13:08:28 scetre Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.12 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

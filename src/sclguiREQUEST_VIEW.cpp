@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.5 2005-11-05 15:40:23 gzins Exp $"
+ * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.6 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/11/05 15:40:23  gzins
+ * Removed unused constructor
+ *
  * Revision 1.4  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,8 +22,7 @@
  *  Definition of sclguiREQUEST_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.5 2005-11-05 15:40:23 gzins Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.6 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 
