@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.6 2005-12-22 13:03:22 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.7 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/12/22 13:03:22  scetre
+ * Updated doxygen doumentation
+ *
  * Revision 1.5  2005/12/14 09:04:50  scetre
  * Used new filter constructor
  *
@@ -28,8 +31,7 @@
  * Definition of sclguiCALIBRATOR_LIST_MODEL class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.6 2005-12-22 13:03:22 scetre Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.7 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

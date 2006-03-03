@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.12 2006-02-22 15:48:42 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.13 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/02/22 15:48:42  lafrasse
+ * Added VOTable export GUI
+ *
  * Revision 1.11  2006/02/22 13:28:02  gzins
  * Put command callbacks in separated source files
  *
@@ -46,8 +49,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiCONTROLLER.cpp,v 1.12 2006-02-22 15:48:42 lafrasse Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.13 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

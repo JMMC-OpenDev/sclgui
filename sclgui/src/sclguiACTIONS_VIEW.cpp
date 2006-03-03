@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.3 2006-02-22 15:48:42 lafrasse Exp $"
+ * "@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.4 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/02/22 15:48:42  lafrasse
+ * Added VOTable export GUI
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,8 +22,7 @@
  * Definition of sclguiACTIONS_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.3 2006-02-22 15:48:42 lafrasse Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiACTIONS_VIEW.cpp,v 1.4 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

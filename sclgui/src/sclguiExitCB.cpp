@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiExitCB.cpp,v 1.1 2006-02-22 13:28:02 gzins Exp $"
+ * "@(#) $Id: sclguiExitCB.cpp,v 1.2 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/02/22 13:28:02  gzins
+ * Put command callbacks in separated source files
+ *
  *
  ******************************************************************************/
 
@@ -14,8 +17,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId="@(#) $Id: sclguiExitCB.cpp,v 1.1 2006-02-22 13:28:02 gzins Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiExitCB.cpp,v 1.2 2006-03-03 15:28:17 scetre Exp $"; 
 
 /* 
  * System Headers 

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"
+ * "@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.5 2006-03-03 15:28:17 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/11/30 10:35:58  scetre
+ * Updated with new filter
+ *
  * Revision 1.3  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -19,8 +22,7 @@
  * Definition of sclguiMAGNITUDE_FILTER_VIEW class.
  */
 
-static char *rcsId="@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.4 2005-11-30 10:35:58 scetre Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiMAGNITUDE_FILTER_VIEW.cpp,v 1.5 2006-03-03 15:28:17 scetre Exp $"; 
 
 
 /* 
