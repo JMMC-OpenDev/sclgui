@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.6 2006-03-03 15:28:17 scetre Exp $"
+ * "@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.7 2006-03-06 17:12:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/03/03 15:28:17  scetre
+ * Changed rcsId to rcsId __attribute__ ((unused))
+ *
  * Revision 1.5  2005/11/05 15:40:23  gzins
  * Removed unused constructor
  *
@@ -19,15 +22,16 @@
 
 /**
  * @file
- *  Definition of sclguiREQUEST_VIEW class.
+ * Definition of sclguiREQUEST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.6 2006-03-03 15:28:17 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiREQUEST_VIEW.cpp,v 1.7 2006-03-06 17:12:02 lafrasse Exp $"; 
 
 /* 
  * System Headers 
  */
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 using namespace std;
 
@@ -80,18 +84,41 @@ mcsCOMPL_STAT sclguiREQUEST_VIEW::Update()
 {
     logTrace("sclguiREQUEST_VIEW::Update()");
 
+    mcsFLOAT diamVK = 0.0;
+    mcsLOGICAL diamVKDefined = _requestModel->IsDiamVKDefined();
+    if (diamVKDefined == mcsTRUE)
+    {
+        diamVK = _requestModel->GetDiamVK();
+    }
+
     // Get the value in the request in order to view constraints on the panel
     ostringstream out;
-    out << "NAME\tRAJ2000\tDEJ2000\tMag";
-    out << _requestModel->GetSearchBand();
-    out << "\tBase-max\tLambda\tDiamVK\n";
-    out << "---------\t-----------\t-----------\t------\t--------\t---------\t--------\n";
-    out << _requestModel->GetObjectName();
-    out << "\t" << _requestModel->GetObjectRa() << "\t" ;
-    out << _requestModel->GetObjectDec() << "\t";
-    out << _requestModel->GetObjectMag() << "\t";
-    out << _requestModel->GetMaxBaselineLength() << "\t";
-    out << _requestModel->GetObservingWlen() << "\t";
+    out << fixed;
+    out << "NAME\tRAJ2000\tDEJ2000\tMag" << _requestModel->GetSearchBand()
+        << "\tBase-max\tLambda\t";
+    if (diamVKDefined == mcsTRUE)
+    {
+        out << "DiamVK";
+    }
+    out << endl;
+
+    out << "---------\t-----------\t-----------\t------\t--------\t---------\t";
+    if (diamVKDefined == mcsTRUE)
+    {
+        out << "--------";
+    }
+    out << endl;
+
+    out <<                    _requestModel->GetObjectName()        << "\t"
+        <<                    _requestModel->GetObjectRa()          << "\t"
+        <<                    _requestModel->GetObjectDec()         << "\t"
+        << setprecision(3) << _requestModel->GetObjectMag()         << "\t"
+        << setprecision(2) << _requestModel->GetMaxBaselineLength() << "\t"
+        <<                    _requestModel->GetObservingWlen()     << "\t";
+    if (diamVKDefined == mcsTRUE)
+    {
+        out << setprecision(3) << diamVK;
+    }
 
     _requestTextArea.SetText(out.str());
     cout << "request" << out << endl;
@@ -101,7 +128,7 @@ mcsCOMPL_STAT sclguiREQUEST_VIEW::Update()
 /**
  * Attach model in the request view
  *
- * @ request the model to attach
+ * @param request the model to attach
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
