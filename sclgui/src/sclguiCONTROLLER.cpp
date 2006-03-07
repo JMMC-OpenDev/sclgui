@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.13 2006-03-03 15:28:17 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.14 2006-03-07 15:14:16 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/03/03 15:28:17  scetre
+ * Changed rcsId to rcsId __attribute__ ((unused))
+ *
  * Revision 1.12  2006/02/22 15:48:42  lafrasse
  * Added VOTable export GUI
  *
@@ -49,7 +52,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.13 2006-03-03 15:28:17 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.14 2006-03-07 15:14:16 scetre Exp $"; 
 
 /* 
  * System Headers 
@@ -80,7 +83,7 @@ using namespace std;
  */
 sclguiCONTROLLER::sclguiCONTROLLER(): 
 _filterListModel("Filter List of the GUI"),
-    _sclServer("Search-calibrator server", "sclsvrServer", 120000)
+    _sclServer("Search-calibrator server", "sclsvrServer", 600000)
 {
     logTrace("sclguiCONTROLLER::sclguiCONTROLLER");
 }
