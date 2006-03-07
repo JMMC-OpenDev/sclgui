@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.12 2006-03-03 15:28:17 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.13 2006-03-07 07:54:07 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/03/03 15:28:17  scetre
+ * Changed rcsId to rcsId __attribute__ ((unused))
+ *
  * Revision 1.11  2006/02/28 13:08:28  scetre
  * Changed USNO color
  *
@@ -48,7 +51,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.12 2006-03-03 15:28:17 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.13 2006-03-07 07:54:07 scetre Exp $"; 
 
 /* 
  * System Headers 
@@ -786,8 +789,8 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
     label->push_back(sclsvrCALIBRATOR_DIAM_IJ);
     label->push_back(sclsvrCALIBRATOR_DIAM_IK);
-    label->push_back(sclsvrCALIBRATOR_DIAM_JK);
     label->push_back(sclsvrCALIBRATOR_DIAM_JH);
+    label->push_back(sclsvrCALIBRATOR_DIAM_JK);
     label->push_back(sclsvrCALIBRATOR_DIAM_MEAN);
     label->push_back(sclsvrCALIBRATOR_DIAM_MEAN_ERROR);
     label->push_back(vobsSTAR_ID_2MASS);
