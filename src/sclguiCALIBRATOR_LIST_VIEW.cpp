@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.13 2006-03-07 07:54:07 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.14 2006-03-22 10:45:48 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/03/07 07:54:07  scetre
+ * Minor changes
+ *
  * Revision 1.12  2006/03/03 15:28:17  scetre
  * Changed rcsId to rcsId __attribute__ ((unused))
  *
@@ -51,7 +54,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.13 2006-03-07 07:54:07 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.14 2006-03-22 10:45:48 scetre Exp $"; 
 
 /* 
  * System Headers 
@@ -796,6 +799,8 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(vobsSTAR_ID_2MASS);
     label->push_back(vobsSTAR_ID_DENIS);
     label->push_back(vobsSTAR_ID_TYC1);
+    label->push_back(vobsSTAR_ID_TYC2);
+    label->push_back(vobsSTAR_ID_TYC3);
     label->push_back(vobsSTAR_ID_HIP);
     label->push_back(vobsSTAR_ID_HD);
     label->push_back(vobsSTAR_ID_DM);
@@ -803,6 +808,8 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *
     label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
     label->push_back(vobsSTAR_POS_EQ_PMRA);
     label->push_back(vobsSTAR_POS_EQ_PMDEC);
+    label->push_back(vobsSTAR_POS_GAL_LAT);
+    label->push_back(vobsSTAR_POS_GAL_LON);
     label->push_back(vobsSTAR_POS_PARLX_TRIG);
     label->push_back(vobsSTAR_SPECT_TYPE_MK);
     label->push_back(vobsSTAR_CODE_VARIAB_V1);
