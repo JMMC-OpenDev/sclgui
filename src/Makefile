@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.9 2006-02-22 13:28:02 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.10 2006-03-27 11:59:58 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.9  2006/02/22 13:28:02  gzins
+# Put command callbacks in separated source files
+#
 # Revision 1.8  2005/10/11 15:24:15  scetre
 # New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
 #
@@ -139,21 +142,31 @@ PY_SCRIPTS_L   =
 #
 # Jarfiles and their directories
 # ---------------------------------
-JARFILES        =
+JARFILES        = sclgui
 
 #
-# <brief description of jjjfff jar files>
-jjjfff_DIRS     =
-jjjfff_EXTRAS   = 
+# <brief description of sclgui jar files>
+sclgui_DIRS     = jmmc 
+sclgui_EXTRAS   = jmmc/scalib/sclgui/eta_tau.vot
 
 #
 # Java programs
 # ---------------------------------
-JAVA_EXECUTABLES=
+JAVA_EXECUTABLES = SearchCalibrators 
 
 #
-# <brief description of jjjjjj java program>
-jjjjjj_CLASS    =
+# other Jar Files
+#
+JAVA_JAR = cds.savot.common.jar \
+		   cds.savot.pull.jar   \
+		   cds.savot.writer.jar \
+		   kxml2-min.jar        \
+		   cds.savot.model.jar  \
+		   cds.savot.sax.jar   
+
+#
+# <brief description of SearchCalibrators java program>
+SearchCalibrators_CLASS = jmmc.scalib.sclgui.SearchCalibrators 
 
 #
 # Command Definition Files (CDF)
