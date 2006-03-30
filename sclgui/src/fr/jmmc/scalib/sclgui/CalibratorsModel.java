@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.2 2006-03-30 13:40:57 yvander Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -63,6 +66,17 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _currentStarList      = new StarList();
 
         _columnNames          = new Vector();
+    }
+
+    /**
+     * setValueAt.
+     *
+     * This method is called when a cell changed.
+     */
+    public void setValueAt(Object value, int row, int col) {
+
+        // DOCUMENT ME!
+        System.out.println("Row : "+row+" Col : "+col+" Value : "+value.toString()+" <---> Data can changed !!!");
     }
 
     /**
@@ -161,6 +175,25 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         // Update any attached observer
         update(null, null);
+    }
+
+     /**
+      * getStarProperty.
+      *
+      * Return the StarProperty corresponding to the cell.
+      */
+    public StarProperty getStarProperty(int row,String colName){
+
+        // The real column index
+        Vector starsProperties =  (Vector)_currentStarList.get(row);
+	int col = _currentStarList.getColumnIdByName(colName);
+
+	// Return the StarProperty
+	if(starsProperties.get(col) instanceof StarProperty)
+	  return (StarProperty)starsProperties.get(col);
+	else
+	  return null;
+
     }
 
     /**
