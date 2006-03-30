@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.2 2006-03-30 13:41:28 yvander Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -110,10 +113,10 @@ public class LegendView extends JFrame implements Observer
 
             //CATALOG ORIGIN
             Vector data = new Vector();
-            data.add("2 MASS");
-            data.add("DENIS");
-            data.add("I280");
-            data.add("BORDE");
+            data.add("I/280");
+            data.add("II/246/out");
+            data.add("II/225/catalog");
+            data.add("II/7A/catalog");
             modelcolors     = new ListModel(data);
             listcolors      = new JList(modelcolors);
             listcolors.setCellRenderer(cell);
@@ -125,9 +128,10 @@ public class LegendView extends JFrame implements Observer
 
             //CONFINDENCE INDEX
             data = new Vector();
-            data.add("low");
+	    data.add("hight");
             data.add("medium");
-            data.add("hight");
+            data.add("low");
+	    
             modelindex     = new ListModel(data);
             listindex      = new JList(modelindex);
             listindex.setCellRenderer(cell);
@@ -176,7 +180,7 @@ public class LegendView extends JFrame implements Observer
  * @author non attribuable
  * @version 1.0
  */
-class CellColors extends DefaultListCellRenderer implements TableCellRenderer
+class CellColors extends DefaultListCellRenderer
 {
     /**
      * DOCUMENT ME!
@@ -232,22 +236,6 @@ class CellColors extends DefaultListCellRenderer implements TableCellRenderer
 
         return this;
     } //end getListCellRendererComponent
-
-    /**
-     * getTableCellRendererComponent  -  return the component with renderer (Table)
-     * @param table JTable
-     * @param value Object
-     * @param isSelected boolean
-     * @param hasFocus boolean
-     * @param row int
-     * @param column int
-     * @return Component
-     */
-    public Component getTableCellRendererComponent(JTable table, Object value,
-        boolean isSelected, boolean hasFocus, int row, int column)
-    {
-        return this;
-    }
 }
 
 

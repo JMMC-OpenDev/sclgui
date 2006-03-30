@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.2 2006-03-30 13:39:19 yvander Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -42,6 +45,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
     /** The monitored application preferences */
     Preferences _preferences;
+
+    //** The results table */
+    JTable _jTable;
 
     //details state
     /** DOCUMENT ME! */
@@ -120,11 +126,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             add(tablePanel);
 
             // Table initialization
-            JTable jTable = new JTable();
-            jTable.setModel(_calibratorsModel);
-            jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            _jTable = new JTable();
+            _jTable.setModel(_calibratorsModel);
+            _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-            JScrollPane scrollPane = new JScrollPane(jTable);
+            JScrollPane scrollPane = new JScrollPane(_jTable);
             scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
             scrollPane.setPreferredSize(new Dimension(subpanelwidth, 160));
             tablePanel.add(scrollPane);
@@ -192,6 +198,14 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     public void tableChanged(TableModelEvent e)
     {
+
+
+	for (int i = 0; i < _calibratorsModel.getColumnCount(); i++) {
+              TableColumn tc = _jTable.getTableHeader().getColumnModel().getColumn(i);
+              tc.setCellRenderer(new TableCellColors());
+            }
+
+
         MCSLogger.trace();
 
         // TODO implement
@@ -245,6 +259,95 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         {
             noteFrame.setVisible(true);
         }
+    }
+}
+
+/**
+ * <p>Titre : </p>
+ *
+ * <p>Description : </p>
+ *
+ * <p>Copyright : Copyright (c) 2006</p>
+ *
+ * <p>Société : </p>
+ *
+ * @author non attribuable
+ * @version 1.0
+ */
+class TableCellColors extends DefaultTableCellRenderer
+{
+    /**
+     * DOCUMENT ME!
+     */
+    Hashtable _hashColors;
+
+    /**
+     * DOCUMENT ME!
+     */
+    Hashtable _hashConfidence;
+
+    /**
+     * TableCellColors  -  Constructor
+     */
+    public TableCellColors()
+    {
+        super();
+
+        _hashColors = new Hashtable();
+        _hashColors.put("I/280",Color.blue);
+        _hashColors.put("II/246/out",Color.orange);
+        _hashColors.put("II/225/catalog",Color.green);
+        _hashColors.put("II/7A/catalog",Color.red);
+
+        _hashConfidence = new Hashtable();
+        _hashConfidence.put("HIGH",Color.white);
+        _hashConfidence.put("MEDIUM",Color.gray);
+        _hashConfidence.put("LOW",Color.darkGray);
+    } //end TableCellColors
+
+
+    /**
+     * getTableCellRendererComponent  -  return the component with renderer (Table)
+     * @param table JTable
+     * @param value Object
+     * @param isSelected boolean
+     * @param hasFocus boolean
+     * @param row int
+     * @param column int
+     * @return Component
+     */
+    public Component getTableCellRendererComponent(JTable table, Object value,
+        boolean isSelected, boolean hasFocus, int row, int column)
+    {
+        // Get the name of column with index
+        TableColumnModel colModel = table.getTableHeader().getColumnModel();
+        String columnName = (String)colModel.getColumn(column).getHeaderValue();
+
+        // Set default renderer to the component
+        super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column);
+
+	// Get StarProperty selected
+        CalibratorsModel calModel = (CalibratorsModel)table.getModel();
+        StarProperty starProperty = calModel.getStarProperty( row, columnName);
+
+        // If cell is not selecterd and not focused
+      if ( ! ( isSelected && hasFocus ) ){
+
+
+	if(starProperty != null){
+
+          // Set Background Color corresponding to the Catalog Origin Color
+          if(starProperty.getOrigin().equals("")==false)
+            setBackground((Color)_hashColors.get(starProperty.getOrigin()));
+
+          else
+	  //Set the Confidence Value
+            if(starProperty.getConfidence().equals("")==false)
+	      setBackground((Color)_hashConfidence.get(starProperty.getConfidence()));
+	}
+      }
+      // Return the component
+      return this;
     }
 }
 /*___oOo___*/
