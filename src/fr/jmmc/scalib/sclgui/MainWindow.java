@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -67,8 +70,7 @@ public class MainWindow extends JFrame implements Printable
 
         try
         {
-//            UIManager.setLookAndFeel(new MetalLookAndFeel());
-
+            //            UIManager.setLookAndFeel(new MetalLookAndFeel());
             setTitle("SearchCal");
 
             menuBar = new MainMenuBar(this);

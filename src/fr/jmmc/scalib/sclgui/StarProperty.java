@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -19,6 +22,8 @@ import java.lang.Float;
  */
 public class StarProperty implements Comparable
 {
+    // Trace has been deactvated because of numerous call
+
     /** Value */
     private String _value;
 
@@ -55,8 +60,7 @@ public class StarProperty implements Comparable
      */
     public void setValue(String value)
     {
-        MCSLogger.trace();
-
+        // MCSLogger.trace();
         _value = value;
     }
 
@@ -91,8 +95,7 @@ public class StarProperty implements Comparable
      */
     public void setOrigin(String origin)
     {
-        MCSLogger.trace();
-
+        //MCSLogger.trace();
         _origin = origin;
     }
 
@@ -103,9 +106,29 @@ public class StarProperty implements Comparable
      */
     public String getOrigin()
     {
-        MCSLogger.trace();
-
+        //MCSLogger.trace();
         return _origin.toString();
+    }
+
+    /**
+     * Indicates if the star property has a catalog origin.
+     *
+     * @return true if a confidence index is set or false
+     */
+    public boolean hasOrigin()
+    {
+        //MCSLogger.trace();
+        if (_confidence.length() > 0)
+        {
+            return false;
+        }
+
+        if (_origin.length() > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -115,8 +138,7 @@ public class StarProperty implements Comparable
      */
     public void setConfidence(String confidence)
     {
-        MCSLogger.trace();
-
+        // MCSLogger.trace();
         _confidence = confidence;
     }
 
@@ -127,9 +149,24 @@ public class StarProperty implements Comparable
      */
     public String getConfidence()
     {
-        MCSLogger.trace();
-
+        //MCSLogger.trace();
         return _confidence.toString();
+    }
+
+    /**
+     * Indicates if the star property has a confidence index.
+     *
+     * @return true if a confidence index is set or false
+     */
+    public boolean hasConfidence()
+    {
+        //MCSLogger.trace();
+        if (_confidence.length() > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -139,8 +176,7 @@ public class StarProperty implements Comparable
      */
     public String toString()
     {
-        MCSLogger.trace();
-
+        // MCSLogger.trace();
         return _value.toString();
     }
 

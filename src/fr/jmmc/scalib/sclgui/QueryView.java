@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -191,7 +194,7 @@ public class QueryView extends JPanel implements Observer
 
         _vo = vo;
 
-//        setBorder(new TitledBorder(yellowBorder, "QUERY PARAMETERS"));
+        //        setBorder(new TitledBorder(yellowBorder, "QUERY PARAMETERS"));
         setBorder(new TitledBorder(lightBorder, "Query Parameters"));
         setLayout(flowLayout4);
 
@@ -549,7 +552,7 @@ public class QueryView extends JPanel implements Observer
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 class TypeOfStarListener implements ActionListener
 {

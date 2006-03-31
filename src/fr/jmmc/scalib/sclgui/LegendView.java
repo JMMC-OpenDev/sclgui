@@ -1,16 +1,21 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.2 2006-03-30 13:41:28 yvander Exp $"
+ * "@(#) $Id: LegendView.java,v 1.3 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/30 13:41:28  yvander
+ * Mise en place des couleurs
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
+
+import jmmc.mcs.util.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -48,111 +53,51 @@ public class LegendView extends JFrame implements Observer
     /**
      * DOCUMENT ME!
      */
-    JPanel paneldata = new JPanel();
+    JList catalogList;
 
     /**
      * DOCUMENT ME!
      */
-    JList listcolors;
+    JList confidenceList;
 
     /**
      * DOCUMENT ME!
      */
-    JList listindex;
-
-    /**
-     * DOCUMENT ME!
-     */
-    ListModel modelcolors;
-
-    /**
-     * DOCUMENT ME!
-     */
-    ListModel modelindex;
-
-    /**
-     * DOCUMENT ME!
-     */
-    CellColors cell = new CellColors();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JLabel labelcolors = new JLabel();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JLabel labelindex = new JLabel();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JScrollPane scrollcolors;
-
-    /**
-     * DOCUMENT ME!
-     */
-    JScrollPane scrollindex;
+    Preferences _preferences;
 
     /**
      * LegendFrame  -  Constructor
      * @param title String
      */
-    public LegendView()
+    public LegendView(Preferences preferences)
     {
         super("Legend");
 
-        try
-        {
-//            UIManager.setLookAndFeel(new MetalLookAndFeel());
+        // Store the application preferences and register against it
+        _preferences = preferences;
+        _preferences.addObserver(this);
 
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            setSize(new Dimension(600, 300));
-            setResizable(false);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-            //CATALOG ORIGIN
-            Vector data = new Vector();
-            data.add("I/280");
-            data.add("II/246/out");
-            data.add("II/225/catalog");
-            data.add("II/7A/catalog");
-            modelcolors     = new ListModel(data);
-            listcolors      = new JList(modelcolors);
-            listcolors.setCellRenderer(cell);
-            labelcolors.setText("Catalog origin : ");
-            paneldata.add(labelcolors);
-            scrollcolors = new JScrollPane(listcolors);
-            scrollcolors.setPreferredSize(new Dimension(90, 120));
-            paneldata.add(scrollcolors);
+        // Get catalog and confidence list 
+        JLabel catalogLabel = new JLabel("Catalog origin : ");
+        catalogList = new JList();
 
-            //CONFINDENCE INDEX
-            data = new Vector();
-	    data.add("hight");
-            data.add("medium");
-            data.add("low");
-	    
-            modelindex     = new ListModel(data);
-            listindex      = new JList(modelindex);
-            listindex.setCellRenderer(cell);
-            labelindex.setText("Confidence index : ");
-            paneldata.add(labelindex);
-            scrollindex = new JScrollPane(listindex);
-            scrollindex.setPreferredSize(new Dimension(90, 60));
-            paneldata.add(scrollindex);
-            paneldata.setLayout(new BoxLayout(paneldata, BoxLayout.Y_AXIS));
+        JLabel confidenceLabel = new JLabel("Confidence index :");
+        confidenceList = new JList();
 
-            getContentPane().add(paneldata);
-            pack();
-        }
-/*        catch (UnsupportedLookAndFeelException exc)
-        {
-            exc.printStackTrace();
-        }
-*/        catch (Exception exc)
-        {
-            exc.printStackTrace();
-        }
+        // Place elements into main panel
+        JPanel paneldata = new JPanel();
+        paneldata.setLayout(new BoxLayout(paneldata, BoxLayout.Y_AXIS));
+        paneldata.add(catalogLabel);
+        paneldata.add(catalogList);
+        paneldata.add(confidenceLabel);
+        paneldata.add(confidenceList);
+        getContentPane().add(paneldata);
+
+        // force to load Preferences at first moment
+        update(_preferences, null);
     }
 
     /**
@@ -163,52 +108,93 @@ public class LegendView extends JFrame implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        // TODO : M�J des champs de la fenetre
+        if (o.equals(_preferences))
+        {
+            // Fill catalog List
+            String           prefix       = "catalog.color.";
+            Enumeration      e            = _preferences.getPreferences(prefix);
+            DefaultListModel catalogModel = new DefaultListModel();
+
+            while (e.hasMoreElements())
+            {
+                String entry       = (String) e.nextElement();
+                String catalogName = entry.substring(prefix.length());
+                catalogModel.addElement(catalogName);
+            }
+
+            catalogList.setModel(catalogModel);
+
+            CellColors catalogRenderer = new CellColors(_preferences, prefix);
+            catalogList.setCellRenderer(catalogRenderer);
+
+            // Fill confidence List
+            prefix     = "confidence.color.";
+            e          = _preferences.getPreferences(prefix);
+
+            DefaultListModel confidenceModel = new DefaultListModel();
+
+            while (e.hasMoreElements())
+            {
+                String entry     = (String) e.nextElement();
+                String entryName = entry.substring(prefix.length());
+                confidenceModel.addElement(entryName);
+            }
+
+            confidenceList.setModel(confidenceModel);
+
+            CellColors confidenceRenderer = new CellColors(_preferences, prefix);
+            confidenceList.setCellRenderer(confidenceRenderer);
+
+            // GUI has been modified then pack window
+            pack();
+        }
     }
 }
 
 
 /**
- * <p>Titre : </p>
+ * DOCUMENT ME!
  *
- * <p>Description : </p>
- *
- * <p>Copyright : Copyright (c) 2006</p>
- *
- * <p>Société : </p>
- *
- * @author non attribuable
- * @version 1.0
+ * @author $author$
+ * @version $Revision: 1.3 $
  */
 class CellColors extends DefaultListCellRenderer
 {
     /**
      * DOCUMENT ME!
      */
-    Vector vectColors;
+    Vector _colors;
 
     /**
-     * DOCUMENT ME!
+     * Creates a new CellColors object.
+     *
+     * @param preferences DOCUMENT ME!
+     * @param prefix DOCUMENT ME!
      */
-    Vector vectConfidence;
-
-    /**
-     * CellColors  -  Constructor
-     */
-    public CellColors()
+    public CellColors(Preferences preferences, String prefix)
     {
         super();
-        vectColors = new Vector();
-        vectColors.add(Color.blue);
-        vectColors.add(Color.orange);
-        vectColors.add(Color.green);
-        vectColors.add(Color.red);
+        _colors = new Vector();
 
-        vectConfidence = new Vector();
-        vectConfidence.add(Color.white);
-        vectConfidence.add(Color.gray);
-        vectConfidence.add(Color.darkGray);
-    } //end CellColors
+        // read colors preferences of prefix group
+        Enumeration e = preferences.getPreferences(prefix);
+
+        while (e.hasMoreElements())
+        {
+            String entry = (String) e.nextElement();
+
+            try
+            {
+                Color oneColor = preferences.getPreferenceAsColor(entry);
+                _colors.add(oneColor);
+            }
+            catch (PreferencesException ex)
+            {
+                // TODO log as error instead of stderr...
+                ex.printStackTrace();
+            }
+        }
+    }
 
     /**
      * getListCellRendererComponent  -  return the component with renderer (List)
@@ -225,45 +211,8 @@ class CellColors extends DefaultListCellRenderer
         super.getListCellRendererComponent(list, value, index, isSelected,
             cellHasFocus);
 
-        if (list.getModel().getSize() == 3) //Confidence Index
-        {
-            setBackground((Color) vectConfidence.get(index));
-        }
-        else
-        { //Catalog origin
-            setBackground((Color) vectColors.get(index));
-        }
+        setBackground((Color) _colors.elementAt(index));
 
         return this;
-    } //end getListCellRendererComponent
-}
-
-
-/**
- * <p>Titre : </p>
- *
- * <p>Description : </p>
- *
- * <p>Copyright : Copyright (c) 2006</p>
- *
- * <p>Société : </p>
- *
- * @author non attribuable
- * @version 1.0
- */
-class ListModel extends DefaultListModel
-{
-    /**
-     * ListModel  -  Constructor
-     * @param data Vector
-     */
-    public ListModel(Vector data)
-    {
-        Iterator i = data.iterator();
-
-        while (i.hasNext())
-        {
-            addElement(i.next());
-        }
     }
 }

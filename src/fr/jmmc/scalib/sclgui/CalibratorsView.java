@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.2 2006-03-30 13:39:19 yvander Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.3 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/30 13:39:19  yvander
+ * Mise en place des couleurs
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -13,6 +16,8 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+
+import jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -46,8 +51,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** The monitored application preferences */
     Preferences _preferences;
 
-    //** The results table */
+    /** The results table */
     JTable _jTable;
+
+    /** The cellrendered that works with every columns */
+    TableCellColors _tableCellColors;
 
     //details state
     /** DOCUMENT ME! */
@@ -65,7 +73,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * DOCUMENT ME!
      */
-    LegendView legendView = new LegendView();
+    LegendView legendView;
 
     /**
      * DOCUMENT ME!
@@ -98,99 +106,96 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _preferences = preferences;
         _preferences.addObserver(this);
 
+        legendView           = new LegendView(_preferences);
+
+        // Create tableCellColors
+        _tableCellColors     = new TableCellColors(_preferences);
+
         // Gray border of the view.
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
 
         // Colored border of the view.
-//        Border coloredBorder = BorderFactory.createLineBorder(Color.red, 2);
-//        setBorder(new TitledBorder(coloredBorder, "RESULTS"));
+        //        Border coloredBorder = BorderFactory.createLineBorder(Color.red, 2);
+        //        setBorder(new TitledBorder(coloredBorder, "RESULTS"));
         setBorder(new TitledBorder(grayBorder, "Found Calibrators"));
 
         // View layout.
         FlowLayout viewLayout = new FlowLayout();
 
-        try
-        {
-            // Size management
-            setMinimumSize(new Dimension(width, 320));
-            setSize(new Dimension(width, 320));
-            setLayout(viewLayout);
-            setPreferredSize(new Dimension(width, 320));
+        // Size management
+        setMinimumSize(new Dimension(width, 320));
+        setSize(new Dimension(width, 320));
+        setLayout(viewLayout);
+        setPreferredSize(new Dimension(width, 320));
 
-            // Table panel creation
-            JPanel tablePanel = new JPanel();
-            tablePanel.setMinimumSize(new Dimension(subpanelwidth, 270));
-            tablePanel.setSize(new Dimension(subpanelwidth, 270));
-            tablePanel.setPreferredSize(new Dimension(subpanelwidth, 270));
-            tablePanel.setLayout(viewLayout);
-            add(tablePanel);
+        // Table panel creation
+        JPanel tablePanel = new JPanel();
+        tablePanel.setMinimumSize(new Dimension(subpanelwidth, 270));
+        tablePanel.setSize(new Dimension(subpanelwidth, 270));
+        tablePanel.setPreferredSize(new Dimension(subpanelwidth, 270));
+        tablePanel.setLayout(viewLayout);
+        add(tablePanel);
 
-            // Table initialization
-            _jTable = new JTable();
-            _jTable.setModel(_calibratorsModel);
-            _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        // Table initialization
+        _jTable = new JTable();
+        _jTable.setModel(_calibratorsModel);
+        _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-            JScrollPane scrollPane = new JScrollPane(_jTable);
-            scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
-            scrollPane.setPreferredSize(new Dimension(subpanelwidth, 160));
-            tablePanel.add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane(_jTable);
+        scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
+        scrollPane.setPreferredSize(new Dimension(subpanelwidth, 160));
+        tablePanel.add(scrollPane);
 
-            // Button panel creation
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setBorder(new TitledBorder(grayBorder, "Operations"));
+        // Button panel creation
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBorder(new TitledBorder(grayBorder, "Operations"));
 
-            JButton selectAllButton = new JButton();
-            selectAllButton.setText("Select All Data");
-            buttonPanel.add(selectAllButton);
+        JButton selectAllButton = new JButton();
+        selectAllButton.setText("Select All Data");
+        buttonPanel.add(selectAllButton);
 
-            JButton deleteSelectionButton = new JButton();
-            deleteSelectionButton.setText("Delete Selection");
-            buttonPanel.add(deleteSelectionButton);
+        JButton deleteSelectionButton = new JButton();
+        deleteSelectionButton.setText("Delete Selection");
+        buttonPanel.add(deleteSelectionButton);
 
-            JButton resetButton = new JButton();
-            resetButton.setText("Reset");
-            buttonPanel.add(resetButton);
+        JButton resetButton = new JButton();
+        resetButton.setText("Reset");
+        buttonPanel.add(resetButton);
 
-            JButton plotInAladinButton = new JButton();
-            plotInAladinButton.setText("Plot Data in Aladin");
-            buttonPanel.add(plotInAladinButton);
+        JButton plotInAladinButton = new JButton();
+        plotInAladinButton.setText("Plot Data in Aladin");
+        buttonPanel.add(plotInAladinButton);
 
-            addCommentButton.setText("Add Comment");
-            addCommentButton.addActionListener(this);
-            buttonPanel.add(addCommentButton);
+        addCommentButton.setText("Add Comment");
+        addCommentButton.addActionListener(this);
+        buttonPanel.add(addCommentButton);
 
-            JButton detres = new JButton();
-            detres.setText("Show Details");
-            buttonPanel.add(detres);
+        JButton detres = new JButton();
+        detres.setText("Show Details");
+        buttonPanel.add(detres);
 
-            showLegendButton.setText("Legend");
-            showLegendButton.addActionListener(this);
-            buttonPanel.add(showLegendButton);
+        showLegendButton.setText("Legend");
+        showLegendButton.addActionListener(this);
+        buttonPanel.add(showLegendButton);
 
-            // Tools panel creation
-            JPanel toolsPanel  = new JPanel();
-            JLabel resumeLabel = new JLabel();
-            resumeLabel.setText("Resume : ");
-            resumeLabel.setPreferredSize(new Dimension(70, 20));
-            toolsPanel.add(resumeLabel);
+        // Tools panel creation
+        JPanel toolsPanel  = new JPanel();
+        JLabel resumeLabel = new JLabel();
+        resumeLabel.setText("Resume : ");
+        resumeLabel.setPreferredSize(new Dimension(70, 20));
+        toolsPanel.add(resumeLabel);
 
-            JTextField resumeTextField = new JTextField();
-            resumeTextField.setText("10 stars with...");
-            resumeTextField.setPreferredSize(new Dimension(subpanelwidth - 80,
-                    20));
-            resumeTextField.setEditable(false);
-            toolsPanel.add(resumeTextField);
-            toolsPanel.add(buttonPanel);
-            toolsPanel.setMinimumSize(new Dimension(subpanelwidth, 140));
-            toolsPanel.setSize(new Dimension(subpanelwidth, 140));
-            toolsPanel.setPreferredSize(new Dimension(subpanelwidth, 140));
+        JTextField resumeTextField = new JTextField();
+        resumeTextField.setText("10 stars with...");
+        resumeTextField.setPreferredSize(new Dimension(subpanelwidth - 80, 20));
+        resumeTextField.setEditable(false);
+        toolsPanel.add(resumeTextField);
+        toolsPanel.add(buttonPanel);
+        toolsPanel.setMinimumSize(new Dimension(subpanelwidth, 140));
+        toolsPanel.setSize(new Dimension(subpanelwidth, 140));
+        toolsPanel.setPreferredSize(new Dimension(subpanelwidth, 140));
 
-            tablePanel.add(toolsPanel);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        tablePanel.add(toolsPanel);
     }
 
     /**
@@ -198,17 +203,14 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     public void tableChanged(TableModelEvent e)
     {
-
-
-	for (int i = 0; i < _calibratorsModel.getColumnCount(); i++) {
-              TableColumn tc = _jTable.getTableHeader().getColumnModel().getColumn(i);
-              tc.setCellRenderer(new TableCellColors());
-            }
-
-
         MCSLogger.trace();
 
-        // TODO implement
+        for (int i = 0; i < _calibratorsModel.getColumnCount(); i++)
+        {
+            TableColumn tc = _jTable.getTableHeader().getColumnModel()
+                                    .getColumn(i);
+            tc.setCellRenderer(_tableCellColors);
+        }
     }
 
     /**
@@ -250,6 +252,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     public void actionPerformed(ActionEvent e)
     {
+        MCSLogger.trace();
+
         if (e.getSource() == showLegendButton)
         {
             legendView.setVisible(true);
@@ -262,20 +266,13 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     }
 }
 
+
 /**
- * <p>Titre : </p>
- *
- * <p>Description : </p>
- *
- * <p>Copyright : Copyright (c) 2006</p>
- *
- * <p>Société : </p>
- *
- * @author non attribuable
- * @version 1.0
  */
-class TableCellColors extends DefaultTableCellRenderer
+class TableCellColors extends DefaultTableCellRenderer implements Observer
 {
+    // No trace log is implemented because these parts of code is often called. 
+
     /**
      * DOCUMENT ME!
      */
@@ -287,24 +284,24 @@ class TableCellColors extends DefaultTableCellRenderer
     Hashtable _hashConfidence;
 
     /**
+     * DOCUMENT ME!
+     */
+    Preferences _preferences;
+
+    /**
      * TableCellColors  -  Constructor
      */
-    public TableCellColors()
+    public TableCellColors(Preferences preferences)
     {
         super();
 
-        _hashColors = new Hashtable();
-        _hashColors.put("I/280",Color.blue);
-        _hashColors.put("II/246/out",Color.orange);
-        _hashColors.put("II/225/catalog",Color.green);
-        _hashColors.put("II/7A/catalog",Color.red);
+        // Store the application preferences and register against it
+        _preferences = preferences;
+        _preferences.addObserver(this);
 
-        _hashConfidence = new Hashtable();
-        _hashConfidence.put("HIGH",Color.white);
-        _hashConfidence.put("MEDIUM",Color.gray);
-        _hashConfidence.put("LOW",Color.darkGray);
+        // force to load Preferences at first moment
+        update(_preferences, null);
     } //end TableCellColors
-
 
     /**
      * getTableCellRendererComponent  -  return the component with renderer (Table)
@@ -319,35 +316,102 @@ class TableCellColors extends DefaultTableCellRenderer
     public Component getTableCellRendererComponent(JTable table, Object value,
         boolean isSelected, boolean hasFocus, int row, int column)
     {
+        // MCSLogger.trace();
         // Get the name of column with index
-        TableColumnModel colModel = table.getTableHeader().getColumnModel();
-        String columnName = (String)colModel.getColumn(column).getHeaderValue();
+        TableColumnModel colModel   = table.getTableHeader().getColumnModel();
+        String           columnName = (String) colModel.getColumn(column)
+                                                       .getHeaderValue();
 
         // Set default renderer to the component
-        super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column);
+        super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
+            row, column);
 
-	// Get StarProperty selected
-        CalibratorsModel calModel = (CalibratorsModel)table.getModel();
-        StarProperty starProperty = calModel.getStarProperty( row, columnName);
+        // Get StarProperty selected
+        CalibratorsModel calModel     = (CalibratorsModel) table.getModel();
+        StarProperty     starProperty = calModel.getStarProperty(row, columnName);
 
         // If cell is not selecterd and not focused
-      if ( ! ( isSelected && hasFocus ) ){
+        if (! (isSelected && hasFocus))
+        {
+            if (starProperty != null)
+            {
+                // Set Background Color corresponding to the Catalog Origin Color or confidence index
+                if (starProperty.hasOrigin())
+                {
+                    setBackground((Color) _hashColors.get(
+                            starProperty.getOrigin()));
+                }
+                else if (starProperty.hasConfidence())
+                {
+                    setBackground((Color) _hashConfidence.get(
+                            starProperty.getConfidence()));
+                }
+            }
+        }
 
+        // Return the component
+        return this;
+    }
 
-	if(starProperty != null){
+    /**
+     * DOCUMENT ME!
+     *
+     * @param o DOCUMENT ME!
+     * @param arg DOCUMENT ME!
+     */
+    public void update(Observable o, Object arg)
+    {
+        MCSLogger.trace();
 
-          // Set Background Color corresponding to the Catalog Origin Color
-          if(starProperty.getOrigin().equals("")==false)
-            setBackground((Color)_hashColors.get(starProperty.getOrigin()));
+        // React to preferences changes
+        if (o.equals(_preferences))
+        {
+            // read colors preferences for catalogs
+            String      prefix = "catalog.color.";
+            Enumeration e      = _preferences.getPreferences(prefix);
+            _hashColors        = new Hashtable();
 
-          else
-	  //Set the Confidence Value
-            if(starProperty.getConfidence().equals("")==false)
-	      setBackground((Color)_hashConfidence.get(starProperty.getConfidence()));
-	}
-      }
-      // Return the component
-      return this;
+            while (e.hasMoreElements())
+            {
+                String entry       = (String) e.nextElement();
+                String catalogName = entry.substring(prefix.length());
+
+                try
+                {
+                    Color catalogColor = _preferences.getPreferenceAsColor(entry);
+                    _hashColors.put(catalogName, catalogColor);
+                }
+                catch (PreferencesException ex)
+                {
+                    // TODO log as error instead of stderr...
+                    ex.printStackTrace();
+                }
+            }
+
+            // read colors preferences for confidences
+            prefix              = "confidence.color.";
+            e                   = _preferences.getPreferences(prefix);
+            _hashConfidence     = new Hashtable();
+
+            while (e.hasMoreElements())
+            {
+                String entry          = (String) e.nextElement();
+                String confidenceName = entry.substring(prefix.length());
+
+                try
+                {
+                    Color confidenceColor = _preferences.getPreferenceAsColor(entry);
+                    _hashConfidence.put(confidenceName, confidenceColor);
+                }
+                catch (PreferencesException ex)
+                {
+                    // TODO log as error instead of stderr...
+                    ex.printStackTrace();
+                }
+            }
+
+            // end of color preference read
+        }
     }
 }
 /*___oOo___*/
