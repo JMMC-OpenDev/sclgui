@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.5 2006-03-31 14:30:42 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.6 2006-03-31 14:33:13 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/03/31 14:30:42  mella
+ * Support some color preferences changes
+ *
  * Revision 1.4  2006/03/31 11:49:29  mella
  * Make file-open menu work
  *
@@ -246,6 +249,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         MCSLogger.trace();
 
         // TODO place right code to make jTable refresh itself
+        _jTable.repaint();
     }
 
     /**
