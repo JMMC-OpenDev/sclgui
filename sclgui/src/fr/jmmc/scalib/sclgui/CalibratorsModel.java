@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.4 2006-03-31 11:49:29 mella Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.5 2006-03-31 14:30:42 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/03/31 11:49:29  mella
+ * Make file-open menu work
+ *
  * Revision 1.3  2006/03/31 08:53:20  mella
  * Handle catalog origin color and confidence indexes from preferences
  * And jalopyzation
@@ -27,8 +30,8 @@ import cds.savot.writer.*;
 
 import jmmc.mcs.log.MCSLogger;
 
-import java.io.StringBufferInputStream;
 import java.io.BufferedReader;
+import java.io.StringBufferInputStream;
 
 import java.util.*;
 
@@ -75,7 +78,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         _columnNames          = new Vector();
     }
-  
+
     /**
      * Returns false regardless of parameter values.
      * @return false
@@ -96,9 +99,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         System.out.println("Row : " + row + " Col : " + col + " Value : " +
             value.toString() + " <---> Data can changed !!!");
     }
-   
-    
-    
+
     /**
      * Parse a VOTablegetting its content from an BufferReader and update any attached JTable to show
      * its content.
@@ -106,20 +107,26 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void parseVOTable(BufferedReader reader)
     {
-        try{
-            StringBuffer   sb  = new StringBuffer();
-            String         str;
+        try
+        {
+            StringBuffer sb  = new StringBuffer();
+            String       str;
+
             while ((str = reader.readLine()) != null)
             {
                 sb.append(str);
             }
+
             reader.close();
             parseVOTable(sb.toString());
-        }catch(Exception e){
+        }
+        catch (Exception e)
+        {
             // TODO handle exception
             e.printStackTrace();
         }
     }
+
     /**
      * Parse a given string as a VOTable and update any attached JTable to show
      * its content.
@@ -129,7 +136,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
-        _voTable = voTable;
+        _voTable             = voTable;
 
         // Clear all the internal list before new parsing
         _originalStarList.clear();

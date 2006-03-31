@@ -1,35 +1,26 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.2 2006-03-31 14:30:42 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Vector;
+import java.util.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.colorchooser.*;
+import javax.swing.event.*;
 
 
 // TODO handle close button correctly
@@ -37,88 +28,8 @@ import javax.swing.border.TitledBorder;
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
-public class PreferencesView extends JFrame implements Observer
+public class PreferencesView extends JFrame implements Observer, ActionListener
 {
-    /**
-     * DOCUMENT ME!
-     */
-    FlowLayout flowlay = new FlowLayout();
-
-    /**
-     * DOCUMENT ME!
-     */
-    Border borderlight = BorderFactory.createLineBorder(Color.gray, 1);
-
-    /**
-     * DOCUMENT ME!
-     */
-    Border borderultralight = BorderFactory.createLineBorder(Color.lightGray, 1);
-
-    //Panel
-    /**
-     * DOCUMENT ME!
-     */
-    JPanel panelconfigureresume = new JPanel();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JPanel panelconfigureresumebutton = new JPanel();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JPanel paneldata = new JPanel();
-
-    //Radio buttons
-    /**
-     * DOCUMENT ME!
-     */
-    JRadioButton details = new JRadioButton("Details");
-
-    /**
-     * DOCUMENT ME!
-     */
-    JRadioButton resume = new JRadioButton("Resume");
-
-    /**
-     * DOCUMENT ME!
-     */
-    ButtonGroup groupRadio = new ButtonGroup();
-
-    //buttons
-    /**
-     * DOCUMENT ME!
-     */
-    JButton buttonconfresume = new JButton("Configure Resume");
-
-    /**
-     * DOCUMENT ME!
-     */
-    JButton buttonapplyconfresume = new JButton("Apply");
-
-    /**
-     * DOCUMENT ME!
-     */
-    JButton buttondefaultconfresume = new JButton("Default");
-
-    //list and scrollpane
-    /**
-     * DOCUMENT ME!
-     */
-    JScrollPane scrollcolumn;
-
-    /**
-     * DOCUMENT ME!
-     */
-    JList listcolumn;
-
-    //evts
-    /**
-     * DOCUMENT ME!
-     */
-    PreferencesListener preferencesListener = new PreferencesListener(this);
-
     /**
      * DOCUMENT ME!
      */
@@ -135,99 +46,26 @@ public class PreferencesView extends JFrame implements Observer
         _preferences = preferences;
         _preferences.addObserver(this);
 
-        try
-        {
-            jbInit();
-        }
-        catch (Exception exc)
-        {
-            exc.printStackTrace();
-        }
-    }
+        // Build main GUI components
+        JPanel    mainPanel   = new JPanel();
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(mainPanel);
 
-    /**
-     * jbInit  -  Components initialisation
-     * @throws Exception
-     */
-    private void jbInit() throws Exception
-    {
-        setSize(300, 200);
+        // Append preference colors chooser component of catalogs
+        ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
+                "catalog.color.");
+        mainPanel.add(colorView);
 
+        // Center on screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize  = getSize();
         setLocation((screenSize.width - frameSize.width) / 2,
             (screenSize.height - frameSize.height) / 2);
 
-        flowlay.setAlignment(FlowLayout.LEFT);
-
-        //Panels configuration
-        paneldata.setLayout(flowlay);
-        paneldata.setBorder(new TitledBorder(borderlight, "Type of display"));
-
-        panelconfigureresume.setLayout(flowlay);
-        panelconfigureresume.setBorder(new TitledBorder(borderultralight,
-                "Resume configuration"));
-        panelconfigureresumebutton.setPreferredSize(new Dimension(80, 80));
-        panelconfigureresume.setVisible(false);
-
-        //type of data
-        Vector data = new Vector();
-        data.add("Mag I");
-        data.add("Mag J");
-        data.add("Mag H");
-        data.add("Mag K");
-
-        listcolumn       = new JList(data);
-        scrollcolumn     = new JScrollPane(listcolumn);
-        scrollcolumn.setPreferredSize(new Dimension(160, 120));
-        listcolumn.setToolTipText("Press on Ctrl to select several data");
-
-        buttonconfresume.addActionListener(preferencesListener);
-        groupRadio.add(resume);
-        groupRadio.add(details);
-        resume.setSelected(true);
-        resume.addActionListener(preferencesListener);
-        details.addActionListener(preferencesListener);
-        details.setPreferredSize(new Dimension(250, 21));
-
-        buttonapplyconfresume.addActionListener(preferencesListener);
-        buttonapplyconfresume.setPreferredSize(new Dimension(80, 27));
-        buttondefaultconfresume.addActionListener(preferencesListener);
-        buttondefaultconfresume.setPreferredSize(new Dimension(80, 27));
-
-        panelconfigureresume.add(scrollcolumn);
-        panelconfigureresume.add(panelconfigureresumebutton);
-        panelconfigureresumebutton.add(buttonapplyconfresume);
-        panelconfigureresumebutton.add(buttondefaultconfresume);
-
-        paneldata.add(details);
-        paneldata.add(resume);
-        paneldata.add(buttonconfresume);
-        paneldata.add(panelconfigureresume);
-
-        getContentPane().add(paneldata, java.awt.BorderLayout.CENTER);
-    }
-
-    /**
-     * Set Frame configuration
-     * @param display boolean
-     */
-    public void configureResumeDisplay(boolean display)
-    {
-        if (display)
-        {
-            setSize(300, 310);
-            setVisible(false);
-            setVisible(true);
-        }
-        else
-        {
-            setSize(300, 200);
-            setVisible(true);
-            setVisible(false);
-        }
-
-        panelconfigureresume.setVisible(display);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        pack();
+        setResizable(false);
     }
 
     /**
@@ -240,26 +78,37 @@ public class PreferencesView extends JFrame implements Observer
     {
         // TODO : MˆJ des champs de la fenetre
     }
+
+    /**
+     * actionPerformed  -  Listener
+     * @param evt ActionEvent
+     */
+    public void actionPerformed(ActionEvent evt)
+    {
+    }
 }
 
 
 /**
  * DOCUMENT ME!
- */
-class PreferencesListener implements ActionListener
+ *
+ * @author $author$
+ * @version $Revision: 1.2 $
+  */
+class SpecificPreferencesView extends JPanel
 {
     /**
      * DOCUMENT ME!
      */
-    PreferencesView _view;
+    Preferences _preferences;
 
     /**
-     * PreferencesListener  -  Constructor
-     * @param view PreferencesView
+     * Constructor.
+     * @param title String
      */
-    public PreferencesListener(PreferencesView view)
+    public SpecificPreferencesView(Preferences preferences)
     {
-        _view = view;
+        _preferences = preferences;
     }
 
     /**
@@ -268,48 +117,175 @@ class PreferencesListener implements ActionListener
      */
     public void actionPerformed(ActionEvent evt)
     {
-        //Check resume or details
-        if (evt.getSource() == _view.resume)
+    }
+}
+
+
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision: 1.2 $
+  */
+class ColorPreferencesView extends JPanel implements ChangeListener,
+    ActionListener
+{
+    /**
+     * DOCUMENT ME!
+     */
+    protected JColorChooser tcc;
+
+    /**
+     * DOCUMENT ME!
+     */
+    protected JLabel banner;
+
+    /**
+     * DOCUMENT ME!
+     */
+    protected Preferences _preferences;
+
+    /**
+     * DOCUMENT ME!
+     */
+    protected JComboBox _preferenceNames;
+
+    /**
+     * DOCUMENT ME!
+     */
+    protected String _preferencePrefix;
+
+    /**
+     * DOCUMENT ME!
+     */
+    protected JButton _applyChangesButton;
+
+    /**
+     * DOCUMENT ME!
+     */
+    protected JButton _saveChangesButton;
+
+    /**
+     * Creates a new ColorPreferencesView object.
+     *
+     * @param preferences DOCUMENT ME!
+     * @param prefix DOCUMENT ME!
+     */
+    public ColorPreferencesView(Preferences preferences, String prefix)
+    {
+        super(new BorderLayout());
+        _preferencePrefix     = prefix;
+        _preferences          = preferences;
+
+        //Set up color chooser for setting text color
+        tcc                   = new JColorChooser();
+        tcc.getSelectionModel().addChangeListener(this);
+
+        // Set up combo test label and apply button
+        _preferenceNames = new JComboBox();
+
+        // Fill with catalog List
+        Enumeration e = _preferences.getPreferences(prefix);
+
+        while (e.hasMoreElements())
         {
-            System.out.println("radio resume");
-        }
-        else if (evt.getSource() == _view.details)
-        {
-            System.out.println("radio details");
+            String entry       = (String) e.nextElement();
+            String catalogName = entry.substring(prefix.length());
+            _preferenceNames.addItem(catalogName);
         }
 
-        //Configure resume display
-        if (evt.getSource() == _view.buttonconfresume)
+        _applyChangesButton = new JButton("Apply changes");
+        _applyChangesButton.addActionListener(this);
+
+        _saveChangesButton = new JButton("Save changes");
+        _saveChangesButton.addActionListener(this);
+
+        setBorder(BorderFactory.createTitledBorder("Choose Color for " +
+                _preferencePrefix + "*"));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(tcc);
+        add(_preferenceNames);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.add(_applyChangesButton);
+        buttonsPanel.add(_saveChangesButton);
+        add(buttonsPanel);
+        _preferenceNames.addActionListener(this);
+        updateColor();
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param e DOCUMENT ME!
+     */
+    public void stateChanged(ChangeEvent e)
+    {
+        Color newColor = tcc.getColor();
+    }
+
+    /**
+     * DOCUMENT ME!
+     */
+    private void updateColor()
+    {
+        String preferenceName = _preferencePrefix +
+            _preferenceNames.getSelectedItem();
+        Color  c;
+
+        try
         {
-            _view.configureResumeDisplay(true);
+            c                 = _preferences.getPreferenceAsColor(preferenceName);
+        }
+        catch (Exception e)
+        {
+            c = Color.white;
         }
 
-        //Apply configuration
-        if (evt.getSource() == _view.buttonapplyconfresume)
+        tcc.setColor(c);
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param evt DOCUMENT ME!
+     */
+    public void actionPerformed(ActionEvent evt)
+    {
+        // If combobox was modified
+        if (evt.getSource().equals(_preferenceNames))
         {
-            if (_view.listcolumn.isSelectionEmpty() == false)
+            updateColor();
+        }
+
+        // If apply button pressed
+        if (evt.getSource().equals(_applyChangesButton))
+        {
+            String preferenceName = _preferencePrefix +
+                _preferenceNames.getSelectedItem();
+            Color  newColor       = tcc.getColor();
+            _preferences.setPreference(preferenceName,
+                jmmc.mcs.util.ColorEncoder.encode(newColor));
+        }
+
+        // If save button pressed
+        if (evt.getSource().equals(_applyChangesButton))
+        {
+            String preferenceName = _preferencePrefix +
+                _preferenceNames.getSelectedItem();
+            Color  newColor       = tcc.getColor();
+            _preferences.setPreference(preferenceName,
+                jmmc.mcs.util.ColorEncoder.encode(newColor));
+
+            try
             {
-                int[] column = null;
-                column = _view.listcolumn.getSelectedIndices();
-
-                int k = 0;
-
-                for (k = 0; k < column.length; k++)
-                {
-                    System.out.println("Elts selectionne : " +
-                        _view.listcolumn.getModel().getElementAt(column[k]));
-                }
+                _preferences.saveToFile();
             }
-            else
+            catch (Exception e)
             {
-                System.out.println("Aucun elts selectionne");
+                // TODO criez fort!!
+                e.printStackTrace();
             }
         }
-
-        //Default configuration
-        if (evt.getSource() == _view.buttondefaultconfresume)
-        {
-            System.out.println("Default configuration");
-        }
-    } //end actionPerformed
-} //end class
+    }
+}

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.4 2006-03-31 11:49:29 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.5 2006-03-31 14:30:42 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/03/31 11:49:29  mella
+ * Make file-open menu work
+ *
  * Revision 1.3  2006/03/31 08:53:20  mella
  * Handle catalog origin color and confidence indexes from preferences
  * And jalopyzation
@@ -26,9 +29,9 @@ import jmmc.mcs.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.*;
-
 import java.io.*;
+
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -194,27 +197,29 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * Open the given file and display it. In fact it tells to the inner model to parse it.
      *
-     * @param file the file to display. 
+     * @param file the file to display.
      */
-      public void openFile(File file){
-        
-        try{ 
+    public void openFile(File file)
+    {
+        try
+        {
             // Get a BufferedReader from file
-            String fileName   = file.getAbsolutePath();
+            String         fileName   = file.getAbsolutePath();
             FileReader     fileReader = new FileReader(fileName);
             BufferedReader in         = new BufferedReader(fileReader);
 
             // Build CalibratorModel and parse votable
             _calibratorsModel.parseVOTable(in);
-            
+
             // Finally affect this model to the main view
-        }catch(Exception e){
+        }
+        catch (Exception e)
+        {
             // TODO handle this exception
             e.printStackTrace();
         }
     }
 
-    
     /**
      * Called on _calibratorsModel changes.
      */
@@ -238,6 +243,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     public void update(Observable o, Object arg)
     {
+        MCSLogger.trace();
+
+        // TODO place right code to make jTable refresh itself
     }
 
     /**
@@ -370,7 +378,6 @@ class TableCellColors extends DefaultTableCellRenderer implements Observer
         return this;
     }
 
-       
     /**
      * DOCUMENT ME!
      *
