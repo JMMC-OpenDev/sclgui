@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.3 2006-03-31 08:53:20 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.4 2006-03-31 11:49:29 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/03/31 08:53:20  mella
+ * Handle catalog origin color and confidence indexes from preferences
+ * And jalopyzation
+ *
  * Revision 1.2  2006/03/30 13:39:19  yvander
  * Mise en place des couleurs
  *
@@ -23,6 +27,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import java.util.*;
+
+import java.io.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -119,22 +125,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         //        setBorder(new TitledBorder(coloredBorder, "RESULTS"));
         setBorder(new TitledBorder(grayBorder, "Found Calibrators"));
 
-        // View layout.
-        FlowLayout viewLayout = new FlowLayout();
-
         // Size management
         setMinimumSize(new Dimension(width, 320));
-        setSize(new Dimension(width, 320));
-        setLayout(viewLayout);
-        setPreferredSize(new Dimension(width, 320));
-
-        // Table panel creation
-        JPanel tablePanel = new JPanel();
-        tablePanel.setMinimumSize(new Dimension(subpanelwidth, 270));
-        tablePanel.setSize(new Dimension(subpanelwidth, 270));
-        tablePanel.setPreferredSize(new Dimension(subpanelwidth, 270));
-        tablePanel.setLayout(viewLayout);
-        add(tablePanel);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Table initialization
         _jTable = new JTable();
@@ -143,8 +136,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         JScrollPane scrollPane = new JScrollPane(_jTable);
         scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
-        scrollPane.setPreferredSize(new Dimension(subpanelwidth, 160));
-        tablePanel.add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(subpanelwidth, 260));
+        add(scrollPane);
 
         // Button panel creation
         JPanel buttonPanel = new JPanel();
@@ -195,9 +188,33 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         toolsPanel.setSize(new Dimension(subpanelwidth, 140));
         toolsPanel.setPreferredSize(new Dimension(subpanelwidth, 140));
 
-        tablePanel.add(toolsPanel);
+        add(toolsPanel);
     }
 
+    /**
+     * Open the given file and display it. In fact it tells to the inner model to parse it.
+     *
+     * @param file the file to display. 
+     */
+      public void openFile(File file){
+        
+        try{ 
+            // Get a BufferedReader from file
+            String fileName   = file.getAbsolutePath();
+            FileReader     fileReader = new FileReader(fileName);
+            BufferedReader in         = new BufferedReader(fileReader);
+
+            // Build CalibratorModel and parse votable
+            _calibratorsModel.parseVOTable(in);
+            
+            // Finally affect this model to the main view
+        }catch(Exception e){
+            // TODO handle this exception
+            e.printStackTrace();
+        }
+    }
+
+    
     /**
      * Called on _calibratorsModel changes.
      */
@@ -353,6 +370,7 @@ class TableCellColors extends DefaultTableCellRenderer implements Observer
         return this;
     }
 
+       
     /**
      * DOCUMENT ME!
      *

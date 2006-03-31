@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.2 2006-03-31 11:49:29 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -293,7 +296,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                 File file = _fileChooser.getSelectedFile();
-                System.out.println("Opening: " + file.getName());
+                _mainWindow._calibratorsView.openFile(file);
             }
             else
             {
