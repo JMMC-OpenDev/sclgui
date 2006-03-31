@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarList.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: StarList.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -19,6 +22,8 @@ import java.util.*;
  */
 public class StarList extends Vector
 {
+    // Trace has been deactvated because of numerous call
+
     /** DOCUMENT ME! */
     private Hashtable _fieldIdToColNumber;
 
@@ -52,8 +57,7 @@ public class StarList extends Vector
      */
     public int getColumnIdByName(String groupName)
     {
-        MCSLogger.trace();
-
+        //MCSLogger.trace();
         Integer index = ((Integer) _fieldIdToColNumber.get(groupName));
 
         return index.intValue();

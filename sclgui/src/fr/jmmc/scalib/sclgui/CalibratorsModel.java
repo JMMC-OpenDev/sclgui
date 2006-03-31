@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.2 2006-03-30 13:40:57 yvander Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.3 2006-03-31 08:53:20 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/30 13:40:57  yvander
+ * Mise en place des couleurs
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -69,14 +72,24 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * Returns false regardless of parameter values.
+     * @return false
+     */
+    public boolean isCellEditable(int row, int column)
+    {
+        return false;
+    }
+
+    /**
      * setValueAt.
      *
      * This method is called when a cell changed.
      */
-    public void setValueAt(Object value, int row, int col) {
-
+    public void setValueAt(Object value, int row, int col)
+    {
         // DOCUMENT ME!
-        System.out.println("Row : "+row+" Col : "+col+" Value : "+value.toString()+" <---> Data can changed !!!");
+        System.out.println("Row : " + row + " Col : " + col + " Value : " +
+            value.toString() + " <---> Data can changed !!!");
     }
 
     /**
@@ -177,23 +190,26 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         update(null, null);
     }
 
-     /**
-      * getStarProperty.
-      *
-      * Return the StarProperty corresponding to the cell.
-      */
-    public StarProperty getStarProperty(int row,String colName){
-
+    /**
+     * getStarProperty.
+     *
+     * Return the StarProperty corresponding to the cell.
+     */
+    public StarProperty getStarProperty(int row, String colName)
+    {
         // The real column index
-        Vector starsProperties =  (Vector)_currentStarList.get(row);
-	int col = _currentStarList.getColumnIdByName(colName);
+        Vector starsProperties = (Vector) _currentStarList.get(row);
+        int    col             = _currentStarList.getColumnIdByName(colName);
 
-	// Return the StarProperty
-	if(starsProperties.get(col) instanceof StarProperty)
-	  return (StarProperty)starsProperties.get(col);
-	else
-	  return null;
-
+        // Return the StarProperty
+        if (starsProperties.get(col) instanceof StarProperty)
+        {
+            return (StarProperty) starsProperties.get(col);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
