@@ -5,14 +5,24 @@
       <errSeverity>WARNING</errSeverity>
       <errFormat><![CDATA[Server is busy. Command '%s' could not be processed.]]></errFormat>
    </error>
-   <error id="2">
-      <errName>SERVER_CRASH</errName>
-      <errSeverity>WARNING</errSeverity>
-      <errFormat><![CDATA[The Search Calibrators server had been stopped]]></errFormat>
-   </error>
    <error id="3">
       <errName>FILTER_NOT_FOUND</errName>
       <errSeverity>WARNING</errSeverity>
       <errFormat><![CDATA[The filter %s was not found in the filter list]]></errFormat>
+   </error>
+   <error id="4">
+      <errName>NOT_SUPPORTED</errName>
+      <errSeverity>WARNING</errSeverity>
+      <errFormat><![CDATA[%.80s - not supported]]></errFormat>
+   </error>
+   <error id="5">
+      <errName>SERVER_CRASH</errName>
+      <errSeverity>WARNING</errSeverity>
+      <errFormat><![CDATA[SearchCal abnormally exited]]></errFormat>
+   </error>
+   <error id="6">
+      <errName>INVALID_CALIB_TYPE</errName>
+      <errSeverity>WARNING</errSeverity>
+      <errFormat><![CDATA[Invalid calibrator type '%d']]></errFormat>
    </error>
 </errorList>
