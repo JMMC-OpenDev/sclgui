@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.2 2006-04-05 12:45:34 yvander Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -54,13 +57,27 @@ public class FiltersModel
 
         FilterView multiplicityFilterView = new FilterView(multiplicityFilter);
 
+	SpectralTypeFilter spectralTypeFilter  = new SpectralTypeFilter();
+        spectralTypeFilter.setEnabled(Boolean.FALSE);
+
+        FilterView spectralTypeFilterView = new FilterView(spectralTypeFilter);
+
+	LuminosityFilter LuminosityFilter  = new LuminosityFilter();
+        LuminosityFilter.setEnabled(Boolean.FALSE);
+
+        FilterView LuminosityFilterView = new FilterView(LuminosityFilter);
+
         _filterList.add(distanceFilter1);
         _filterList.add(distanceFilter2);
         _filterList.add(multiplicityFilter);
+	_filterList.add(spectralTypeFilter);
+	_filterList.add(LuminosityFilter);
 
         _filterViews.add(distanceFilterView1);
         _filterViews.add(distanceFilterView2);
         _filterViews.add(multiplicityFilterView);
+	_filterViews.add(spectralTypeFilterView);
+	_filterViews.add(LuminosityFilterView);
     }
 
     /**
