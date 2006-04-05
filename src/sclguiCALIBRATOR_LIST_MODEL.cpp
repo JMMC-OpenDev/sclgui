@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.7 2006-03-03 15:28:17 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.8 2006-04-05 15:08:28 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/03/03 15:28:17  scetre
+ * Changed rcsId to rcsId __attribute__ ((unused))
+ *
  * Revision 1.6  2005/12/22 13:03:22  scetre
  * Updated doxygen doumentation
  *
@@ -31,7 +34,7 @@
  * Definition of sclguiCALIBRATOR_LIST_MODEL class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.7 2006-03-03 15:28:17 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.8 2006-04-05 15:08:28 gzins Exp $"; 
 
 /* 
  * System Headers 
@@ -47,19 +50,17 @@ using namespace std;
 #include "log.h"
 #include "err.h"
 
-
 /*
  * SCALIB Headers 
  */
 #include "vobs.h"
-
 
 /*
  * Local Headers 
  */
 #include "sclguiCALIBRATOR_LIST_MODEL.h"
 #include "sclguiPrivate.h"
-
+#include "sclguiErrors.h"
 
 /**
  * Class constructor
@@ -90,8 +91,8 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::SetList(msgMESSAGE &msg)
 {
     logTrace("sclguiCALIBRATOR_LIST_MODEL::SetList()");
 
-    // todo err
-    ResetCalibrators();
+    // Clear list 
+    Clear();
 
     // If calibrators have been found or not.
     if (miscIsSpaceStr(msg.GetBody()) == mcsFALSE)
@@ -120,8 +121,8 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::SetList(sclsvrCALIBRATOR_LIST &list)
 {
     logTrace("sclguiCALIBRATOR_LIST_MODEL::SetList()");
 
-    // todo err
-    ResetCalibrators();
+    // Clear list 
+    Clear();
 
     _calibratorList.Copy(list);
     
@@ -131,6 +132,34 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::SetList(sclsvrCALIBRATOR_LIST &list)
         return mcsFAILURE;
     }
     
+    return mcsSUCCESS;
+}
+
+/**
+ * Clear calibrator list of the model
+ *
+ * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
+ * returned.
+ */
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::Clear(void)
+{
+    logTrace("sclguiCALIBRATOR_LIST_MODEL::Clear()");
+
+    // Clear the list of calibrators
+    _calibratorList.Clear();
+
+     // Clear list of deleted calibrators 
+    if (ClearDeletedCalibratorList() == mcsFAILURE)
+    {
+        return mcsFAILURE;
+    }
+
+    // Notify attached views
+    if (NotifyViews() == mcsFAILURE)
+    { 
+        return mcsFAILURE;
+    }
+
     return mcsSUCCESS;
 }
 
@@ -151,23 +180,130 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::SetFilterList(sclguiFILTER_LIST_MODEL
 }
 
 /**
- * Get the list of calibrators of the model
+ * Get the list of the specified calibrators
+ *
+ * @param type specify  
  *
  * @return list of calibrator of the model according the filter witch are
  * enabled
  */
-sclsvrCALIBRATOR_LIST* sclguiCALIBRATOR_LIST_MODEL::GetCalibratorList(void)
+sclsvrCALIBRATOR_LIST* sclguiCALIBRATOR_LIST_MODEL::GetList
+    (sclguiTYPE_OF_CALIBRATORS type)
 {
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetCalibratorList()");
+    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetList()");
 
-    _filteredCalibratorList.Clear(); 
-    _filteredCalibratorList.Copy(_calibratorList, mcsFALSE);
+    switch (type)
+    {
+        case sclguiALL_CALIBRATORS:
+        {
+            return (&_calibratorList);
+            break;
+        }
+        case sclguiDELETED_CALIBRATORS:
+        {
+            return (&_deletedCalibratorList);
+            break;
+        }        
+        case sclguiFILTERED_CALIBRATORS:
+        {
+            // Apply filter and remove deleted calibrators
+            _filteredCalibratorList.Clear(); 
+            _filteredCalibratorList.Copy(_calibratorList, mcsFALSE);
+            _filteredCalibratorList.Delete(_deletedCalibratorList);
+            _filterListModel->Apply(_filteredCalibratorList);
+            return (&_filteredCalibratorList);
+            break;
+        }        
+        case sclguiCALIBRATORS_WITH_COHERENT_DIAM:
+        case sclguiCALIBRATORS_WITHOUT_VAR_MULT:
+        {
+            errAdd(sclguiERR_NOT_SUPPORTED, 
+                   "Get list of calibrators with coherent diameters or without "
+                   "multiply/variability");
+            return NULL;
+            break;
+        }
+        default:
+        {
+            errAdd(sclguiERR_INVALID_CALIB_TYPE, type);
+            return NULL;
+            break;
+        }
+    }
+}
 
-    // delete in the return list the unwanted calibrators
-    _filteredCalibratorList.Extract(_deletedCalibratorList);
-    _filterListModel->Apply(_filteredCalibratorList);
+/**
+ * Get number of CDS return
+ *
+ * @return number of CDS return
+ */
+mcsINT32 sclguiCALIBRATOR_LIST_MODEL::GetNbCalibrators
+    (sclguiTYPE_OF_CALIBRATORS type)
+{
+    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetNbCalibrators");
 
-    return &_filteredCalibratorList;
+    switch (type)
+    {
+        case sclguiALL_CALIBRATORS:
+        {
+            return (_calibratorList.Size());
+            break;
+        }
+        case sclguiDELETED_CALIBRATORS:
+        {
+            return (_deletedCalibratorList.Size());
+            break;
+        }        
+        case sclguiFILTERED_CALIBRATORS:
+        {
+            // Apply filter and remove deleted calibrators
+            _filteredCalibratorList.Clear(); 
+            _filteredCalibratorList.Copy(_calibratorList, mcsFALSE);
+            _filteredCalibratorList.Delete(_deletedCalibratorList);
+            _filterListModel->Apply(_filteredCalibratorList);
+            return (_filteredCalibratorList.Size());
+            break;
+        }        
+        case sclguiCALIBRATORS_WITH_COHERENT_DIAM:
+        {
+            // Get list with only calibrators having coherent diameter
+            sclsvrCALIBRATOR_LIST list;
+            list.Copy(_calibratorList, mcsFALSE);
+            return (list.Size());
+            break;
+        }
+        case sclguiCALIBRATORS_WITHOUT_VAR_MULT:
+        {
+            // Filter list
+            vobsFILTER_LIST filterList("Filter List");
+
+            // Add variability filter
+            vobsVARIABILITY_FILTER variabilityFilter("Var filter");
+            variabilityFilter.Enable();
+            filterList.Add(&variabilityFilter, "Variability Filter");
+
+            // Add multiplicity filter
+            vobsMULTIPLICITY_FILTER multiplicityFilter("Mult filter");
+            multiplicityFilter.Enable();
+            filterList.Add(&multiplicityFilter, "Multiplicity Filter");
+
+            // Get list with only calibrators having coherent diameter
+            sclsvrCALIBRATOR_LIST list;
+            list.Copy(_calibratorList, mcsFALSE);
+    
+            // Apply the temporary filter list on the copied list
+            filterList.Apply(&list);
+            return (list.Size());
+
+            break;
+        }
+        default:
+        {
+            errAdd(sclguiERR_INVALID_CALIB_TYPE, type);
+            return -1;
+            break;
+        }
+    }
 }
 
 /**
@@ -176,26 +312,26 @@ sclsvrCALIBRATOR_LIST* sclguiCALIBRATOR_LIST_MODEL::GetCalibratorList(void)
  * Removing a calibrator of the list is done by puting this star in the list of
  * the unwanted star.
  *
- * @param unwantedStarNumber the unwanted calibrator number
- * @param DeletedStarNameMsg message
+ * @param starNum the unwanted calibrator number
+ * @param starId Id of the deleted star
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
 mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_MODEL::DeleteCalibrator(mcsINT32       unwantedStarNumber,
-                                              miscoDYN_BUF  &DeletedStarNameMsg)
+sclguiCALIBRATOR_LIST_MODEL::DeleteCalibrator(mcsINT32 starNum,
+                                              mcsSTRING32 starId)
 {
     logTrace("sclguiCALIBRATOR_LIST_MODEL::DeleteCalibrator()");
 
     sclsvrCALIBRATOR_LIST* list;
     list = new sclsvrCALIBRATOR_LIST;
     list->Copy(_calibratorList, mcsFALSE);
-    list->Extract(_deletedCalibratorList);
+    list->Delete(_deletedCalibratorList);
     _filterListModel->Apply(*list);
     
     sclsvrCALIBRATOR* calibrator = NULL;    
-    for (int el = 0; el < unwantedStarNumber; el++)
+    for (int el = 0; el < starNum; el++)
     {
         // Get next calibrator
         calibrator = (sclsvrCALIBRATOR*)list->GetNextStar((mcsLOGICAL)(el==0));
@@ -213,73 +349,21 @@ sclguiCALIBRATOR_LIST_MODEL::DeleteCalibrator(mcsINT32       unwantedStarNumber,
         return mcsFAILURE;
     }
 
-    // Convert calibrator number to string
-    mcsSTRING32 calibratorNumberBuffer;
-    sprintf(calibratorNumberBuffer, "%d", unwantedStarNumber);
-    // Build message
-    if (DeletedStarNameMsg.AppendString("Star number ") == mcsFAILURE)
-    {
-        return mcsFAILURE;
-    }
-    if (DeletedStarNameMsg.AppendString(calibratorNumberBuffer) == mcsFAILURE)
-    {
-        return mcsFAILURE;
-    }
-    if (calibrator != NULL)
-    {
-        if (DeletedStarNameMsg.AppendString(" (HD ") == mcsFAILURE)
-        {
-            return mcsFAILURE;
-        }
-        if (DeletedStarNameMsg.
-            AppendString(calibrator->GetPropertyValue(vobsSTAR_ID_HD)) ==
-            mcsFAILURE)
-        {
-            return mcsFAILURE;
-        }
-        if (DeletedStarNameMsg.AppendString(")") == mcsFAILURE)
-        {
-            return mcsFAILURE;
-        }
-    }
-    if (DeletedStarNameMsg.AppendString(" has been deleted") == mcsFAILURE)
-    {
-        return mcsFAILURE;
-    }
+    // Get star Id 
+    calibrator->GetId(starId, sizeof(mcsSTRING32) - 1);
     
     return mcsSUCCESS;
 }
 
 /**
- * Reset calibrator list of the model
+ * Clear list of deleted calibrators 
  *
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
  * returned.
  */
-mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::ResetCalibrators(void)
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::ClearDeletedCalibratorList(void)
 {
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::ResetCalibrators()");
-
-    _calibratorList.Clear();
-
-    // Notify attached views
-    if (NotifyViews() == mcsFAILURE)
-    { 
-        return mcsFAILURE;
-    }
-
-    return mcsSUCCESS;
-}
-
-/**
- * Reset deleting calibrator list of the model
- *
- * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is 
- * returned.
- */
-mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::ResetDeletedCalibrators(void)
-{
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::ResetDeletedCalirators()");
+    logTrace("sclguiCALIBRATOR_LIST_MODEL::ClearDeletedCalibratorList()");
 
     _deletedCalibratorList.Clear();
 
@@ -292,81 +376,6 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::ResetDeletedCalibrators(void)
     return mcsSUCCESS;
 }
 
-
-/**
- * Get number of CDS return
- *
- * @return number of CDS return
- */
-mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbCDSReturn(void)
-{
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetNbCDSReturn");
-
-    return _calibratorList.Size();
-}
-
-/**
- * Get the number of calibrators with a coherent diameter
- *
- * @return number of calibrator with coherent diameter
- */
-mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbCoherentDiamFound(void)
-{
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetNbCoherentDiamFound");   
-
-    // Create new calibrator list from the model list
-    sclsvrCALIBRATOR_LIST list;
-    list.Copy(_calibratorList, mcsFALSE);
-
-    return list.Size();
-}
-
-
-/**
- * Get the number of caliobrators without variability and multiplicity flag
- *
- * @return number of calibrator without variability and multiplicity flag
- */
-mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbWithoutVarMult(void)
-{
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetNbWithoutVarMult");
-    
-    // Temporary filter list
-    vobsFILTER_LIST filterList("Filter List");
-
-    // Add variability filter
-    vobsVARIABILITY_FILTER variabilityFilter("Var filter");
-    variabilityFilter.Enable();
-    filterList.Add(&variabilityFilter, "Variability Filter");
-
-    // Add multiplicity filter
-    vobsMULTIPLICITY_FILTER multiplicityFilter("Mult filter");
-    multiplicityFilter.Enable();
-    filterList.Add(&multiplicityFilter, "Multiplicity Filter");
-    
-    // Create temporary calibrator list copy of the model list
-    sclsvrCALIBRATOR_LIST list;
-    list.Copy(_calibratorList, mcsFALSE);
-
-    // Apply the temporary filter list on the copied list
-    filterList.Apply(&list);
-    
-    // Return the number of calibrator left in the list after filtering
-    return list.Size();
-}
-
-/**
- * Get the number of star left in the filtered list
- *
- * @return number of star in the filtered list
- */
-mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbInFilteredList(void)
-{
-    logTrace("sclguiCALIBRATOR_LIST_MODEL::GetNbInFilteredList()");
-
-    return _filteredCalibratorList.Size();
-}
-
 /**
  * Load a calibrator list from a given file
  *
@@ -377,16 +386,12 @@ mcsFLOAT sclguiCALIBRATOR_LIST_MODEL::GetNbInFilteredList(void)
  * returned.
  */
 mcsCOMPL_STAT sclguiCALIBRATOR_LIST_MODEL::LoadFromFile(mcsSTRING256 fileName,
-                                              sclsvrREQUEST &request)
+                                                        sclsvrREQUEST &request)
 {
     logTrace("sclguiCALIBRATOR_LIST_MODEL::LoadFromFile()");
 
-    // Reset Model
-    if (ResetCalibrators() == mcsFAILURE)
-    {
-        return mcsFAILURE;
-    }
-    if (ResetDeletedCalibrators() == mcsFAILURE)
+    // Clear list of calibrators 
+    if (Clear() == mcsFAILURE)
     {
         return mcsFAILURE;
     }
