@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.14 2006-03-22 10:45:48 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.15 2006-04-05 15:09:22 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/03/22 10:45:48  scetre
+ * Added TYC2, TYC3, GLAT and GLON in the detail labels
+ *
  * Revision 1.13  2006/03/07 07:54:07  scetre
  * Minor changes
  *
@@ -54,7 +57,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.14 2006-03-22 10:45:48 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.15 2006-04-05 15:09:22 gzins Exp $"; 
 
 /* 
  * System Headers 
@@ -277,16 +280,20 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
 
     // Update the 'resume' textfield
     ostringstream output;
-    output << "Number of stars: " << _calibratorListModel->GetNbCDSReturn()
-           << " found, " << _calibratorListModel->GetNbCoherentDiamFound() 
+    output << "Number of stars: " 
+           << _calibratorListModel->GetNbCalibrators(sclguiALL_CALIBRATORS)
+           << " found, " 
+           << _calibratorListModel->GetNbCalibrators
+                                        (sclguiCALIBRATORS_WITH_COHERENT_DIAM)
            << " with coherent diameter and "
-           << _calibratorListModel->GetNbWithoutVarMult() 
+           << _calibratorListModel->GetNbCalibrators
+                                        (sclguiCALIBRATORS_WITHOUT_VAR_MULT)
            << " without variability and multiplicity";
     _resumeTextArea.SetText(output.str());
     
     // Retrieve the calibrator list from the model
     sclsvrCALIBRATOR_LIST *calibratorList;
-    calibratorList = _calibratorListModel->GetCalibratorList();
+    calibratorList = _calibratorListModel->GetList(sclguiFILTERED_CALIBRATORS);
 
     // Build looking label
     BuildLabel(&_label, _details);

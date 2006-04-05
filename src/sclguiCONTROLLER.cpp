@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.14 2006-03-07 15:14:16 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.15 2006-04-05 15:09:34 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/03/07 15:14:16  scetre
+ * Increased timoe out from 12000 to 60000
+ *
  * Revision 1.13  2006/03/03 15:28:17  scetre
  * Changed rcsId to rcsId __attribute__ ((unused))
  *
@@ -52,7 +55,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.14 2006-03-07 15:14:16 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.15 2006-04-05 15:09:34 gzins Exp $"; 
 
 /* 
  * System Headers 
@@ -380,7 +383,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::ShowAllResultsButtonCB(void*)
     {
         return mcsFAILURE;
     }
-    _calibratorListModel.ResetDeletedCalibrators();
+    _calibratorListModel.ClearDeletedCalibratorList();
     
     // Disable filter by variability and multipicity because the default state
     // of the model enabled mult and var
@@ -420,7 +423,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::ResetButtonCB(void*)
     }
 
     // Reset list of unwanted calibrators
-    _calibratorListModel.ResetDeletedCalibrators();
+    _calibratorListModel.ClearDeletedCalibratorList();
     
     // Update main window
     _mainWindow.Update();
@@ -582,33 +585,38 @@ mcsCOMPL_STAT sclguiCONTROLLER::DeleteButtonCB(void*)
 
     // If the number of star in the filtered list is not positive or lower
     // than zero, inform the user
-    if (_calibratorListModel.GetNbInFilteredList() == 0)
+    mcsINT32 nbCalibrators;
+    nbCalibrators = 
+        _calibratorListModel.GetNbCalibrators(sclguiFILTERED_CALIBRATORS);
+    if (nbCalibrators == 0)
     {
         SetStatus(false, "Invalid star number",
                   "Can't delete, no star in the list");
         return mcsFAILURE;
     }
-    else if ((calibratorNumber > _calibratorListModel.GetNbInFilteredList()) || 
+    else if ((calibratorNumber > (mcsUINT32)nbCalibrators) ||
              (calibratorNumber <= 0))
     {
         sprintf(statusMessage,
                 "Value should be a positive integer lower than %d",
-                _calibratorListModel.GetNbInFilteredList());
+                nbCalibrators);
         SetStatus(false, "Invalid star number", statusMessage); 
         return mcsFAILURE;
     }
     
     // Delete the unwanted calibrator star in the model
-    miscoDYN_BUF DeletedStarNameMsg;
+    mcsSTRING32 starId;
     if (_calibratorListModel.DeleteCalibrator(calibratorNumber,
-                                              DeletedStarNameMsg) == mcsFAILURE)
+                                              starId) == mcsFAILURE)
     {
         return mcsFAILURE;
     }
 
     // Display a status message containing the deleted star name
-    string statusMsg = DeletedStarNameMsg.GetBuffer();
-    SetStatus(true, statusMsg);
+    ostringstream statusMsg;
+    statusMsg << "Star number " << calibratorNumber << " (" 
+        << starId << ") has been deleted";
+    SetStatus(true, statusMsg.str());
     
     // Update main window
     _mainWindow.Update();
@@ -785,7 +793,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::VOTExportButtonCB(void*)
  */
 mcsCOMPL_STAT sclguiCONTROLLER::SaveOverwriteButtonCB(void*)
 {
-    logTrace("sclguiCONTROLLER::OverwriteButtonCB()");
+    logTrace("sclguiCONTROLLER::SaveOverwriteButtonCB()");
 
     // Get the file name from the corresponding textfield
     mcsSTRING256 fileName;
@@ -1147,7 +1155,8 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
     vobsSTAR_PROPERTY_ID_LIST label;
 
     // Get the calibrator list
-    sclsvrCALIBRATOR_LIST* list = _calibratorListModel.GetCalibratorList();
+    sclsvrCALIBRATOR_LIST* list =
+        _calibratorListModel.GetList(sclguiFILTERED_CALIBRATORS);
 
     // Get the user request parameters
     mcsSTRING256 request;
@@ -1158,6 +1167,8 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
     {
         case sclguiSAVE_OVERWRITE :
         {
+            list = _calibratorListModel.GetList(sclguiALL_CALIBRATORS);
+
             // Get list label
             label = _calibratorListModelSubPanel.GetLabel(mcsTRUE);
     
@@ -1165,7 +1176,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
             label.push_back(sclsvrCALIBRATOR_DIAM_FLAG);
 
             // Call Save method of the list for a save
-            status = list->Save(fileName, label, _requestModel, mcsTRUE);
+            status = list->Save(fileName, label, _requestModel, mcsFALSE);
 
             break;
         }
