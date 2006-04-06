@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.2 2006-04-06 13:24:04 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -55,6 +58,10 @@ public class FilterView extends JPanel implements Observer
         EnablerListener cbListener = new EnablerListener(_model);
         enabledCheckbox.addActionListener(cbListener);
 
+        // Add an empty panel to force filter to be aligned
+        JPanel              panel         = new JPanel();
+        add(panel);
+        
         // Get constraints of model
         Hashtable constraints = _model.getConstraints();
 
