@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.6 2006-03-31 14:33:13 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.7 2006-04-06 13:08:47 yvander Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/03/31 14:33:13  mella
+ * Now the jTable refresh itself on preferences changes
+ *
  * Revision 1.5  2006/03/31 14:30:42  mella
  * Support some color preferences changes
  *
@@ -103,6 +106,16 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     JButton addCommentButton = new JButton();
 
     /**
+     * DOCUMENT ME!
+     */
+    JButton plotInAladinButton = new JButton();
+
+    /**
+     * Interaction with Aladin
+     */
+    VOInteraction _aladinInteraction = null;
+
+    /**
      * Constructor.
      *
      * @param calibratorsModel the resutModel.
@@ -161,8 +174,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         resetButton.setText("Reset");
         buttonPanel.add(resetButton);
 
-        JButton plotInAladinButton = new JButton();
         plotInAladinButton.setText("Plot Data in Aladin");
+	plotInAladinButton.addActionListener(this);
         buttonPanel.add(plotInAladinButton);
 
         addCommentButton.setText("Add Comment");
@@ -292,6 +305,26 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         {
             noteFrame.setVisible(true);
         }
+
+	if (e.getSource() == plotInAladinButton)
+        {
+	    if(_calibratorsModel.getVOTable() != null)
+	    {
+	        if( _aladinInteraction== null)
+	        {
+	            //
+                    _aladinInteraction = new VOInteraction();
+                    _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
+                    _aladinInteraction._aladin.execCommand("sync");
+                }
+                else
+	        {
+                    //
+		    _aladinInteraction._aladin.setVisible(true);
+                }
+	    }
+        }
+
     }
 }
 
