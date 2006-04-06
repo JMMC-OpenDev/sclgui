@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.7 2006-04-06 13:08:47 yvander Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.8 2006-04-06 14:48:40 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/04/06 13:08:47  yvander
+ * Aladin interaction
+ *
  * Revision 1.6  2006/03/31 14:33:13  mella
  * Now the jTable refresh itself on preferences changes
  *
@@ -140,8 +143,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
 
         // Colored border of the view.
-        //        Border coloredBorder = BorderFactory.createLineBorder(Color.red, 2);
-        //        setBorder(new TitledBorder(coloredBorder, "RESULTS"));
         setBorder(new TitledBorder(grayBorder, "Found Calibrators"));
 
         // Size management
@@ -150,7 +151,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Table initialization
         _jTable = new JTable();
-        _jTable.setModel(_calibratorsModel);
+        _jTable.setModel(new TableSorter(_calibratorsModel));
+//        _jTable.setModel(_calibratorsModel);
         _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollPane = new JScrollPane(_jTable);
@@ -175,7 +177,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         buttonPanel.add(resetButton);
 
         plotInAladinButton.setText("Plot Data in Aladin");
-	plotInAladinButton.addActionListener(this);
+        plotInAladinButton.addActionListener(this);
         buttonPanel.add(plotInAladinButton);
 
         addCommentButton.setText("Add Comment");
@@ -243,6 +245,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
+        // @todo : maybe this should be done only one time
         for (int i = 0; i < _calibratorsModel.getColumnCount(); i++)
         {
             TableColumn tc = _jTable.getTableHeader().getColumnModel()
@@ -261,7 +264,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
-        // TODO place right code to make jTable refresh itself
+        // @todo : place right code to make jTable refresh itself
         _jTable.repaint();
     }
 
@@ -306,25 +309,24 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             noteFrame.setVisible(true);
         }
 
-	if (e.getSource() == plotInAladinButton)
+        if (e.getSource() == plotInAladinButton)
         {
-	    if(_calibratorsModel.getVOTable() != null)
-	    {
-	        if( _aladinInteraction== null)
-	        {
-	            //
+            if (_calibratorsModel.getVOTable() != null)
+            {
+                if (_aladinInteraction == null)
+                {
+                    //
                     _aladinInteraction = new VOInteraction();
                     _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
                     _aladinInteraction._aladin.execCommand("sync");
                 }
                 else
-	        {
+                {
                     //
-		    _aladinInteraction._aladin.setVisible(true);
+                    _aladinInteraction._aladin.setVisible(true);
                 }
-	    }
+            }
         }
-
     }
 }
 
@@ -378,19 +380,16 @@ class TableCellColors extends DefaultTableCellRenderer implements Observer
     public Component getTableCellRendererComponent(JTable table, Object value,
         boolean isSelected, boolean hasFocus, int row, int column)
     {
-        // MCSLogger.trace();
-        // Get the name of column with index
-        TableColumnModel colModel   = table.getTableHeader().getColumnModel();
-        String           columnName = (String) colModel.getColumn(column)
-                                                       .getHeaderValue();
+        MCSLogger.trace();
 
         // Set default renderer to the component
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
             row, column);
 
         // Get StarProperty selected
-        CalibratorsModel calModel     = (CalibratorsModel) table.getModel();
-        StarProperty     starProperty = calModel.getStarProperty(row, columnName);
+        CalibratorsModel calModel     = ((CalibratorsModel)((TableSorter)table.getModel()).getTableModel());
+//        CalibratorsModel calModel     = ((CalibratorsModel) table.getModel());
+        StarProperty     starProperty = calModel.getStarProperty(row, column);
 
         // If cell is not selecterd and not focused
         if (! (isSelected && hasFocus))
@@ -398,15 +397,20 @@ class TableCellColors extends DefaultTableCellRenderer implements Observer
             if (starProperty != null)
             {
                 // Set Background Color corresponding to the Catalog Origin Color or confidence index
-                if (starProperty.hasOrigin())
+                if (starProperty.hasOrigin() == true)
                 {
                     setBackground((Color) _hashColors.get(
                             starProperty.getOrigin()));
                 }
-                else if (starProperty.hasConfidence())
+                else if (starProperty.hasConfidence() == true)
                 {
                     setBackground((Color) _hashConfidence.get(
                             starProperty.getConfidence()));
+                }
+                else
+                {
+                    // If cells are black, something bad appent !
+                    setBackground(Color.BLACK);
                 }
             }
         }
@@ -450,7 +454,7 @@ class TableCellColors extends DefaultTableCellRenderer implements Observer
                 }
             }
 
-            // read colors preferences for confidences
+            // Read colors preferences for confidences
             prefix              = "confidence.color.";
             e                   = _preferences.getPreferences(prefix);
             _hashConfidence     = new Hashtable();
@@ -471,8 +475,6 @@ class TableCellColors extends DefaultTableCellRenderer implements Observer
                     ex.printStackTrace();
                 }
             }
-
-            // end of color preference read
         }
     }
 }
