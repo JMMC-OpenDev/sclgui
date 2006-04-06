@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.3 2006-04-06 13:27:27 mella Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.4 2006-04-06 14:57:15 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/06 13:27:27  mella
+ * Remove unused Constraint
+ *
  * Revision 1.2  2006/04/05 12:41:23  yvander
  * Voir commentaire dans le fichier
  *
@@ -68,7 +71,7 @@ public class MultiplicityFilter extends Filter
                 // Get the multiplicity flag value
                 Vector       row              = ((Vector) starList.elementAt(rowId));
                 StarProperty cell             = ((StarProperty) row.elementAt(multiplicityId));
-                String       multiplicityFlag = cell.toString();
+                String       multiplicityFlag = cell.getStringValue();
 
                 // if the multiplicity flag exist
                 if ((multiplicityFlag != null) &&
