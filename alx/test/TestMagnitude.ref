@@ -1536,21 +1536,23 @@ alxGetLineForFaintStar()
 Inferior line = 13
 Superior line = 14
 0.000000 < J-K (0.776999) < 0.000000
-errAddInStack(alx, 19)
-errAddInLocalStack_v()
-Used error definition file '../errors/alxErrors.xml'
-Used error definition file '../errors/alxErrors.xml'
-Used error definition file '../errors/alxErrors.xml'
-errPutInStack()
-alx alxTestMagnitude  alxCorrectedMagnitude.c:1340 19 W The ratio can't be computed because its divider equal 0
-alx alxTestMagnitude alxCorrectedMagnitude.c:1340 19 W The ratio can't be computed because its divider equal 0
-
-errResetLocalStack()
+Ratio = 0.500000
+alxComputeAllMagnitudesForFaintStar()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+J = 8.275
+K = 7.498
+R = 8.205 (2)
+I = 8.210 (2)
+B = 8.115 (2)
+H = 8.270 (2)
+V = 8.185 (2)
+L = 99.990 (0)
+M = 99.990 (0)
 alxComputeAngularDiameterFaint()
-errCloseStack()
 alxGetPolynamialForAngularDiameter()
-errCloseLocalStack()
-Diameter IJ = -0.000(-0.0000), IK = -0.000(-0.0000), JK = 0.203(0.0184), JH = 390860352.000(41822056.0000), mean = 97715088.000000(48857544.000000) 
-errDisplayStack()
+Diameter IJ = 0.061(0.0064), IK = 0.139(0.0118), JK = 0.165(0.0150), JH = 0.068(0.0072), mean = 0.108112(0.054056) 
 Diameters have not been computed because condition about diamIC-diamMoy > deltaDiamMoy
-errDisplayLocalStack()
