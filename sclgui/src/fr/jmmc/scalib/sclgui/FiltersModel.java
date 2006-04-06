@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.2 2006-04-05 12:45:34 yvander Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.3 2006-04-06 14:38:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/05 12:45:34  yvander
+ * Ajout du type spectral et de la luminosite
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -40,44 +43,36 @@ public class FiltersModel
         _filterList.setEnabled(Boolean.TRUE);
         _filterViews = new Vector();
 
-        DistanceFilter distanceFilter1 = new DistanceFilter();
-        distanceFilter1.setConstraint("dist", "0.5");
-        distanceFilter1.setEnabled(Boolean.FALSE);
+        DistanceFilter distanceFilter = new DistanceFilter();
+        distanceFilter.setConstraint("dist", "5");
+        distanceFilter.setEnabled(Boolean.TRUE);
 
-        FilterView     distanceFilterView1 = new FilterView(distanceFilter1);
+        FilterView         distanceFilterView = new FilterView(distanceFilter);
 
-        DistanceFilter distanceFilter2     = new DistanceFilter();
-        distanceFilter2.setConstraint("dist", "10");
-        distanceFilter2.setEnabled(Boolean.TRUE);
-
-        FilterView         distanceFilterView2 = new FilterView(distanceFilter2);
-
-        MultiplicityFilter multiplicityFilter  = new MultiplicityFilter();
+        MultiplicityFilter multiplicityFilter = new MultiplicityFilter();
         multiplicityFilter.setEnabled(Boolean.TRUE);
 
-        FilterView multiplicityFilterView = new FilterView(multiplicityFilter);
+        FilterView         multiplicityFilterView = new FilterView(multiplicityFilter);
 
-	SpectralTypeFilter spectralTypeFilter  = new SpectralTypeFilter();
+        SpectralTypeFilter spectralTypeFilter     = new SpectralTypeFilter();
         spectralTypeFilter.setEnabled(Boolean.FALSE);
 
-        FilterView spectralTypeFilterView = new FilterView(spectralTypeFilter);
+        FilterView       spectralTypeFilterView = new FilterView(spectralTypeFilter);
 
-	LuminosityFilter LuminosityFilter  = new LuminosityFilter();
+        LuminosityFilter LuminosityFilter       = new LuminosityFilter();
         LuminosityFilter.setEnabled(Boolean.FALSE);
 
         FilterView LuminosityFilterView = new FilterView(LuminosityFilter);
 
-        _filterList.add(distanceFilter1);
-        _filterList.add(distanceFilter2);
+        _filterList.add(distanceFilter);
         _filterList.add(multiplicityFilter);
-	_filterList.add(spectralTypeFilter);
-	_filterList.add(LuminosityFilter);
+        _filterList.add(spectralTypeFilter);
+        _filterList.add(LuminosityFilter);
 
-        _filterViews.add(distanceFilterView1);
-        _filterViews.add(distanceFilterView2);
+        _filterViews.add(distanceFilterView);
         _filterViews.add(multiplicityFilterView);
-	_filterViews.add(spectralTypeFilterView);
-	_filterViews.add(LuminosityFilterView);
+        _filterViews.add(spectralTypeFilterView);
+        _filterViews.add(LuminosityFilterView);
     }
 
     /**
