@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.11 2006-04-06 14:43:18 mella Exp $"
+# "@(#) $Id: Makefile,v 1.12 2006-04-06 15:00:08 mella Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.11  2006/04/06 14:43:18  mella
+# *** empty log message ***
+#
 # Revision 1.10  2006/03/27 11:59:58  lafrasse
 # Added new experimental Java GUI
 #
@@ -45,7 +48,7 @@
 #
 # C programs (public and local)
 # -----------------------------
-#EXECUTABLES     = sclguiControl
+EXECUTABLES     = sclguiControl
 EXECUTABLES_L   = 
 
 #
