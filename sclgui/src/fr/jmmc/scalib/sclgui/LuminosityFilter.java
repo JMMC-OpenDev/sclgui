@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.1 2006-04-05 12:44:57 yvander Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.2 2006-04-06 14:24:54 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/04/05 12:44:57  yvander
+ * luminosite devpt
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -14,8 +17,8 @@ package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
 
-import java.util.Vector;
 import java.util.Enumeration;
+import java.util.Vector;
 
 
 /**
@@ -31,12 +34,12 @@ public class LuminosityFilter extends Filter
     public LuminosityFilter()
     {
         super();
-        _constraints.put("I", new Boolean(false));
-	_constraints.put("II", new Boolean(false));
-	_constraints.put("III", new Boolean(false));
-	_constraints.put("IV", new Boolean(false));
-	_constraints.put("V", new Boolean(false));
-	_constraints.put("VI", new Boolean(false));
+        _constraints.put("I", new Boolean(true));
+        _constraints.put("II", new Boolean(true));
+        _constraints.put("III", new Boolean(true));
+        _constraints.put("IV", new Boolean(true));
+        _constraints.put("V", new Boolean(true));
+        _constraints.put("VI", new Boolean(true));
     }
 
     /**
@@ -62,25 +65,25 @@ public class LuminosityFilter extends Filter
 
         Vector lumClass = new Vector();
 
-	// Checkboxes values with elements (true or false) and keys (indexes)
-	Enumeration elements = _constraints.elements();
-	Enumeration keys = _constraints.keys();
+        // Checkboxes values with elements (true or false) and keys (indexes)
+        Enumeration elements = _constraints.elements();
+        Enumeration keys     = _constraints.keys();
 
-	while (elements.hasMoreElements())
-	{
+        while (elements.hasMoreElements())
+        {
             // Next data
-	    boolean bool = ((Boolean)elements.nextElement()).booleanValue();
-	    String lumClassValue = (String)keys.nextElement();
+            boolean bool          = ((Boolean) elements.nextElement()).booleanValue();
+            String  lumClassValue = (String) keys.nextElement();
 
-	    // Checkbox selected
-	    if (bool == true)
-	    {
-	        // Add in Vector
-		lumClass.add(lumClassValue);
-	    }
-	}
+            // Checkbox selected
+            if (bool == true)
+            {
+                // Add in Vector
+                lumClass.add(lumClassValue);
+            }
+        }
 
-	// Return a vector
+        // Return a vector
         return lumClass;
     }
 
@@ -93,7 +96,6 @@ public class LuminosityFilter extends Filter
     {
         MCSLogger.trace();
 
-
         // If the filter is enabled
         if ((isEnabled() == true))
         {
@@ -105,115 +107,115 @@ public class LuminosityFilter extends Filter
 
             while (rowId < starList.size())
             {
-	        // Get the spectral type value of the star
-		Vector row = ((Vector) starList.elementAt(rowId));
-		StarProperty cell = ((StarProperty) row.elementAt(spectralTypeId));
-		String spectralTypeValue = cell.toString();
+                // Get the spectral type value of the star
+                Vector       row               = ((Vector) starList.elementAt(rowId));
+                StarProperty cell              = ((StarProperty) row.elementAt(spectralTypeId));
+                String       spectralTypeValue = cell.toString();
 
-		// To determine if the end of luminosity class in spectral type
-		boolean endOfLum = false;
+                // To determine if the end of luminosity class in spectral type
+                boolean endOfLum = false;
 
-		// The spectral type exist
-		if ((spectralTypeValue != null) && (spectralTypeValue.equals("") == false))
-		{
-		    // Meter of character
-		    int beginIdx = 0;
-		    int endIdx = 0;
+                // The spectral type exist
+                if ((spectralTypeValue != null) &&
+                        (spectralTypeValue.equals("") == false))
+                {
+                    // Meter of character
+                    int beginIdx = 0;
+                    int endIdx   = 0;
 
-		    // Loop until the beginning of luminosity class
-		    while (beginIdx < spectralTypeValue.length() &&
-		        spectralTypeValue.charAt(beginIdx) != 'I' &&
-		        spectralTypeValue.charAt(beginIdx) != 'V' )
-		    {
-			beginIdx++;
-		    }
+                    // Loop until the beginning of luminosity class
+                    while ((beginIdx < spectralTypeValue.length()) &&
+                            (spectralTypeValue.charAt(beginIdx) != 'I') &&
+                            (spectralTypeValue.charAt(beginIdx) != 'V'))
+                    {
+                        beginIdx++;
+                    }
 
-		    //endIdx >= beginIdx
-		    endIdx = beginIdx;
+                    //endIdx >= beginIdx
+                    endIdx = beginIdx;
 
-		    // Loop until the end of luminosity class
-		    while (endIdx < spectralTypeValue.length() &&
-		          endOfLum != true )
-		    {
-		        //
-			if (spectralTypeValue.charAt(endIdx) == 'I' ||
-		        spectralTypeValue.charAt(endIdx) == 'V')
-			{
-			    //
-			    endIdx++;
-			}
-			else
-			{
-			    //
-			    endOfLum = true;
-			}
-		    }
+                    // Loop until the end of luminosity class
+                    while ((endIdx < spectralTypeValue.length()) &&
+                            (endOfLum != true))
+                    {
+                        //
+                        if ((spectralTypeValue.charAt(endIdx) == 'I') ||
+                                (spectralTypeValue.charAt(endIdx) == 'V'))
+                        {
+                            //
+                            endIdx++;
+                        }
+                        else
+                        {
+                            //
+                            endOfLum = true;
+                        }
+                    }
 
-		    // Get the luminosity classes selected
-	            Vector lumClassSelected = getAllowedLuminosity();
+                    // Get the luminosity classes selected
+                    Vector lumClassSelected = getAllowedLuminosity();
 
-		    // If luminosity classes are checked
-		    if (lumClassSelected.size() > 0)
-		    {
-		        // Find or not a luminosity class corresponding to the selection
-		        boolean find = false;
+                    // If luminosity classes are checked
+                    if (lumClassSelected.size() > 0)
+                    {
+                        // Find or not a luminosity class corresponding to the selection
+                        boolean find = false;
 
-		        // For each luminosity class checked
-		        for (int i = 0; i < lumClassSelected.size(); i++)
-		        {
-		            // The value of spectral type checked
-			    String valueSelected = (String) lumClassSelected.elementAt(i);
-			    String starLuminosity = spectralTypeValue.substring(beginIdx,endIdx);
+                        // For each luminosity class checked
+                        for (int i = 0; i < lumClassSelected.size(); i++)
+                        {
+                            // The value of spectral type checked
+                            String valueSelected  = (String) lumClassSelected.elementAt(i);
+                            String starLuminosity = spectralTypeValue.substring(beginIdx,
+                                    endIdx);
 
-			    // Luminosity class are identicals
-			    if (starLuminosity.equals(valueSelected) == true)
-			    {
-			        // Do not remove
-			        find = true;
-			    }
+                            // Luminosity class are identicals
+                            if (starLuminosity.equals(valueSelected) == true)
+                            {
+                                // Do not remove
+                                find = true;
+                            }
+                        }
 
-		        }
-
-		        // Data Not found
-		        if (find == false)
-		        {
-		            // Remove star to the starList
-			    starList.remove(rowId);
-
-		        }
-		        else
-		        {
-		            // Otherwise process the next row
-		            rowId++;
-		        }
-		    }
-		    else
-		    {
-		        // There is not luminosity class in spectral type
-			if (beginIdx == spectralTypeValue.length())
-			{
-			    // Remove star to the starList
+                        // Data Not found
+                        if (find == false)
+                        {
+                            // Remove star to the starList
                             starList.remove(rowId);
-			}
-			else
-			{
-			    // Otherwise process the next row
-		            rowId++;
-			}
-		    }
+                        }
+                        else
+                        {
+                            // Otherwise process the next row
+                            rowId++;
+                        }
+                    }
+                    else
+                    {
+                        // There is not luminosity class in spectral type
+                        if (beginIdx == spectralTypeValue.length())
+                        {
+                            // Remove star to the starList
+                            starList.remove(rowId);
+                        }
+                        else
+                        {
+                            // Otherwise process the next row
+                            rowId++;
+                        }
+                    }
+                }
 
-		}
-		// The spectral type does not exist
-		else
-		{
-		    // Remove star to the starList
+                // The spectral type does not exist
+                else
+                {
+                    // Remove star to the starList
                     starList.remove(rowId);
-		    /* OR
-		    // Otherwise process the next row
-		    rowId++;
-		    */
-		}
 
+                    /* OR
+                       // Otherwise process the next row
+                       rowId++;
+                     */
+                }
             }
         }
     }
