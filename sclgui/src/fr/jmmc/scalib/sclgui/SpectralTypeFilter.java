@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.2 2006-04-06 14:24:54 mella Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.3 2006-04-06 14:38:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/06 14:24:54  mella
+ * Add default constraints to true
+ *
  * Revision 1.1  2006/04/05 12:44:08  yvander
  * type spectral devpt
  *
@@ -34,6 +37,7 @@ public class SpectralTypeFilter extends Filter
     public SpectralTypeFilter()
     {
         super();
+
         _constraints.put("O", new Boolean(true));
         _constraints.put("B", new Boolean(true));
         _constraints.put("A", new Boolean(true));
