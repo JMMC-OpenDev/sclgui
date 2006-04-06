@@ -1,0 +1,1556 @@
+alxComputeMagnitudesForBrightStar()
+alxComputeDiffMagnitudeForBrightStar()
+alxString2SpectralType()
+Type spectral = B2.5V
+	Code              = B
+	Sub-type Quantity = 2.500000
+	Light class       = V
+alxGetColorTableForBrightStar()
+Type of star = DWARF
+Loading ../config/alxColorTableForBrightDwarfStar.cfg ...
+miscDynBufGetNextLine() = 'O5	-0.30	-0.42	-0.17	-0.31	-0.08	-0.14	0.01	-0.10	-5.70	60.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'O7	-0.29	-0.42	-0.15	-0.30	-0.08	-0.13	0.02	-0.09	-5.20	30.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'O8	-0.28	-0.41	-0.15	-0.28	-0.09	-0.14	0.03	-0.07	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'O9	-0.28	-0.39	-0.15	-0.22	-0.11	-0.17	0.03	-0.09	-4.50	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B0	-0.26	-0.37	-0.14	-0.21	-0.11	-0.17	0.02	-0.08	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B1	-0.23	-0.33	-0.12	-0.18	-0.09	-0.13	-0.01	-0.05	-3.20	17.50'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B2	-0.21	-0.29	-0.10	-0.19	-0.03	-0.10	0.00	-0.05	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B3	-0.18	-0.24	-0.08	-0.15	-0.05	-0.09	0.00	-0.05	-1.60	8.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B4	-0.16	-0.20	-0.07	-0.14	-0.04	-0.09	0.01	-0.04	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B5	-0.15	-0.19	-0.05	-0.15	-0.05	-0.08	0.01	-0.02	-1.20	5.90'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B6	-0.14	-0.18	-0.04	-0.13	-0.03	-0.07	0.03	-0.03	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B7	-0.13	-0.16	-0.04	-0.12	-0.03	-0.06	0.03	-0.02	-0.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B8	-0.11	-0.11	-0.03	-0.12	-0.01	-0.03	0.03	-0.02	-0.25	3.80'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B9	-0.07	-0.08	-0.01	-0.07	0.00	-0.01	0.03	-0.01	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A0	-0.02	-0.01	0.02	-0.06	-0.01	-0.01	0.03	0.00	0.65	2.90'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A1	0.01	0.03	0.04	-0.02	0.00	0.00	0.03	0.00	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A2	0.05	0.07	0.07	0.02	0.01	0.01	0.04	0.01	1.30	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A4	0.08	0.24	0.11	0.03	0.04	0.05	0.05	0.02	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A5	0.15	0.33	0.13	0.03	0.06	0.08	0.05	0.03	1.95	2.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A7	0.20	0.30	0.20	0.07	0.08	0.10	0.06	0.03	2.20	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A8	0.25	0.34	0.21	0.09	0.11	0.12	0.06	0.03	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F0	0.30	0.42	0.25	0.13	0.12	0.15	0.06	0.03	2.70	1.60'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F2	0.35	0.51	0.32	0.14	0.15	0.19	0.06	0.03	3.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F5	0.44	0.68	0.39	0.14	0.22	0.26	0.07	0.02	3.50	1.40'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F7	0.48	0.79	0.44	0.16	0.27	0.33	0.07	0.02	4.00	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F8	0.52	0.81	0.45	0.19	0.28	0.34	0.07	0.02	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G0	0.58	0.84	0.48	0.21	0.29	0.35	0.08	0.01	4.40	1.05'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G2	0.63	0.87	0.52	0.24	0.31	0.36	0.08	0.01	4.70	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G4	0.66	0.91	0.55	0.24	0.32	0.38	0.08	0.01	5.10	0.92'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G5	0.68	0.94	0.58	0.23	0.34	0.40	0.08	0.00	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G6	0.70	0.97	0.59	0.24	0.36	0.43	0.08	0.00	5.50	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G8	0.74	1.06	0.63	0.25	0.39	0.48	0.09	0.00	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K0	0.81	1.14	0.69	0.30	0.44	0.53	0.09	-0.01	5.90	0.79'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K1	0.86	1.20	0.72	0.31	0.46	0.57	0.10	-0.01	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K2	0.91	1.26	0.73	0.34	0.49	0.59	0.10	-0.02	6.40	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K3	0.96	1.38	0.80	0.37	0.53	0.62	0.11	-0.03	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K4	1.05	1.48	0.87	0.40	0.57	0.67	0.12	-0.04	7.00	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K5	1.15	1.58	0.95	0.43	0.60	0.71	0.13	-0.01	7.35	0.67'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K7	1.33	1.86	1.14	0.43	0.64	0.78	0.14	0.06	8.10	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M0	1.35	2.10	1.29	0.45	0.73	0.92	0.21	0.10	8.80	0.51'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M1	1.42	2.31	1.33	0.52	0.72	0.93	0.24	0.13	9.30	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M2	1.50	2.53	1.38	0.60	0.71	0.93	0.28	0.17	9.90	0.40'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M3	1.55	2.93	1.55	0.75	0.66	0.92	0.31	0.20	10.40	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M4	1.65	3.42	1.80	0.83	0.65	0.94	0.40	0.30	11.30	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M5	1.80	4.03	2.17	0.95	0.62	0.95	0.43	0.35	12.30	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M6	1.95	4.65	2.55	1.06	0.60	0.96	0.46	0.40	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M7	2.10	5.68	3.38	1.17	0.63	1.04	0.53	0.50	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxGetLineForBrightStar()
+Inferior line = 6
+Superior line = 7
+mgB-mgV = -0.070 / B-V [-0.210..-0.180]; delta > 0.1
+alxComputeAllMagnitudesForBrightStar()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+B = 6.600
+V = 6.670
+R = 99.990 (0)
+I = 99.990 (0)
+J = 99.990 (0)
+H = 99.990 (0)
+K = 99.990 (0)
+L = 99.990 (0)
+M = 99.990 (0)
+alxComputeMagnitudesForBrightStar()
+alxComputeDiffMagnitudeForBrightStar()
+alxString2SpectralType()
+Type spectral = K2.5V
+	Code              = K
+	Sub-type Quantity = 2.500000
+	Light class       = V
+alxGetColorTableForBrightStar()
+Type of star = DWARF
+alxGetLineForBrightStar()
+Inferior line = 34
+Superior line = 35
+Ratio = 1.600004
+alxComputeAllMagnitudesForBrightStar()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+B = 6.600
+V = 5.770
+R = 4.928 (0)
+I = 4.318 (0)
+J = 3.930 (0)
+H = 3.376 (0)
+K = 3.340 (0)
+L = 3.224 (0)
+M = 3.260 (0)
+alxComputeMagnitudesForBrightStar()
+alxComputeDiffMagnitudeForBrightStar()
+alxString2SpectralType()
+Type spectral = A0I
+	Code              = A
+	Sub-type Quantity = 0.000000
+	Light class       = I
+alxGetColorTableForBrightStar()
+Type of star = SUPER GIANT
+Loading ../config/alxColorTableForBrightSuperGiantStar.cfg ...
+miscDynBufGetNextLine() = 'O5	-0.32	-0.46	-0.22	-0.25	-0.15	-0.18	-0.03	-0.01	99.99	70.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'O7	-0.31	-0.46	-0.21	-0.23	-0.14	-0.17	-0.03	-0.01	-6.50	30.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'O8	-0.30	-0.44	-0.19	-0.24	-0.13	-0.15	-0.03	-0.01	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'O9	-0.27	-0.39	-0.18	-0.21	-0.13	-0.14	-0.03	-0.01	-6.50	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B0	-0.22	-0.31	-0.14	-0.17	-0.11	-0.12	-0.01	-0.01	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B1	-0.19	-0.26	-0.11	-0.15	-0.11	-0.11	-0.01	-0.01	-6.40	25.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B2	-0.16	-0.22	-0.08	-0.12	-0.10	-0.10	0.00	0.00	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B3	-0.13	-0.17	-0.05	-0.10	-0.09	-0.08	0.00	0.00	-6.30	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B5	-0.08	-0.09	-0.01	-0.06	-0.06	-0.06	0.02	0.00	-6.20	20.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B6	-0.06	-0.06	0.00	-0.03	-0.06	-0.06	0.03	0.00	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B7	-0.04	-0.02	0.02	-0.02	-0.04	-0.02	0.02	0.00	-6.20	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B8	-0.03	-0.01	0.02	-0.02	-0.05	-0.02	0.02	0.00	-6.20	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B9	-0.01	0.02	0.02	0.01	-0.04	-0.02	0.02	0.00	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A0	0.00	0.09	0.03	-0.01	99.99	0.04	0.05	99.99	-6.30	16.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A1	0.02	0.11	0.06	-0.01	99.99	0.10	0.05	99.99	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A2	0.04	0.14	0.07	-0.02	99.99	0.12	0.05	99.99	-6.50	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A5	0.09	0.25	0.13	-0.03	99.99	0.14	0.05	99.99	-6.60	13.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A7	0.12	0.35	0.18	0.01	99.99	0.16	0.05	99.99	-6.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F0	0.17	0.41	0.21	0.04	99.99	0.19	0.05	99.99	-6.60	12.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F2	0.23	0.48	0.27	0.06	99.99	0.21	0.05	99.99	-6.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F5	0.32	0.59	0.35	0.08	99.99	0.26	0.05	99.99	-6.60	10.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F7	0.44	0.65	0.41	0.10	99.99	0.32	0.06	99.99	-6.50	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F8	0.56	0.72	0.45	0.13	99.99	0.36	0.06	99.99	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G0	0.76	0.85	0.51	0.19	99.99	0.40	0.07	99.99	-6.40	10.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G2	0.87	0.99	0.58	0.22	99.99	0.47	0.08	99.99	-6.30	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G4	0.97	1.07	0.65	0.28	99.99	0.50	0.08	99.99	-6.20	12.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G5	1.02	1.11	0.67	0.32	99.99	0.53	0.09	99.99	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G6	1.06	1.12	0.67	0.32	99.99	0.53	0.10	99.99	-6.10	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G8	1.15	1.15	0.69	0.30	99.99	0.54	0.11	99.99	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K0	1.24	1.24	0.76	0.34	99.99	0.58	0.12	99.99	-6.00	13.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K1	1.30	1.32	0.80	0.35	99.99	0.62	0.13	99.99	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K2	1.35	1.40	0.86	0.37	99.99	0.66	0.14	99.99	-5.90	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K3	1.46	1.58	0.94	0.42	99.99	0.72	0.14	99.99	99.99	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K4	1.53	1.77	1.04	0.48	99.99	0.76	0.15	99.99	-5.80	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K5	1.60	2.10	1.21	0.61	99.99	0.99	0.15	99.99	-5.80	13.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K7	1.63	2.14	1.22	0.63	99.99	0.99	0.16	99.99	-5.70	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M0	1.63	2.17	1.23	0.65	99.99	0.97	0.17	99.99	-5.60	13.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M1	1.63	2.27	1.27	0.63	99.99	1.02	0.17	99.99	-5.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M2	1.64	2.44	1.33	0.64	99.99	1.03	0.18	99.99	-5.60	19.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M3	1.64	2.79	1.47	0.72	99.99	1.07	0.19	99.99	-5.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M4	1.64	3.39	1.73	0.86	99.99	1.02	0.20	99.99	-5.60	99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M5	1.62	4.14	2.17	0.89	99.99	1.02	0.25	99.99	-5.60	24.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxGetLineForBrightStar()
+alxComputeAllMagnitudesForBrightStar()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+B = 6.600
+V = 6.670
+R = 6.640 (0)
+I = 6.580 (0)
+J = 6.590 (0)
+H = -93.400 (0)
+K = 6.550 (0)
+L = 6.500 (0)
+M = 99.990 (0)
+alxComputeExtinctionCoefficient()
+alxGetPolynamialForInterstellarAbsorption()
+miscDynBufGetNextLine() = '00-10	0.752	0.610	0.090	-0.387'
+miscDynBufGetNextLine() = '10-20	0.500	3.012	-3.659	1.378'
+miscDynBufGetNextLine() = '20-30	0.245	5.468	-7.721	3.432'
+miscDynBufGetNextLine() = '30-40	0.156	5.996	-9.214	4.478'
+miscDynBufGetNextLine() = '40-50	0.300	3.753	-5.793	2.893'
+miscDynBufGetNextLine() = '50-60	0.490	9.364	-1.023	0.476'
+miscDynBufGetNextLine() = '60-70	0.740	-1.825	3.780	-1.622'
+miscDynBufGetNextLine() = '70-80	0.943	-3.715	6.975	-2.682'
+miscDynBufGetNextLine() = '80-90	0.740	-2.954	6.672	-3.190'
+miscDynBufGetNextLine() = '90-100	0.598	-2.604	7.809	-4.593'
+miscDynBufGetNextLine() = '100-110	0.442	-1.745	7.066	-4.558'
+miscDynBufGetNextLine() = '110-120	0.235	0.201	2.681	-2.111'
+miscDynBufGetNextLine() = '120-130	0.065	1.821	-0.625	-0.308'
+miscDynBufGetNextLine() = '130-140	-0.103	3.096	-2.055	0.248'
+miscDynBufGetNextLine() = '140-150	-0.248	4.273	-3.300	0.440'
+miscDynBufGetNextLine() = '150-160	-0.189	4.592	-4.951	1.556'
+miscDynBufGetNextLine() = '160-170	-0.033	4.066	-5.594	2.389'
+miscDynBufGetNextLine() = '170-180	0.091	3.101	-4.644	2.158'
+miscDynBufGetNextLine() = '180-190	0.163	2.070	-3.064	1.476'
+miscDynBufGetNextLine() = '190-200	0.217	1.084	-1.410	0.698'
+miscDynBufGetNextLine() = '200-210	0.286	0.189	-0.117	0.392'
+miscDynBufGetNextLine() = '210-220	0.307	-0.227	0.434	0.288'
+miscDynBufGetNextLine() = '220-230	0.259	-0.160	0.649	-0.266'
+miscDynBufGetNextLine() = '230-240	0.201	0.192	0.123	-0.128'
+miscDynBufGetNextLine() = '240-250	0.198	0.258	0.160	-0.136'
+miscDynBufGetNextLine() = '250-260	0.274	-0.082	0.729	-0.207'
+miscDynBufGetNextLine() = '260-270	0.313	-0.016	0.187	0.374'
+miscDynBufGetNextLine() = '270-280	0.288	0.386	-0.462	0.361'
+miscDynBufGetNextLine() = '280-290	0.313	0.535	-0.650	0.395'
+miscDynBufGetNextLine() = '290-300	0.381	0.398	0.079	-0.117'
+miscDynBufGetNextLine() = '300-310	0.280	1.661	-1.839	0.643'
+miscDynBufGetNextLine() = '310-320	0.120	3.513	-5.033	2.260'
+miscDynBufGetNextLine() = '320-330	-0.046	5.282	-7.844	3.611'
+miscDynBufGetNextLine() = '330-340	-0.031	5.477	-7.961	3.546'
+miscDynBufGetNextLine() = '340-350	0.465	2.076	-2.138	0.871'
+miscDynBufGetNextLine() = '350-360	0.961	-1.226	3.345	-1.648'
+Galactic longitude          = 165.000
+Distance                    = 0.100
+Extinction coefficient in V = 0.032
+alxComputeRealMagnitudes()
+alxGetExtinctionRatioTable()
+miscDynBufGetNextLine() = 'M	0.12'
+miscDynBufGetNextLine() = 'L	0.19'
+miscDynBufGetNextLine() = 'K	0.36'
+miscDynBufGetNextLine() = 'H	0.53'
+miscDynBufGetNextLine() = 'J	0.86'
+miscDynBufGetNextLine() = 'I	1.57'
+miscDynBufGetNextLine() = 'R	2.32'
+miscDynBufGetNextLine() = 'V	3.10'
+miscDynBufGetNextLine() = 'B	4.10'
+Corrected magnitude[0] = 6.558
+Corrected magnitude[1] = 6.638
+Corrected magnitude[2] = 6.616
+Corrected magnitude[3] = 6.564
+Corrected magnitude[4] = 6.581
+Corrected magnitude[5] = -93.405
+Corrected magnitude[6] = 6.546
+Corrected magnitude[7] = 6.498
+Corrected magnitude[8] = 99.990
+alxComputeMagnitudesForBrightStar()
+alxComputeDiffMagnitudeForBrightStar()
+alxString2SpectralType()
+Type spectral = M8
+	Code              = M
+	Sub-type Quantity = 8.000000
+	Light class       = 
+alxGetColorTableForBrightStar()
+Type of star = DWARF
+alxGetLineForBrightStar()
+errAddInStack(alx, 9)
+errAddInLocalStack_v()
+errResetLocalStack()
+Used error definition file '../errors/alxErrors.xml'
+Used error definition file '../errors/alxErrors.xml'
+Used error definition file '../errors/alxErrors.xml'
+errPutInStack()
+alx alxTestMagnitude  alxCorrectedMagnitude.c:898 9 W Spectral type 'M8' not found in color table.
+alx alxTestMagnitude alxCorrectedMagnitude.c:898 9 W Spectral type 'M8' not found in color table.
+
+errResetLocalStack()
+*********************
+errCloseStack()
+extinction
+errCloseLocalStack()
+alxComputeExtinctionCoefficient()
+errDisplayStack()
+alxGetPolynamialForInterstellarAbsorption()
+errDisplayLocalStack()
+Galactic longitude          = 166.610
+Distance                    = 0.110
+Extinction coefficient in V = 0.096
+alxComputeRealMagnitudes()
+alxGetExtinctionRatioTable()
+Corrected magnitude[0] = 8.325
+Corrected magnitude[1] = 8.171
+Corrected magnitude[2] = 7.948
+Corrected magnitude[3] = 7.831
+Corrected magnitude[4] = 7.740
+Corrected magnitude[5] = 7.611
+Corrected magnitude[6] = 7.628
+Corrected magnitude[7] = 7.114
+Corrected magnitude[8] = 99.990
+complete
+alxComputeMagnitudesForBrightStar()
+alxComputeDiffMagnitudeForBrightStar()
+alxString2SpectralType()
+Type spectral = A0
+	Code              = A
+	Sub-type Quantity = 0.000000
+	Light class       = 
+alxGetColorTableForBrightStar()
+Type of star = DWARF
+alxGetLineForBrightStar()
+mgB-mgV = 1.54027939e-01 / B-V -1.99999996e-02; delta > 0.1
+alxComputeAllMagnitudesForBrightStar()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+B = 8.325
+V = 8.171
+R = 7.948 (0)
+I = 7.831 (0)
+J = 7.740 (0)
+H = 7.611 (0)
+K = 7.628 (0)
+L = 7.114 (0)
+M = 99.990 (0)
+*********************
+extinction
+alxComputeExtinctionCoefficient()
+alxGetPolynamialForInterstellarAbsorption()
+Galactic longitude          = 166.370
+Distance                    = 0.833
+Extinction coefficient in V = 0.292
+alxComputeRealMagnitudes()
+alxGetExtinctionRatioTable()
+Corrected magnitude[0] = 8.374
+Corrected magnitude[1] = 7.387
+Corrected magnitude[2] = 99.990
+Corrected magnitude[3] = 99.990
+Corrected magnitude[4] = 99.990
+Corrected magnitude[5] = 99.990
+Corrected magnitude[6] = 99.990
+Corrected magnitude[7] = 99.990
+Corrected magnitude[8] = 99.990
+complete
+alxComputeMagnitudesForBrightStar()
+alxComputeDiffMagnitudeForBrightStar()
+alxString2SpectralType()
+Type spectral = K2
+	Code              = K
+	Sub-type Quantity = 2.000000
+	Light class       = 
+alxGetColorTableForBrightStar()
+Type of star = DWARF
+alxGetLineForBrightStar()
+alxComputeAllMagnitudesForBrightStar()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+alxDiffMagnitude()
+B = 8.374
+V = 7.387
+R = 6.657 (0)
+I = 6.127 (0)
+J = 5.787 (0)
+H = 5.297 (0)
+K = 5.197 (0)
+L = 5.097 (0)
+M = 99.990 (0)
+alxComputeAngularDiameter()
+alxGetPolynamialForAngularDiameter()
+miscDynBufGetNextLine() = 'B-V	0.33822617	0.76172888	0.16990933	-0.0803159	0.36842746	0.0'
+miscDynBufGetNextLine() = 'V-R	0.29974514	0.90469909	-0.0438167	2.3256422	-1.4324917	0.43618476'
+miscDynBufGetNextLine() = 'V-K	0.32561925	0.31467316	0.09401181	-0.0187446	0.00818989	0.0'
+miscDynBufGetNextLine() = 'I-J	0.34946308	0.95697558	0.29160789	-0.9128686	3.72737551	-1.9296987'
+miscDynBufGetNextLine() = 'I-K	0.34087196	0.42204760	0.06249948	-0.1556986	0.16802847	-0.0320820'
+miscDynBufGetNextLine() = 'J-H	0.32264301	1.16345012	-2.3579349	4.59855961	-3.9917061	1.6884892'
+miscDynBufGetNextLine() = 'J-K	0.31137016	0.72685874	-0.08288215	-0.6358744	0.96504903	-0.2818557'
+Diameter BV = 0.474(0.0379), VR = 0.473(0.0459), VK = 0.452(0.0312)
+(0=LOW, 1=MEDIUM and 2=HIGH)
+alxComputeApparentMagnitudes()
+Corrected magnitude[B] = 8.760
+Corrected magnitude[V] = 7.679
+Corrected magnitude[R] = 6.875
+Corrected magnitude[I] = 6.275
+Corrected magnitude[J] = 6.598
+Corrected magnitude[H] = 5.347
+Corrected magnitude[K] = 5.231
+Corrected magnitude[L] = 5.115
+Corrected magnitude[M] = 99.990
+*********** FAINT TEST **********
+complete
+alxComputeMagnitudesForFaintStar()
+alxComputeDiffMagnitudeForFaintStar()
+alxString2SpectralType()
+Type spectral = A0
+	Code              = A
+	Sub-type Quantity = 0.000000
+	Light class       = 
+alxGetColorTableForFaintStar()
+Type of star = DWARF
+Loading ../config/alxColorTableForFaintDwarfStar.cfg ...
+miscDynBufGetNextLine() = '05  -0.30   -0.32   -0.14   -0.40   -0.06   -0.12   -0.02   -0.1    -5.70   60.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = '07  -0.29   -0.32   -0.13   -0.38   -0.06   -0.11   -0.01   -0.09   -5.20   30.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = '08  -0.285  -0.31   -0.13   -0.36   -0.07   -0.12   0.00    -0.07   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = '09  -0.28   -0.30   -0.13   -0.30   -0.09   -0.14   0.00    -0.09   -4.50   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B0  -0.26   -0.28   -0.12   -0.29   -0.09   -0.14   -0.01   -0.08   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B1  -0.23   -0.25   -0.11   -0.25   -0.07   -0.11   -0.04   -0.05   -3.20   17.50'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B2  -0.21   -0.22   -0.09   -0.25   -0.02   -0.08   -0.03   -0.05   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B3  -0.18   -0.18   -0.08   -0.20   -0.04   -0.07   -0.03   -0.05   -1.60   8.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B4  -0.16   -0.15   -0.07   -0.18   -0.03   -0.07   -0.02   -0.04   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B5  -0.15   -0.14   -0.06   -0.18   -0.04   -0.06   -0.02   -0.02   -1.20   5.90'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B6  -0.14   -0.13   -0.05   -0.16   -0.02   -0.05   0.00    -0.03   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B7  -0.13   -0.12   -0.05   -0.15   -0.02   -0.04   0.00    -0.02   -0.60   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B8  -0.11   -0.08   -0.04   -0.14   0.00    -0.02   0.00    -0.02   -0.25   3.80'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'B9  -0.07   -0.05   -0.03   -0.08   0.01    0.00    0.00    -0.01   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A0  -0.02   0.00    -0.01   -0.05   0.00    0.00    0.00    0.00    0.65    2.90'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A1  0.01    0.03    0.01    0.00    0.01    0.01    0.00    0.00    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A2  0.05    0.06    0.03    0.05    0.02    0.02    0.01    0.01    1.30    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A4  0.08    0.20    0.06    0.09    0.05    0.06    0.02    0.02    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A5  0.15    0.27    0.07    0.11    0.06    0.08    0.02    0.03    1.95    2.00'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A7  0.20    0.24    0.12    0.15    0.08    0.10    0.03    0.03    2.20    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'A8  0.25    0.27    0.13    0.18    0.11    0.12    0.03    0.03    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F0  0.30    0.33    0.16    0.24    0.12    0.15    0.03    0.03    2.70    1.60'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F1  0.35    0.40    0.21    0.28    0.15    0.18    0.03    0.03    3.60    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F5  0.44    0.53    0.26    0.32    0.21    0.25    0.04    0.02    3.50    1.40'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F7  0.48    0.62    0.29    0.37    0.26    0.31    0.04    0.02    4.00    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'F8  0.52    0.64    0.30    0.40    0.27    0.32    0.04    0.02    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G0  0.58    0.66    0.32    0.43    0.28    0.33    0.05    0.01    4.40    1.05'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G2  0.63    0.68    0.35    0.47    0.29    0.34    0.05    0.01    4.70    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G4  0.66    0.71    0.37    0.48    0.30    0.36    0.05    0.01    5.10    0.92'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G5  0.68    0.73    0.39    0.48    0.32    0.38    0.05    0.00    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G6  0.70    0.75    0.40    0.50    0.34    0.40    0.05    0.00    5.50    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'G8  0.74    0.82    0.43    0.53    0.37    0.45    0.06    0.00    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K0  0.81    0.88    0.47    0.60    0.41    0.49    0.06    -0.01   5.90    0.79'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K1  0.86    0.93    0.49    0.63    0.43    0.53    0.07    -0.01   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K2  0.91    0.98    0.50    0.67    0.46    0.55    0.07    -0.02   6.40    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K3  0.96    1.07    0.55    0.73    0.50    0.58    0.08    -0.03   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K4  1.05    1.15    0.60    0.79    0.53    0.62    0.09    0.04    7.00    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K5  1.15    1.22    0.66    0.85    0.56    0.66    0.10    -0.01   7.35    0.67'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'K7  1.33    1.45    0.79    0.90    0.60    0.72    0.11    0.06    8.10    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M0  1.35    1.65    0.90    0.97    0.68    0.85    0.18    0.10    8.80    0.51'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M1  1.42    1.85    0.92    1.05    0.67    0.86    0.21    0.13    9.30    99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M2  1.50    2.05    0.95    1.14    0.66    0.86    0.25    0.17    9.90    0.40'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M3  1.55    2.40    1.05    1.35    0.62    0.85    0.28    0.20    10.40   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M4  1.65    2.80    1.20    1.51    0.61    0.87    0.37    0.30    11.30   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M5  1.80    3.27    1.42    1.76    0.58    0.88    0.40    0.35    12.30   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M6  1.95    3.75    1.65    2.01    0.56    0.89    0.43    0.40    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M7  2.10    4.45    2.15    2.44    0.59    0.96    0.50    0.50    99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+miscDynBufGetNextLine() = 'M8  99.99   4.60    99.99   3.04    0.69    1.14    0.65    99.99   99.99   99.99'
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxIsBlankingValue()
+alxGetLineForFaintStar()
+Inferior line = 13
+Superior line = 14
+0.000000 < J-K (0.776999) < 0.000000
+errAddInStack(alx, 19)
+errAddInLocalStack_v()
+Used error definition file '../errors/alxErrors.xml'
+Used error definition file '../errors/alxErrors.xml'
+Used error definition file '../errors/alxErrors.xml'
+errPutInStack()
+alx alxTestMagnitude  alxCorrectedMagnitude.c:1340 19 W The ratio can't be computed because its divider equal 0
+alx alxTestMagnitude alxCorrectedMagnitude.c:1340 19 W The ratio can't be computed because its divider equal 0
+
+errResetLocalStack()
+alxComputeAngularDiameterFaint()
+errCloseStack()
+alxGetPolynamialForAngularDiameter()
+errCloseLocalStack()
+Diameter IJ = -0.000(-0.0000), IK = -0.000(-0.0000), JK = 0.203(0.0184), JH = 390860352.000(41822056.0000), mean = 97715088.000000(48857544.000000) 
+errDisplayStack()
+Diameters have not been computed because condition about diamIC-diamMoy > deltaDiamMoy
+errDisplayLocalStack()
