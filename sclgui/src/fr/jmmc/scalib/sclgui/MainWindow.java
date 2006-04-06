@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.3 2006-04-06 14:33:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/31 08:53:20  mella
+ * Handle catalog origin color and confidence indexes from preferences
+ * And jalopyzation
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -30,7 +34,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 public class MainWindow extends JFrame implements Printable
 {
     /** Main panel container, displaying the query and result views */
-    Container contentPane;
+    Container mainPane;
 
     /**
      * Main window menu.
@@ -70,23 +74,38 @@ public class MainWindow extends JFrame implements Printable
 
         try
         {
-            //            UIManager.setLookAndFeel(new MetalLookAndFeel());
             setTitle("SearchCal");
 
             menuBar = new MainMenuBar(this);
             setJMenuBar(menuBar);
 
-            contentPane = getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+            mainPane = getContentPane();
+            mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
 
-            queryView.setVisible(true);
-            contentPane.add(_queryView);
+            // Create a first top-bottom split pane for calibrators and filters
+            JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                    _calibratorsView, _filtersView);
+            // Set the split pane to continuously resize the child components
+            // which the divider is dragged
+            resultPane.setContinuousLayout(true);
+            // Allows the user to conveniently move the divider to either end with a single click
+            resultPane.setOneTouchExpandable(true);
 
+            // Create a second top-bottom split pane
+            JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                    _queryView, resultPane);
+            // Set the split pane to continuously resize the child components
+            // which the divider is dragged
+            splitPane.setContinuousLayout(true);
+
+            // Allows the user to conveniently move the divider to either end with a single click
+            splitPane.setOneTouchExpandable(true);
+
+            mainPane.add(splitPane);
+
+            _queryView.setVisible(true);
             _calibratorsView.setVisible(true);
-            contentPane.add(_calibratorsView);
-
             _filtersView.setVisible(true);
-            contentPane.add(_filtersView);
 
             pack();
             setVisible(true);
