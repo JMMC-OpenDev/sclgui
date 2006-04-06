@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.3 2006-03-31 14:53:28 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.4 2006-04-06 14:44:14 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/03/31 14:53:28  mella
+ * Add TabbedPane container
+ *
  * Revision 1.2  2006/03/31 14:30:42  mella
  * Support some color preferences changes
  *
@@ -41,6 +44,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
     /**
      * DOCUMENT ME!
      */
+    protected JButton _restoreDefaultButton;
     protected JButton _saveChangesButton;
 
     protected JTabbedPane prefTabbedPane;
@@ -68,6 +72,9 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         prefTabbedPane.add("Catalog Origin" , colorView);
 
         JPanel buttonsPanel = new JPanel();
+        _restoreDefaultButton = new JButton("Restore to default");
+        _restoreDefaultButton.addActionListener(this);
+        buttonsPanel.add(_restoreDefaultButton);
         _saveChangesButton = new JButton("Save changes");
         _saveChangesButton.addActionListener(this);
         buttonsPanel.add(_saveChangesButton);
@@ -101,6 +108,19 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
      */
     public void actionPerformed(ActionEvent evt)
     {
+        // If restore default button pressed
+        if (evt.getSource().equals(_restoreDefaultButton))
+        {
+            try
+            {
+                _preferences.resetToDefaultPreferences();
+            }
+            catch (Exception e)
+            {
+                // TODO criez fort!!
+                e.printStackTrace();
+            }
+        }
         // If save button pressed
         if (evt.getSource().equals(_saveChangesButton))
         {
@@ -122,7 +142,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
   */
 class SpecificPreferencesView extends JPanel
 {
@@ -154,7 +174,7 @@ class SpecificPreferencesView extends JPanel
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
   */
 class ColorPreferencesView extends JPanel implements ChangeListener,
     ActionListener
