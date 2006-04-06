@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.6 2006-04-06 13:07:53 yvander Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.7 2006-04-06 14:40:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/04/06 13:07:53  yvander
+ * Add getVOTable method
+ *
  * Revision 1.5  2006/03/31 14:30:42  mella
  * Support some color preferences changes
  *
@@ -92,20 +95,20 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * setValueAt.
+     * This method is called when a cell value is needed by the attached view.
      *
-     * This method is called when a cell changed.
+     * @return the specified cell value.
      */
-    public void setValueAt(Object value, int row, int col)
+    public Object getValueAt(int row, int column)
     {
-        // DOCUMENT ME!
-        System.out.println("Row : " + row + " Col : " + col + " Value : " +
-            value.toString() + " <---> Data can changed !!!");
+        // Return the StarProperty value
+        return getStarProperty(row, column).getValue();
     }
 
     /**
      * Parse a VOTablegetting its content from an BufferReader and update any attached JTable to show
      * its content.
+     *
      * @param reader BufferedReader used to read the voTable.
      */
     public void parseVOTable(BufferedReader reader)
@@ -179,6 +182,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
             groupNameToGroupId.put(groupName, new Integer(groupId));
             _columnNames.add(groupName);
+
+            // @todo : store the datatype to later affect the right object (amongst String, Double, RA & Dec) as each starProperty value.
         }
 
         // Add the group name to group id conversion table to the star list
@@ -204,18 +209,21 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
                  */
                 int mainGroupCellId = 3 * groupId;
 
+                // Store the group value (always the first group cell)
+                Object value = row.getContent(mainGroupCellId + 0);
+
+                // Store the group origin (always the second group cell)
+                String origin = row.getContent(mainGroupCellId + 1);
+
+                // Store the group confidence (always the third group cell)
+                String confidence = row.getContent(mainGroupCellId + 2);
+
                 /*
                  * Create a new StarProperty instance from the retrieved value,
                  * origin and confidence.
                  */
-                StarProperty starProperty = new StarProperty();
-
-                // Store the group value (always the first group cell)
-                starProperty.setValue(row.getContent(mainGroupCellId + 0));
-                // Store the group origin (always the second group cell)
-                starProperty.setOrigin(row.getContent(mainGroupCellId + 1));
-                // Store the group confidence (always the third group cell)
-                starProperty.setConfidence(row.getContent(mainGroupCellId + 2));
+                StarProperty starProperty = new StarProperty(value, origin,
+                        confidence);
 
                 // Add the newly created star property to the star property list
                 starProperties.add(starProperty);
@@ -234,32 +242,29 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * Return the StarProperty corresponding to the cell.
      */
-    public StarProperty getStarProperty(int row, String colName)
+    public StarProperty getStarProperty(int row, int column)
     {
         // The real column index
         Vector starsProperties = (Vector) _currentStarList.get(row);
-        int    col             = _currentStarList.getColumnIdByName(colName);
 
         // Return the StarProperty
-        if (starsProperties.get(col) instanceof StarProperty)
+        if (starsProperties.get(column) instanceof StarProperty)
         {
-            return (StarProperty) starsProperties.get(col);
+            return (StarProperty) starsProperties.get(column);
         }
-        else
-        {
-            return null;
-        }
+
+        return null;
     }
 
     /**
      * getVOTable.
      *
-     * Return the VOTable corresponding to the SearchCal result.
+     * @return the VOTable corresponding to the SearchCal initial result.
      */
     public String getVOTable()
     {
-        // The origin data
-            return _voTable;
+        // The original data
+        return _voTable;
     }
 
     /**
