@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.3 2006-04-06 14:36:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/31 08:53:20  mella
+ * Handle catalog origin color and confidence indexes from preferences
+ * And jalopyzation
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -25,7 +29,7 @@ public class StarProperty implements Comparable
     // Trace has been deactvated because of numerous call
 
     /** Value */
-    private String _value;
+    private Object _value;
 
     /** Origin */
     private String _origin;
@@ -34,19 +38,9 @@ public class StarProperty implements Comparable
     private String _confidence;
 
     /**
-     * Default constructor.
-     */
-    public StarProperty()
-    {
-        setValue("");
-        setConfidence("");
-        setOrigin("");
-    }
-
-    /**
      * Fully parametred constructor.
      */
-    public StarProperty(String value, String confidence, String origin)
+    public StarProperty(Object value, String origin, String confidence)
     {
         setValue(value);
         setConfidence(confidence);
@@ -58,10 +52,23 @@ public class StarProperty implements Comparable
      *
      * @param value the new star property value.
      */
-    public void setValue(String value)
+    public void setValue(Object value)
     {
-        // MCSLogger.trace();
+        MCSLogger.trace();
+
         _value = value;
+    }
+
+    /**
+     * Get the value of the star property in its original form.
+     *
+     * @return an Object representing the star property value.
+     */
+    public Object getValue()
+    {
+        MCSLogger.trace();
+
+        return _value;
     }
 
     /**
@@ -73,7 +80,7 @@ public class StarProperty implements Comparable
     {
         MCSLogger.trace();
 
-        return _value;
+        return _value.toString();
     }
 
     /**
@@ -85,7 +92,7 @@ public class StarProperty implements Comparable
     {
         MCSLogger.trace();
 
-        return Double.parseDouble(_value);
+        return Double.parseDouble(_value.toString());
     }
 
     /**
@@ -95,7 +102,8 @@ public class StarProperty implements Comparable
      */
     public void setOrigin(String origin)
     {
-        //MCSLogger.trace();
+        MCSLogger.trace();
+
         _origin = origin;
     }
 
@@ -106,8 +114,9 @@ public class StarProperty implements Comparable
      */
     public String getOrigin()
     {
-        //MCSLogger.trace();
-        return _origin.toString();
+        MCSLogger.trace();
+
+        return _origin;
     }
 
     /**
@@ -117,7 +126,8 @@ public class StarProperty implements Comparable
      */
     public boolean hasOrigin()
     {
-        //MCSLogger.trace();
+        MCSLogger.trace();
+
         if (_confidence.length() > 0)
         {
             return false;
@@ -138,7 +148,8 @@ public class StarProperty implements Comparable
      */
     public void setConfidence(String confidence)
     {
-        // MCSLogger.trace();
+        MCSLogger.trace();
+
         _confidence = confidence;
     }
 
@@ -149,8 +160,9 @@ public class StarProperty implements Comparable
      */
     public String getConfidence()
     {
-        //MCSLogger.trace();
-        return _confidence.toString();
+        MCSLogger.trace();
+
+        return _confidence;
     }
 
     /**
@@ -160,24 +172,14 @@ public class StarProperty implements Comparable
      */
     public boolean hasConfidence()
     {
-        //MCSLogger.trace();
+        MCSLogger.trace();
+
         if (_confidence.length() > 0)
         {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * Give back the string representation of a star property.
-     *
-     * @return the representation of the star property as a String object.
-     */
-    public String toString()
-    {
-        // MCSLogger.trace();
-        return _value.toString();
     }
 
     /**
@@ -192,8 +194,22 @@ public class StarProperty implements Comparable
     {
         MCSLogger.trace();
 
-        // TODO fiish implementation
-        return _value.compareTo(o);
+        return ((Comparable) _value).compareTo((Comparable) o);
+
+        /*
+           // If the _value member instance class implements 'Comparable' interface
+           Class[] interfaces = _value.getClass().getInterfaces();
+           for (int i = 0; i < interfaces.length; i++)
+           {
+               // Compare it against the given object
+               if (interfaces[i] == java.lang.Comparable.class)
+               {
+                   return ((Comparable)_value).compareTo((Comparable)o);
+               }
+           }
+           // Otherwise only return whether the given object is the same or not
+           return (_value.equals(o) == true ? 0 : 1);
+         */
     }
 }
 /*___oOo___*/
