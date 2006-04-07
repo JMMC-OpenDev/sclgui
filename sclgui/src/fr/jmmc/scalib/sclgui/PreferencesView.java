@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.4 2006-04-06 14:44:14 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.5 2006-04-07 08:41:03 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/04/06 14:44:14  mella
+ * Add feature to restore to default preferences
+ *
  * Revision 1.3  2006/03/31 14:53:28  mella
  * Add TabbedPane container
  *
@@ -45,23 +48,31 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
      * DOCUMENT ME!
      */
     protected JButton _restoreDefaultButton;
+
+    /**
+     * DOCUMENT ME!
+     */
     protected JButton _saveChangesButton;
 
+    /**
+     * DOCUMENT ME!
+     */
     protected JTabbedPane prefTabbedPane;
-    
+
     /**
      * Constructor.
      * @param title String
      */
-    public PreferencesView(Preferences preferences)
+    public PreferencesView()
     {
         super("SCALIB Preferences");
 
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
         // Build main GUI components
         prefTabbedPane = new JTabbedPane();
+
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(prefTabbedPane);
@@ -69,7 +80,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         // Append preference colors chooser component of catalogs
         ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
                 "catalog.color.");
-        prefTabbedPane.add("Catalog Origin" , colorView);
+        prefTabbedPane.add("Catalog Origin", colorView);
 
         JPanel buttonsPanel = new JPanel();
         _restoreDefaultButton = new JButton("Restore to default");
@@ -78,8 +89,8 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         _saveChangesButton = new JButton("Save changes");
         _saveChangesButton.addActionListener(this);
         buttonsPanel.add(_saveChangesButton);
-        contentPane.add (buttonsPanel);
-            
+        contentPane.add(buttonsPanel);
+
         // Center on screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize  = getSize();
@@ -121,6 +132,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
                 e.printStackTrace();
             }
         }
+
         // If save button pressed
         if (evt.getSource().equals(_saveChangesButton))
         {
@@ -142,8 +154,8 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
-  */
+ * @version $Revision: 1.5 $
+ */
 class SpecificPreferencesView extends JPanel
 {
     /**
@@ -166,7 +178,7 @@ class SpecificPreferencesView extends JPanel
      */
     public void actionPerformed(ActionEvent evt)
     {
-         }
+    }
 }
 
 
@@ -174,8 +186,8 @@ class SpecificPreferencesView extends JPanel
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
-  */
+ * @version $Revision: 1.5 $
+ */
 class ColorPreferencesView extends JPanel implements ChangeListener,
     ActionListener
 {
@@ -209,7 +221,6 @@ class ColorPreferencesView extends JPanel implements ChangeListener,
      */
     protected JButton _applyChangesButton;
 
-  
     /**
      * Creates a new ColorPreferencesView object.
      *
@@ -284,7 +295,6 @@ class ColorPreferencesView extends JPanel implements ChangeListener,
         tcc.setColor(c);
     }
 
-    
     /**
      * DOCUMENT ME!
      *
@@ -307,6 +317,5 @@ class ColorPreferencesView extends JPanel implements ChangeListener,
             _preferences.setPreference(preferenceName,
                 jmmc.mcs.util.ColorEncoder.encode(newColor));
         }
-
     }
 }

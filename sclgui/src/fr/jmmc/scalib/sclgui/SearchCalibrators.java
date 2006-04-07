@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.2 2006-04-07 08:41:03 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -78,8 +81,7 @@ public class SearchCalibrators
     public SearchCalibrators()
     {
         // Retrieve application preferences and attach them to their view
-        Preferences     preferences     = new Preferences();
-        PreferencesView preferencesView = new PreferencesView(preferences);
+        PreferencesView preferencesView = new PreferencesView();
 
         // Create filters
         FiltersModel filtersModel = new FiltersModel();
@@ -87,8 +89,7 @@ public class SearchCalibrators
 
         // Create a calibrators model and attach it to a calibrators view
         CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
-        CalibratorsView  calibratorsView  = new CalibratorsView(calibratorsModel,
-                preferences);
+        CalibratorsView  calibratorsView  = new CalibratorsView(calibratorsModel);
 
         filtersModel.addObserver(calibratorsModel);
 

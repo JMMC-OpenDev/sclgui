@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.9 2006-04-07 07:51:37 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.10 2006-04-07 08:41:03 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/04/07 07:51:37  mella
+ * Make table sorter work
+ *
  * Revision 1.8  2006/04/06 14:48:40  lafrasse
  * Added TableSorter usage
  *
@@ -75,9 +78,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** The results table */
     JTable _jTable;
 
-    /** The cellrendered that works with every columns */
-    TableCellColors _tableCellColors;
-
     //details state
     /** DOCUMENT ME! */
     String detresstat = "show";
@@ -126,21 +126,17 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      *
      * @param calibratorsModel the resutModel.
      */
-    public CalibratorsView(CalibratorsModel calibratorsModel,
-        Preferences preferences)
+    public CalibratorsView(CalibratorsModel calibratorsModel)
     {
         // Store the model and register against it
         _calibratorsModel = calibratorsModel;
         _calibratorsModel.addTableModelListener(this);
 
         // Store the application preferences and register against it
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        legendView           = new LegendView(_preferences);
-
-        // Create tableCellColors
-        _tableCellColors     = new TableCellColors(_preferences);
+        legendView = new LegendView(_preferences);
 
         // Gray border of the view.
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
@@ -154,6 +150,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Table initialization
         _jTable = new JTable();
+
         TableSorter tableSorter = new TableSorter(_calibratorsModel);
         tableSorter.setTableHeader(_jTable.getTableHeader());
         _jTable.setModel(tableSorter);
@@ -250,12 +247,14 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         MCSLogger.trace();
 
         // @todo : maybe this should be done only one time
-        for (int i = 0; i < _calibratorsModel.getColumnCount(); i++)
-        {
-            TableColumn tc = _jTable.getTableHeader().getColumnModel()
-                                    .getColumn(i);
-            tc.setCellRenderer(_tableCellColors);
-        }
+        /*
+           for (int i = 0; i < _calibratorsModel.getColumnCount(); i++)
+           {
+               TableColumn tc = _jTable.getTableHeader().getColumnModel()
+                                       .getColumn(i);
+               tc.setCellRenderer(_tableCellColors);
+           }
+         */
     }
 
     /**
@@ -328,155 +327,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 {
                     //
                     _aladinInteraction._aladin.setVisible(true);
-                }
-            }
-        }
-    }
-}
-
-
-/**
- */
-class TableCellColors extends DefaultTableCellRenderer implements Observer
-{
-    // No trace log is implemented because these parts of code is often called. 
-
-    /**
-     * DOCUMENT ME!
-     */
-    Hashtable _hashColors;
-
-    /**
-     * DOCUMENT ME!
-     */
-    Hashtable _hashConfidence;
-
-    /**
-     * DOCUMENT ME!
-     */
-    Preferences _preferences;
-
-    /**
-     * TableCellColors  -  Constructor
-     */
-    public TableCellColors(Preferences preferences)
-    {
-        super();
-
-        // Store the application preferences and register against it
-        _preferences = preferences;
-        _preferences.addObserver(this);
-
-        // force to load Preferences at first moment
-        update(_preferences, null);
-    } //end TableCellColors
-
-    /**
-     * getTableCellRendererComponent  -  return the component with renderer (Table)
-     * @param table JTable
-     * @param value Object
-     * @param isSelected boolean
-     * @param hasFocus boolean
-     * @param row int
-     * @param column int
-     * @return Component
-     */
-    public Component getTableCellRendererComponent(JTable table, Object value,
-        boolean isSelected, boolean hasFocus, int row, int column)
-    {
-        MCSLogger.trace();
-
-        // Set default renderer to the component
-        super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
-            row, column);
-
-        // Get StarProperty selected
-        CalibratorsModel calModel     = ((CalibratorsModel)((TableSorter)table.getModel()).getTableModel());
-//        CalibratorsModel calModel     = ((CalibratorsModel) table.getModel());
-        StarProperty     starProperty = calModel.getStarProperty(row, column);
-
-        // If cell is not selecterd and not focused
-        if (! (isSelected && hasFocus))
-        {
-            if (starProperty != null)
-            {
-                // Set Background Color corresponding to the Catalog Origin Color or confidence index
-                if (starProperty.hasOrigin() == true)
-                {
-                    setBackground((Color) _hashColors.get(
-                            starProperty.getOrigin()));
-                }
-                else if (starProperty.hasConfidence() == true)
-                {
-                    setBackground((Color) _hashConfidence.get(
-                            starProperty.getConfidence()));
-                }
-                else
-                {
-                    // If cells are black, something bad appent !
-                    setBackground(Color.BLACK);
-                }
-            }
-        }
-
-        // Return the component
-        return this;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param o DOCUMENT ME!
-     * @param arg DOCUMENT ME!
-     */
-    public void update(Observable o, Object arg)
-    {
-        MCSLogger.trace();
-
-        // React to preferences changes
-        if (o.equals(_preferences))
-        {
-            // read colors preferences for catalogs
-            String      prefix = "catalog.color.";
-            Enumeration e      = _preferences.getPreferences(prefix);
-            _hashColors        = new Hashtable();
-
-            while (e.hasMoreElements())
-            {
-                String entry       = (String) e.nextElement();
-                String catalogName = entry.substring(prefix.length());
-
-                try
-                {
-                    Color catalogColor = _preferences.getPreferenceAsColor(entry);
-                    _hashColors.put(catalogName, catalogColor);
-                }
-                catch (PreferencesException ex)
-                {
-                    // TODO log as error instead of stderr...
-                    ex.printStackTrace();
-                }
-            }
-
-            // Read colors preferences for confidences
-            prefix              = "confidence.color.";
-            e                   = _preferences.getPreferences(prefix);
-            _hashConfidence     = new Hashtable();
-
-            while (e.hasMoreElements())
-            {
-                String entry          = (String) e.nextElement();
-                String confidenceName = entry.substring(prefix.length());
-
-                try
-                {
-                    Color confidenceColor = _preferences.getPreferenceAsColor(entry);
-                    _hashConfidence.put(confidenceName, confidenceColor);
-                }
-                catch (PreferencesException ex)
-                {
-                    // TODO log as error instead of stderr...
-                    ex.printStackTrace();
                 }
             }
         }
