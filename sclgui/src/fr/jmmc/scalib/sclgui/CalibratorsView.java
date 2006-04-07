@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.8 2006-04-06 14:48:40 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.9 2006-04-07 07:51:37 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/04/06 14:48:40  lafrasse
+ * Added TableSorter usage
+ *
  * Revision 1.7  2006/04/06 13:08:47  yvander
  * Aladin interaction
  *
@@ -151,8 +154,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Table initialization
         _jTable = new JTable();
-        _jTable.setModel(new TableSorter(_calibratorsModel));
-//        _jTable.setModel(_calibratorsModel);
+        TableSorter tableSorter = new TableSorter(_calibratorsModel);
+        tableSorter.setTableHeader(_jTable.getTableHeader());
+        _jTable.setModel(tableSorter);
         _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollPane = new JScrollPane(_jTable);
