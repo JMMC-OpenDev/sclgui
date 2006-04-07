@@ -1,5 +1,9 @@
 package jmmc.scalib.sclgui;
 
+import jmmc.mcs.log.MCSLogger;
+
+import jmmc.mcs.util.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -107,6 +111,9 @@ public class TableSorter extends AbstractTableModel
             }
         };
 
+    /** The cellrendered that works with every columns */
+    TableCellColors _tableCellColors;
+
     /**
      * DOCUMENT ME!
      */
@@ -154,6 +161,7 @@ public class TableSorter extends AbstractTableModel
     {
         this.mouseListener          = new MouseHandler();
         this.tableModelListener     = new TableModelHandler();
+        _tableCellColors            = new TableCellColors();
     }
 
     /**
@@ -626,6 +634,17 @@ public class TableSorter extends AbstractTableModel
     {
         public void tableChanged(TableModelEvent e)
         {
+            // Use the internal cell renderer with origin and confidence
+            if (tableModel.getColumnCount() == tableHeader.getColumnModel()
+                                                              .getColumnCount())
+            {
+                for (int i = 0; i < tableModel.getColumnCount(); i++)
+                {
+                    TableColumn tc = tableHeader.getColumnModel().getColumn(i);
+                    tc.setCellRenderer(_tableCellColors);
+                }
+            }
+
             // If we're not sorting by anything, just pass the event along.
             if (! isSorting())
             {
@@ -817,6 +836,157 @@ public class TableSorter extends AbstractTableModel
         {
             this.column        = column;
             this.direction     = direction;
+        }
+    }
+
+    /**
+       Used to display colorized cells
+     */
+    private class TableCellColors extends DefaultTableCellRenderer
+        implements Observer
+    {
+        // No trace log is implemented because these parts of code is often called. 
+
+        /**
+         * DOCUMENT ME!
+         */
+        Hashtable _hashColors;
+
+        /**
+         * DOCUMENT ME!
+         */
+        Hashtable _hashConfidence;
+
+        /**
+         * DOCUMENT ME!
+         */
+        Preferences _preferences;
+
+        /**
+         * TableCellColors  -  Constructor
+         */
+        public TableCellColors()
+        {
+            super();
+
+            // Store the application preferences and register against it
+            _preferences = Preferences.getInstance();
+            _preferences.addObserver(this);
+
+            // force to load Preferences at first moment
+            update(_preferences, null);
+        }
+
+        /**
+         * getTableCellRendererComponent  -  return the component with renderer (Table)
+         * @param table JTable
+         * @param value Object
+         * @param isSelected boolean
+         * @param hasFocus boolean
+         * @param row int
+         * @param column int
+         * @return Component
+         */
+        public Component getTableCellRendererComponent(JTable table,
+            Object value, boolean isSelected, boolean hasFocus, int row,
+            int column)
+        {
+            // MCSLogger.trace();
+
+            // Set default renderer to the component
+            super.getTableCellRendererComponent(table, value, isSelected,
+                hasFocus, row, column);
+
+            // Get StarProperty selected using modelIndex Method
+            CalibratorsModel calModel     = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
+            StarProperty     starProperty = calModel.getStarProperty(modelIndex(
+                        row), column);
+
+            // If cell is not selecterd and not focused
+            if (! (isSelected && hasFocus))
+            {
+                if (starProperty != null)
+                {
+                    // Set Background Color corresponding to the Catalog Origin Color or confidence index
+                    if (starProperty.hasOrigin() == true)
+                    {
+                        setBackground((Color) _hashColors.get(
+                                starProperty.getOrigin()));
+                    }
+                    else if (starProperty.hasConfidence() == true)
+                    {
+                        setBackground((Color) _hashConfidence.get(
+                                starProperty.getConfidence()));
+                    }
+                    else
+                    {
+                        // If cells are black, something bad appent !
+                        setBackground(Color.BLACK);
+                    }
+                }
+            }
+
+            // Return the component
+            return this;
+        }
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @param o DOCUMENT ME!
+         * @param arg DOCUMENT ME!
+         */
+        public void update(Observable o, Object arg)
+        {
+            MCSLogger.trace();
+
+            // React to preferences changes
+            if (o.equals(_preferences))
+            {
+                // read colors preferences for catalogs
+                String      prefix = "catalog.color.";
+                Enumeration e      = _preferences.getPreferences(prefix);
+                _hashColors        = new Hashtable();
+
+                while (e.hasMoreElements())
+                {
+                    String entry       = (String) e.nextElement();
+                    String catalogName = entry.substring(prefix.length());
+
+                    try
+                    {
+                        Color catalogColor = _preferences.getPreferenceAsColor(entry);
+                        _hashColors.put(catalogName, catalogColor);
+                    }
+                    catch (PreferencesException ex)
+                    {
+                        // TODO log as error instead of stderr...
+                        ex.printStackTrace();
+                    }
+                }
+
+                // Read colors preferences for confidences
+                prefix              = "confidence.color.";
+                e                   = _preferences.getPreferences(prefix);
+                _hashConfidence     = new Hashtable();
+
+                while (e.hasMoreElements())
+                {
+                    String entry          = (String) e.nextElement();
+                    String confidenceName = entry.substring(prefix.length());
+
+                    try
+                    {
+                        Color confidenceColor = _preferences.getPreferenceAsColor(entry);
+                        _hashConfidence.put(confidenceName, confidenceColor);
+                    }
+                    catch (PreferencesException ex)
+                    {
+                        // TODO log as error instead of stderr...
+                        ex.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }
