@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.10 2006-04-07 08:41:03 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.11 2006-04-07 11:05:28 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/04/07 08:41:03  mella
+ * Preferences singleton is accessed using Preferences.getInstance()
+ *
  * Revision 1.9  2006/04/07 07:51:37  mella
  * Make table sorter work
  *
@@ -245,16 +248,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public void tableChanged(TableModelEvent e)
     {
         MCSLogger.trace();
-
-        // @todo : maybe this should be done only one time
-        /*
-           for (int i = 0; i < _calibratorsModel.getColumnCount(); i++)
-           {
-               TableColumn tc = _jTable.getTableHeader().getColumnModel()
-                                       .getColumn(i);
-               tc.setCellRenderer(_tableCellColors);
-           }
-         */
     }
 
     /**
@@ -267,7 +260,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
-        // @todo : place right code to make jTable refresh itself
+        // If preference colors have changed, repaint table
         _jTable.repaint();
     }
 
