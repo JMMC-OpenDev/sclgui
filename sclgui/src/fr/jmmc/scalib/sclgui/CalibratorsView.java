@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.11 2006-04-07 11:05:28 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.12 2006-04-07 13:07:25 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/04/07 11:05:28  mella
+ * Housekeeping
+ *
  * Revision 1.10  2006/04/07 08:41:03  mella
  * Preferences singleton is accessed using Preferences.getInstance()
  *
@@ -158,6 +161,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         tableSorter.setTableHeader(_jTable.getTableHeader());
         _jTable.setModel(tableSorter);
         _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(_jTable);
         scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
@@ -197,23 +201,22 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         buttonPanel.add(showLegendButton);
 
         // Tools panel creation
-        JPanel toolsPanel  = new JPanel();
+        JPanel resumePanel = new JPanel();
         JLabel resumeLabel = new JLabel();
         resumeLabel.setText("Resume : ");
         resumeLabel.setPreferredSize(new Dimension(70, 20));
-        toolsPanel.add(resumeLabel);
-
+        
         JTextField resumeTextField = new JTextField();
         resumeTextField.setText("10 stars with...");
         resumeTextField.setPreferredSize(new Dimension(subpanelwidth - 80, 20));
         resumeTextField.setEditable(false);
-        toolsPanel.add(resumeTextField);
-        toolsPanel.add(buttonPanel);
-        toolsPanel.setMinimumSize(new Dimension(subpanelwidth, 140));
-        toolsPanel.setSize(new Dimension(subpanelwidth, 140));
-        toolsPanel.setPreferredSize(new Dimension(subpanelwidth, 140));
-
-        add(toolsPanel);
+        
+        resumePanel.add(resumeLabel);
+        resumePanel.add(resumeTextField);
+        resumePanel.setMaximumSize(resumePanel.getPreferredSize());
+        buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
+        add(resumePanel);
+        add(buttonPanel);
     }
 
     /**
