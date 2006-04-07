@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.5 2006-04-07 08:41:03 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.6 2006-04-07 11:06:33 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/04/07 08:41:03  mella
+ * Preferences singleton is accessed using Preferences.getInstance()
+ *
  * Revision 1.4  2006/04/06 14:44:14  mella
  * Add feature to restore to default preferences
  *
@@ -30,6 +33,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.colorchooser.*;
 import javax.swing.event.*;
+import javax.swing.table.*;
 
 
 // TODO handle close button correctly
@@ -81,6 +85,11 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
                 "catalog.color.");
         prefTabbedPane.add("Catalog Origin", colorView);
+
+        // Append preference colors chooser component of catalogs
+        ColorPreferencesView confidenceView = new ColorPreferencesView(_preferences,
+                "confidence.color.");
+        prefTabbedPane.add("Confidence index", confidenceView);
 
         JPanel buttonsPanel = new JPanel();
         _restoreDefaultButton = new JButton("Restore to default");
@@ -154,7 +163,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 class SpecificPreferencesView extends JPanel
 {
@@ -186,30 +195,14 @@ class SpecificPreferencesView extends JPanel
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.5 $
- */
-class ColorPreferencesView extends JPanel implements ChangeListener,
-    ActionListener
+ * @version $Revision: 1.6 $
+  */
+class ColorPreferencesView extends JPanel implements Observer
 {
     /**
      * DOCUMENT ME!
      */
-    protected JColorChooser tcc;
-
-    /**
-     * DOCUMENT ME!
-     */
-    protected JLabel banner;
-
-    /**
-     * DOCUMENT ME!
-     */
     protected Preferences _preferences;
-
-    /**
-     * DOCUMENT ME!
-     */
-    protected JComboBox _preferenceNames;
 
     /**
      * DOCUMENT ME!
@@ -219,7 +212,12 @@ class ColorPreferencesView extends JPanel implements ChangeListener,
     /**
      * DOCUMENT ME!
      */
-    protected JButton _applyChangesButton;
+    private Object[][] data;
+
+    /**
+     * DOCUMENT ME!
+     */
+    JTable table;
 
     /**
      * Creates a new ColorPreferencesView object.
@@ -229,93 +227,249 @@ class ColorPreferencesView extends JPanel implements ChangeListener,
      */
     public ColorPreferencesView(Preferences preferences, String prefix)
     {
-        super(new BorderLayout());
         _preferencePrefix     = prefix;
         _preferences          = preferences;
+        _preferences.addObserver(this);
 
-        //Set up color chooser for setting text color
-        tcc                   = new JColorChooser();
-        tcc.getSelectionModel().addChangeListener(this);
+        // Make data filled
+        update(null, null);
 
-        // Set up combo test label and apply button
-        _preferenceNames = new JComboBox();
+        TableModel tableModel = new MyTableModel();
+        table = new JTable(tableModel);
 
-        // Fill with catalog List
-        Enumeration e = _preferences.getPreferences(prefix);
+        //Create the scroll pane and add the table to it.
+        JScrollPane scrollPane = new JScrollPane(table);
+        //Set up renderer and editor for the Favorite Color column.
+        table.setDefaultRenderer(Color.class, new ColorRenderer(true));
+        table.setDefaultEditor(Color.class, new ColorEditor());
+        //Add the scroll pane to this panel.
+        add(scrollPane);
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param o DOCUMENT ME!
+     * @param arg DOCUMENT ME!
+     */
+    public void update(Observable o, Object arg)
+    {
+        // Fill with preferences entries
+        Enumeration e      = _preferences.getPreferences(_preferencePrefix);
+        Vector      names  = new Vector();
+        Vector      colors = new Vector();
 
         while (e.hasMoreElements())
         {
-            String entry       = (String) e.nextElement();
-            String catalogName = entry.substring(prefix.length());
-            _preferenceNames.addItem(catalogName);
+            String entry          = (String) e.nextElement();
+
+            String preferenceName = entry.substring(_preferencePrefix.length());
+            names.add(preferenceName);
+
+            Color c;
+
+            try
+            {
+                c = _preferences.getPreferenceAsColor(entry);
+            }
+            catch (Exception ex)
+            {
+                c = Color.white;
+            }
+
+            colors.add(c);
         }
 
-        _applyChangesButton = new JButton("Apply changes");
-        _applyChangesButton.addActionListener(this);
+        data = new Object[names.size()][2];
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(tcc);
-        add(_preferenceNames);
+        for (int i = 0; i < names.size(); i++)
+        {
+            data[i][0]     = names.elementAt(i);
+            data[i][1]     = colors.elementAt(i);
+        }
 
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.add(_applyChangesButton);
-        add(buttonsPanel);
-        _preferenceNames.addActionListener(this);
-        updateColor();
+        // repaint table 
+        if (table != null)
+        {
+            table.repaint();
+        }
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param e DOCUMENT ME!
-     */
-    public void stateChanged(ChangeEvent e)
+    class MyTableModel extends AbstractTableModel
     {
-        Color newColor = tcc.getColor();
-    }
+        private String[] columnNames = { "Property", "Favorite Color" };
 
-    /**
-     * DOCUMENT ME!
-     */
-    private void updateColor()
-    {
-        String preferenceName = _preferencePrefix +
-            _preferenceNames.getSelectedItem();
-        Color  c;
-
-        try
+        public int getColumnCount()
         {
-            c                 = _preferences.getPreferenceAsColor(preferenceName);
-        }
-        catch (Exception e)
-        {
-            c = Color.white;
+            return columnNames.length;
         }
 
-        tcc.setColor(c);
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param evt DOCUMENT ME!
-     */
-    public void actionPerformed(ActionEvent evt)
-    {
-        // If combobox was modified
-        if (evt.getSource().equals(_preferenceNames))
+        public int getRowCount()
         {
-            updateColor();
+            return data.length;
         }
 
-        // If apply button pressed
-        if (evt.getSource().equals(_applyChangesButton))
+        public String getColumnName(int col)
         {
-            String preferenceName = _preferencePrefix +
-                _preferenceNames.getSelectedItem();
-            Color  newColor       = tcc.getColor();
+            return columnNames[col];
+        }
+
+        public Object getValueAt(int row, int col)
+        {
+            return data[row][col];
+        }
+
+        /*
+         * JTable uses this method to determine the default renderer/
+         * editor for each cell.  If we didn't implement this method,
+         * then the last column would contain text ("true"/"false"),
+         * rather than a check box.
+         */
+        public Class getColumnClass(int c)
+        {
+            return getValueAt(0, c).getClass();
+        }
+
+        public boolean isCellEditable(int row, int col)
+        {
+            //Note that the data/cell address is constant,
+            //no matter where the cell appears onscreen.
+            if (col < 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void setValueAt(Object value, int row, int col)
+        {
+            data[row][col] = value;
+            fireTableCellUpdated(row, col);
+
+            String preferenceName = _preferencePrefix + data[row][0];
+            Color  newColor       = (Color) data[row][1];
             _preferences.setPreference(preferenceName,
                 jmmc.mcs.util.ColorEncoder.encode(newColor));
+        }
+    }
+
+    class ColorRenderer extends JLabel implements TableCellRenderer
+    {
+        Border  unselectedBorder = null;
+        Border  selectedBorder   = null;
+        boolean isBordered       = true;
+
+        public ColorRenderer(boolean isBordered)
+        {
+            this.isBordered = isBordered;
+            setOpaque(true); //MUST do this for background to show up.
+        }
+
+        public Component getTableCellRendererComponent(JTable table,
+            Object color, boolean isSelected, boolean hasFocus, int row,
+            int column)
+        {
+            Color newColor = (Color) color;
+            setBackground(newColor);
+
+            if (isBordered)
+            {
+                if (isSelected)
+                {
+                    if (selectedBorder == null)
+                    {
+                        selectedBorder = BorderFactory.createMatteBorder(2, 5,
+                                2, 5, table.getSelectionBackground());
+                    }
+
+                    setBorder(selectedBorder);
+                }
+                else
+                {
+                    if (unselectedBorder == null)
+                    {
+                        unselectedBorder = BorderFactory.createMatteBorder(2,
+                                5, 2, 5, table.getBackground());
+                    }
+
+                    setBorder(unselectedBorder);
+                }
+            }
+
+            setToolTipText("RGB value: " + newColor.getRed() + ", " +
+                newColor.getGreen() + ", " + newColor.getBlue());
+
+            return this;
+        }
+    }
+
+    class ColorEditor extends AbstractCellEditor implements TableCellEditor,
+        ActionListener
+    {
+        protected static final String EDIT         = "edit";
+        Color                         currentColor;
+        JButton                       button;
+        JColorChooser                 colorChooser;
+        JDialog                       dialog;
+
+        public ColorEditor()
+        {
+            //Set up the editor (from the table's point of view),
+            //which is a button.
+            //This button brings up the color chooser dialog,
+            //which is the editor from the user's point of view.
+            button                                 = new JButton();
+            button.setActionCommand(EDIT);
+            button.addActionListener(this);
+            button.setBorderPainted(false);
+
+            //Set up the dialog that the button brings up.
+            colorChooser     = new JColorChooser();
+            dialog           = JColorChooser.createDialog(button,
+                    "Pick a Color", true, //modal
+                    colorChooser, this, //OK button handler
+                    null); //no CANCEL button handler
+        }
+
+        /**
+         * Handles events from the editor button and from
+         * the dialog's OK button.
+         */
+        public void actionPerformed(ActionEvent e)
+        {
+            if (EDIT.equals(e.getActionCommand()))
+            {
+                //The user has clicked the cell, so
+                //bring up the dialog.
+                button.setBackground(currentColor);
+                colorChooser.setColor(currentColor);
+                dialog.setVisible(true);
+
+                //Make the renderer reappear.
+                fireEditingStopped();
+            }
+            else
+            { //User pressed dialog's "OK" button.
+                currentColor = colorChooser.getColor();
+            }
+        }
+
+        //Implement the one CellEditor method that AbstractCellEditor doesn't.
+        public Object getCellEditorValue()
+        {
+            return currentColor;
+        }
+
+        //Implement the one method defined by TableCellEditor.
+        public Component getTableCellEditorComponent(JTable table,
+            Object value, boolean isSelected, int row, int column)
+        {
+            currentColor = (Color) value;
+
+            return button;
         }
     }
 }
