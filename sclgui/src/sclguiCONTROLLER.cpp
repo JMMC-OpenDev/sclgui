@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.15 2006-04-05 15:09:34 gzins Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.16 2006-04-07 14:47:07 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/04/05 15:09:34  gzins
+ * Updated according to new sclsvrCALIBRATOR_LIST API
+ *
  * Revision 1.14  2006/03/07 15:14:16  scetre
  * Increased timoe out from 12000 to 60000
  *
@@ -55,7 +58,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.15 2006-04-05 15:09:34 gzins Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.16 2006-04-07 14:47:07 lafrasse Exp $"; 
 
 /* 
  * System Headers 
@@ -1162,7 +1165,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
     mcsSTRING256 request;
     _requestModel.GetCmdParamLine(request);
         
-    // According to the desired action (save, export to CSV, or VOTable)
+    // According to the desired action (save in SCL, export to CSV, or VOTable)
     switch (action)
     {
         case sclguiSAVE_OVERWRITE :
@@ -1175,8 +1178,8 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
             // Add in the label list the "diameter ok flag"
             label.push_back(sclsvrCALIBRATOR_DIAM_FLAG);
 
-            // Call Save method of the list for a save
-            status = list->Save(fileName, label, _requestModel, mcsFALSE);
+            // Save the calibrator list in exended SCL format
+            status = list->Save(fileName, label, _requestModel, mcsTRUE);
 
             break;
         }
@@ -1187,7 +1190,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
             label = _calibratorListModelSubPanel.GetLabel(
                                      _calibratorListModelSubPanel.IsDetailed());
 
-            // Call Save method of the list for an export
+            // Save the calibrator list in standard CSV format
             status = list->Save(fileName, label, _requestModel, mcsFALSE);
 
             break;
