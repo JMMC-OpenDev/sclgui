@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.16 2006-04-07 14:47:07 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.17 2006-04-10 11:56:07 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/04/07 14:47:07  lafrasse
+ * Restored extended format for SCL saves
+ *
  * Revision 1.15  2006/04/05 15:09:34  gzins
  * Updated according to new sclsvrCALIBRATOR_LIST API
  *
@@ -58,7 +61,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.16 2006-04-07 14:47:07 lafrasse Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.17 2006-04-10 11:56:07 scetre Exp $"; 
 
 /* 
  * System Headers 
@@ -1189,6 +1192,9 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
             // Get actual label
             label = _calibratorListModelSubPanel.GetLabel(
                                      _calibratorListModelSubPanel.IsDetailed());
+
+            // Add in the label list the "diameter ok flag"
+            label.push_back(sclsvrCALIBRATOR_DIAM_FLAG);
 
             // Save the calibrator list in standard CSV format
             status = list->Save(fileName, label, _requestModel, mcsFALSE);
