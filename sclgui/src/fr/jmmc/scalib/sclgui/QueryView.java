@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.2 2006-03-31 08:53:20 mella Exp $"
+ * "@(#) $Id: QueryView.java,v 1.3 2006-04-12 12:30:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/31 08:53:20  mella
+ * Handle catalog origin color and confidence indexes from preferences
+ * And jalopyzation
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -552,7 +556,7 @@ public class QueryView extends JPanel implements Observer
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 class TypeOfStarListener implements ActionListener
 {
@@ -561,7 +565,7 @@ class TypeOfStarListener implements ActionListener
 
     /**
      * TypeOfStarListener  -  Constructor
-     * @param panel QueryView
+     * @param queryView QueryView
      */
     public TypeOfStarListener(QueryView queryView)
     {

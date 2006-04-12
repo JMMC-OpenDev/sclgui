@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.3 2006-03-31 08:53:20 mella Exp $"
+ * "@(#) $Id: LegendView.java,v 1.4 2006-04-12 12:30:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/03/31 08:53:20  mella
+ * Handle catalog origin color and confidence indexes from preferences
+ * And jalopyzation
+ *
  * Revision 1.2  2006/03/30 13:41:28  yvander
  * Mise en place des couleurs
  *
@@ -67,7 +71,7 @@ public class LegendView extends JFrame implements Observer
 
     /**
      * LegendFrame  -  Constructor
-     * @param title String
+     * @param preferences the application preferences that store catalog colors
      */
     public LegendView(Preferences preferences)
     {
@@ -156,7 +160,7 @@ public class LegendView extends JFrame implements Observer
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 class CellColors extends DefaultListCellRenderer
 {

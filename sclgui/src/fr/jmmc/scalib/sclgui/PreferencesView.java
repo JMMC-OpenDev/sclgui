@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.6 2006-04-07 11:06:33 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.7 2006-04-12 12:30:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/04/07 11:06:33  mella
+ * Add better widgets
+ *
  * Revision 1.5  2006/04/07 08:41:03  mella
  * Preferences singleton is accessed using Preferences.getInstance()
  *
@@ -65,7 +68,6 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
 
     /**
      * Constructor.
-     * @param title String
      */
     public PreferencesView()
     {
@@ -163,7 +165,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 class SpecificPreferencesView extends JPanel
 {
@@ -174,7 +176,7 @@ class SpecificPreferencesView extends JPanel
 
     /**
      * Constructor.
-     * @param title String
+     * @param preferences the application preferences
      */
     public SpecificPreferencesView(Preferences preferences)
     {
@@ -195,7 +197,7 @@ class SpecificPreferencesView extends JPanel
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
   */
 class ColorPreferencesView extends JPanel implements Observer
 {
