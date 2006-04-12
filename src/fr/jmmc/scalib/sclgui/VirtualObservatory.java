@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.2 2006-04-12 12:30:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -37,7 +40,7 @@ public class VirtualObservatory
     /**
      * Get calibrator list as a raw VOTable from JMMC web service.
      *
-     * @param query the query to execute.
+     * @param queryModel the query to execute.
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */

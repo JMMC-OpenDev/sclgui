@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.7 2006-04-06 14:40:51 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.8 2006-04-12 12:30:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/04/06 14:40:51  lafrasse
+ * Updated to reflect StarProperty default constructor disparition in favour of a fully parametrized one
+ *
  * Revision 1.6  2006/04/06 13:07:53  yvander
  * Add getVOTable method
  *
@@ -136,7 +139,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Parse a given string as a VOTable and update any attached JTable to show
      * its content.
-     * @param VOTable the voTable content
+     * @param voTable the voTable content
      */
     public void parseVOTable(String voTable)
     {

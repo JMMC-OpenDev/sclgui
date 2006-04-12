@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.2 2006-04-06 13:24:04 mella Exp $"
+ * "@(#) $Id: FilterView.java,v 1.3 2006-04-12 12:30:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/06 13:24:04  mella
+ * Add empty panel for presentation
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -213,7 +216,7 @@ class StringParamListener implements ActionListener
      *
      * @param filter the filter to update.
      * @param constraintName the name of the constraint to handle.
-     * @param textfield The GUI component to display the constraint.
+     * @param widget The GUI component to display the constraint.
      */
     public StringParamListener(Filter filter, String constraintName,
         JTextField widget)
@@ -257,7 +260,7 @@ class BooleanParamListener implements ActionListener
      *
      * @param filter the filter to update.
      * @param constraintName the name of the constraint to handle.
-     * @param textfield The GUI component to display the constraint.
+     * @param widget The GUI component to display the constraint.
      */
     public BooleanParamListener(Filter filter, String constraintName,
         JCheckBox widget)
