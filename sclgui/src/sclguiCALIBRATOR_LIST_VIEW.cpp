@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.15 2006-04-05 15:09:22 gzins Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.16 2006-04-18 14:57:38 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/04/05 15:09:22  gzins
+ * Updated according to new sclsvrCALIBRATOR_LIST API
+ *
  * Revision 1.14  2006/03/22 10:45:48  scetre
  * Added TYC2, TYC3, GLAT and GLON in the detail labels
  *
@@ -38,7 +41,7 @@
  * Updated with new filter
  *
  * Revision 1.4  2005/11/24 15:17:03  scetre
- * Added UNSO catalog legend.
+ * Added USNO catalog legend.
  * Added complete label for faint K research
  *
  * Revision 1.3  2005/11/23 08:42:27  scetre
@@ -57,7 +60,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.15 2006-04-05 15:09:22 gzins Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.16 2006-04-18 14:57:38 gzins Exp $"; 
 
 /* 
  * System Headers 
@@ -103,7 +106,7 @@ using namespace std;
 #define sclguiBORDE_COLOR               "#9778fb"
 #define sclguiV_36B_COLOR               "#88a0a6"
 #define sclgui_MIDI_COLOR               "#c994ca"
-#define sclguiUNSO_COLOR                "#f1fb58"
+#define sclguiUSNO_COLOR                "#f1fb58"
 
 /**
  * Class constructor
@@ -154,8 +157,8 @@ sclguiCALIBRATOR_LIST_VIEW::sclguiCALIBRATOR_LIST_VIEW()
     _legendTable->SetCellBackground(0, 11, sclguiI_196_COLOR);
     _legendTable->SetCell(0, 12, "V/36B");
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
-    _legendTable->SetCell(0, 13, "UNSO");
-    _legendTable->SetCellBackground(0, 13, sclguiUNSO_COLOR);
+    _legendTable->SetCell(0, 13, "USNO");
+    _legendTable->SetCellBackground(0, 13, sclguiUSNO_COLOR);
     _legendTable->SetCell(0, 14, "MIDI");
     _legendTable->SetCellBackground(0, 14, sclgui_MIDI_COLOR);
     
@@ -230,8 +233,8 @@ sclguiCALIBRATOR_LIST_VIEW(sclguiCALIBRATOR_LIST_MODEL &calibratorsModel,
     _legendTable->SetCellBackground(0, 11, sclguiI_196_COLOR);
     _legendTable->SetCell(0, 12, "V/36B");
     _legendTable->SetCellBackground(0, 12, sclguiV_36B_COLOR);
-    _legendTable->SetCell(0, 13, "UNSO");
-    _legendTable->SetCellBackground(0, 13, sclguiUNSO_COLOR);
+    _legendTable->SetCell(0, 13, "USNO");
+    _legendTable->SetCellBackground(0, 13, sclguiUSNO_COLOR);
     _legendTable->SetCell(0, 14, "MIDI");
     _legendTable->SetCellBackground(0, 14, sclgui_MIDI_COLOR);
     
@@ -379,7 +382,7 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
             }
             if (strcmp(property->GetOrigin(), "I/284") == 0)
             {
-                _listTable->SetCellBackground(el, i+1, sclguiUNSO_COLOR);
+                _listTable->SetCellBackground(el, i+1, sclguiUSNO_COLOR);
             }
             if (strcmp(property->GetOrigin(), "II/225/catalog") == 0)
             {
