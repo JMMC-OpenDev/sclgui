@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: simcliTestGetCoordinates.c,v 1.4 2005-02-15 14:50:51 gzins Exp $"
+ * "@(#) $Id: simcliTestGetCoordinates.c,v 1.5 2006-05-11 13:04:57 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/02/15 14:50:51  gzins
+ * Added CVS log as file modification history
+ *
  * scetre    17-Nov-2004  Created
  *
  ******************************************************************************/
@@ -16,9 +19,7 @@
  * 
  */
 
-static char *rcsId="@(#) $Id: simcliTestGetCoordinates.c,v 1.4 2005-02-15 14:50:51 gzins Exp $"; 
-static void *use_rcsId = ((void)&use_rcsId,(void *) &rcsId);
-
+static char *rcsId __attribute__ ((unused)) ="@(#) $Id: simcliTestGetCoordinates.c,v 1.5 2006-05-11 13:04:57 mella Exp $";
 
 /* 
  * System Headers 
