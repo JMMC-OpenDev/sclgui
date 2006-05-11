@@ -1,0 +1,136 @@
+SIMBAD client routines.                                                   V 3.3
+
+F. Ochsenbein - M. Wenger                                           27-Jun-1995
+
+===============================================================================
+
+Files contained in this package:
+
+README          This file. It contains the list of the files in the package
+                and the history of the successive release.
+
+SIMCLI.DOC      Description of the client routines. These routines are
+                used to develop client applications.
+
+Makefile        Typing 'make', it builds the SIMBAD client routines library:
+                     libsimcli.a
+                and all the demo programmes.
+
+skio.c          Low level socket i/o routines
+
+skclient.c      Low level socket management routines. Client side.
+
+uifclient.c     SIMBAD command level interface routines
+
+simcli.c        SIMBAD query & data level interface routines.
+
+cliopt.c        Function used by the demo programmes. It queries for the
+                username and password if they are not provided on the command
+                line.
+
+clitest.c       Demo pgm #1
+                Returns all data for several predefined queries.
+                Uses all routines defined in the package.
+                The queries can be overriden by any other one.
+
+clibib.c        Demo pgm #2
+                Returns references for several predefined objects.
+                These objects can be overriden by any other one.
+
+cliname.c       Demo pgm #3
+                Gives a simple example of how a name resolver can be written.
+
+clicoord.c      Demo pgm #4
+                Returns just the coordinates for a given object name.
+
+clitime.c       Demo pgm #5
+                Queries 500 objects. Displays one dot for each queried object.
+                Gives an idea of how fast the client/server works.
+                The needed elapsed time is displayed.
+
+
+Release history:
+===============
+Release 3.3  -  Jun, 27th 1995
+
+- ANSI C version
+
+- Documentation modification: all the different comment fields are
+  described as they are given when they exist.
+
+-----------------------------------------------------------------------------
+Release 3.2  -  Feb, 2nd 1995
+
+- Fixes several bugs concerning empty results and display of bibliographical
+  references. New socket interface routines.
+
+-----------------------------------------------------------------------------
+Release 3.1  -  Mar, 1st 1994
+
+- Checks for a normal SIMBAD userid/password for any connection.
+  Another check is made by the server on the version number of the client 
+  routine. Connections initiated by clients no longer supported by the server
+  will be refused.
+
+- All the demo programmes need a true userid/password. They can be typed on
+  the command line (Ex: clitest userid passwd), or, if not, they will be
+  prompted (Ex: if you type "clitest userid", only the password will be asked
+  for by a prompt).
+
+- A service routine cliopt.c deals with querying the user for his userid and
+  password in the demo programmes.
+
+- Accepts queries near objects:
+      simbad_query(hh,"~ident","") ;
+
+- Accepts queries by galactical or ecliptical coordinates:
+      simbad_query(hh,"g=gal. coord.","") ;
+      simbad_query(hh,"e=ecl. coord.","") ;
+
+- Accepts lines of any length. Especially the JP11 measurements are available
+
+- clitime demo programme gives elapsed times.
+
+-----------------------------------------------------------------------------
+Release 2.0  -  Sept 28th, 1993
+
+- Improvement of the server stability
+
+- Suppression of signal capture in the client routines
+
+- simbad_query() can be called with only options, leaving the 'question'
+  parameter empty.
+
+- there is a new demo programme: clibib
+
+-----------------------------------------------------------------------------
+Release 1.1  -  July 20, 1993
+
+- Improvement of the client application/server interactions: the server is
+  more immune against crashes of a client application.
+
+- New data available: 
+  the measurements are now available, with two limitations:
+     JP11 is not available
+     IRAS is available, without the reference field.
+
+- New astrotype: 
+     I.0 gives a selected identifier.
+
+- The option field in simbad_query() can be used for:
+     * defining a radius when querying by coordinates
+     * limiting bibliography between years
+
+- Error management:
+  All client routines return -1 or NULL when an error is encountered.
+  The actual error is accessible through two functions:
+     * simbad_errno() returns a general error code.
+     * simbad_error() returns the text of the error message
+  No error text is directly printed by the routines.
+
+-----------------------------------------------------------------------------
+Release 1.0  -  June 18, 1993
+
+First distributed release.
+
+-----------------------------------------------------------------------------
