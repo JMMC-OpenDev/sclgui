@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.3 2006-04-12 12:30:02 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.4 2006-06-07 12:49:37 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/12 12:30:02  lafrasse
+ * Updated some Doxygen tags to fix previous documentation generation errors
+ *
  * Revision 1.2  2006/03/31 08:53:20  mella
  * Handle catalog origin color and confidence indexes from preferences
  * And jalopyzation
@@ -21,30 +24,45 @@ import jmmc.mcs.log.MCSLogger;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import java.text.*;
+
 import java.util.*;
 import java.util.logging.*;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.*;
+import javax.swing.text.*;
 
 
 /**
  * Query view.
  */
-public class QueryView extends JPanel implements Observer
+public class QueryView extends JPanel implements Observer,
+    PropertyChangeListener
 {
+    // Logger
+    /**
+     * logger must be used to perform logging
+     */
+    Logger logger = MCSLogger.getLogger();
+
     //TextFields
     /** DOCUMENT ME! */
     JTextField textWave = new JTextField();
 
     /** DOCUMENT ME! */
-    JTextField textMagMax = new JTextField();
+    JFormattedTextField textMagMax;
 
     /** DOCUMENT ME! */
     JTextField textName = new JTextField();
 
     /** DOCUMENT ME! */
-    JTextField textMagMin = new JTextField();
+    JFormattedTextField textMagMin;
 
     /** DOCUMENT ME! */
     JTextField textRA = new JTextField();
@@ -56,7 +74,7 @@ public class QueryView extends JPanel implements Observer
     JTextField textBase = new JTextField();
 
     /** DOCUMENT ME! */
-    JTextField textMagnitude = new JTextField();
+    JFormattedTextField textMagnitude;
 
     /** DOCUMENT ME! */
     JTextField textDiffRA = new JTextField();
@@ -205,6 +223,13 @@ public class QueryView extends JPanel implements Observer
         // Layout configuration
         flowLayout.setAlignment(FlowLayout.LEFT);
 
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        textMagnitude     = new JFormattedTextField(nf);
+        textMagMin        = new JFormattedTextField(nf);
+        textMagMax        = new JFormattedTextField(nf);
+
+        textMagnitude.addPropertyChangeListener("value", this);
+
         try
         {
             setMinimumSize(new Dimension(width, 205));
@@ -235,6 +260,23 @@ public class QueryView extends JPanel implements Observer
             QueryModel model = (QueryModel) o;
 
             updateDataView(model);
+        }
+    }
+
+    /** Called when a field's "value" property changes. */
+    public void propertyChange(PropertyChangeEvent e)
+    {
+        MCSLogger.trace();
+
+        Object source = e.getSource();
+
+        if (source == textMagnitude)
+        {
+            logger.fine("textMagnitude changed try to adjust magMin, magMax");
+
+            double d = ((Number) textMagnitude.getValue()).doubleValue();
+            textMagMax.setValue(new Double(d + 2));
+            textMagMin.setValue(new Double(d - 2));
         }
     }
 
@@ -556,7 +598,7 @@ public class QueryView extends JPanel implements Observer
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 class TypeOfStarListener implements ActionListener
 {
