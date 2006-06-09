@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.2 2006-03-31 11:49:29 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.3 2006-06-09 14:30:02 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/03/31 11:49:29  mella
+ * Make file-open menu work
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -21,6 +24,7 @@ import java.awt.print.*;
 
 import java.io.*;
 
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.swing.*;
@@ -38,6 +42,12 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     /** Shared file chooser accross load, save and export */
     JFileChooser _fileChooser;
 
+    /** Shared Preferences instance */
+    Preferences _preferences;
+
+    /** Menu to enable/disable tooltips */
+    JCheckBoxMenuItem _activeHelpMenuItem;
+
     /**
      * Constructor.
      */
@@ -45,6 +55,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     {
         _mainWindow      = mainWindow;
         _fileChooser     = new JFileChooser();
+
+        _preferences     = Preferences.getInstance();
 
         fileMenu();
         editMenu();
@@ -262,11 +274,10 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         menuItem.addActionListener(this);
         helpMenu.add(menuItem);
 
-        menuItem = new JMenuItem("Active Help");
-        menuItem.addActionListener(this);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
-                ActionEvent.CTRL_MASK));
-        helpMenu.add(menuItem);
+        ActiveHelpMenuItem _activeHelpMenuItem = new ActiveHelpMenuItem("Active Help",
+                _preferences);
+
+        helpMenu.add(_activeHelpMenuItem);
     }
 
     /**
@@ -451,6 +462,38 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         if (actionName.equals("Show Legend"))
         {
             // TODO _mainWindow.showLegendView();
+        }
+    }
+
+    class ActiveHelpMenuItem extends JCheckBoxMenuItem implements Observer,
+        ActionListener
+    {
+        public ActiveHelpMenuItem(String title, Preferences preferences)
+        {
+            super("Active Help");
+            setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
+                    ActionEvent.CTRL_MASK));
+
+            _preferences = preferences;
+
+            setSelected(_preferences.getPreferenceAsBoolean(
+                    "help.tooltips.show"));
+
+            _preferences.addObserver(this);
+
+            addActionListener(this);
+        }
+
+        public void update(Observable o, Object arg)
+        {
+            setSelected(_preferences.getPreferenceAsBoolean(
+                    "help.tooltips.show"));
+        }
+
+        public void actionPerformed(ActionEvent evt)
+        {
+            MCSLogger.trace();
+            _preferences.setPreference("help.tooltips.show", isSelected());
         }
     }
 }
