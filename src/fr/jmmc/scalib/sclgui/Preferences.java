@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.3 2006-04-07 08:41:03 mella Exp $"
+ * "@(#) $Id: Preferences.java,v 1.4 2006-06-09 13:37:37 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/07 08:41:03  mella
+ * Preferences singleton is accessed using Preferences.getInstance()
+ *
  * Revision 1.2  2006/03/31 08:53:20  mella
  * Handle catalog origin color and confidence indexes from preferences
  * And jalopyzation
@@ -80,6 +83,9 @@ public class Preferences extends jmmc.mcs.util.Preferences
             myDefaultProperties.put("confidence.color.LOW", "#6E6E6E");
             myDefaultProperties.put("confidence.color.MEDIUM", "#D8D8D8");
             myDefaultProperties.put("confidence.color.HIGH", "#EFEFEF");
+
+            /* Place help behaviour */
+            myDefaultProperties.put("help.tooltips.show", "true");
 
             _singleton.setDefaultPreferences(myDefaultProperties);
             _singleton.loadFromFile();
