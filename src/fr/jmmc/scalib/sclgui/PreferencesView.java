@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.7 2006-04-12 12:30:02 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.8 2006-06-09 13:36:51 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/04/12 12:30:02  lafrasse
+ * Updated some Doxygen tags to fix previous documentation generation errors
+ *
  * Revision 1.6  2006/04/07 11:06:33  mella
  * Add better widgets
  *
@@ -83,6 +86,10 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(prefTabbedPane);
 
+        // Append properties component
+        OrderedWordsPreferencesView propertiesView = new OrderedWordsPreferencesView(_preferences);
+        prefTabbedPane.add("Star Properties", propertiesView);
+
         // Append preference colors chooser component of catalogs
         ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
                 "catalog.color.");
@@ -92,6 +99,14 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         ColorPreferencesView confidenceView = new ColorPreferencesView(_preferences,
                 "confidence.color.");
         prefTabbedPane.add("Confidence index", confidenceView);
+
+        // Append proxy component
+        ProxyPreferencesView proxyView = new ProxyPreferencesView(_preferences);
+        prefTabbedPane.add("Proxy", proxyView);
+
+        // Append help component
+        HelpSetupPreferencesView helpView = new HelpSetupPreferencesView(_preferences);
+        prefTabbedPane.add("Help", helpView);
 
         JPanel buttonsPanel = new JPanel();
         _restoreDefaultButton = new JButton("Restore to default");
@@ -121,7 +136,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
      */
     public void update(Observable o, Object arg)
     {
-        // TODO : MˆJ des champs de la fenetre
+        // TODO : MAJ des champs de la fenetre
     }
 
     /**
@@ -162,43 +177,163 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
 
 
 /**
- * DOCUMENT ME!
+ * This Panel is dedicated to manage proxy configuration.
  *
- * @author $author$
- * @version $Revision: 1.7 $
  */
-class SpecificPreferencesView extends JPanel
+class ProxyPreferencesView extends JPanel implements Observer
 {
     /**
      * DOCUMENT ME!
      */
-    Preferences _preferences;
+    private Preferences _preferences;
 
     /**
      * Constructor.
      * @param preferences the application preferences
      */
-    public SpecificPreferencesView(Preferences preferences)
+    public ProxyPreferencesView(Preferences preferences)
     {
         _preferences = preferences;
+        _preferences.addObserver(this);
+
+        this.add(new JLabel("TODO"));
+
+        // Make data filled
+        update(null, null);
     }
 
     /**
-     * actionPerformed  -  Listener
-     * @param evt ActionEvent
+     * Present fresh content according preference content.
+     *
+     * @param o preferences
+     * @param arg not used
      */
-    public void actionPerformed(ActionEvent evt)
+    public void update(Observable o, Object arg)
     {
+        // Fill with preferences entries
     }
 }
 
 
 /**
- * DOCUMENT ME!
+ * This Panel is dedicated to manage one ordered list of words.
  *
- * @author $author$
- * @version $Revision: 1.7 $
-  */
+ */
+class OrderedWordsPreferencesView extends JPanel implements Observer
+{
+    /**
+     * DOCUMENT ME!
+     */
+    private Preferences _preferences;
+
+    /**
+     * Constructor.
+     * @param preferences the application preferences
+     */
+    public OrderedWordsPreferencesView(Preferences preferences)
+    {
+        _preferences = preferences;
+        _preferences.addObserver(this);
+
+        this.add(new JLabel("TODO"));
+
+        // Make data filled
+        update(null, null);
+    }
+
+    /**
+     * Present fresh content according preference content.
+     *
+     * @param o preferences
+     * @param arg not used
+     */
+    public void update(Observable o, Object arg)
+    {
+        // Fill with preferences entries
+    }
+}
+
+
+/**
+ * This Panel is dedicated to manage help behaviour configuration.
+ *
+ */
+class HelpSetupPreferencesView extends JPanel implements Observer,
+    ChangeListener
+{
+    /**
+     * DOCUMENT ME!
+     */
+    private Preferences _preferences;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private JCheckBox _enableToolTipCheckBox;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private ToolTipManager _sharedToolTipManager;
+
+    /**
+     * Constructor.
+     * @param preferences the application preferences
+     */
+    public HelpSetupPreferencesView(Preferences preferences)
+    {
+        _preferences = preferences;
+        _preferences.addObserver(this);
+
+        // get instance of shared tooltip to adjust behaviour in update code
+        _sharedToolTipManager      = ToolTipManager.sharedInstance();
+
+        _enableToolTipCheckBox     = new JCheckBox("Show tooltips");
+
+        String ttt                 = Resources.getToolTipText(
+                "_enableToolTipCheckBox");
+        _enableToolTipCheckBox.setToolTipText(ttt);
+        _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
+        _enableToolTipCheckBox.addChangeListener(this);
+
+        this.add(_enableToolTipCheckBox);
+
+        // Make data filled
+        update(null, null);
+    }
+
+    /**
+     * Present fresh content according preference content.
+     *
+     * @param o preferences
+     * @param arg not used
+     */
+    public void update(Observable o, Object arg)
+    {
+        // Adjust view and behaviour according preferences entries
+        boolean enableTT = _preferences.getPreferenceAsBoolean(
+                "help.tooltips.show");
+        _enableToolTipCheckBox.setSelected(enableTT);
+        _sharedToolTipManager.setEnabled(enableTT);
+    }
+
+    /**
+     * Update preferences according buttons change
+     */
+    public void stateChanged(ChangeEvent e)
+    {
+        if (e.getSource().equals(_enableToolTipCheckBox))
+        {
+            _preferences.setPreference("help.tooltips.show",
+                _enableToolTipCheckBox.isSelected());
+        }
+    }
+}
+
+
+/**
+ *  This panel is dedicated to manage color preferences.
+ */
 class ColorPreferencesView extends JPanel implements Observer
 {
     /**
@@ -249,10 +384,10 @@ class ColorPreferencesView extends JPanel implements Observer
     }
 
     /**
-     * DOCUMENT ME!
+     * Present fresh content according preference content.
      *
-     * @param o DOCUMENT ME!
-     * @param arg DOCUMENT ME!
+     * @param o preferences
+     * @param arg not used
      */
     public void update(Observable o, Object arg)
     {
