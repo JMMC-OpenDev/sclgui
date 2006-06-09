@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.4 2006-06-07 12:49:37 mella Exp $"
+ * "@(#) $Id: QueryView.java,v 1.5 2006-06-09 13:35:10 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/06/07 12:49:37  mella
+ * Check magnitude fields format and ajust min,mag according magnitude changes
+ *
  * Revision 1.3  2006/04/12 12:30:02  lafrasse
  * Updated some Doxygen tags to fix previous documentation generation errors
  *
@@ -223,12 +226,17 @@ public class QueryView extends JPanel implements Observer,
         // Layout configuration
         flowLayout.setAlignment(FlowLayout.LEFT);
 
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        textMagnitude     = new JFormattedTextField(nf);
-        textMagMin        = new JFormattedTextField(nf);
-        textMagMax        = new JFormattedTextField(nf);
+        // Widget tuning
+        NumberFormat   nf             = NumberFormat.getNumberInstance();
+        ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
 
+        textMagnitude                 = new JFormattedTextField(nf);
         textMagnitude.addPropertyChangeListener("value", this);
+        textMagnitude.setToolTipText("Science Object Magnitude");
+        toolTipManager.registerComponent(textMagnitude);
+
+        textMagMin     = new JFormattedTextField(nf);
+        textMagMax     = new JFormattedTextField(nf);
 
         try
         {
@@ -598,7 +606,7 @@ public class QueryView extends JPanel implements Observer,
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 class TypeOfStarListener implements ActionListener
 {
