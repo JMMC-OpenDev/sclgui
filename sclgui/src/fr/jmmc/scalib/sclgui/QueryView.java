@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.5 2006-06-09 13:35:10 mella Exp $"
+ * "@(#) $Id: QueryView.java,v 1.6 2006-06-12 08:44:34 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/09 13:35:10  mella
+ * add one part of code to give a sample of requested tooltip usage
+ *
  * Revision 1.4  2006/06/07 12:49:37  mella
  * Check magnitude fields format and ajust min,mag according magnitude changes
  *
@@ -356,7 +359,7 @@ public class QueryView extends JPanel implements Observer,
         textName.setText(_model.getScienceObjectName());
         textDEC.setText(_model.getDec());
         textRA.setText(_model.getRa());
-        textMagnitude.setText(String.valueOf(_model.getMagnitude()));
+        textMagnitude.setValue(new Double(_model.getMagnitude()));
     }
 
     /**
@@ -606,7 +609,7 @@ public class QueryView extends JPanel implements Observer,
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 class TypeOfStarListener implements ActionListener
 {
