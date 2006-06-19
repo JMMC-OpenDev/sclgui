@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.12 2006-04-07 13:07:25 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.13 2006-06-19 11:27:21 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/04/07 13:07:25  mella
+ * Improve presentation
+ *
  * Revision 1.11  2006/04/07 11:05:28  mella
  * Housekeeping
  *
@@ -53,6 +56,7 @@ import java.awt.event.*;
 import java.io.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -84,6 +88,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** The results table */
     JTable _jTable;
 
+    /** Logger instance */
+    Logger _logger = MCSLogger.getLogger();
+
     //details state
     /** DOCUMENT ME! */
     String detresstat = "show";
@@ -111,6 +118,16 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      * DOCUMENT ME!
      */
     NoteFrame noteFrame = new NoteFrame();
+
+    /**
+     * 'Select All' button
+     */
+    JButton selectAllButton = new JButton();
+
+    /**
+     * 'Delete Selection' button
+     */
+    JButton deleteSelectionButton = new JButton();
 
     /**
      * DOCUMENT ME!
@@ -160,6 +177,13 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         TableSorter tableSorter = new TableSorter(_calibratorsModel);
         tableSorter.setTableHeader(_jTable.getTableHeader());
         _jTable.setModel(tableSorter);
+
+        //        _jTable.setModel(_calibratorsModel);
+
+        // Get default selection mode
+        int selMode = _jTable.getSelectionModel().getSelectionMode();
+        _logger.fine("_jTable selection mode is:" + selMode);
+
         _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         _jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -172,12 +196,12 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(new TitledBorder(grayBorder, "Operations"));
 
-        JButton selectAllButton = new JButton();
         selectAllButton.setText("Select All Data");
+        selectAllButton.addActionListener(this);
         buttonPanel.add(selectAllButton);
 
-        JButton deleteSelectionButton = new JButton();
         deleteSelectionButton.setText("Delete Selection");
+        deleteSelectionButton.addActionListener(this);
         buttonPanel.add(deleteSelectionButton);
 
         JButton resetButton = new JButton();
@@ -205,12 +229,12 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         JLabel resumeLabel = new JLabel();
         resumeLabel.setText("Resume : ");
         resumeLabel.setPreferredSize(new Dimension(70, 20));
-        
+
         JTextField resumeTextField = new JTextField();
         resumeTextField.setText("10 stars with...");
         resumeTextField.setPreferredSize(new Dimension(subpanelwidth - 80, 20));
         resumeTextField.setEditable(false);
-        
+
         resumePanel.add(resumeLabel);
         resumePanel.add(resumeTextField);
         resumePanel.setMaximumSize(resumePanel.getPreferredSize());
@@ -297,6 +321,25 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public void actionPerformed(ActionEvent e)
     {
         MCSLogger.trace();
+
+        if (e.getSource() == selectAllButton)
+        {
+            _jTable.clearSelection();
+            _jTable.selectAll();
+        }
+
+        if (e.getSource() == deleteSelectionButton)
+        {
+            int[] rowIndices = _jTable.getSelectedRows();
+
+            for (int i = 0; i < rowIndices.length; i++)
+            {
+                _logger.warning("TB implemented: delete row [" + i + "/" +
+                    rowIndices.length + "]->" + rowIndices[i]);
+                System.out.println("TB implemented: delete row [" + i + "/" +
+                    rowIndices.length + "]->" + rowIndices[i]);
+            }
+        }
 
         if (e.getSource() == showLegendButton)
         {
