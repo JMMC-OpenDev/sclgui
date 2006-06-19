@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.8 2006-06-09 13:36:51 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.9 2006-06-19 11:22:45 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/06/09 13:36:51  mella
+ * add some config panels , the help one manage tooltips behaviour
+ *
  * Revision 1.7  2006/04/12 12:30:02  lafrasse
  * Updated some Doxygen tags to fix previous documentation generation errors
  *
@@ -30,10 +33,13 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
+import jmmc.mcs.log.MCSLogger;
+
 import java.awt.*;
 import java.awt.event.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -87,7 +93,8 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
         contentPane.add(prefTabbedPane);
 
         // Append properties component
-        OrderedWordsPreferencesView propertiesView = new OrderedWordsPreferencesView(_preferences);
+        OrderedWordsPreferencesView propertiesView = new OrderedWordsPreferencesView(_preferences,
+                "star.properties.order");
         prefTabbedPane.add("Star Properties", propertiesView);
 
         // Append preference colors chooser component of catalogs
@@ -219,23 +226,97 @@ class ProxyPreferencesView extends JPanel implements Observer
  * This Panel is dedicated to manage one ordered list of words.
  *
  */
-class OrderedWordsPreferencesView extends JPanel implements Observer
+class OrderedWordsPreferencesView extends JPanel implements Observer,
+    ActionListener
 {
     /**
      * DOCUMENT ME!
      */
+    Logger _logger = MCSLogger.getLogger();
+
+    /**
+     * The main preferences object.
+     */
     private Preferences _preferences;
+
+    /**
+     * The name of preference that must be managed as a ordered words.
+     */
+    private String _preferenceName;
+
+    /**
+     * The widget that dispaly the list of words
+     */
+    private JList _wordsList;
+
+    /**
+     * The model associated to the widget that dispaly the list of words
+     */
+    private DefaultListModel _listModel;
+
+    /**
+     * The actual shown list of words
+     */
+    private String _actualWords = "";
+
+    /**
+     * Move up Button
+     */
+    private JButton _moveUpButton;
+
+    /**
+     * Move down Button
+     */
+    private JButton _moveDownButton;
+
+    /**
+     * Add Button
+     */
+    private JButton _addWordButton;
+
+    /**
+     * Remove  Button
+     */
+    private JButton _removeWordButton;
+
+    /**
+     * newWord textfield
+     */
+    private JTextField _newWordTextfield;
 
     /**
      * Constructor.
      * @param preferences the application preferences
+     * @param preferenceName the preference name that list the words separated
+     * by spaces
      */
-    public OrderedWordsPreferencesView(Preferences preferences)
+    public OrderedWordsPreferencesView(Preferences preferences,
+        String preferenceName)
     {
         _preferences = preferences;
         _preferences.addObserver(this);
 
-        this.add(new JLabel("TODO"));
+        _preferenceName = preferenceName;
+
+        //Set vertical layout
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        // Append list with associated model into a scrollPane
+        _listModel     = new DefaultListModel();
+        _wordsList     = new JList(_listModel);
+
+        JScrollPane scrollingList = new JScrollPane(_wordsList);
+        this.add(scrollingList);
+
+        // Append move buttons
+        JPanel panel = new JPanel();
+        _moveUpButton = new JButton("Up");
+        _moveUpButton.addActionListener(this);
+        panel.add(_moveUpButton);
+        _moveDownButton = new JButton("Down");
+        _moveDownButton.addActionListener(this);
+        panel.add(_moveDownButton);
+        this.add(panel);
 
         // Make data filled
         update(null, null);
@@ -249,7 +330,94 @@ class OrderedWordsPreferencesView extends JPanel implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        // Fill with preferences entries
+        // Fill list with ordered words if _actualWord is not equal
+        String words = _preferences.getPreference(_preferenceName);
+
+        if (words == null)
+        {
+            _logger.warning(_preferenceName + " not found into preferences");
+
+            return;
+        }
+
+        if (! words.equals(_actualWords))
+        {
+            _actualWords = words;
+
+            StringTokenizer st = new StringTokenizer(_actualWords);
+
+            while (st.hasMoreTokens())
+            {
+                String word = st.nextToken();
+                _listModel.removeElement(word);
+                _listModel.addElement(word);
+            }
+        }
+    }
+
+    /**
+     * actionPerformed  -  Listener
+     * @param evt ActionEvent
+     */
+    public void actionPerformed(ActionEvent evt)
+    {
+        boolean listModified = false;
+
+        // test pressed button origin
+        if (evt.getSource().equals(_moveDownButton))
+        {
+            // Get the index of the first selected item
+            int firstSelIx = _wordsList.getSelectedIndex();
+            int nextIx     = firstSelIx + 1;
+
+            if ((nextIx < _listModel.size()) && (firstSelIx != -1))
+            {
+                Object el = _listModel.getElementAt(firstSelIx);
+                _listModel.removeElementAt(firstSelIx);
+
+                if (nextIx == _listModel.size())
+                {
+                    _listModel.addElement(el);
+                }
+                else
+                {
+                    _listModel.add(nextIx, el);
+                }
+
+                _wordsList.setSelectionInterval(nextIx, nextIx);
+                listModified = true;
+            }
+        }
+
+        if (evt.getSource().equals(_moveUpButton))
+        {
+            // Get the index of the first selected item
+            int firstSelIx = _wordsList.getSelectedIndex();
+            int nextIx     = firstSelIx - 1;
+
+            if ((firstSelIx > 0) && (firstSelIx != -1))
+            {
+                Object el = _listModel.getElementAt(firstSelIx);
+                _listModel.removeElementAt(firstSelIx);
+                _listModel.add(nextIx, el);
+                _wordsList.setSelectionInterval(nextIx, nextIx);
+                listModified = true;
+            }
+        }
+
+        if (listModified)
+        {
+            StringBuffer sb = new StringBuffer();
+            Enumeration  e  = _listModel.elements();
+
+            while (e.hasMoreElements())
+            {
+                Object o = e.nextElement();
+                sb.append(" " + o);
+            }
+
+            _preferences.setPreference(_preferenceName, sb.toString());
+        }
     }
 }
 
