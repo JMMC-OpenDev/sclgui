@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.3 2006-04-06 14:33:00 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.4 2006-06-19 11:23:57 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/06 14:33:00  lafrasse
+ * Moved all the main views in split panes
+ *
  * Revision 1.2  2006/03/31 08:53:20  mella
  * Handle catalog origin color and confidence indexes from preferences
  * And jalopyzation
@@ -18,21 +21,39 @@ package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
 
+import org.w3c.dom.*;
+
+import org.xml.sax.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.*;
+
+import java.io.*;
+
+import java.net.*;
 
 import java.util.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+
 
 /**
- * Main window.
+ * Main window. This class is at one central point and play the mediator role.
  */
-public class MainWindow extends JFrame implements Printable
+public class MainWindow extends JFrame
 {
+    /**
+     *
+     */
+    Logger _logger = MCSLogger.getLogger();
+
     /** Main panel container, displaying the query and result views */
     Container mainPane;
 
@@ -124,89 +145,94 @@ public class MainWindow extends JFrame implements Printable
      */
     public void showPreferencesView()
     {
+        MCSLogger.trace();
         _preferencesView.setVisible(true);
     }
 
     /**
-     * print  -  Printing results
-     * @param g Graphics
-     * @param pf PageFormat
-     * @param pi int for pageIndex
-     * @return int
-     * @throws PrinterException
+     * DOCUMENT ME!
+     *
+     * @param inFilename DOCUMENT ME!
+     * @param outFilename DOCUMENT ME!
+     * @param xslFilename DOCUMENT ME!
      */
-    public int print(Graphics g, PageFormat pf, int pi)
-        throws PrinterException
+    private void doXsl(URL inFilename, String outFilename, URL xslFilename)
     {
         MCSLogger.trace();
+        _logger.fine("xsl='" + xslFilename + "', xml='" + inFilename +
+            "', out='" + outFilename + "'");
 
-        if (pi > 0)
+        try
         {
-            return (NO_SUCH_PAGE);
+            // Create transformer factory
+            TransformerFactory factory = TransformerFactory.newInstance();
+
+            // Use the factory to create a template containing the xsl file
+            Templates template = factory.newTemplates(new StreamSource("" +
+                        xslFilename));
+
+            // Use the template to create a transformer
+            Transformer xformer = template.newTransformer();
+
+            // Prepare the input and output files
+            Source source = new StreamSource("" + inFilename);
+            Result result = new StreamResult(new FileOutputStream(outFilename));
+
+            // Apply the xsl file to the source file and write the result to
+            // the output file
+            xformer.transform(source, result);
         }
-        else
+        catch (FileNotFoundException e)
         {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.translate(pf.getImageableX(), pf.getImageableY());
-
-            int fontHeight  = g2d.getFontMetrics().getHeight();
-            int fontDescent = g2d.getFontMetrics().getDescent();
-
-            // laisser de l'espace pour le numero de page
-            double pageHeight = pf.getImageableHeight() - fontHeight;
-            double pageWidth  = pf.getImageableWidth();
-
-            g2d.drawString("Page: " + (pi + 1), ((int) pageWidth / 2) - 35,
-                (int) ((pageHeight + fontHeight) - fontDescent));
-
-            g2d.scale(0.7, 0.7);
-            disableDoubleBuffering(_queryView);
-            _queryView.paint(g2d);
-            enableDoubleBuffering(_queryView);
-            g2d.scale(1, 1);
-
-            /*
-               A placer dans le resultModel??
-                        //Comment printing
-                        if (this.resultPanel.noteinstancied == true) {
-                            System.out.println("Note added");
-                            disableDoubleBuffering(this.resultPanel.framenote);
-                            g2d.drawString("Your Comment : ", 0,
-                                           (int) (this.queryPanel.getHeight()) + 30);
-                            Graphics2D gd2 = (Graphics2D) g2d.create(0,
-                                    (int) (this.queryPanel.getHeight()) + 50,
-                                    this.resultPanel.framenote.getWidth(),
-                                    this.resultPanel.framenote.getHeight());
-                            this.resultPanel.framenote.textpanenote.paint(gd2);
-                            enableDoubleBuffering(this.resultPanel.framenote);
-                        }
-             */
-            return PAGE_EXISTS;
+            _logger.severe("File not found '" + e + "'");
+        }
+        catch (TransformerConfigurationException e)
+        {
+            // An error occurred in the XSL file
+            _logger.severe("One error occured into the xsl file '" +
+                xslFilename + "'");
+        }
+        catch (TransformerException e)
+        {
+            // An error occurred while applying the XSL file
+            // Get location of error in input file
+            SourceLocator locator  = e.getLocator();
+            int           col      = locator.getColumnNumber();
+            int           line     = locator.getLineNumber();
+            String        publicId = locator.getPublicId();
+            String        systemId = locator.getSystemId();
+            _logger.severe("One error occured applying xsl (xsl='" +
+                xslFilename + "', xml='" + inFilename + "' error on line " +
+                line + " column " + col + ")");
         }
     }
 
     /**
-     * Disable DoubleBuffering for the given component.
-     * @param c Component
+     * DOCUMENT ME!
+     *
+     * @param outputFilename DOCUMENT ME!
      */
-    public static void disableDoubleBuffering(Component c)
+    public void exportVOTableToCSV(String outputFilename)
     {
         MCSLogger.trace();
 
-        RepaintManager currentManager = RepaintManager.currentManager(c);
-        currentManager.setDoubleBufferingEnabled(false);
+        URL xslURL = MainWindow.class.getResource("voTableToCSV.xsl");
+        URL xmlURL = MainWindow.class.getResource("eta_tau.vot");
+        doXsl(xmlURL, outputFilename, xslURL);
     }
 
     /**
-     * Enable DoubleBuffering for the given component.
-     * @param c Component
+     * DOCUMENT ME!
+     *
+     * @param outputFilename DOCUMENT ME!
      */
-    public static void enableDoubleBuffering(Component c)
+    public void exportVOTableToHTML(String outputFilename)
     {
         MCSLogger.trace();
 
-        RepaintManager currentManager = RepaintManager.currentManager(c);
-        currentManager.setDoubleBufferingEnabled(true);
+        URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
+        URL xmlURL = MainWindow.class.getResource("eta_tau.vot");
+        doXsl(xmlURL, outputFilename, xslURL);
     }
 }
 /*___oOo___*/

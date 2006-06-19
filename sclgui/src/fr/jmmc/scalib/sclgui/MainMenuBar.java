@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.3 2006-06-09 14:30:02 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.4 2006-06-19 11:25:17 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/09 14:30:02  mella
+ * Lynk ActiveHelp checkbox to the preference
+ *
  * Revision 1.2  2006/03/31 11:49:29  mella
  * Make file-open menu work
  *
@@ -110,27 +113,32 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Add a separator
         fileMenu.add(new JSeparator());
 
-        // Export... menu item
-        menuItem = new JMenuItem("Export...");
+        // Export as CSV... menu item
+        menuItem = new JMenuItem("Export as CSV...");
         menuItem.addActionListener(this);
         fileMenu.add(menuItem);
 
-        // Add a separator
-        fileMenu.add(new JSeparator());
-
-        // Page Setup... menu item
-        menuItem = new JMenuItem("Page Setup...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        // Export as HTML... menu item
+        menuItem = new JMenuItem("Export as HTML...");
         menuItem.addActionListener(this);
         fileMenu.add(menuItem);
 
-        // Print... menu item
-        menuItem = new JMenuItem("Print...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        /* Deactivate printing calls
+           // Add a separator
+           fileMenu.add(new JSeparator());
+           // Page Setup... menu item
+           menuItem = new JMenuItem("Page Setup...");
+           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+                   ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+           // Print... menu item
+           menuItem = new JMenuItem("Print...");
+           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+                   ActionEvent.CTRL_MASK));
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
@@ -343,15 +351,31 @@ public class MainMenuBar extends JMenuBar implements ActionListener
             // TODO reparse VOTable
         }
 
-        // Export... handler
-        if (actionName.equals("Export..."))
+        // Export as HTML... handler
+        if (actionName.equals("Export as HTML..."))
         {
-            int returnVal = _fileChooser.showDialog(this, "Export...");
+            int returnVal = _fileChooser.showDialog(this, "Export");
 
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                 File file = _fileChooser.getSelectedFile();
-                System.out.println("Export: " + file.getName());
+                _mainWindow.exportVOTableToHTML(file.getName());
+            }
+            else
+            {
+                System.out.println("'" + actionName + "' command cancelled.");
+            }
+        }
+
+        // Export as CSV... handler
+        if (actionName.equals("Export as CSV..."))
+        {
+            int returnVal = _fileChooser.showDialog(this, "Export");
+
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                File file = _fileChooser.getSelectedFile();
+                _mainWindow.exportVOTableToCSV(file.getName());
             }
             else
             {
