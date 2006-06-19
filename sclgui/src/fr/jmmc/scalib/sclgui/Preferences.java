@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.4 2006-06-09 13:37:37 mella Exp $"
+ * "@(#) $Id: Preferences.java,v 1.5 2006-06-19 11:24:51 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/06/09 13:37:37  mella
+ * add default true help.tooltips.show preference
+ *
  * Revision 1.3  2006/04/07 08:41:03  mella
  * Preferences singleton is accessed using Preferences.getInstance()
  *
@@ -86,6 +89,9 @@ public class Preferences extends jmmc.mcs.util.Preferences
 
             /* Place help behaviour */
             myDefaultProperties.put("help.tooltips.show", "true");
+
+            /* Place star properties order */
+            myDefaultProperties.put("star.properties.order", "HD HIP RAJ2000");
 
             _singleton.setDefaultPreferences(myDefaultProperties);
             _singleton.loadFromFile();
