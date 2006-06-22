@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.4 2006-06-19 11:25:17 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.5 2006-06-22 12:31:43 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/06/19 11:25:17  mella
+ * Add export capability and remove printing one
+ *
  * Revision 1.3  2006/06/09 14:30:02  mella
  * Lynk ActiveHelp checkbox to the preference
  *
@@ -18,6 +21,7 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
+import jmmc.mcs.util.*;
 import jmmc.mcs.log.MCSLogger;
 
 import java.awt.Toolkit;
@@ -45,11 +49,14 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     /** Shared file chooser accross load, save and export */
     JFileChooser _fileChooser;
 
-    /** Shared Preferences instance */
+    /** Shared instances */
     Preferences _preferences;
+    LegendView _legendView;
 
     /** Menu to enable/disable tooltips */
     JCheckBoxMenuItem _activeHelpMenuItem;
+    JCheckBoxMenuItem _showLegendMenuItem;
+    JCheckBoxMenuItem _showDetailsMenuItem;
 
     /**
      * Constructor.
@@ -60,6 +67,9 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         _fileChooser     = new JFileChooser();
 
         _preferences     = Preferences.getInstance();
+
+        _legendView      = new LegendView(_preferences);
+        _legendView.setVisible(false);
 
         fileMenu();
         editMenu();
@@ -218,14 +228,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Add a separator
         editMenu.add(new JSeparator());
 
-        // Add a Comment... menu item
-        menuItem = new JMenuItem("Add a Comment...");
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
-
-        // Add a separator
-        editMenu.add(new JSeparator());
-
         // Preferences... menu item
         menuItem = new JMenuItem("Preferences...");
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_COMMA,
@@ -241,23 +243,27 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     {
         MCSLogger.trace();
 
-        // Create the Edit menu.
+        // Create the View menu.
         JMenu viewMenu = new JMenu("View");
         add(viewMenu);
 
-        // Create each Edit menu item
+        // Create each View menu item
         JMenuItem menuItem;
 
-        // Cut menu item
-        menuItem = new JMenuItem("Show Details");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        viewMenu.add(menuItem);
+        // Show Details item
+        PreferencedCheckBoxMenuItem _showDetailsMenuItem = new PreferencedCheckBoxMenuItem("Show Details", _preferences, "view.details.show");
+        viewMenu.add(_showDetailsMenuItem);
 
-        // Copy menu item
-        menuItem = new JMenuItem("Show Legend");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
+        // Show Legend item
+        PreferencedCheckBoxMenuItem _showLegendMenuItem = new PreferencedCheckBoxMenuItem("Show Legend", _preferences, "view.legend.show");
+        viewMenu.add(_showLegendMenuItem);
+
+        // Add a separator
+        viewMenu.add(new JSeparator());
+
+        // Plot in Aladin... menu item
+        menuItem = new JMenuItem("Plot in Aladin...");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
                 ActionEvent.CTRL_MASK));
         menuItem.addActionListener(this);
         viewMenu.add(menuItem);
@@ -274,7 +280,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JMenu helpMenu = new JMenu("Help");
         add(helpMenu);
 
-        // Create each File menu item
+        // Create each Help menu item
         JMenuItem menuItem;
 
         // About SearchCal... menu item
@@ -282,8 +288,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         menuItem.addActionListener(this);
         helpMenu.add(menuItem);
 
-        ActiveHelpMenuItem _activeHelpMenuItem = new ActiveHelpMenuItem("Active Help",
-                _preferences);
+        // Activate Help menu item
+        PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Active Help", _preferences, "help.tooltips.show");
 
         helpMenu.add(_activeHelpMenuItem);
     }
@@ -480,44 +486,14 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Show Details handler
         if (actionName.equals("Show Details"))
         {
+            // TODO
         }
 
         // Show Legend handler
         if (actionName.equals("Show Legend"))
         {
             // TODO _mainWindow.showLegendView();
-        }
-    }
-
-    class ActiveHelpMenuItem extends JCheckBoxMenuItem implements Observer,
-        ActionListener
-    {
-        public ActiveHelpMenuItem(String title, Preferences preferences)
-        {
-            super("Active Help");
-            setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
-                    ActionEvent.CTRL_MASK));
-
-            _preferences = preferences;
-
-            setSelected(_preferences.getPreferenceAsBoolean(
-                    "help.tooltips.show"));
-
-            _preferences.addObserver(this);
-
-            addActionListener(this);
-        }
-
-        public void update(Observable o, Object arg)
-        {
-            setSelected(_preferences.getPreferenceAsBoolean(
-                    "help.tooltips.show"));
-        }
-
-        public void actionPerformed(ActionEvent evt)
-        {
-            MCSLogger.trace();
-            _preferences.setPreference("help.tooltips.show", isSelected());
+//            legendView.setVisible(true);
         }
     }
 }
