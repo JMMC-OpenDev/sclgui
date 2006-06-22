@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.13 2006-06-19 11:27:21 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.14 2006-06-22 12:29:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/06/19 11:27:21  mella
+ * Add some base of code
+ *
  * Revision 1.12  2006/04/07 13:07:25  mella
  * Improve presentation
  *
@@ -67,9 +70,9 @@ import javax.swing.table.*;
 /**
  * Calibrators view.
  *
- * Manage a JTable and a bunch of buttons to handle our applicaton core
- * functionalities. This file also embedds the appropriate MVC controller in the
- * form of several ActionListener.
+ * Manage a JTable.
+ * This file also embedds the appropriate MVC controller in the form of several
+ * ActionListener.
  * It extend JPanel in order to be displayable.
  * It implements TableModelListener in order to automatically update any time
  * its data model or the application preferences change.
@@ -112,32 +115,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * DOCUMENT ME!
      */
-    JButton showLegendButton = new JButton();
-
-    /**
-     * DOCUMENT ME!
-     */
     NoteFrame noteFrame = new NoteFrame();
-
-    /**
-     * 'Select All' button
-     */
-    JButton selectAllButton = new JButton();
-
-    /**
-     * 'Delete Selection' button
-     */
-    JButton deleteSelectionButton = new JButton();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JButton addCommentButton = new JButton();
-
-    /**
-     * DOCUMENT ME!
-     */
-    JButton plotInAladinButton = new JButton();
 
     /**
      * Interaction with Aladin
@@ -158,8 +136,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // Store the application preferences and register against it
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
-
-        legendView = new LegendView(_preferences);
 
         // Gray border of the view.
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
@@ -192,38 +168,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         scrollPane.setPreferredSize(new Dimension(subpanelwidth, 260));
         add(scrollPane);
 
-        // Button panel creation
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBorder(new TitledBorder(grayBorder, "Operations"));
-
-        selectAllButton.setText("Select All Data");
-        selectAllButton.addActionListener(this);
-        buttonPanel.add(selectAllButton);
-
-        deleteSelectionButton.setText("Delete Selection");
-        deleteSelectionButton.addActionListener(this);
-        buttonPanel.add(deleteSelectionButton);
-
-        JButton resetButton = new JButton();
-        resetButton.setText("Reset");
-        buttonPanel.add(resetButton);
-
-        plotInAladinButton.setText("Plot Data in Aladin");
-        plotInAladinButton.addActionListener(this);
-        buttonPanel.add(plotInAladinButton);
-
-        addCommentButton.setText("Add Comment");
-        addCommentButton.addActionListener(this);
-        buttonPanel.add(addCommentButton);
-
-        JButton detres = new JButton();
-        detres.setText("Show Details");
-        buttonPanel.add(detres);
-
-        showLegendButton.setText("Legend");
-        showLegendButton.addActionListener(this);
-        buttonPanel.add(showLegendButton);
-
         // Tools panel creation
         JPanel resumePanel = new JPanel();
         JLabel resumeLabel = new JLabel();
@@ -238,9 +182,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         resumePanel.add(resumeLabel);
         resumePanel.add(resumeTextField);
         resumePanel.setMaximumSize(resumePanel.getPreferredSize());
-        buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
         add(resumePanel);
-        add(buttonPanel);
     }
 
     /**
@@ -322,6 +264,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
+/* TODO : move this in MainMenuBar.java
         if (e.getSource() == selectAllButton)
         {
             _jTable.clearSelection();
@@ -369,6 +312,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 }
             }
         }
+*/
     }
 }
 /*___oOo___*/
