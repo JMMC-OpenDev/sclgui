@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.5 2006-06-19 11:24:51 mella Exp $"
+ * "@(#) $Id: Preferences.java,v 1.6 2006-06-22 12:32:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/19 11:24:51  mella
+ * Add star property order entry with temporary value
+ *
  * Revision 1.4  2006/06/09 13:37:37  mella
  * add default true help.tooltips.show preference
  *
@@ -59,10 +62,11 @@ public class Preferences extends jmmc.mcs.util.Preferences
             _singleton.loadFromFile();
 
             Properties myDefaultProperties = new Properties();
+
+            // Store preference file version number
             myDefaultProperties.put("scalib.version", "1.0");
 
             // Place catalog origin colors
-            myDefaultProperties.put("scalib.version", "1.0");
             myDefaultProperties.put("catalog.color.I/280", "#FFB6B6");
             myDefaultProperties.put("catalog.color.I/284", "#F1FB58");
             myDefaultProperties.put("catalog.color.II/225/catalog", "#F6B6FF");
@@ -89,6 +93,10 @@ public class Preferences extends jmmc.mcs.util.Preferences
 
             /* Place help behaviour */
             myDefaultProperties.put("help.tooltips.show", "true");
+
+            /* Place view behaviour */
+            myDefaultProperties.put("view.legend.show", "false");
+            myDefaultProperties.put("view.details.show", "false");
 
             /* Place star properties order */
             myDefaultProperties.put("star.properties.order", "HD HIP RAJ2000");
