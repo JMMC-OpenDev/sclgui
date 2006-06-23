@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.3 2006-04-12 12:30:02 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.4 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/12 12:30:02  lafrasse
+ * Updated some Doxygen tags to fix previous documentation generation errors
+ *
  * Revision 1.2  2006/04/06 13:24:04  mella
  * Add empty panel for presentation
  *
@@ -62,9 +65,9 @@ public class FilterView extends JPanel implements Observer
         enabledCheckbox.addActionListener(cbListener);
 
         // Add an empty panel to force filter to be aligned
-        JPanel              panel         = new JPanel();
+        JPanel panel = new JPanel();
         add(panel);
-        
+
         // Get constraints of model
         Hashtable constraints = _model.getConstraints();
 

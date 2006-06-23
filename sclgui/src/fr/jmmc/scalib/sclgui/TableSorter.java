@@ -902,7 +902,18 @@ public class TableSorter extends AbstractTableModel
             StarProperty     starProperty = calModel.getStarProperty(modelIndex(
                         row), column);
 
-            // If cell is not selecterd and not focused
+            // do not change color if cell is located onto a selected row
+            int[] selectedRows = table.getSelectedRows();
+
+            for (int i = 0; i < selectedRows.length; i++)
+            {
+                if (selectedRows[i] == row)
+                {
+                    return this;
+                }
+            }
+
+            // If cell is not selected and not focused 
             if (! (isSelected && hasFocus))
             {
                 if (starProperty != null)

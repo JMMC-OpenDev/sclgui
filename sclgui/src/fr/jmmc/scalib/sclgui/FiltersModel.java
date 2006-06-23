@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.4 2006-04-07 13:51:13 yvander Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.5 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/04/07 13:51:13  yvander
+ * conflict
+ *
  * Revision 1.3  2006/04/06 14:38:12  lafrasse
  * Removed redondant distance filter (was here for test purpose only)
  *
@@ -62,29 +65,27 @@ public class FiltersModel
 
         FilterView       spectralTypeFilterView = new FilterView(spectralTypeFilter);
 
-	LuminosityFilter luminosityFilter  = new LuminosityFilter();
+        LuminosityFilter luminosityFilter       = new LuminosityFilter();
         luminosityFilter.setEnabled(Boolean.FALSE);
 
-        FilterView luminosityFilterView = new FilterView(luminosityFilter);
+        FilterView        luminosityFilterView = new FilterView(luminosityFilter);
 
-	VariabilityFilter variabilityFilter  = new VariabilityFilter();
+        VariabilityFilter variabilityFilter    = new VariabilityFilter();
         variabilityFilter.setEnabled(Boolean.FALSE);
 
         FilterView variabilityFilterView = new FilterView(variabilityFilter);
 
         _filterList.add(distanceFilter);
         _filterList.add(multiplicityFilter);
-	_filterList.add(spectralTypeFilter);
-	_filterList.add(luminosityFilter);
-	_filterList.add(variabilityFilter);
-
+        _filterList.add(spectralTypeFilter);
+        _filterList.add(luminosityFilter);
+        _filterList.add(variabilityFilter);
 
         _filterViews.add(distanceFilterView);
         _filterViews.add(multiplicityFilterView);
-	_filterViews.add(spectralTypeFilterView);
-	_filterViews.add(luminosityFilterView);
-	_filterViews.add(variabilityFilterView);
-
+        _filterViews.add(spectralTypeFilterView);
+        _filterViews.add(luminosityFilterView);
+        _filterViews.add(variabilityFilterView);
     }
 
     /**

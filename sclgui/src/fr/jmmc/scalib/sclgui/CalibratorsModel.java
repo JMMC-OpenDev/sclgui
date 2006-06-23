@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.8 2006-04-12 12:30:02 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.9 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/04/12 12:30:02  lafrasse
+ * Updated some Doxygen tags to fix previous documentation generation errors
+ *
  * Revision 1.7  2006/04/06 14:40:51  lafrasse
  * Updated to reflect StarProperty default constructor disparition in favour of a fully parametrized one
  *
@@ -39,10 +42,12 @@ import cds.savot.writer.*;
 
 import jmmc.mcs.log.MCSLogger;
 
+import java.io.*;
 import java.io.BufferedReader;
 import java.io.StringBufferInputStream;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -61,17 +66,28 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Original VOTable as a string */
     private String _voTable;
 
-    /** Original VOTable as a star list */
+    /** Current VOTable as a string */
+    private String _currentVOTable;
+
+    /** Original VOTable as a star list
+     * NOTE: this object is actually not really used could be deleted?
+     */
     private StarList _originalStarList;
 
-    /** Displayed star list (filtered and removed-star free) */
+    /** User star list (filtered one included) */
     private StarList _currentStarList;
+
+    /** Displayed star list (filtered and removed-star free) */
+    private StarList _filteredStarList;
 
     /** JTable column names */
     private Vector _columnNames;
 
     /** Filters */
     private FiltersModel _filtersModel;
+
+    /** Logger instance */
+    private Logger _logger;
 
     /**
      * Constructor.
@@ -83,9 +99,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _filtersModel         = filtersModel;
 
         _originalStarList     = new StarList();
-        _currentStarList      = new StarList();
+        _currentStarList      = (StarList) _originalStarList.clone();
+        _filteredStarList     = (StarList) _originalStarList.clone();
 
         _columnNames          = new Vector();
+        _logger               = MCSLogger.getLogger();
     }
 
     /**
@@ -146,6 +164,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         MCSLogger.trace();
 
         _voTable             = voTable;
+        _currentVOTable      = voTable;
 
         // Clear all the internal list before new parsing
         _originalStarList.clear();
@@ -236,6 +255,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             _originalStarList.add(starProperties);
         }
 
+        // copy content of originalStarList into currentStarList
+        _currentStarList = (StarList) _originalStarList.clone();
+
         // Update any attached observer
         update(null, null);
     }
@@ -248,7 +270,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     public StarProperty getStarProperty(int row, int column)
     {
         // The real column index
-        Vector starsProperties = (Vector) _currentStarList.get(row);
+        Vector starsProperties = (Vector) _filteredStarList.get(row);
 
         // Return the StarProperty
         if (starsProperties.get(column) instanceof StarProperty)
@@ -260,14 +282,118 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    private SavotVOTable getSavotVOTable()
+    {
+        // This method must be optimized (if no change occured do not generate
+        // again...)
+        MCSLogger.trace();
+
+        // Put the whole original VOTable file into memory
+        SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
+                    _voTable), SavotPullEngine.FULL, "UTF-8");
+
+        // Parse the VOTable
+        SavotVOTable parsedVOTable = parser.getVOTable();
+
+        // Get the VOTable resources
+        ResourceSet resourceSet = parsedVOTable.getResources();
+
+        // Get the first table of the first resource
+        // TODO this is may not be compatible with other VOTable than JMMC ones
+        SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
+
+        // Remove every row
+        TRSet rows = resource.getTRSet(0);
+        rows.removeAllItems();
+
+        // And create one row per star entry
+        Enumeration stars = _currentStarList.elements();
+
+        while (stars.hasMoreElements())
+        {
+            Vector      starProperties = (Vector) stars.nextElement();
+            Enumeration props          = starProperties.elements();
+
+            SavotTR     tr             = new SavotTR();
+            TDSet       tds            = new TDSet();
+            tr.setTDs(tds);
+            rows.addItem(tr);
+
+            while (props.hasMoreElements())
+            {
+                StarProperty prop         = (StarProperty) props.nextElement();
+
+                SavotTD      valueTd      = new SavotTD();
+                SavotTD      originTd     = new SavotTD();
+                SavotTD      confidenceTd = new SavotTD();
+                tds.addItem(valueTd);
+                tds.addItem(originTd);
+                tds.addItem(confidenceTd);
+                valueTd.setContent(prop.getStringValue());
+                originTd.setContent(prop.getOrigin());
+                confidenceTd.setContent(prop.getConfidence());
+            }
+        }
+
+        return parsedVOTable;
+    }
+
+    /**
+     * Save the current votable into the given file.
+     */
+    public void saveVOTable(File file)
+    {
+        MCSLogger.trace();
+
+        String       filename = file.getAbsolutePath();
+
+        SavotVOTable voTable  = getSavotVOTable();
+        SavotWriter  wd       = new SavotWriter();
+        wd.generateDocument(voTable, filename);
+    }
+
+    /**
      * getVOTable.
      *
      * @return the VOTable corresponding to the SearchCal initial result.
      */
     public String getVOTable()
     {
+        MCSLogger.trace();
+
+        SavotVOTable          voTable      = getSavotVOTable();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        SavotWriter           wd           = new SavotWriter();
+        wd.generateDocument(voTable, outputStream);
+
         // The original data
-        return _voTable;
+        return outputStream.toString();
+    }
+
+    /**
+     * Delete the shown elements according given index. The shown elements are
+     * the not filtered elements.
+     * @param indices array of indices.
+     */
+    public void deleteShownStars(int[] indices)
+    {
+        MCSLogger.trace();
+
+        for (int i = 0; i < indices.length; i++)
+        {
+            _logger.warning("deleting shown star ->" + indices[i]);
+
+            Object o = (Object) _filteredStarList.get(indices[i]);
+            _currentStarList.removeElement(o);
+        }
+
+        _logger.fine("_currentStarList size is now " + _currentStarList.size());
+        update(null, null);
     }
 
     /**
@@ -279,13 +405,13 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         // has been deactivated, otherwise currentStarList is sufficient
 
         // Back up the original list for later use (reset, updated filter list)
-        _currentStarList = (StarList) _originalStarList.clone();
+        _filteredStarList = (StarList) _currentStarList.clone();
 
         // Filter the displayed stra list
-        _filtersModel.process(_currentStarList);
+        _filtersModel.process(_filteredStarList);
 
         // As a DefaultTableModel instance, set all the JTable needed vectors
-        setDataVector(_currentStarList, _columnNames);
+        setDataVector(_filteredStarList, _columnNames);
 
         // Ask all the attached JTable views to update
         fireTableDataChanged();

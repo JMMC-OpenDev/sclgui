@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VOInteraction.java,v 1.2 2006-04-07 13:07:09 mella Exp $"
+ * "@(#) $Id: VOInteraction.java,v 1.3 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/07 13:07:09  mella
+ * jolyzation
+ *
  * Revision 1.1  2006/04/06 13:09:40  yvander
  * Aladin interaction class
  *
@@ -41,8 +44,8 @@ import javax.swing.table.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
-  */
+ * @version $Revision: 1.3 $
+ */
 public class VOInteraction implements VOApp
 {
     /** aladin Software */

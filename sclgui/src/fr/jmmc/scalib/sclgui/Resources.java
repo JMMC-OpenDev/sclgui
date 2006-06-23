@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Resources.java,v 1.1 2006-06-09 15:15:37 mella Exp $"
+ * "@(#) $Id: Resources.java,v 1.2 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/06/09 15:15:37  mella
+ * First revision
+ *
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
@@ -85,7 +88,7 @@ public class Resources
      * @param xpath query used to dig resource
      *
      * @return the content of the xpath response
-     * 
+     *
      */
     private static String getFromXpath(String xpath)
     {
@@ -111,20 +114,19 @@ public class Resources
                 // Get element
                 CharacterData elem = (CharacterData) nodelist.item(i);
                 _logger.finest("xpath returns '" + elem + "'");
-                sb.append("" + elem.getData()+" ");
+                sb.append("" + elem.getData() + " ");
             }
 
             return sb.toString();
         }
         catch (javax.xml.transform.TransformerException e)
         {
-            _logger.warning(""+e);
+            _logger.warning("" + e);
+
             return "";
         }
-
     }
 
-    
     /**
      * Get content from resource file.
      *
@@ -159,12 +161,14 @@ public class Resources
      *
      * @return the tooltip text
      */
-    public static String getToolTipText(String widgetName, String
-            widgetGroupName)
+    public static String getToolTipText(String widgetName,
+        String widgetGroupName)
     {
         MCSLogger.trace();
 
-        String xpath = "//widgets[./@name='"+widgetGroupName+"']/widget[./name='" + widgetName + "']/tooltip/text()";
+        String xpath = "//widgets[./@name='" + widgetGroupName +
+            "']/widget[./name='" + widgetName + "']/tooltip/text()";
+
         return getFromXpath(xpath);
     }
 }
