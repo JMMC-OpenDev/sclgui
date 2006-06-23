@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.5 2006-06-22 12:31:43 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.6 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/22 12:31:43  lafrasse
+ * Added CheckBox Menu Items for legend view and detailed view
+ *
  * Revision 1.4  2006/06/19 11:25:17  mella
  * Add export capability and remove printing one
  *
@@ -21,9 +24,11 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
-import jmmc.mcs.util.*;
 import jmmc.mcs.log.MCSLogger;
 
+import jmmc.mcs.util.*;
+
+import java.awt.*;
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
 import java.awt.event.*;
@@ -35,6 +40,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import javax.swing.text.BadLocationException;
 
 
@@ -51,12 +57,34 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
     /** Shared instances */
     Preferences _preferences;
+
+    /**
+     * DOCUMENT ME!
+     */
     LegendView _legendView;
 
     /** Menu to enable/disable tooltips */
     JCheckBoxMenuItem _activeHelpMenuItem;
+
+    /**
+     * DOCUMENT ME!
+     */
     JCheckBoxMenuItem _showLegendMenuItem;
+
+    /**
+     * DOCUMENT ME!
+     */
     JCheckBoxMenuItem _showDetailsMenuItem;
+
+    /**
+     * Interaction with Aladin
+     */
+    VOInteraction _aladinInteraction = null;
+
+    /**
+     * Logger instance
+     */
+    Logger _logger = MCSLogger.getLogger();
 
     /**
      * Constructor.
@@ -192,26 +220,11 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Add a separator
         editMenu.add(new JSeparator());
 
-        // Cut menu item
-        menuItem = new JMenuItem("Cut");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
-
-        // Copy menu item
-        menuItem = new JMenuItem("Copy");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
-
-        // Paste menu item
-        menuItem = new JMenuItem("Paste");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
+        //These actions come from the default editor kit.
+        //Get the ones we want and stick them in the menu.
+        editMenu.add(new DefaultEditorKit.CutAction());
+        editMenu.add(new DefaultEditorKit.CopyAction());
+        editMenu.add(new DefaultEditorKit.PasteAction());
 
         // Delete menu item
         menuItem = new JMenuItem("Delete");
@@ -251,11 +264,13 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JMenuItem menuItem;
 
         // Show Details item
-        PreferencedCheckBoxMenuItem _showDetailsMenuItem = new PreferencedCheckBoxMenuItem("Show Details", _preferences, "view.details.show");
+        PreferencedCheckBoxMenuItem _showDetailsMenuItem = new PreferencedCheckBoxMenuItem("Show Details",
+                _preferences, "view.details.show");
         viewMenu.add(_showDetailsMenuItem);
 
         // Show Legend item
-        PreferencedCheckBoxMenuItem _showLegendMenuItem = new PreferencedCheckBoxMenuItem("Show Legend", _preferences, "view.legend.show");
+        PreferencedCheckBoxMenuItem _showLegendMenuItem = new PreferencedCheckBoxMenuItem("Show Legend",
+                _preferences, "view.legend.show");
         viewMenu.add(_showLegendMenuItem);
 
         // Add a separator
@@ -289,7 +304,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         helpMenu.add(menuItem);
 
         // Activate Help menu item
-        PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Active Help", _preferences, "help.tooltips.show");
+        PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Active Help",
+                _preferences, "help.tooltips.show");
 
         helpMenu.add(_activeHelpMenuItem);
     }
@@ -343,7 +359,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                 File file = _fileChooser.getSelectedFile();
-                System.out.println("Saving as: " + file.getName());
+                // @TODO change this part of code
+                _mainWindow._calibratorsView._calibratorsModel.saveVOTable(file);
             }
             else
             {
@@ -446,24 +463,10 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         {
         }
 
-        // Cut handler
-        if (actionName.equals("Cut"))
-        {
-        }
-
-        // Copy handler
-        if (actionName.equals("Copy"))
-        {
-        }
-
-        // Paste handler
-        if (actionName.equals("Paste"))
-        {
-        }
-
         // Delete handler
         if (actionName.equals("Delete"))
         {
+            _mainWindow._calibratorsView.deleteSelectedRows();
         }
 
         // Select All handler
@@ -493,7 +496,34 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         if (actionName.equals("Show Legend"))
         {
             // TODO _mainWindow.showLegendView();
-//            legendView.setVisible(true);
+            //            legendView.setVisible(true);
+        }
+
+        // Plot data in Aladin handler
+        if (actionName.equals("Plot in Aladin..."))
+        {
+            CalibratorsModel calibratorsModel = _mainWindow._calibratorsView._calibratorsModel;
+
+            if (calibratorsModel.getVOTable() != null)
+            {
+                if (_aladinInteraction == null)
+                {
+                    //
+                    _aladinInteraction = new VOInteraction();
+                    _aladinInteraction.startAladin(calibratorsModel.getVOTable());
+                    _aladinInteraction._aladin.execCommand("sync");
+                }
+                else
+                {
+                    InputStream in  = new StringBufferInputStream(calibratorsModel.getVOTable());
+                    String      oid;
+                    oid             = _aladinInteraction.putVOTable(_aladinInteraction,
+                            in, "SearchCal");
+                    _logger.fine("Aladin return new oid for votable : " + oid);
+                    //
+                    _aladinInteraction._aladin.setVisible(true);
+                }
+            }
         }
     }
 }

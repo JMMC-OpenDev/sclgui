@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.4 2006-04-07 08:04:32 mella Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.5 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/04/07 08:04:32  mella
+ * Remove too often log calls
+ *
  * Revision 1.3  2006/04/06 14:36:21  lafrasse
  * Generalized star property value from String type to Object
  *
@@ -58,7 +61,6 @@ public class StarProperty implements Comparable
     public void setValue(Object value)
     {
         // MCSLogger.trace();
-
         _value = value;
     }
 
@@ -70,7 +72,6 @@ public class StarProperty implements Comparable
     public Object getValue()
     {
         // MCSLogger.trace();
-
         return _value;
     }
 
@@ -82,7 +83,6 @@ public class StarProperty implements Comparable
     public String getStringValue()
     {
         // MCSLogger.trace();
-
         return _value.toString();
     }
 
@@ -94,7 +94,6 @@ public class StarProperty implements Comparable
     public double getDoubleValue()
     {
         // MCSLogger.trace();
-
         return Double.parseDouble(_value.toString());
     }
 
@@ -106,7 +105,6 @@ public class StarProperty implements Comparable
     public void setOrigin(String origin)
     {
         // MCSLogger.trace();
-
         _origin = origin;
     }
 
@@ -118,7 +116,6 @@ public class StarProperty implements Comparable
     public String getOrigin()
     {
         // MCSLogger.trace();
-
         return _origin;
     }
 
@@ -130,7 +127,6 @@ public class StarProperty implements Comparable
     public boolean hasOrigin()
     {
         // MCSLogger.trace();
-
         if (_confidence.length() > 0)
         {
             return false;
@@ -152,7 +148,6 @@ public class StarProperty implements Comparable
     public void setConfidence(String confidence)
     {
         // MCSLogger.trace();
-
         _confidence = confidence;
     }
 
@@ -164,7 +159,6 @@ public class StarProperty implements Comparable
     public String getConfidence()
     {
         // MCSLogger.trace();
-
         return _confidence;
     }
 
@@ -176,7 +170,6 @@ public class StarProperty implements Comparable
     public boolean hasConfidence()
     {
         // MCSLogger.trace();
-
         if (_confidence.length() > 0)
         {
             return true;

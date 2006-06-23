@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersView.java,v 1.2 2006-04-07 13:07:25 mella Exp $"
+ * "@(#) $Id: FiltersView.java,v 1.3 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/07 13:07:25  mella
+ * Improve presentation
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -54,11 +57,13 @@ public class FiltersView extends JPanel
         for (Enumeration e = filterViews.elements(); e.hasMoreElements();)
         {
             FilterView filterView = (FilterView) e.nextElement();
-            int maxHeight=(int)filterView.getPreferredSize().getHeight();
-            int maxWidth= (int)filterView.getMaximumSize().getWidth();
-            filterView.setMaximumSize(new Dimension(maxWidth, maxHeight)); 
+            int        maxHeight  = (int) filterView.getPreferredSize()
+                                                    .getHeight();
+            int        maxWidth   = (int) filterView.getMaximumSize().getWidth();
+            filterView.setMaximumSize(new Dimension(maxWidth, maxHeight));
             add(filterView);
         }
+
         setMaximumSize(getPreferredSize());
         setMaximumSize(getMinimumSize());
     }

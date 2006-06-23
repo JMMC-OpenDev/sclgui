@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.14 2006-06-22 12:29:18 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.15 2006-06-23 09:19:41 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/06/22 12:29:18  lafrasse
+ * Removed Button Bar (replaced by menus)
+ *
  * Revision 1.13  2006/06/19 11:27:21  mella
  * Add some base of code
  *
@@ -256,6 +259,15 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     /**
+     * Tell to the associated model to remove selected rows.
+     */
+    public void deleteSelectedRows()
+    {
+        MCSLogger.trace();
+        _calibratorsModel.deleteShownStars(_jTable.getSelectedRows());
+    }
+
+    /**
      * DOCUMENT ME!
      *
      * @param e DOCUMENT ME!
@@ -264,55 +276,39 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
-/* TODO : move this in MainMenuBar.java
-        if (e.getSource() == selectAllButton)
-        {
-            _jTable.clearSelection();
-            _jTable.selectAll();
-        }
-
-        if (e.getSource() == deleteSelectionButton)
-        {
-            int[] rowIndices = _jTable.getSelectedRows();
-
-            for (int i = 0; i < rowIndices.length; i++)
-            {
-                _logger.warning("TB implemented: delete row [" + i + "/" +
-                    rowIndices.length + "]->" + rowIndices[i]);
-                System.out.println("TB implemented: delete row [" + i + "/" +
-                    rowIndices.length + "]->" + rowIndices[i]);
-            }
-        }
-
-        if (e.getSource() == showLegendButton)
-        {
-            legendView.setVisible(true);
-        }
-
-        if (e.getSource() == addCommentButton)
-        {
-            noteFrame.setVisible(true);
-        }
-
-        if (e.getSource() == plotInAladinButton)
-        {
-            if (_calibratorsModel.getVOTable() != null)
-            {
-                if (_aladinInteraction == null)
-                {
-                    //
-                    _aladinInteraction = new VOInteraction();
-                    _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
-                    _aladinInteraction._aladin.execCommand("sync");
-                }
-                else
-                {
-                    //
-                    _aladinInteraction._aladin.setVisible(true);
-                }
-            }
-        }
-*/
+        /* TODO : move this in MainMenuBar.java
+           if (e.getSource() == selectAllButton)
+           {
+               _jTable.clearSelection();
+               _jTable.selectAll();
+           }
+           if (e.getSource() == showLegendButton)
+           {
+               legendView.setVisible(true);
+           }
+           if (e.getSource() == addCommentButton)
+           {
+               noteFrame.setVisible(true);
+           }
+           if (e.getSource() == plotInAladinButton)
+           {
+               if (_calibratorsModel.getVOTable() != null)
+               {
+                   if (_aladinInteraction == null)
+                   {
+                       //
+                       _aladinInteraction = new VOInteraction();
+                       _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
+                       _aladinInteraction._aladin.execCommand("sync");
+                   }
+                   else
+                   {
+                       //
+                       _aladinInteraction._aladin.setVisible(true);
+                   }
+               }
+           }
+         */
     }
 }
 /*___oOo___*/
