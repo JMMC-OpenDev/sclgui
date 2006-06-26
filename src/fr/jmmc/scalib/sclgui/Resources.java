@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Resources.java,v 1.3 2006-06-26 14:29:08 mella Exp $"
+ * "@(#) $Id: Resources.java,v 1.4 2006-06-26 16:06:00 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/26 14:29:08  mella
+ * *** empty log message ***
+ *
  * Revision 1.2  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -122,7 +125,7 @@ public class Resources
                 sb.append("" + elem.getData() + " ");
             }
 
-            return sb.toString();
+            return sb.toString().strip();
         }
         catch (javax.xml.transform.TransformerException e)
         {
@@ -200,9 +203,7 @@ public class Resources
      */
     public static ImageIcon getActionIcon(String actionName)
     {
-        String    xpath     = "//actions/action[./name='" + actionName +
-            "']/icon/text()";
-        String    iconPath  = getFromXpath(xpath);
+        String    iconPath  = getActionIconPath(actionName);
         ImageIcon imageIcon = createImageIcon(iconPath,
                 "Icon of action '" + actionName + "'");
 
@@ -222,8 +223,7 @@ public class Resources
         }
         else
         {
-            _logger.warning("Couldn't find file: " + path);
-
+            _logger.warning("Couldn't find file: '" + path+"'");
             return null;
         }
     }
