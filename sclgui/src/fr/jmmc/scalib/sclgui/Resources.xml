@@ -5,11 +5,14 @@
 ********************************************************************************
  JMMC project
 
- "@(#) $Id: Resources.xml,v 1.1 2006-06-09 15:15:37 mella Exp $"
+ "@(#) $Id: Resources.xml,v 1.2 2006-06-26 14:29:08 mella Exp $"
 
  History
  ~~~~~~~
  $Log: not supported by cvs2svn $
+ Revision 1.1  2006/06/09 15:15:37  mella
+ First revision
+
 
 ********************************************************************************
  NAME
@@ -55,10 +58,12 @@
             <tooltip><![CDATA[<html><font color=#ffffdd><b><u>SHOW</u> or <u>HIDE</u></b><br>ToolTips</font></html>]]></tooltip>
         </widget>
     </widgets>
-    <widgets name="oneTestPanel">
-        <widget>
-            <name>textMagnitude</name>
-            <tooltip>Science Object Magnitude</tooltip>
-        </widget>
-    </widgets>
+    <actions>
+        <action>
+            <name>deleteTableSelection</name>
+            <text>Delete</text>
+            <icon>images/delete16.png</icon>
+            <description>Delete Selected Sources</description>
+        </action>
+    </actions>
 </resources>
