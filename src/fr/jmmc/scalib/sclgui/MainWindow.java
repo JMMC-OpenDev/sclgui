@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.4 2006-06-19 11:23:57 mella Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.5 2006-06-26 14:33:32 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/06/19 11:23:57  mella
+ * Add export capability and remove printing one
+ *
  * Revision 1.3  2006/04/06 14:33:00  lafrasse
  * Moved all the main views in split panes
  *
@@ -97,9 +100,6 @@ public class MainWindow extends JFrame
         {
             setTitle("SearchCal");
 
-            menuBar = new MainMenuBar(this);
-            setJMenuBar(menuBar);
-
             mainPane = getContentPane();
             mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
 
@@ -127,6 +127,10 @@ public class MainWindow extends JFrame
             _queryView.setVisible(true);
             _calibratorsView.setVisible(true);
             _filtersView.setVisible(true);
+
+            // Menu must be created after Actions init.
+            menuBar = new MainMenuBar(this);
+            setJMenuBar(menuBar);
 
             pack();
             setVisible(true);
