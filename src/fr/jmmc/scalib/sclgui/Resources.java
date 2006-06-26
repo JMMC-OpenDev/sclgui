@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Resources.java,v 1.2 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: Resources.java,v 1.3 2006-06-26 14:29:08 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.1  2006/06/09 15:15:37  mella
  * First revision
  *
@@ -25,6 +28,8 @@ import java.net.URL;
 
 import java.util.*;
 import java.util.logging.Logger;
+
+import javax.swing.*;
 
 import javax.xml.parsers.*;
 
@@ -139,6 +144,88 @@ public class Resources
         MCSLogger.trace();
 
         return getFromXpath(resourceName);
+    }
+
+    /**
+     * Get the text of an action .
+     *
+     * @param actionName the actionInstanceName
+     *
+     * @return the associated text
+     */
+    public static String getActionText(String actionName)
+    {
+        String xpath = "//actions/action[./name='" + actionName +
+            "']/text/text()";
+
+        return getFromXpath(xpath);
+    }
+
+    /**
+     * Get the description of an action .
+     *
+     * @param actionName the actionInstanceName
+     *
+     * @return the associated description
+     */
+    public static String getActionDescription(String actionName)
+    {
+        String xpath = "//actions/action[./name='" + actionName +
+            "']/description/text()";
+
+        return getFromXpath(xpath);
+    }
+
+    /**
+     * Get the icon path of an action .
+     *
+     * @param actionName the actionInstanceName
+     *
+     * @return the associated icon path
+     */
+    public static String getActionIconPath(String actionName)
+    {
+        String xpath = "//actions/action[./name='" + actionName +
+            "']/icon/text()";
+
+        return getFromXpath(xpath);
+    }
+
+    /**
+     * Get the icon  of an action .
+     *
+     * @param actionName the actionInstanceName
+     *
+     * @return the associated icon
+     */
+    public static ImageIcon getActionIcon(String actionName)
+    {
+        String    xpath     = "//actions/action[./name='" + actionName +
+            "']/icon/text()";
+        String    iconPath  = getFromXpath(xpath);
+        ImageIcon imageIcon = createImageIcon(iconPath,
+                "Icon of action '" + actionName + "'");
+
+        return imageIcon;
+    }
+
+    /**
+     * Returns an ImageIcon, or null if the path was invalid.
+     */
+    protected static ImageIcon createImageIcon(String path, String description)
+    {
+        java.net.URL imgURL = Resources.class.getResource(path);
+
+        if (imgURL != null)
+        {
+            return new ImageIcon(imgURL, description);
+        }
+        else
+        {
+            _logger.warning("Couldn't find file: " + path);
+
+            return null;
+        }
     }
 
     /**
