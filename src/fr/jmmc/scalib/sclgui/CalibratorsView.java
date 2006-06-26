@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.15 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.16 2006-06-26 14:36:43 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.14  2006/06/22 12:29:18  lafrasse
  * Removed Button Bar (replaced by menus)
  *
@@ -126,6 +129,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     VOInteraction _aladinInteraction = null;
 
     /**
+     * Delete Action
+     */
+    Action _deleteAction;
+
+    /**
      * Constructor.
      *
      * @param calibratorsModel the resutModel.
@@ -136,8 +144,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsModel = calibratorsModel;
         _calibratorsModel.addTableModelListener(this);
 
+        // create actions
+        _deleteAction     = new DeleteAction();
+
         // Store the application preferences and register against it
-        _preferences = Preferences.getInstance();
+        _preferences      = Preferences.getInstance();
         _preferences.addObserver(this);
 
         // Gray border of the view.
@@ -277,19 +288,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         MCSLogger.trace();
 
         /* TODO : move this in MainMenuBar.java
-           if (e.getSource() == selectAllButton)
-           {
-               _jTable.clearSelection();
-               _jTable.selectAll();
-           }
-           if (e.getSource() == showLegendButton)
-           {
-               legendView.setVisible(true);
-           }
-           if (e.getSource() == addCommentButton)
-           {
-               noteFrame.setVisible(true);
-           }
            if (e.getSource() == plotInAladinButton)
            {
                if (_calibratorsModel.getVOTable() != null)
@@ -309,6 +307,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                }
            }
          */
+    }
+
+    protected class DeleteAction extends SCAction
+    {
+        public DeleteAction()
+        {
+            super("deleteTableSelection");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+            deleteSelectedRows();
+        }
     }
 }
 /*___oOo___*/
