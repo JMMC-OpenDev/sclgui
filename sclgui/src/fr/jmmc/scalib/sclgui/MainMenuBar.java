@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.6 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.7 2006-06-26 14:34:18 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.5  2006/06/22 12:31:43  lafrasse
  * Added CheckBox Menu Items for legend view and detailed view
  *
@@ -227,9 +230,9 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         editMenu.add(new DefaultEditorKit.PasteAction());
 
         // Delete menu item
-        menuItem = new JMenuItem("Delete");
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
+        Action action;
+        action = _mainWindow._calibratorsView._deleteAction;
+        editMenu.add(action);
 
         // Select All menu item
         menuItem = new JMenuItem("Select All");
@@ -460,17 +463,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
         // Redo handler
         if (actionName.equals("Redo"))
-        {
-        }
-
-        // Delete handler
-        if (actionName.equals("Delete"))
-        {
-            _mainWindow._calibratorsView.deleteSelectedRows();
-        }
-
-        // Select All handler
-        if (actionName.equals("Select All"))
         {
         }
 
