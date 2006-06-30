@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.12 2006-04-06 15:00:08 mella Exp $"
+# "@(#) $Id: Makefile,v 1.13 2006-06-30 08:05:28 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.12  2006/04/06 15:00:08  mella
+# Previous commit was wrong
+#
 # Revision 1.11  2006/04/06 14:43:18  mella
 # *** empty log message ***
 #
@@ -153,7 +156,8 @@ JARFILES        = sclgui
 #
 # <brief description of sclgui jar files>
 sclgui_DIRS     = jmmc 
-sclgui_EXTRAS   = jmmc/scalib/sclgui/eta_tau.vot
+sclgui_EXTRAS   = jmmc/scalib/sclgui/eta_tau.vot \
+                  jmmc/scalib/sclgui/search.png
 
 #
 # Java programs
