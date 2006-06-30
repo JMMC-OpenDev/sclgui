@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.7 2006-06-26 14:34:18 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.8 2006-06-30 11:53:17 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/06/26 14:34:18  mella
+ * Add delete action link
+ *
  * Revision 1.6  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -259,6 +262,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     {
         MCSLogger.trace();
 
+        Action action;
+
         // Create the View menu.
         JMenu viewMenu = new JMenu("View");
         add(viewMenu);
@@ -274,6 +279,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Show Legend item
         PreferencedCheckBoxMenuItem _showLegendMenuItem = new PreferencedCheckBoxMenuItem("Show Legend",
                 _preferences, "view.legend.show");
+        action = _mainWindow._calibratorsView._showLegendAction;
+        _showLegendMenuItem.setAction(action);
         viewMenu.add(_showLegendMenuItem);
 
         // Add a separator

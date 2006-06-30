@@ -846,6 +846,8 @@ public class TableSorter extends AbstractTableModel
         implements Observer
     {
         // No trace log is implemented because these parts of code is often called. 
+        /** Logger instance */
+        Logger _logger = MCSLogger.getLogger();
 
         /**
          * DOCUMENT ME!
@@ -918,6 +920,9 @@ public class TableSorter extends AbstractTableModel
             {
                 if (starProperty != null)
                 {
+                    // Set default text color to black
+                    setForeground(Color.BLACK);
+
                     // Set Background Color corresponding to the Catalog Origin Color or confidence index
                     if (starProperty.hasOrigin() == true)
                     {
@@ -931,8 +936,8 @@ public class TableSorter extends AbstractTableModel
                     }
                     else
                     {
-                        // If cells are black, something bad appent !
-                        setBackground(Color.BLACK);
+                        // If something bad appent, write text in red !
+                        setForeground(Color.RED);
                     }
                 }
             }

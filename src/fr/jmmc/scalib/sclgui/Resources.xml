@@ -5,11 +5,14 @@
 ********************************************************************************
  JMMC project
 
- "@(#) $Id: Resources.xml,v 1.3 2006-06-30 08:03:05 lafrasse Exp $"
+ "@(#) $Id: Resources.xml,v 1.4 2006-06-30 11:53:17 mella Exp $"
 
  History
  ~~~~~~~
  $Log: not supported by cvs2svn $
+ Revision 1.3  2006/06/30 08:03:05  lafrasse
+ Added query view related actions
+
  Revision 1.2  2006/06/26 14:29:08  mella
  *** empty log message ***
 
@@ -67,6 +70,12 @@
             <text>Delete</text>
             <icon></icon>
             <description>Delete Selected Sources</description>
+        </action>
+		 <action>
+            <name>showLegend</name>
+            <text>Show Legend</text>
+            <icon>images/show16.png</icon>
+            <description>Show legend of the calibrators properties</description>
         </action>
         <action>
             <name>searchScienceObject</name>

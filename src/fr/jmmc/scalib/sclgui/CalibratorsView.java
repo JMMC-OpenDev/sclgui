@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.16 2006-06-26 14:36:43 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.17 2006-06-30 11:53:17 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/06/26 14:36:43  mella
+ * Add delete action
+ *
  * Revision 1.15  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -108,10 +111,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     boolean noteinstancied = false;
 
     /** DOCUMENT ME! */
-    int width = 995;
+    int panelWidth = 895;
 
     /** DOCUMENT ME! */
-    int subpanelwidth = 970;
+    int subpanelwidth = 570;
+
+    /**
+     * Table and Legend container
+     */
+    JSplitPane tableAndLegendPane;
+
+    /**
+     * DOCUMENT ME!
+     */
+    int legendWidth;
 
     /**
      * DOCUMENT ME!
@@ -129,9 +142,59 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     VOInteraction _aladinInteraction = null;
 
     /**
+     * Save
+     */
+    Action _saveAction;
+
+    /**
+     * Save as
+     */
+    Action _saveAsAction;
+
+    /**
+     * Revert to saved
+     */
+    Action _revertToSavedAction;
+
+    /**
+     * Export as HTML
+     */
+    Action _exportAsHtmlAction;
+
+    /**
+     * Export as CSV
+     */
+    Action _exportAsCsvAction;
+
+    /**
      * Delete Action
      */
     Action _deleteAction;
+
+    /**
+     * Select All
+     */
+    Action _selectAllAction;
+
+    /**
+     *  Show details
+     */
+    Action _showDetailsAction;
+
+    /**
+     *  Show legend
+     */
+    Action _showLegendAction;
+
+    /**
+     * plot in aladin
+     */
+    Action _plotInAladinAction;
+
+    /**
+     *
+     */
+    Action _Action;
 
     /**
      * Constructor.
@@ -145,10 +208,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsModel.addTableModelListener(this);
 
         // create actions
-        _deleteAction     = new DeleteAction();
+        _deleteAction         = new DeleteAction();
+        _showLegendAction     = new ShowLegendAction();
 
         // Store the application preferences and register against it
-        _preferences      = Preferences.getInstance();
+        _preferences          = Preferences.getInstance();
         _preferences.addObserver(this);
 
         // Gray border of the view.
@@ -158,7 +222,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         setBorder(new TitledBorder(grayBorder, "Found Calibrators"));
 
         // Size management
-        setMinimumSize(new Dimension(width, 320));
+        setMinimumSize(new Dimension(panelWidth, 320));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Table initialization
@@ -167,20 +231,26 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         TableSorter tableSorter = new TableSorter(_calibratorsModel);
         tableSorter.setTableHeader(_jTable.getTableHeader());
         _jTable.setModel(tableSorter);
-
-        //        _jTable.setModel(_calibratorsModel);
-
-        // Get default selection mode
-        int selMode = _jTable.getSelectionModel().getSelectionMode();
-        _logger.fine("_jTable selection mode is:" + selMode);
-
-        _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         _jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollPane = new JScrollPane(_jTable);
         scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
         scrollPane.setPreferredSize(new Dimension(subpanelwidth, 260));
-        add(scrollPane);
+
+        //that width must be fixed
+        JPanel legendPanel = new LegendView(_preferences);
+        legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
+        _logger.fine("#######" + legendWidth + " " + subpanelwidth);
+        legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
+        // Set and place Table and Legend group
+        tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                scrollPane, legendPanel);
+        tableAndLegendPane.setOneTouchExpandable(true);
+        tableAndLegendPane.setResizeWeight(1.0);
+        tableAndLegendPane.setContinuousLayout(true);
+        add(tableAndLegendPane);
+        tableAndLegendPane.setAlignmentX(Float.parseFloat(".5"));
 
         // Tools panel creation
         JPanel resumePanel = new JPanel();
@@ -195,8 +265,10 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         resumePanel.add(resumeLabel);
         resumePanel.add(resumeTextField);
-        resumePanel.setMaximumSize(resumePanel.getPreferredSize());
         add(resumePanel);
+
+        // Make data refreshed according prefs
+        update(null, null);
     }
 
     /**
@@ -231,6 +303,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public void tableChanged(TableModelEvent e)
     {
         MCSLogger.trace();
+        _deleteAction.setEnabled(true);
     }
 
     /**
@@ -245,6 +318,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // If preference colors have changed, repaint table
         _jTable.repaint();
+
+        boolean showLegendPref = _preferences.getPreferenceAsBoolean(
+                "view.legend.show");
+
+        //        showLegend(showLegendPref);
     }
 
     /**
@@ -276,6 +354,30 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
         _calibratorsModel.deleteShownStars(_jTable.getSelectedRows());
+    }
+
+    /**
+     * Tell GUI to show or hide legend panel
+     */
+    public void showLegend(boolean flag)
+    {
+        MCSLogger.trace();
+
+        int i;
+
+        if (flag)
+        {
+            i = -legendWidth;
+        }
+        else
+        {
+            i = legendWidth;
+        }
+
+        int loc = tableAndLegendPane.getDividerLocation();
+        tableAndLegendPane.setDividerLocation(loc + i);
+
+        //tableAndLegendPane.setResizeWeight(1.0);
     }
 
     /**
@@ -314,12 +416,32 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         public DeleteAction()
         {
             super("deleteTableSelection");
+            setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             MCSLogger.trace();
             deleteSelectedRows();
+        }
+    }
+
+    protected class ShowLegendAction extends SCAction
+    {
+        public ShowLegendAction()
+        {
+            super("showLegend");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            if (e.getSource() instanceof AbstractButton)
+            {
+                AbstractButton b = (AbstractButton) e.getSource();
+                showLegend(b.isSelected());
+            }
         }
     }
 }
