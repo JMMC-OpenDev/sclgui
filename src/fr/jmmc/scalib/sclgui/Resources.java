@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Resources.java,v 1.4 2006-06-26 16:06:00 mella Exp $"
+ * "@(#) $Id: Resources.java,v 1.5 2006-06-30 07:56:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/06/26 16:06:00  mella
+ * Remove last space character for xpath queries
+ *
  * Revision 1.3  2006/06/26 14:29:08  mella
  * *** empty log message ***
  *
@@ -125,7 +128,7 @@ public class Resources
                 sb.append("" + elem.getData() + " ");
             }
 
-            return sb.toString().strip();
+            return sb.toString().trim();
         }
         catch (javax.xml.transform.TransformerException e)
         {
@@ -215,7 +218,7 @@ public class Resources
      */
     protected static ImageIcon createImageIcon(String path, String description)
     {
-        java.net.URL imgURL = Resources.class.getResource(path);
+        java.net.URL imgURL = Resources.class.getResource("./" + path);
 
         if (imgURL != null)
         {
@@ -223,7 +226,8 @@ public class Resources
         }
         else
         {
-            _logger.warning("Couldn't find file: '" + path+"'");
+            _logger.warning("Couldn't find file: '" + path + "'");
+
             return null;
         }
     }
