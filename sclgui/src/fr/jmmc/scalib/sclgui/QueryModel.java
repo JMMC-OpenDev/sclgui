@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.2 2006-06-30 07:59:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -32,28 +35,57 @@ public class QueryModel extends Observable
     /** The science object right magnitude */
     private double _magnitude;
 
+    /** The querying scenario */
+    private boolean _bright;
+
+    /** The current step of the querying progress.
+     * 0 < _currentStep < _totalStep
+     */
+    private int _currentStep;
+
+    /** The total number of step of the querying progress.
+     * _totalStep > 0
+     */
+    private int _totalStep;
+
     /**
      * Default constructor.
      */
     public QueryModel()
     {
-        _scienceObjectName     = "";
-        _ra                    = "";
-        _dec                   = "";
-        _magnitude             = 0.0;
+        init();
     }
 
     /**
-     * Every method that change the data should call this method.
-     * // Controllers should call notifyObservers on model to make views updated
+     * Reset all properties.
      */
-    private void dataChanged()
+    public void init()
     {
-        MCSLogger.trace();
+        setScienceObjectName("");
+        setRa("+00:00:00.00");
+        setDec("+00:00:00.00");
+        setMagnitude(0.0);
 
-        setChanged();
+        isBright(true);
+        setCurrentStep(0);
+        setTotalStep(0);
 
-        // notifyObservers();
+        notifyObservers();
+    }
+
+    /**
+     * Set default values to all properties.
+     */
+    public void example()
+    {
+        setScienceObjectName("eta_tau");
+        setRa("+03:47:29.79");
+        setDec("+24:06:18.50");
+        setMagnitude(2.96);
+
+        setTotalStep(11);
+
+        notifyObservers();
     }
 
     /**
@@ -78,7 +110,8 @@ public class QueryModel extends Observable
         MCSLogger.trace();
 
         _scienceObjectName = scienceObjectName;
-        dataChanged();
+
+        setChanged();
     }
 
     /**
@@ -115,7 +148,8 @@ public class QueryModel extends Observable
         }
 
         _ra = ra;
-        dataChanged();
+
+        setChanged();
     }
 
     /**
@@ -152,7 +186,8 @@ public class QueryModel extends Observable
         }
 
         _dec = dec;
-        dataChanged();
+
+        setChanged();
     }
 
     /**
@@ -177,7 +212,8 @@ public class QueryModel extends Observable
         MCSLogger.trace();
 
         _magnitude = magnitude;
-        dataChanged();
+
+        setChanged();
     }
 
     /**
@@ -197,6 +233,106 @@ public class QueryModel extends Observable
         {
             throw new IllegalArgumentException("Magnitude must be a number");
         }
+    }
+
+    /**
+     * Indicates wether the query is using the bright scenario or the faint one.
+     *
+     * @return true wether the query is of the bright type, otherwise false for
+     * the faint ones.
+     */
+    public boolean isBright()
+    {
+        return _bright;
+    }
+
+    /**
+     * Set wether the query should use the bright scenario or the faint one.
+     *
+     * @param flag true for bright queries, false for faint ones.
+     */
+    public void isBright(boolean flag)
+    {
+        _bright = flag;
+
+        setChanged();
+    }
+
+    /**
+     * Return the current step of query progress.
+     *
+     * @return the current querying step.
+     */
+    public int getCurrentStep()
+    {
+        MCSLogger.trace();
+
+        return _currentStep;
+    }
+
+    /**
+     * Set the current step of query progress.
+     *
+     * @param the current querying step.
+     */
+    public void setCurrentStep(int currentStep)
+    {
+        MCSLogger.trace();
+
+        if (currentStep <= _totalStep)
+        {
+            _currentStep = currentStep;
+        }
+        else
+        {
+            currentStep = 0;
+        }
+
+        setChanged();
+        notifyObservers();
+    }
+
+    /**
+     * Return the total number of step of query.
+     *
+     * @return the total number of querying step.
+     */
+    public int getTotalStep()
+    {
+        MCSLogger.trace();
+
+        return _totalStep;
+    }
+
+    /**
+     * Set the total number of step of query.
+     *
+     * @param the total number of querying step.
+     */
+    public void setTotalStep(int totalStep)
+    {
+        MCSLogger.trace();
+
+        _totalStep = totalStep;
+
+        setChanged();
+    }
+
+    /**
+     * Return the current querying status.
+     *
+     * @return the current querying status.
+     */
+    public String getCurrentStatus()
+    {
+        MCSLogger.trace();
+
+        if (_currentStep == 0)
+        {
+            return " ";
+        }
+
+        return "Catalog " + getCurrentStep() + "/" + getTotalStep();
     }
 
     /**
