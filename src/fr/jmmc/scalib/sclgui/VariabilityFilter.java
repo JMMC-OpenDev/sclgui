@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.2 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.3 2006-06-30 07:58:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.1  2006/04/07 13:32:23  yvander
  * Variability devpt
  *
@@ -85,7 +88,7 @@ public class VariabilityFilter extends Filter
         MCSLogger.trace();
 
         // If the filter is enabled
-        if (isEnabled() == true)//if ((isEnabled() == true) && (getVariability() == true))
+        if (isEnabled() == true) //if ((isEnabled() == true) && (getVariability() == true))
         {
             // Get the ids of the column contaning 'variability' star property
             int[] variabilityId = new int[3];
