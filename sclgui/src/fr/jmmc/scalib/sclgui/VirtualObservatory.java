@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.2 2006-04-12 12:30:02 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.3 2006-06-30 08:01:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/12 12:30:02  lafrasse
+ * Updated some Doxygen tags to fix previous documentation generation errors
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -14,11 +17,16 @@ package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
 
+import java.awt.*;
+import java.awt.event.*;
+
 import java.io.*;
 
 import java.net.URL;
 
 import java.util.logging.Logger;
+
+import javax.swing.*;
 
 
 /**
@@ -44,9 +52,39 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    public void GetCal(QueryModel queryModel) throws Exception
+    public void getCal(QueryModel queryModel) throws Exception
     {
         MCSLogger.trace();
+        class ProgressBarThread extends Thread
+        {
+            QueryModel _queryModel;
+            int        _millisecond;
+
+            ProgressBarThread(QueryModel queryModel, int millisecond)
+            {
+                _queryModel      = queryModel;
+                _millisecond     = millisecond;
+            }
+
+            public void run()
+            {
+                for (int i = 0; i <= _queryModel.getTotalStep(); i++)
+                {
+                    _queryModel.setCurrentStep(i);
+
+                    try
+                    {
+                        Thread.sleep(_millisecond);
+                    }
+                    catch (Exception e)
+                    {
+                    }
+                }
+            }
+        }
+
+        ProgressBarThread thread = new ProgressBarThread(queryModel, 200);
+        thread.start();
 
         try
         {
@@ -78,6 +116,22 @@ public class VirtualObservatory
         {
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * Get science object properties from is name through Simbad web service.
+     *
+     * @param queryModel the query to update.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    public void getScienceObject(QueryModel queryModel)
+        throws Exception
+    {
+        MCSLogger.trace();
+
+        // TODO : Querying Simbad and fill the query model accordinally
+        queryModel.init();
     }
 }
 /*___oOo___*/
