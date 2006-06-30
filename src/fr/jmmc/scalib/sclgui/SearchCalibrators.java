@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.2 2006-04-07 08:41:03 mella Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.3 2006-06-30 07:57:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/04/07 08:41:03  mella
+ * Preferences singleton is accessed using Preferences.getInstance()
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -99,13 +102,7 @@ public class SearchCalibrators
         QueryModel queryModel = new QueryModel();
         QueryView  queryView  = new QueryView(queryModel, vo);
 
-        queryModel.setScienceObjectName("eta_tau");
-        queryModel.setRa("+30:00:00.00");
-        queryModel.setDec("+30:00:00.00");
-        queryModel.setMagnitude(1.0);
-        queryModel.notifyObservers();
-
-        MainWindow window = new MainWindow(queryView, calibratorsView,
+        MainWindow window     = new MainWindow(queryView, calibratorsView,
                 preferencesView, filtersView);
     }
 
