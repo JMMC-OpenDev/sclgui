@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Resources.java,v 1.5 2006-06-30 07:56:44 lafrasse Exp $"
+ * "@(#) $Id: Resources.java,v 1.6 2006-06-30 12:32:03 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/30 07:56:44  lafrasse
+ * Corrected a bug preventing compilation
+ *
  * Revision 1.4  2006/06/26 16:06:00  mella
  * Remove last space character for xpath queries
  *
@@ -45,111 +48,49 @@ import javax.xml.parsers.*;
  */
 public class Resources
 {
-    /** xml document */
-    private static Document _document = null;
-
-    /** xml filename */
-    private static String _resourceName = "Resources.xml";
+    /** resource filename */
+    private static String _resourceName = "Resources.prop";
 
     /** logger */
     private static Logger _logger = MCSLogger.getLogger();
 
-    /**
-     * Constructor.
-     *
-     */
-    public Resources()
-    {
-    }
-
-    /**
-     * Load xml file to init the _document instance.
-     */
-    private static void loadDocument()
-    {
-        MCSLogger.trace();
-
-        URL _resourcesURL = Resources.class.getResource(_resourceName);
-        _logger.finest("Using resource file named:" + _resourcesURL);
-
-        try
-        {
-            // Create a builder factory whitout validation
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setValidating(false);
-
-            // Create the builder and parse the URL
-            _document = factory.newDocumentBuilder().parse("" + _resourcesURL);
-        }
-        catch (SAXException e)
-        {
-            // A parsing error occurred; the xml input  is not valid
-        }
-        catch (ParserConfigurationException e)
-        {
-        }
-        catch (IOException e)
-        {
-        }
-    }
-
-    /**
-     * Get content from resource file using xpath.
-     *
-     * @param xpath query used to dig resource
-     *
-     * @return the content of the xpath response
-     *
-     */
-    private static String getFromXpath(String xpath)
-    {
-        MCSLogger.trace();
-
-        if (_document == null)
-        {
-            loadDocument();
-        }
-
-        _logger.finest("Searching resource using xpath '" + xpath + "'");
-
-        try
-        {
-            // Get the matching elements
-            NodeList     nodelist = org.apache.xpath.XPathAPI.selectNodeList(_document,
-                    xpath);
-            StringBuffer sb       = new StringBuffer();
-
-            // Process the elements in the nodelist
-            for (int i = 0; i < nodelist.getLength(); i++)
-            {
-                // Get element
-                CharacterData elem = (CharacterData) nodelist.item(i);
-                _logger.finest("xpath returns '" + elem + "'");
-                sb.append("" + elem.getData() + " ");
-            }
-
-            return sb.toString().trim();
-        }
-        catch (javax.xml.transform.TransformerException e)
-        {
-            _logger.warning("" + e);
-
-            return "";
-        }
-    }
+    /** Properties */
+    private static Properties _resources = null;
 
     /**
      * Get content from resource file.
      *
-     * @param resourceName xpath query used to dig resource
+     * @param resourceName name of resource
      *
-     * @return the content of the xpath response
+     * @return the content of the resource or null indicating error
      */
     public static String getResource(String resourceName)
     {
         MCSLogger.trace();
 
-        return getFromXpath(resourceName);
+        if (_resources == null)
+        {
+            try
+            {
+                URL resourcesURL = Resources.class.getResource(_resourceName);
+                _logger.finest("Using resource file named:" + resourcesURL);
+
+                FileInputStream in = new FileInputStream(new File(
+                            resourcesURL.getFile()));
+                _resources = new Properties();
+                _resources.load(in);
+            }
+            catch (Exception e)
+            {
+                _logger.warning("Resource File can't be read");
+
+                return null;
+            }
+        }
+
+        _logger.fine("getResource for " + resourceName);
+
+        return _resources.getProperty(resourceName);
     }
 
     /**
@@ -161,10 +102,7 @@ public class Resources
      */
     public static String getActionText(String actionName)
     {
-        String xpath = "//actions/action[./name='" + actionName +
-            "']/text/text()";
-
-        return getFromXpath(xpath);
+        return getResource("actions.action." + actionName + ".text");
     }
 
     /**
@@ -176,10 +114,7 @@ public class Resources
      */
     public static String getActionDescription(String actionName)
     {
-        String xpath = "//actions/action[./name='" + actionName +
-            "']/description/text()";
-
-        return getFromXpath(xpath);
+        return getResource("actions.action." + actionName + ".description");
     }
 
     /**
@@ -191,10 +126,7 @@ public class Resources
      */
     public static String getActionIconPath(String actionName)
     {
-        String xpath = "//actions/action[./name='" + actionName +
-            "']/icon/text()";
-
-        return getFromXpath(xpath);
+        return getResource("actions.action." + actionName + ".icon");
     }
 
     /**
@@ -241,26 +173,7 @@ public class Resources
      */
     public static String getToolTipText(String widgetName)
     {
-        return getToolTipText(widgetName, "common");
-    }
-
-    /**
-     * Get the tooltip text of widget related to a specific widget group.
-     *
-     * @param widgetName the widgetInstanceName
-     * @param widgetGroupName the widget group name
-     *
-     * @return the tooltip text
-     */
-    public static String getToolTipText(String widgetName,
-        String widgetGroupName)
-    {
-        MCSLogger.trace();
-
-        String xpath = "//widgets[./@name='" + widgetGroupName +
-            "']/widget[./name='" + widgetName + "']/tooltip/text()";
-
-        return getFromXpath(xpath);
+        return getResource("widgets.widget." + widgetName + ".tooltip");
     }
 }
 /*___oOo___*/
