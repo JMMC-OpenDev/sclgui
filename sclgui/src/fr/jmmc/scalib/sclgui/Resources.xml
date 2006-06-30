@@ -5,11 +5,14 @@
 ********************************************************************************
  JMMC project
 
- "@(#) $Id: Resources.xml,v 1.2 2006-06-26 14:29:08 mella Exp $"
+ "@(#) $Id: Resources.xml,v 1.3 2006-06-30 08:03:05 lafrasse Exp $"
 
  History
  ~~~~~~~
  $Log: not supported by cvs2svn $
+ Revision 1.2  2006/06/26 14:29:08  mella
+ *** empty log message ***
+
  Revision 1.1  2006/06/09 15:15:37  mella
  First revision
 
@@ -62,8 +65,32 @@
         <action>
             <name>deleteTableSelection</name>
             <text>Delete</text>
-            <icon>images/delete16.png</icon>
+            <icon></icon>
             <description>Delete Selected Sources</description>
+        </action>
+        <action>
+            <name>searchScienceObject</name>
+            <text></text>
+            <icon>search.png</icon>
+            <description>Try to get star properties from Simbad</description>
+        </action>
+        <action>
+            <name>brightQuery</name>
+            <text>Bright</text>
+            <icon></icon>
+            <description>Launch Calibrators Search using the Bright Scenarion</description>
+        </action>
+        <action>
+            <name>faintQuery</name>
+            <text>Faint</text>
+            <icon></icon>
+            <description>Launch Calibrators Search using the Faint Scenarion</description>
+        </action>
+        <action>
+            <name>searchCalibrators</name>
+            <text>GO</text>
+            <icon></icon>
+            <description>Launch Calibrators Search</description>
         </action>
     </actions>
 </resources>
