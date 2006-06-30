@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.5 2006-06-26 14:33:32 mella Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.6 2006-06-30 11:53:17 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/26 14:33:32  mella
+ * Place menu creation at end
+ *
  * Revision 1.4  2006/06/19 11:23:57  mella
  * Add export capability and remove printing one
  *
@@ -106,6 +109,9 @@ public class MainWindow extends JFrame
             // Create a first top-bottom split pane for calibrators and filters
             JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                     _calibratorsView, _filtersView);
+            // Give priority to calibrators view
+            resultPane.setResizeWeight(1.0);
+
             // Set the split pane to continuously resize the child components
             // which the divider is dragged
             resultPane.setContinuousLayout(true);
