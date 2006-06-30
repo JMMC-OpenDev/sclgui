@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.6 2006-06-12 08:44:34 mella Exp $"
+ * "@(#) $Id: QueryView.java,v 1.7 2006-06-30 08:02:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/06/12 08:44:34  mella
+ * Set Magnitude textfield using  setValue instead of setText
+ *
  * Revision 1.5  2006/06/09 13:35:10  mella
  * add one part of code to give a sample of requested tooltip usage
  *
@@ -51,143 +54,65 @@ import javax.swing.text.*;
 public class QueryView extends JPanel implements Observer,
     PropertyChangeListener
 {
-    // Logger
-    /**
-     * logger must be used to perform logging
-     */
+    /** logger must be used to perform logging */
     Logger logger = MCSLogger.getLogger();
 
-    //TextFields
-    /** DOCUMENT ME! */
-    JTextField textWave = new JTextField();
+    /** MVC associated model */
+    QueryModel _queryModel;
 
-    /** DOCUMENT ME! */
-    JFormattedTextField textMagMax;
+    /** Assocaited virtual observatory */
+    VirtualObservatory _vo;
 
-    /** DOCUMENT ME! */
-    JTextField textName = new JTextField();
+    /** Science object textfields */
+    JTextField _starNameTextfield = new JTextField();
 
-    /** DOCUMENT ME! */
-    JFormattedTextField textMagMin;
+    /** Science object right ascension coordinate */
+    JTextField _starRATextfield = new JTextField();
 
-    /** DOCUMENT ME! */
-    JTextField textRA = new JTextField();
+    /** Science object declinaison coordinate */
+    JTextField _starDECTextfield = new JTextField();
 
-    /** DOCUMENT ME! */
-    JTextField textDEC = new JTextField();
+    /** Science object magnitude */
+    JFormattedTextField _starMagnitudeTextfield = new JFormattedTextField();
 
-    /** DOCUMENT ME! */
-    JTextField textBase = new JTextField();
+    /** Science object magnitude */
+    JCheckBox _includeScienceObjectCheckbox = new JCheckBox();
 
-    /** DOCUMENT ME! */
-    JFormattedTextField textMagnitude;
+    /** Search minimum magnitude */
+    JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField();
 
-    /** DOCUMENT ME! */
-    JTextField textDiffRA = new JTextField();
+    /** Search maximum magnitude */
+    JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField();
 
-    /** DOCUMENT ME! */
-    JTextField textDiffDEC = new JTextField();
+    /** Bright/Faint query radion button group */
+    ButtonGroup _brightFaintButtonGroup = new ButtonGroup();
 
-    //Labels
-    /** DOCUMENT ME! */
-    JLabel select = new JLabel();
+    /** Bright query button */
+    JRadioButton _brightRadioButton;
 
-    /** DOCUMENT ME! */
-    JLabel labelObject = new JLabel();
+    /** Faint query button */
+    JRadioButton _faintRadioButton;
 
-    /** DOCUMENT ME! */
-    JLabel labelWave = new JLabel();
+    /** Search box RA size */
+    JTextField _diffRATextfield = new JTextField();
 
-    /** DOCUMENT ME! */
-    JLabel labelMagMin = new JLabel();
+    /** Search box DEC size */
+    JTextField _diffDECTextfield = new JTextField();
 
-    /** DOCUMENT ME! */
-    JLabel labelRA = new JLabel();
+    /** Instrument wavelentgh */
+    JTextField _wavelengthTextfield = new JTextField();
 
-    /** DOCUMENT ME! */
-    JLabel labelDEC = new JLabel();
+    /** Instrument magnitude band */
+    JComboBox _magnitudeBandCombo;
 
-    /** DOCUMENT ME! */
-    JLabel labelBase = new JLabel();
+    /** Instrument maximun baseline */
+    JTextField _maxBaselineTextField = new JTextField();
 
-    /** DOCUMENT ME! */
-    JLabel labelMagobj = new JLabel();
+    /** Query launcher/canceler */
+    JButton _goButton;
 
-    /** DOCUMENT ME! */
-    JLabel labelDiffRA = new JLabel();
-
-    /** DOCUMENT ME! */
-    JLabel labelDiffDEC = new JLabel();
-
-    /** DOCUMENT ME! */
-    JLabel labelBlank = new JLabel();
-
-    //Radio buttons
-    /** DOCUMENT ME! */
-    JRadioButton bright = new JRadioButton("Bright");
-
-    /** DOCUMENT ME! */
-    JRadioButton faint = new JRadioButton("Faint");
-
-    /** DOCUMENT ME! */
-    ButtonGroup groupRadio = new ButtonGroup();
-
-    //Border
-    /** DOCUMENT ME! */
-    Border yellowBorder = BorderFactory.createLineBorder(Color.YELLOW, 2);
-
-    /** DOCUMENT ME! */
-    Border lightBorder = BorderFactory.createLineBorder(Color.GRAY, 1);
-
-    /** DOCUMENT ME! */
-    Border emptyBorder = BorderFactory.createEmptyBorder();
-
-    //Panels
-    /** DOCUMENT ME! */
-    JPanel panelradio = new JPanel();
-
-    /** DOCUMENT ME! */
-    JPanel panelparams = new JPanel();
-
-    /** DOCUMENT ME! */
-    JLabel labelBand = new JLabel();
-
-    /** DOCUMENT ME! */
-    JLabel labelMagMax = new JLabel();
-
-    /** DOCUMENT ME! */
-    JPanel panelparamsscienceobj = new JPanel();
-
-    /** DOCUMENT ME! */
-    JPanel panelparamsconfig = new JPanel();
-
-    /** DOCUMENT ME! */
-    JPanel panelparamssearchcal = new JPanel();
-
-    /** DOCUMENT ME! */
-    JPanel panelparamsexplain = new JPanel();
-
-    //Layout
-    /** DOCUMENT ME! */
-    FlowLayout flowLayout = new FlowLayout();
-
-    /** DOCUMENT ME! */
-    FlowLayout flowLayout4 = new FlowLayout();
-
-    //buttons
-    /** DOCUMENT ME! */
-    JButton buttonGo = new JButton();
-
-    /** DOCUMENT ME! */
-    JButton buttonCancel = new JButton();
-
-    //Combo
-    /** DOCUMENT ME! */
-    JComboBox comboBand;
-
-    //ProgressBar
-    /** DOCUMENT ME! */
-    JProgressBar progressbar = new JProgressBar();
+    /** Query progress bar */
+    JProgressBar _progressBar = new JProgressBar();
 
     //width
     /** DOCUMENT ME! */
@@ -203,59 +128,157 @@ public class QueryView extends JPanel implements Observer,
     /** DOCUMENT ME! */
     JScrollPane scrollexplain = new JScrollPane(textareaexplain);
 
-    /** MVC associated model */
-    private QueryModel _model;
-
-    /** DOCUMENT ME! */
-    private VirtualObservatory _vo;
-
     /**
      * Constructor.
      *
      * @param model the object used to store all the query attributes.
      * @param vo the object used to query the JMMC GETCAL webservice.
      */
-    public QueryView(QueryModel model, VirtualObservatory vo)
+    public QueryView(QueryModel queryModel, VirtualObservatory vo)
     {
-        _model = model;
-        _model.addObserver(this);
+        // Store the model
+        _queryModel     = queryModel;
 
-        _vo = vo;
+        // Store the virtual observatory
+        _vo             = vo;
 
-        //        setBorder(new TitledBorder(yellowBorder, "QUERY PARAMETERS"));
-        setBorder(new TitledBorder(lightBorder, "Query Parameters"));
-        setLayout(flowLayout4);
+        // Query panel global attributes
+        setBorder(new TitledBorder("Query Parameters"));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // Layout configuration
-        flowLayout.setAlignment(FlowLayout.LEFT);
+        // Form panel global attributes and common objects
+        JPanel queryFormPanel = new JPanel();
+        queryFormPanel.setLayout(new BoxLayout(queryFormPanel, BoxLayout.X_AXIS));
 
-        // Widget tuning
-        NumberFormat   nf             = NumberFormat.getNumberInstance();
-        ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
+        JPanel       tempPanel;
+        Dimension    textfieldDimension = new Dimension(100, 20);
+        NumberFormat nf                 = NumberFormat.getNumberInstance();
 
-        textMagnitude                 = new JFormattedTextField(nf);
-        textMagnitude.addPropertyChangeListener("value", this);
-        textMagnitude.setToolTipText("Science Object Magnitude");
-        toolTipManager.registerComponent(textMagnitude);
+        // Science Object panel
+        JPanel scienceObjectPanel = new JPanel();
+        scienceObjectPanel.setBorder(new TitledBorder("Science Object"));
+        scienceObjectPanel.setLayout(new GridLayout(0, 2));
+        // Star name field
+        scienceObjectPanel.add(new JLabel("Name : "));
+        tempPanel = new JPanel();
+        _starNameTextfield.setMaximumSize(textfieldDimension);
+        _starNameTextfield.setMinimumSize(textfieldDimension);
+        _starNameTextfield.setPreferredSize(textfieldDimension);
+        tempPanel.add(_starNameTextfield);
+        tempPanel.add(new JButton(new SearchScienceObjectAction()));
+        scienceObjectPanel.add(tempPanel);
+        // RA coordinate field
+        scienceObjectPanel.add(new JLabel("RA 2000 (mn) : "));
+        _starRATextfield.setMaximumSize(textfieldDimension);
+        _starRATextfield.setMinimumSize(textfieldDimension);
+        _starRATextfield.setPreferredSize(textfieldDimension);
+        scienceObjectPanel.add(_starRATextfield);
+        // DEG coordinate field
+        scienceObjectPanel.add(new JLabel("DEC 2000 (deg) : "));
+        _starDECTextfield.setMaximumSize(textfieldDimension);
+        _starDECTextfield.setMinimumSize(textfieldDimension);
+        _starDECTextfield.setPreferredSize(textfieldDimension);
+        scienceObjectPanel.add(_starDECTextfield);
+        // Magnitude field
+        scienceObjectPanel.add(new JLabel("Magnitude : "));
+        _starMagnitudeTextfield = new JFormattedTextField(nf);
+        _starMagnitudeTextfield.setMaximumSize(textfieldDimension);
+        _starMagnitudeTextfield.setMinimumSize(textfieldDimension);
+        _starMagnitudeTextfield.setPreferredSize(textfieldDimension);
+        scienceObjectPanel.add(_starMagnitudeTextfield);
+        // Include the science objet in result
+        scienceObjectPanel.add(new JLabel("Included : "));
+        scienceObjectPanel.add(_includeScienceObjectCheckbox);
+        queryFormPanel.add(scienceObjectPanel);
 
-        textMagMin     = new JFormattedTextField(nf);
-        textMagMax     = new JFormattedTextField(nf);
+        // Searching Parameters panel
+        JPanel searchCalPanel = new JPanel();
+        searchCalPanel.setBorder(new TitledBorder("SearchCal Parameters"));
+        searchCalPanel.setLayout(new GridLayout(0, 2));
+        // Minimum magnitude field
+        searchCalPanel.add(new JLabel("Min. Magnitude : "));
+        _minMagnitudeTextfield = new JFormattedTextField(nf);
+        _minMagnitudeTextfield.setMaximumSize(textfieldDimension);
+        _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
+        _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
+        searchCalPanel.add(_minMagnitudeTextfield);
+        // Maximum magnitude field
+        searchCalPanel.add(new JLabel("Max. Magnitude : "));
+        _maxMagnitudeTextfield = new JFormattedTextField(nf);
+        _maxMagnitudeTextfield.setMaximumSize(textfieldDimension);
+        _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
+        _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
+        searchCalPanel.add(_maxMagnitudeTextfield);
+        // Bright/Faint Scenario
+        searchCalPanel.add(new JLabel("Scenario : "));
+        tempPanel              = new JPanel();
+        _brightRadioButton     = new JRadioButton(new BrightQueryAction());
+        _brightRadioButton.setSelected(true);
+        _brightFaintButtonGroup.add(_brightRadioButton);
+        tempPanel.add(_brightRadioButton);
+        _faintRadioButton = new JRadioButton(new FaintQueryAction());
+        _brightFaintButtonGroup.add(_faintRadioButton);
+        tempPanel.add(_faintRadioButton);
+        searchCalPanel.add(tempPanel);
+        // RA delta field
+        searchCalPanel.add(new JLabel("Diff RA (arcmin) : "));
+        _diffRATextfield.setMaximumSize(textfieldDimension);
+        _diffRATextfield.setMinimumSize(textfieldDimension);
+        _diffRATextfield.setPreferredSize(textfieldDimension);
+        searchCalPanel.add(_diffRATextfield);
+        // DEC delta field
+        searchCalPanel.add(new JLabel("Diff DEC (arcmin) : "));
+        _diffDECTextfield.setMaximumSize(textfieldDimension);
+        _diffDECTextfield.setMinimumSize(textfieldDimension);
+        _diffDECTextfield.setPreferredSize(textfieldDimension);
+        searchCalPanel.add(_diffDECTextfield);
+        queryFormPanel.add(searchCalPanel);
 
-        try
-        {
-            setMinimumSize(new Dimension(width, 205));
-            setSize(new Dimension(width, 205));
-            setPreferredSize(new Dimension(width, 205));
+        // Instrumental Configuration panel
+        JPanel instrumentPanel = new JPanel();
+        instrumentPanel.setBorder(new TitledBorder("Instrumental Configuration"));
+        instrumentPanel.setLayout(new GridLayout(0, 2));
+        // Wavelength field
+        instrumentPanel.add(new JLabel("Wavelength : "));
+        _wavelengthTextfield.setMaximumSize(textfieldDimension);
+        _wavelengthTextfield.setMinimumSize(textfieldDimension);
+        _wavelengthTextfield.setPreferredSize(textfieldDimension);
+        instrumentPanel.add(_wavelengthTextfield);
+        // Magnitude band field
+        instrumentPanel.add(new JLabel("Magnitude Band : "));
 
-            panelRadioInit();
-            panelParamsInit();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        String[] bands = { "I", "J", "H", "K" };
+        _magnitudeBandCombo = new JComboBox(bands);
+        _magnitudeBandCombo.setSelectedIndex(3);
+        instrumentPanel.add(_magnitudeBandCombo);
+        // Maximum baseline
+        instrumentPanel.add(new JLabel("Max. Baseline : "));
+        _maxBaselineTextField.setMaximumSize(textfieldDimension);
+        _maxBaselineTextField.setMinimumSize(textfieldDimension);
+        _maxBaselineTextField.setPreferredSize(textfieldDimension);
+        instrumentPanel.add(_maxBaselineTextField);
+        queryFormPanel.add(instrumentPanel);
 
-        updateDataView(_model);
+        add(queryFormPanel);
+
+        // Status panel global attributes and common objects
+        JPanel queryStatusPanel = new JPanel();
+        queryStatusPanel.setLayout(new BoxLayout(queryStatusPanel,
+                BoxLayout.X_AXIS));
+
+        // Progress label
+        queryStatusPanel.add(new JLabel("Progress : "));
+        // Progressbar
+        _progressBar.setStringPainted(true);
+        queryStatusPanel.add(_progressBar);
+        // GO Button
+        _goButton = new JButton(new SearchCalibratorsAction());
+        queryStatusPanel.add(_goButton);
+
+        add(queryStatusPanel);
+
+        // Start listening to any updates of the model
+        _queryModel.addObserver(this);
     }
 
     /**
@@ -268,9 +291,18 @@ public class QueryView extends JPanel implements Observer,
         // Next line could be skipped because we already know the observable
         if (o instanceof QueryModel)
         {
-            QueryModel model = (QueryModel) o;
+            QueryModel queryModel = (QueryModel) o;
 
-            updateDataView(model);
+            _starNameTextfield.setText(queryModel.getScienceObjectName());
+            _starDECTextfield.setText(queryModel.getDec());
+            _starRATextfield.setText(queryModel.getRa());
+            _starMagnitudeTextfield.setValue(new Double(
+                    queryModel.getMagnitude()));
+
+            // TODO : link to bright/faint radio buttons, and all the other missing fields
+            _progressBar.setValue(queryModel.getCurrentStep());
+            _progressBar.setMaximum(queryModel.getTotalStep());
+            _progressBar.setString(queryModel.getCurrentStatus());
         }
     }
 
@@ -281,13 +313,14 @@ public class QueryView extends JPanel implements Observer,
 
         Object source = e.getSource();
 
-        if (source == textMagnitude)
+        if (source == _starMagnitudeTextfield)
         {
-            logger.fine("textMagnitude changed try to adjust magMin, magMax");
+            logger.fine(
+                "_starMagnitudeTextfield changed try to adjust magMin, magMax");
 
-            double d = ((Number) textMagnitude.getValue()).doubleValue();
-            textMagMax.setValue(new Double(d + 2));
-            textMagMin.setValue(new Double(d - 2));
+            double d = ((Number) _starMagnitudeTextfield.getValue()).doubleValue();
+            _maxMagnitudeTextfield.setValue(new Double(d + 2));
+            _minMagnitudeTextfield.setValue(new Double(d - 2));
         }
     }
 
@@ -298,68 +331,47 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        // Depending on the queryModel state, change view...
-        if (false)
-        { // TODO Change condiion
-          //Prepare barprogress
-            progressbar.setVisible(true);
-            progressbar.setIndeterminate(true);
-            labelBlank.setVisible(false);
-
-            //change cursor
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-            //panels enabled false
-            enabledComponents(this, false);
-            textareaexplain.setText("Query is beeing resolved ");
-        }
-
-        if (false)
-        { // TODO Change condiion
-          //default cursor
-            setCursor(Cursor.getDefaultCursor());
-
-            //begin state
-            labelBlank.setVisible(true);
-            progressbar.setVisible(false);
-            progressbar.setIndeterminate(false);
-
-            //panel enabled true
-            enabledComponents(this, true);
-
-            // Should get completion status to indicate proper work or not...TBD                
-            textareaexplain.setText("Query has been resolved successfully");
-        }
-
-        if (false)
-        { // TODO Change condiion
-          //default cursor
-            setCursor(Cursor.getDefaultCursor());
-
-            //begin state
-            labelBlank.setVisible(true);
-            progressbar.setVisible(false);
-            progressbar.setIndeterminate(false);
-
-            //panel enabled true
-            enabledComponents(this, true);
-
-            // Should get completion status to indicate proper work or not...TBD                
-            textareaexplain.setText("Query has not been resolved successfully");
-        }
-    }
-
-    /**
-     * Read the model to update view according data changes.
-     */
-    private void updateDataView(QueryModel queryModel)
-    {
-        MCSLogger.trace();
-
-        textName.setText(_model.getScienceObjectName());
-        textDEC.setText(_model.getDec());
-        textRA.setText(_model.getRa());
-        textMagnitude.setValue(new Double(_model.getMagnitude()));
+        /*
+           // Depending on the queryModel state, change view...
+           if (false)
+           { // TODO Change condition
+             //Prepare barprogress
+               _progressBar.setVisible(true);
+               _progressBar.setIndeterminate(true);
+               labelBlank.setVisible(false);
+               //change cursor
+               setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+               //panels enabled false
+               enabledComponents(this, false);
+               textareaexplain.setText("Query is beeing resolved ");
+           }
+           if (false)
+           { // TODO Change condiion
+             //default cursor
+               setCursor(Cursor.getDefaultCursor());
+               //begin state
+               labelBlank.setVisible(true);
+               _progressBar.setVisible(false);
+               _progressBar.setIndeterminate(false);
+               //panel enabled true
+               enabledComponents(this, true);
+               // Should get completion status to indicate proper work or not...TBD
+               textareaexplain.setText("Query has been resolved successfully");
+           }
+           if (false)
+           { // TODO Change condiion
+             //default cursor
+               setCursor(Cursor.getDefaultCursor());
+               //begin state
+               labelBlank.setVisible(true);
+               _progressBar.setVisible(false);
+               _progressBar.setIndeterminate(false);
+               //panel enabled true
+               enabledComponents(this, true);
+               // Should get completion status to indicate proper work or not...TBD
+               textareaexplain.setText("Query has not been resolved successfully");
+           }
+         */
     }
 
     /**
@@ -372,191 +384,10 @@ public class QueryView extends JPanel implements Observer,
         textareaexplain.setText("Parameters verification...");
 
         // Try to inject user values into the model
-        try
-        {
-            _model.setScienceObjectName(textName.getText());
-            _model.setRa(textRA.getText());
-            _model.setDec(textDEC.getText());
-            _model.setMagnitude(textMagnitude.getText());
-            _model.notifyObservers();
-            addText(textareaexplain, "Parameters ok");
-
-            // If the model seems complete, launch query execution
-            if (_model.isConsumable())
-            {
-                try
-                {
-                    _vo.GetCal(_model);
-                }
-                catch (Exception e)
-                {
-                    textareaexplain.setText("GETCAL crashed");
-                    e.printStackTrace();
-                }
-            }
-        }
-        catch (IllegalArgumentException e)
-        {
-            addText(textareaexplain, "Input error:" + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            addText(textareaexplain, "ERROR:" + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * panelRadioInit
-     */
-    public void panelRadioInit()
-    {
-        MCSLogger.trace();
-
-        select.setText("Select the type of star :  ");
-
-        bright.setSelected(true);
-        groupRadio.add(bright);
-        groupRadio.add(faint);
-
-        // EVTS
-        TypeOfStarListener gestionnaire = new TypeOfStarListener(this);
-        bright.addActionListener(gestionnaire);
-        faint.addActionListener(gestionnaire);
-
-        labelBlank.setPreferredSize(new Dimension(290, 25));
-
-        buttonGo.setPreferredSize(new Dimension(90, 25));
-        buttonGo.setText("GO");
-        buttonCancel.setPreferredSize(new Dimension(90, 25));
-        buttonCancel.setText("Cancel");
-
-        LaunchSearchCalListener sclistener = new LaunchSearchCalListener(this);
-        buttonGo.addActionListener(sclistener);
-        buttonCancel.addActionListener(sclistener);
-
-        panelradio.setPreferredSize(new Dimension(subpanelswidth, 30));
-        panelradio.setLayout(flowLayout);
-
-        progressbar.setVisible(false);
-        progressbar.setPreferredSize(new Dimension(290, 25));
-
-        panelradio.add(select);
-        panelradio.add(bright);
-        panelradio.add(faint);
-        panelradio.add(labelBlank);
-        panelradio.add(progressbar);
-        panelradio.add(buttonCancel);
-        panelradio.add(buttonGo);
-
-        add(panelradio);
-    }
-
-    //end panelRadioInit
-
-    /**
-     * panelParamsInit
-     */
-    public void panelParamsInit()
-    {
-        MCSLogger.trace();
-
-        //SCIENCE OBJECT
-        panelparamsscienceobj.setPreferredSize(new Dimension(250, 127));
-        panelparamsscienceobj.setBorder(new TitledBorder(lightBorder,
-                "Science object"));
-        panelparamsscienceobj.setLayout(flowLayout);
-        setLabelsAndTexts(panelparamsscienceobj, labelObject, textName, 130,
-            17, 90, 20, "Name : ");
-        setLabelsAndTexts(panelparamsscienceobj, labelRA, textRA, 130, 17, 90,
-            20, "RA 2000 (mn) : ");
-        setLabelsAndTexts(panelparamsscienceobj, labelDEC, textDEC, 130, 17,
-            90, 20, "DEC 2000 (deg) : ");
-        setLabelsAndTexts(panelparamsscienceobj, labelMagobj, textMagnitude,
-            130, 17, 90, 20, "Magnitude : ");
-
-        //SEARCHCAL PARAMETERS
-        panelparamssearchcal.setPreferredSize(new Dimension(250, 127));
-        panelparamssearchcal.setBorder(new TitledBorder(lightBorder,
-                "SearchCal parameters"));
-        panelparamssearchcal.setLayout(flowLayout);
-        setLabelsAndTexts(panelparamssearchcal, labelMagMin, textMagMin, 130,
-            17, 90, 20, "Mag min to search : ");
-        setLabelsAndTexts(panelparamssearchcal, labelMagMax, textMagMax, 130,
-            17, 90, 20, "Mag max to search : ");
-        setLabelsAndTexts(panelparamssearchcal, labelDiffRA, textDiffRA, 130,
-            17, 90, 20, "Diff RA (arcmin) : ");
-        setLabelsAndTexts(panelparamssearchcal, labelDiffDEC, textDiffDEC, 130,
-            17, 90, 20, "Diff DEC (arcmin) : ");
-
-        //INSTRUMENTAL CONFIGURATION
-        panelparamsconfig.setPreferredSize(new Dimension(250, 127));
-        panelparamsconfig.setBorder(new TitledBorder(lightBorder,
-                "Instrumental configuration"));
-        panelparamsconfig.setLayout(flowLayout);
-        setLabelsAndTexts(panelparamsconfig, labelWave, textWave, 130, 17, 90,
-            20, "Wavelength : ");
-        labelBand.setPreferredSize(new Dimension(130, 17));
-        labelBand.setText("Magnitude band : ");
-
-        String[] bands = { "I", "J", "H", "K" };
-        comboBand = new JComboBox(bands);
-        comboBand.setSelectedIndex(3);
-        comboBand.setPreferredSize(new Dimension(90, 23));
-        panelparamsconfig.add(labelBand);
-        panelparamsconfig.add(comboBand);
-        setLabelsAndTexts(panelparamsconfig, labelBase, textBase, 130, 17, 90,
-            20, "Max baseline used : ");
-
-        //EXPLAIN
-        panelparams.setPreferredSize(new Dimension(subpanelswidth, 135));
-        panelparams.setLayout(flowLayout);
-
-        panelparamsexplain.setPreferredSize(new Dimension(200, 127));
-        panelparamsexplain.setBorder(new TitledBorder(lightBorder, "Explains"));
-        textareaexplain.setBackground(UIManager.getColor("Button.background"));
-        scrollexplain.setPreferredSize(new Dimension(180, 85));
-        scrollexplain.setBorder(emptyBorder);
-
-        textareaexplain.setEditable(false);
-        textareaexplain.setText("");
-        textareaexplain.setRows(5);
-
-        panelparamsexplain.add(scrollexplain);
-
-        //PANELPARAMS
-        panelparams.add(panelparamsscienceobj);
-        panelparams.add(panelparamssearchcal);
-        panelparams.add(panelparamsconfig);
-        panelparams.add(panelparamsexplain);
-
-        add(panelparams);
-    }
-
-    //end panelParamsInit
-
-    /**
-     * setLabelsAndTexts  -  Labels and texfields configuration
-     * @param panel JPanel
-     * @param label JLabel
-     * @param textfield JTextField
-     * @param labelwidth int
-     * @param labelheight int
-     * @param textwidth int
-     * @param textheight int
-     * @param text String
-     */
-    public void setLabelsAndTexts(JPanel panel, JLabel label,
-        JTextField textfield, int labelwidth, int labelheight, int textwidth,
-        int textheight, String text)
-    {
-        MCSLogger.trace();
-
-        textfield.setPreferredSize(new Dimension(textwidth, textheight));
-        label.setPreferredSize(new Dimension(labelwidth, labelheight));
-        label.setText(text);
-        panel.add(label);
-        panel.add(textfield);
+        _queryModel.setScienceObjectName(_starNameTextfield.getText());
+        _queryModel.setRa(_starRATextfield.getText());
+        _queryModel.setDec(_starDECTextfield.getText());
+        _queryModel.setMagnitude(_starMagnitudeTextfield.getText());
     }
 
     /**
@@ -601,91 +432,120 @@ public class QueryView extends JPanel implements Observer,
             compo.setEnabled(bool);
         }
     }
-}
 
-
-//end class
-/**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision: 1.6 $
- */
-class TypeOfStarListener implements ActionListener
-{
-    /** DOCUMENT ME! */
-    QueryView _queryView;
-
-    /**
-     * TypeOfStarListener  -  Constructor
-     * @param queryView QueryView
-     */
-    public TypeOfStarListener(QueryView queryView)
+    protected class SearchScienceObjectAction extends SCAction
     {
-        _queryView          = queryView;
-    }
-
-    /**
-     * actionPerformed  -  Enable or disable TextFields according to the type of star
-     * @param e ActionEvent
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        MCSLogger.trace();
-
-        if (e.getSource().equals(_queryView.bright))
+        public SearchScienceObjectAction()
         {
-            _queryView.textDiffRA.setEnabled(true);
-            _queryView.textDiffRA.setBackground(Color.white);
-            _queryView.textDiffDEC.setEnabled(true);
-            _queryView.textDiffDEC.setBackground(Color.white);
-            _queryView.textareaexplain.setText("Case bright :\nBox used");
-        }
-        else if (e.getSource().equals(_queryView.faint))
-        {
-            _queryView.textDiffRA.setEnabled(false);
-            _queryView.textDiffRA.setBackground(Color.lightGray);
-            _queryView.textDiffDEC.setEnabled(false);
-            _queryView.textDiffDEC.setBackground(Color.lightGray);
-            _queryView.textareaexplain.setText("Case faint :\nBox not used");
-        }
-    }
-}
-
-
-/**
- * DOCUMENT ME!
- */
-class LaunchSearchCalListener implements ActionListener
-{
-    /** DOCUMENT ME! */
-    QueryView _queryView;
-
-    /**
-     * LaunchSearchCalListener  -  Constructor
-     * @param queryView QueryView
-     */
-    public LaunchSearchCalListener(QueryView queryView)
-    {
-        _queryView = queryView;
-    }
-
-    /**
-     * actionPerformed  -  Launching
-     * @param e ActionEvent
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        MCSLogger.trace();
-
-        if (e.getSource().equals(_queryView.buttonGo))
-        {
-            _queryView.fullFillModel();
+            super("searchScienceObject");
         }
 
-        if (e.getSource().equals(_queryView.buttonCancel))
+        public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            System.out.println("Cancel SearchCal query");
+            MCSLogger.trace();
+
+            if (_starNameTextfield.getText().length() == 0)
+            {
+                _queryModel.example();
+            }
+            else
+            {
+                try
+                {
+                    _vo.getScienceObject(_queryModel);
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+    }
+
+    protected class BrightQueryAction extends SCAction
+    {
+        public BrightQueryAction()
+        {
+            super("brightQuery");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            _diffRATextfield.setEnabled(true);
+            _diffDECTextfield.setEnabled(true);
+            textareaexplain.setText("Case bright :\nBox used");
+            _queryModel.isBright(true);
+        }
+    }
+
+    protected class FaintQueryAction extends SCAction
+    {
+        public FaintQueryAction()
+        {
+            super("faintQuery");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            _diffRATextfield.setEnabled(false);
+            _diffDECTextfield.setEnabled(false);
+            textareaexplain.setText("Case faint :\nBox not used");
+            _queryModel.isBright(false);
+        }
+    }
+
+    protected class SearchCalibratorsAction extends SCAction
+    {
+        /** Store wether the query is running or not */
+        boolean running;
+
+        public SearchCalibratorsAction()
+        {
+            super("searchCalibrators");
+            running         = false;
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            fullFillModel();
+
+            /* TODO
+               if (running = false)
+               {
+                   fullFillModel();
+                   _goButton.setText("Cancel");
+               }
+               else
+               {
+                   // TODO : _query.stop();
+                   _goButton.setText("GO");
+               }
+             */
+
+            // If the model seems complete, launch query execution
+            if (_queryModel.isConsumable())
+            {
+                addText(textareaexplain, "Parameters ok");
+
+                try
+                {
+                    _vo.getCal(_queryModel);
+                }
+                catch (Exception ex)
+                {
+                    textareaexplain.setText("GETCAL crashed");
+                    ex.printStackTrace();
+                }
+            }
+            else
+            {
+                addText(textareaexplain, "Parameters KO");
+            }
         }
     }
 }
