@@ -846,9 +846,6 @@ public class TableSorter extends AbstractTableModel
         implements Observer
     {
         // No trace log is implemented because these parts of code is often called. 
-        /** Logger instance */
-        Logger _logger = MCSLogger.getLogger();
-
         /**
          * DOCUMENT ME!
          */
