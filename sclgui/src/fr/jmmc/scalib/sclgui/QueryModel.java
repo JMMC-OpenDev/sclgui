@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.2 2006-06-30 07:59:44 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.3 2006-07-03 13:34:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/06/30 07:59:44  lafrasse
+ * Added progress status handling and initialitzation and example values
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -35,6 +38,12 @@ public class QueryModel extends Observable
     /** The science object right magnitude */
     private double _magnitude;
 
+    /** The calibrators minimum magnitude */
+    private double _minMagnitude;
+
+    /** The calibrators maximum magnitude */
+    private double _maxMagnitude;
+
     /** The querying scenario */
     private boolean _bright;
 
@@ -53,6 +62,8 @@ public class QueryModel extends Observable
      */
     public QueryModel()
     {
+        MCSLogger.trace();
+
         init();
     }
 
@@ -61,6 +72,8 @@ public class QueryModel extends Observable
      */
     public void init()
     {
+        MCSLogger.trace();
+
         setScienceObjectName("");
         setRa("+00:00:00.00");
         setDec("+00:00:00.00");
@@ -78,10 +91,12 @@ public class QueryModel extends Observable
      */
     public void example()
     {
+        MCSLogger.trace();
+
         setScienceObjectName("eta_tau");
         setRa("+03:47:29.79");
         setDec("+24:06:18.50");
-        setMagnitude(2.96);
+        setMagnitude(3);
 
         setTotalStep(11);
 
@@ -191,9 +206,9 @@ public class QueryModel extends Observable
     }
 
     /**
-     * Return the magnitude for the actual query.
+     * Return the science object magnitude for the actual query.
      *
-     * @return the magnitude.
+     * @return the science object magnitude as a float value.
      */
     public double getMagnitude()
     {
@@ -212,6 +227,8 @@ public class QueryModel extends Observable
         MCSLogger.trace();
 
         _magnitude = magnitude;
+        _minMagnitude = _magnitude - 2;
+        _maxMagnitude = _magnitude + 2;
 
         setChanged();
     }
@@ -233,6 +250,100 @@ public class QueryModel extends Observable
         {
             throw new IllegalArgumentException("Magnitude must be a number");
         }
+    }
+
+    /**
+     * Return the minimun calibrator magnitude for the actual query.
+     *
+     * @return the minimum magnitude as a float value.
+     */
+    public double getMinMagnitude()
+    {
+        MCSLogger.trace();
+
+        return _minMagnitude;
+    }
+
+    /**
+     * Change the minimun calibrator magnitude parameter.
+     *
+     * @param minMagnitude the new minimum magnitude as a float value.
+     */
+    public void setMinMagnitude(double minMagnitude)
+    {
+        MCSLogger.trace();
+
+        _minMagnitude = minMagnitude;
+
+        setChanged();
+    }
+
+    /**
+     * Change the minimun calibrator magnitude parameter.
+     *
+     * @param minMagnitude the new minimum magnitude as a string value.
+     */
+    public void setMinMagnitude(String magnitude) throws IllegalArgumentException
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            setMinMagnitude(Double.parseDouble(magnitude));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new IllegalArgumentException("Magnitude must be a number");
+        }
+
+        setChanged();
+    }
+
+    /**
+     * Return the maximun calibrator magnitude for the actual query.
+     *
+     * @return the maximum magnitude as a float value.
+     */
+    public double getMaxMagnitude()
+    {
+        MCSLogger.trace();
+
+        return _maxMagnitude;
+    }
+
+    /**
+     * Change the maximun calibrator magnitude parameter.
+     *
+     * @param maxMagnitude the new maximum magnitude as a float value.
+     */
+    public void setMaxMagnitude(double maxMagnitude)
+    {
+        MCSLogger.trace();
+
+        _maxMagnitude = maxMagnitude;
+
+        setChanged();
+    }
+
+    /**
+     * Change the maximun calibrator magnitude parameter.
+     *
+     * @param maxMagnitude the new minimum magnitude as a string value.
+     */
+    public void setMaxMagnitude(String magnitude) throws IllegalArgumentException
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            setMaxMagnitude(Double.parseDouble(magnitude));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new IllegalArgumentException("Magnitude must be a number");
+        }
+
+        setChanged();
     }
 
     /**
