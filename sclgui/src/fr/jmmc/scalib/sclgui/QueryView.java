@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.7 2006-06-30 08:02:33 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.8 2006-07-03 13:35:15 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/06/30 08:02:33  lafrasse
+ * Reformatted the whole code using Actions
+ *
  * Revision 1.6  2006/06/12 08:44:34  mella
  * Set Magnitude textfield using  setValue instead of setText
  *
@@ -54,9 +57,6 @@ import javax.swing.text.*;
 public class QueryView extends JPanel implements Observer,
     PropertyChangeListener
 {
-    /** logger must be used to perform logging */
-    Logger logger = MCSLogger.getLogger();
-
     /** MVC associated model */
     QueryModel _queryModel;
 
@@ -136,6 +136,8 @@ public class QueryView extends JPanel implements Observer,
      */
     public QueryView(QueryModel queryModel, VirtualObservatory vo)
     {
+        MCSLogger.trace();
+
         // Store the model
         _queryModel     = queryModel;
 
@@ -298,8 +300,13 @@ public class QueryView extends JPanel implements Observer,
             _starRATextfield.setText(queryModel.getRa());
             _starMagnitudeTextfield.setValue(new Double(
                     queryModel.getMagnitude()));
+            _minMagnitudeTextfield.setValue(new Double(
+                    queryModel.getMinMagnitude()));
+            _maxMagnitudeTextfield.setValue(new Double(
+                    queryModel.getMaxMagnitude()));
 
             // TODO : link to bright/faint radio buttons, and all the other missing fields
+
             _progressBar.setValue(queryModel.getCurrentStep());
             _progressBar.setMaximum(queryModel.getTotalStep());
             _progressBar.setString(queryModel.getCurrentStatus());
@@ -313,14 +320,36 @@ public class QueryView extends JPanel implements Observer,
 
         Object source = e.getSource();
 
+        // Try to inject user values into the model
+
+        if (source == _starNameTextfield)
+        {
+            _queryModel.setScienceObjectName(_starNameTextfield.getText());
+        }
+
+        if (source == _starRATextfield)
+        {
+            _queryModel.setRa(_starRATextfield.getText());
+        }
+
+        if (source == _starDECTextfield)
+        {
+            _queryModel.setDec(_starDECTextfield.getText());
+        }
+
         if (source == _starMagnitudeTextfield)
         {
-            logger.fine(
-                "_starMagnitudeTextfield changed try to adjust magMin, magMax");
+            _queryModel.setMagnitude(_starMagnitudeTextfield.getText());
+        }
 
-            double d = ((Number) _starMagnitudeTextfield.getValue()).doubleValue();
-            _maxMagnitudeTextfield.setValue(new Double(d + 2));
-            _minMagnitudeTextfield.setValue(new Double(d - 2));
+        if (source == _minMagnitudeTextfield)
+        {
+            _queryModel.setMinMagnitude(_minMagnitudeTextfield.getText());
+        }
+
+        if (source == _maxMagnitudeTextfield)
+        {
+            _queryModel.setMaxMagnitude(_maxMagnitudeTextfield.getText());
         }
     }
 
@@ -372,22 +401,6 @@ public class QueryView extends JPanel implements Observer,
                textareaexplain.setText("Query has not been resolved successfully");
            }
          */
-    }
-
-    /**
-     * Affect query model with correct values.
-     */
-    public void fullFillModel()
-    {
-        MCSLogger.trace();
-
-        textareaexplain.setText("Parameters verification...");
-
-        // Try to inject user values into the model
-        _queryModel.setScienceObjectName(_starNameTextfield.getText());
-        _queryModel.setRa(_starRATextfield.getText());
-        _queryModel.setDec(_starDECTextfield.getText());
-        _queryModel.setMagnitude(_starMagnitudeTextfield.getText());
     }
 
     /**
@@ -512,7 +525,9 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            fullFillModel();
+            StatusBar.show("TOTO vz lz");
+
+            //fullFillModel();
 
             /* TODO
                if (running = false)
