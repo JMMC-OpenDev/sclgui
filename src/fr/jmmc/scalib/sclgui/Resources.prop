@@ -1,3 +1,26 @@
+#*******************************************************************************
+# JMMC project
+#
+# "@(#) $Id: Resources.prop,v 1.2 2006-07-03 12:32:57 mella Exp $"
+#
+# History
+# -------
+# $Log: not supported by cvs2svn $
+#*******************************************************************************
+
+#/**
+# @file
+# This property file indicates make GUI built dynamic.
+# Some widget or action get text description or icons from this file.
+# widget's tooltips are described using following notation:
+# widgets.widget.<widgetName>.tooltip
+# action have 3 fields :
+# actions.action.<actionName>.text
+# actions.action.<actionName>.icon
+# actions.action.<actionName>.description
+#
+#*/
+
 widgets.widget.textMagnitude.tooltip=Science Object Magnitude
 widgets.widget._enableToolTipCheckBox.tooltip=<html><font color=#ffffdd><b><u>SHOW</u> or <u>HIDE</u></b><br>ToolTips</font></html>
 actions.action.deleteTableSelection.text=Delete
@@ -6,7 +29,6 @@ actions.action.deleteTableSelection.description=Delete Selected Sources
 actions.action.showLegend.text=Show Legend
 actions.action.showLegend.icon=images/show16.png
 actions.action.showLegend.description=Show legend of the calibrators properties
-actions.action.searchScienceObject.text=Complete
 actions.action.searchScienceObject.icon=search.png
 actions.action.searchScienceObject.description=Try to get star properties from Simbad
 actions.action.brightQuery.text=Bright
