@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.17 2006-06-30 11:53:17 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.18 2006-07-03 12:39:39 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2006/06/30 11:53:17  mella
+ * Change GUI presentation
+ *
  * Revision 1.16  2006/06/26 14:36:43  mella
  * Add delete action
  *
@@ -124,11 +127,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * DOCUMENT ME!
      */
-    int legendWidth;
-
-    /**
-     * DOCUMENT ME!
-     */
     LegendView legendView;
 
     /**
@@ -240,7 +238,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         //that width must be fixed
         JPanel legendPanel = new LegendView(_preferences);
-        legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
+        int    legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
         _logger.fine("#######" + legendWidth + " " + subpanelwidth);
         legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
         // Set and place Table and Legend group
@@ -319,10 +317,10 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // If preference colors have changed, repaint table
         _jTable.repaint();
 
+        // Check associated preference to be consistent
         boolean showLegendPref = _preferences.getPreferenceAsBoolean(
                 "view.legend.show");
-
-        //        showLegend(showLegendPref);
+        showLegend(showLegendPref);
     }
 
     /**
@@ -362,22 +360,19 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public void showLegend(boolean flag)
     {
         MCSLogger.trace();
-
-        int i;
+        int tableAndLegendWidth = ((int) tableAndLegendPane.getBounds()
+                                                           .getWidth()) -
+            tableAndLegendPane.getDividerSize();
+        int loc                 = tableAndLegendWidth;
 
         if (flag)
         {
-            i = -legendWidth;
-        }
-        else
-        {
-            i = legendWidth;
+            Component legend = tableAndLegendPane.getRightComponent();
+            loc = tableAndLegendWidth -
+                ((int) legend.getMinimumSize().getWidth());
         }
 
-        int loc = tableAndLegendPane.getDividerLocation();
-        tableAndLegendPane.setDividerLocation(loc + i);
-
-        //tableAndLegendPane.setResizeWeight(1.0);
+        tableAndLegendPane.setDividerLocation(loc);
     }
 
     /**
