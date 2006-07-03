@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.13 2006-06-30 08:05:28 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.14 2006-07-03 13:21:32 mella Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.13  2006/06/30 08:05:28  lafrasse
+# Added packaging for the Java query view search icon in the JAR file
+#
 # Revision 1.12  2006/04/06 15:00:08  mella
 # Previous commit was wrong
 #
@@ -157,6 +160,7 @@ JARFILES        = sclgui
 # <brief description of sclgui jar files>
 sclgui_DIRS     = jmmc 
 sclgui_EXTRAS   = jmmc/scalib/sclgui/eta_tau.vot \
+                  jmmc/scalib/sclgui/Resources.prop \
                   jmmc/scalib/sclgui/search.png
 
 #
