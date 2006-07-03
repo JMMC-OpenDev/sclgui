@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.5 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.6 2006-07-03 13:33:07 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.4  2006/04/07 13:51:13  yvander
  * conflict
  *
@@ -51,40 +54,28 @@ public class FiltersModel
 
         DistanceFilter distanceFilter = new DistanceFilter();
         distanceFilter.setConstraint("dist", "5");
-        distanceFilter.setEnabled(Boolean.TRUE);
-
+        _filterList.add(distanceFilter);
         FilterView         distanceFilterView = new FilterView(distanceFilter);
+        _filterViews.add(distanceFilterView);
 
         MultiplicityFilter multiplicityFilter = new MultiplicityFilter();
-        multiplicityFilter.setEnabled(Boolean.TRUE);
-
+        _filterList.add(multiplicityFilter);
         FilterView         multiplicityFilterView = new FilterView(multiplicityFilter);
+        _filterViews.add(multiplicityFilterView);
 
         SpectralTypeFilter spectralTypeFilter     = new SpectralTypeFilter();
-        spectralTypeFilter.setEnabled(Boolean.FALSE);
-
+        _filterList.add(spectralTypeFilter);
         FilterView       spectralTypeFilterView = new FilterView(spectralTypeFilter);
+        _filterViews.add(spectralTypeFilterView);
 
         LuminosityFilter luminosityFilter       = new LuminosityFilter();
-        luminosityFilter.setEnabled(Boolean.FALSE);
-
+        _filterList.add(luminosityFilter);
         FilterView        luminosityFilterView = new FilterView(luminosityFilter);
+        _filterViews.add(luminosityFilterView);
 
         VariabilityFilter variabilityFilter    = new VariabilityFilter();
-        variabilityFilter.setEnabled(Boolean.FALSE);
-
-        FilterView variabilityFilterView = new FilterView(variabilityFilter);
-
-        _filterList.add(distanceFilter);
-        _filterList.add(multiplicityFilter);
-        _filterList.add(spectralTypeFilter);
-        _filterList.add(luminosityFilter);
         _filterList.add(variabilityFilter);
-
-        _filterViews.add(distanceFilterView);
-        _filterViews.add(multiplicityFilterView);
-        _filterViews.add(spectralTypeFilterView);
-        _filterViews.add(luminosityFilterView);
+        FilterView variabilityFilterView = new FilterView(variabilityFilter);
         _filterViews.add(variabilityFilterView);
     }
 
