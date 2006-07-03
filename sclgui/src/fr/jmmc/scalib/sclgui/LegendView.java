@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.5 2006-06-30 11:53:17 mella Exp $"
+ * "@(#) $Id: LegendView.java,v 1.6 2006-07-03 12:37:04 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/30 11:53:17  mella
+ * Change GUI presentation
+ *
  * Revision 1.4  2006/04/12 12:30:02  lafrasse
  * Updated some Doxygen tags to fix previous documentation generation errors
  *
@@ -24,11 +27,7 @@ package jmmc.scalib.sclgui;
 
 import jmmc.mcs.util.*;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -78,16 +77,18 @@ public class LegendView extends JPanel
 
         // Append preference colors chooser component of catalogs
         ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
-                "catalog.color.");
+                "catalog.color.", "Catalogs origin");
 
         // Append preference colors chooser component of catalogs
         ColorPreferencesView confidenceView = new ColorPreferencesView(_preferences,
-                "confidence.color.");
+                "confidence.color.", "Confidence index");
 
         //Create the scrollpanes and add the tables.
         JScrollPane scrollPane = new JScrollPane(colorView);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        // If you prefer to be sure all text is readable uncomment next line
+        // scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         JScrollPane scrollPane2 = new JScrollPane(confidenceView);
         scrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -104,33 +105,27 @@ public class LegendView extends JPanel
      */
     class ColorPreferencesView extends JPanel implements Observer
     {
-        /**
-         * DOCUMENT ME!
-         */
+        /** Application preferences */
         protected Preferences _preferences;
 
-        /**
-         * DOCUMENT ME!
-         */
+        /** Preference prefix */
         protected String _preferencePrefix;
 
-        /**
-         * DOCUMENT ME!
-         */
+        /** data of Table model */
         private Object[][] data;
 
-        /**
-         * DOCUMENT ME!
-         */
+        /** Displayed table */
         JTable table;
 
         /**
          * Creates a new ColorPreferencesView object.
          *
-         * @param preferences DOCUMENT ME!
-         * @param prefix DOCUMENT ME!
+         * @param preferences application preferences
+         * @param prefix properties prefix
+         * @param header table caolumn header value
          */
-        public ColorPreferencesView(Preferences preferences, String prefix)
+        public ColorPreferencesView(Preferences preferences, String prefix,
+            String header)
         {
             _preferencePrefix     = prefix;
             _preferences          = preferences;
@@ -140,16 +135,23 @@ public class LegendView extends JPanel
             update(null, null);
 
             TableModel tableModel = new MyTableModel();
-            table = new JTable(tableModel);
 
+            table = new JTable(tableModel);
+            table.getColumnModel().getColumn(0).setHeaderValue(header);
             //Set up renderer and editor for the Favorite Color column.
             table.setDefaultRenderer(Color.class, new ColorRenderer(false));
             table.setDefaultEditor(Color.class, new ColorEditor());
             table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+            setLayout(new BorderLayout());
+
+            //Add the header and the table 
+            JTableHeader tableHeader = table.getTableHeader();
+            add(tableHeader, BorderLayout.NORTH);
+            add(table, BorderLayout.CENTER);
+
             // Make table resized
             update(null, null);
-            //Add the table 
-            add(table);
         }
 
         /**
@@ -233,7 +235,7 @@ public class LegendView extends JPanel
                 }
             }
 
-            column.setPreferredWidth(cellWidth + 2);
+            column.setPreferredWidth(cellWidth + 4);
         }
 
         class MyTableModel extends AbstractTableModel
