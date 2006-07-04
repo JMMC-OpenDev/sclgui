@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.8 2006-07-03 13:35:15 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.9 2006-07-04 09:37:45 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/07/03 13:35:15  lafrasse
+ * Streamlined code, and added support for min & max calibrators magnitude
+ *
  * Revision 1.7  2006/06/30 08:02:33  lafrasse
  * Reformatted the whole code using Actions
  *
@@ -525,7 +528,6 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            StatusBar.show("TOTO vz lz");
 
             //fullFillModel();
 
