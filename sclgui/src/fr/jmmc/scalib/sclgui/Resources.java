@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Resources.java,v 1.6 2006-06-30 12:32:03 mella Exp $"
+ * "@(#) $Id: Resources.java,v 1.7 2006-07-05 11:27:31 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/06/30 12:32:03  mella
+ * Use properties file to store resources instead of xml format
+ *
  * Revision 1.5  2006/06/30 07:56:44  lafrasse
  * Corrected a bug preventing compilation
  *
@@ -49,7 +52,7 @@ import javax.xml.parsers.*;
 public class Resources
 {
     /** resource filename */
-    private static String _resourceName = "Resources.prop";
+    private static String _resourceName = "Resources.properties";
 
     /** logger */
     private static Logger _logger = MCSLogger.getLogger();
