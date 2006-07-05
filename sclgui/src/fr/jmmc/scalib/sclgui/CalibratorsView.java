@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.18 2006-07-03 12:39:39 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.19 2006-07-05 14:53:29 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2006/07/03 12:39:39  mella
+ * Implement right showLegend method
+ *
  * Revision 1.17  2006/06/30 11:53:17  mella
  * Change GUI presentation
  *
@@ -99,6 +102,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
     /** The monitored application preferences */
     Preferences _preferences;
+
+    /** The one column table */
+    JTable _jTableId;
 
     /** The results table */
     JTable _jTable;
@@ -224,31 +230,39 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Table initialization
-        _jTable = new JTable();
+        _jTable       = new JTable();
+        _jTableId     = new JTable();
 
         TableSorter tableSorter = new TableSorter(_calibratorsModel);
         tableSorter.setTableHeader(_jTable.getTableHeader());
         _jTable.setModel(tableSorter);
+        _jTableId.setModel(tableSorter);
         _jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+        // Place tables into scrollPane
         JScrollPane scrollPane = new JScrollPane(_jTable);
         scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
         scrollPane.setPreferredSize(new Dimension(subpanelwidth, 260));
 
-        //that width must be fixed
+        JScrollPane leftScrollPane = new JScrollPane(_jTableId);
+
+        //set Minimum Width of legend component
         JPanel legendPanel = new LegendView(_preferences);
         int    legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
-        _logger.fine("#######" + legendWidth + " " + subpanelwidth);
         legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
-        // Set and place Table and Legend group
+
+        // Set and place TableId, Table and Legend group
         tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 scrollPane, legendPanel);
         tableAndLegendPane.setOneTouchExpandable(true);
         tableAndLegendPane.setResizeWeight(1.0);
         tableAndLegendPane.setContinuousLayout(true);
-        add(tableAndLegendPane);
         tableAndLegendPane.setAlignmentX(Float.parseFloat(".5"));
+
+        JSplitPane tablesPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                leftScrollPane, tableAndLegendPane);
+        add(tablesPane);
 
         // Tools panel creation
         JPanel resumePanel = new JPanel();
@@ -302,6 +316,23 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
         _deleteAction.setEnabled(true);
+
+        // update identification table if bae table has a minimum of one column
+        if (_jTable.getColumnModel().getColumnCount() > 0)//        if (_jTable.getColumnModel().getColumnCount()>1110 )
+        {
+            // Just refresh if  _jTableId has just on column
+            // else remove every other column
+            if (_jTableId.getColumnModel().getColumnCount() == 1)
+            {
+                _jTableId.repaint();
+            }
+            else
+            {
+                //_jTableId.setColumnModel( new DefaultTableColumnModel());
+                //_jTableId.getColumnModel().addColumn(_jTable.getColumnModel().getColumn(0));
+                _jTableId.repaint();
+            }
+        }
     }
 
     /**
@@ -360,6 +391,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public void showLegend(boolean flag)
     {
         MCSLogger.trace();
+
         int tableAndLegendWidth = ((int) tableAndLegendPane.getBounds()
                                                            .getWidth()) -
             tableAndLegendPane.getDividerSize();
@@ -387,22 +419,22 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         /* TODO : move this in MainMenuBar.java
            if (e.getSource() == plotInAladinButton)
            {
-               if (_calibratorsModel.getVOTable() != null)
-               {
-                   if (_aladinInteraction == null)
-                   {
-                       //
-                       _aladinInteraction = new VOInteraction();
-                       _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
-                       _aladinInteraction._aladin.execCommand("sync");
-                   }
-                   else
-                   {
-                       //
-                       _aladinInteraction._aladin.setVisible(true);
-                   }
-               }
-           }
+           if (_calibratorsModel.getVOTable() != null)
+           {
+           if (_aladinInteraction == null)
+           {
+           //
+           _aladinInteraction = new VOInteraction();
+           _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
+           _aladinInteraction._aladin.execCommand("sync");
+              }
+              else
+              {
+           //
+           _aladinInteraction._aladin.setVisible(true);
+              }
+              }
+              }
          */
     }
 
