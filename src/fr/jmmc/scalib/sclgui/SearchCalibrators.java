@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.3 2006-06-30 07:57:58 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.4 2006-07-11 11:11:57 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/30 07:57:58  lafrasse
+ * Removed default query parameters definition
+ *
  * Revision 1.2  2006/04/07 08:41:03  mella
  * Preferences singleton is accessed using Preferences.getInstance()
  *
@@ -83,9 +86,6 @@ public class SearchCalibrators
      */
     public SearchCalibrators()
     {
-        // Retrieve application preferences and attach them to their view
-        PreferencesView preferencesView = new PreferencesView();
-
         // Create filters
         FiltersModel filtersModel = new FiltersModel();
         FiltersView  filtersView  = new FiltersView(filtersModel);
@@ -102,8 +102,15 @@ public class SearchCalibrators
         QueryModel queryModel = new QueryModel();
         QueryView  queryView  = new QueryView(queryModel, vo);
 
-        MainWindow window     = new MainWindow(queryView, calibratorsView,
-                preferencesView, filtersView);
+        // Retrieve application preferences and attach them to their view
+        // (This instance must be instanciated after dependencies)
+        PreferencesView preferencesView = new PreferencesView();
+
+        MainWindow      window          = new MainWindow(queryView,
+                calibratorsView, preferencesView, filtersView);
+
+        // Make application presentation coherent with preferences
+        Preferences.getInstance().notifyObservers();
     }
 
     /**
