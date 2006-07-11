@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.6 2006-06-22 12:32:21 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.7 2006-07-11 11:17:48 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/06/22 12:32:21  lafrasse
+ * Added legend view and detailed view status storage
+ *
  * Revision 1.5  2006/06/19 11:24:51  mella
  * Add star property order entry with temporary value
  *
@@ -100,6 +103,9 @@ public class Preferences extends jmmc.mcs.util.Preferences
 
             /* Place star properties order */
             myDefaultProperties.put("star.properties.order", "HD HIP RAJ2000");
+
+            /* Place general preferences  */
+            myDefaultProperties.put("scienceObject.include", "true");
 
             _singleton.setDefaultPreferences(myDefaultProperties);
             _singleton.loadFromFile();
