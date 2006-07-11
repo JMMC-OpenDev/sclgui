@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.19 2006-07-05 14:53:29 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.20 2006-07-11 11:18:55 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2006/07/05 14:53:29  mella
+ * Change panel order, panels are numbered and enabled according inputs
+ *
  * Revision 1.18  2006/07/03 12:39:39  mella
  * Implement right showLegend method
  *
@@ -95,8 +98,18 @@ import javax.swing.table.*;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-    Observer, ActionListener
+    Observer
 {
+    /**
+     *  Show details
+     */
+    static Action _showDetailsAction;
+
+    /**
+     *  Show legend
+     */
+    static Action _showLegendAction;
+
     /** The monitored data source displayed by the embedded JTable */
     CalibratorsModel _calibratorsModel;
 
@@ -181,16 +194,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     Action _selectAllAction;
 
     /**
-     *  Show details
-     */
-    Action _showDetailsAction;
-
-    /**
-     *  Show legend
-     */
-    Action _showLegendAction;
-
-    /**
      * plot in aladin
      */
     Action _plotInAladinAction;
@@ -212,11 +215,12 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsModel.addTableModelListener(this);
 
         // create actions
-        _deleteAction         = new DeleteAction();
-        _showLegendAction     = new ShowLegendAction();
+        _deleteAction          = new DeleteAction();
+        _showLegendAction      = new ShowLegendAction();
+        _showDetailsAction     = new ShowDetailsAction();
 
         // Store the application preferences and register against it
-        _preferences          = Preferences.getInstance();
+        _preferences           = Preferences.getInstance();
         _preferences.addObserver(this);
 
         // Gray border of the view.
@@ -230,13 +234,12 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Table initialization
-        _jTable       = new JTable();
-        _jTableId     = new JTable();
+        _jTable = new JTable();
 
         TableSorter tableSorter = new TableSorter(_calibratorsModel);
         tableSorter.setTableHeader(_jTable.getTableHeader());
         _jTable.setModel(tableSorter);
-        _jTableId.setModel(tableSorter);
+        _jTableId = new JTable(tableSorter, new DefaultTableColumnModel(), null);
         _jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -246,6 +249,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         scrollPane.setPreferredSize(new Dimension(subpanelwidth, 260));
 
         JScrollPane leftScrollPane = new JScrollPane(_jTableId);
+        leftScrollPane.setMinimumSize(new Dimension(100, 160));
+        leftScrollPane.setPreferredSize(new Dimension(100, 260));
 
         //set Minimum Width of legend component
         JPanel legendPanel = new LegendView(_preferences);
@@ -258,10 +263,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         tableAndLegendPane.setOneTouchExpandable(true);
         tableAndLegendPane.setResizeWeight(1.0);
         tableAndLegendPane.setContinuousLayout(true);
-        tableAndLegendPane.setAlignmentX(Float.parseFloat(".5"));
 
         JSplitPane tablesPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 leftScrollPane, tableAndLegendPane);
+        //        tablesPane.setResizeWeight(1.0);
+        tablesPane.setAlignmentX(Float.parseFloat(".5"));
         add(tablesPane);
 
         // Tools panel creation
@@ -318,19 +324,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _deleteAction.setEnabled(true);
 
         // update identification table if bae table has a minimum of one column
-        if (_jTable.getColumnModel().getColumnCount() > 0)//        if (_jTable.getColumnModel().getColumnCount()>1110 )
+        if (_jTable.getColumnModel().getColumnCount() > 0) //        if (_jTable.getColumnModel().getColumnCount()>1110 )
         {
-            // Just refresh if  _jTableId has just on column
-            // else remove every other column
-            if (_jTableId.getColumnModel().getColumnCount() == 1)
+            // if _jTableId has not exactly one column
+            // remove every other column
+            // and append coorect one
+            // @todo manage selection of one named column instead of first one
+            if (_jTableId.getColumnModel().getColumnCount() != 1)
             {
-                _jTableId.repaint();
-            }
-            else
-            {
-                //_jTableId.setColumnModel( new DefaultTableColumnModel());
-                //_jTableId.getColumnModel().addColumn(_jTable.getColumnModel().getColumn(0));
-                _jTableId.repaint();
+                _logger.fine(
+                    "Setting first column of table to Identification table");
+
+                // @todo try to make next line run without eating all cpu
+                // resource
+                // _jTableId.getColumnModel().addColumn(_jTable.getColumnModel().getColumn(0));
             }
         }
     }
@@ -347,6 +354,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // If preference colors have changed, repaint table
         _jTable.repaint();
+        _jTableId.repaint();
 
         // Check associated preference to be consistent
         boolean showLegendPref = _preferences.getPreferenceAsBoolean(
@@ -408,34 +416,13 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param e DOCUMENT ME!
+     * Tell GUI to show or hide detailled column info
      */
-    public void actionPerformed(ActionEvent e)
+    public void showDetails(boolean flag)
     {
         MCSLogger.trace();
 
-        /* TODO : move this in MainMenuBar.java
-           if (e.getSource() == plotInAladinButton)
-           {
-           if (_calibratorsModel.getVOTable() != null)
-           {
-           if (_aladinInteraction == null)
-           {
-           //
-           _aladinInteraction = new VOInteraction();
-           _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
-           _aladinInteraction._aladin.execCommand("sync");
-              }
-              else
-              {
-           //
-           _aladinInteraction._aladin.setVisible(true);
-              }
-              }
-              }
-         */
+        //@todo implement
     }
 
     protected class DeleteAction extends SCAction
@@ -455,6 +442,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
     protected class ShowLegendAction extends SCAction
     {
+        Preferences _preferences = Preferences.getInstance();
+
         public ShowLegendAction()
         {
             super("showLegend");
@@ -468,6 +457,28 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             {
                 AbstractButton b = (AbstractButton) e.getSource();
                 showLegend(b.isSelected());
+            }
+        }
+    }
+
+    protected class ShowDetailsAction extends SCAction
+    {
+        Preferences _preferences = Preferences.getInstance();
+
+        public ShowDetailsAction()
+        {
+            super("showDetails");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            if (e.getSource() instanceof AbstractButton)
+            {
+                AbstractButton b = (AbstractButton) e.getSource();
+                showDetails(b.isSelected());
+                _logger.info("Button.selected=" + b.isSelected());
             }
         }
     }
