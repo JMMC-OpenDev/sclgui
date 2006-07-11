@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.8 2006-06-30 11:53:17 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.9 2006-07-11 11:17:21 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/06/30 11:53:17  mella
+ * Change GUI presentation
+ *
  * Revision 1.7  2006/06/26 14:34:18  mella
  * Add delete action link
  *
@@ -272,14 +275,18 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JMenuItem menuItem;
 
         // Show Details item
-        PreferencedCheckBoxMenuItem _showDetailsMenuItem = new PreferencedCheckBoxMenuItem("Show Details",
-                _preferences, "view.details.show");
+        JCheckBoxMenuItem _showDetailsMenuItem = new JCheckBoxMenuItem();
+        _showDetailsMenuItem.setModel(new PreferencedButtonModel(_preferences,
+                "view.details.show"));
+        action = CalibratorsView._showDetailsAction;
+        _showDetailsMenuItem.setAction(action);
         viewMenu.add(_showDetailsMenuItem);
 
         // Show Legend item
-        PreferencedCheckBoxMenuItem _showLegendMenuItem = new PreferencedCheckBoxMenuItem("Show Legend",
-                _preferences, "view.legend.show");
-        action = _mainWindow._calibratorsView._showLegendAction;
+        JCheckBoxMenuItem _showLegendMenuItem = new JCheckBoxMenuItem();
+        _showLegendMenuItem.setModel(new PreferencedButtonModel(_preferences,
+                "view.legend.show"));
+        action = CalibratorsView._showLegendAction;
         _showLegendMenuItem.setAction(action);
         viewMenu.add(_showLegendMenuItem);
 
