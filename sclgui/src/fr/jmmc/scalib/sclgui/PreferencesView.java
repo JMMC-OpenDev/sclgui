@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.10 2006-06-30 11:53:17 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.11 2006-07-11 11:16:23 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/06/30 11:53:17  mella
+ * Change GUI presentation
+ *
  * Revision 1.9  2006/06/19 11:22:45  mella
  * Add GUI to manage ordered keywords
  *
@@ -37,6 +40,8 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+
+import jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -449,9 +454,12 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
         _preferences = preferences;
         _preferences.addObserver(this);
 
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         // get instance of shared tooltip to adjust behaviour in update code
         _sharedToolTipManager      = ToolTipManager.sharedInstance();
 
+        // Handle tooltips
         _enableToolTipCheckBox     = new JCheckBox("Show tooltips");
 
         String ttt                 = Resources.getToolTipText(
@@ -459,8 +467,24 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
         _enableToolTipCheckBox.setToolTipText(ttt);
         _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
         _enableToolTipCheckBox.addChangeListener(this);
+        add(_enableToolTipCheckBox);
 
-        this.add(_enableToolTipCheckBox);
+        // Handle include science object name
+        Hashtable booleanPrefs = new Hashtable(); // Table of:  pref->Action
+        booleanPrefs.put("scienceObject.include",
+            QueryView._includeScienceObjectAction);
+        booleanPrefs.put("view.details.show", CalibratorsView._showDetailsAction);
+        booleanPrefs.put("view.legend.show", CalibratorsView._showLegendAction);
+
+        // Create a checkbox for every pref and action entries
+        for (Enumeration e = booleanPrefs.keys(); e.hasMoreElements();)
+        {
+            String    pref   = (String) e.nextElement();
+            Action    action = (Action) booleanPrefs.get(pref);
+            JCheckBox cb     = new JCheckBox(action);
+            cb.setModel(new PreferencedButtonModel(_preferences, pref));
+            add(cb);
+        }
 
         // Make data filled
         update(null, null);
@@ -475,10 +499,12 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
     public void update(Observable o, Object arg)
     {
         // Adjust view and behaviour according preferences entries
-        boolean enableTT = _preferences.getPreferenceAsBoolean(
-                "help.tooltips.show");
-        _enableToolTipCheckBox.setSelected(enableTT);
-        _sharedToolTipManager.setEnabled(enableTT);
+        boolean b;
+
+        // Tooltips
+        b = _preferences.getPreferenceAsBoolean("help.tooltips.show");
+        _enableToolTipCheckBox.setSelected(b);
+        _sharedToolTipManager.setEnabled(b);
     }
 
     /**
@@ -486,7 +512,11 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
      */
     public void stateChanged(ChangeEvent e)
     {
-        if (e.getSource().equals(_enableToolTipCheckBox))
+        MCSLogger.trace();
+
+        Object source = e.getSource();
+
+        if (source.equals(_enableToolTipCheckBox))
         {
             _preferences.setPreference("help.tooltips.show",
                 _enableToolTipCheckBox.isSelected());
