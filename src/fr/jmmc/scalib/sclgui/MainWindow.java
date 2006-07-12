@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.7 2006-07-12 14:29:01 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.8 2006-07-12 15:50:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/07/12 14:29:01  lafrasse
+ * Code refinment
+ * Added the status bar
+ *
  * Revision 1.6  2006/06/30 11:53:17  mella
  * Change GUI presentation
  *
@@ -29,6 +33,7 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+import jmmc.mcs.util.StatusBar;
 
 import org.w3c.dom.*;
 
