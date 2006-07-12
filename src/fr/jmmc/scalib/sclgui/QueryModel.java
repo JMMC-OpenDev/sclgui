@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.3 2006-07-03 13:34:23 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.4 2006-07-12 14:30:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/07/03 13:34:23  lafrasse
+ * Added maximum & minimum calibrators magnitude properties
+ *
  * Revision 1.2  2006/06/30 07:59:44  lafrasse
  * Added progress status handling and initialitzation and example values
  *
@@ -26,26 +29,44 @@ import java.util.logging.Logger;
  */
 public class QueryModel extends Observable
 {
+    /** The instrumental magnitude band */
+    private String _instrumentalMagnitudeBand;
+
+    /** The instrumental wavelength */
+    private double _instrumentalWavelength;
+
+    /** The instrumental maximum base line */
+    private double _instrumentalMaxBaseLine;
+
     /** The science object name */
     private String _scienceObjectName;
 
     /** The science object right assention coordinate */
-    private String _ra;
+    private String _scienceObjectRA;
 
     /** The science object declinaison coordinate */
-    private String _dec;
+    private String _scienceObjectDEC;
 
     /** The science object right magnitude */
-    private double _magnitude;
+    private double _scienceObjectMagnitude;
 
-    /** The calibrators minimum magnitude */
-    private double _minMagnitude;
+    /** The query minimum magnitude */
+    private double _queryMinMagnitude;
 
     /** The calibrators maximum magnitude */
-    private double _maxMagnitude;
+    private double _queryMaxMagnitude;
 
-    /** The querying scenario */
-    private boolean _bright;
+    /** The query bright scenario flag */
+    private boolean _queryBrightScenarioFlag;
+
+    /** The query diff. RA */
+    private double _queryDiffRASize;
+
+    /** The query diff. DEC */
+    private double _queryDiffDECSize;
+
+    /** The query radius */
+    private double _queryRadialSize;
 
     /** The current step of the querying progress.
      * 0 < _currentStep < _totalStep
@@ -74,12 +95,19 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        setScienceObjectName("");
-        setRa("+00:00:00.00");
-        setDec("+00:00:00.00");
-        setMagnitude(0.0);
+        // @TODO : retrieve all those values from preference
+        setInstrumentalMagnitudeBand("K");
+        setInstrumentalMaxBaseLine(100);
 
-        isBright(true);
+        setScienceObjectName("");
+        setScienceObjectRA("+00:00:00.00");
+        setScienceObjectDEC("+00:00:00.00");
+        setScienceObjectMagnitude(0.0);
+
+        setQueryBrightScenarion(true);
+        setQueryDiffRASize(10);
+        setQueryDiffDECSize(5);
+
         setCurrentStep(0);
         setTotalStep(0);
 
@@ -93,14 +121,102 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
+        setInstrumentalMagnitudeBand("V");
+        setInstrumentalWavelength(3.3);
+        setInstrumentalMaxBaseLine(123.4);
+
         setScienceObjectName("eta_tau");
-        setRa("+03:47:29.79");
-        setDec("+24:06:18.50");
-        setMagnitude(3);
+        setScienceObjectRA("+03:47:29.79");
+        setScienceObjectDEC("+24:06:18.50");
+        setScienceObjectMagnitude(3);
+
+        setQueryMinMagnitude(2);
+        setQueryMaxMagnitude(5);
+        setQueryDiffRASize(11);
+        setQueryDiffDECSize(6);
 
         setTotalStep(11);
 
         notifyObservers();
+    }
+
+    /**
+     * Return the instrumental magnitude band for the actual query.
+     *
+     * @return the instrumental magnitude band as a String object.
+     */
+    public String getInstrumentalMagnitudeBand()
+    {
+        MCSLogger.trace();
+
+        return _instrumentalMagnitudeBand;
+    }
+
+    /**
+     * Change the instrumental magnitude band for the actual query.
+     *
+     * @param scienceObjectName the new instrumental magnitude band.
+     */
+    public void setInstrumentalMagnitudeBand(String magnitudeBand)
+    {
+        MCSLogger.trace();
+
+        _instrumentalMagnitudeBand = magnitudeBand;
+
+        // @TODO : should modify _instrumentalWavelength automatically if unset
+        setChanged();
+    }
+
+    /**
+     * Return the instrumental wavelength for the actual query.
+     *
+     * @return the instrumental wavelength as a float value.
+     */
+    public double getInstrumentalWavelength()
+    {
+        MCSLogger.trace();
+
+        return _instrumentalWavelength;
+    }
+
+    /**
+     * Change the instrumental wavelength parameter.
+     *
+     * @param wavelength the new instrumental wavelength as a float value.
+     */
+    public void setInstrumentalWavelength(double wavelength)
+    {
+        MCSLogger.trace();
+
+        _instrumentalWavelength = wavelength;
+
+        setChanged();
+    }
+
+    /**
+     * Return the instrumental maximum base line for the actual query.
+     *
+     * @return the instrumental maximum base line as a float value.
+     */
+    public double getInstrumentalMaxBaseLine()
+    {
+        MCSLogger.trace();
+
+        return _instrumentalMaxBaseLine;
+    }
+
+    /**
+     * Change the instrumental maximum base line parameter.
+     *
+     * @param wavelength the new instrumental maximum base line as a float.
+     */
+    public void setInstrumentalMaxBaseLine(double maxBaseLine)
+    {
+        MCSLogger.trace();
+
+        _instrumentalMaxBaseLine = maxBaseLine;
+
+        setChanged();
     }
 
     /**
@@ -134,11 +250,11 @@ public class QueryModel extends Observable
      *
      * @return the right ascension.
      */
-    public String getRa()
+    public String getScienceObjectRA()
     {
         MCSLogger.trace();
 
-        return _ra;
+        return _scienceObjectRA;
     }
 
     /**
@@ -146,23 +262,24 @@ public class QueryModel extends Observable
      *
      * @param ra the right ascension.
      */
-    public void setRa(String ra) throws IllegalArgumentException
+    public void setScienceObjectRA(String rightAscension)
+        throws IllegalArgumentException
     {
         MCSLogger.trace();
 
         // Check if the given parameter is not empty
-        if (ra.length() < 1)
+        if (rightAscension.length() < 1)
         {
             throw new IllegalArgumentException("given RA is empty");
         }
 
         // Validate the format of the given value
-        if (ra.matches("[+|-][0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
+        if (rightAscension.matches("[+|-][0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
         {
             throw new IllegalArgumentException("wrong RA format: +30:00:00.00");
         }
 
-        _ra = ra;
+        _scienceObjectRA = rightAscension;
 
         setChanged();
     }
@@ -172,11 +289,11 @@ public class QueryModel extends Observable
      *
      * @return the declinaison.
      */
-    public String getDec()
+    public String getScienceObjectDEC()
     {
         MCSLogger.trace();
 
-        return _dec;
+        return _scienceObjectDEC;
     }
 
     /**
@@ -184,23 +301,24 @@ public class QueryModel extends Observable
      *
      * @param dec the declinaison.
      */
-    public void setDec(String dec) throws IllegalArgumentException
+    public void setScienceObjectDEC(String declinaison)
+        throws IllegalArgumentException
     {
         MCSLogger.trace();
 
         // Check if given parameter is not empty
-        if (dec.length() < 1)
+        if (declinaison.length() < 1)
         {
             throw new IllegalArgumentException("given DEC is empty");
         }
 
         // Validate the format of the given value
-        if (dec.matches("[+|-][0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
+        if (declinaison.matches("[+|-][0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
         {
             throw new IllegalArgumentException("wrong DEC format: +30:00:00.00");
         }
 
-        _dec = dec;
+        _scienceObjectDEC = declinaison;
 
         setChanged();
     }
@@ -210,11 +328,11 @@ public class QueryModel extends Observable
      *
      * @return the science object magnitude as a float value.
      */
-    public double getMagnitude()
+    public double getScienceObjectMagnitude()
     {
         MCSLogger.trace();
 
-        return _magnitude;
+        return _scienceObjectMagnitude;
     }
 
     /**
@@ -222,13 +340,13 @@ public class QueryModel extends Observable
      *
      * @param magnitude the new magnitude as a float value.
      */
-    public void setMagnitude(double magnitude)
+    public void setScienceObjectMagnitude(double magnitude)
     {
         MCSLogger.trace();
 
-        _magnitude = magnitude;
-        _minMagnitude = _magnitude - 2;
-        _maxMagnitude = _magnitude + 2;
+        _scienceObjectMagnitude     = magnitude;
+        _queryMinMagnitude          = _scienceObjectMagnitude - 2;
+        _queryMaxMagnitude          = _scienceObjectMagnitude + 2;
 
         setChanged();
     }
@@ -238,13 +356,34 @@ public class QueryModel extends Observable
      *
      * @param magnitude the new magnitude as a string value.
      */
-    public void setMagnitude(String magnitude) throws IllegalArgumentException
+    public void setScienceObjectMagnitude(String magnitude)
+        throws IllegalArgumentException
     {
         MCSLogger.trace();
 
         try
         {
-            setMagnitude(Double.parseDouble(magnitude));
+            setScienceObjectMagnitude(Double.parseDouble(magnitude));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new IllegalArgumentException("Magnitude must be a number");
+        }
+    }
+
+    /**
+     * Change the magnitude parameter.
+     *
+     * @param magnitude the new magnitude as a Double value.
+     */
+    public void setScienceObjectMagnitude(Double magnitude)
+        throws IllegalArgumentException
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            setScienceObjectMagnitude(magnitude.doubleValue());
         }
         catch (NumberFormatException e)
         {
@@ -257,11 +396,11 @@ public class QueryModel extends Observable
      *
      * @return the minimum magnitude as a float value.
      */
-    public double getMinMagnitude()
+    public double getQueryMinMagnitude()
     {
         MCSLogger.trace();
 
-        return _minMagnitude;
+        return _queryMinMagnitude;
     }
 
     /**
@@ -269,11 +408,11 @@ public class QueryModel extends Observable
      *
      * @param minMagnitude the new minimum magnitude as a float value.
      */
-    public void setMinMagnitude(double minMagnitude)
+    public void setQueryMinMagnitude(double minMagnitude)
     {
         MCSLogger.trace();
 
-        _minMagnitude = minMagnitude;
+        _queryMinMagnitude = minMagnitude;
 
         setChanged();
     }
@@ -283,13 +422,14 @@ public class QueryModel extends Observable
      *
      * @param minMagnitude the new minimum magnitude as a string value.
      */
-    public void setMinMagnitude(String magnitude) throws IllegalArgumentException
+    public void setQueryMinMagnitude(String magnitude)
+        throws IllegalArgumentException
     {
         MCSLogger.trace();
 
         try
         {
-            setMinMagnitude(Double.parseDouble(magnitude));
+            setQueryMinMagnitude(Double.parseDouble(magnitude));
         }
         catch (NumberFormatException e)
         {
@@ -304,11 +444,11 @@ public class QueryModel extends Observable
      *
      * @return the maximum magnitude as a float value.
      */
-    public double getMaxMagnitude()
+    public double getQueryMaxMagnitude()
     {
         MCSLogger.trace();
 
-        return _maxMagnitude;
+        return _queryMaxMagnitude;
     }
 
     /**
@@ -316,11 +456,11 @@ public class QueryModel extends Observable
      *
      * @param maxMagnitude the new maximum magnitude as a float value.
      */
-    public void setMaxMagnitude(double maxMagnitude)
+    public void setQueryMaxMagnitude(double maxMagnitude)
     {
         MCSLogger.trace();
 
-        _maxMagnitude = maxMagnitude;
+        _queryMaxMagnitude = maxMagnitude;
 
         setChanged();
     }
@@ -330,13 +470,14 @@ public class QueryModel extends Observable
      *
      * @param maxMagnitude the new minimum magnitude as a string value.
      */
-    public void setMaxMagnitude(String magnitude) throws IllegalArgumentException
+    public void setQueryMaxMagnitude(String magnitude)
+        throws IllegalArgumentException
     {
         MCSLogger.trace();
 
         try
         {
-            setMaxMagnitude(Double.parseDouble(magnitude));
+            setQueryMaxMagnitude(Double.parseDouble(magnitude));
         }
         catch (NumberFormatException e)
         {
@@ -352,9 +493,9 @@ public class QueryModel extends Observable
      * @return true wether the query is of the bright type, otherwise false for
      * the faint ones.
      */
-    public boolean isBright()
+    public boolean isQueryScenarioBright()
     {
-        return _bright;
+        return _queryBrightScenarioFlag;
     }
 
     /**
@@ -362,9 +503,153 @@ public class QueryModel extends Observable
      *
      * @param flag true for bright queries, false for faint ones.
      */
-    public void isBright(boolean flag)
+    public void setQueryBrightScenarion(boolean flag)
     {
-        _bright = flag;
+        _queryBrightScenarioFlag = flag;
+
+        setChanged();
+    }
+
+    /**
+     * Return the query box differential RA size.
+     *
+     * @return the query box differential RA size.
+     */
+    public double getQueryDiffRASize()
+    {
+        MCSLogger.trace();
+
+        return _queryDiffRASize;
+    }
+
+    /**
+     * Change the query box differential RA size.
+     *
+     * @param diffRASize the new query box differential RA size as a float.
+     */
+    public void setQueryDiffRASize(double diffRASize)
+    {
+        MCSLogger.trace();
+
+        _queryDiffRASize = diffRASize;
+
+        setChanged();
+    }
+
+    /**
+     * Change the query box differential RA size.
+     *
+     * @param diffRASize the new query box differential RA size as a string.
+     */
+    public void setQueryDiffRASize(String diffRASize)
+        throws IllegalArgumentException
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            setQueryDiffRASize(Double.parseDouble(diffRASize));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new IllegalArgumentException("Diff. RA must be a number");
+        }
+
+        setChanged();
+    }
+
+    /**
+     * Return the query box differential DEC size.
+     *
+     * @return the query box differential DEC size.
+     */
+    public double getQueryDiffDECSize()
+    {
+        MCSLogger.trace();
+
+        return _queryDiffDECSize;
+    }
+
+    /**
+     * Change the query box differential DEC size.
+     *
+     * @param radiusSize the new query box differential DEC size as a float.
+     */
+    public void setQueryDiffDECSize(double diffDECSize)
+    {
+        MCSLogger.trace();
+
+        _queryDiffDECSize = diffDECSize;
+
+        setChanged();
+    }
+
+    /**
+     * Change the query box differential DEC size.
+     *
+     * @param diffDECSize the new query box differential DEC size as a string.
+     */
+    public void setQueryDiffDECSize(String diffDECSize)
+        throws IllegalArgumentException
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            setQueryDiffDECSize(Double.parseDouble(diffDECSize));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new IllegalArgumentException("Diff. DEC must be a number");
+        }
+
+        setChanged();
+    }
+
+    /**
+     * Return the query box radial size.
+     *
+     * @return the query box radial size.
+     */
+    public double getQueryRadialSize()
+    {
+        MCSLogger.trace();
+
+        return _queryRadialSize;
+    }
+
+    /**
+     * Change the query box radial size.
+     *
+     * @param radiusSize the new query box radial size as a float.
+     */
+    public void setQueryRadialSize(double radiusSize)
+    {
+        MCSLogger.trace();
+
+        _queryRadialSize = radiusSize;
+
+        setChanged();
+    }
+
+    /**
+     * Change the query box radial size.
+     *
+     * @param radiusSize the new query box radial size as a string.
+     */
+    public void setQueryRadialSize(String radiusSize)
+        throws IllegalArgumentException
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            setQueryRadialSize(Double.parseDouble(radiusSize));
+        }
+        catch (NumberFormatException e)
+        {
+            throw new IllegalArgumentException("Diff. DEC must be a number");
+        }
 
         setChanged();
     }
@@ -463,14 +748,14 @@ public class QueryModel extends Observable
             return false;
         }
 
-        // If the ra coordinate is not defined
-        if (_ra.length() < 1)
+        // If the RA coordinate is not defined
+        if (_scienceObjectRA.length() < 1)
         {
             return false;
         }
 
-        // If the dec coordinate is not defined
-        if (_dec.length() < 1)
+        // If the DEC coordinate is not defined
+        if (_scienceObjectDEC.length() < 1)
         {
             return false;
         }

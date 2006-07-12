@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.6 2006-06-30 11:53:17 mella Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.7 2006-07-12 14:29:01 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/06/30 11:53:17  mella
+ * Change GUI presentation
+ *
  * Revision 1.5  2006/06/26 14:33:32  mella
  * Place menu creation at end
  *
@@ -56,55 +59,51 @@ import javax.xml.transform.stream.*;
 public class MainWindow extends JFrame
 {
     /**
-     *
+     * Shared logging object
+     * @TODO : replace this by MCSLogger
      */
     Logger _logger = MCSLogger.getLogger();
 
     /** Main panel container, displaying the query and result views */
-    Container mainPane;
+    Container _mainPane;
 
-    /**
-     * Main window menu.
-     */
-    MainMenuBar menuBar;
+    /** Main window menu */
+    MainMenuBar _menuBar;
 
-    /**
-     * Query view
-     */
+    /** Query view */
     QueryView _queryView;
 
-    /**
-     * Calibrators view
-     */
+    /** Calibrators view */
     CalibratorsView _calibratorsView;
 
-    /**
-     * Preferences view
-     */
+    /** Preferences view */
     PreferencesView _preferencesView;
 
-    /**
-     * Filters view
-     */
+    /** Filters view */
     FiltersView _filtersView;
+
+    /** Status bar */
+    StatusBar _statusBar;
 
     /**
      * Constructor.
      */
     public MainWindow(QueryView queryView, CalibratorsView calibratorsView,
-        PreferencesView preferencesView, FiltersView filtersView)
+        PreferencesView preferencesView, FiltersView filtersView,
+        StatusBar statusBar)
     {
         _queryView           = queryView;
         _calibratorsView     = calibratorsView;
         _preferencesView     = preferencesView;
         _filtersView         = filtersView;
+        _statusBar           = statusBar;
 
         try
         {
             setTitle("SearchCal");
 
-            mainPane = getContentPane();
-            mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
+            _mainPane = getContentPane();
+            _mainPane.setLayout(new BoxLayout(_mainPane, BoxLayout.Y_AXIS));
 
             // Create a first top-bottom split pane for calibrators and filters
             JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -124,22 +123,29 @@ public class MainWindow extends JFrame
             // Set the split pane to continuously resize the child components
             // which the divider is dragged
             splitPane.setContinuousLayout(true);
-
             // Allows the user to conveniently move the divider to either end with a single click
             splitPane.setOneTouchExpandable(true);
+            _mainPane.add(splitPane);
 
-            mainPane.add(splitPane);
+            // Add the Status bar
+            _mainPane.add(statusBar);
 
+            // Show all the GUI
             _queryView.setVisible(true);
             _calibratorsView.setVisible(true);
             _filtersView.setVisible(true);
+            _statusBar.setVisible(true);
 
             // Menu must be created after Actions init.
-            menuBar = new MainMenuBar(this);
-            setJMenuBar(menuBar);
+            _menuBar = new MainMenuBar(this);
+            setJMenuBar(_menuBar);
 
+            // Set the GUI up
             pack();
             setVisible(true);
+
+            // Show the user the app is ready to be used
+            StatusBar.show("application ready.");
         }
         catch (Exception e)
         {
@@ -156,6 +162,7 @@ public class MainWindow extends JFrame
     public void showPreferencesView()
     {
         MCSLogger.trace();
+
         _preferencesView.setVisible(true);
     }
 
