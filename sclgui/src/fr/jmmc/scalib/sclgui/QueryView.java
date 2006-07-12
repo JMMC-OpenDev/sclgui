@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.11 2006-07-11 11:15:20 mella Exp $"
+ * "@(#) $Id: QueryView.java,v 1.12 2006-07-12 14:31:26 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/07/11 11:15:20  mella
+ * add include science object action and use gridbaglayout manager
+ *
  * Revision 1.10  2006/07/04 09:54:41  mella
  * Use a gridBagLayout for form
  *
@@ -77,33 +80,45 @@ public class QueryView extends JPanel implements Observer,
     /** Assocaited virtual observatory */
     VirtualObservatory _vo;
 
+    /** Numerical textfiels formatter */
+    NumberFormat nf = NumberFormat.getNumberInstance();
+
+    /** Instrument panel */
+    JPanel instrumentPanel = new JPanel();
+
+    /** Instrument magnitude band */
+    JComboBox _instrumentalMagnitudeBandCombo;
+
+    /** Instrument wavelentgh */
+    JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(nf);
+
+    /** Instrument maximun baseline */
+    JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(nf);
+
     /** Science object panel */
     JPanel scienceObjectPanel;
 
-    /** Science object textfields */
-    JFormattedTextField _starNameTextfield = new JFormattedTextField(new MessageFormat(
+    /** Science object name */
+    JFormattedTextField _scienceObjectNameTextfield = new JFormattedTextField(new MessageFormat(
                 "{0}"));
 
     /** Science object right ascension coordinate */
-    JTextField _starRATextfield = new JTextField();
+    JTextField _scienceObjectRATextfield = new JTextField();
 
     /** Science object declinaison coordinate */
-    JTextField _starDECTextfield = new JTextField();
+    JTextField _scienceObjectDECTextfield = new JTextField();
 
     /** Science object magnitude */
-    JFormattedTextField _starMagnitudeTextfield = new JFormattedTextField();
-
-    /** Science object magnitude */
-    JCheckBox _includeScienceObjectCheckbox;
+    JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(nf);
 
     /** SearchCal parameters panel */
     JPanel searchCalPanel;
 
     /** Search minimum magnitude */
-    JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField();
+    JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(nf);
 
     /** Search maximum magnitude */
-    JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField();
+    JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(nf);
 
     /** Bright/Faint query radion button group */
     ButtonGroup _brightFaintButtonGroup = new ButtonGroup();
@@ -115,39 +130,19 @@ public class QueryView extends JPanel implements Observer,
     JRadioButton _faintRadioButton;
 
     /** Search box RA size */
-    JTextField _diffRATextfield = new JTextField();
+    JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(nf);
 
     /** Search box DEC size */
-    JTextField _diffDECTextfield = new JTextField();
+    JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(nf);
 
-    /** Instrument wavelentgh */
-    JFormattedTextField _wavelengthTextfield;
-
-    /** Instrument magnitude band */
-    JComboBox _magnitudeBandCombo;
-
-    /** Instrument maximun baseline */
-    JFormattedTextField _maxBaselineTextField;
+    /** Search box radial size */
+    JFormattedTextField _radialSizeTextfield = new JFormattedTextField(nf);
 
     /** Query launcher/canceler */
-    JButton _goButton;
+    JButton _searchButton;
 
     /** Query progress bar */
     JProgressBar _progressBar = new JProgressBar();
-
-    //width
-    /** DOCUMENT ME! */
-    int width = 995;
-
-    /** DOCUMENT ME! */
-    int subpanelswidth = 970;
-
-    //Explains
-    /** DOCUMENT ME! */
-    JTextArea textareaexplain = new JTextArea();
-
-    /** DOCUMENT ME! */
-    JScrollPane scrollexplain = new JScrollPane(textareaexplain);
 
     /**
      * Constructor.
@@ -180,13 +175,11 @@ public class QueryView extends JPanel implements Observer,
         // Form panel global attributes and common objects
         JPanel             tempPanel;
         Dimension          textfieldDimension = new Dimension(100, 20);
-        NumberFormat       nf                 = NumberFormat.getNumberInstance();
         GridBagConstraints c                  = new GridBagConstraints();
         c.fill                                = GridBagConstraints.HORIZONTAL;
         c.weightx                             = 1;
 
         // Instrumental Configuration panel
-        JPanel instrumentPanel = new JPanel();
         instrumentPanel.setBorder(new TitledBorder(
                 "1)  Instrumental Configuration"));
         instrumentPanel.setLayout(new GridBagLayout());
@@ -194,31 +187,29 @@ public class QueryView extends JPanel implements Observer,
         c.gridy     = 0;
         c.gridx     = 0;
         instrumentPanel.add(new JLabel("Magnitude Band : "), c);
-        _magnitudeBandCombo = new JComboBox(bands);
-        _magnitudeBandCombo.setSelectedIndex(3);
-        _magnitudeBandCombo.addActionListener(this);
+        _instrumentalMagnitudeBandCombo = new JComboBox(bands);
+        _instrumentalMagnitudeBandCombo.setSelectedIndex(3);
+        _instrumentalMagnitudeBandCombo.addActionListener(this);
         c.gridx = 1;
-        instrumentPanel.add(_magnitudeBandCombo, c);
+        instrumentPanel.add(_instrumentalMagnitudeBandCombo, c);
         // Wavelength field
         c.gridy++;
         c.gridx = 0;
         instrumentPanel.add(new JLabel("Wavelength [µm] : "), c);
-        _wavelengthTextfield = new JFormattedTextField(nf);
-        _wavelengthTextfield.setMinimumSize(textfieldDimension);
-        _wavelengthTextfield.setPreferredSize(textfieldDimension);
-        _wavelengthTextfield.addPropertyChangeListener(this);
+        _instrumentalWavelengthTextfield.setMinimumSize(textfieldDimension);
+        _instrumentalWavelengthTextfield.setPreferredSize(textfieldDimension);
+        _instrumentalWavelengthTextfield.addPropertyChangeListener(this);
         c.gridx = 1;
-        instrumentPanel.add(_wavelengthTextfield, c);
+        instrumentPanel.add(_instrumentalWavelengthTextfield, c);
         // Maximum baseline
         c.gridy++;
         c.gridx = 0;
         instrumentPanel.add(new JLabel("Max. Baseline [m] : "), c);
-        _maxBaselineTextField = new JFormattedTextField(nf);
-        _maxBaselineTextField.setMinimumSize(textfieldDimension);
-        _maxBaselineTextField.setPreferredSize(textfieldDimension);
-        _maxBaselineTextField.addPropertyChangeListener(this);
+        _instrumentalMaxBaselineTextField.setMinimumSize(textfieldDimension);
+        _instrumentalMaxBaselineTextField.setPreferredSize(textfieldDimension);
+        _instrumentalMaxBaselineTextField.addPropertyChangeListener(this);
         c.gridx = 1;
-        instrumentPanel.add(_maxBaselineTextField, c);
+        instrumentPanel.add(_instrumentalMaxBaselineTextField, c);
 
         // Science Object panel
         scienceObjectPanel = new JPanel();
@@ -229,10 +220,10 @@ public class QueryView extends JPanel implements Observer,
         c.gridx     = 0;
         scienceObjectPanel.add(new JLabel("Name : "), c);
         tempPanel = new JPanel(new GridBagLayout());
-        _starNameTextfield.setMinimumSize(textfieldDimension);
-        _starNameTextfield.setPreferredSize(textfieldDimension);
-        _starNameTextfield.addPropertyChangeListener(this);
-        tempPanel.add(_starNameTextfield, c);
+        _scienceObjectNameTextfield.setMinimumSize(textfieldDimension);
+        _scienceObjectNameTextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectNameTextfield.addPropertyChangeListener(this);
+        tempPanel.add(_scienceObjectNameTextfield, c);
         c.gridx = 1;
         tempPanel.add(new JButton(new SearchScienceObjectAction()));
         scienceObjectPanel.add(tempPanel, c);
@@ -240,27 +231,27 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         scienceObjectPanel.add(new JLabel("RA 2000 (mn) : "), c);
-        _starRATextfield.setMinimumSize(textfieldDimension);
-        _starRATextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectRATextfield.setMinimumSize(textfieldDimension);
+        _scienceObjectRATextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
-        scienceObjectPanel.add(_starRATextfield, c);
+        scienceObjectPanel.add(_scienceObjectRATextfield, c);
         // DEG coordinate field
         c.gridy++;
         c.gridx = 0;
         scienceObjectPanel.add(new JLabel("DEC 2000 (deg) : "), c);
-        _starDECTextfield.setMinimumSize(textfieldDimension);
-        _starDECTextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectDECTextfield.setMinimumSize(textfieldDimension);
+        _scienceObjectDECTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
-        scienceObjectPanel.add(_starDECTextfield, c);
+        scienceObjectPanel.add(_scienceObjectDECTextfield, c);
         // Magnitude field
         c.gridy++;
         c.gridx = 0;
         scienceObjectPanel.add(new JLabel("Magnitude : "), c);
-        _starMagnitudeTextfield = new JFormattedTextField(nf);
-        _starMagnitudeTextfield.setMinimumSize(textfieldDimension);
-        _starMagnitudeTextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
+        _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectMagnitudeTextfield.addPropertyChangeListener(this);
         c.gridx = 1;
-        scienceObjectPanel.add(_starMagnitudeTextfield, c);
+        scienceObjectPanel.add(_scienceObjectMagnitudeTextfield, c);
         // Searching Parameters panel
         searchCalPanel = new JPanel();
         searchCalPanel.setBorder(new TitledBorder("3)  SearchCal Parameters"));
@@ -269,7 +260,6 @@ public class QueryView extends JPanel implements Observer,
         c.gridy     = 0;
         c.gridx     = 0;
         searchCalPanel.add(new JLabel("Min. Magnitude : "), c);
-        _minMagnitudeTextfield = new JFormattedTextField(nf);
         _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
@@ -278,7 +268,6 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         searchCalPanel.add(new JLabel("Max. Magnitude : "), c);
-        _maxMagnitudeTextfield = new JFormattedTextField(nf);
         _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
@@ -301,18 +290,19 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         searchCalPanel.add(new JLabel("Diff RA (arcmin) : "), c);
-        _diffRATextfield.setMinimumSize(textfieldDimension);
-        _diffRATextfield.setPreferredSize(textfieldDimension);
+        _diffRASizeTextfield.setMinimumSize(textfieldDimension);
+        _diffRASizeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
-        searchCalPanel.add(_diffRATextfield, c);
+        searchCalPanel.add(_diffRASizeTextfield, c);
         // DEC delta field
         c.gridy++;
         c.gridx = 0;
         searchCalPanel.add(new JLabel("Diff DEC (arcmin) : "), c);
-        _diffDECTextfield.setMinimumSize(textfieldDimension);
-        _diffDECTextfield.setPreferredSize(textfieldDimension);
+        _diffDECSizeTextfield.setMinimumSize(textfieldDimension);
+        _diffDECSizeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
-        searchCalPanel.add(_diffDECTextfield, c);
+        // @TODO : radial size field
+        searchCalPanel.add(_diffDECSizeTextfield, c);
 
         // Status panel global attributes and common objects
         JPanel queryStatusPanel = new JPanel();
@@ -329,9 +319,9 @@ public class QueryView extends JPanel implements Observer,
         queryStatusPanel.add(_progressBar);
         // Fixed space
         queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-        // GO Button
-        _goButton = new JButton(new SearchCalibratorsAction());
-        queryStatusPanel.add(_goButton);
+        // Search Button
+        _searchButton = new JButton(new SearchCalibratorsAction());
+        queryStatusPanel.add(_searchButton);
         // Fixed space
         queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 
@@ -367,15 +357,30 @@ public class QueryView extends JPanel implements Observer,
         {
             QueryModel queryModel = (QueryModel) o;
 
-            _starNameTextfield.setText(queryModel.getScienceObjectName());
-            _starDECTextfield.setText(queryModel.getDec());
-            _starRATextfield.setText(queryModel.getRa());
-            _starMagnitudeTextfield.setValue(new Double(
-                    queryModel.getMagnitude()));
+            // Instrumental parameters
+            // @TODO : _instrumentalMagnitudeBandCombo.set???(queryModel.getInstrumentalMagnitudeBand());
+            _instrumentalWavelengthTextfield.setValue(new Double(queryModel.getInstrumentalWavelength()));
+            _instrumentalMaxBaselineTextField.setValue(new Double(queryModel.getInstrumentalMaxBaseLine()));
+
+            // Science object parameters
+            _scienceObjectNameTextfield.setText(queryModel.getScienceObjectName());
+            _scienceObjectDECTextfield.setText(queryModel.getScienceObjectDEC());
+            _scienceObjectRATextfield.setText(queryModel.getScienceObjectRA());
+            _scienceObjectMagnitudeTextfield.setValue(new Double(
+                    queryModel.getScienceObjectMagnitude()));
+
+            // SearchCal parameters
             _minMagnitudeTextfield.setValue(new Double(
-                    queryModel.getMinMagnitude()));
+                    queryModel.getQueryMinMagnitude()));
             _maxMagnitudeTextfield.setValue(new Double(
-                    queryModel.getMaxMagnitude()));
+                    queryModel.getQueryMaxMagnitude()));
+            // @TODO : _brightFaintButtonGroup.set???(queryModel.isQueryScenarioBright()));
+            _diffRASizeTextfield.setValue(new Double(
+                    queryModel.getQueryDiffRASize()));
+            _diffDECSizeTextfield.setValue(new Double(
+                    queryModel.getQueryDiffDECSize()));
+            _radialSizeTextfield.setValue(new Double(
+                    queryModel.getQueryRadialSize()));
 
             // TODO : link to bright/faint radio buttons, and all the other missing fields
             _progressBar.setValue(queryModel.getCurrentStep());
@@ -391,11 +396,11 @@ public class QueryView extends JPanel implements Observer,
 
         Object source = e.getSource();
 
-        if (source == _magnitudeBandCombo)
+        if (source == _instrumentalMagnitudeBandCombo)
         {
-            String comboValue      = (String) _magnitudeBandCombo.getSelectedItem();
+            String comboValue      = (String) _instrumentalMagnitudeBandCombo.getSelectedItem();
             String wavelengthValue = (String) bandToWavelength.get(comboValue);
-            _wavelengthTextfield.setText(wavelengthValue);
+            _instrumentalWavelengthTextfield.setText(wavelengthValue);
         }
     }
 
@@ -407,85 +412,105 @@ public class QueryView extends JPanel implements Observer,
         Object source = e.getSource();
 
         // test if science object panel must be shown
-        boolean instrumentConfigOk = _wavelengthTextfield.isEditValid() &&
-            (_wavelengthTextfield.getText().length() > 0) &&
-            _maxBaselineTextField.isEditValid() &&
-            (_maxBaselineTextField.getText().length() > 0);
-        enabledComponents(scienceObjectPanel, instrumentConfigOk);
+        boolean instrumentConfigOk = _instrumentalWavelengthTextfield.isEditValid() &&
+            (_instrumentalWavelengthTextfield.getText().length() > 0) &&
+            _instrumentalMaxBaselineTextField.isEditValid() &&
+            (_instrumentalMaxBaselineTextField.getText().length() > 0);
+        setEnabledComponents(scienceObjectPanel, instrumentConfigOk);
 
         // test if searchCal parameters must be shown 
         boolean sciencObjectOk = instrumentConfigOk &&
-            (_starNameTextfield.getText().length() > 0);
+            (_scienceObjectNameTextfield.getText().length() > 0);
 
-        enabledComponents(searchCalPanel, sciencObjectOk);
+        setEnabledComponents(searchCalPanel, sciencObjectOk);
 
-        if (source == _wavelengthTextfield)
+        if (source == _instrumentalWavelengthTextfield)
         {
         }
 
-        if (source == _maxBaselineTextField)
+        if (source == _instrumentalMaxBaselineTextField)
         {
         }
 
         // Try to inject user values into the model
-        if (source == _starNameTextfield)
+        if (source == _scienceObjectNameTextfield)
         {
-            _queryModel.setScienceObjectName(_starNameTextfield.getText());
+            _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
         }
 
-        if (source == _starRATextfield)
+        if (source == _scienceObjectRATextfield)
         {
-            _queryModel.setRa(_starRATextfield.getText());
+            _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
         }
 
-        if (source == _starDECTextfield)
+        if (source == _scienceObjectDECTextfield)
         {
-            _queryModel.setDec(_starDECTextfield.getText());
+            _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
         }
 
-        if (source == _starMagnitudeTextfield)
+        if (source == _scienceObjectMagnitudeTextfield)
         {
-            _queryModel.setMagnitude(_starMagnitudeTextfield.getText());
+            /*
+               Object tmp = _scienceObjectMagnitudeTextfield.getValue();
+               if (tmp != null)
+               {
+               MCSLogger.finest(tmp.getClass().getName());
+               MCSLogger.finest(tmp.toString());
+                       }
+                       Long magnitude = (Long)_scienceObjectMagnitudeTextfield.getValue();
+                       if (magnitude != null)
+                       {
+               _queryModel.setScienceObjectMagnitude(magnitude.doubleValue());
+               }
+             */
         }
 
         if (source == _minMagnitudeTextfield)
         {
-            _queryModel.setMinMagnitude(_minMagnitudeTextfield.getText());
+            _queryModel.setQueryMinMagnitude(_minMagnitudeTextfield.getText());
         }
 
         if (source == _maxMagnitudeTextfield)
         {
-            _queryModel.setMaxMagnitude(_maxMagnitudeTextfield.getText());
+            _queryModel.setQueryMaxMagnitude(_maxMagnitudeTextfield.getText());
         }
     }
 
     /**
-     * Enable or disable the sub components of a container or the component if
-     * it does not contain any sub component.
+     * Recursively enable/disable sub-components of a given container, or the
+     * component itself if it does not contain any sub-component.
+     *
      * @param compo JComponent
      * @param bool boolean
+     *
      * @TODO place it under common mcs area
      */
-    public static void enabledComponents(JComponent compo, boolean bool)
+    public static void setEnabledComponents(JComponent component, boolean flag)
     {
         MCSLogger.trace();
 
-        if (compo.getComponentCount() > 0)
+        // If the given component contains sub-components
+        if (component.getComponentCount() > 0)
         {
-            Component[] cmp = compo.getComponents();
-            int         k;
+            // Get all the embedded sub-components
+            Component[] components = component.getComponents();
 
-            for (k = 0; k < cmp.length; k++)
+            // For each sub-component
+            for (int i = 0; i < components.length; i++)
             {
-                if (cmp[k].getClass() != JComboBox.class)
+                // If the sub-component is not a combobox
+                // SL -> GM : pourquoi ?
+                if (components[i].getClass() != JComboBox.class)
                 {
-                    enabledComponents((JComponent) cmp[k], bool);
+                    // Try to enable/disable any contained sub-sub-component
+                    setEnabledComponents((JComponent) components[i], flag);
                 }
             }
         }
-        else
+        else // If the given component contains no sub-components
         {
-            compo.setEnabled(bool);
+            // Enable/disable the poor lonesome component
+            component.setEnabled(flag);
         }
     }
 
@@ -507,8 +532,8 @@ public class QueryView extends JPanel implements Observer,
                //change cursor
                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                //panels enabled false
-               enabledComponents(this, false);
-               textareaexplain.setText("Query is beeing resolved ");
+               setEnabledComponents(this, false);
+               StatusBar.show("query is beeing resolved ... please wait.");
            }
            if (false)
            { // TODO Change condiion
@@ -519,9 +544,10 @@ public class QueryView extends JPanel implements Observer,
                _progressBar.setVisible(false);
                _progressBar.setIndeterminate(false);
                //panel enabled true
-               enabledComponents(this, true);
+               setEnabledComponents(this, true);
                // Should get completion status to indicate proper work or not...TBD
-               textareaexplain.setText("Query has been resolved successfully");
+               // @TODO : show time elapsed ?
+               StatusBar.show("query has been resolved successfully.");
            }
            if (false)
            { // TODO Change condiion
@@ -532,23 +558,11 @@ public class QueryView extends JPanel implements Observer,
                _progressBar.setVisible(false);
                _progressBar.setIndeterminate(false);
                //panel enabled true
-               enabledComponents(this, true);
+               setEnabledComponents(this, true);
                // Should get completion status to indicate proper work or not...TBD
-               textareaexplain.setText("Query has not been resolved successfully");
+               StatusBar.show("query has not been resolved.");
            }
          */
-    }
-
-    /**
-     * addText
-     * @param component JTextArea
-     * @param text String
-     */
-    public void addText(JTextArea component, String text)
-    {
-        MCSLogger.trace();
-
-        component.setText(component.getText() + "\n" + text);
     }
 
     protected class SearchScienceObjectAction extends SCAction
@@ -562,7 +576,7 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            if (_starNameTextfield.getText().length() == 0)
+            if (_scienceObjectNameTextfield.getText().length() == 0)
             {
                 _queryModel.example();
             }
@@ -574,6 +588,8 @@ public class QueryView extends JPanel implements Observer,
                 }
                 catch (Exception ex)
                 {
+                    StatusBar.show("GETSTAR webservice unreachable.");
+                    ex.printStackTrace();
                 }
             }
         }
@@ -590,10 +606,10 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            _diffRATextfield.setEnabled(true);
-            _diffDECTextfield.setEnabled(true);
-            textareaexplain.setText("Case bright :\nBox used");
-            _queryModel.isBright(true);
+            _diffRASizeTextfield.setEnabled(true);
+            _diffDECSizeTextfield.setEnabled(true);
+            StatusBar.show("bright scenario selected.");
+            _queryModel.setQueryBrightScenarion(true);
         }
     }
 
@@ -608,10 +624,10 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            _diffRATextfield.setEnabled(false);
-            _diffDECTextfield.setEnabled(false);
-            textareaexplain.setText("Case faint :\nBox not used");
-            _queryModel.isBright(false);
+            _diffRASizeTextfield.setEnabled(false);
+            _diffDECSizeTextfield.setEnabled(false);
+            StatusBar.show("faint scenario selected.");
+            _queryModel.setQueryBrightScenarion(false);
         }
     }
 
@@ -653,27 +669,25 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            //StatusBar.show("TOTO vz lz");
-
             //fullFillModel();
 
             /* TODO
                if (running = false)
                {
                    fullFillModel();
-                   _goButton.setText("Cancel");
+                   _searchButton.setText("Cancel");
                }
                else
                {
                    // TODO : _query.stop();
-                   _goButton.setText("GO");
+                   _searchButton.setText("Search");
                }
              */
 
             // If the model seems complete, launch query execution
             if (_queryModel.isConsumable())
             {
-                addText(textareaexplain, "Parameters ok");
+                StatusBar.show("query parameters seem OK.");
 
                 try
                 {
@@ -681,13 +695,13 @@ public class QueryView extends JPanel implements Observer,
                 }
                 catch (Exception ex)
                 {
-                    textareaexplain.setText("GETCAL crashed");
+                    StatusBar.show("GETCAL webservice unreachable.");
                     ex.printStackTrace();
                 }
             }
             else
             {
-                addText(textareaexplain, "Parameters KO");
+                StatusBar.show("query parameters seem wrong.");
             }
         }
     }
