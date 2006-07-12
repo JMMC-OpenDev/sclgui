@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.12 2006-07-12 14:31:26 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.13 2006-07-12 15:52:25 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/07/12 14:31:26  lafrasse
+ * Code refinment
+ * Added the status bar
+ *
  * Revision 1.11  2006/07/11 11:15:20  mella
  * add include science object action and use gridbaglayout manager
  *
@@ -41,6 +45,7 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+import jmmc.mcs.util.StatusBar;
 
 import java.awt.*;
 import java.awt.event.*;
