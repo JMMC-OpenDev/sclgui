@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.4 2006-07-11 11:11:57 mella Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.5 2006-07-12 14:29:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/07/11 11:11:57  mella
+ * Change instanciation order
+ *
  * Revision 1.3  2006/06/30 07:57:58  lafrasse
  * Removed default query parameters definition
  *
@@ -105,9 +108,12 @@ public class SearchCalibrators
         // Retrieve application preferences and attach them to their view
         // (This instance must be instanciated after dependencies)
         PreferencesView preferencesView = new PreferencesView();
+        StatusBar       statusBar       = new StatusBar();
+        // Show the user the app is been initialized
+        StatusBar.show("application initialization...");
 
-        MainWindow      window          = new MainWindow(queryView,
-                calibratorsView, preferencesView, filtersView);
+        MainWindow window = new MainWindow(queryView, calibratorsView,
+                preferencesView, filtersView, statusBar);
 
         // Make application presentation coherent with preferences
         Preferences.getInstance().notifyObservers();
@@ -119,11 +125,13 @@ public class SearchCalibrators
     public static void main(String[] args)
     {
         // Get a MCSLogger reference  and adjust for convenience
+        // @TODO : move this in MCSLogger
         Logger logger = MCSLogger.getLogger();
         logger.setLevel(java.util.logging.Level.ALL);
         MCSLogger.trace();
 
         // Create a console handler
+        // @TODO : move this in MCSLogger
         ConsoleHandler handler = new ConsoleHandler();
         handler.setLevel(java.util.logging.Level.ALL);
         logger.addHandler(handler);
