@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.20 2006-07-11 11:18:55 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.21 2006-07-18 13:08:11 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2006/07/11 11:18:55  mella
+ * Add show details action and place for first id column
+ *
  * Revision 1.19  2006/07/05 14:53:29  mella
  * Change panel order, panels are numbered and enabled according inputs
  *
@@ -100,14 +103,10 @@ import javax.swing.table.*;
 public class CalibratorsView extends JPanel implements TableModelListener,
     Observer
 {
-    /**
-     *  Show details
-     */
+    /** Show Details action */
     static Action _showDetailsAction;
 
-    /**
-     *  Show legend
-     */
+    /** Show Legend action */
     static Action _showLegendAction;
 
     /** The monitored data source displayed by the embedded JTable */
@@ -116,97 +115,46 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** The monitored application preferences */
     Preferences _preferences;
 
-    /** The one column table */
-    JTable _jTableId;
+    /** The left-most static one column table containing star ID */
+    JTable _calibratorsIdTable;
 
-    /** The results table */
-    JTable _jTable;
+    /** The calibrators table */
+    JTable _calibratorsTable;
 
     /** Logger instance */
     Logger _logger = MCSLogger.getLogger();
 
-    //details state
-    /** DOCUMENT ME! */
-    String detresstat = "show";
+    /** Calibrators table and Legend container */
+    JSplitPane _tableAndLegendPane;
 
-    /** DOCUMENT ME! */
-    boolean noteinstancied = false;
-
-    /** DOCUMENT ME! */
-    int panelWidth = 895;
-
-    /** DOCUMENT ME! */
-    int subpanelwidth = 570;
-
-    /**
-     * Table and Legend container
-     */
-    JSplitPane tableAndLegendPane;
-
-    /**
-     * DOCUMENT ME!
-     */
-    LegendView legendView;
-
-    /**
-     * DOCUMENT ME!
-     */
-    NoteFrame noteFrame = new NoteFrame();
-
-    /**
-     * Interaction with Aladin
-     */
-    VOInteraction _aladinInteraction = null;
-
-    /**
-     * Save
-     */
+    /** Save action */
     Action _saveAction;
 
-    /**
-     * Save as
-     */
+    /** Save As... action */
     Action _saveAsAction;
 
-    /**
-     * Revert to saved
-     */
+    /** Revert to Saved action */
     Action _revertToSavedAction;
 
-    /**
-     * Export as HTML
-     */
+    /** Export as HTML action */
     Action _exportAsHtmlAction;
 
-    /**
-     * Export as CSV
-     */
+    /** Export as CSV action */
     Action _exportAsCsvAction;
 
-    /**
-     * Delete Action
-     */
+    /** Delete action */
     Action _deleteAction;
 
-    /**
-     * Select All
-     */
+    /** Select All action */
     Action _selectAllAction;
 
-    /**
-     * plot in aladin
-     */
+    /** Plot in Aladin action */
     Action _plotInAladinAction;
-
-    /**
-     *
-     */
-    Action _Action;
 
     /**
      * Constructor.
      *
-     * @param calibratorsModel the resutModel.
+     * @param calibratorsModel the data to be displayed.
      */
     public CalibratorsView(CalibratorsModel calibratorsModel)
     {
@@ -230,25 +178,26 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         setBorder(new TitledBorder(grayBorder, "Found Calibrators"));
 
         // Size management
-        setMinimumSize(new Dimension(panelWidth, 320));
+        setMinimumSize(new Dimension(895, 320));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Table initialization
-        _jTable = new JTable();
+        _calibratorsTable = new JTable();
 
         TableSorter tableSorter = new TableSorter(_calibratorsModel);
-        tableSorter.setTableHeader(_jTable.getTableHeader());
-        _jTable.setModel(tableSorter);
-        _jTableId = new JTable(tableSorter, new DefaultTableColumnModel(), null);
-        _jTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        _jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableSorter.setTableHeader(_calibratorsTable.getTableHeader());
+        _calibratorsTable.setModel(tableSorter);
+        _calibratorsIdTable = new JTable(tableSorter,
+                new DefaultTableColumnModel(), null);
+        _calibratorsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        _calibratorsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // Place tables into scrollPane
-        JScrollPane scrollPane = new JScrollPane(_jTable);
-        scrollPane.setMinimumSize(new Dimension(subpanelwidth, 160));
-        scrollPane.setPreferredSize(new Dimension(subpanelwidth, 260));
+        JScrollPane scrollPane = new JScrollPane(_calibratorsTable);
+        scrollPane.setMinimumSize(new Dimension(570, 160));
+        scrollPane.setPreferredSize(new Dimension(570, 260));
 
-        JScrollPane leftScrollPane = new JScrollPane(_jTableId);
+        JScrollPane leftScrollPane = new JScrollPane(_calibratorsIdTable);
         leftScrollPane.setMinimumSize(new Dimension(100, 160));
         leftScrollPane.setPreferredSize(new Dimension(100, 260));
 
@@ -258,32 +207,17 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
 
         // Set and place TableId, Table and Legend group
-        tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+        _tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 scrollPane, legendPanel);
-        tableAndLegendPane.setOneTouchExpandable(true);
-        tableAndLegendPane.setResizeWeight(1.0);
-        tableAndLegendPane.setContinuousLayout(true);
+        _tableAndLegendPane.setOneTouchExpandable(true);
+        _tableAndLegendPane.setResizeWeight(1.0);
+        _tableAndLegendPane.setContinuousLayout(true);
 
         JSplitPane tablesPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                leftScrollPane, tableAndLegendPane);
+                leftScrollPane, _tableAndLegendPane);
         //        tablesPane.setResizeWeight(1.0);
         tablesPane.setAlignmentX(Float.parseFloat(".5"));
         add(tablesPane);
-
-        // Tools panel creation
-        JPanel resumePanel = new JPanel();
-        JLabel resumeLabel = new JLabel();
-        resumeLabel.setText("Resume : ");
-        resumeLabel.setPreferredSize(new Dimension(70, 20));
-
-        JTextField resumeTextField = new JTextField();
-        resumeTextField.setText("10 stars with...");
-        resumeTextField.setPreferredSize(new Dimension(subpanelwidth - 80, 20));
-        resumeTextField.setEditable(false);
-
-        resumePanel.add(resumeLabel);
-        resumePanel.add(resumeTextField);
-        add(resumePanel);
 
         // Make data refreshed according prefs
         update(null, null);
@@ -324,37 +258,34 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _deleteAction.setEnabled(true);
 
         // update identification table if bae table has a minimum of one column
-        if (_jTable.getColumnModel().getColumnCount() > 0) //        if (_jTable.getColumnModel().getColumnCount()>1110 )
+        if (_calibratorsTable.getColumnModel().getColumnCount() > 0) //        if (_calibratorsTable.getColumnModel().getColumnCount()>1110 )
         {
-            // if _jTableId has not exactly one column
+            // if _calibratorsIdTable has not exactly one column
             // remove every other column
             // and append coorect one
             // @todo manage selection of one named column instead of first one
-            if (_jTableId.getColumnModel().getColumnCount() != 1)
+            if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1)
             {
                 _logger.fine(
                     "Setting first column of table to Identification table");
 
                 // @todo try to make next line run without eating all cpu
                 // resource
-                // _jTableId.getColumnModel().addColumn(_jTable.getColumnModel().getColumn(0));
+                // _calibratorsIdTable.getColumnModel().addColumn(_calibratorsTable.getColumnModel().getColumn(0));
             }
         }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param o DOCUMENT ME!
-     * @param arg DOCUMENT ME!
+     * Automatically called whenever the observed model changed
      */
     public void update(Observable o, Object arg)
     {
         MCSLogger.trace();
 
-        // If preference colors have changed, repaint table
-        _jTable.repaint();
-        _jTableId.repaint();
+        // If preference colors have changed, repaint tables
+        _calibratorsTable.repaint();
+        _calibratorsIdTable.repaint();
 
         // Check associated preference to be consistent
         boolean showLegendPref = _preferences.getPreferenceAsBoolean(
@@ -363,34 +294,12 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     /**
-     * setDetresstat  -  set the stat of the display status
-     * @param s String
-     */
-    public void setDetresstat(String s)
-    {
-        MCSLogger.trace();
-
-        detresstat = s;
-    }
-
-    /**
-     * setnotestate  -  set the stat of the noteframe status
-     * @param bool boolean
-     */
-    public void setnotestate(boolean bool)
-    {
-        MCSLogger.trace();
-
-        noteinstancied = bool;
-    }
-
-    /**
      * Tell to the associated model to remove selected rows.
      */
     public void deleteSelectedRows()
     {
         MCSLogger.trace();
-        _calibratorsModel.deleteShownStars(_jTable.getSelectedRows());
+        _calibratorsModel.deleteShownStars(_calibratorsTable.getSelectedRows());
     }
 
     /**
@@ -400,19 +309,19 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
-        int tableAndLegendWidth = ((int) tableAndLegendPane.getBounds()
-                                                           .getWidth()) -
-            tableAndLegendPane.getDividerSize();
+        int tableAndLegendWidth = ((int) _tableAndLegendPane.getBounds()
+                                                            .getWidth()) -
+            _tableAndLegendPane.getDividerSize();
         int loc                 = tableAndLegendWidth;
 
         if (flag)
         {
-            Component legend = tableAndLegendPane.getRightComponent();
+            Component legend = _tableAndLegendPane.getRightComponent();
             loc = tableAndLegendWidth -
                 ((int) legend.getMinimumSize().getWidth());
         }
 
-        tableAndLegendPane.setDividerLocation(loc);
+        _tableAndLegendPane.setDividerLocation(loc);
     }
 
     /**
@@ -455,8 +364,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
             if (e.getSource() instanceof AbstractButton)
             {
-                AbstractButton b = (AbstractButton) e.getSource();
-                showLegend(b.isSelected());
+                AbstractButton button = (AbstractButton) e.getSource();
+                showLegend(button.isSelected());
             }
         }
     }
@@ -476,9 +385,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
             if (e.getSource() instanceof AbstractButton)
             {
-                AbstractButton b = (AbstractButton) e.getSource();
-                showDetails(b.isSelected());
-                _logger.info("Button.selected=" + b.isSelected());
+                AbstractButton button = (AbstractButton) e.getSource();
+                showDetails(button.isSelected());
+                _logger.info("Button.selected=" + button.isSelected());
             }
         }
     }
