@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.6 2006-07-12 15:51:51 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.7 2006-07-18 13:08:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/07/12 15:51:51  lafrasse
+ * Corrected package import to resolve a comilation problem with
+ * jmmc.mcs.util.StatusBar
+ *
  * Revision 1.5  2006/07/12 14:29:39  lafrasse
  * Added the status bar
  *
@@ -25,6 +29,7 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+
 import jmmc.mcs.util.StatusBar;
 
 import java.util.logging.*;
