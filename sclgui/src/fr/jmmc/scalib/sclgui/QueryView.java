@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.13 2006-07-12 15:52:25 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.14 2006-07-18 13:08:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/07/12 15:52:25  lafrasse
+ * Corrected package import to resolve a comilation problem with
+ * jmmc.mcs.util.StatusBar
+ *
  * Revision 1.12  2006/07/12 14:31:26  lafrasse
  * Code refinment
  * Added the status bar
@@ -45,6 +49,7 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+
 import jmmc.mcs.util.StatusBar;
 
 import java.awt.*;
@@ -364,8 +369,10 @@ public class QueryView extends JPanel implements Observer,
 
             // Instrumental parameters
             // @TODO : _instrumentalMagnitudeBandCombo.set???(queryModel.getInstrumentalMagnitudeBand());
-            _instrumentalWavelengthTextfield.setValue(new Double(queryModel.getInstrumentalWavelength()));
-            _instrumentalMaxBaselineTextField.setValue(new Double(queryModel.getInstrumentalMaxBaseLine()));
+            _instrumentalWavelengthTextfield.setValue(new Double(
+                    queryModel.getInstrumentalWavelength()));
+            _instrumentalMaxBaselineTextField.setValue(new Double(
+                    queryModel.getInstrumentalMaxBaseLine()));
 
             // Science object parameters
             _scienceObjectNameTextfield.setText(queryModel.getScienceObjectName());
