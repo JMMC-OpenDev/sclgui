@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.4 2006-04-06 14:57:15 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.5 2006-07-18 14:52:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/04/06 14:57:15  lafrasse
+ * Generalized star property value from String type to Object
+ *
  * Revision 1.3  2006/04/06 13:27:27  mella
  * Remove unused Constraint
  *
@@ -45,7 +48,7 @@ public class MultiplicityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Multiplicity";
+        return "Reject Multiplicity";
     }
 
     /**

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.3 2006-06-30 07:58:22 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.4 2006-07-18 14:52:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/30 07:58:22  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.2  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -26,30 +29,17 @@ import jmmc.mcs.log.MCSLogger;
 import java.util.Vector;
 
 
-/*******
- *
- *
- * VOIR AVEC GUILLAUME !
- * On ne prend pas en compte la checkbox variable puisque si l'on selection variability c'est que l'on interdit la variabilite OU autorise(si autorise alors inverser le boolean et deplacer le remove).
- *
- *
- *
- */
-
 /**
  * Variability filter.
  */
 public class VariabilityFilter extends Filter
 {
-    //TODO place a constant for every "variable" ;))
-
     /**
      * Default constructor.
      */
     public VariabilityFilter()
     {
         super();
-        _constraints.put("variable", new Boolean(true));
     }
 
     /**
@@ -61,21 +51,7 @@ public class VariabilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Variability";
-    }
-
-    /**
-     * Return if or not variability is allowed by this filter.
-     *
-     * @return the variability flag.
-     */
-    private boolean getVariability()
-    {
-        MCSLogger.trace();
-
-        Boolean b = (Boolean) _constraints.get("variable");
-
-        return b.booleanValue();
+        return "Reject Variability";
     }
 
     /**
@@ -88,7 +64,7 @@ public class VariabilityFilter extends Filter
         MCSLogger.trace();
 
         // If the filter is enabled
-        if (isEnabled() == true) //if ((isEnabled() == true) && (getVariability() == true))
+        if (isEnabled() == true)
         {
             // Get the ids of the column contaning 'variability' star property
             int[] variabilityId = new int[3];
@@ -122,17 +98,10 @@ public class VariabilityFilter extends Filter
                     if ((variabilityFlag != null) &&
                             (variabilityFlag.equals("") == false))
                     {
-                        // if variability is checked
-                        /*if (getVariability() == true)
-                           {
-                               // Remove this row from the star List
-                         */
                         starList.remove(rowId);
 
                         // Data found
                         find = true;
-
-                        //  }
                     }
 
                     // Next variability flag
