@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.4 2006-07-12 14:30:58 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.5 2006-07-18 13:16:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/07/12 14:30:58  lafrasse
+ * Code refinment
+ * Added the status bar
+ *
  * Revision 1.3  2006/07/03 13:34:23  lafrasse
  * Added maximum & minimum calibrators magnitude properties
  *
@@ -115,25 +119,25 @@ public class QueryModel extends Observable
     }
 
     /**
-     * Set default values to all properties.
+     * Set default values for a bright search on ETA_TAU.
      */
     public void example()
     {
         MCSLogger.trace();
 
         setInstrumentalMagnitudeBand("V");
-        setInstrumentalWavelength(3.3);
-        setInstrumentalMaxBaseLine(123.4);
+        setInstrumentalWavelength(1);
+        setInstrumentalMaxBaseLine(102.45);
 
         setScienceObjectName("eta_tau");
         setScienceObjectRA("+03:47:29.79");
         setScienceObjectDEC("+24:06:18.50");
-        setScienceObjectMagnitude(3);
+        setScienceObjectMagnitude(0);
 
         setQueryMinMagnitude(2);
-        setQueryMaxMagnitude(5);
-        setQueryDiffRASize(11);
-        setQueryDiffDECSize(6);
+        setQueryMaxMagnitude(4);
+        setQueryDiffRASize(60);
+        setQueryDiffDECSize(5);
 
         setTotalStep(11);
 
