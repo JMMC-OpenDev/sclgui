@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.14 2006-07-18 13:08:39 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.15 2006-07-19 16:11:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/07/18 13:08:39  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.13  2006/07/12 15:52:25  lafrasse
  * Corrected package import to resolve a comilation problem with
  * jmmc.mcs.util.StatusBar
@@ -90,9 +93,6 @@ public class QueryView extends JPanel implements Observer,
     /** Assocaited virtual observatory */
     VirtualObservatory _vo;
 
-    /** Numerical textfiels formatter */
-    NumberFormat nf = NumberFormat.getNumberInstance();
-
     /** Instrument panel */
     JPanel instrumentPanel = new JPanel();
 
@@ -100,10 +100,10 @@ public class QueryView extends JPanel implements Observer,
     JComboBox _instrumentalMagnitudeBandCombo;
 
     /** Instrument wavelentgh */
-    JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(0));
 
     /** Instrument maximun baseline */
-    JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(nf);
+    JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(0));
 
     /** Science object panel */
     JPanel scienceObjectPanel;
@@ -119,16 +119,16 @@ public class QueryView extends JPanel implements Observer,
     JTextField _scienceObjectDECTextfield = new JTextField();
 
     /** Science object magnitude */
-    JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(0));
 
     /** SearchCal parameters panel */
     JPanel searchCalPanel;
 
     /** Search minimum magnitude */
-    JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(0));
 
     /** Search maximum magnitude */
-    JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(0));
 
     /** Bright/Faint query radion button group */
     ButtonGroup _brightFaintButtonGroup = new ButtonGroup();
@@ -140,13 +140,13 @@ public class QueryView extends JPanel implements Observer,
     JRadioButton _faintRadioButton;
 
     /** Search box RA size */
-    JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(0));
 
     /** Search box DEC size */
-    JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(0));
 
     /** Search box radial size */
-    JFormattedTextField _radialSizeTextfield = new JFormattedTextField(nf);
+    JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(0));
 
     /** Query launcher/canceler */
     JButton _searchButton;
@@ -174,8 +174,8 @@ public class QueryView extends JPanel implements Observer,
         _includeScienceObjectAction     = new IncludeScienceObjectAction();
 
         // Fill bands and correspondance with wavelengths
-        String[] bands       = { "I", "J", "H", "K" };
-        String[] wavelengths = { "1.1", "2.2", "3.3", "4.4" };
+        String[] bands       = { "I"  , "J"  , "H"  , "K"  , "V"  };
+        String[] wavelengths = { "1.1", "2.2", "3.3", "4.4", "5.5"};
 
         for (int i = 0; i < bands.length; i++)
         {
@@ -438,10 +438,12 @@ public class QueryView extends JPanel implements Observer,
 
         if (source == _instrumentalWavelengthTextfield)
         {
+            _queryModel.setInstrumentalWavelength((Double) _instrumentalWavelengthTextfield.getValue());
         }
 
         if (source == _instrumentalMaxBaselineTextField)
         {
+            _queryModel.setInstrumentalMaxBaseLine((Double) _instrumentalMaxBaselineTextField.getValue());
         }
 
         // Try to inject user values into the model
@@ -462,29 +464,17 @@ public class QueryView extends JPanel implements Observer,
 
         if (source == _scienceObjectMagnitudeTextfield)
         {
-            /*
-               Object tmp = _scienceObjectMagnitudeTextfield.getValue();
-               if (tmp != null)
-               {
-               MCSLogger.finest(tmp.getClass().getName());
-               MCSLogger.finest(tmp.toString());
-                       }
-                       Long magnitude = (Long)_scienceObjectMagnitudeTextfield.getValue();
-                       if (magnitude != null)
-                       {
-               _queryModel.setScienceObjectMagnitude(magnitude.doubleValue());
-               }
-             */
+            _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
         }
 
         if (source == _minMagnitudeTextfield)
         {
-            _queryModel.setQueryMinMagnitude(_minMagnitudeTextfield.getText());
+            _queryModel.setQueryMinMagnitude((Double) _minMagnitudeTextfield.getValue());
         }
 
         if (source == _maxMagnitudeTextfield)
         {
-            _queryModel.setQueryMaxMagnitude(_maxMagnitudeTextfield.getText());
+            _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
         }
     }
 
