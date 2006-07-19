@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.2 2006-07-19 16:26:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -43,7 +46,7 @@ public abstract class Filter extends Observable
     public abstract String getName();
 
     /**
-     * Return wether the filter is enabled or not.
+     * Return whether the filter is enabled or not.
      *
      * @return true if the filter is enabled, false otherwise.
      */
@@ -68,7 +71,7 @@ public abstract class Filter extends Observable
     }
 
     /**
-     * Set wether the filter is enabled or not.
+     * Set whether the filter is enabled or not.
      *
      * @param enabledFlag if true enable the filter, disable it otherwise.
      */
@@ -92,38 +95,6 @@ public abstract class Filter extends Observable
         MCSLogger.trace();
 
         return _constraints;
-    }
-
-    /**
-     * Create/Update a filter constraint with a String-typed value.
-     *
-     * @param constraintName the name of the constraint to be created/updated.
-     * @param constraintValue the value of the constraint to be created/updated.
-     */
-    public void setConstraint(String constraintName, String constraintValue)
-    {
-        MCSLogger.trace();
-
-        _constraints.put(constraintName, constraintValue);
-
-        setChanged();
-        notifyObservers();
-    }
-
-    /**
-     * Create/Update a filter constraint with a Double-typed value.
-     *
-     * @param constraintName the name of the constraint to be created/updated.
-     * @param constraintValue the value of the constraint to be created/updated.
-     */
-    public void setConstraint(String constraintName, Double constraintValue)
-    {
-        MCSLogger.trace();
-
-        _constraints.put(constraintName, constraintValue);
-
-        setChanged();
-        notifyObservers();
     }
 
     /**
