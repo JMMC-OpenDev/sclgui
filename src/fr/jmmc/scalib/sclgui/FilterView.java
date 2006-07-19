@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.4 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: FilterView.java,v 1.5 2006-07-19 16:27:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.3  2006/04/12 12:30:02  lafrasse
  * Updated some Doxygen tags to fix previous documentation generation errors
  *
@@ -25,6 +28,8 @@ import java.awt.event.*;
 
 import java.util.*;
 
+import java.text.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
@@ -43,7 +48,7 @@ public class FilterView extends JPanel implements Observer
     Filter _model;
 
     /** Store all the GUI component used to represent the attached filter */
-    Hashtable widgets;
+    Hashtable _widgets;
 
     /**
      * Default constructor.
@@ -53,7 +58,7 @@ public class FilterView extends JPanel implements Observer
         _model = model;
         _model.addObserver(this);
 
-        widgets = new Hashtable();
+        _widgets = new Hashtable();
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -75,97 +80,65 @@ public class FilterView extends JPanel implements Observer
         {
             String constraintName   = (String) e.nextElement();
             Object constraintObject = constraints.get(constraintName);
-
-            if (constraintObject instanceof Double)
-            {
-                String constraintValue = (String) constraintObject;
-                addStringParam(constraintName, constraintValue);
-            }
-            else if (constraintObject instanceof String)
-            {
-                addStringParam(constraintName, (String) constraintObject);
-            }
-            else if (constraintObject instanceof Boolean)
-            {
-                addBooleanParam(constraintName, (Boolean) constraintObject);
-            }
+            addParam(constraintName, constraintObject);
         }
 
         EtchedBorder border = (EtchedBorder) BorderFactory.createEtchedBorder();
         setBorder(border);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param constraintName DOCUMENT ME!
-     * @param constraintValue DOCUMENT ME!
-     */
-    public void addStringParam(String constraintName, String constraintValue)
+    public void addParam(String constraintName, Object constraintValue)
     {
         MCSLogger.trace();
+
+        JComponent widget = new JLabel("!!! ERROR !!!");
+        ActionListener paramListener;
+
+        if (constraintValue.getClass() == java.lang.Double.class)
+        {
+            widget        = new JFormattedTextField((Double) constraintValue);
+            paramListener = new DoubleParamListener(_model, constraintName, (JFormattedTextField) widget);
+            ((JFormattedTextField) widget).addActionListener(paramListener);
+        }
+        else if (constraintValue.getClass() == java.lang.String.class)
+        {
+            widget        = new JTextField((String) constraintValue);
+            paramListener = new StringParamListener(_model, constraintName,(JTextField) widget);
+            ((JTextField) widget).addActionListener(paramListener);
+        }
+        else if (constraintValue.getClass() == java.lang.Boolean.class)
+        {
+            widget        = new JCheckBox(constraintName,
+                ((Boolean) constraintValue).booleanValue());
+            paramListener = new BooleanParamListener(_model, constraintName,(JCheckBox) widget);
+            ((JCheckBox) widget).addActionListener(paramListener);
+        }
 
         JPanel              panel         = new JPanel();
-        JLabel              label         = new JLabel(constraintName);
-        JTextField          widget        = new JTextField(constraintValue);
-        StringParamListener paramListener = new StringParamListener(_model,
-                constraintName, widget);
-        widget.addActionListener(paramListener);
-
-        panel.add(label);
+        panel.add(new JLabel(constraintName));
         panel.add(widget);
         add(panel);
-        widgets.put(constraintName, widget);
+        _widgets.put(constraintName, widget);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param constraintName DOCUMENT ME!
-     * @param constraintValue DOCUMENT ME!
-     */
-    public void setStringParam(String constraintName, String constraintValue)
+    public void setParam(String constraintName, Object constraintValue)
     {
         MCSLogger.trace();
 
-        JTextField widget = (JTextField) widgets.get(constraintName);
-        widget.setText(constraintValue);
-    }
+        JComponent widget = (JComponent) _widgets.get(constraintName);
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param constraintName DOCUMENT ME!
-     * @param constraintValue DOCUMENT ME!
-     */
-    public void addBooleanParam(String constraintName, Boolean constraintValue)
-    {
-        MCSLogger.trace();
-
-        JPanel               panel         = new JPanel();
-        JCheckBox            widget        = new JCheckBox(constraintName,
-                constraintValue.booleanValue());
-        BooleanParamListener paramListener = new BooleanParamListener(_model,
-                constraintName, widget);
-        widget.addActionListener(paramListener);
-
-        panel.add(widget);
-        add(panel);
-        widgets.put(constraintName, widget);
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param constraintName DOCUMENT ME!
-     * @param constraintValue DOCUMENT ME!
-     */
-    public void setBooleanParam(String constraintName, Boolean constraintValue)
-    {
-        MCSLogger.trace();
-
-        JCheckBox widget = (JCheckBox) widgets.get(constraintName);
-        widget.setSelected(constraintValue.booleanValue());
+        if (constraintValue.getClass() == java.lang.Double.class)
+        {
+            ((JFormattedTextField) widget).setValue((Double) constraintValue);
+        }
+        else if (constraintValue.getClass() == java.lang.String.class)
+        {
+            ((JTextField) widget).setText((String) constraintValue);
+        }
+        else if (constraintValue.getClass() == java.lang.Boolean.class)
+        {
+            ((JCheckBox) widget).setSelected(((Boolean) constraintValue).booleanValue());
+        }
     }
 
     /**
@@ -181,21 +154,52 @@ public class FilterView extends JPanel implements Observer
         {
             String constraintName   = (String) e.nextElement();
             Object constraintObject = constraints.get(constraintName);
-
-            if (constraintObject instanceof Double)
-            {
-                String constraintValue = (String) constraintObject;
-                setStringParam(constraintName, constraintValue);
-            }
-            else if (constraintObject instanceof String)
-            {
-                setStringParam(constraintName, (String) constraintObject);
-            }
-            else if (constraintObject instanceof Boolean)
-            {
-                setBooleanParam(constraintName, (Boolean) constraintObject);
-            }
+            setParam(constraintName, constraintObject);
         }
+    }
+}
+
+
+/**
+ * Handle any event coming from a given parameter widget.
+ */
+class DoubleParamListener implements ActionListener
+{
+    /** The filter to update */
+    Filter _filter;
+
+    /** the constraint to handle */
+    String _constraintName;
+
+    /** The GUI component to display the constraint */
+    JFormattedTextField _widget;
+
+    /**
+     * Constructor.
+     *
+     * @param filter the filter to update.
+     * @param constraintName the name of the constraint to handle.
+     * @param widget The GUI component to display the constraint.
+     */
+    public DoubleParamListener(Filter filter, String constraintName,
+        JFormattedTextField widget)
+    {
+        _filter             = filter;
+        _constraintName     = constraintName;
+        _widget             = widget;
+    }
+
+    /**
+     * Called whenever an event was issued by the GUI component.
+     *
+     * @param e the event.
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        MCSLogger.trace();
+
+        // Update the filter value with the one given by the GUI component
+        _filter.setConstraint(_constraintName, (Double) _widget.getValue());
     }
 }
 
