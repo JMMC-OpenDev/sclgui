@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.2 2006-07-19 16:22:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -27,7 +30,10 @@ public class DistanceFilter extends Filter
     public DistanceFilter()
     {
         super();
+
         _constraints.put("dist", new Double(0.0));
+        _constraints.put("Maximum RA Separation (mn)", new Double(0.0));
+        _constraints.put("Maximum DEC Separation (degree)", new Double(0.0));
     }
 
     /**
@@ -39,7 +45,7 @@ public class DistanceFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Maximum Distance";
+        return "Reject stars farther than :";
     }
 
     /**
@@ -51,7 +57,7 @@ public class DistanceFilter extends Filter
     {
         MCSLogger.trace();
 
-        Double d = new Double((String) _constraints.get("dist"));
+        Double d = (Double) _constraints.get("dist");
 
         return d.doubleValue();
     }
