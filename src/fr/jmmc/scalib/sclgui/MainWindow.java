@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.9 2006-07-18 13:08:39 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.10 2006-07-26 13:30:32 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/07/18 13:08:39  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.8  2006/07/12 15:50:29  lafrasse
  * Corrected package import to resolve a comilation problem with
  * jmmc.mcs.util.StatusBar
@@ -113,7 +116,7 @@ public class MainWindow extends JFrame
             setTitle("SearchCal");
 
             _mainPane = getContentPane();
-            _mainPane.setLayout(new BoxLayout(_mainPane, BoxLayout.Y_AXIS));
+            _mainPane.setLayout(new BorderLayout());
 
             // Create a first top-bottom split pane for calibrators and filters
             JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -135,10 +138,10 @@ public class MainWindow extends JFrame
             splitPane.setContinuousLayout(true);
             // Allows the user to conveniently move the divider to either end with a single click
             splitPane.setOneTouchExpandable(true);
-            _mainPane.add(splitPane);
+            _mainPane.add(splitPane, BorderLayout.CENTER);
 
             // Add the Status bar
-            _mainPane.add(statusBar);
+            _mainPane.add(statusBar, BorderLayout.SOUTH);
 
             // Show all the GUI
             _queryView.setVisible(true);
