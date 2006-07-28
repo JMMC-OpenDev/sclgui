@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.7 2006-07-18 13:08:39 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.8 2006-07-28 08:30:43 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/07/18 13:08:39  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.6  2006/07/12 15:51:51  lafrasse
  * Corrected package import to resolve a comilation problem with
  * jmmc.mcs.util.StatusBar
@@ -98,6 +101,9 @@ public class SearchCalibrators
      */
     public SearchCalibrators()
     {
+        // Set default resource    
+        jmmc.mcs.util.Resources.setResourceName("jmmc/scalib/sclgui/Resources");
+
         // Create filters
         FiltersModel filtersModel = new FiltersModel();
         FiltersView  filtersView  = new FiltersView(filtersModel);
