@@ -1,15 +1,20 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SCAction.java,v 1.1 2006-06-26 14:30:40 mella Exp $"
+ * "@(#) $Id: SCAction.java,v 1.2 2006-07-28 08:33:55 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/06/26 14:30:40  mella
+ * *** empty log message ***
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.*;
+
+import jmmc.mcs.util.*;
 
 import javax.swing.*;
 
