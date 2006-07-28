@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.11 2006-07-11 11:16:23 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.12 2006-07-28 08:37:56 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/07/11 11:16:23  mella
+ * Add show Detail and show legend preference checkboxes
+ *
  * Revision 1.10  2006/06/30 11:53:17  mella
  * Change GUI presentation
  *
@@ -482,7 +485,7 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
             String    pref   = (String) e.nextElement();
             Action    action = (Action) booleanPrefs.get(pref);
             JCheckBox cb     = new JCheckBox(action);
-            cb.setModel(new PreferencedButtonModel(_preferences, pref));
+            cb.setModel(PreferencedButtonModel.getInstance(_preferences, pref));
             add(cb);
         }
 
