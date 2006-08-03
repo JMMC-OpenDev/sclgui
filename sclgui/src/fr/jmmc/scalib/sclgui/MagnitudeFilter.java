@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MagnitudeFilter.java,v 1.1 2006-07-19 16:22:55 lafrasse Exp $"
+ * "@(#) $Id: MagnitudeFilter.java,v 1.2 2006-08-03 14:47:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/07/19 16:22:55  lafrasse
+ * Creation
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -53,33 +56,30 @@ public class MagnitudeFilter extends Filter
         // If the filter is enabled
         if (isEnabled() == true)
         {
-/*
-            // Get the id of the column contaning 'distance' star property
-            int distanceId = starList.getColumnIdByName("dist");
-
-            // For each row of the star list
-            int rowId = 0;
-
-            while (rowId < starList.size())
-            {
-                // Get the distance value
-                Vector       row             = ((Vector) starList.elementAt(rowId));
-                StarProperty cell            = ((StarProperty) row.elementAt(distanceId));
-                double       currentDistance = cell.getDoubleValue();
-
-                // if the distance value is greater than the allowed one
-                if (currentDistance > getAllowedDistance())
-                {
-                    // Remove this row from the star list
-                    starList.remove(rowId);
-                }
-                else
-                {
-                    // Otherwise process the next row
-                    rowId++;
-                }
-            }
-*/
+            /*
+               // Get the id of the column contaning 'distance' star property
+               int distanceId = starList.getColumnIdByName("dist");
+               // For each row of the star list
+               int rowId = 0;
+               while (rowId < starList.size())
+               {
+                   // Get the distance value
+                   Vector       row             = ((Vector) starList.elementAt(rowId));
+                   StarProperty cell            = ((StarProperty) row.elementAt(distanceId));
+                   double       currentDistance = cell.getDoubleValue();
+                   // if the distance value is greater than the allowed one
+                   if (currentDistance > getAllowedDistance())
+                   {
+                       // Remove this row from the star list
+                       starList.remove(rowId);
+                   }
+                   else
+                   {
+                       // Otherwise process the next row
+                       rowId++;
+                   }
+               }
+             */
         }
     }
 }

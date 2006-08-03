@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.1 2006-07-28 13:14:53 lafrasse Exp $"
+ * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.2 2006-08-03 14:47:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/07/28 13:14:53  lafrasse
+ * Creation
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -76,8 +79,8 @@ public class VisibilityFilter extends Filter
             while (rowId < starList.size())
             {
                 // Get the visibility value
-                Vector       row             = ((Vector) starList.elementAt(rowId));
-                StarProperty cell            = ((StarProperty) row.elementAt(visibilityId));
+                Vector       row              = ((Vector) starList.elementAt(rowId));
+                StarProperty cell             = ((StarProperty) row.elementAt(visibilityId));
                 double       currentVisibiliy = cell.getDoubleValue();
 
                 // if the visibility value is greater than the allowed one
