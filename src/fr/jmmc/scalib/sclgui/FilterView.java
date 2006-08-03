@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.5 2006-07-19 16:27:39 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.6 2006-08-03 14:47:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/07/19 16:27:39  lafrasse
+ * Generalized code for addXXXParam and setXXXParam
+ *
  * Revision 1.4  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -26,9 +29,9 @@ import jmmc.mcs.log.MCSLogger;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.*;
-
 import java.text.*;
+
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -87,40 +90,55 @@ public class FilterView extends JPanel implements Observer
         setBorder(border);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param constraintName DOCUMENT ME!
+     * @param constraintValue DOCUMENT ME!
+     */
     public void addParam(String constraintName, Object constraintValue)
     {
         MCSLogger.trace();
 
-        JComponent widget = new JLabel("!!! ERROR !!!");
+        JComponent     widget        = new JLabel("!!! ERROR !!!");
         ActionListener paramListener;
 
         if (constraintValue.getClass() == java.lang.Double.class)
         {
-            widget        = new JFormattedTextField((Double) constraintValue);
-            paramListener = new DoubleParamListener(_model, constraintName, (JFormattedTextField) widget);
+            widget                   = new JFormattedTextField((Double) constraintValue);
+            paramListener            = new DoubleParamListener(_model,
+                    constraintName, (JFormattedTextField) widget);
             ((JFormattedTextField) widget).addActionListener(paramListener);
         }
         else if (constraintValue.getClass() == java.lang.String.class)
         {
-            widget        = new JTextField((String) constraintValue);
-            paramListener = new StringParamListener(_model, constraintName,(JTextField) widget);
+            widget            = new JTextField((String) constraintValue);
+            paramListener     = new StringParamListener(_model, constraintName,
+                    (JTextField) widget);
             ((JTextField) widget).addActionListener(paramListener);
         }
         else if (constraintValue.getClass() == java.lang.Boolean.class)
         {
-            widget        = new JCheckBox(constraintName,
-                ((Boolean) constraintValue).booleanValue());
-            paramListener = new BooleanParamListener(_model, constraintName,(JCheckBox) widget);
+            widget            = new JCheckBox(constraintName,
+                    ((Boolean) constraintValue).booleanValue());
+            paramListener     = new BooleanParamListener(_model,
+                    constraintName, (JCheckBox) widget);
             ((JCheckBox) widget).addActionListener(paramListener);
         }
 
-        JPanel              panel         = new JPanel();
+        JPanel panel = new JPanel();
         panel.add(new JLabel(constraintName));
         panel.add(widget);
         add(panel);
         _widgets.put(constraintName, widget);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param constraintName DOCUMENT ME!
+     * @param constraintValue DOCUMENT ME!
+     */
     public void setParam(String constraintName, Object constraintValue)
     {
         MCSLogger.trace();

@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.8 2006-07-19 16:24:54 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.9 2006-08-03 14:47:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/07/19 16:24:54  lafrasse
+ * Added missing filters
+ * Reordered according to preliminary review scientists feedback
+ *
  * Revision 1.7  2006/07/12 14:16:34  lafrasse
  * Jalopyzation
  *
@@ -61,42 +65,49 @@ public class FiltersModel
         // Distance filter
         DistanceFilter distanceFilter = new DistanceFilter();
         _filterList.add(distanceFilter);
+
         FilterView distanceFilterView = new FilterView(distanceFilter);
         _filterViews.add(distanceFilterView);
 
         // Magnitude filter
         MagnitudeFilter magnitudeFilter = new MagnitudeFilter();
         _filterList.add(magnitudeFilter);
+
         FilterView magnitudeFilterView = new FilterView(magnitudeFilter);
         _filterViews.add(magnitudeFilterView);
 
         // Spectral Type filter
         SpectralTypeFilter spectralTypeFilter = new SpectralTypeFilter();
         _filterList.add(spectralTypeFilter);
+
         FilterView spectralTypeFilterView = new FilterView(spectralTypeFilter);
         _filterViews.add(spectralTypeFilterView);
 
         // Luminosity filter
         LuminosityFilter luminosityFilter = new LuminosityFilter();
         _filterList.add(luminosityFilter);
+
         FilterView luminosityFilterView = new FilterView(luminosityFilter);
         _filterViews.add(luminosityFilterView);
 
         // Visibiliy filter
         VisibilityFilter visibiliyFilter = new VisibilityFilter();
         _filterList.add(visibiliyFilter);
+
         FilterView visibiliyFilterView = new FilterView(visibiliyFilter);
         _filterViews.add(visibiliyFilterView);
 
         // Variability filter
         VariabilityFilter variabilityFilter = new VariabilityFilter();
         _filterList.add(variabilityFilter);
+
         FilterView variabilityFilterView = new FilterView(variabilityFilter);
         _filterViews.add(variabilityFilterView);
 
         // Multiplicity filter
         MultiplicityFilter multiplicityFilter = new MultiplicityFilter();
         _filterList.add(multiplicityFilter);
+
         FilterView multiplicityFilterView = new FilterView(multiplicityFilter);
         _filterViews.add(multiplicityFilterView);
     }
