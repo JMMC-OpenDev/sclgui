@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.16 2006-07-28 08:35:11 mella Exp $"
+ * "@(#) $Id: QueryView.java,v 1.17 2006-08-04 16:35:43 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/07/28 08:35:11  mella
+ * make it compile
+ *
  * Revision 1.15  2006/07/19 16:11:41  lafrasse
  * Changed Formatted TextFields for better Double handling
  * Added "V" magnitude band
@@ -598,7 +601,7 @@ public class QueryView extends JPanel implements Observer,
             {
                 try
                 {
-                    _vo.getScienceObject(_queryModel);
+                    _vo.getScienceObject();
                 }
                 catch (Exception ex)
                 {

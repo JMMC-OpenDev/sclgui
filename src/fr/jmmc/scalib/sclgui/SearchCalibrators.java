@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.8 2006-07-28 08:30:43 mella Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.9 2006-08-04 16:35:43 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/07/28 08:30:43  mella
+ * Use mcs generic Resources class
+ *
  * Revision 1.7  2006/07/18 13:08:39  lafrasse
  * Jalopyzation
  *
@@ -114,11 +117,13 @@ public class SearchCalibrators
 
         filtersModel.addObserver(calibratorsModel);
 
-        VirtualObservatory vo = new VirtualObservatory(calibratorsModel);
-
         // Create a query model and attach it to a query view
-        QueryModel queryModel = new QueryModel();
-        QueryView  queryView  = new QueryView(queryModel, vo);
+        QueryModel         queryModel = new QueryModel();
+
+        VirtualObservatory vo         = new VirtualObservatory(queryModel,
+                calibratorsModel, filtersModel);
+
+        QueryView          queryView  = new QueryView(queryModel, vo);
 
         // Retrieve application preferences and attach them to their view
         // (This instance must be instanciated after dependencies)
