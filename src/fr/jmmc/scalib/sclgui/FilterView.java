@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.6 2006-08-03 14:47:29 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.7 2006-08-04 14:09:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/08/03 14:47:29  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.5  2006/07/19 16:27:39  lafrasse
  * Generalized code for addXXXParam and setXXXParam
  *
@@ -44,115 +47,160 @@ import javax.swing.table.*;
 
 /**
  * Generic filter view.
+ *
+ * @warning Only Strings, Doubles and Booleans constraints are supported.
  */
 public class FilterView extends JPanel implements Observer
 {
     /** The filter to represent */
     Filter _model;
 
+    /** Filter enabling checbox */
+    JCheckBox _enabledCheckbox;
+
     /** Store all the GUI component used to represent the attached filter */
-    Hashtable _widgets;
+    Hashtable _widgets = new Hashtable();
+
+    /** Widgets panel */
+    JPanel _widgetsPanel = new JPanel();
 
     /**
      * Default constructor.
      */
     public FilterView(Filter model)
     {
+        // Members initialization
         _model = model;
         _model.addObserver(this);
 
-        _widgets = new Hashtable();
-
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-        JCheckBox enabledCheckbox = new JCheckBox(_model.getName(),
-                _model.isEnabled());
-        add(enabledCheckbox);
-
-        EnablerListener cbListener = new EnablerListener(_model);
-        enabledCheckbox.addActionListener(cbListener);
+        // Create the filter enable/disable checkbox
+        _enabledCheckbox = new JCheckBox(_model.getName(), _model.isEnabled());
+        _enabledCheckbox.addActionListener(new EnablerListener(_model,
+                _enabledCheckbox));
+        add(_enabledCheckbox);
 
         // Add an empty panel to force filter to be aligned
-        JPanel panel = new JPanel();
-        add(panel);
+        add(new JPanel());
 
-        // Get constraints of model
+        // For each constraint of the associated filter
         Hashtable constraints = _model.getConstraints();
 
         for (Enumeration e = constraints.keys(); e.hasMoreElements();)
         {
-            String constraintName   = (String) e.nextElement();
+            // Get the constraint name
+            String constraintName = (String) e.nextElement();
+
+            // Get the constraint value
             Object constraintObject = constraints.get(constraintName);
-            addParam(constraintName, constraintObject);
+            // Add the corresponding widget to the current filter view
+            addParam(_widgetsPanel, constraintName, constraintObject);
         }
 
-        EtchedBorder border = (EtchedBorder) BorderFactory.createEtchedBorder();
-        setBorder(border);
+        // Layout and border initialization
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setBorder((EtchedBorder) BorderFactory.createEtchedBorder());
+
+        // Display the widget panel only if there are some constraints
+        if (constraints.isEmpty() == false)
+        {
+            _widgetsPanel.setLayout(new BoxLayout(_widgetsPanel,
+                    BoxLayout.X_AXIS));
+            _widgetsPanel.setBorder((EtchedBorder) BorderFactory.createEtchedBorder());
+            add(_widgetsPanel);
+        }
+
+        // Display each widget
+        update(_model, null);
     }
 
     /**
-     * DOCUMENT ME!
+     * Add a constraint to the filter.
      *
-     * @param constraintName DOCUMENT ME!
-     * @param constraintValue DOCUMENT ME!
+     * @constraintName the name of the constraint (will be used as the widget
+     * label).
+     * @constraintValue the object holding the constraint value.
      */
-    public void addParam(String constraintName, Object constraintValue)
+    private void addParam(JPanel panel, String constraintName,
+        Object constraintValue)
     {
         MCSLogger.trace();
 
-        JComponent     widget        = new JLabel("!!! ERROR !!!");
+        JLabel         label         = new JLabel(constraintName);
+        JComponent     widget;
         ActionListener paramListener;
 
+        // If the constraint is a Double object
         if (constraintValue.getClass() == java.lang.Double.class)
         {
+            // Create the widget label
+            panel.add(label);
+
+            // Create the constraint widget
             widget                   = new JFormattedTextField((Double) constraintValue);
             paramListener            = new DoubleParamListener(_model,
                     constraintName, (JFormattedTextField) widget);
             ((JFormattedTextField) widget).addActionListener(paramListener);
+            _widgets.put(constraintName, widget);
+            panel.add(widget);
+            add(panel);
         }
+
+        // Else if the constraint is a String object
         else if (constraintValue.getClass() == java.lang.String.class)
         {
+            // Create the widget label
+            panel.add(label);
+
+            // Create the constraint widget
             widget            = new JTextField((String) constraintValue);
             paramListener     = new StringParamListener(_model, constraintName,
                     (JTextField) widget);
             ((JTextField) widget).addActionListener(paramListener);
+            _widgets.put(constraintName, widget);
+            panel.add(widget);
+            add(panel);
         }
+
+        // Else if the constraint is a Boolean object
         else if (constraintValue.getClass() == java.lang.Boolean.class)
         {
+            // Create the constraint widget
             widget            = new JCheckBox(constraintName,
                     ((Boolean) constraintValue).booleanValue());
             paramListener     = new BooleanParamListener(_model,
                     constraintName, (JCheckBox) widget);
             ((JCheckBox) widget).addActionListener(paramListener);
+            _widgets.put(constraintName, widget);
+            panel.add(widget);
+            add(panel);
         }
-
-        JPanel panel = new JPanel();
-        panel.add(new JLabel(constraintName));
-        panel.add(widget);
-        add(panel);
-        _widgets.put(constraintName, widget);
     }
 
     /**
-     * DOCUMENT ME!
+     * Change a constraint value.
      *
-     * @param constraintName DOCUMENT ME!
-     * @param constraintValue DOCUMENT ME!
+     * @constraintName the name of the constraint to be updated.
+     * @constraintValue the new constraint value.
      */
-    public void setParam(String constraintName, Object constraintValue)
+    private void setParam(String constraintName, Object constraintValue)
     {
         MCSLogger.trace();
 
         JComponent widget = (JComponent) _widgets.get(constraintName);
 
+        // If the constraint is a Double object
         if (constraintValue.getClass() == java.lang.Double.class)
         {
             ((JFormattedTextField) widget).setValue((Double) constraintValue);
         }
+
+        // Else if the constraint is a String object
         else if (constraintValue.getClass() == java.lang.String.class)
         {
             ((JTextField) widget).setText((String) constraintValue);
         }
+
+        // Else if the constraint is a Boolean object
         else if (constraintValue.getClass() == java.lang.Boolean.class)
         {
             ((JCheckBox) widget).setSelected(((Boolean) constraintValue).booleanValue());
@@ -164,8 +212,7 @@ public class FilterView extends JPanel implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        // TODO update fields
-        // get constraints of model
+        // Updtae each constraint value from their widget
         Hashtable constraints = _model.getConstraints();
 
         for (Enumeration e = constraints.keys(); e.hasMoreElements();)
@@ -174,6 +221,9 @@ public class FilterView extends JPanel implements Observer
             Object constraintObject = constraints.get(constraintName);
             setParam(constraintName, constraintObject);
         }
+
+        // Enable or disable all the constraint widgets
+        QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
     }
 }
 
@@ -318,14 +368,18 @@ class EnablerListener implements ActionListener
     /** The filter to update */
     Filter _filter;
 
+    /** The checkbox to monitor */
+    JCheckBox _checkBox;
+
     /**
      * Constructor.
      *
      * @param filter the filter to update.
      */
-    public EnablerListener(Filter filter)
+    public EnablerListener(Filter filter, JCheckBox checkBox)
     {
-        _filter = filter;
+        _filter       = filter;
+        _checkBox     = checkBox;
     }
 
     /**
@@ -338,8 +392,8 @@ class EnablerListener implements ActionListener
         MCSLogger.trace();
 
         // Update the filter enabled state with the one given by the checkbox
-        JCheckBox cb = (JCheckBox) e.getSource();
-        _filter.setEnabled(new Boolean(cb.isSelected()));
+        Boolean flag = new Boolean(_checkBox.isSelected());
+        _filter.setEnabled(flag);
     }
 }
 /*___oOo___*/

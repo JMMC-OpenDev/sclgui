@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.2 2006-08-03 14:47:29 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.3 2006-08-04 14:09:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/08/03 14:47:29  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.1  2006/07/28 13:14:53  lafrasse
  * Creation
  *
@@ -41,7 +44,7 @@ public class VisibilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject visibility accuracy above";
+        return "Reject Visibility Accuracy above";
     }
 
     /**

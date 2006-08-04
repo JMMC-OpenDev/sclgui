@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.3 2006-04-06 14:38:58 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.4 2006-08-04 14:09:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/06 14:38:58  lafrasse
+ * Layout update
+ *
  * Revision 1.2  2006/04/06 14:24:54  mella
  * Add default constraints to true
  *
@@ -38,12 +41,12 @@ public class LuminosityFilter extends Filter
     {
         super();
 
-        _constraints.put("I", new Boolean(true));
-        _constraints.put("II", new Boolean(true));
-        _constraints.put("III", new Boolean(true));
-        _constraints.put("IV", new Boolean(true));
-        _constraints.put("V", new Boolean(true));
-        _constraints.put("VI", new Boolean(true));
+        _constraints.put("I", new Boolean(false));
+        _constraints.put("II", new Boolean(false));
+        _constraints.put("III", new Boolean(false));
+        _constraints.put("IV", new Boolean(false));
+        _constraints.put("V", new Boolean(false));
+        _constraints.put("VI", new Boolean(false));
     }
 
     /**
@@ -55,7 +58,7 @@ public class LuminosityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Luminosity Class";
+        return "Reject selected Luminosity Classes";
     }
 
     /**

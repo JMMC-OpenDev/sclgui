@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterList.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: FilterList.java,v 1.2 2006-08-04 14:09:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
@@ -89,8 +92,10 @@ public class FilterList extends Filter implements Observer
     {
         MCSLogger.trace();
 
+        // If the filter list is enbled
         if (isEnabled() == true)
         {
+            // Process each filter of the filter list against the star list
             for (int filterId = 0; filterId < _filters.size(); filterId++)
             {
                 ((Filter) _filters.get(filterId)).process(starList);
