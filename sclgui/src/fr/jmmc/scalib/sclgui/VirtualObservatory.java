@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.3 2006-06-30 08:01:23 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.4 2006-08-04 16:35:43 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/30 08:01:23  lafrasse
+ * Added fake progress bar updates and science object completion API
+ *
  * Revision 1.2  2006/04/12 12:30:02  lafrasse
  * Updated some Doxygen tags to fix previous documentation generation errors
  *
@@ -34,21 +37,28 @@ import javax.swing.*;
  */
 public class VirtualObservatory
 {
+    /** Query model */
+    QueryModel _queryModel;
+
     /** Data model to which the result should be passed */
     CalibratorsModel _calibratorsModel;
+
+    /** Filters model */
+    FiltersModel _filtersModel;
 
     /**
      * Contructor.
      */
-    public VirtualObservatory(CalibratorsModel calibratorsModel)
+    public VirtualObservatory(QueryModel queryModel,
+        CalibratorsModel calibratorsModel, FiltersModel filtersModel)
     {
-        _calibratorsModel = calibratorsModel;
+        _queryModel           = queryModel;
+        _calibratorsModel     = calibratorsModel;
+        _filtersModel         = filtersModel;
     }
 
     /**
      * Get calibrator list as a raw VOTable from JMMC web service.
-     *
-     * @param queryModel the query to execute.
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
@@ -83,7 +93,7 @@ public class VirtualObservatory
             }
         }
 
-        ProgressBarThread thread = new ProgressBarThread(queryModel, 200);
+        ProgressBarThread thread = new ProgressBarThread(_queryModel, 200);
         thread.start();
 
         try
@@ -121,17 +131,14 @@ public class VirtualObservatory
     /**
      * Get science object properties from is name through Simbad web service.
      *
-     * @param queryModel the query to update.
-     *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    public void getScienceObject(QueryModel queryModel)
-        throws Exception
+    public void getScienceObject() throws Exception
     {
         MCSLogger.trace();
 
         // TODO : Querying Simbad and fill the query model accordinally
-        queryModel.init();
+        _queryModel.init();
     }
 }
 /*___oOo___*/
