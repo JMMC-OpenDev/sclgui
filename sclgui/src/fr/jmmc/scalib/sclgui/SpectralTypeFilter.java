@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.3 2006-04-06 14:38:58 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.4 2006-08-04 14:09:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/04/06 14:38:58  lafrasse
+ * Layout update
+ *
  * Revision 1.2  2006/04/06 14:24:54  mella
  * Add default constraints to true
  *
@@ -38,13 +41,13 @@ public class SpectralTypeFilter extends Filter
     {
         super();
 
-        _constraints.put("O", new Boolean(true));
-        _constraints.put("B", new Boolean(true));
-        _constraints.put("A", new Boolean(true));
-        _constraints.put("F", new Boolean(true));
-        _constraints.put("G", new Boolean(true));
-        _constraints.put("K", new Boolean(true));
-        _constraints.put("M", new Boolean(true));
+        _constraints.put("O", new Boolean(false));
+        _constraints.put("B", new Boolean(false));
+        _constraints.put("A", new Boolean(false));
+        _constraints.put("F", new Boolean(false));
+        _constraints.put("G", new Boolean(false));
+        _constraints.put("K", new Boolean(false));
+        _constraints.put("M", new Boolean(false));
     }
 
     /**
@@ -56,7 +59,7 @@ public class SpectralTypeFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Spectral Type";
+        return "Reject selected Spectral Types";
     }
 
     /**

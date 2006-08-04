@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersView.java,v 1.3 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: FiltersView.java,v 1.4 2006-08-04 14:09:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.2  2006/04/07 13:07:25  mella
  * Improve presentation
  *
@@ -33,9 +36,6 @@ import javax.swing.table.*;
  */
 public class FiltersView extends JPanel
 {
-    /** The model to represent */
-    FiltersModel _model;
-
     /**
      * Constructor.
      *
@@ -43,16 +43,14 @@ public class FiltersView extends JPanel
      */
     public FiltersView(FiltersModel model)
     {
-        _model = model;
+        // Initialize layout and border
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         Border lightBorder = BorderFactory.createLineBorder(Color.GRAY, 1);
         setBorder(new TitledBorder(lightBorder, "Filters"));
 
-        // Set a layout manager
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         // Add each model filter view to the view panel
-        Vector filterViews = _model.getFilterViewVector();
+        Vector filterViews = model.getFilterViewVector();
 
         for (Enumeration e = filterViews.elements(); e.hasMoreElements();)
         {
