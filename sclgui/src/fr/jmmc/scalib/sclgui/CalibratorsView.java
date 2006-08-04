@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.21 2006-07-18 13:08:11 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.22 2006-08-04 16:53:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2006/07/18 13:08:11  lafrasse
+ * Removed resume text field and label
+ * Code refinment
+ *
  * Revision 1.20  2006/07/11 11:18:55  mella
  * Add show details action and place for first id column
  *
@@ -76,6 +80,7 @@ import jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.print.*;
 
 import java.io.*;
 
@@ -101,7 +106,7 @@ import javax.swing.table.*;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-    Observer
+    Observer, Printable
 {
     /** Show Details action */
     static Action _showDetailsAction;
@@ -332,6 +337,31 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         MCSLogger.trace();
 
         //@todo implement
+    }
+
+    /**
+     * @sa java.awt.print
+     */
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
+        throws PrinterException
+    {
+        Graphics2D g2d = (Graphics2D) graphics;
+        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+        int fontHeight  = g2d.getFontMetrics().getHeight();
+        int fontDescent = g2d.getFontMetrics().getDescent();
+
+        // laisser de l'espace pour le numero de page
+        double pageHeight = pageFormat.getImageableHeight() - fontHeight;
+        double pageWidth  = pageFormat.getImageableWidth();
+
+        g2d.drawString("Page: " + (pageIndex + 1), ((int) pageWidth / 2) - 35,
+            (int) ((pageHeight + fontHeight) - fontDescent));
+
+        g2d.scale(0.7, 0.7);
+        paint(g2d);
+
+        return (Printable.PAGE_EXISTS);
     }
 
     protected class DeleteAction extends SCAction

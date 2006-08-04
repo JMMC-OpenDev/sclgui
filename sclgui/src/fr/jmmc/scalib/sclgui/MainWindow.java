@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.10 2006-07-26 13:30:32 mella Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.11 2006-08-04 16:53:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/07/26 13:30:32  mella
+ * Use BorderLayout to educate status position
+ *
  * Revision 1.9  2006/07/18 13:08:39  lafrasse
  * Jalopyzation
  *
@@ -49,7 +52,6 @@ import org.xml.sax.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.print.*;
 
 import java.io.*;
 
@@ -84,19 +86,19 @@ public class MainWindow extends JFrame
     MainMenuBar _menuBar;
 
     /** Query view */
-    QueryView _queryView;
+    public QueryView _queryView;
 
     /** Calibrators view */
-    CalibratorsView _calibratorsView;
-
-    /** Preferences view */
-    PreferencesView _preferencesView;
+    public CalibratorsView _calibratorsView;
 
     /** Filters view */
-    FiltersView _filtersView;
+    public FiltersView _filtersView;
 
     /** Status bar */
     StatusBar _statusBar;
+
+    /** Preferences view */
+    PreferencesView _preferencesView;
 
     /**
      * Constructor.

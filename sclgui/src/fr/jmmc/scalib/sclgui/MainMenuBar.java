@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.10 2006-07-28 08:39:18 mella Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.11 2006-08-04 16:53:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/07/28 08:39:18  mella
+ * Use shared PreferenceButtonModels
+ *
  * Revision 1.9  2006/07/11 11:17:21  mella
  * Add better code for preferenced checkboxes
  *
@@ -173,22 +176,21 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         menuItem.addActionListener(this);
         fileMenu.add(menuItem);
 
-        /* Deactivate printing calls
-           // Add a separator
-           fileMenu.add(new JSeparator());
-           // Page Setup... menu item
-           menuItem = new JMenuItem("Page Setup...");
-           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                   ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-           // Print... menu item
-           menuItem = new JMenuItem("Print...");
-           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                   ActionEvent.CTRL_MASK));
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
+        // Add a separator
+        fileMenu.add(new JSeparator());
+
+        // Page Setup... menu item
+        menuItem = new JMenuItem("Page Setup...");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+                ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        menuItem.addActionListener(this);
+        fileMenu.add(menuItem);
+        // Print... menu item
+        menuItem = new JMenuItem("Print...");
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+                ActionEvent.CTRL_MASK));
+        menuItem.addActionListener(this);
+        fileMenu.add(menuItem);
 
         // Add a separator
         fileMenu.add(new JSeparator());
@@ -444,9 +446,12 @@ public class MainMenuBar extends JMenuBar implements ActionListener
             // TODO put printJob, landscape upward to be shared with Print... handler below
             PrinterJob printJob  = PrinterJob.getPrinterJob();
             PageFormat landscape = printJob.defaultPage();
+            landscape.setOrientation(PageFormat.LANDSCAPE);
 
-            Book       book      = new Book();
-            book.append((Printable) _mainWindow, landscape);
+            Book book = new Book();
+            book.append((Printable) _mainWindow._queryView, landscape);
+            book.append((Printable) _mainWindow._calibratorsView, landscape);
+            book.append((Printable) _mainWindow._filtersView, landscape);
 
             // TODO check if previous line is not sufficient
             //book.append((Printable) _mainWindow.resultspanel, landscape);

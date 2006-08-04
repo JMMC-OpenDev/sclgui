@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.17 2006-08-04 16:35:43 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.18 2006-08-04 16:53:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2006/08/04 16:35:43  lafrasse
+ * Added queryModel & filtersModel hooks in VirtualObservatory
+ *
  * Revision 1.16  2006/07/28 08:35:11  mella
  * make it compile
  *
@@ -64,6 +67,7 @@ import jmmc.mcs.util.StatusBar;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.print.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -84,7 +88,7 @@ import javax.swing.text.*;
  * Query view.
  */
 public class QueryView extends JPanel implements Observer,
-    PropertyChangeListener, ActionListener
+    PropertyChangeListener, ActionListener, Printable
 {
     /**
      * bandToWavelength hashtable
@@ -580,6 +584,31 @@ public class QueryView extends JPanel implements Observer,
                StatusBar.show("query has not been resolved.");
            }
          */
+    }
+
+    /**
+     * @sa java.awt.print
+     */
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
+        throws PrinterException
+    {
+        Graphics2D g2d = (Graphics2D) graphics;
+        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+        int fontHeight  = g2d.getFontMetrics().getHeight();
+        int fontDescent = g2d.getFontMetrics().getDescent();
+
+        // laisser de l'espace pour le numero de page
+        double pageHeight = pageFormat.getImageableHeight() - fontHeight;
+        double pageWidth  = pageFormat.getImageableWidth();
+
+        g2d.drawString("Page: " + (pageIndex + 1), ((int) pageWidth / 2) - 35,
+            (int) ((pageHeight + fontHeight) - fontDescent));
+
+        g2d.scale(0.7, 0.7);
+        paint(g2d);
+
+        return (Printable.PAGE_EXISTS);
     }
 
     protected class SearchScienceObjectAction extends SCAction
