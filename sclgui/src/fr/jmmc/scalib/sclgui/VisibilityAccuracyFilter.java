@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.3 2006-08-04 14:09:10 lafrasse Exp $"
+ * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.4 2006-08-08 16:13:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/08/04 14:09:10  lafrasse
+ * Added GUI enabling/disabling feature to filters
+ *
  * Revision 1.2  2006/08/03 14:47:29  lafrasse
  * Jalopyzation
  *
@@ -32,7 +35,7 @@ public class VisibilityFilter extends Filter
     {
         super();
 
-        _constraints.put("accuracy (%)", new Double(0.0));
+        setConstraint("accuracy (%)", new Double(0.0));
     }
 
     /**
@@ -56,7 +59,7 @@ public class VisibilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        Double d = new Double((String) _constraints.get("accuracy (%)"));
+        Double d = new Double((String) getConstraintByName("accuracy (%)"));
 
         return d.doubleValue();
     }
