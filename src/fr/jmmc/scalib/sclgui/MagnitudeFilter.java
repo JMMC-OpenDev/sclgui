@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MagnitudeFilter.java,v 1.2 2006-08-03 14:47:29 lafrasse Exp $"
+ * "@(#) $Id: MagnitudeFilter.java,v 1.3 2006-08-08 16:13:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/08/03 14:47:29  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.1  2006/07/19 16:22:55  lafrasse
  * Creation
  *
@@ -29,7 +32,7 @@ public class MagnitudeFilter extends Filter
     {
         super();
 
-        _constraints.put("magnitude", new Double(0.0));
+        setConstraint("magnitude", new Double(0.0));
     }
 
     /**

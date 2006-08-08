@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.2 2006-07-19 16:22:31 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.3 2006-08-08 16:13:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/07/19 16:22:31  lafrasse
+ * Changed name and behavior according to preliminary review scientists feedback
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -31,9 +34,9 @@ public class DistanceFilter extends Filter
     {
         super();
 
-        _constraints.put("dist", new Double(0.0));
-        _constraints.put("Maximum RA Separation (mn)", new Double(0.0));
-        _constraints.put("Maximum DEC Separation (degree)", new Double(0.0));
+        setConstraint("dist", new Double(0.0));
+        setConstraint("Maximum RA Separation (mn)", new Double(0.0));
+        setConstraint("Maximum DEC Separation (degree)", new Double(0.0));
     }
 
     /**
@@ -57,7 +60,7 @@ public class DistanceFilter extends Filter
     {
         MCSLogger.trace();
 
-        Double d = (Double) _constraints.get("dist");
+        Double d = (Double) getConstraintByName("dist");
 
         return d.doubleValue();
     }

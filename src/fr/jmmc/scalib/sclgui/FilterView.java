@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.7 2006-08-04 14:09:10 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.8 2006-08-08 16:13:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/08/04 14:09:10  lafrasse
+ * Added GUI enabling/disabling feature to filters
+ *
  * Revision 1.6  2006/08/03 14:47:29  lafrasse
  * Jalopyzation
  *
@@ -53,7 +56,7 @@ import javax.swing.table.*;
 public class FilterView extends JPanel implements Observer
 {
     /** The filter to represent */
-    Filter _model;
+    Filter _filter;
 
     /** Filter enabling checbox */
     JCheckBox _enabledCheckbox;
@@ -61,21 +64,24 @@ public class FilterView extends JPanel implements Observer
     /** Store all the GUI component used to represent the attached filter */
     Hashtable _widgets = new Hashtable();
 
+    /** Store all the widget in the constraints order */
+    Vector _orderedWidgets = new Vector();
+
     /** Widgets panel */
     JPanel _widgetsPanel = new JPanel();
 
     /**
      * Default constructor.
      */
-    public FilterView(Filter model)
+    public FilterView(Filter filter)
     {
         // Members initialization
-        _model = model;
-        _model.addObserver(this);
+        _filter = filter;
+        _filter.addObserver(this);
 
         // Create the filter enable/disable checkbox
-        _enabledCheckbox = new JCheckBox(_model.getName(), _model.isEnabled());
-        _enabledCheckbox.addActionListener(new EnablerListener(_model,
+        _enabledCheckbox = new JCheckBox(_filter.getName(), _filter.isEnabled());
+        _enabledCheckbox.addActionListener(new EnablerListener(_filter,
                 _enabledCheckbox));
         add(_enabledCheckbox);
 
@@ -83,15 +89,14 @@ public class FilterView extends JPanel implements Observer
         add(new JPanel());
 
         // For each constraint of the associated filter
-        Hashtable constraints = _model.getConstraints();
-
-        for (Enumeration e = constraints.keys(); e.hasMoreElements();)
+        for (int i = 0; i < _filter.getNbOfConstraints(); i++)
         {
             // Get the constraint name
-            String constraintName = (String) e.nextElement();
+            String constraintName = _filter.getConstraintNameByOrder(i);
 
-            // Get the constraint value
-            Object constraintObject = constraints.get(constraintName);
+            // Get the correspondingconstraint value
+            Object constraintObject = _filter.getConstraintByName(constraintName);
+
             // Add the corresponding widget to the current filter view
             addParam(_widgetsPanel, constraintName, constraintObject);
         }
@@ -101,7 +106,7 @@ public class FilterView extends JPanel implements Observer
         setBorder((EtchedBorder) BorderFactory.createEtchedBorder());
 
         // Display the widget panel only if there are some constraints
-        if (constraints.isEmpty() == false)
+        if (_filter.getNbOfConstraints() > 0)
         {
             _widgetsPanel.setLayout(new BoxLayout(_widgetsPanel,
                     BoxLayout.X_AXIS));
@@ -109,8 +114,8 @@ public class FilterView extends JPanel implements Observer
             add(_widgetsPanel);
         }
 
-        // Display each widget
-        update(_model, null);
+        // Refresh each widget with the filter values
+        update(_filter, null);
     }
 
     /**
@@ -137,10 +142,11 @@ public class FilterView extends JPanel implements Observer
 
             // Create the constraint widget
             widget                   = new JFormattedTextField((Double) constraintValue);
-            paramListener            = new DoubleParamListener(_model,
+            paramListener            = new DoubleParamListener(_filter,
                     constraintName, (JFormattedTextField) widget);
             ((JFormattedTextField) widget).addActionListener(paramListener);
             _widgets.put(constraintName, widget);
+            _orderedWidgets.add(widget);
             panel.add(widget);
             add(panel);
         }
@@ -153,10 +159,11 @@ public class FilterView extends JPanel implements Observer
 
             // Create the constraint widget
             widget            = new JTextField((String) constraintValue);
-            paramListener     = new StringParamListener(_model, constraintName,
-                    (JTextField) widget);
+            paramListener     = new StringParamListener(_filter,
+                    constraintName, (JTextField) widget);
             ((JTextField) widget).addActionListener(paramListener);
             _widgets.put(constraintName, widget);
+            _orderedWidgets.add(widget);
             panel.add(widget);
             add(panel);
         }
@@ -167,10 +174,11 @@ public class FilterView extends JPanel implements Observer
             // Create the constraint widget
             widget            = new JCheckBox(constraintName,
                     ((Boolean) constraintValue).booleanValue());
-            paramListener     = new BooleanParamListener(_model,
+            paramListener     = new BooleanParamListener(_filter,
                     constraintName, (JCheckBox) widget);
             ((JCheckBox) widget).addActionListener(paramListener);
             _widgets.put(constraintName, widget);
+            _orderedWidgets.add(widget);
             panel.add(widget);
             add(panel);
         }
@@ -212,13 +220,16 @@ public class FilterView extends JPanel implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        // Updtae each constraint value from their widget
-        Hashtable constraints = _model.getConstraints();
-
-        for (Enumeration e = constraints.keys(); e.hasMoreElements();)
+        // For each constraint of the associated filter
+        for (int i = 0; i < _filter.getNbOfConstraints(); i++)
         {
-            String constraintName   = (String) e.nextElement();
-            Object constraintObject = constraints.get(constraintName);
+            // Get the constraint name
+            String constraintName = _filter.getConstraintNameByOrder(i);
+
+            // Get the correspondingconstraint value
+            Object constraintObject = _filter.getConstraintByName(constraintName);
+
+            // Update the corresponding value from the widget
             setParam(constraintName, constraintObject);
         }
 

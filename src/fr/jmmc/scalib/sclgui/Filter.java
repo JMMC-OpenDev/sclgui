@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.2 2006-07-19 16:26:21 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.3 2006-08-08 16:13:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/07/19 16:26:21  lafrasse
+ * Generalized setConstraint code
+ * Updated documentation
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
@@ -14,8 +18,7 @@ package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
 
-import java.util.Hashtable;
-import java.util.Observable;
+import java.util.*;
 
 
 /**
@@ -26,16 +29,18 @@ public abstract class Filter extends Observable
     /** Enabled flag */
     private Boolean _enabledFlag;
 
-    /** 'key-value' table */
-    protected Hashtable _constraints;
+    /** 'constraint name-constraint value' table */
+    private Hashtable _constraints = new Hashtable();
+
+    /** Ordered table of filter constraint names */
+    private Vector _orderedConstraintNames = new Vector();
 
     /**
      * Default constructor.
      */
     public Filter()
     {
-        _enabledFlag     = new Boolean(false);
-        _constraints     = new Hashtable();
+        _enabledFlag = new Boolean(false);
     }
 
     /**
@@ -86,15 +91,39 @@ public abstract class Filter extends Observable
     }
 
     /**
-     * Get the filter constraints 'key-value' table.
+     * Get the number of filter constraints.
      *
-     * @return the filter constraint(s).
+     * @return the number of filter constraint(s).
      */
-    public Hashtable getConstraints()
+    public int getNbOfConstraints()
     {
         MCSLogger.trace();
 
-        return _constraints;
+        return _orderedConstraintNames.size();
+    }
+
+    /**
+     * Get the filter constraint name by order.
+     *
+     * @return the filter constraint name.
+     */
+    public String getConstraintNameByOrder(int index)
+    {
+        MCSLogger.trace();
+
+        return (String) _orderedConstraintNames.elementAt(index);
+    }
+
+    /**
+     * Get the filter constraint value from its name.
+     *
+     * @return the filter constraint value.
+     */
+    public Object getConstraintByName(String constraintName)
+    {
+        MCSLogger.trace();
+
+        return _constraints.get(constraintName);
     }
 
     /**
@@ -108,6 +137,7 @@ public abstract class Filter extends Observable
         MCSLogger.trace();
 
         _constraints.put(constraintName, constraintValue);
+        _orderedConstraintNames.add(constraintName);
 
         setChanged();
         notifyObservers();
@@ -130,6 +160,7 @@ public abstract class Filter extends Observable
         String filter = "Filter '" + getName() + "' ";
         filter += (((isEnabled() == true) ? "enabled" : "disabled") + " :");
         filter += _constraints;
+        filter += _orderedConstraintNames;
 
         return filter;
     }
