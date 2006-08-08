@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.4 2006-08-04 14:09:10 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.5 2006-08-08 16:14:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/08/04 14:09:10  lafrasse
+ * Added GUI enabling/disabling feature to filters
+ *
  * Revision 1.3  2006/04/06 14:38:58  lafrasse
  * Layout update
  *
@@ -23,16 +26,18 @@ package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.*;
 
 
 /**
  *  SpectralTypeFilter filter.
  */
-public class SpectralTypeFilter extends Filter
+public class SpectralTypeFilter extends Filter implements Observer
 {
     //TODO place a constant for every "spectral type" ;))
+
+    /** String containing all the spectral type names to be rejected */
+    String _rejectedSpectralTypes = new String();
 
     /**
      * Default constructor.
@@ -41,13 +46,15 @@ public class SpectralTypeFilter extends Filter
     {
         super();
 
-        _constraints.put("O", new Boolean(false));
-        _constraints.put("B", new Boolean(false));
-        _constraints.put("A", new Boolean(false));
-        _constraints.put("F", new Boolean(false));
-        _constraints.put("G", new Boolean(false));
-        _constraints.put("K", new Boolean(false));
-        _constraints.put("M", new Boolean(false));
+        addObserver(this);
+
+        setConstraint("O", new Boolean(false));
+        setConstraint("B", new Boolean(false));
+        setConstraint("A", new Boolean(false));
+        setConstraint("F", new Boolean(false));
+        setConstraint("G", new Boolean(false));
+        setConstraint("K", new Boolean(false));
+        setConstraint("M", new Boolean(false));
     }
 
     /**
@@ -63,36 +70,28 @@ public class SpectralTypeFilter extends Filter
     }
 
     /**
-     * Return the spectrals types selected.
-     *
-     * @return spType a vector of spectral type.
+     * @sa java.util.Observer
      */
-    private Vector getAllowedSpectralType()
+    public void update(Observable o, Object arg)
     {
         MCSLogger.trace();
 
-        Vector spType = new Vector();
-
-        // Checkboxes values with elements(true or false) and keys( indexes)
-        Enumeration elements = _constraints.elements();
-        Enumeration keys     = _constraints.keys();
-
-        while (elements.hasMoreElements())
+        // For each spectral type constraint
+        for (int i = 0; i < getNbOfConstraints(); i++)
         {
-            // Next data
-            boolean bool        = ((Boolean) elements.nextElement()).booleanValue();
-            String  spTypeValue = (String) keys.nextElement();
+            // Get the spectral type name
+            String spectralTypeName = getConstraintNameByOrder(i);
 
-            // Checkbox selected
-            if (bool == true)
+            // Get the spectral type state (checked or not)
+            boolean spectralTypeState = ((Boolean) getConstraintByName(spectralTypeName)).booleanValue();
+
+            // If the spectral type must be rejected (is checked)
+            if (spectralTypeState == true)
             {
-                // Add in Vector
-                spType.add(spTypeValue);
+                // Add the its name in the rejected spectral type string
+                _rejectedSpectralTypes += spectralTypeName;
             }
         }
-
-        // Return a vector
-        return spType;
     }
 
     /**
@@ -104,100 +103,41 @@ public class SpectralTypeFilter extends Filter
     {
         MCSLogger.trace();
 
-        // Get the spectral types selected
-        Vector spTypeSelected = getAllowedSpectralType();
-
         // If the filter is enabled
         if ((isEnabled() == true))
         {
             // Get the id of the column contaning 'SpType' star property
             int spectralTypeId = starList.getColumnIdByName("SpType");
 
-            // For each row of the star list
-            int rowId = 0;
+            int rowId          = 0;
 
+            // For each row of the star list
             while (rowId < starList.size())
             {
                 // Get the spectral type value of the star
-                Vector       row               = ((Vector) starList.elementAt(rowId));
-                StarProperty cell              = ((StarProperty) row.elementAt(spectralTypeId));
-                String       spectralTypeValue = cell.toString();
+                Vector       row        = ((Vector) starList.elementAt(rowId));
+                StarProperty cell       = ((StarProperty) row.elementAt(spectralTypeId));
+                String       cellString = cell.toString();
 
-                // Find or not a spectral type corresponding to the selection
-                boolean find = false;
-
-                // The spectral type exist
-                if ((spectralTypeValue != null) &&
-                        (spectralTypeValue.equals("") == false))
+                // If the spectral type cell is not empty
+                if ((cellString != null) && (cellString.equals("") == false))
                 {
-                    // If something is checked
-                    if (spTypeSelected.size() > 0)
+                    // If the cell contains one or more rejected spectral types
+                    if (cellString.contains(_rejectedSpectralTypes) == true)
                     {
-                        for (int i = 0; i < spTypeSelected.size(); i++)
-                        {
-                            // The value of spectral type checked
-                            String valueSelected = (String) spTypeSelected.elementAt(i);
-
-                            // Meter of character
-                            int spcharIdx = 0;
-
-                            // Loop to verify data
-                            while ((spcharIdx < spectralTypeValue.length()) &&
-                                    (spectralTypeValue.charAt(spcharIdx) != 'I') &&
-                                    (spectralTypeValue.charAt(spcharIdx) != 'V') &&
-                                    (find == false))
-                            {
-                                // Check if
-                                if (spectralTypeValue.charAt(spcharIdx) == valueSelected.charAt(
-                                            0))
-                                {
-                                    find = true;
-                                }
-
-                                spcharIdx++;
-                            }
-                        }
-
-                        // Data Not found
-                        if (find == false)
-                        {
-                            // Remove star to the starList
-                            starList.remove(rowId);
-                        }
-                        else
-                        {
-                            // Otherwise process the next row
-                            rowId++;
-                        }
+                        // Remove the corresponding star from the list
+                        starList.remove(rowId);
                     }
                     else
                     {
-                        // The spectral type contains only the luminosity class
-                        if ((spectralTypeValue.charAt(0) == 'I') ||
-                                (spectralTypeValue.charAt(0) == 'V') ||
-                                Character.isDigit(spectralTypeValue.charAt(0)))
-                        {
-                            // Remove star to the starList
-                            starList.remove(rowId);
-                        }
-                        else
-                        {
-                            // Otherwise process the next row
-                            rowId++;
-                        }
+                        // Otherwise process the next row
+                        rowId++;
                     }
                 }
-
-                // The spectral type does not exist
-                else
+                else // The cell is empty
                 {
-                    // Remove star to the starList
-                    starList.remove(rowId);
-
-                    /* OR
-                       // Otherwise process the next row
-                       rowId++;
-                     */
+                    // Process the next row
+                    rowId++;
                 }
             }
         }
