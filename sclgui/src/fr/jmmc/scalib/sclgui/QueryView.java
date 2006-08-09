@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.18 2006-08-04 16:53:54 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.19 2006-08-09 13:10:15 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2006/08/04 16:53:54  lafrasse
+ * Re-added preliminary print support
+ *
  * Revision 1.17  2006/08/04 16:35:43  lafrasse
  * Added queryModel & filtersModel hooks in VirtualObservatory
  *
@@ -737,7 +740,7 @@ public class QueryView extends JPanel implements Observer,
 
                 try
                 {
-                    _vo.getCal(_queryModel);
+                    _vo.getCal();
                 }
                 catch (Exception ex)
                 {

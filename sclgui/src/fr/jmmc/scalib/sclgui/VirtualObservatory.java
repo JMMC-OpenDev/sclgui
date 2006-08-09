@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.4 2006-08-04 16:35:43 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.5 2006-08-09 13:10:15 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/08/04 16:35:43  lafrasse
+ * Added queryModel & filtersModel hooks in VirtualObservatory
+ *
  * Revision 1.3  2006/06/30 08:01:23  lafrasse
  * Added fake progress bar updates and science object completion API
  *
@@ -62,7 +65,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    public void getCal(QueryModel queryModel) throws Exception
+    public void getCal() throws Exception
     {
         MCSLogger.trace();
         class ProgressBarThread extends Thread
