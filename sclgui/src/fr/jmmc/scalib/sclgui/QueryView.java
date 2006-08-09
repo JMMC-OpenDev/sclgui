@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.19 2006-08-09 13:10:15 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.20 2006-08-09 14:22:25 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2006/08/09 13:10:15  lafrasse
+ * Refined VirtualObservatory::getCal() API
+ *
  * Revision 1.18  2006/08/04 16:53:54  lafrasse
  * Re-added preliminary print support
  *
@@ -93,12 +96,10 @@ import javax.swing.text.*;
 public class QueryView extends JPanel implements Observer,
     PropertyChangeListener, ActionListener, Printable
 {
-    /**
-     * bandToWavelength hashtable
-     */
+    /** bandToWavelength hashtable */
     static Hashtable bandToWavelength = new Hashtable();
 
-    /** include science object action */
+    /** Include Science Object action */
     static Action _includeScienceObjectAction;
 
     /** MVC associated model */
@@ -134,6 +135,9 @@ public class QueryView extends JPanel implements Observer,
     /** Science object declinaison coordinate */
     JTextField _scienceObjectDECTextfield = new JTextField();
 
+    /** Science object magnitude label */
+    JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ");
+
     /** Science object magnitude */
     JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
@@ -141,9 +145,15 @@ public class QueryView extends JPanel implements Observer,
     /** SearchCal parameters panel */
     JPanel searchCalPanel;
 
+    /** Search minimum magnitude label */
+    JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ");
+
     /** Search minimum magnitude */
     JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
+
+    /** Search maximum magnitude label */
+    JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ");
 
     /** Search maximum magnitude */
     JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
@@ -278,7 +288,7 @@ public class QueryView extends JPanel implements Observer,
         // Magnitude field
         c.gridy++;
         c.gridx = 0;
-        scienceObjectPanel.add(new JLabel("Magnitude : "), c);
+        scienceObjectPanel.add(_scienceObjectMagnitudeLabel, c);
         _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.addPropertyChangeListener(this);
@@ -291,7 +301,7 @@ public class QueryView extends JPanel implements Observer,
         // Minimum magnitude field
         c.gridy     = 0;
         c.gridx     = 0;
-        searchCalPanel.add(new JLabel("Min. Magnitude : "), c);
+        searchCalPanel.add(_minMagnitudeLabel, c);
         _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
@@ -299,7 +309,7 @@ public class QueryView extends JPanel implements Observer,
         // Maximum magnitude field
         c.gridy++;
         c.gridx = 0;
-        searchCalPanel.add(new JLabel("Max. Magnitude : "), c);
+        searchCalPanel.add(_maxMagnitudeLabel, c);
         _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
@@ -389,6 +399,10 @@ public class QueryView extends JPanel implements Observer,
         {
             QueryModel queryModel = (QueryModel) o;
 
+            // Compute all the magnitude labels from the current magnitude band
+            String magnitudeWithBand = "Magnitude (" +
+                queryModel.getInstrumentalMagnitudeBand() + ") : ";
+
             // Instrumental parameters
             // @TODO : _instrumentalMagnitudeBandCombo.set???(queryModel.getInstrumentalMagnitudeBand());
             _instrumentalWavelengthTextfield.setValue(new Double(
@@ -400,12 +414,15 @@ public class QueryView extends JPanel implements Observer,
             _scienceObjectNameTextfield.setText(queryModel.getScienceObjectName());
             _scienceObjectDECTextfield.setText(queryModel.getScienceObjectDEC());
             _scienceObjectRATextfield.setText(queryModel.getScienceObjectRA());
+            _scienceObjectMagnitudeLabel.setText(magnitudeWithBand);
             _scienceObjectMagnitudeTextfield.setValue(new Double(
                     queryModel.getScienceObjectMagnitude()));
 
             // SearchCal parameters
+            _minMagnitudeLabel.setText("Min. " + magnitudeWithBand);
             _minMagnitudeTextfield.setValue(new Double(
                     queryModel.getQueryMinMagnitude()));
+            _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
             _maxMagnitudeTextfield.setValue(new Double(
                     queryModel.getQueryMaxMagnitude()));
             // @TODO : _brightFaintButtonGroup.set???(queryModel.isQueryScenarioBright()));
