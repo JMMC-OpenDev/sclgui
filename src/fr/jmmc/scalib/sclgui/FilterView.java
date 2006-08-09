@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.8 2006-08-08 16:13:21 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.9 2006-08-09 13:53:24 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/08/08 16:13:21  lafrasse
+ * Updated to properly handle widget order
+ *
  * Revision 1.7  2006/08/04 14:09:10  lafrasse
  * Added GUI enabling/disabling feature to filters
  *
@@ -81,7 +84,7 @@ public class FilterView extends JPanel implements Observer
 
         // Create the filter enable/disable checkbox
         _enabledCheckbox = new JCheckBox(_filter.getName(), _filter.isEnabled());
-        _enabledCheckbox.addActionListener(new EnablerListener(_filter,
+        _enabledCheckbox.addActionListener(new ParamListener(_filter, null,
                 _enabledCheckbox));
         add(_enabledCheckbox);
 
@@ -142,7 +145,7 @@ public class FilterView extends JPanel implements Observer
 
             // Create the constraint widget
             widget                   = new JFormattedTextField((Double) constraintValue);
-            paramListener            = new DoubleParamListener(_filter,
+            paramListener            = new ParamListener(_filter,
                     constraintName, (JFormattedTextField) widget);
             ((JFormattedTextField) widget).addActionListener(paramListener);
             _widgets.put(constraintName, widget);
@@ -159,8 +162,8 @@ public class FilterView extends JPanel implements Observer
 
             // Create the constraint widget
             widget            = new JTextField((String) constraintValue);
-            paramListener     = new StringParamListener(_filter,
-                    constraintName, (JTextField) widget);
+            paramListener     = new ParamListener(_filter, constraintName,
+                    (JTextField) widget);
             ((JTextField) widget).addActionListener(paramListener);
             _widgets.put(constraintName, widget);
             _orderedWidgets.add(widget);
@@ -174,8 +177,8 @@ public class FilterView extends JPanel implements Observer
             // Create the constraint widget
             widget            = new JCheckBox(constraintName,
                     ((Boolean) constraintValue).booleanValue());
-            paramListener     = new BooleanParamListener(_filter,
-                    constraintName, (JCheckBox) widget);
+            paramListener     = new ParamListener(_filter, constraintName,
+                    (JCheckBox) widget);
             ((JCheckBox) widget).addActionListener(paramListener);
             _widgets.put(constraintName, widget);
             _orderedWidgets.add(widget);
@@ -242,7 +245,7 @@ public class FilterView extends JPanel implements Observer
 /**
  * Handle any event coming from a given parameter widget.
  */
-class DoubleParamListener implements ActionListener
+class ParamListener implements ActionListener
 {
     /** The filter to update */
     Filter _filter;
@@ -251,17 +254,17 @@ class DoubleParamListener implements ActionListener
     String _constraintName;
 
     /** The GUI component to display the constraint */
-    JFormattedTextField _widget;
+    JComponent _widget;
 
     /**
      * Constructor.
      *
      * @param filter the filter to update.
-     * @param constraintName the name of the constraint to handle.
+     * @param constraintName the name of the constraint to handle, or null for
+     * the whole filter enabling checkbox.
      * @param widget The GUI component to display the constraint.
      */
-    public DoubleParamListener(Filter filter, String constraintName,
-        JFormattedTextField widget)
+    public ParamListener(Filter filter, String constraintName, JComponent widget)
     {
         _filter             = filter;
         _constraintName     = constraintName;
@@ -277,134 +280,39 @@ class DoubleParamListener implements ActionListener
     {
         MCSLogger.trace();
 
-        // Update the filter value with the one given by the GUI component
-        _filter.setConstraint(_constraintName, (Double) _widget.getValue());
-    }
-}
+        // If there is no constraint name
+        if (_constraintName == null)
+        {
+            // Enable or disable the whole filter
+            _filter.setEnabled(new Boolean(((JCheckBox) _widget).isSelected()));
+        }
+        else // If a constraint name was given
+        {
+            // Get the corresponding constraint value
+            Object constraintValue = _filter.getConstraintByName(_constraintName);
 
+            // Refresh its value from the corresponding widget
+            // If the constraint is a Double object
+            if (constraintValue.getClass() == java.lang.Double.class)
+            {
+                _filter.setConstraint(_constraintName,
+                    (Double) ((JFormattedTextField) _widget).getValue());
+            }
 
-/**
- * Handle any event coming from a given parameter widget.
- */
-class StringParamListener implements ActionListener
-{
-    /** The filter to update */
-    Filter _filter;
+            // Else if the constraint is a String object
+            else if (constraintValue.getClass() == java.lang.String.class)
+            {
+                _filter.setConstraint(_constraintName,
+                    ((JTextField) _widget).getText());
+            }
 
-    /** the constraint to handle */
-    String _constraintName;
-
-    /** The GUI component to display the constraint */
-    JTextField _widget;
-
-    /**
-     * Constructor.
-     *
-     * @param filter the filter to update.
-     * @param constraintName the name of the constraint to handle.
-     * @param widget The GUI component to display the constraint.
-     */
-    public StringParamListener(Filter filter, String constraintName,
-        JTextField widget)
-    {
-        _filter             = filter;
-        _constraintName     = constraintName;
-        _widget             = widget;
-    }
-
-    /**
-     * Called whenever an event was issued by the GUI component.
-     *
-     * @param e the event.
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        MCSLogger.trace();
-
-        // Update the filter value with the one given by the GUI component
-        _filter.setConstraint(_constraintName, _widget.getText());
-    }
-}
-
-
-/**
- * Handle any event coming from a given parameter widget.
- */
-class BooleanParamListener implements ActionListener
-{
-    /** The filter to update */
-    Filter _filter;
-
-    /** the constraint to handle */
-    String _constraintName;
-
-    /** The GUI component to display the constraint */
-    JCheckBox _widget;
-
-    /**
-     * Constructor.
-     *
-     * @param filter the filter to update.
-     * @param constraintName the name of the constraint to handle.
-     * @param widget The GUI component to display the constraint.
-     */
-    public BooleanParamListener(Filter filter, String constraintName,
-        JCheckBox widget)
-    {
-        _filter             = filter;
-        _constraintName     = constraintName;
-        _widget             = widget;
-    }
-
-    /**
-     * Called whenever an event was issued by the GUI component.
-     *
-     * @param e the event.
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        MCSLogger.trace();
-
-        // Update the filter value with the one given by the GUI component
-        _filter.setConstraint(_constraintName, new Boolean(_widget.isSelected()));
-    }
-}
-
-
-/**
- * Handle any event coming from the filter enabling view.
- */
-class EnablerListener implements ActionListener
-{
-    /** The filter to update */
-    Filter _filter;
-
-    /** The checkbox to monitor */
-    JCheckBox _checkBox;
-
-    /**
-     * Constructor.
-     *
-     * @param filter the filter to update.
-     */
-    public EnablerListener(Filter filter, JCheckBox checkBox)
-    {
-        _filter       = filter;
-        _checkBox     = checkBox;
-    }
-
-    /**
-     * Called whenever an event was issued by the enabling checkbox.
-     *
-     * @param e the event.
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        MCSLogger.trace();
-
-        // Update the filter enabled state with the one given by the checkbox
-        Boolean flag = new Boolean(_checkBox.isSelected());
-        _filter.setEnabled(flag);
+            // Else if the constraint is a Boolean object
+            else if (constraintValue.getClass() == java.lang.Boolean.class)
+            {
+                _filter.setConstraint(_constraintName,
+                    new Boolean(((JCheckBox) _widget).isSelected()));
+            }
+        }
     }
 }
 /*___oOo___*/
