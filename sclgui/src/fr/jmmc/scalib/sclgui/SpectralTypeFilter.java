@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.5 2006-08-08 16:14:23 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.6 2006-08-22 14:50:51 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/08/08 16:14:23  lafrasse
+ * Updated to properly handle widget order
+ * Streamlined filter processing code
+ *
  * Revision 1.4  2006/08/04 14:09:10  lafrasse
  * Added GUI enabling/disabling feature to filters
  *
@@ -123,7 +127,7 @@ public class SpectralTypeFilter extends Filter implements Observer
                 if ((cellString != null) && (cellString.equals("") == false))
                 {
                     // If the cell contains one or more rejected spectral types
-                    if (cellString.contains(_rejectedSpectralTypes) == true)
+                    if (cellString.indexOf(_rejectedSpectralTypes) >= 1)
                     {
                         // Remove the corresponding star from the list
                         starList.remove(rowId);

@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.6 2006-08-10 15:22:55 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.7 2006-08-22 14:50:51 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/08/10 15:22:55  lafrasse
+ * Fullfiled missing members and accessors
+ * Used Double as default numeric type
+ * Added full implementation of by-default auto-updated values
+ * Streamlined magnitude bands and default wavelengthes support
+ *
  * Revision 1.5  2006/07/18 13:16:10  lafrasse
  * Changed example values to mirror those of ETA_TAU in the current SearchCal
  * version
@@ -46,13 +52,13 @@ public class QueryModel extends Observable
     Hashtable _magnitudeBandToWavelength = new Hashtable();
 
     /** The instrumental wavelength */
-    private Double _instrumentalWavelength;
+    private double _instrumentalWavelength;
 
     /** The instrumental wavelength auto-update flag */
     private boolean _instrumentalWavelengthAutoUpdate = true;
 
     /** The instrumental maximum base line */
-    private Double _instrumentalMaxBaseLine;
+    private double _instrumentalMaxBaseLine;
 
     /** The science object name */
     private String _scienceObjectName;
@@ -64,16 +70,16 @@ public class QueryModel extends Observable
     private String _scienceObjectDEC;
 
     /** The science object right magnitude */
-    private Double _scienceObjectMagnitude;
+    private double _scienceObjectMagnitude;
 
     /** The query minimum magnitude */
-    private Double _queryMinMagnitude;
+    private double _queryMinMagnitude;
 
     /** The query minimum magnitude auto-update flag */
     private boolean _queryMinMagnitudeAutoUpdate = true;
 
     /** The query maximum magnitude */
-    private Double _queryMaxMagnitude;
+    private double _queryMaxMagnitude;
 
     /** The query maximum magnitude auto-update flag */
     private boolean _queryMaxMagnitudeAutoUpdate = true;
@@ -82,13 +88,13 @@ public class QueryModel extends Observable
     private boolean _queryBrightScenarioFlag;
 
     /** The query diff. RA */
-    private Double _queryDiffRASize;
+    private double _queryDiffRASize;
 
     /** The query diff. DEC */
-    private Double _queryDiffDECSize;
+    private double _queryDiffDECSize;
 
     /** The query radius */
-    private Double _queryRadialSize;
+    private double _queryRadialSize;
 
     /** The current step of the querying progress.
      * 0 < _currentStep < _totalStep
@@ -108,13 +114,14 @@ public class QueryModel extends Observable
         MCSLogger.trace();
 
         String[] magnitudeBands = { "I", "J", "H", "K", "V" };
-        Double[] wavelengths    = { 1.1, 2.2, 3.3, 4.4, 5.5 };
+        double[] wavelengths    = { 1.1, 2.2, 3.3, 4.4, 5.5 };
 
         // For each "magnitude band-predefined wavelength" couple
         for (int i = 0; i < magnitudeBands.length; i++)
         {
             // Construct the conversion table between both
-            _magnitudeBandToWavelength.put(magnitudeBands[i], wavelengths[i]);
+            _magnitudeBandToWavelength.put(magnitudeBands[i],
+                new Double(wavelengths[i]));
         }
 
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
@@ -231,7 +238,8 @@ public class QueryModel extends Observable
         // Modify _instrumentalWavelength automatically if needed
         if (_instrumentalWavelengthAutoUpdate == true)
         {
-            _instrumentalWavelength = (Double) _magnitudeBandToWavelength.get(magnitudeBand);
+            Double d = (Double) _magnitudeBandToWavelength.get(magnitudeBand);
+            _instrumentalWavelength = d.doubleValue();
         }
 
         setChanged();
@@ -247,16 +255,16 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _instrumentalWavelength;
+        return new Double(_instrumentalWavelength);
     }
 
     /**
      * Change the instrumental wavelength parameter.
      * Calling this method once disable the instrumental wavelength auto-update.
      *
-     * @param wavelength the new instrumental wavelength as a Double value.
+     * @param wavelength the new instrumental wavelength as a double value.
      */
-    public void setInstrumentalWavelength(Double wavelength)
+    public void setInstrumentalWavelength(double wavelength)
     {
         MCSLogger.trace();
 
@@ -270,6 +278,17 @@ public class QueryModel extends Observable
     }
 
     /**
+     * Change the instrumental wavelength parameter.
+     * Calling this method once disable the instrumental wavelength auto-update.
+     *
+     * @param wavelength the new instrumental wavelength as a Double value.
+     */
+    public void setInstrumentalWavelength(Double wavelength)
+    {
+        setInstrumentalWavelength(wavelength.doubleValue());
+    }
+
+    /**
      * Return the instrumental maximum base line for the actual query.
      *
      * @return the instrumental maximum base line as a Double value.
@@ -278,7 +297,22 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _instrumentalMaxBaseLine;
+        return new Double(_instrumentalMaxBaseLine);
+    }
+
+    /**
+     * Change the instrumental maximum base line parameter.
+     *
+     * @param wavelength the new instrumental maximum base line as a double.
+     */
+    public void setInstrumentalMaxBaseLine(double maxBaseLine)
+    {
+        MCSLogger.trace();
+
+        _instrumentalMaxBaseLine = maxBaseLine;
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -288,12 +322,7 @@ public class QueryModel extends Observable
      */
     public void setInstrumentalMaxBaseLine(Double maxBaseLine)
     {
-        MCSLogger.trace();
-
-        _instrumentalMaxBaseLine = maxBaseLine;
-
-        setChanged();
-        notifyObservers();
+        setInstrumentalMaxBaseLine(maxBaseLine.doubleValue());
     }
 
     /**
@@ -412,15 +441,15 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _scienceObjectMagnitude;
+        return new Double(_scienceObjectMagnitude);
     }
 
     /**
      * Change the magnitude parameter.
      *
-     * @param magnitude the new magnitude as a Double value.
+     * @param magnitude the new magnitude as a double value.
      */
-    public void setScienceObjectMagnitude(Double magnitude)
+    public void setScienceObjectMagnitude(double magnitude)
     {
         MCSLogger.trace();
 
@@ -443,6 +472,16 @@ public class QueryModel extends Observable
     }
 
     /**
+     * Change the magnitude parameter.
+     *
+     * @param magnitude the new magnitude as a Double value.
+     */
+    public void setScienceObjectMagnitude(Double magnitude)
+    {
+        setScienceObjectMagnitude(magnitude.doubleValue());
+    }
+
+    /**
      * Return the minimun calibrator magnitude for the actual query.
      *
      * @return the minimum magnitude as a Double value.
@@ -451,7 +490,7 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _queryMinMagnitude;
+        return new Double(_queryMinMagnitude);
     }
 
     /**
@@ -459,9 +498,9 @@ public class QueryModel extends Observable
      * Calling this method once disable the minimun calibrator magnitude
      * auto-update.
      *
-     * @param minMagnitude the new minimum magnitude as a Double value.
+     * @param minMagnitude the new minimum magnitude as a double value.
      */
-    public void setQueryMinMagnitude(Double minMagnitude)
+    public void setQueryMinMagnitude(double minMagnitude)
     {
         MCSLogger.trace();
 
@@ -479,6 +518,18 @@ public class QueryModel extends Observable
     }
 
     /**
+     * Change the minimun calibrator magnitude parameter.
+     * Calling this method once disable the minimun calibrator magnitude
+     * auto-update.
+     *
+     * @param minMagnitude the new minimum magnitude as a Double value.
+     */
+    public void setQueryMinMagnitude(Double minMagnitude)
+    {
+        setQueryMinMagnitude(minMagnitude.doubleValue());
+    }
+
+    /**
      * Return the maximun calibrator magnitude for the actual query.
      *
      * @return the maximum magnitude as a Double value.
@@ -487,7 +538,7 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _queryMaxMagnitude;
+        return new Double(_queryMaxMagnitude);
     }
 
     /**
@@ -495,9 +546,9 @@ public class QueryModel extends Observable
      * Calling this method once disable the maximun calibrator magnitude
      * auto-update.
      *
-     * @param maxMagnitude the new maximum magnitude as a Double value.
+     * @param maxMagnitude the new maximum magnitude as a double value.
      */
-    public void setQueryMaxMagnitude(Double maxMagnitude)
+    public void setQueryMaxMagnitude(double maxMagnitude)
     {
         MCSLogger.trace();
 
@@ -512,6 +563,18 @@ public class QueryModel extends Observable
 
         setChanged();
         notifyObservers();
+    }
+
+    /**
+     * Change the maximun calibrator magnitude parameter.
+     * Calling this method once disable the maximun calibrator magnitude
+     * auto-update.
+     *
+     * @param maxMagnitude the new maximum magnitude as a Double value.
+     */
+    public void setQueryMaxMagnitude(Double maxMagnitude)
+    {
+        setQueryMaxMagnitude(maxMagnitude.doubleValue());
     }
 
     /**
@@ -547,7 +610,22 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _queryDiffRASize;
+        return new Double(_queryDiffRASize);
+    }
+
+    /**
+     * Change the query box differential RA size.
+     *
+     * @param diffRASize the new query box differential RA size as a double.
+     */
+    public void setQueryDiffRASize(double diffRASize)
+    {
+        MCSLogger.trace();
+
+        _queryDiffRASize = diffRASize;
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -557,12 +635,7 @@ public class QueryModel extends Observable
      */
     public void setQueryDiffRASize(Double diffRASize)
     {
-        MCSLogger.trace();
-
-        _queryDiffRASize = diffRASize;
-
-        setChanged();
-        notifyObservers();
+        setQueryDiffRASize(diffRASize.doubleValue());
     }
 
     /**
@@ -574,7 +647,22 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _queryDiffDECSize;
+        return new Double(_queryDiffDECSize);
+    }
+
+    /**
+     * Change the query box differential DEC size.
+     *
+     * @param radiusSize the new query box differential DEC size as a double.
+     */
+    public void setQueryDiffDECSize(double diffDECSize)
+    {
+        MCSLogger.trace();
+
+        _queryDiffDECSize = diffDECSize;
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -584,12 +672,7 @@ public class QueryModel extends Observable
      */
     public void setQueryDiffDECSize(Double diffDECSize)
     {
-        MCSLogger.trace();
-
-        _queryDiffDECSize = diffDECSize;
-
-        setChanged();
-        notifyObservers();
+        setQueryDiffDECSize(diffDECSize.doubleValue());
     }
 
     /**
@@ -601,7 +684,22 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        return _queryRadialSize;
+        return new Double(_queryRadialSize);
+    }
+
+    /**
+     * Change the query box radial size.
+     *
+     * @param radiusSize the new query box radial size as a double.
+     */
+    public void setQueryRadialSize(double radiusSize)
+    {
+        MCSLogger.trace();
+
+        _queryRadialSize = radiusSize;
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -611,12 +709,7 @@ public class QueryModel extends Observable
      */
     public void setQueryRadialSize(Double radiusSize)
     {
-        MCSLogger.trace();
-
-        _queryRadialSize = radiusSize;
-
-        setChanged();
-        notifyObservers();
+        setQueryRadialSize(radiusSize.doubleValue());
     }
 
     /**
