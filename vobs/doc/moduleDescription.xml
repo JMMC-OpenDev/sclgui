@@ -1,0 +1,35 @@
+<!--
+********************************************************************************
+ JMMC project
+
+ "@(#) $Id: moduleDescription.xml,v 1.2 2005-02-15 15:21:26 gzins Exp $"
+
+ History
+ ~~~~~~~
+ $Log: not supported by cvs2svn $
+ scetre    01-Oct-2004  Created
+
+********************************************************************************
+ NAME
+ moduleDescription.xml - Give module informations
+ 
+ DESCRIPTION
+ moduleDescription.xml gives informations about: 
+ - the module description
+ - the module responsible
+ - the package whom belongs to this module
+
+ EXAMPLES
+    <module name="dummymod">
+        <desc>Dummy module description</desc>
+        <resp>FirstName LastName</resp>
+        <package>MCS</package>
+    </module>
+
+-->
+
+<module name="vobs">
+    <desc>Interface to virtual observatory</desc>
+    <resp>Sylvain CETRE</resp>
+    <package>CALIB</package>
+</module>
