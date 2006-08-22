@@ -1,0 +1,107 @@
+/*******************************************************************************
+ * JMMC project
+ *
+ * "@(#) $Id: VisibilityFilter.java,v 1.4 2006-08-08 16:13:21 lafrasse Exp $"
+ *
+ * History
+ * -------
+ * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/08/04 14:09:10  lafrasse
+ * Added GUI enabling/disabling feature to filters
+ *
+ * Revision 1.2  2006/08/03 14:47:29  lafrasse
+ * Jalopyzation
+ *
+ * Revision 1.1  2006/07/28 13:14:53  lafrasse
+ * Creation
+ *
+ ******************************************************************************/
+package jmmc.scalib.sclgui;
+
+import jmmc.mcs.log.MCSLogger;
+
+import java.util.Vector;
+
+
+/**
+ * Visibiliy filter.
+ */
+public class VisibilityFilter extends Filter
+{
+    /**
+     * Default constructor.
+     */
+    public VisibilityFilter()
+    {
+        super();
+
+        setConstraint("accuracy (%)", new Double(0.0));
+    }
+
+    /**
+     * Return the filter name.
+     *
+     * @return the name of the filter.
+     */
+    public String getName()
+    {
+        MCSLogger.trace();
+
+        return "Reject Visibility Accuracy above";
+    }
+
+    /**
+     * Return the maximum visibility accuracy allowed by this filter.
+     *
+     * @return the visibility accuracy allowed by this filter.
+     */
+    private double getAllowedVisibiliy()
+    {
+        MCSLogger.trace();
+
+        Double d = new Double((String) getConstraintByName("accuracy (%)"));
+
+        return d.doubleValue();
+    }
+
+    /**
+     * Apply the filter (if enabled) to the given star list.
+     *
+     * @param starList the list of star to filter.
+     */
+    public void process(StarList starList)
+    {
+        MCSLogger.trace();
+
+        // If the filter is enabled
+        if (isEnabled() == true)
+        {
+            // Get the id of the column contaning 'visibility' star property
+            int visibilityId = starList.getColumnIdByName("dist");
+
+            // For each row of the star list
+            int rowId = 0;
+
+            while (rowId < starList.size())
+            {
+                // Get the visibility value
+                Vector       row              = ((Vector) starList.elementAt(rowId));
+                StarProperty cell             = ((StarProperty) row.elementAt(visibilityId));
+                double       currentVisibiliy = cell.getDoubleValue();
+
+                // if the visibility value is greater than the allowed one
+                if (currentVisibiliy > getAllowedVisibiliy())
+                {
+                    // Remove this row from the star list
+                    starList.remove(rowId);
+                }
+                else
+                {
+                    // Otherwise process the next row
+                    rowId++;
+                }
+            }
+        }
+    }
+}
+/*___oOo___*/
