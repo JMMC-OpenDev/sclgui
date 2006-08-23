@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.16 2006-04-18 14:57:38 gzins Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.17 2006-08-23 12:12:36 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/04/18 14:57:38  gzins
+ * Changed UNSO to USNO
+ *
  * Revision 1.15  2006/04/05 15:09:22  gzins
  * Updated according to new sclsvrCALIBRATOR_LIST API
  *
@@ -60,7 +63,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.16 2006-04-18 14:57:38 gzins Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.17 2006-08-23 12:12:36 gzins Exp $"; 
 
 /* 
  * System Headers 
@@ -298,12 +301,13 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
     sclsvrCALIBRATOR_LIST *calibratorList;
     calibratorList = _calibratorListModel->GetList(sclguiFILTERED_CALIBRATORS);
 
-    // Build looking label
-    BuildLabel(&_label, _details);
+    // Get the list of properties (labels) to be displayed 
+    vobsSTAR_PROPERTY_ID_LIST label;
+    label = GetLabel(_details);
 
     // Get the number of labels and calibrators to set the table size
     int nbOfProperties ;
-    nbOfProperties = _label.size() + 1 ;
+    nbOfProperties = label.size() + 1 ;
     int nbOfRows;
     nbOfRows = calibratorList->Size();
 
@@ -317,8 +321,8 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
     sclsvrCALIBRATOR tmpCalibrator;    
     int propIdx = 0;
     vobsSTAR_PROPERTY_ID_LIST::iterator labelIterator;
-    labelIterator = _label.begin();
-    while(labelIterator != _label.end())
+    labelIterator = label.begin();
+    while(labelIterator != label.end())
     {
         _listTable->SetColumnHeader
             (propIdx+1, 
@@ -341,8 +345,8 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Update()
         int i=0;
         
         // Add calibrator properties rows
-        labelIterator = _label.begin();
-        while(labelIterator != _label.end())
+        labelIterator = label.begin();
+        while(labelIterator != label.end())
         {
             string propvalue;
             vobsSTAR_PROPERTY *property;
@@ -468,12 +472,33 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::Detail(mcsLOGICAL state)
  *
  * @return labels
  */
-vobsSTAR_PROPERTY_ID_LIST sclguiCALIBRATOR_LIST_VIEW::GetLabel(mcsLOGICAL details)
+vobsSTAR_PROPERTY_ID_LIST sclguiCALIBRATOR_LIST_VIEW::GetLabel
+    (mcsLOGICAL details)
 {
     logTrace("sclguiTABLE_VIEW::GetLabel()");
     
     vobsSTAR_PROPERTY_ID_LIST label;
-    BuildLabel(&label, details);
+    
+    // Reset list
+    label.erase(label.begin(), label.end());
+
+    // Build label according to the research band and the faint or bright
+    // research
+    if (_requestModel->IsBright() == mcsTRUE)
+    {
+        if (strcmp(_requestModel->GetSearchBand(), "N") == 0)
+        {
+            GetLabelForBrighN(&label, details);
+        }
+        else
+        {
+            GetLabelForBrightKV(&label, details);
+        }
+    }
+    else
+    {
+        GetLabelForFaintK(&label, details);
+    }
 
     return label;
 }
@@ -506,7 +531,7 @@ sclguiCALIBRATOR_LIST_VIEW::AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibrators
      // Attach to the calibrators model
     _calibratorListModel = &calibratorsModel;
     // Attach to the request model
-    _requestModelModel = &requestModel;
+    _requestModel = &requestModel;
 
     return mcsSUCCESS;
 }
@@ -514,78 +539,6 @@ sclguiCALIBRATOR_LIST_VIEW::AttachModel(sclguiCALIBRATOR_LIST_MODEL &calibrators
 /*
  * Private methods
  */
-/**
- * Reset the list of wanted UCD
- *
- * @return always mcsSUCCESS
- */
-mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::ResetLabel()
-{
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::ResetLabel()");
-
-    _label.erase(_label.begin(), _label.end());
-    
-    return mcsSUCCESS;
-}
-
-/**
- * Build result table label
- *
- * @param label label of the table
- * @param details boolean to know if it is a detail view or not
- * 
- * @return always mcsSUCCESS
- */
-mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
-                                    mcsLOGICAL details)
-{
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabel()");
-
-    // ResetLabel
-    ResetLabel();
-
-    // Build label according to the research band and the faint or bright
-    // research
-    if (_requestModelModel->IsBright() == mcsTRUE)
-    {
-        if (strcmp(_requestModelModel->GetSearchBand(), "N") == 0)
-        {
-            if (details == mcsFALSE)
-            {
-                BuildLabelN(label);
-            }
-            else
-            {
-                BuildLabelNComplete(label);
-            }
-        }
-        else
-        {
-            if (details == mcsFALSE)
-            {
-                BuildLabelKV(label);
-            }
-            else
-            {
-                BuildLabelKVComplete(label);
-            }
-        }
-    }
-    else
-    {
-        if (details == mcsFALSE)
-        {
-            BuildLabelFaintK(label);
-        }
-        else
-        {
-            BuildLabelFaintKComplete(label);
-        }
-    }
-    
-    return mcsSUCCESS;
-}
 
 /**
  * Build label for K and V band
@@ -594,83 +547,71 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
  * 
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label)
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::GetLabelForBrightKV
+    (vobsSTAR_PROPERTY_ID_LIST *label, mcsLOGICAL details)
 {
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKV()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::GetLabelForBrightKV()");
     
-    label->push_back(sclsvrCALIBRATOR_DIST);
-    label->push_back(vobsSTAR_ID_HD);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(sclsvrCALIBRATOR_VIS2);
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(sclsvrCALIBRATOR_DIAM_VK);
-    label->push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR);
-    label->push_back(vobsSTAR_SPECT_TYPE_MK);
-    label->push_back(vobsSTAR_PHOT_JHN_V);
-    label->push_back(vobsSTAR_PHOT_JHN_J);
-    label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(vobsSTAR_PHOT_JHN_K);
-    
-    return mcsSUCCESS;
-}
-
-/**
- * Build detailed label for K and V bands
- *
- * @param label label list to build
- * 
- * @return always mcsSUCCESS
- */
-mcsCOMPL_STAT
-sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label)
-{
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete()");
-
-    // build ucdNameforKV list
-    label->push_back(sclsvrCALIBRATOR_DIST);
-    label->push_back(sclsvrCALIBRATOR_VIS2);
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(sclsvrCALIBRATOR_DIAM_BV);
-    label->push_back(sclsvrCALIBRATOR_DIAM_VR);
-    label->push_back(sclsvrCALIBRATOR_DIAM_VK);
-    label->push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR);
-    label->push_back(vobsSTAR_ID_HIP);
-    label->push_back(vobsSTAR_ID_HD);
-    label->push_back(vobsSTAR_ID_DM);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_PMDEC);
-    label->push_back(vobsSTAR_POS_EQ_PMRA);
-    label->push_back(vobsSTAR_POS_PARLX_TRIG);
-    label->push_back(vobsSTAR_SPECT_TYPE_MK);
-    label->push_back(vobsSTAR_CODE_VARIAB_V3);
-    label->push_back(vobsSTAR_CODE_MULT_FLAG);
-    label->push_back(vobsSTAR_POS_GAL_LAT);
-    label->push_back(vobsSTAR_POS_GAL_LON);
-    label->push_back(vobsSTAR_VELOC_HC);
-    label->push_back(vobsSTAR_VELOC_ROTAT);
-    label->push_back(vobsSTAR_LD_DIAM);
-    label->push_back(vobsSTAR_LD_DIAM_ERROR);
-    label->push_back(vobsSTAR_UD_DIAM);
-    label->push_back(vobsSTAR_UD_DIAM_ERROR);
-    label->push_back(vobsSTAR_OBS_METHOD);
-    label->push_back(vobsSTAR_INST_WAVELENGTH_VALUE);
-    label->push_back(vobsSTAR_UDDK_DIAM);
-    label->push_back(vobsSTAR_UDDK_DIAM_ERROR);
-    label->push_back(vobsSTAR_PHOT_JHN_B);
-    label->push_back(vobsSTAR_PHOT_JHN_V);
-    label->push_back(vobsSTAR_PHOT_JHN_R);
-    label->push_back(vobsSTAR_PHOT_JHN_I);
-    label->push_back(vobsSTAR_PHOT_JHN_J);
-    label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(vobsSTAR_PHOT_JHN_K);
-    label->push_back(vobsSTAR_PHOT_JHN_L);
-    label->push_back(vobsSTAR_PHOT_JHN_M);
-    label->push_back(vobsSTAR_PHOT_JHN_N);
-    label->push_back(sclsvrCALIBRATOR_EXTINCTION_RATIO);
-    
+    if (details == mcsFALSE)
+    {
+        label->push_back(sclsvrCALIBRATOR_DIST);
+        label->push_back(vobsSTAR_ID_HD);
+        label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+        label->push_back(sclsvrCALIBRATOR_VIS2);
+        label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(sclsvrCALIBRATOR_DIAM_VK);
+        label->push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR);
+        label->push_back(vobsSTAR_SPECT_TYPE_MK);
+        label->push_back(vobsSTAR_PHOT_JHN_V);
+        label->push_back(vobsSTAR_PHOT_JHN_J);
+        label->push_back(vobsSTAR_PHOT_JHN_H);
+        label->push_back(vobsSTAR_PHOT_JHN_K);
+    }
+    else
+    {
+        label->push_back(sclsvrCALIBRATOR_DIST);
+        label->push_back(sclsvrCALIBRATOR_VIS2);
+        label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(sclsvrCALIBRATOR_DIAM_BV);
+        label->push_back(sclsvrCALIBRATOR_DIAM_VR);
+        label->push_back(sclsvrCALIBRATOR_DIAM_VK);
+        label->push_back(sclsvrCALIBRATOR_DIAM_VK_ERROR);
+        label->push_back(vobsSTAR_ID_HIP);
+        label->push_back(vobsSTAR_ID_HD);
+        label->push_back(vobsSTAR_ID_DM);
+        label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_PMDEC);
+        label->push_back(vobsSTAR_POS_EQ_PMRA);
+        label->push_back(vobsSTAR_POS_PARLX_TRIG);
+        label->push_back(vobsSTAR_SPECT_TYPE_MK);
+        label->push_back(vobsSTAR_CODE_VARIAB_V3);
+        label->push_back(vobsSTAR_CODE_MULT_FLAG);
+        label->push_back(vobsSTAR_POS_GAL_LAT);
+        label->push_back(vobsSTAR_POS_GAL_LON);
+        label->push_back(vobsSTAR_VELOC_HC);
+        label->push_back(vobsSTAR_VELOC_ROTAT);
+        label->push_back(vobsSTAR_LD_DIAM);
+        label->push_back(vobsSTAR_LD_DIAM_ERROR);
+        label->push_back(vobsSTAR_UD_DIAM);
+        label->push_back(vobsSTAR_UD_DIAM_ERROR);
+        label->push_back(vobsSTAR_OBS_METHOD);
+        label->push_back(vobsSTAR_INST_WAVELENGTH_VALUE);
+        label->push_back(vobsSTAR_UDDK_DIAM);
+        label->push_back(vobsSTAR_UDDK_DIAM_ERROR);
+        label->push_back(vobsSTAR_PHOT_JHN_B);
+        label->push_back(vobsSTAR_PHOT_JHN_V);
+        label->push_back(vobsSTAR_PHOT_JHN_R);
+        label->push_back(vobsSTAR_PHOT_JHN_I);
+        label->push_back(vobsSTAR_PHOT_JHN_J);
+        label->push_back(vobsSTAR_PHOT_JHN_H);
+        label->push_back(vobsSTAR_PHOT_JHN_K);
+        label->push_back(vobsSTAR_PHOT_JHN_L);
+        label->push_back(vobsSTAR_PHOT_JHN_M);
+        label->push_back(vobsSTAR_PHOT_JHN_N);
+        label->push_back(sclsvrCALIBRATOR_EXTINCTION_RATIO);
+    } 
     return mcsSUCCESS;
 }
 
@@ -681,72 +622,61 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *labe
  * 
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_VIEW::BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label)
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::GetLabelForBrighN
+    (vobsSTAR_PROPERTY_ID_LIST *label, mcsLOGICAL details)
 {
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelN()");
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::GetLabelForBrighN()");
 
-    label->push_back(sclsvrCALIBRATOR_DIST);
-    label->push_back(vobsSTAR_ID_HD);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(sclsvrCALIBRATOR_VIS2);
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(vobsSTAR_DIAM12);
-    label->push_back(vobsSTAR_DIAM12_ERROR);
-    label->push_back(vobsSTAR_PHOT_FLUX_IR_12);
-    label->push_back(vobsSTAR_SPECT_TYPE_MK);
-    label->push_back(vobsSTAR_PHOT_JHN_N);
-    label->push_back(sclsvrCALIBRATOR_VIS2_8);
-    label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR);
-    label->push_back(sclsvrCALIBRATOR_VIS2_13);
-    label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
-    
-    return mcsSUCCESS;
-}
-
-/**
- * Build detailed label for N band
- *
- * @param label label list to build
- * 
- * @return always mcsSUCCESS
- */
-mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label)
-{
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete()");
-
-    label->push_back(sclsvrCALIBRATOR_DIST);
-    label->push_back(vobsSTAR_ID_HD);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(sclsvrCALIBRATOR_VIS2);
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(vobsSTAR_DIAM12);
-    label->push_back(vobsSTAR_DIAM12_ERROR);
-    label->push_back(vobsSTAR_IR_FLUX_ORIGIN);
-    label->push_back(vobsSTAR_PHOT_FLUX_IR_12);
-    label->push_back(vobsSTAR_PHOT_FLUX_IR_12_ERROR);
-    label->push_back(vobsSTAR_SPECT_TYPE_MK);
-    label->push_back(vobsSTAR_PHOT_JHN_N);
-    label->push_back(sclsvrCALIBRATOR_VIS2_8);
-    label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR);
-    label->push_back(sclsvrCALIBRATOR_VIS2_13);
-    label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
-    label->push_back(vobsSTAR_REF_STAR);
-    label->push_back(vobsSTAR_CODE_MULT_FLAG);
-    label->push_back(vobsSTAR_CODE_VARIAB_V3);
-    label->push_back(vobsSTAR_PHOT_JHN_V);
-    label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(vobsSTAR_POS_PARLX_TRIG);
-    label->push_back(vobsSTAR_POS_PARLX_TRIG_ERROR);
-    label->push_back(vobsSTAR_POS_EQ_PMRA);
-    label->push_back(vobsSTAR_POS_EQ_PMDEC);
-    label->push_back(vobsSTAR_PHOT_EXTINCTION_TOTAL);
-    label->push_back(vobsSTAR_CHI2_QUALITY);   
-    label->push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
-    
+    if (details == mcsFALSE)
+    {
+        label->push_back(sclsvrCALIBRATOR_DIST);
+        label->push_back(vobsSTAR_ID_HD);
+        label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+        label->push_back(sclsvrCALIBRATOR_VIS2);
+        label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(vobsSTAR_DIAM12);
+        label->push_back(vobsSTAR_DIAM12_ERROR);
+        label->push_back(vobsSTAR_PHOT_FLUX_IR_12);
+        label->push_back(vobsSTAR_SPECT_TYPE_MK);
+        label->push_back(vobsSTAR_PHOT_JHN_N);
+        label->push_back(sclsvrCALIBRATOR_VIS2_8);
+        label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR);
+        label->push_back(sclsvrCALIBRATOR_VIS2_13);
+        label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
+    }
+    else
+    {
+        label->push_back(sclsvrCALIBRATOR_DIST);
+        label->push_back(vobsSTAR_ID_HD);
+        label->push_back(vobsSTAR_POS_EQ_RA_MAIN );
+        label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+        label->push_back(sclsvrCALIBRATOR_VIS2);
+        label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(vobsSTAR_DIAM12);
+        label->push_back(vobsSTAR_DIAM12_ERROR);
+        label->push_back(vobsSTAR_IR_FLUX_ORIGIN);
+        label->push_back(vobsSTAR_PHOT_FLUX_IR_12);
+        label->push_back(vobsSTAR_PHOT_FLUX_IR_12_ERROR);
+        label->push_back(vobsSTAR_SPECT_TYPE_MK);
+        label->push_back(vobsSTAR_PHOT_JHN_N);
+        label->push_back(sclsvrCALIBRATOR_VIS2_8);
+        label->push_back(sclsvrCALIBRATOR_VIS2_8_ERROR);
+        label->push_back(sclsvrCALIBRATOR_VIS2_13);
+        label->push_back(sclsvrCALIBRATOR_VIS2_13_ERROR);
+        label->push_back(vobsSTAR_REF_STAR);
+        label->push_back(vobsSTAR_CODE_MULT_FLAG);
+        label->push_back(vobsSTAR_CODE_VARIAB_V3);
+        label->push_back(vobsSTAR_PHOT_JHN_V);
+        label->push_back(vobsSTAR_PHOT_JHN_H);
+        label->push_back(vobsSTAR_POS_PARLX_TRIG);
+        label->push_back(vobsSTAR_POS_PARLX_TRIG_ERROR);
+        label->push_back(vobsSTAR_POS_EQ_PMRA);
+        label->push_back(vobsSTAR_POS_EQ_PMDEC);
+        label->push_back(vobsSTAR_PHOT_EXTINCTION_TOTAL);
+        label->push_back(vobsSTAR_CHI2_QUALITY);   
+        label->push_back(vobsSTAR_SP_TYP_PHYS_TEMP_EFFEC);
+    } 
     return mcsSUCCESS;
 }
 
@@ -757,97 +687,87 @@ sclguiCALIBRATOR_LIST_VIEW::BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label
  * 
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK(vobsSTAR_PROPERTY_ID_LIST *label)
+mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::GetLabelForFaintK
+    (vobsSTAR_PROPERTY_ID_LIST *label, mcsLOGICAL details)
 {
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintK()");
-    
-    label->push_back(sclsvrCALIBRATOR_DIST);
-    label->push_back(vobsSTAR_ID_2MASS);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(sclsvrCALIBRATOR_VIS2);
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(sclsvrCALIBRATOR_DIAM_MEAN);
-    label->push_back(sclsvrCALIBRATOR_DIAM_MEAN_ERROR);
-    label->push_back(vobsSTAR_PHOT_JHN_V);
-    label->push_back(vobsSTAR_PHOT_PHG_V);
-    label->push_back(vobsSTAR_PHOT_JHN_I);
-    label->push_back(vobsSTAR_PHOT_COUS_I);
-    label->push_back(vobsSTAR_PHOT_PHG_I);
-    label->push_back(vobsSTAR_PHOT_JHN_J);
-    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_J);
-    label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
-    label->push_back(vobsSTAR_PHOT_JHN_K);
-    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
-    
-    return mcsSUCCESS;
-}
+    logTrace("sclguiCALIBRATOR_LIST_VIEW::GetLabelForFaintK()");
 
-/**
- * Build complete label for faint K band
- *
- * @param label label list to build
- * 
- * @return always mcsSUCCESS
- */
-mcsCOMPL_STAT 
-sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *label)
-{
-    logTrace("sclguiCALIBRATOR_LIST_VIEW::BuildLabelFaintKComplete()");
-
-    label->push_back(sclsvrCALIBRATOR_DIST);
-    label->push_back(sclsvrCALIBRATOR_VIS2);
-    label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
-    label->push_back(sclsvrCALIBRATOR_DIAM_IJ);
-    label->push_back(sclsvrCALIBRATOR_DIAM_IK);
-    label->push_back(sclsvrCALIBRATOR_DIAM_JH);
-    label->push_back(sclsvrCALIBRATOR_DIAM_JK);
-    label->push_back(sclsvrCALIBRATOR_DIAM_MEAN);
-    label->push_back(sclsvrCALIBRATOR_DIAM_MEAN_ERROR);
-    label->push_back(vobsSTAR_ID_2MASS);
-    label->push_back(vobsSTAR_ID_DENIS);
-    label->push_back(vobsSTAR_ID_TYC1);
-    label->push_back(vobsSTAR_ID_TYC2);
-    label->push_back(vobsSTAR_ID_TYC3);
-    label->push_back(vobsSTAR_ID_HIP);
-    label->push_back(vobsSTAR_ID_HD);
-    label->push_back(vobsSTAR_ID_DM);
-    label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
-    label->push_back(vobsSTAR_POS_EQ_PMRA);
-    label->push_back(vobsSTAR_POS_EQ_PMDEC);
-    label->push_back(vobsSTAR_POS_GAL_LAT);
-    label->push_back(vobsSTAR_POS_GAL_LON);
-    label->push_back(vobsSTAR_POS_PARLX_TRIG);
-    label->push_back(vobsSTAR_SPECT_TYPE_MK);
-    label->push_back(vobsSTAR_CODE_VARIAB_V1);
-    label->push_back(vobsSTAR_CODE_VARIAB_V2);
-    label->push_back(vobsSTAR_CODE_VARIAB_V3);
-    label->push_back(vobsSTAR_CODE_MULT_FLAG);
-    label->push_back(vobsSTAR_LD_DIAM);
-    label->push_back(vobsSTAR_LD_DIAM_ERROR);
-    label->push_back(vobsSTAR_UD_DIAM);
-    label->push_back(vobsSTAR_UD_DIAM_ERROR);
-    label->push_back(vobsSTAR_OBS_METHOD);
-    // lambda
-    label->push_back(vobsSTAR_PHOT_JHN_B);
-    label->push_back(vobsSTAR_PHOT_PHG_B);
-    label->push_back(vobsSTAR_PHOT_JHN_V);
-    label->push_back(vobsSTAR_PHOT_PHG_V);
-    label->push_back(vobsSTAR_PHOT_PHG_R);
-    label->push_back(vobsSTAR_PHOT_JHN_I);
-    label->push_back(vobsSTAR_PHOT_COUS_I);
-    label->push_back(vobsSTAR_PHOT_PHG_I);
-    label->push_back(vobsSTAR_PHOT_JHN_J);
-    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_J);
-    label->push_back(vobsSTAR_PHOT_JHN_H);
-    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
-    label->push_back(vobsSTAR_PHOT_JHN_K);
-    label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
-    label->push_back(sclsvrCALIBRATOR_EXTINCTION_RATIO);
-
+    if (details == mcsFALSE)
+    {
+        label->push_back(sclsvrCALIBRATOR_DIST);
+        label->push_back(vobsSTAR_ID_2MASS);
+        label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+        label->push_back(sclsvrCALIBRATOR_VIS2);
+        label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(sclsvrCALIBRATOR_DIAM_MEAN);
+        label->push_back(sclsvrCALIBRATOR_DIAM_MEAN_ERROR);
+        label->push_back(vobsSTAR_PHOT_JHN_V);
+        label->push_back(vobsSTAR_PHOT_PHG_V);
+        label->push_back(vobsSTAR_PHOT_JHN_I);
+        label->push_back(vobsSTAR_PHOT_COUS_I);
+        label->push_back(vobsSTAR_PHOT_PHG_I);
+        label->push_back(vobsSTAR_PHOT_JHN_J);
+        label->push_back(sclsvrCALIBRATOR_PHOT_COUS_J);
+        label->push_back(vobsSTAR_PHOT_JHN_H);
+        label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
+        label->push_back(vobsSTAR_PHOT_JHN_K);
+        label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
+    }
+    else
+    {
+        label->push_back(sclsvrCALIBRATOR_DIST);
+        label->push_back(sclsvrCALIBRATOR_VIS2);
+        label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(sclsvrCALIBRATOR_DIAM_IJ);
+        label->push_back(sclsvrCALIBRATOR_DIAM_IK);
+        label->push_back(sclsvrCALIBRATOR_DIAM_JH);
+        label->push_back(sclsvrCALIBRATOR_DIAM_JK);
+        label->push_back(sclsvrCALIBRATOR_DIAM_HK);
+        label->push_back(sclsvrCALIBRATOR_DIAM_MEAN);
+        label->push_back(sclsvrCALIBRATOR_DIAM_MEAN_ERROR);
+        label->push_back(vobsSTAR_ID_2MASS);
+        label->push_back(vobsSTAR_ID_DENIS);
+        label->push_back(vobsSTAR_ID_TYC1);
+        label->push_back(vobsSTAR_ID_TYC2);
+        label->push_back(vobsSTAR_ID_TYC3);
+        label->push_back(vobsSTAR_ID_HIP);
+        label->push_back(vobsSTAR_ID_HD);
+        label->push_back(vobsSTAR_ID_DM);
+        label->push_back(vobsSTAR_POS_EQ_RA_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_DEC_MAIN);
+        label->push_back(vobsSTAR_POS_EQ_PMRA);
+        label->push_back(vobsSTAR_POS_EQ_PMDEC);
+        label->push_back(vobsSTAR_POS_GAL_LAT);
+        label->push_back(vobsSTAR_POS_GAL_LON);
+        label->push_back(vobsSTAR_POS_PARLX_TRIG);
+        label->push_back(vobsSTAR_SPECT_TYPE_MK);
+        label->push_back(vobsSTAR_CODE_VARIAB_V1);
+        label->push_back(vobsSTAR_CODE_VARIAB_V2);
+        label->push_back(vobsSTAR_CODE_VARIAB_V3);
+        label->push_back(vobsSTAR_CODE_MULT_FLAG);
+        label->push_back(vobsSTAR_LD_DIAM);
+        label->push_back(vobsSTAR_LD_DIAM_ERROR);
+        label->push_back(vobsSTAR_UD_DIAM);
+        label->push_back(vobsSTAR_UD_DIAM_ERROR);
+        label->push_back(vobsSTAR_OBS_METHOD);
+        // lambda
+        label->push_back(vobsSTAR_PHOT_JHN_B);
+        label->push_back(vobsSTAR_PHOT_PHG_B);
+        label->push_back(vobsSTAR_PHOT_JHN_V);
+        label->push_back(vobsSTAR_PHOT_PHG_V);
+        label->push_back(vobsSTAR_PHOT_PHG_R);
+        label->push_back(vobsSTAR_PHOT_JHN_I);
+        label->push_back(vobsSTAR_PHOT_COUS_I);
+        label->push_back(vobsSTAR_PHOT_PHG_I);
+        label->push_back(vobsSTAR_PHOT_JHN_J);
+        label->push_back(sclsvrCALIBRATOR_PHOT_COUS_J);
+        label->push_back(vobsSTAR_PHOT_JHN_H);
+        label->push_back(sclsvrCALIBRATOR_PHOT_COUS_H);
+        label->push_back(vobsSTAR_PHOT_JHN_K);
+        label->push_back(sclsvrCALIBRATOR_PHOT_COUS_K);
+        label->push_back(sclsvrCALIBRATOR_EXTINCTION_RATIO);
+    }
     return mcsSUCCESS;
 }
 
