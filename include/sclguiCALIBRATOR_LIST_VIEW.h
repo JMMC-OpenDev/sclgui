@@ -3,11 +3,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.3 2005-11-23 08:42:27 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.4 2006-08-23 12:12:25 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/11/23 08:42:27  scetre
+ * Added possibility to build label for faint K
+ *
  * Revision 1.2  2005/10/18 12:52:48  lafrasse
  * First code revue
  *
@@ -78,7 +81,7 @@ private:
     sclguiCALIBRATOR_LIST_VIEW& operator=(const sclguiCALIBRATOR_LIST_VIEW&);
 
     sclguiCALIBRATOR_LIST_MODEL* _calibratorListModel;
-    sclguiREQUEST_MODEL* _requestModelModel;
+    sclguiREQUEST_MODEL* _requestModel;
     
     gwtTEXTAREA _resumeTextArea;    
     gwtTABLE* _listTable;
@@ -86,17 +89,13 @@ private:
     gwtTABLE* _confidenceTable;
 
     mcsLOGICAL _details;
-    vobsSTAR_PROPERTY_ID_LIST _label;
 
-    mcsCOMPL_STAT ResetLabel();
-    mcsCOMPL_STAT BuildLabel(vobsSTAR_PROPERTY_ID_LIST *label,
-                             mcsLOGICAL details=mcsFALSE);
-    mcsCOMPL_STAT BuildLabelKV(vobsSTAR_PROPERTY_ID_LIST *label);
-    mcsCOMPL_STAT BuildLabelKVComplete(vobsSTAR_PROPERTY_ID_LIST *label);
-    mcsCOMPL_STAT BuildLabelN(vobsSTAR_PROPERTY_ID_LIST *label);
-    mcsCOMPL_STAT BuildLabelNComplete(vobsSTAR_PROPERTY_ID_LIST *label);
-    mcsCOMPL_STAT BuildLabelFaintK(vobsSTAR_PROPERTY_ID_LIST *label);
-    mcsCOMPL_STAT BuildLabelFaintKComplete(vobsSTAR_PROPERTY_ID_LIST *label);
+    mcsCOMPL_STAT GetLabelForBrightKV(vobsSTAR_PROPERTY_ID_LIST *label,
+                                      mcsLOGICAL details);
+    mcsCOMPL_STAT GetLabelForBrighN(vobsSTAR_PROPERTY_ID_LIST *label,
+                                    mcsLOGICAL details);
+    mcsCOMPL_STAT GetLabelForFaintK(vobsSTAR_PROPERTY_ID_LIST *label,
+                                    mcsLOGICAL details);
     
 };
 
