@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.7 2006-08-22 14:50:51 mella Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.8 2006-09-15 14:20:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/08/22 14:50:51  mella
+ * Complete API for setter functions to accept Double or double params
+ *
  * Revision 1.6  2006/08/10 15:22:55  lafrasse
  * Fullfiled missing members and accessors
  * Used Double as default numeric type
@@ -45,6 +48,9 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class QueryModel extends Observable
 {
+    /** For default values */
+    Preferences _preferences;
+
     /** The instrumental magnitude band */
     private DefaultComboBoxModel _instrumentalMagnitudeBands;
 
@@ -71,6 +77,9 @@ public class QueryModel extends Observable
 
     /** The science object right magnitude */
     private double _scienceObjectMagnitude;
+
+    /** The science object inclusion flag */
+    private boolean _scienceObjectInclusionFlag;
 
     /** The query minimum magnitude */
     private double _queryMinMagnitude;
@@ -113,6 +122,8 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
+        _preferences = Preferences.getInstance();
+
         String[] magnitudeBands = { "I", "J", "H", "K", "V" };
         double[] wavelengths    = { 1.1, 2.2, 3.3, 4.4, 5.5 };
 
@@ -126,13 +137,13 @@ public class QueryModel extends Observable
 
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
 
-        init();
+        reset();
     }
 
     /**
      * Reset all properties.
      */
-    public void init()
+    public void reset()
     {
         MCSLogger.trace();
 
@@ -144,8 +155,9 @@ public class QueryModel extends Observable
         setScienceObjectRA("+00:00:00.00");
         setScienceObjectDEC("+00:00:00.00");
         setScienceObjectMagnitude(0.0);
+        setScienceObjectInclusionFlag(true);
 
-        setQueryBrightScenarion(true);
+        setQueryBrightScenarioFlag(true);
         setQueryDiffRASize(10.0);
         setQueryDiffDECSize(5.0);
         setQueryRadialSize(0.0);
@@ -155,26 +167,97 @@ public class QueryModel extends Observable
     }
 
     /**
+     * Reset all properties to their default values.
+     */
+    public void loadDefaultValues()
+    {
+        MCSLogger.trace();
+
+        setInstrumentalMagnitudeBand(_preferences.getPreference(
+                "query.magnitudeBand"));
+        setInstrumentalWavelength(_preferences.getPreferenceAsDouble(
+                "query.instrumentalWavelength"));
+        setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
+                "query.instrumentalMaxBaseLine"));
+
+        setScienceObjectName(_preferences.getPreference(
+                "query.scienceObjectName"));
+        setScienceObjectRA(_preferences.getPreference("query.scienceObjectRA"));
+        setScienceObjectDEC(_preferences.getPreference("query.scienceObjectDEC"));
+        setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
+                "query.scienceObjectMagnitude"));
+        setScienceObjectInclusionFlag(_preferences.getPreferenceAsBoolean(
+                "query.scienceObjectInclusionFlag"));
+
+        setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
+                "query.queryMinMagnitude"));
+        setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
+                "query.queryMaxMagnitude"));
+        setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
+                "query.brightScenario"));
+        setQueryDiffRASize(_preferences.getPreferenceAsDouble(
+                "query.instrumentalMaxBaseLine"));
+        setQueryDiffDECSize(_preferences.getPreferenceAsDouble(
+                "query.instrumentalMaxBaseLine"));
+        setQueryRadialSize(_preferences.getPreferenceAsDouble(
+                "query.instrumentalMaxBaseLine"));
+    }
+
+    /**
+     * Store all current properties as the futur default values.
+     */
+    public void saveDefaultValues()
+    {
+        MCSLogger.trace();
+
+        _preferences.setPreference("query.magnitudeBand",
+            getInstrumentalMagnitudeBand());
+        _preferences.setPreference("query.instrumentalWavelength",
+            getInstrumentalWavelength());
+        _preferences.setPreference("query.instrumentalMaxBaseLine",
+            getInstrumentalMaxBaseLine());
+
+        _preferences.setPreference("query.scienceObjectName",
+            getScienceObjectName());
+        _preferences.setPreference("query.scienceObjectRA", getScienceObjectRA());
+        _preferences.setPreference("query.scienceObjectDEC",
+            getScienceObjectDEC());
+        _preferences.setPreference("query.scienceObjectMagnitude",
+            getScienceObjectMagnitude());
+        _preferences.setPreference("query.scienceObjectInclusionFlag",
+            getScienceObjectInclusionFlag());
+
+        _preferences.setPreference("query.queryMinMagnitude",
+            getQueryMinMagnitude());
+        _preferences.setPreference("query.queryMaxMagnitude",
+            getQueryMaxMagnitude());
+        _preferences.setPreference("query.brightScenario",
+            getQueryBrightScenarioFlag());
+        _preferences.setPreference("query.instrumentalMaxBaseLine",
+            getQueryDiffRASize());
+        _preferences.setPreference("query.instrumentalMaxBaseLine",
+            getQueryDiffDECSize());
+        _preferences.setPreference("query.instrumentalMaxBaseLine",
+            getQueryRadialSize());
+
+        try
+        {
+            _preferences.saveToFile();
+        }
+        catch (Exception e)
+        {
+        }
+    }
+
+    /**
      * Set default values for a bright search on ETA_TAU.
      */
     public void example()
     {
         MCSLogger.trace();
 
-        setInstrumentalMagnitudeBand("V");
-        setInstrumentalWavelength(1978.0);
-        setInstrumentalMaxBaseLine(102.45);
-
-        setScienceObjectName("eta_tau");
-        setScienceObjectRA("+03:47:29.79");
-        setScienceObjectDEC("+24:06:18.50");
-        setScienceObjectMagnitude(0.0);
-
-        setQueryMinMagnitude(2.0);
-        setQueryMaxMagnitude(4.0);
-        setQueryDiffRASize(60.0);
-        setQueryDiffDECSize(5.0);
-        setQueryRadialSize(0.0);
+        // @TODO : this method should diappear at last !
+        loadDefaultValues();
 
         setTotalStep(11);
     }
@@ -482,6 +565,30 @@ public class QueryModel extends Observable
     }
 
     /**
+     * Indicates wether the query result should include the science object.
+     *
+     * @return true wether the query results should include the science object,
+     * false otherwise.
+     */
+    public Boolean getScienceObjectInclusionFlag()
+    {
+        return _scienceObjectInclusionFlag;
+    }
+
+    /**
+     * Set wether the result should include the science object or not.
+     *
+     * @param flag true for scinec objection inclusion, false otherwise.
+     */
+    public void setScienceObjectInclusionFlag(boolean flag)
+    {
+        _scienceObjectInclusionFlag = flag;
+
+        setChanged();
+        notifyObservers();
+    }
+
+    /**
      * Return the minimun calibrator magnitude for the actual query.
      *
      * @return the minimum magnitude as a Double value.
@@ -583,7 +690,7 @@ public class QueryModel extends Observable
      * @return true wether the query is of the bright type, otherwise false for
      * the faint ones.
      */
-    public boolean isQueryScenarioBright()
+    public Boolean getQueryBrightScenarioFlag()
     {
         return _queryBrightScenarioFlag;
     }
@@ -593,7 +700,7 @@ public class QueryModel extends Observable
      *
      * @param flag true for bright queries, false for faint ones.
      */
-    public void setQueryBrightScenarion(boolean flag)
+    public void setQueryBrightScenarioFlag(boolean flag)
     {
         _queryBrightScenarioFlag = flag;
 
