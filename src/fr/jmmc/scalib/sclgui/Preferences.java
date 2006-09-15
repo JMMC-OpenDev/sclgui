@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.7 2006-07-11 11:17:48 mella Exp $"
+ * "@(#) $Id: Preferences.java,v 1.8 2006-09-15 14:19:11 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/07/11 11:17:48  mella
+ * Add scienceObject.include preference
+ *
  * Revision 1.6  2006/06/22 12:32:21  lafrasse
  * Added legend view and detailed view status storage
  *
@@ -104,8 +107,21 @@ public class Preferences extends jmmc.mcs.util.Preferences
             /* Place star properties order */
             myDefaultProperties.put("star.properties.order", "HD HIP RAJ2000");
 
-            /* Place general preferences  */
-            myDefaultProperties.put("scienceObject.include", "true");
+            /* query default values preferences  */
+            myDefaultProperties.put("query.magnitudeBand", "V");
+            myDefaultProperties.put("query.instrumentalWavelength", "1978.0");
+            myDefaultProperties.put("query.instrumentalMaxBaseLine", "102.45");
+            myDefaultProperties.put("query.scienceObjectName", "eta_tau");
+            myDefaultProperties.put("query.scienceObjectRA", "+03:47:29.79");
+            myDefaultProperties.put("query.scienceObjectDEC", "+24:06:18.50");
+            myDefaultProperties.put("query.scienceObjectMagnitude", "0.0");
+            myDefaultProperties.put("query.scienceObjectInclusionFlag", "true");
+            myDefaultProperties.put("query.queryMinMagnitude", "2.0");
+            myDefaultProperties.put("query.queryMaxMagnitude", "4.0");
+            myDefaultProperties.put("query.queryBrightScenarioFlag", "true");
+            myDefaultProperties.put("query.queryDiffRASize", "60.0");
+            myDefaultProperties.put("query.queryDiffDECSize", "5.0");
+            myDefaultProperties.put("query.queryRadialSize", "0.0");
 
             _singleton.setDefaultPreferences(myDefaultProperties);
             _singleton.loadFromFile();
