@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.21 2006-08-10 15:27:41 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.22 2006-09-15 14:20:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2006/08/10 15:27:41  lafrasse
+ * Code refinments
+ * Used Double as default numeric type
+ * Added full implementation of by-default auto-updated values
+ * Streamlined magnitude bands and default wavelengthes support
+ *
  * Revision 1.20  2006/08/09 14:22:25  lafrasse
  * Added dynamic labels with the band for all the magnitude textfields
  *
@@ -103,7 +109,7 @@ public class QueryView extends JPanel implements Observer,
     static Action _includeScienceObjectAction;
 
     /** MVC associated model */
-    QueryModel _queryModel;
+    public QueryModel _queryModel;
 
     /** Assocaited virtual observatory */
     VirtualObservatory _vo;
@@ -428,7 +434,7 @@ public class QueryView extends JPanel implements Observer,
         _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
 
-        boolean brightScenarioFlag = _queryModel.isQueryScenarioBright();
+        boolean brightScenarioFlag = _queryModel.getQueryBrightScenarioFlag();
         _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASize());
         _diffRASizeTextfield.setVisible(brightScenarioFlag);
         _diffRASizeLabel.setVisible(brightScenarioFlag);
@@ -663,6 +669,7 @@ public class QueryView extends JPanel implements Observer,
 
             if (_scienceObjectNameTextfield.getText().length() == 0)
             {
+                // @TODO
                 _queryModel.example();
             }
             else
@@ -692,7 +699,7 @@ public class QueryView extends JPanel implements Observer,
             MCSLogger.trace();
 
             StatusBar.show("bright scenario selected.");
-            _queryModel.setQueryBrightScenarion(true);
+            _queryModel.setQueryBrightScenarioFlag(true);
         }
     }
 
@@ -708,7 +715,7 @@ public class QueryView extends JPanel implements Observer,
             MCSLogger.trace();
 
             StatusBar.show("faint scenario selected.");
-            _queryModel.setQueryBrightScenarion(false);
+            _queryModel.setQueryBrightScenarioFlag(false);
         }
     }
 

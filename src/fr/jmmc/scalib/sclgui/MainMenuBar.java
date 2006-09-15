@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.12 2006-09-15 08:26:59 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.13 2006-09-15 14:20:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/09/15 08:26:59  lafrasse
+ * Added Help menu entries.
+ * Code refinments.
+ *
  * Revision 1.11  2006/08/04 16:53:54  lafrasse
  * Re-added preliminary print support
  *
@@ -97,6 +101,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
         fileMenu();
         editMenu();
+        queryMenu();
         viewMenu();
         helpMenu();
     }
@@ -242,6 +247,41 @@ public class MainMenuBar extends JMenuBar implements ActionListener
                 ActionEvent.CTRL_MASK));
         menuItem.addActionListener(this);
         editMenu.add(menuItem);
+    }
+
+    /**
+     * Create and populate the 'Query' menu
+     */
+    void queryMenu()
+    {
+        MCSLogger.trace();
+
+        Action action;
+
+        // Create the View menu.
+        JMenu queryMenu = new JMenu("Query");
+        add(queryMenu);
+
+        // Create each View menu item
+        JMenuItem menuItem;
+
+        // Reset Values menu item
+        menuItem = new JMenuItem("Reset Values");
+        menuItem.addActionListener(this);
+        queryMenu.add(menuItem);
+
+        // Add a separator
+        queryMenu.add(new JSeparator());
+
+        // Default Values menu item
+        menuItem = new JMenuItem("Load Default Values");
+        menuItem.addActionListener(this);
+        queryMenu.add(menuItem);
+
+        // Save Values as Default Values menu item
+        menuItem = new JMenuItem("Save Current Values as Default");
+        menuItem.addActionListener(this);
+        queryMenu.add(menuItem);
     }
 
     /**
@@ -505,6 +545,24 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         if (actionName.equals("Preferences..."))
         {
             _mainWindow.showPreferencesView();
+        }
+
+        // Reset Values handler
+        if (actionName.equals("Reset Values"))
+        {
+            _mainWindow._queryView._queryModel.reset();
+        }
+
+        // Default Values handler
+        if (actionName.equals("Load Default Values"))
+        {
+            _mainWindow._queryView._queryModel.loadDefaultValues();
+        }
+
+        // Save Values as Default handler
+        if (actionName.equals("Save Current Values as Default"))
+        {
+            _mainWindow._queryView._queryModel.saveDefaultValues();
         }
 
         // Show Details handler

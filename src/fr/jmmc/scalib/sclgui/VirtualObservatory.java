@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.5 2006-08-09 13:10:15 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.6 2006-09-15 14:20:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/08/09 13:10:15  lafrasse
+ * Refined VirtualObservatory::getCal() API
+ *
  * Revision 1.4  2006/08/04 16:35:43  lafrasse
  * Added queryModel & filtersModel hooks in VirtualObservatory
  *
@@ -140,8 +143,8 @@ public class VirtualObservatory
     {
         MCSLogger.trace();
 
-        // TODO : Querying Simbad and fill the query model accordinally
-        _queryModel.init();
+        // @TODO : Querying Simbad and fill the query model accordinally
+        _queryModel.reset();
     }
 }
 /*___oOo___*/
