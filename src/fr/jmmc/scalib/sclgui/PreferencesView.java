@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.12 2006-07-28 08:37:56 mella Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.13 2006-09-15 14:19:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/07/28 08:37:56  mella
+ * Use shared PreferenceButtonModels
+ *
  * Revision 1.11  2006/07/11 11:16:23  mella
  * Add show Detail and show legend preference checkboxes
  *
@@ -59,95 +62,80 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 
 
-// TODO handle close button correctly
+// @TODO handle close button correctly
 
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
-public class PreferencesView extends JFrame implements Observer, ActionListener
+public class PreferencesView extends JFrame implements ActionListener
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** Data model */
     Preferences _preferences;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** "Restore to Default Settings" button */
     protected JButton _restoreDefaultButton;
 
-    /**
-     * DOCUMENT ME!
-     */
-    protected JButton _saveChangesButton;
-
-    /**
-     * DOCUMENT ME!
-     */
-    protected JTabbedPane prefTabbedPane;
+    /** "Save Modifications" button */
+    protected JButton _saveModificationButton;
 
     /**
      * Constructor.
      */
     public PreferencesView()
     {
-        super("SCALIB Preferences");
+        super("Preferences");
 
-        _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
+        // Window size
+        setSize(480, 360);
+        setResizable(false);
 
-        // Build main GUI components
-        prefTabbedPane = new JTabbedPane();
-
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(prefTabbedPane);
-
-        // Append properties component
-        OrderedWordsPreferencesView propertiesView = new OrderedWordsPreferencesView(_preferences,
-                "star.properties.order");
-        prefTabbedPane.add("Star Properties", propertiesView);
-
-        JPanel legendView = new LegendView(_preferences);
-        prefTabbedPane.add("Legend colors", legendView);
-
-        // Append proxy component
-        ProxyPreferencesView proxyView = new ProxyPreferencesView(_preferences);
-        prefTabbedPane.add("Proxy", proxyView);
-
-        // Append help component
-        HelpSetupPreferencesView helpView = new HelpSetupPreferencesView(_preferences);
-        prefTabbedPane.add("Help", helpView);
-
-        JPanel buttonsPanel = new JPanel();
-        _restoreDefaultButton = new JButton("Restore to default");
-        _restoreDefaultButton.addActionListener(this);
-        buttonsPanel.add(_restoreDefaultButton);
-        _saveChangesButton = new JButton("Save changes");
-        _saveChangesButton.addActionListener(this);
-        buttonsPanel.add(_saveChangesButton);
-        contentPane.add(buttonsPanel);
-
-        // Center on screen
+        // Window screen position (centered)
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize  = getSize();
         setLocation((screenSize.width - frameSize.width) / 2,
             (screenSize.height - frameSize.height) / 2);
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        pack();
-        setResizable(false);
-    }
+        // Get and listen to data model modifications
+        _preferences = Preferences.getInstance();
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param o DOCUMENT ME!
-     * @param arg DOCUMENT ME!
-     */
-    public void update(Observable o, Object arg)
-    {
-        // TODO : MAJ des champs de la fenetre
+        // Build the tabbed pane
+        JTabbedPane tabbedPane  = new JTabbedPane();
+        Container   contentPane = getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(tabbedPane);
+
+        // Add the query preferences pane
+        QueryPreferencesView queryView = new QueryPreferencesView(_preferences);
+        tabbedPane.add("Query", queryView);
+
+        // Add the columns preferences pane
+        ColumnsPreferencesView columnsView = new ColumnsPreferencesView(_preferences,
+                "star.properties.order");
+        tabbedPane.add("Columns", columnsView);
+
+        // Add the catalog preferences pane
+        JPanel catalogView = new LegendView(_preferences);
+        tabbedPane.add("Catalogs", catalogView);
+
+        // Add the network preferences pane
+        NetworkPreferencesView networkView = new NetworkPreferencesView(_preferences);
+        tabbedPane.add("Network", networkView);
+
+        // Add the help preferences pane
+        HelpPreferencesView helpView = new HelpPreferencesView(_preferences);
+        tabbedPane.add("Help", helpView);
+
+        // Add the restore and sace buttons
+        JPanel buttonsPanel = new JPanel();
+        _restoreDefaultButton = new JButton("Restore to Default Settings");
+        _restoreDefaultButton.addActionListener(this);
+        buttonsPanel.add(_restoreDefaultButton);
+        _saveModificationButton = new JButton("Save Modifications");
+        _saveModificationButton.addActionListener(this);
+        buttonsPanel.add(_saveModificationButton);
+        contentPane.add(buttonsPanel);
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -156,7 +144,7 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
      */
     public void actionPerformed(ActionEvent evt)
     {
-        // If restore default button pressed
+        // If the "Restore to default settings" button has been pressed
         if (evt.getSource().equals(_restoreDefaultButton))
         {
             try
@@ -170,8 +158,8 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
             }
         }
 
-        // If save button pressed
-        if (evt.getSource().equals(_saveChangesButton))
+        // If the "Save modifications" button has been pressed
+        if (evt.getSource().equals(_saveModificationButton))
         {
             try
             {
@@ -188,26 +176,35 @@ public class PreferencesView extends JFrame implements Observer, ActionListener
 
 
 /**
- * This Panel is dedicated to manage proxy configuration.
- *
+ * This panel is dedicated to query default values configuration.
  */
-class ProxyPreferencesView extends JPanel implements Observer
+class QueryPreferencesView extends JPanel implements Observer, ChangeListener
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** Data model */
     private Preferences _preferences;
 
     /**
      * Constructor.
      * @param preferences the application preferences
      */
-    public ProxyPreferencesView(Preferences preferences)
+    public QueryPreferencesView(Preferences preferences)
     {
         _preferences = preferences;
         _preferences.addObserver(this);
 
-        this.add(new JLabel("TODO"));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        // Include Science Object Checkbox
+        JCheckBox cb = new JCheckBox(QueryView._includeScienceObjectAction);
+        cb.setModel(PreferencedButtonModel.getInstance(_preferences,
+                "science.includeObject"));
+        add(cb);
+
+        JLabel baseLineLabel = new JLabel("Default Base Line Value (m) :");
+        add(baseLineLabel);
+
+        JTextField baseLineTextField = new JTextField();
+        add(baseLineTextField);
 
         // Make data filled
         update(null, null);
@@ -221,71 +218,66 @@ class ProxyPreferencesView extends JPanel implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        // Fill with preferences entries
+    }
+
+    /**
+     * Update preferences according buttons change
+     */
+    public void stateChanged(ChangeEvent e)
+    {
+        MCSLogger.trace();
+
+        Object source = e.getSource();
+
+        /*
+           if (source.equals(_enableToolTipCheckBox))
+           {
+               _preferences.setPreference("science.includeObject",
+                   _enableToolTipCheckBox.isSelected());
+           }
+         */
     }
 }
 
 
 /**
  * This Panel is dedicated to manage one ordered list of words.
- *
  */
-class OrderedWordsPreferencesView extends JPanel implements Observer,
-    ActionListener
+class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 {
     /**
      * DOCUMENT ME!
      */
     Logger _logger = MCSLogger.getLogger();
 
-    /**
-     * The main preferences object.
-     */
+    /** Data model */
     private Preferences _preferences;
 
-    /**
-     * The name of preference that must be managed as a ordered words.
-     */
+    /** The name of preference that must be managed as a ordered words. */
     private String _preferenceName;
 
-    /**
-     * The widget that dispaly the list of words
-     */
+    /** The widget that dispaly the list of words */
     private JList _wordsList;
 
-    /**
-     * The model associated to the widget that dispaly the list of words
-     */
+    /** The model associated to the widget that dispaly the list of words */
     private DefaultListModel _listModel;
 
-    /**
-     * The actual shown list of words
-     */
+    /** The actual shown list of words */
     private String _actualWords = "";
 
-    /**
-     * Move up Button
-     */
+    /** Move up Button */
     private JButton _moveUpButton;
 
-    /**
-     * Move down Button
-     */
+    /** Move down Button */
     private JButton _moveDownButton;
 
-    /**
-     * Add Button
-     */
+    /** Add Button */
     private JButton _addWordButton;
 
-    /**
-     * Remove  Button
-     */
+    /** Remove  Button */
     private JButton _removeWordButton;
 
-    /**
-     * newWord textfield
-     */
+    /** newWord textfield */
     private JTextField _newWordTextfield;
 
     /**
@@ -294,8 +286,7 @@ class OrderedWordsPreferencesView extends JPanel implements Observer,
      * @param preferenceName the preference name that list the words separated
      * by spaces
      */
-    public OrderedWordsPreferencesView(Preferences preferences,
-        String preferenceName)
+    public ColumnsPreferencesView(Preferences preferences, String preferenceName)
     {
         _preferences = preferences;
         _preferences.addObserver(this);
@@ -427,15 +418,48 @@ class OrderedWordsPreferencesView extends JPanel implements Observer,
 
 
 /**
- * This Panel is dedicated to manage help behaviour configuration.
- *
+ * This Panel is dedicated to manage network preferences.
  */
-class HelpSetupPreferencesView extends JPanel implements Observer,
-    ChangeListener
+class NetworkPreferencesView extends JPanel implements Observer
 {
+    /** Data model */
+    private Preferences _preferences;
+
     /**
-     * DOCUMENT ME!
+     * Constructor.
+     * @param preferences the application preferences
      */
+    public NetworkPreferencesView(Preferences preferences)
+    {
+        _preferences = preferences;
+        _preferences.addObserver(this);
+
+        // @TODO : implement
+        add(new JLabel("TODO"));
+
+        // Make data filled
+        update(null, null);
+    }
+
+    /**
+     * Present fresh content according preference content.
+     *
+     * @param o preferences
+     * @param arg not used
+     */
+    public void update(Observable o, Object arg)
+    {
+        // Fill with preferences entries
+    }
+}
+
+
+/**
+ * This Panel is dedicated to manage help behaviour configuration.
+ */
+class HelpPreferencesView extends JPanel implements Observer, ChangeListener
+{
+    /** Data model */
     private Preferences _preferences;
 
     /**
@@ -452,7 +476,7 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
      * Constructor.
      * @param preferences the application preferences
      */
-    public HelpSetupPreferencesView(Preferences preferences)
+    public HelpPreferencesView(Preferences preferences)
     {
         _preferences = preferences;
         _preferences.addObserver(this);
@@ -474,8 +498,6 @@ class HelpSetupPreferencesView extends JPanel implements Observer,
 
         // Handle include science object name
         Hashtable booleanPrefs = new Hashtable(); // Table of:  pref->Action
-        booleanPrefs.put("scienceObject.include",
-            QueryView._includeScienceObjectAction);
         booleanPrefs.put("view.details.show", CalibratorsView._showDetailsAction);
         booleanPrefs.put("view.legend.show", CalibratorsView._showLegendAction);
 
