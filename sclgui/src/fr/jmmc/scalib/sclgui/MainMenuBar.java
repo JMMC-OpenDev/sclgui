@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.11 2006-08-04 16:53:54 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.12 2006-09-15 08:26:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/08/04 16:53:54  lafrasse
+ * Re-added preliminary print support
+ *
  * Revision 1.10  2006/07/28 08:39:18  mella
  * Use shared PreferenceButtonModels
  *
@@ -73,32 +76,10 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     /** Shared instances */
     Preferences _preferences;
 
-    /**
-     * DOCUMENT ME!
-     */
-    LegendView _legendView;
-
-    /** Menu to enable/disable tooltips */
-    JCheckBoxMenuItem _activeHelpMenuItem;
-
-    /**
-     * DOCUMENT ME!
-     */
-    JCheckBoxMenuItem _showLegendMenuItem;
-
-    /**
-     * DOCUMENT ME!
-     */
-    JCheckBoxMenuItem _showDetailsMenuItem;
-
-    /**
-     * Interaction with Aladin
-     */
+    /** Interaction with Aladin */
     VOInteraction _aladinInteraction = null;
 
-    /**
-     * Logger instance
-     */
+    /** Logger instance */
     Logger _logger = MCSLogger.getLogger();
 
     /**
@@ -111,8 +92,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
         _preferences     = Preferences.getInstance();
 
-        _legendView      = new LegendView(_preferences);
-        _legendView.setVisible(false);
+        LegendView legendView = new LegendView(_preferences);
+        legendView.setVisible(false);
 
         fileMenu();
         editMenu();
@@ -325,8 +306,34 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         menuItem.addActionListener(this);
         helpMenu.add(menuItem);
 
+        // Add a separator
+        helpMenu.add(new JSeparator());
+
+        // SearchCal Tutorial menu item
+        menuItem = new JMenuItem("SearchCal Tutorial");
+        menuItem.addActionListener(this);
+        helpMenu.add(menuItem);
+
+        // SearchCal FAQ menu item
+        menuItem = new JMenuItem("SearchCal FAQ");
+        menuItem.addActionListener(this);
+        helpMenu.add(menuItem);
+
+        // SearchCal Help menu item
+        menuItem = new JMenuItem("SearchCal Help");
+        menuItem.addActionListener(this);
+        helpMenu.add(menuItem);
+
+        // SearchCal Feedback menu item
+        menuItem = new JMenuItem("SearchCal Feedback");
+        menuItem.addActionListener(this);
+        helpMenu.add(menuItem);
+
+        // Add a separator
+        helpMenu.add(new JSeparator());
+
         // Activate Help menu item
-        PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Active Help",
+        PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Show Tooltips",
                 _preferences, "help.tooltips.show");
 
         helpMenu.add(_activeHelpMenuItem);
