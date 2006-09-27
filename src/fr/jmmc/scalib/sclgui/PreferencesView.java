@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.13 2006-09-15 14:19:59 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.14 2006-09-27 11:54:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/09/15 14:19:59  lafrasse
+ * Code refinments.
+ *
  * Revision 1.12  2006/07/28 08:37:56  mella
  * Use shared PreferenceButtonModels
  *
@@ -199,12 +202,6 @@ class QueryPreferencesView extends JPanel implements Observer, ChangeListener
         cb.setModel(PreferencedButtonModel.getInstance(_preferences,
                 "science.includeObject"));
         add(cb);
-
-        JLabel baseLineLabel = new JLabel("Default Base Line Value (m) :");
-        add(baseLineLabel);
-
-        JTextField baseLineTextField = new JTextField();
-        add(baseLineTextField);
 
         // Make data filled
         update(null, null);
