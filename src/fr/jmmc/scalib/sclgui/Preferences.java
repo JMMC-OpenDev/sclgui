@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.8 2006-09-15 14:19:11 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.9 2006-09-28 15:23:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/09/15 14:19:11  lafrasse
+ * Added query default values.
+ *
  * Revision 1.7  2006/07/11 11:17:48  mella
  * Add scienceObject.include preference
  *
@@ -67,63 +70,71 @@ public class Preferences extends jmmc.mcs.util.Preferences
             _singleton.setShortPreferenceFilename(_shortPreferenceFilename);
             _singleton.loadFromFile();
 
-            Properties myDefaultProperties = new Properties();
+            Preferences defaults = new Preferences();
 
-            // Store preference file version number
-            myDefaultProperties.put("scalib.version", "1.0");
+            try
+            {
+                // Store preference file version number
+                defaults.setPreference("scalib.version", "1.0");
 
-            // Place catalog origin colors
-            myDefaultProperties.put("catalog.color.I/280", "#FFB6B6");
-            myDefaultProperties.put("catalog.color.I/284", "#F1FB58");
-            myDefaultProperties.put("catalog.color.II/225/catalog", "#F6B6FF");
-            myDefaultProperties.put("catalog.color.II/7A/catalog", "#B9B6FF");
-            myDefaultProperties.put("catalog.color.II/246/out", "#B6E8FF");
-            myDefaultProperties.put("catalog.color.V/50/catalog", "#B6FFE6");
-            myDefaultProperties.put("catalog.color.J/A+A/433/1155", "#C89292");
-            myDefaultProperties.put("catalog.color.J/A+A/386/492/charm",
-                "#DFFFB6");
-            myDefaultProperties.put("catalog.color.J/A+A/431/773/charm2",
-                "#B7FF5A");
-            myDefaultProperties.put("catalog.color.B/denis", "#FFF4B6");
-            myDefaultProperties.put("catalog.color.J/A+A/413/1037", "#FFFADD");
-            myDefaultProperties.put("catalog.color.I/196/main", "#78FB8B");
-            myDefaultProperties.put("catalog.color.J/A+A/393/183/catalog",
-                "#9778FB");
-            myDefaultProperties.put("catalog.color.MIDI", "#C994CA");
-            myDefaultProperties.put("catalog.color.V/36B/bsc4s", "#88A0A6");
+                // Place catalog origin colors
+                defaults.setPreference("catalog.color.I/280", "#FFB6B6");
+                defaults.setPreference("catalog.color.I/284", "#F1FB58");
+                defaults.setPreference("catalog.color.II/225/catalog", "#F6B6FF");
+                defaults.setPreference("catalog.color.II/7A/catalog", "#B9B6FF");
+                defaults.setPreference("catalog.color.II/246/out", "#B6E8FF");
+                defaults.setPreference("catalog.color.V/50/catalog", "#B6FFE6");
+                defaults.setPreference("catalog.color.J/A+A/433/1155", "#C89292");
+                defaults.setPreference("catalog.color.J/A+A/386/492/charm",
+                    "#DFFFB6");
+                defaults.setPreference("catalog.color.J/A+A/431/773/charm2",
+                    "#B7FF5A");
+                defaults.setPreference("catalog.color.B/denis", "#FFF4B6");
+                defaults.setPreference("catalog.color.J/A+A/413/1037", "#FFFADD");
+                defaults.setPreference("catalog.color.I/196/main", "#78FB8B");
+                defaults.setPreference("catalog.color.J/A+A/393/183/catalog",
+                    "#9778FB");
+                defaults.setPreference("catalog.color.MIDI", "#C994CA");
+                defaults.setPreference("catalog.color.V/36B/bsc4s", "#88A0A6");
 
-            /* Place confidence indexes color */
-            myDefaultProperties.put("confidence.color.LOW", "#6E6E6E");
-            myDefaultProperties.put("confidence.color.MEDIUM", "#D8D8D8");
-            myDefaultProperties.put("confidence.color.HIGH", "#EFEFEF");
+                /* Place confidence indexes color */
+                int i = 0;
+                defaults.setPreference("confidence.color.LOW", i++, "#6E6E6E");
+                defaults.setPreference("confidence.color.MEDIUM", i++, "#D8D8D8");
+                defaults.setPreference("confidence.color.HIGH", i++, "#EFEFEF");
 
-            /* Place help behaviour */
-            myDefaultProperties.put("help.tooltips.show", "true");
+                /* Place help behaviour */
+                defaults.setPreference("help.tooltips.show", "true");
 
-            /* Place view behaviour */
-            myDefaultProperties.put("view.legend.show", "false");
-            myDefaultProperties.put("view.details.show", "false");
+                /* Place view behaviour */
+                defaults.setPreference("view.legend.show", "false");
+                defaults.setPreference("view.details.show", "false");
 
-            /* Place star properties order */
-            myDefaultProperties.put("star.properties.order", "HD HIP RAJ2000");
+                /* Place star properties order */
+                defaults.setPreference("star.properties.order", "HD HIP RAJ2000");
 
-            /* query default values preferences  */
-            myDefaultProperties.put("query.magnitudeBand", "V");
-            myDefaultProperties.put("query.instrumentalWavelength", "1978.0");
-            myDefaultProperties.put("query.instrumentalMaxBaseLine", "102.45");
-            myDefaultProperties.put("query.scienceObjectName", "eta_tau");
-            myDefaultProperties.put("query.scienceObjectRA", "+03:47:29.79");
-            myDefaultProperties.put("query.scienceObjectDEC", "+24:06:18.50");
-            myDefaultProperties.put("query.scienceObjectMagnitude", "0.0");
-            myDefaultProperties.put("query.scienceObjectInclusionFlag", "true");
-            myDefaultProperties.put("query.queryMinMagnitude", "2.0");
-            myDefaultProperties.put("query.queryMaxMagnitude", "4.0");
-            myDefaultProperties.put("query.queryBrightScenarioFlag", "true");
-            myDefaultProperties.put("query.queryDiffRASize", "60.0");
-            myDefaultProperties.put("query.queryDiffDECSize", "5.0");
-            myDefaultProperties.put("query.queryRadialSize", "0.0");
+                /* query default values preferences  */
+                defaults.setPreference("query.magnitudeBand", "V");
+                defaults.setPreference("query.instrumentalWavelength", "1978.0");
+                defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
+                defaults.setPreference("query.scienceObjectName", "eta_tau");
+                defaults.setPreference("query.scienceObjectRA", "+03:47:29.79");
+                defaults.setPreference("query.scienceObjectDEC", "+24:06:18.50");
+                defaults.setPreference("query.scienceObjectMagnitude", "0.0");
+                defaults.setPreference("query.scienceObjectInclusionFlag",
+                    "true");
+                defaults.setPreference("query.queryMinMagnitude", "2.0");
+                defaults.setPreference("query.queryMaxMagnitude", "4.0");
+                defaults.setPreference("query.queryBrightScenarioFlag", "true");
+                defaults.setPreference("query.queryDiffRASize", "60.0");
+                defaults.setPreference("query.queryDiffDECSize", "5.0");
+                defaults.setPreference("query.queryRadialSize", "0.0");
+            }
+            catch (Exception e)
+            {
+            }
 
-            _singleton.setDefaultPreferences(myDefaultProperties);
+            _singleton.setDefaultPreferences(defaults);
             _singleton.loadFromFile();
         }
 
