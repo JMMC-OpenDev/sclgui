@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.8 2006-09-15 14:20:54 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.9 2006-09-28 15:23:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/09/15 14:20:54  lafrasse
+ * Added query default values support.
+ *
  * Revision 1.7  2006/08/22 14:50:51  mella
  * Complete API for setter functions to accept Double or double params
  *
@@ -210,42 +213,44 @@ public class QueryModel extends Observable
     {
         MCSLogger.trace();
 
-        _preferences.setPreference("query.magnitudeBand",
-            getInstrumentalMagnitudeBand());
-        _preferences.setPreference("query.instrumentalWavelength",
-            getInstrumentalWavelength());
-        _preferences.setPreference("query.instrumentalMaxBaseLine",
-            getInstrumentalMaxBaseLine());
-
-        _preferences.setPreference("query.scienceObjectName",
-            getScienceObjectName());
-        _preferences.setPreference("query.scienceObjectRA", getScienceObjectRA());
-        _preferences.setPreference("query.scienceObjectDEC",
-            getScienceObjectDEC());
-        _preferences.setPreference("query.scienceObjectMagnitude",
-            getScienceObjectMagnitude());
-        _preferences.setPreference("query.scienceObjectInclusionFlag",
-            getScienceObjectInclusionFlag());
-
-        _preferences.setPreference("query.queryMinMagnitude",
-            getQueryMinMagnitude());
-        _preferences.setPreference("query.queryMaxMagnitude",
-            getQueryMaxMagnitude());
-        _preferences.setPreference("query.brightScenario",
-            getQueryBrightScenarioFlag());
-        _preferences.setPreference("query.instrumentalMaxBaseLine",
-            getQueryDiffRASize());
-        _preferences.setPreference("query.instrumentalMaxBaseLine",
-            getQueryDiffDECSize());
-        _preferences.setPreference("query.instrumentalMaxBaseLine",
-            getQueryRadialSize());
-
         try
         {
+            _preferences.setPreference("query.magnitudeBand",
+                getInstrumentalMagnitudeBand());
+            _preferences.setPreference("query.instrumentalWavelength",
+                getInstrumentalWavelength());
+            _preferences.setPreference("query.instrumentalMaxBaseLine",
+                getInstrumentalMaxBaseLine());
+
+            _preferences.setPreference("query.scienceObjectName",
+                getScienceObjectName());
+            _preferences.setPreference("query.scienceObjectRA",
+                getScienceObjectRA());
+            _preferences.setPreference("query.scienceObjectDEC",
+                getScienceObjectDEC());
+            _preferences.setPreference("query.scienceObjectMagnitude",
+                getScienceObjectMagnitude());
+            _preferences.setPreference("query.scienceObjectInclusionFlag",
+                getScienceObjectInclusionFlag());
+
+            _preferences.setPreference("query.queryMinMagnitude",
+                getQueryMinMagnitude());
+            _preferences.setPreference("query.queryMaxMagnitude",
+                getQueryMaxMagnitude());
+            _preferences.setPreference("query.brightScenario",
+                getQueryBrightScenarioFlag());
+            _preferences.setPreference("query.instrumentalMaxBaseLine",
+                getQueryDiffRASize());
+            _preferences.setPreference("query.instrumentalMaxBaseLine",
+                getQueryDiffDECSize());
+            _preferences.setPreference("query.instrumentalMaxBaseLine",
+                getQueryRadialSize());
+
             _preferences.saveToFile();
         }
         catch (Exception e)
         {
+            // @TODO
         }
     }
 

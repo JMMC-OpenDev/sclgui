@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.14 2006-09-27 11:54:10 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.15 2006-09-28 15:23:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/09/27 11:54:10  lafrasse
+ * Removed unused widgets in Query view
+ *
  * Revision 1.13  2006/09/15 14:19:59  lafrasse
  * Code refinments.
  *
@@ -400,15 +403,22 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
         if (listModified)
         {
             StringBuffer sb = new StringBuffer();
-            Enumeration  e  = _listModel.elements();
+            Enumeration  en = _listModel.elements();
 
-            while (e.hasMoreElements())
+            while (en.hasMoreElements())
             {
-                Object o = e.nextElement();
+                Object o = en.nextElement();
                 sb.append(" " + o);
             }
 
-            _preferences.setPreference(_preferenceName, sb.toString());
+            try
+            {
+                _preferences.setPreference(_preferenceName, sb.toString());
+            }
+            catch (Exception e)
+            {
+                // @TODO
+            }
         }
     }
 }
@@ -532,16 +542,23 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
     /**
      * Update preferences according buttons change
      */
-    public void stateChanged(ChangeEvent e)
+    public void stateChanged(ChangeEvent ev)
     {
         MCSLogger.trace();
 
-        Object source = e.getSource();
+        Object source = ev.getSource();
 
         if (source.equals(_enableToolTipCheckBox))
         {
-            _preferences.setPreference("help.tooltips.show",
-                _enableToolTipCheckBox.isSelected());
+            try
+            {
+                _preferences.setPreference("help.tooltips.show",
+                    _enableToolTipCheckBox.isSelected());
+            }
+            catch (Exception e)
+            {
+                // @TODO
+            }
         }
     }
 }

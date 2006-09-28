@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.6 2006-07-03 12:37:04 mella Exp $"
+ * "@(#) $Id: LegendView.java,v 1.7 2006-09-28 15:23:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/07/03 12:37:04  mella
+ * Add header to legend sections
+ *
  * Revision 1.5  2006/06/30 11:53:17  mella
  * Change GUI presentation
  *
@@ -52,8 +55,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.table.*;
 import javax.swing.table.TableCellRenderer;
 
-
-// TODO handle close button correctly
 
 /**
  * This is a preference dedicated to the java SearchCal Client.
@@ -287,8 +288,15 @@ public class LegendView extends JPanel
 
                 String preferenceName = _preferencePrefix + data[row][1];
                 Color  newColor       = (Color) data[row][0];
-                _preferences.setPreference(preferenceName,
-                    jmmc.mcs.util.ColorEncoder.encode(newColor));
+
+                try
+                {
+                    _preferences.setPreference(preferenceName, newColor);
+                }
+                catch (Exception e)
+                {
+                    // @TODO
+                }
             }
         }
 
