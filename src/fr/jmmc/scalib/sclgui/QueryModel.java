@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.9 2006-09-28 15:23:29 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.10 2006-10-03 15:31:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/09/28 15:23:29  lafrasse
+ * Updated to handle jmmc.util.Preferences API modifications.
+ *
  * Revision 1.8  2006/09/15 14:20:54  lafrasse
  * Added query default values support.
  *
@@ -49,7 +52,7 @@ import javax.swing.DefaultComboBoxModel;
 /**
  * Query model.
  */
-public class QueryModel extends Observable
+public class QueryModel extends Observable implements Observer
 {
     /** For default values */
     Preferences _preferences;
@@ -126,6 +129,7 @@ public class QueryModel extends Observable
         MCSLogger.trace();
 
         _preferences = Preferences.getInstance();
+        _preferences.addObserver(this);
 
         String[] magnitudeBands = { "I", "J", "H", "K", "V" };
         double[] wavelengths    = { 1.1, 2.2, 3.3, 4.4, 5.5 };
@@ -141,6 +145,20 @@ public class QueryModel extends Observable
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
 
         reset();
+    }
+
+    /**
+     * Called when observed objects change.
+     *
+     * @param o the observed object that changed
+     * @param arg not used
+     */
+    public void update(Observable o, Object arg)
+    {
+        // Called if the observe shared instance Preference object was updated.
+        // Then inform any object than observe us that we also probably change.
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -199,11 +217,11 @@ public class QueryModel extends Observable
         setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
                 "query.brightScenario"));
         setQueryDiffRASize(_preferences.getPreferenceAsDouble(
-                "query.instrumentalMaxBaseLine"));
+                "query.queryDiffRASize"));
         setQueryDiffDECSize(_preferences.getPreferenceAsDouble(
-                "query.instrumentalMaxBaseLine"));
+                "query.queryDiffDECSize"));
         setQueryRadialSize(_preferences.getPreferenceAsDouble(
-                "query.instrumentalMaxBaseLine"));
+                "query.queryRadialSize"));
     }
 
     /**
@@ -239,11 +257,11 @@ public class QueryModel extends Observable
                 getQueryMaxMagnitude());
             _preferences.setPreference("query.brightScenario",
                 getQueryBrightScenarioFlag());
-            _preferences.setPreference("query.instrumentalMaxBaseLine",
+            _preferences.setPreference("query.queryDiffRASize",
                 getQueryDiffRASize());
-            _preferences.setPreference("query.instrumentalMaxBaseLine",
+            _preferences.setPreference("query.queryDiffDECSize",
                 getQueryDiffDECSize());
-            _preferences.setPreference("query.instrumentalMaxBaseLine",
+            _preferences.setPreference("query.queryRadialSize",
                 getQueryRadialSize());
 
             _preferences.saveToFile();
@@ -546,13 +564,15 @@ public class QueryModel extends Observable
         // Modify _queryMinMagnitude automatically if needed
         if (_queryMinMagnitudeAutoUpdate == true)
         {
-            _queryMinMagnitude = _scienceObjectMagnitude - 2;
+            _queryMinMagnitude = _scienceObjectMagnitude +
+                getQueryMinMagnitudeDelta();
         }
 
         // Modify _queryMaxMagnitude automatically if needed
         if (_queryMaxMagnitudeAutoUpdate == true)
         {
-            _queryMaxMagnitude = _scienceObjectMagnitude + 2;
+            _queryMaxMagnitude = _scienceObjectMagnitude +
+                getQueryMaxMagnitudeDelta();
         }
 
         setChanged();
@@ -642,6 +662,42 @@ public class QueryModel extends Observable
     }
 
     /**
+     * Return the auto-update delta for the minimun calibrator magnitude.
+     *
+     * @return the minimum magnitude delta as a Double value.
+     */
+    public Double getQueryMinMagnitudeDelta()
+    {
+        MCSLogger.trace();
+
+        return _preferences.getPreferenceAsDouble(
+            "query.queryMinMagnitudeDelta");
+    }
+
+    /**
+     * Change the auto-update delta for the minimun calibrator magnitude.
+     *
+     * @param delta the new delta as a double value.
+     */
+    public void setQueryMinMagnitudeDelta(double delta)
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            _preferences.setPreference("query.queryMinMagnitudeDelta",
+                new Double(delta));
+        }
+        catch (Exception e)
+        {
+            // @TODO
+        }
+
+        setChanged();
+        notifyObservers();
+    }
+
+    /**
      * Return the maximun calibrator magnitude for the actual query.
      *
      * @return the maximum magnitude as a Double value.
@@ -687,6 +743,42 @@ public class QueryModel extends Observable
     public void setQueryMaxMagnitude(Double maxMagnitude)
     {
         setQueryMaxMagnitude(maxMagnitude.doubleValue());
+    }
+
+    /**
+     * Return the auto-update delta for the maximun calibrator magnitude.
+     *
+     * @return the maximum magnitude delta as a Double value.
+     */
+    public Double getQueryMaxMagnitudeDelta()
+    {
+        MCSLogger.trace();
+
+        return _preferences.getPreferenceAsDouble(
+            "query.queryMaxMagnitudeDelta");
+    }
+
+    /**
+     * Change the auto-update delta for the maximun calibrator magnitude.
+     *
+     * @param delta the new delta as a double value.
+     */
+    public void setQueryMaxMagnitudeDelta(double delta)
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            _preferences.setPreference("query.queryMaxMagnitudeDelta",
+                new Double(delta));
+        }
+        catch (Exception e)
+        {
+            // @TODO
+        }
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
