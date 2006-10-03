@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.7 2006-09-28 15:23:29 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.8 2006-10-03 15:25:20 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/09/28 15:23:29  lafrasse
+ * Updated to handle jmmc.util.Preferences API modifications.
+ *
  * Revision 1.6  2006/07/03 12:37:04  mella
  * Add header to legend sections
  *
@@ -70,10 +73,10 @@ public class LegendView extends JPanel
      * LegendFrame  -  Constructor
      * @param preferences the application preferences that store catalog colors
      */
-    public LegendView(Preferences preferences)
+    public LegendView()
     {
         // Store the application preferences and register against it
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Append preference colors chooser component of catalogs
