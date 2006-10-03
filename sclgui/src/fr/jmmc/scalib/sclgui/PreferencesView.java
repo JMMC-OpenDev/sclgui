@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.15 2006-09-28 15:23:29 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.16 2006-10-03 15:31:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/09/28 15:23:29  lafrasse
+ * Updated to handle jmmc.util.Preferences API modifications.
+ *
  * Revision 1.14  2006/09/27 11:54:10  lafrasse
  * Removed unused widgets in Query view
  *
@@ -111,24 +114,24 @@ public class PreferencesView extends JFrame implements ActionListener
         contentPane.add(tabbedPane);
 
         // Add the query preferences pane
-        QueryPreferencesView queryView = new QueryPreferencesView(_preferences);
+        QueryPreferencesView queryView = new QueryPreferencesView();
         tabbedPane.add("Query", queryView);
 
         // Add the columns preferences pane
-        ColumnsPreferencesView columnsView = new ColumnsPreferencesView(_preferences,
+        ColumnsPreferencesView columnsView = new ColumnsPreferencesView(
                 "star.properties.order");
         tabbedPane.add("Columns", columnsView);
 
         // Add the catalog preferences pane
-        JPanel catalogView = new LegendView(_preferences);
+        JPanel catalogView = new LegendView();
         tabbedPane.add("Catalogs", catalogView);
 
         // Add the network preferences pane
-        NetworkPreferencesView networkView = new NetworkPreferencesView(_preferences);
+        NetworkPreferencesView networkView = new NetworkPreferencesView();
         tabbedPane.add("Network", networkView);
 
         // Add the help preferences pane
-        HelpPreferencesView helpView = new HelpPreferencesView(_preferences);
+        HelpPreferencesView helpView = new HelpPreferencesView();
         tabbedPane.add("Help", helpView);
 
         // Add the restore and sace buttons
@@ -184,18 +187,24 @@ public class PreferencesView extends JFrame implements ActionListener
 /**
  * This panel is dedicated to query default values configuration.
  */
-class QueryPreferencesView extends JPanel implements Observer, ChangeListener
+class QueryPreferencesView extends JPanel implements Observer, ActionListener
 {
     /** Data model */
     private Preferences _preferences;
+
+    /**  Min magnitude delta textfield */
+    private JFormattedTextField _minMagnitudeDeltaTextfield;
+
+    /**  Max magnitude delta textfield */
+    private JFormattedTextField _maxMagnitudeDeltaTextfield;
 
     /**
      * Constructor.
      * @param preferences the application preferences
      */
-    public QueryPreferencesView(Preferences preferences)
+    public QueryPreferencesView()
     {
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -205,6 +214,30 @@ class QueryPreferencesView extends JPanel implements Observer, ChangeListener
         cb.setModel(PreferencedButtonModel.getInstance(_preferences,
                 "science.includeObject"));
         add(cb);
+
+        JPanel    panel;
+        JLabel    label;
+        Dimension textfieldDimension = new Dimension(100, 20);
+
+        panel     = new JPanel();
+        label     = new JLabel("Minimum Magnitude Delta :");
+        panel.add(label);
+        _minMagnitudeDeltaTextfield = new JFormattedTextField(new Double(0));
+        _minMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
+        _minMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
+        _minMagnitudeDeltaTextfield.addActionListener(this);
+        panel.add(_minMagnitudeDeltaTextfield);
+        add(panel);
+
+        panel     = new JPanel();
+        label     = new JLabel("Maximum Magnitude Delta :");
+        panel.add(label);
+        _maxMagnitudeDeltaTextfield = new JFormattedTextField(new Double(0));
+        _maxMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
+        _maxMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
+        _maxMagnitudeDeltaTextfield.addActionListener(this);
+        panel.add(_maxMagnitudeDeltaTextfield);
+        add(panel);
 
         // Make data filled
         update(null, null);
@@ -218,24 +251,50 @@ class QueryPreferencesView extends JPanel implements Observer, ChangeListener
      */
     public void update(Observable o, Object arg)
     {
+        Double d;
+
+        d = _preferences.getPreferenceAsDouble("query.queryMinMagnitudeDelta");
+        _minMagnitudeDeltaTextfield.setValue(d);
+
+        d = _preferences.getPreferenceAsDouble("query.queryMaxMagnitudeDelta");
+        _maxMagnitudeDeltaTextfield.setValue(d);
     }
 
     /**
-     * Update preferences according buttons change
+     * actionPerformed  -  Listener
+     * @param evt ActionEvent
      */
-    public void stateChanged(ChangeEvent e)
+    public void actionPerformed(ActionEvent evt)
     {
         MCSLogger.trace();
 
-        Object source = e.getSource();
+        Object source = evt.getSource();
 
-        /*
-           if (source.equals(_enableToolTipCheckBox))
-           {
-               _preferences.setPreference("science.includeObject",
-                   _enableToolTipCheckBox.isSelected());
-           }
-         */
+        if (source.equals(_minMagnitudeDeltaTextfield))
+        {
+            try
+            {
+                _preferences.setPreference("query.queryMinMagnitudeDelta",
+                    ((Double) _minMagnitudeDeltaTextfield.getValue()));
+            }
+            catch (Exception ex)
+            {
+                //@TODO
+            }
+        }
+
+        if (source.equals(_maxMagnitudeDeltaTextfield))
+        {
+            try
+            {
+                _preferences.setPreference("query.queryMaxMagnitudeDelta",
+                    ((Double) _maxMagnitudeDeltaTextfield.getValue()));
+            }
+            catch (Exception ex)
+            {
+                //@TODO
+            }
+        }
     }
 }
 
@@ -245,11 +304,6 @@ class QueryPreferencesView extends JPanel implements Observer, ChangeListener
  */
 class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 {
-    /**
-     * DOCUMENT ME!
-     */
-    Logger _logger = MCSLogger.getLogger();
-
     /** Data model */
     private Preferences _preferences;
 
@@ -277,31 +331,28 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
     /** Remove  Button */
     private JButton _removeWordButton;
 
-    /** newWord textfield */
-    private JTextField _newWordTextfield;
-
     /**
      * Constructor.
      * @param preferences the application preferences
      * @param preferenceName the preference name that list the words separated
      * by spaces
      */
-    public ColumnsPreferencesView(Preferences preferences, String preferenceName)
+    public ColumnsPreferencesView(String preferenceName)
     {
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
         _preferenceName = preferenceName;
 
         //Set vertical layout
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Append list with associated model into a scrollPane
         _listModel     = new DefaultListModel();
         _wordsList     = new JList(_listModel);
 
         JScrollPane scrollingList = new JScrollPane(_wordsList);
-        this.add(scrollingList);
+        add(scrollingList);
 
         // Append move buttons
         JPanel panel = new JPanel();
@@ -311,7 +362,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
         _moveDownButton = new JButton("Down");
         _moveDownButton.addActionListener(this);
         panel.add(_moveDownButton);
-        this.add(panel);
+        add(panel);
 
         // Make data filled
         update(null, null);
@@ -330,7 +381,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 
         if (words == null)
         {
-            _logger.warning(_preferenceName + " not found into preferences");
+            MCSLogger.finest(_preferenceName + " not found into preferences");
 
             return;
         }
@@ -436,9 +487,9 @@ class NetworkPreferencesView extends JPanel implements Observer
      * Constructor.
      * @param preferences the application preferences
      */
-    public NetworkPreferencesView(Preferences preferences)
+    public NetworkPreferencesView()
     {
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
         // @TODO : implement
@@ -483,9 +534,9 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
      * Constructor.
      * @param preferences the application preferences
      */
-    public HelpPreferencesView(Preferences preferences)
+    public HelpPreferencesView()
     {
-        _preferences = preferences;
+        _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

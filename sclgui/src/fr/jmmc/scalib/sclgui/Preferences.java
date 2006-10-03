@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.9 2006-09-28 15:23:29 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.10 2006-10-03 15:31:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/09/28 15:23:29  lafrasse
+ * Updated to handle jmmc.util.Preferences API modifications.
+ *
  * Revision 1.8  2006/09/15 14:19:11  lafrasse
  * Added query default values.
  *
@@ -33,6 +36,8 @@
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
+
+import jmmc.mcs.log.MCSLogger;
 
 import java.util.Properties;
 
@@ -62,6 +67,8 @@ public class Preferences extends jmmc.mcs.util.Preferences
      */
     public static Preferences getInstance()
     {
+        MCSLogger.trace();
+
         // Build new reference if singleton does not already exist
         // or return previous reference
         if (_singleton == null)
@@ -113,7 +120,7 @@ public class Preferences extends jmmc.mcs.util.Preferences
                 /* Place star properties order */
                 defaults.setPreference("star.properties.order", "HD HIP RAJ2000");
 
-                /* query default values preferences  */
+                /* Query default values preferences  */
                 defaults.setPreference("query.magnitudeBand", "V");
                 defaults.setPreference("query.instrumentalWavelength", "1978.0");
                 defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
@@ -124,7 +131,9 @@ public class Preferences extends jmmc.mcs.util.Preferences
                 defaults.setPreference("query.scienceObjectInclusionFlag",
                     "true");
                 defaults.setPreference("query.queryMinMagnitude", "2.0");
+                defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
                 defaults.setPreference("query.queryMaxMagnitude", "4.0");
+                defaults.setPreference("query.queryMaxMagnitudeDelta", "4.0");
                 defaults.setPreference("query.queryBrightScenarioFlag", "true");
                 defaults.setPreference("query.queryDiffRASize", "60.0");
                 defaults.setPreference("query.queryDiffDECSize", "5.0");
@@ -132,6 +141,7 @@ public class Preferences extends jmmc.mcs.util.Preferences
             }
             catch (Exception e)
             {
+                MCSLogger.finest("Default preference values creation FAILED.");
             }
 
             _singleton.setDefaultPreferences(defaults);
