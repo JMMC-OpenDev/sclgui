@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.13 2006-09-15 14:20:54 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.14 2006-10-03 15:28:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/09/15 14:20:54  lafrasse
+ * Added query default values support.
+ *
  * Revision 1.12  2006/09/15 08:26:59  lafrasse
  * Added Help menu entries.
  * Code refinments.
@@ -96,7 +99,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
         _preferences     = Preferences.getInstance();
 
-        LegendView legendView = new LegendView(_preferences);
+        LegendView legendView = new LegendView();
         legendView.setVisible(false);
 
         fileMenu();
