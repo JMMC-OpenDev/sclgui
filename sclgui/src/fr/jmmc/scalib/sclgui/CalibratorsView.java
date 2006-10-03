@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.22 2006-08-04 16:53:54 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.23 2006-10-03 15:27:56 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2006/08/04 16:53:54  lafrasse
+ * Re-added preliminary print support
+ *
  * Revision 1.21  2006/07/18 13:08:11  lafrasse
  * Removed resume text field and label
  * Code refinment
@@ -126,9 +129,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** The calibrators table */
     JTable _calibratorsTable;
 
-    /** Logger instance */
-    Logger _logger = MCSLogger.getLogger();
-
     /** Calibrators table and Legend container */
     JSplitPane _tableAndLegendPane;
 
@@ -207,7 +207,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         leftScrollPane.setPreferredSize(new Dimension(100, 260));
 
         //set Minimum Width of legend component
-        JPanel legendPanel = new LegendView(_preferences);
+        JPanel legendPanel = new LegendView();
         int    legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
         legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
 
@@ -271,7 +271,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             // @todo manage selection of one named column instead of first one
             if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1)
             {
-                _logger.fine(
+                MCSLogger.finest(
                     "Setting first column of table to Identification table");
 
                 // @todo try to make next line run without eating all cpu
@@ -417,7 +417,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             {
                 AbstractButton button = (AbstractButton) e.getSource();
                 showDetails(button.isSelected());
-                _logger.info("Button.selected=" + button.isSelected());
+                MCSLogger.finest("Button.selected = " + button.isSelected());
             }
         }
     }
