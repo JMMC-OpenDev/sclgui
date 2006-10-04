@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.10 2006-10-03 15:31:19 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.11 2006-10-04 11:34:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/10/03 15:31:19  lafrasse
+ * Added support for preferenced min and max magnitude auto-update deltas.
+ *
  * Revision 1.9  2006/09/28 15:23:29  lafrasse
  * Updated to handle jmmc.util.Preferences API modifications.
  *
@@ -130,6 +133,8 @@ public class Preferences extends jmmc.mcs.util.Preferences
                 defaults.setPreference("query.scienceObjectMagnitude", "0.0");
                 defaults.setPreference("query.scienceObjectInclusionFlag",
                     "true");
+                defaults.setPreference("query.scienceObjectDetectionDistance",
+                    "0.1");
                 defaults.setPreference("query.queryMinMagnitude", "2.0");
                 defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
                 defaults.setPreference("query.queryMaxMagnitude", "4.0");
