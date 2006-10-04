@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.10 2006-10-03 15:31:19 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.11 2006-10-04 11:34:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/10/03 15:31:19  lafrasse
+ * Added support for preferenced min and max magnitude auto-update deltas.
+ *
  * Revision 1.9  2006/09/28 15:23:29  lafrasse
  * Updated to handle jmmc.util.Preferences API modifications.
  *
@@ -86,6 +89,9 @@ public class QueryModel extends Observable implements Observer
 
     /** The science object inclusion flag */
     private boolean _scienceObjectInclusionFlag;
+
+    /** The science object detection distance */
+    private boolean _scienceObjectDetectionDistance;
 
     /** The query minimum magnitude */
     private double _queryMinMagnitude;
@@ -608,6 +614,42 @@ public class QueryModel extends Observable implements Observer
     public void setScienceObjectInclusionFlag(boolean flag)
     {
         _scienceObjectInclusionFlag = flag;
+
+        setChanged();
+        notifyObservers();
+    }
+
+    /**
+     * Return the tolerated distance to detect the science object.
+     *
+     * @return the tolerated distance as a Double value.
+     */
+    public Double getScienceObjectDetectionDistance()
+    {
+        MCSLogger.trace();
+
+        return _preferences.getPreferenceAsDouble(
+            "query.scienceObjectDetectionDistance");
+    }
+
+    /**
+     * Change the tolerated distance to detect the science object.
+     *
+     * @param distance the new tolerated distance as a double value.
+     */
+    public void setScienceObjectDetectionDistance(double distance)
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            _preferences.setPreference("query.scienceObjectDetectionDistance",
+                new Double(distance));
+        }
+        catch (Exception e)
+        {
+            // @TODO
+        }
 
         setChanged();
         notifyObservers();

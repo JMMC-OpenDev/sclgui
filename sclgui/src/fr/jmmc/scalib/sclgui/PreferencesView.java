@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.16 2006-10-03 15:31:19 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.17 2006-10-04 11:34:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/10/03 15:31:19  lafrasse
+ * Added support for preferenced min and max magnitude auto-update deltas.
+ *
  * Revision 1.15  2006/09/28 15:23:29  lafrasse
  * Updated to handle jmmc.util.Preferences API modifications.
  *
@@ -192,10 +195,13 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
     /** Data model */
     private Preferences _preferences;
 
-    /**  Min magnitude delta textfield */
+    /** Science object distance tolerance */
+    private JFormattedTextField _scienceObjectDetectionDistanceTextfield;
+
+    /** Min magnitude delta textfield */
     private JFormattedTextField _minMagnitudeDeltaTextfield;
 
-    /**  Max magnitude delta textfield */
+    /** Max magnitude delta textfield */
     private JFormattedTextField _maxMagnitudeDeltaTextfield;
 
     /**
@@ -218,6 +224,17 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
         JPanel    panel;
         JLabel    label;
         Dimension textfieldDimension = new Dimension(100, 20);
+
+        panel     = new JPanel();
+        label     = new JLabel("Science Object Detection Distance :");
+        panel.add(label);
+        _scienceObjectDetectionDistanceTextfield = new JFormattedTextField(new Double(
+                    0));
+        _scienceObjectDetectionDistanceTextfield.setMinimumSize(textfieldDimension);
+        _scienceObjectDetectionDistanceTextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectDetectionDistanceTextfield.addActionListener(this);
+        panel.add(_scienceObjectDetectionDistanceTextfield);
+        add(panel);
 
         panel     = new JPanel();
         label     = new JLabel("Minimum Magnitude Delta :");
@@ -253,6 +270,10 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
     {
         Double d;
 
+        d = _preferences.getPreferenceAsDouble(
+                "query.scienceObjectDetectionDistance");
+        _scienceObjectDetectionDistanceTextfield.setValue(d);
+
         d = _preferences.getPreferenceAsDouble("query.queryMinMagnitudeDelta");
         _minMagnitudeDeltaTextfield.setValue(d);
 
@@ -269,6 +290,19 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
         MCSLogger.trace();
 
         Object source = evt.getSource();
+
+        if (source.equals(_scienceObjectDetectionDistanceTextfield))
+        {
+            try
+            {
+                _preferences.setPreference("query.scienceObjectDetectionDistance",
+                    ((Double) _scienceObjectDetectionDistanceTextfield.getValue()));
+            }
+            catch (Exception ex)
+            {
+                //@TODO
+            }
+        }
 
         if (source.equals(_minMagnitudeDeltaTextfield))
         {
