@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.17 2006-04-10 11:56:07 scetre Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.18 2006-10-09 15:07:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2006/04/10 11:56:07  scetre
+ * Added diamOK flag in standard format
+ *
  * Revision 1.16  2006/04/07 14:47:07  lafrasse
  * Restored extended format for SCL saves
  *
@@ -61,7 +64,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.17 2006-04-10 11:56:07 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.18 2006-10-09 15:07:03 lafrasse Exp $"; 
 
 /* 
  * System Headers 
@@ -1215,9 +1218,16 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
             mcsSTRING32 software;
             snprintf(software, sizeof(software), "%s v%s", "SearchCal",
                      GetSwVersion());
-        
+
+            // Get theXML serialization of th request
+            string xml;
+            if (_requestModel.GetXMLString(xml) == mcsFAILURE)
+            {
+                return mcsFAILURE;
+            }
+
             // Save the list as a VOTable v1.1
-            status = list->SaveToVOTable(fileName, header, software, request);
+            status = list->SaveToVOTable(fileName, header, software, request, xml.c_str());
 
             break;
         }
