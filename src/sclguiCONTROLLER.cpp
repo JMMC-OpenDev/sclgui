@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.19 2006-10-10 11:30:14 lafrasse Exp $"
+ * "@(#) $Id: sclguiCONTROLLER.cpp,v 1.20 2006-10-10 15:50:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2006/10/10 11:30:14  lafrasse
+ * Changed request XML serialization APIs in SerializeToXML().
+ *
  * Revision 1.18  2006/10/09 15:07:03  lafrasse
  * Added request XML serialization in VOTables.
  *
@@ -67,7 +70,7 @@
  * Definition of sclguiCONTROLLER class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.19 2006-10-10 11:30:14 lafrasse Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCONTROLLER.cpp,v 1.20 2006-10-10 15:50:41 lafrasse Exp $"; 
 
 /* 
  * System Headers 
@@ -1224,7 +1227,7 @@ mcsCOMPL_STAT sclguiCONTROLLER::Overwrite(mcsSTRING32             fileName,
 
             // Get theXML serialization of th request
             string xmlOutput;
-            if (_requestModel.SerializeToXML(xmlOutput) == mcsFAILURE)
+            if (_requestModel.AppendParamsToVOTable(xmlOutput) == mcsFAILURE)
             {
                 return mcsFAILURE;
             }
