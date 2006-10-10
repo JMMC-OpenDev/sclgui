@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.17 2006-10-04 11:34:31 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.18 2006-10-10 09:09:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2006/10/04 11:34:31  lafrasse
+ * Added support for preferenced science object detection distance.
+ *
  * Revision 1.16  2006/10/03 15:31:19  lafrasse
  * Added support for preferenced min and max magnitude auto-update deltas.
  *
@@ -415,7 +418,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 
         if (words == null)
         {
-            MCSLogger.finest(_preferenceName + " not found into preferences");
+            MCSLogger.debug(_preferenceName + " not found into preferences");
 
             return;
         }
