@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.23 2006-10-03 15:27:56 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.24 2006-10-10 09:09:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2006/10/03 15:27:56  lafrasse
+ * Refined logger usage.
+ * Updated to match new LegendView constructor API.
+ *
  * Revision 1.22  2006/08/04 16:53:54  lafrasse
  * Re-added preliminary print support
  *
@@ -271,7 +275,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             // @todo manage selection of one named column instead of first one
             if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1)
             {
-                MCSLogger.finest(
+                MCSLogger.debug(
                     "Setting first column of table to Identification table");
 
                 // @todo try to make next line run without eating all cpu
@@ -417,7 +421,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             {
                 AbstractButton button = (AbstractButton) e.getSource();
                 showDetails(button.isSelected());
-                MCSLogger.finest("Button.selected = " + button.isSelected());
+                MCSLogger.debug("Button.selected = " + button.isSelected());
             }
         }
     }

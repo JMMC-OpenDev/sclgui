@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.11 2006-10-04 11:34:31 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.12 2006-10-10 09:09:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/10/04 11:34:31  lafrasse
+ * Added support for preferenced science object detection distance.
+ *
  * Revision 1.10  2006/10/03 15:31:19  lafrasse
  * Added support for preferenced min and max magnitude auto-update deltas.
  *
@@ -146,7 +149,7 @@ public class Preferences extends jmmc.mcs.util.Preferences
             }
             catch (Exception e)
             {
-                MCSLogger.finest("Default preference values creation FAILED.");
+                MCSLogger.debug("Default preference values creation FAILED.");
             }
 
             _singleton.setDefaultPreferences(defaults);
