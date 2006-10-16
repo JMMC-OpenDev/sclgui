@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CLASSPATH=../lib/kxml2-min.jar:../lib/cds.savot.writer.jar:../lib/cds.savot.sax.jar:../lib/cds.savot.pull.jar:../lib/cds.savot.model.jar:../lib/cds.savot.common.jar:.:../lib/Aladin.jar
+export CLASSPATH=../lib/kxml2-min.jar:../lib/cds.savot.writer.jar:../lib/cds.savot.sax.jar:../lib/cds.savot.pull.jar:../lib/cds.savot.model.jar:../lib/cds.savot.common.jar:.:../lib/Aladin.jar:../lib/java-getopt-1.0.13.jar
 
 
 compile(){
@@ -8,7 +8,7 @@ compile(){
 }
 
 run(){
-	java -classpath $CLASSPATH jmmc.scalib.sclgui.SearchCalibrators
+	java -classpath $CLASSPATH jmmc.scalib.sclgui.SearchCalibrators -v 5
 }
 
 clean(){
