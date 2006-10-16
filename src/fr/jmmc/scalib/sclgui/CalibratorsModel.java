@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.9 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.10 2006-10-16 14:29:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.8  2006/04/12 12:30:02  lafrasse
  * Updated some Doxygen tags to fix previous documentation generation errors
  *
@@ -86,9 +89,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Filters */
     private FiltersModel _filtersModel;
 
-    /** Logger instance */
-    private Logger _logger;
-
     /**
      * Constructor.
      *
@@ -103,7 +103,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _filteredStarList     = (StarList) _originalStarList.clone();
 
         _columnNames          = new Vector();
-        _logger               = MCSLogger.getLogger();
     }
 
     /**
@@ -386,13 +385,14 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         for (int i = 0; i < indices.length; i++)
         {
-            _logger.warning("deleting shown star ->" + indices[i]);
+            MCSLogger.warning("deleting shown star ->" + indices[i]);
 
             Object o = (Object) _filteredStarList.get(indices[i]);
             _currentStarList.removeElement(o);
         }
 
-        _logger.fine("_currentStarList size is now " + _currentStarList.size());
+        MCSLogger.info("_currentStarList size is now " +
+            _currentStarList.size());
         update(null, null);
     }
 
