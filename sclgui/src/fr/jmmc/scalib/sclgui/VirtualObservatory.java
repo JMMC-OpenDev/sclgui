@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.6 2006-09-15 14:20:54 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.7 2006-10-16 14:29:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/09/15 14:20:54  lafrasse
+ * Added query default values support.
+ *
  * Revision 1.5  2006/08/09 13:10:15  lafrasse
  * Refined VirtualObservatory::getCal() API
  *
@@ -110,9 +113,8 @@ public class VirtualObservatory
             //BufferedReader in         = new BufferedReader(fileReader);
             String resourceName = "eta_tau.vot";
             URL    votableURL   = VirtualObservatory.class.getResource(resourceName);
-            // Read all the text returned by the embedded file
-            System.out.println(resourceName + "-->" + votableURL);
 
+            // Read all the text returned by the embedded file
             BufferedReader in  = new BufferedReader(new InputStreamReader(
                         votableURL.openStream()));
 

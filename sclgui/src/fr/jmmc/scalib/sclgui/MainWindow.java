@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.11 2006-08-04 16:53:54 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.12 2006-10-16 14:29:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/08/04 16:53:54  lafrasse
+ * Re-added preliminary print support
+ *
  * Revision 1.10  2006/07/26 13:30:32  mella
  * Use BorderLayout to educate status position
  *
@@ -73,12 +76,6 @@ import javax.xml.transform.stream.*;
  */
 public class MainWindow extends JFrame
 {
-    /**
-     * Shared logging object
-     * @TODO : replace this by MCSLogger
-     */
-    Logger _logger = MCSLogger.getLogger();
-
     /** Main panel container, displaying the query and result views */
     Container _mainPane;
 
@@ -191,7 +188,7 @@ public class MainWindow extends JFrame
     private void doXsl(URL inFilename, String outFilename, URL xslFilename)
     {
         MCSLogger.trace();
-        _logger.fine("xsl='" + xslFilename + "', xml='" + inFilename +
+        MCSLogger.info("xsl='" + xslFilename + "', xml='" + inFilename +
             "', out='" + outFilename + "'");
 
         try
@@ -216,12 +213,12 @@ public class MainWindow extends JFrame
         }
         catch (FileNotFoundException e)
         {
-            _logger.severe("File not found '" + e + "'");
+            MCSLogger.error("File not found '" + e + "'");
         }
         catch (TransformerConfigurationException e)
         {
             // An error occurred in the XSL file
-            _logger.severe("One error occured into the xsl file '" +
+            MCSLogger.error("One error occured into the xsl file '" +
                 xslFilename + "'");
         }
         catch (TransformerException e)
@@ -233,7 +230,7 @@ public class MainWindow extends JFrame
             int           line     = locator.getLineNumber();
             String        publicId = locator.getPublicId();
             String        systemId = locator.getSystemId();
-            _logger.severe("One error occured applying xsl (xsl='" +
+            MCSLogger.error("One error occured applying xsl (xsl='" +
                 xslFilename + "', xml='" + inFilename + "' error on line " +
                 line + " column " + col + ")");
         }

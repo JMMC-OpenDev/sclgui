@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.14 2006-10-03 15:28:29 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.15 2006-10-16 14:29:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/10/03 15:28:29  lafrasse
+ * Updated to match new LegendView constructor API.
+ *
  * Revision 1.13  2006/09/15 14:20:54  lafrasse
  * Added query default values support.
  *
@@ -85,9 +88,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
     /** Interaction with Aladin */
     VOInteraction _aladinInteraction = null;
-
-    /** Logger instance */
-    Logger _logger = MCSLogger.getLogger();
 
     /**
      * Constructor.
@@ -601,7 +601,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener
                     String      oid;
                     oid             = _aladinInteraction.putVOTable(_aladinInteraction,
                             in, "SearchCal");
-                    _logger.fine("Aladin return new oid for votable : " + oid);
+                    MCSLogger.info("Aladin return new oid for votable : " +
+                        oid);
                     //
                     _aladinInteraction._aladin.setVisible(true);
                 }
