@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.9 2006-08-04 16:35:43 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.10 2006-10-16 14:26:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/08/04 16:35:43  lafrasse
+ * Added queryModel & filtersModel hooks in VirtualObservatory
+ *
  * Revision 1.8  2006/07/28 08:30:43  mella
  * Use mcs generic Resources class
  *
@@ -37,6 +40,8 @@ package jmmc.scalib.sclgui;
 import jmmc.mcs.log.MCSLogger;
 
 import jmmc.mcs.util.StatusBar;
+
+import gnu.getopt.Getopt;
 
 import java.util.logging.*;
 import java.util.logging.Logger;
@@ -144,17 +149,28 @@ public class SearchCalibrators
      */
     public static void main(String[] args)
     {
-        // Get a MCSLogger reference  and adjust for convenience
-        // @TODO : move this in MCSLogger
-        Logger logger = MCSLogger.getLogger();
-        logger.setLevel(java.util.logging.Level.ALL);
-        MCSLogger.trace();
+        // Set default log level
+        MCSLogger.setLevel("0");
 
-        // Create a console handler
-        // @TODO : move this in MCSLogger
-        ConsoleHandler handler = new ConsoleHandler();
-        handler.setLevel(java.util.logging.Level.ALL);
-        logger.addHandler(handler);
+        // Parse the command line in search of the -v' option ans its argument
+        Getopt commandLineParser = new Getopt("SearchCalibrators", args, "v:");
+        int    option;
+        String optionArgument;
+
+        while ((option = commandLineParser.getopt()) != -1)
+        {
+            switch (option)
+            {
+            case 'v':
+                optionArgument = commandLineParser.getOptarg();
+                MCSLogger.setLevel(optionArgument);
+
+                break;
+
+            default:
+                MCSLogger.error("getopt() returned '" + (char) option + "'.\n");
+            }
+        }
 
         // Launch application
         SearchCalibrators searchCalibrators = new SearchCalibrators();
