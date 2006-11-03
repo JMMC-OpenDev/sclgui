@@ -1,14 +1,19 @@
 #!/bin/bash
 
-export CLASSPATH=../lib/kxml2-min.jar:../lib/cds.savot.writer.jar:../lib/cds.savot.sax.jar:../lib/cds.savot.pull.jar:../lib/cds.savot.model.jar:../lib/cds.savot.common.jar:.:../lib/Aladin.jar:../lib/java-getopt-1.0.13.jar
+# You should only have to define properly two next lines
+MAINCLASS=jmmc/scalib/sclgui/SearchCalibrators
+ARGS="-v 5"
+
 
 
 compile(){
-	javac jmmc/scalib/sclgui/SearchCalibrators.java
+	echo "javac $MAINCLASS.java"
+	javac $MAINCLASS.java
 }
 
 run(){
-	java -classpath $CLASSPATH jmmc.scalib.sclgui.SearchCalibrators -v 5
+	java -classpath $CLASSPATH $MAINCLASS $ARGS
+	java -classpath $CLASSPATH $MAINCLASS $ARGS
 }
 
 clean(){
@@ -22,6 +27,16 @@ then
     compile
 	exit
 fi
+
+# define classpath
+CP=.
+for j in ../lib/*.jar
+do
+ CP=$CP:$j
+done
+export CLASSPATH=$CP
+echo CLASSPATH is $CLASSPATH
+
 
 for cmd in $*
 do
