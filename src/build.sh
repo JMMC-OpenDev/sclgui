@@ -7,13 +7,15 @@ ARGS="-v 5"
 
 
 compile(){
-	echo "javac $MAINCLASS.java"
-	javac $MAINCLASS.java
+	CMD="javac $MAINCLASS.java"
+    echo $CMD
+    $CMD
 }
 
 run(){
-	java -classpath $CLASSPATH $MAINCLASS $ARGS
-	java -classpath $CLASSPATH $MAINCLASS $ARGS
+	CMD="java -classpath $CLASSPATH $MAINCLASS $ARG"
+    echo $CMD
+    $CMD
 }
 
 clean(){
