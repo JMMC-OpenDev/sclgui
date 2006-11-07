@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.12 2006-10-10 09:09:37 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.13 2006-11-07 17:14:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/10/10 09:09:37  lafrasse
+ * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
+ *
  * Revision 1.11  2006/10/04 11:34:31  lafrasse
  * Added support for preferenced science object detection distance.
  *
@@ -127,8 +130,8 @@ public class Preferences extends jmmc.mcs.util.Preferences
                 defaults.setPreference("star.properties.order", "HD HIP RAJ2000");
 
                 /* Query default values preferences  */
-                defaults.setPreference("query.magnitudeBand", "V");
-                defaults.setPreference("query.instrumentalWavelength", "1978.0");
+                defaults.setPreference("query.magnitudeBand", "K");
+                defaults.setPreference("query.instrumentalWavelength", "1.0");
                 defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
                 defaults.setPreference("query.scienceObjectName", "eta_tau");
                 defaults.setPreference("query.scienceObjectRA", "+03:47:29.79");
