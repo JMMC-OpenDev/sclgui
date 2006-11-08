@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.6 2006-08-22 14:50:51 mella Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.7 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/08/22 14:50:51  mella
+ * Complete API for setter functions to accept Double or double params
+ *
  * Revision 1.5  2006/08/08 16:14:23  lafrasse
  * Updated to properly handle widget order
  * Streamlined filter processing code
@@ -29,6 +32,8 @@
 package jmmc.scalib.sclgui;
 
 import jmmc.mcs.log.MCSLogger;
+
+import java.lang.Character;
 
 import java.util.*;
 
@@ -70,7 +75,7 @@ public class SpectralTypeFilter extends Filter implements Observer
     {
         MCSLogger.trace();
 
-        return "Reject selected Spectral Types";
+        return "Reject Spectral Types other than :";
     }
 
     /**
@@ -99,52 +104,75 @@ public class SpectralTypeFilter extends Filter implements Observer
     }
 
     /**
-     * Apply the filter (if enabled) to the given star list.
+     * Return whether the given row should be removed or not.
      *
-     * @param starList the list of star to filter.
+     * @param starList the list of stars from which the row may be removed.
+     * @param row the star properties to be evaluated.
+     *
+     * @return true if the given row should be rejected, false otherwise.
      */
-    public void process(StarList starList)
+    public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         MCSLogger.trace();
 
-        // If the filter is enabled
-        if ((isEnabled() == true))
+        // Get the ID of the column contaning 'SpType' star property
+        int spectralTypeID = starList.getColumnIdByName("SpType");
+
+        // Get the spectral type from the row
+        StarProperty cell         = (StarProperty) row.elementAt(spectralTypeID);
+        String       spectralType = (String) cell.getValue();
+
+        // Extract the alphabetic part of the spectral type
+        String extractedSpectralType = "";
+
+        for (int i = 0; i < spectralType.length(); i++)
         {
-            // Get the id of the column contaning 'SpType' star property
-            int spectralTypeId = starList.getColumnIdByName("SpType");
+            char c = spectralType.charAt(i);
 
-            int rowId          = 0;
-
-            // For each row of the star list
-            while (rowId < starList.size())
+            // If the luminosity class has been reached
+            if ((c == 'I') || (c == 'V'))
             {
-                // Get the spectral type value of the star
-                Vector       row        = ((Vector) starList.elementAt(rowId));
-                StarProperty cell       = ((StarProperty) row.elementAt(spectralTypeId));
-                String       cellString = cell.toString();
+                // Escaping the current loop
+                break;
+            }
 
-                // If the spectral type cell is not empty
-                if ((cellString != null) && (cellString.equals("") == false))
+            // If the spectral type has been reached
+            // eg. the first alphabetic part of a spectral type
+            if (Character.isLetter(c) == true)
+            {
+                // Re-copy its content for later use
+                extractedSpectralType = extractedSpectralType + c;
+            }
+        }
+
+        // If no spectral type were found
+        if (extractedSpectralType.length() == 0)
+        {
+            // The star should be removed
+            return true;
+        }
+
+        // For each spectral type constraints
+        for (int i = 0; i < getNbOfConstraints(); i++)
+        {
+            // Get the spectral type name and boolean state
+            String  spectralTypeClassName  = getConstraintNameByOrder(i);
+            boolean spectralTypeClassState = ((Boolean) getConstraintByName(spectralTypeClassName)).booleanValue();
+
+            // If the spectral type must be kept
+            if (spectralTypeClassState == true)
+            {
+                // if the spectral type matches the extracted one
+                if (spectralTypeClassName.compareTo(extractedSpectralType) == 0)
                 {
-                    // If the cell contains one or more rejected spectral types
-                    if (cellString.indexOf(_rejectedSpectralTypes) >= 1)
-                    {
-                        // Remove the corresponding star from the list
-                        starList.remove(rowId);
-                    }
-                    else
-                    {
-                        // Otherwise process the next row
-                        rowId++;
-                    }
-                }
-                else // The cell is empty
-                {
-                    // Process the next row
-                    rowId++;
+                    // The current star should be kept
+                    return false;
                 }
             }
         }
+
+        // Otherwise the current star row from the star list should be removed
+        return true;
     }
 }
 /*___oOo___*/
