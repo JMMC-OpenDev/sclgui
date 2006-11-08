@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.5 2006-07-18 14:52:49 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.6 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/07/18 14:52:49  lafrasse
+ * Changed name and behavior according to preliminary review scientists feedback
+ *
  * Revision 1.4  2006/04/06 14:57:15  lafrasse
  * Generalized star property value from String type to Object
  *
@@ -48,48 +51,36 @@ public class MultiplicityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Multiplicity";
+        return "Reject Multiplicity :";
     }
 
     /**
-     * Apply the filter (if enabled) to the given star list.
+     * Return whether the given row should be removed or not.
      *
-     * @param starList the list of star to filter.
+     * @param starList the list of stars from which the row may be removed.
+     * @param row the star properties to be evaluated.
+     *
+     * @return true if the given row should be rejected, false otherwise.
      */
-    public void process(StarList starList)
+    public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         MCSLogger.trace();
 
-        // If the filter is enabled
-        if (isEnabled() == true)
+        // Get the id of the column contaning 'multiplicity' star property
+        int          multiplicityId   = starList.getColumnIdByName("MultFlag");
+
+        StarProperty cell             = ((StarProperty) row.elementAt(multiplicityId));
+        String       multiplicityFlag = cell.getStringValue();
+
+        // if the multiplicity flag exist
+        if ((multiplicityFlag != null) && (multiplicityFlag.length() != 0))
         {
-            // Get the id of the column contaning 'multiplicity' star property
-            int multiplicityId = starList.getColumnIdByName("MultFlag");
-
-            // For each row of the star list
-            int rowId = 0;
-
-            while (rowId < starList.size())
-            {
-                // Get the multiplicity flag value
-                Vector       row              = ((Vector) starList.elementAt(rowId));
-                StarProperty cell             = ((StarProperty) row.elementAt(multiplicityId));
-                String       multiplicityFlag = cell.getStringValue();
-
-                // if the multiplicity flag exist
-                if ((multiplicityFlag != null) &&
-                        (multiplicityFlag.equals("") == false))
-                {
-                    // Remove current line
-                    starList.remove(rowId);
-                }
-                else
-                {
-                    // Otherwise process the next row
-                    rowId++;
-                }
-            }
+            // This row should be removed
+            return true;
         }
+
+        // Otherwise this row should be kept
+        return false;
     }
 }
 /*___oOo___*/

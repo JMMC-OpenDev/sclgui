@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.10 2006-10-16 14:26:00 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.11 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/10/16 14:26:00  lafrasse
+ * Added command line option parsing.
+ * Added log level setting from command line option.
+ *
  * Revision 1.9  2006/08/04 16:35:43  lafrasse
  * Added queryModel & filtersModel hooks in VirtualObservatory
  *
@@ -105,15 +109,18 @@ public class SearchCalibrators
 {
     /**
      * Create all objects needed by SearchCalibrators and plug event responding
-     * loop (Listenr/listenable, Observer/Observable) in.
+     * loop (Listener/Listenable, Observer/Observable) in.
      */
     public SearchCalibrators()
     {
         // Set default resource    
         jmmc.mcs.util.Resources.setResourceName("jmmc/scalib/sclgui/Resources");
 
+        // Create a query model
+        QueryModel queryModel = new QueryModel();
+
         // Create filters
-        FiltersModel filtersModel = new FiltersModel();
+        FiltersModel filtersModel = new FiltersModel(queryModel);
         FiltersView  filtersView  = new FiltersView(filtersModel);
 
         // Create a calibrators model and attach it to a calibrators view
@@ -122,13 +129,12 @@ public class SearchCalibrators
 
         filtersModel.addObserver(calibratorsModel);
 
-        // Create a query model and attach it to a query view
-        QueryModel         queryModel = new QueryModel();
-
-        VirtualObservatory vo         = new VirtualObservatory(queryModel,
+        // Link everything up
+        VirtualObservatory vo = new VirtualObservatory(queryModel,
                 calibratorsModel, filtersModel);
 
-        QueryView          queryView  = new QueryView(queryModel, vo);
+        // Attach the query model to its query view
+        QueryView queryView = new QueryView(queryModel, vo);
 
         // Retrieve application preferences and attach them to their view
         // (This instance must be instanciated after dependencies)

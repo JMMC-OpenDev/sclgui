@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.5 2006-08-08 16:14:23 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.6 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/08/08 16:14:23  lafrasse
+ * Updated to properly handle widget order
+ * Streamlined filter processing code
+ *
  * Revision 1.4  2006/08/04 14:09:10  lafrasse
  * Added GUI enabling/disabling feature to filters
  *
@@ -65,10 +69,12 @@ public class LuminosityFilter extends Filter implements Observer
     {
         MCSLogger.trace();
 
-        return "Reject selected Luminosity Classes";
+        return "Reject Luminosity Classes other than :";
     }
 
     /**
+     * Update luminosity checboxes according to constraint changes.
+     *
      * @sa java.util.Observer
      */
     public void update(Observable o, Object arg)
@@ -94,19 +100,70 @@ public class LuminosityFilter extends Filter implements Observer
     }
 
     /**
-     * Apply the filter (if enabled) to the given star list.
+     * Return whether the given row should be removed or not.
      *
-     * @param starList the list of star to filter.
+     * @param starList the list of stars from which the row may be removed.
+     * @param row the star properties to be evaluated.
+     *
+     * @return true if the given row should be rejected, false otherwise.
      */
-    public void process(StarList starList)
+    public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         MCSLogger.trace();
 
-        // If the filter is enabled
-        if ((isEnabled() == true))
+        // Get the ID of the column contaning 'SpType' star property
+        int spectralTypeID = starList.getColumnIdByName("SpType");
+
+        // Get the corresponding frow the given row
+        StarProperty cell = (StarProperty) row.elementAt(spectralTypeID);
+
+        // Extract the spectral type from the cell
+        String spectralType = (String) cell.getValue();
+
+        // Extract the luminosity class of the given spectral type
+        String extractedLuminosityClass = "";
+
+        for (int i = 0; i < spectralType.length(); i++)
         {
-            // TODO : implement (see SpectralTypeFilter.java for an example)
+            char c = spectralType.charAt(i);
+
+            // If the luminosity class has been reached
+            // eg. the part of a spectral type composed of I & V (roman number)
+            if ((c == 'I') || (c == 'V'))
+            {
+                // Re-copy its content for later use
+                extractedLuminosityClass = extractedLuminosityClass + c;
+            }
         }
+
+        // If no luminosity classes were found
+        if (extractedLuminosityClass.length() == 0)
+        {
+            // The star should be removed
+            return true;
+        }
+
+        // For each luminosity constraints
+        for (int i = 0; i < getNbOfConstraints(); i++)
+        {
+            // Get the luminosity class name and boolean state
+            String  luminosityClassName  = getConstraintNameByOrder(i);
+            boolean luminosityClassState = ((Boolean) getConstraintByName(luminosityClassName)).booleanValue();
+
+            // If the luminosity class must be kept
+            if (luminosityClassState == true)
+            {
+                // if the luminosity class matches the extracted one
+                if (luminosityClassName.compareTo(extractedLuminosityClass) == 0)
+                {
+                    // This line must be kept
+                    return false;
+                }
+            }
+        }
+
+        // Otherwise reject the line
+        return true;
     }
 }
 /*___oOo___*/

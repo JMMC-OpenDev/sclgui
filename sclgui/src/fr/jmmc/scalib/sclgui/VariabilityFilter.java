@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.4 2006-07-18 14:52:49 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.5 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/07/18 14:52:49  lafrasse
+ * Changed name and behavior according to preliminary review scientists feedback
+ *
  * Revision 1.3  2006/06/30 07:58:22  lafrasse
  * Jalopyzation
  *
@@ -51,71 +54,36 @@ public class VariabilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Variability";
+        return "Reject Variability :";
     }
 
     /**
-     * Apply the filter (if enabled) to the given star list.
+     * Return whether the given row should be removed or not.
      *
-     * @param starList the list of star to filter.
+     * @param starList the list of stars from which the row may be removed.
+     * @param row the star properties to be evaluated.
+     *
+     * @return true if the given row should be rejected, false otherwise.
      */
-    public void process(StarList starList)
+    public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         MCSLogger.trace();
 
-        // If the filter is enabled
-        if (isEnabled() == true)
+        // Get the ID of the column contaning 'variability3' star property
+        int          variability3ID  = starList.getColumnIdByName("VarFlag3");
+
+        StarProperty cell            = (StarProperty) row.elementAt(variability3ID);
+        String       variabilityFlag = (String) cell.getValue();
+
+        // If the "variability3" flag was found in the current line
+        if ((variabilityFlag != null) && (variabilityFlag.length() != 0))
         {
-            // Get the ids of the column contaning 'variability' star property
-            int[] variabilityId = new int[3];
-            variabilityId[0]     = starList.getColumnIdByName("VarFlag1");
-            variabilityId[1]     = starList.getColumnIdByName("VarFlag2");
-            variabilityId[2]     = starList.getColumnIdByName("VarFlag3");
-
-            // Search statment
-            boolean find = false;
-
-            // For each row of the star list
-            int rowId = 0;
-
-            // Index of variability flag
-            int i = 0;
-
-            while (rowId < starList.size())
-            {
-                // Restart search
-                find     = false;
-                i        = 0;
-
-                // Get the variability flags value
-                while ((find != true) && (i < variabilityId.length))
-                {
-                    Vector       row             = ((Vector) starList.elementAt(rowId));
-                    StarProperty cell            = ((StarProperty) row.elementAt(variabilityId[i]));
-                    String       variabilityFlag = cell.toString();
-
-                    // if the variability flag exist
-                    if ((variabilityFlag != null) &&
-                            (variabilityFlag.equals("") == false))
-                    {
-                        starList.remove(rowId);
-
-                        // Data found
-                        find = true;
-                    }
-
-                    // Next variability flag
-                    i++;
-                }
-
-                // Next line
-                if (find == false)
-                {
-                    // Otherwise process the next row
-                    rowId++;
-                }
-            }
+            // This row should be removed
+            return true;
         }
+
+        // Otherwise this row should be kept
+        return false;
     }
 }
 /*___oOo___*/

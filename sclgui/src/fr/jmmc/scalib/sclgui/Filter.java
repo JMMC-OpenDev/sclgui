@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.3 2006-08-08 16:13:21 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.4 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/08/08 16:13:21  lafrasse
+ * Updated to properly handle widget order
+ *
  * Revision 1.2  2006/07/19 16:26:21  lafrasse
  * Generalized setConstraint code
  * Updated documentation
@@ -144,11 +147,51 @@ public abstract class Filter extends Observable
     }
 
     /**
+     * Return whether the given row should be removed or not.
+     *
+     * @param starList the list of stars from which the row may be removed.
+     * @param row the star properties to be evaluated.
+     *
+     * @return true if the given row should be rejected, false otherwise.
+     */
+    public boolean shouldRemoveRow(StarList starList, Vector row)
+    {
+        return true;
+    }
+
+    /**
      * Apply the filter (if enabled) to the given star list.
      *
      * @param starList the list of star to filter.
      */
-    public abstract void process(StarList starList);
+    public void process(StarList starList)
+    {
+        MCSLogger.trace();
+
+        // If the filter is enabled
+        if ((isEnabled() == true))
+        {
+            // For each row of the star list
+            int rowId = 0;
+
+            while (rowId < starList.size())
+            {
+                Vector row = ((Vector) starList.elementAt(rowId));
+
+                // If the luminosity class was found in the current line
+                if (shouldRemoveRow(starList, row) == true)
+                {
+                    // Remove the current star row from the star list
+                    starList.remove(rowId);
+                }
+                else
+                {
+                    // Otherwise process the next row
+                    rowId++;
+                }
+            }
+        }
+    }
 
     /**
      * Serialze a filter as a String for console representation.

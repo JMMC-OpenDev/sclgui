@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.9 2006-08-03 14:47:29 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.10 2006-11-08 22:25:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/08/03 14:47:29  lafrasse
+ * Jalopyzation
+ *
  * Revision 1.8  2006/07/19 16:24:54  lafrasse
  * Added missing filters
  * Reordered according to preliminary review scientists feedback
@@ -54,23 +57,31 @@ public class FiltersModel
     private Vector _filterViews;
 
     /**
+     * Store the current query model in order to allow later retrieves of
+     * any science object properties if needed (eg DistanceFilter).
+     */
+    private QueryModel _queryModel;
+
+    /**
      * Default constructor.
      */
-    public FiltersModel()
+    public FiltersModel(QueryModel queryModel)
     {
-        _filterList = new FilterList();
+        _queryModel     = queryModel;
+
+        _filterList     = new FilterList();
         _filterList.setEnabled(Boolean.TRUE);
         _filterViews = new Vector();
 
         // Distance filter
-        DistanceFilter distanceFilter = new DistanceFilter();
+        DistanceFilter distanceFilter = new DistanceFilter(_queryModel);
         _filterList.add(distanceFilter);
 
         FilterView distanceFilterView = new FilterView(distanceFilter);
         _filterViews.add(distanceFilterView);
 
         // Magnitude filter
-        MagnitudeFilter magnitudeFilter = new MagnitudeFilter();
+        MagnitudeFilter magnitudeFilter = new MagnitudeFilter(_queryModel);
         _filterList.add(magnitudeFilter);
 
         FilterView magnitudeFilterView = new FilterView(magnitudeFilter);
