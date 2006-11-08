@@ -13,7 +13,7 @@ compile(){
 }
 
 run(){
-	CMD="java -classpath $CLASSPATH $MAINCLASS $ARG"
+	CMD="java -classpath $CLASSPATH $MAINCLASS $ARGS"
     echo $CMD
     $CMD
 }
