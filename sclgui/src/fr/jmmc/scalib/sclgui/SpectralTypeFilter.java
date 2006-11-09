@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.7 2006-11-08 22:25:00 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.8 2006-11-09 16:03:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/11/08 22:25:00  lafrasse
+ * Implemented filtering algorithm.
+ *
  * Revision 1.6  2006/08/22 14:50:51  mella
  * Complete API for setter functions to accept Double or double params
  *
@@ -41,21 +44,14 @@ import java.util.*;
 /**
  *  SpectralTypeFilter filter.
  */
-public class SpectralTypeFilter extends Filter implements Observer
+public class SpectralTypeFilter extends Filter
 {
-    //TODO place a constant for every "spectral type" ;))
-
-    /** String containing all the spectral type names to be rejected */
-    String _rejectedSpectralTypes = new String();
-
     /**
      * Default constructor.
      */
     public SpectralTypeFilter()
     {
         super();
-
-        addObserver(this);
 
         setConstraint("O", new Boolean(false));
         setConstraint("B", new Boolean(false));
@@ -79,28 +75,38 @@ public class SpectralTypeFilter extends Filter implements Observer
     }
 
     /**
-     * @sa java.util.Observer
+     * Extract one or more spectral types of the given spectral type.
+     *
+     * @param rawSpectralType the spectral type to analyze.
+     *
+     * @return a Vector of String containing found spectral types (if any).
      */
-    public void update(Observable o, Object arg)
+    public static Vector spectralTypes(String rawSpectralType)
     {
-        MCSLogger.trace();
+        Vector foundSpectralTypes = new Vector();
 
-        // For each spectral type constraint
-        for (int i = 0; i < getNbOfConstraints(); i++)
+        for (int i = 0; i < rawSpectralType.length(); i++)
         {
-            // Get the spectral type name
-            String spectralTypeName = getConstraintNameByOrder(i);
+            char c = rawSpectralType.charAt(i);
 
-            // Get the spectral type state (checked or not)
-            boolean spectralTypeState = ((Boolean) getConstraintByName(spectralTypeName)).booleanValue();
-
-            // If the spectral type must be rejected (is checked)
-            if (spectralTypeState == true)
+            // If the luminosity class has been reached
+            if ((c == 'I') || (c == 'V'))
             {
-                // Add the its name in the rejected spectral type string
-                _rejectedSpectralTypes += spectralTypeName;
+                // Skip those characters
+                continue;
+            }
+
+            // If the spectral type has been reached
+            // eg. the uppercase alphabetic parts of a spectral type
+            if ((Character.isLetter(c) == true) &&
+                    (Character.isUpperCase(c) == true))
+            {
+                // Re-copy its content for later use (as a String object)
+                foundSpectralTypes.add("" + c);
             }
         }
+
+        return foundSpectralTypes;
     }
 
     /**
@@ -115,59 +121,66 @@ public class SpectralTypeFilter extends Filter implements Observer
     {
         MCSLogger.trace();
 
+        /*
+           // DO NOT REMOVE !!! - Validity test code
+           String[] rawSpectralTypes =
+               {
+                   "-", "A0", "A0Ia", "A0Ib", "A0IV", "A0V", "A1III/IV", "A1V",
+                   "A2", "A2m", "A3", "A3IV", "A5", "A5V", "A7IV", "A7IV-V",
+                   "A8/A9V", "A8Vn", "A9V", "A9V...", "Am...", "Ap...", "B0IV...",
+                   "B1.5V", "B2", "B2III", "B2:IIIpshev", "B3IIIe", "B5", "B5III",
+                   "B5V", "B6III", "B7/B8V", "B8III", "B8V", "B8Vn", "B9",
+                   "B9.5IV:", "B9IIIMNp...", "B9IV", "F0", "F0IV...", "F2II/III",
+                   "F3Ia", "F5", "F5V", "F8", "G0", "G0Ib", "G0III...", "G0V",
+                   "G3Ib", "G3V", "G4Ibp...", "G5", "G5II...", "G5III", "G5IV",
+                   "G6/G8III", "G7III", "G8III", "G8IV/V", "K", "K0", "K0III",
+                   "K0IV", "K1Iabv", "K1III", "K1III/IV", "K1IIIvar", "K1/K2III",
+                   "K2", "K2III", "K2IIIvar", "K2IV", "K2/K3III", "K3Ib", "K3III",
+                   "K3IIvar", "K4III", "K4/K5III", "K5", "K5II", "K5III",
+                   "K5/M0III", "K7", "M0", "M0III", "M0I-M4Ia", "M1", "M1III",
+                   "M1IIIb", "M2Iabpe", "M3", "M3III", "M3/M4III", "M4.5IIIa",
+                   "M4III", "M4III:", "M5III", "M5/M6IV", "M6", "M6e-M7", "M6III",
+                   "M7III", "M8III:e", "Ma", "Mb", "Mc", "Md", "O", "O...", "O7"
+               };
+           for (int x = 0; x < rawSpectralTypes.length; x++)
+           {
+               String rawSpectralType    = rawSpectralTypes[x];
+               Vector foundSpectralTypes = spectralTypes(rawSpectralType);
+               System.out.println("spectralTypes[" + x + "] = '" +
+                   rawSpectralType + "' ->");
+               int foundSpectralTypesSize = foundSpectralTypes.size();
+               for (int y = 0; y < foundSpectralTypesSize; y++)
+               {
+                   System.out.println("\tfoundSpectralTypes[" + (y + 1) + "/" +
+                       foundSpectralTypesSize + "] = '" +
+                       (String) foundSpectralTypes.elementAt(y) + "'");
+               }
+               System.out.println();
+           }
+         */
+
         // Get the ID of the column contaning 'SpType' star property
-        int spectralTypeID = starList.getColumnIdByName("SpType");
+        int rawSpectralTypeID = starList.getColumnIdByName("SpType");
 
         // Get the spectral type from the row
-        StarProperty cell         = (StarProperty) row.elementAt(spectralTypeID);
-        String       spectralType = (String) cell.getValue();
+        StarProperty cell            = (StarProperty) row.elementAt(rawSpectralTypeID);
+        String       rawSpectralType = (String) cell.getValue();
 
-        // Extract the alphabetic part of the spectral type
-        String extractedSpectralType = "";
+        // Get back the spectral types found in the given spectral type
+        Vector spectralTypes = spectralTypes(rawSpectralType);
 
-        for (int i = 0; i < spectralType.length(); i++)
+        // For each found spectral type
+        for (int i = 0; i < spectralTypes.size(); i++)
         {
-            char c = spectralType.charAt(i);
+            // Get the spectral type check box boolean state
+            String  spectralTypeName  = (String) spectralTypes.elementAt(i);
+            boolean spectralTypeState = ((Boolean) getConstraintByName(spectralTypeName)).booleanValue();
 
-            // If the luminosity class has been reached
-            if ((c == 'I') || (c == 'V'))
+            // If the current spectral type must be kept
+            if (spectralTypeState == true)
             {
-                // Escaping the current loop
-                break;
-            }
-
-            // If the spectral type has been reached
-            // eg. the first alphabetic part of a spectral type
-            if (Character.isLetter(c) == true)
-            {
-                // Re-copy its content for later use
-                extractedSpectralType = extractedSpectralType + c;
-            }
-        }
-
-        // If no spectral type were found
-        if (extractedSpectralType.length() == 0)
-        {
-            // The star should be removed
-            return true;
-        }
-
-        // For each spectral type constraints
-        for (int i = 0; i < getNbOfConstraints(); i++)
-        {
-            // Get the spectral type name and boolean state
-            String  spectralTypeClassName  = getConstraintNameByOrder(i);
-            boolean spectralTypeClassState = ((Boolean) getConstraintByName(spectralTypeClassName)).booleanValue();
-
-            // If the spectral type must be kept
-            if (spectralTypeClassState == true)
-            {
-                // if the spectral type matches the extracted one
-                if (spectralTypeClassName.compareTo(extractedSpectralType) == 0)
-                {
-                    // The current star should be kept
-                    return false;
-                }
+                // This line must be kept
+                return false;
             }
         }
 
