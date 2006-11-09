@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.7 2006-11-09 14:02:40 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.8 2006-11-09 15:39:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/11/09 14:02:40  lafrasse
+ * Added "Multiple luminosity classes in on spectral type" support and test code.
+ *
  * Revision 1.6  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -39,21 +42,14 @@ import java.util.*;
 /**
  *  LuminosityFilter filter.
  */
-public class LuminosityFilter extends Filter implements Observer
+public class LuminosityFilter extends Filter
 {
-    //TODO place a constant for every "luminosity" ;))
-
-    /** String containing all the luminosty class names to be rejected */
-    String _rejectedLuminosityClasses = new String();
-
     /**
      * Default constructor.
      */
     public LuminosityFilter()
     {
         super();
-
-        addObserver(this);
 
         setConstraint("I", new Boolean(false));
         setConstraint("II", new Boolean(false));
@@ -76,40 +72,13 @@ public class LuminosityFilter extends Filter implements Observer
     }
 
     /**
-     * Update luminosity checboxes according to constraint changes.
-     *
-     * @sa java.util.Observer
-     */
-    public void update(Observable o, Object arg)
-    {
-        MCSLogger.trace();
-
-        // For each spectral type constraint
-        for (int i = 0; i < getNbOfConstraints(); i++)
-        {
-            // Get the spectral type name
-            String luminosityClassName = getConstraintNameByOrder(i);
-
-            // Get the spectral type state (checked or not)
-            boolean luminosityClassState = ((Boolean) getConstraintByName(luminosityClassName)).booleanValue();
-
-            // If the spectral type must be rejected (is checked)
-            if (luminosityClassState == true)
-            {
-                // Add the its name in the rejected spectral type string
-                _rejectedLuminosityClasses += luminosityClassName;
-            }
-        }
-    }
-
-    /**
      * Extract one or more luminosity classes of the given spectral type.
      *
-     * @param spectralType the spectral type to analyze.
+     * @param rawSpectralType the spectral type to analyze.
      *
      * @return a Vector of String containing found luminosity classes (if any).
      */
-    public static Vector luminosityClasses(String spectralType)
+    public static Vector luminosityClasses(String rawSpectralType)
     {
         MCSLogger.trace();
 
@@ -117,11 +86,12 @@ public class LuminosityFilter extends Filter implements Observer
         String  foundLuminosityClass   = "";
         boolean luminosityClassFound   = false;
 
-        int     spectralTypeSize       = spectralType.length();
+        int     rawSpectralTypeSize    = rawSpectralType.length();
 
-        for (int i = 0; i < spectralTypeSize; i++)
+        // Scan every given spectral type characters
+        for (int i = 0; i < rawSpectralTypeSize; i++)
         {
-            char c = spectralType.charAt(i);
+            char c = rawSpectralType.charAt(i);
 
             // If a luminosity class has been reached
             // eg. a part of a spectral type composed of I & V (roman numbers)
@@ -134,7 +104,7 @@ public class LuminosityFilter extends Filter implements Observer
                 luminosityClassFound     = true;
 
                 // If we are on the last char of the spectral type
-                if (i == (spectralTypeSize - 1))
+                if (i == (rawSpectralTypeSize - 1))
                 {
                     // Store the luminosity class as a result
                     foundLuminosityClasses.add(foundLuminosityClass);
@@ -171,8 +141,8 @@ public class LuminosityFilter extends Filter implements Observer
         MCSLogger.trace();
 
         /*
-           // Validity test code : DO NOT REMOVE !!!
-           String[] spectralTypes =
+           // DO NOT REMOVE !!! - Validity test code
+           String[] rawSpectralTypes =
                {
                    "-", "A0", "A0Ia", "A0Ib", "A0IV", "A0V", "A1III/IV", "A1V",
                    "A2", "A2m", "A3", "A3IV", "A5", "A5V", "A7IV", "A7IV-V",
@@ -191,11 +161,11 @@ public class LuminosityFilter extends Filter implements Observer
                    "M4III", "M4III:", "M5III", "M5/M6IV", "M6", "M6e-M7", "M6III",
                    "M7III", "M8III:e", "Ma", "Mb", "Mc", "Md", "O", "O...", "O7"
                };
-           for (int x = 0; x < spectralTypes.length; x++)
+           for (int x = 0; x < rawSpectralTypes.length; x++)
            {
-               String spectralType      = spectralTypes[x];
-               Vector luminosityClasses = luminosityClasses(spectralType);
-               System.out.println("spectralTypes[" + x + "] = '" + spectralType +
+               String rawSpectralType   = rawSpectralTypes[x];
+               Vector luminosityClasses = luminosityClasses(rawSpectralType);
+               System.out.println("rawSpectralTypes[" + x + "] = '" + rawSpectralType +
                    "' ->");
                int luminosityClassesSize = luminosityClasses.size();
                for (int y = 0; y < luminosityClassesSize; y++)
@@ -209,16 +179,16 @@ public class LuminosityFilter extends Filter implements Observer
          */
 
         // Get the ID of the column contaning 'SpType' star property
-        int spectralTypeID = starList.getColumnIdByName("SpType");
+        int rawSpectralTypeID = starList.getColumnIdByName("SpType");
 
         // Get the corresponding cell the given row
-        StarProperty cell = (StarProperty) row.elementAt(spectralTypeID);
+        StarProperty cell = (StarProperty) row.elementAt(rawSpectralTypeID);
 
         // Extract the spectral type from the cell
-        String spectralType = (String) cell.getValue();
+        String rawSpectralType = (String) cell.getValue();
 
         // Get back the luminosity classes found in the given spectral type
-        Vector luminosityClasses = luminosityClasses(spectralType);
+        Vector luminosityClasses = luminosityClasses(rawSpectralType);
 
         // For each found luminosity class
         for (int i = 0; i < luminosityClasses.size(); i++)
