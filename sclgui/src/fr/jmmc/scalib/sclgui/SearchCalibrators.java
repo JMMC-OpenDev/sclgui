@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.11 2006-11-08 22:25:00 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.12 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/11/08 22:25:00  lafrasse
+ * Implemented filtering algorithm.
+ *
  * Revision 1.10  2006/10/16 14:26:00  lafrasse
  * Added command line option parsing.
  * Added log level setting from command line option.
@@ -143,7 +146,7 @@ public class SearchCalibrators
         // Show the user the app is been initialized
         StatusBar.show("application initialization...");
 
-        MainWindow window = new MainWindow(queryView, calibratorsView,
+        MainWindow window = new MainWindow(vo, queryView, calibratorsView,
                 preferencesView, filtersView, statusBar);
 
         // Make application presentation coherent with preferences

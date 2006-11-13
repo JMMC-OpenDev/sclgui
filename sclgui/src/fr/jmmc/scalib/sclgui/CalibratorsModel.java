@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.10 2006-10-16 14:29:51 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.11 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/10/16 14:29:51  lafrasse
+ * Updated to reflect MCSLogger API changes.
+ *
  * Revision 1.9  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -46,13 +49,17 @@ import cds.savot.writer.*;
 import jmmc.mcs.log.MCSLogger;
 
 import java.io.*;
-import java.io.BufferedReader;
-import java.io.StringBufferInputStream;
+
+import java.net.*;
 
 import java.util.*;
-import java.util.logging.*;
 
 import javax.swing.table.DefaultTableModel;
+
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
 
 
 /**
@@ -89,6 +96,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Filters */
     private FiltersModel _filtersModel;
 
+    /** Filters */
+    private ParamSet _paramSet;
+
     /**
      * Constructor.
      *
@@ -103,6 +113,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _filteredStarList     = (StarList) _originalStarList.clone();
 
         _columnNames          = new Vector();
+
+        _paramSet             = null;
     }
 
     /**
@@ -177,6 +189,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         // Parse the VOTable
         SavotVOTable parsedVOTable = parser.getVOTable();
 
+        // Retrieve VOTable parameters
+        _paramSet = parsedVOTable.getParams();
+        System.out.println("_paramSet[" + _paramSet.getItemCount() + "] = " +
+            _paramSet);
+
         // Get the VOTable resources
         ResourceSet resourceSet = parsedVOTable.getResources();
 
@@ -192,7 +209,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
          * definition.
          */
 
-        // TODO this is may not be compatible with other VOTable than JMMC ones
+        // @TODO this is may not be compatible with other VOTable than JMMC ones
         Hashtable groupNameToGroupId = new Hashtable();
 
         for (int groupId = 0; groupId < groupSet.getItemCount(); groupId++)
@@ -254,11 +271,23 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             _originalStarList.add(starProperties);
         }
 
-        // copy content of originalStarList into currentStarList
+        // Copy content of originalStarList into currentStarList
         _currentStarList = (StarList) _originalStarList.clone();
 
         // Update any attached observer
         update(null, null);
+    }
+
+    /**
+     * Give back the VOTable parameters.
+     *
+     * @return a ParamSet.
+     */
+    public ParamSet getParamSet()
+    {
+        MCSLogger.trace();
+
+        return _paramSet;
     }
 
     /**
@@ -342,9 +371,33 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * Open the given file as a VOTable.
+     */
+    public void openFile(File file)
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            // Get a BufferedReader from file
+            String         fileName   = file.getAbsolutePath();
+            FileReader     fileReader = new FileReader(fileName);
+            BufferedReader in         = new BufferedReader(fileReader);
+
+            // Build CalibratorModel and parse votable
+            parseVOTable(in);
+        }
+        catch (Exception e)
+        {
+            // TODO handle this exception
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Save the current votable into the given file.
      */
-    public void saveVOTable(File file)
+    public void saveVOTableFile(File file)
     {
         MCSLogger.trace();
 
@@ -394,6 +447,93 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         MCSLogger.info("_currentStarList size is now " +
             _currentStarList.size());
         update(null, null);
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param inFilename DOCUMENT ME!
+     * @param outFilename DOCUMENT ME!
+     * @param xslFilename DOCUMENT ME!
+     */
+    private void doXsl(File inFilename, File outFilename, URL xslFilename)
+    {
+        MCSLogger.trace();
+        MCSLogger.info("xsl='" + xslFilename + "', xml='" + inFilename +
+            "', out='" + outFilename + "'");
+
+        try
+        {
+            // Create transformer factory
+            TransformerFactory factory = TransformerFactory.newInstance();
+
+            // Use the factory to create a template containing the xsl file
+            Templates template = factory.newTemplates(new StreamSource("" +
+                        xslFilename));
+
+            // Use the template to create a transformer
+            Transformer xformer = template.newTransformer();
+
+            // Prepare the input and output files
+            Source source = new StreamSource("" + inFilename);
+            Result result = new StreamResult(new FileOutputStream(outFilename));
+
+            // Apply the xsl file to the source file and write the result to
+            // the output file
+            xformer.transform(source, result);
+        }
+        catch (FileNotFoundException e)
+        {
+            MCSLogger.error("File not found '" + e + "'");
+        }
+        catch (TransformerConfigurationException e)
+        {
+            // An error occurred in the XSL file
+            MCSLogger.error("One error occured into the xsl file '" +
+                xslFilename + "'");
+        }
+        catch (TransformerException e)
+        {
+            // An error occurred while applying the XSL file
+            // Get location of error in input file
+            SourceLocator locator  = e.getLocator();
+            int           col      = locator.getColumnNumber();
+            int           line     = locator.getLineNumber();
+            String        publicId = locator.getPublicId();
+            String        systemId = locator.getSystemId();
+            MCSLogger.error("One error occured applying xsl (xsl='" +
+                xslFilename + "', xml='" + inFilename + "' error on line " +
+                line + " column " + col + ")");
+        }
+    }
+
+    /**
+     * Convert a given VOTable file to the CSV format.
+     *
+     * @param in the file to convert
+     * @param out the converted file
+     */
+    public void exportVOTableToCSV(File in, File out)
+    {
+        MCSLogger.trace();
+
+        URL xslURL = MainWindow.class.getResource("voTableToCSV.xsl");
+        doXsl(in, out, xslURL);
+    }
+
+    /**
+     * Convert a given VOTable file to the HTML format.
+     *
+     * @param in the file to convert
+     * @param out the converted file
+     */
+    public void exportVOTableToHTML(File in, File out)
+    {
+        MCSLogger.trace();
+
+        URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
+        URL xmlURL = MainWindow.class.getResource("eta_tau.vot");
+        doXsl(in, out, xslURL);
     }
 
     /**

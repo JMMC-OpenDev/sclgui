@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.11 2006-10-04 11:34:31 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.12 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/10/04 11:34:31  lafrasse
+ * Added support for preferenced science object detection distance.
+ *
  * Revision 1.10  2006/10/03 15:31:19  lafrasse
  * Added support for preferenced min and max magnitude auto-update deltas.
  *
@@ -43,6 +46,8 @@
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
+
+import cds.savot.model.*;
 
 import jmmc.mcs.log.MCSLogger;
 
@@ -228,6 +233,50 @@ public class QueryModel extends Observable implements Observer
                 "query.queryDiffDECSize"));
         setQueryRadialSize(_preferences.getPreferenceAsDouble(
                 "query.queryRadialSize"));
+    }
+
+    /**
+     * Set all properties from the given SAVOT ParamSet.
+     *
+     * @param paramSet the part of the VOTable containing our query parameters.
+     */
+    public void loadParamSet(ParamSet paramSet)
+    {
+        MCSLogger.trace();
+
+        System.out.println("start");
+
+        // Convert the ParamSet in an HashTable on parameters name -> value
+        Hashtable parameters = new Hashtable();
+
+        for (int i = 0; i < paramSet.getItemCount(); i++)
+        {
+            SavotParam param      = (SavotParam) paramSet.getItemAt(i);
+            String     paramName  = param.getName();
+            String     paramValue = param.getValue();
+            System.out.println(paramName + " = '" + paramValue + "'");
+            parameters.put(paramName, paramValue);
+        }
+
+        System.out.println("stop");
+
+        /*
+           setInstrumentalMagnitudeBand((String) parameters.get("band"));
+           setInstrumentalWavelength((Double) parameters.get("wlen"));
+           setInstrumentalMaxBaseLine((Double) parameters.get("baseMax"));
+           setScienceObjectName((String) parameters.get("objectName"));
+           setScienceObjectRA((String) parameters.get("ra"));
+           setScienceObjectDEC((String) parameters.get("dec"));
+           setScienceObjectMagnitude((Double) parameters.get("mag"));
+           // @TODO : should the inclusion falg be part of the query VOT params ?
+           //setScienceObjectInclusionFlag((String) parameters.get("objectName"));
+           setQueryMinMagnitude((Double) parameters.get("minMagRange"));
+           setQueryMaxMagnitude((Double) parameters.get("maxMagRange"));
+           setQueryBrightScenarioFlag((Boolean) parameters.get("bright"));
+           setQueryDiffRASize((Double) parameters.get("diffRa"));
+           setQueryDiffDECSize((Double) parameters.get("diffDec"));
+           setQueryRadialSize((Double) parameters.get("radius"));
+         */
     }
 
     /**
@@ -1046,12 +1095,7 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        // If the science object name is missing
-        // TODO Verify that this parameter is really mandatory
-        if (_scienceObjectName.length() < 1)
-        {
-            return false;
-        }
+        // @TODO : Verify any mandatory missing parameter
 
         // If the RA coordinate is not defined
         if (_scienceObjectRA.length() < 1)
