@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.24 2006-10-10 09:09:37 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.25 2006-11-13 13:28:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2006/10/10 09:09:37  lafrasse
+ * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
+ *
  * Revision 1.23  2006/10/03 15:27:56  lafrasse
  * Refined logger usage.
  * Updated to match new LegendView constructor API.
@@ -171,7 +174,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsModel = calibratorsModel;
         _calibratorsModel.addTableModelListener(this);
 
-        // create actions
+        // Create actions
         _deleteAction          = new DeleteAction();
         _showLegendAction      = new ShowLegendAction();
         _showDetailsAction     = new ShowDetailsAction();
