@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.15 2006-10-16 14:29:51 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.16 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/10/16 14:29:51  lafrasse
+ * Updated to reflect MCSLogger API changes.
+ *
  * Revision 1.14  2006/10/03 15:28:29  lafrasse
  * Updated to match new LegendView constructor API.
  *
@@ -80,9 +83,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     /** The window in which the menu bar should be displayed */
     MainWindow _mainWindow;
 
-    /** Shared file chooser accross load, save and export */
-    JFileChooser _fileChooser;
-
     /** Shared instances */
     Preferences _preferences;
 
@@ -95,7 +95,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
     public MainMenuBar(MainWindow mainWindow)
     {
         _mainWindow      = mainWindow;
-        _fileChooser     = new JFileChooser();
 
         _preferences     = Preferences.getInstance();
 
@@ -124,46 +123,65 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JMenuItem menuItem;
 
         // Open... menu item
-        menuItem = new JMenuItem("Open...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._openFileAction);
+        /*
+           // Open... menu item
+           menuItem = new JMenuItem("Open...");
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
 
         // Save menu item
-        menuItem = new JMenuItem("Save");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._saveFileAction);
+        /*
+           // Save menu item
+           menuItem = new JMenuItem("Save");
+           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                   ActionEvent.CTRL_MASK));
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Save As... menu item
-        menuItem = new JMenuItem("Save As...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._saveFileAsAction);
+        /*
+           // Save As... menu item
+           menuItem = new JMenuItem("Save As...");
+           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                   ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Revert to Saved menu item
-        menuItem = new JMenuItem("Revert to Saved");
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._revertToSavedFileAction);
+        /*
+           menuItem = new JMenuItem("Revert to Saved");
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
 
         // Export as CSV... menu item
-        menuItem = new JMenuItem("Export as CSV...");
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._exportToCSVFileAction);
+        /*
+           menuItem = new JMenuItem("Export as CSV...");
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Export as HTML... menu item
-        menuItem = new JMenuItem("Export as HTML...");
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._exportToHTMLFileAction);
+        /*
+           menuItem = new JMenuItem("Export as HTML...");
+           menuItem.addActionListener(this);
+           fileMenu.add(menuItem);
+         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
@@ -273,6 +291,12 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         menuItem.addActionListener(this);
         queryMenu.add(menuItem);
 
+        // Get Star menu item
+        queryMenu.add(_mainWindow._vo._getStarAction);
+
+        // Get Cal menu item
+        queryMenu.add(_mainWindow._vo._getCalAction);
+
         // Add a separator
         queryMenu.add(new JSeparator());
 
@@ -324,8 +348,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
         // Plot in Aladin... menu item
         menuItem = new JMenuItem("Plot in Aladin...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                ActionEvent.CTRL_MASK));
         menuItem.addActionListener(this);
         viewMenu.add(menuItem);
     }
@@ -401,45 +423,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener
             _mainWindow.showPreferencesView();
         }
 
-        // Open... handler
-        if (actionName.equals("Open..."))
-        {
-            int returnVal = _fileChooser.showOpenDialog(this);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File file = _fileChooser.getSelectedFile();
-                _mainWindow._calibratorsView.openFile(file);
-            }
-            else
-            {
-                System.out.println("'" + actionName + "' command cancelled.");
-            }
-        }
-
-        // Save handler
-        if (actionName.equals("Save"))
-        {
-            // TODO Overwrite file if loaded from file, Save as... otherwise
-        }
-
-        // Save As... handler
-        if (actionName.equals("Save As..."))
-        {
-            int returnVal = _fileChooser.showSaveDialog(this);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File file = _fileChooser.getSelectedFile();
-                // @TODO change this part of code
-                _mainWindow._calibratorsView._calibratorsModel.saveVOTable(file);
-            }
-            else
-            {
-                System.out.println("'" + actionName + "' command cancelled.");
-            }
-        }
-
         // Revert to Saved handler
         if (actionName.equals("Revert to Saved"))
         {
@@ -449,33 +432,35 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Export as HTML... handler
         if (actionName.equals("Export as HTML..."))
         {
-            int returnVal = _fileChooser.showDialog(this, "Export");
-
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File file = _fileChooser.getSelectedFile();
-                _mainWindow.exportVOTableToHTML(file.getName());
-            }
-            else
-            {
-                System.out.println("'" + actionName + "' command cancelled.");
-            }
+            /*
+               int returnVal = _fileChooser.showDialog(this, "Export");
+               if (returnVal == JFileChooser.APPROVE_OPTION)
+               {
+                   File file = _fileChooser.getSelectedFile();
+                   _mainWindow.exportVOTableToHTML(file.getName());
+               }
+               else
+               {
+                   System.out.println("'" + actionName + "' command cancelled.");
+               }
+             */
         }
 
         // Export as CSV... handler
         if (actionName.equals("Export as CSV..."))
         {
-            int returnVal = _fileChooser.showDialog(this, "Export");
-
-            if (returnVal == JFileChooser.APPROVE_OPTION)
-            {
-                File file = _fileChooser.getSelectedFile();
-                _mainWindow.exportVOTableToCSV(file.getName());
-            }
-            else
-            {
-                System.out.println("'" + actionName + "' command cancelled.");
-            }
+            /*
+               int returnVal = _fileChooser.showDialog(this, "Export");
+               if (returnVal == JFileChooser.APPROVE_OPTION)
+               {
+                   File file = _fileChooser.getSelectedFile();
+                   _mainWindow.exportVOTableToCSV(file.getName());
+               }
+               else
+               {
+                   System.out.println("'" + actionName + "' command cancelled.");
+               }
+             */
         }
 
         // Page Setup... handler

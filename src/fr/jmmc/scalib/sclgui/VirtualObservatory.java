@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.7 2006-10-16 14:29:51 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.8 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2006/10/16 14:29:51  lafrasse
+ * Updated to reflect MCSLogger API changes.
+ *
  * Revision 1.6  2006/09/15 14:20:54  lafrasse
  * Added query default values support.
  *
@@ -55,85 +58,70 @@ public class VirtualObservatory
     /** Filters model */
     FiltersModel _filtersModel;
 
+    /** Get Star action */
+    public GetStarAction _getStarAction;
+
+    /** Get Cal action */
+    public GetCalAction _getCalAction;
+
+    /** Open file... action */
+    public OpenFileAction _openFileAction;
+
+    /** Save file... action */
+    public SaveFileAction _saveFileAction;
+
+    /** Save file as... action */
+    public SaveFileAsAction _saveFileAsAction;
+
+    /** Revet to Saved File action */
+    public RevertToSavedFileAction _revertToSavedFileAction;
+
+    /** Export to CSV File action */
+    public ExportToCSVFileAction _exportToCSVFileAction;
+
+    /** Export to HTML File action */
+    public ExportToHTMLFileAction _exportToHTMLFileAction;
+
+    /** Path to an open or saved file */
+    File _file;
+
     /**
      * Contructor.
      */
     public VirtualObservatory(QueryModel queryModel,
         CalibratorsModel calibratorsModel, FiltersModel filtersModel)
     {
-        _queryModel           = queryModel;
-        _calibratorsModel     = calibratorsModel;
-        _filtersModel         = filtersModel;
+        _queryModel                  = queryModel;
+        _calibratorsModel            = calibratorsModel;
+        _filtersModel                = filtersModel;
+
+        _file                        = null;
+
+        _getStarAction               = new GetStarAction();
+        _getCalAction                = new GetCalAction();
+
+        _openFileAction              = new OpenFileAction();
+        _saveFileAction              = new SaveFileAction();
+        _saveFileAsAction            = new SaveFileAsAction();
+        _revertToSavedFileAction     = new RevertToSavedFileAction();
+        _exportToCSVFileAction       = new ExportToCSVFileAction();
+        _exportToHTMLFileAction      = new ExportToHTMLFileAction();
     }
 
     /**
-     * Get calibrator list as a raw VOTable from JMMC web service.
+     * Enable/disable 'Save' related menus.
      *
-     * @throws java.lang.Exception << TODO a mettre !!!
+     * @param flag true to enable all menus, false otherwise.
      */
-    public void getCal() throws Exception
+    public void enableSaveMenus(boolean flag)
     {
         MCSLogger.trace();
-        class ProgressBarThread extends Thread
-        {
-            QueryModel _queryModel;
-            int        _millisecond;
 
-            ProgressBarThread(QueryModel queryModel, int millisecond)
-            {
-                _queryModel      = queryModel;
-                _millisecond     = millisecond;
-            }
-
-            public void run()
-            {
-                for (int i = 0; i <= _queryModel.getTotalStep(); i++)
-                {
-                    _queryModel.setCurrentStep(i);
-
-                    try
-                    {
-                        Thread.sleep(_millisecond);
-                    }
-                    catch (Exception e)
-                    {
-                    }
-                }
-            }
-        }
-
-        ProgressBarThread thread = new ProgressBarThread(_queryModel, 200);
-        thread.start();
-
-        try
-        {
-            // TODO temp hack to load a VOTable file name according to the query science object name, for test purpose only
-            //String         fileName   = queryModel.getScienceObjectName() + ".vot";
-            //FileReader     fileReader = new FileReader(fileName);
-            //BufferedReader in         = new BufferedReader(fileReader);
-            String resourceName = "eta_tau.vot";
-            URL    votableURL   = VirtualObservatory.class.getResource(resourceName);
-
-            // Read all the text returned by the embedded file
-            BufferedReader in  = new BufferedReader(new InputStreamReader(
-                        votableURL.openStream()));
-
-            StringBuffer   sb  = new StringBuffer();
-            String         str;
-
-            while ((str = in.readLine()) != null)
-            {
-                sb.append(str);
-            }
-
-            in.close();
-
-            _calibratorsModel.parseVOTable(sb.toString());
-        }
-        catch (IOException e)
-        {
-            throw new Exception(e.getMessage());
-        }
+        _saveFileAction.setEnabled(true);
+        _saveFileAsAction.setEnabled(true);
+        _revertToSavedFileAction.setEnabled(true);
+        _exportToCSVFileAction.setEnabled(true);
+        _exportToHTMLFileAction.setEnabled(true);
     }
 
     /**
@@ -141,12 +129,283 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    public void getScienceObject() throws Exception
+    protected class GetStarAction extends SCAction
     {
-        MCSLogger.trace();
+        public GetStarAction()
+        {
+            // @TODO : set button image
+            super("getStar");
+            setEnabled(false);
+        }
 
-        // @TODO : Querying Simbad and fill the query model accordinally
-        _queryModel.reset();
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // @TODO : Querying Simbad and fill the query model accordinally
+            _queryModel.reset();
+            _queryModel.example();
+        }
+    }
+
+    /**
+     * Get calibrator list as a raw VOTable from JMMC web service.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class GetCalAction extends SCAction
+    {
+        public GetCalAction()
+        {
+            super("getCal");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+            class ProgressBarThread extends Thread
+            {
+                QueryModel _queryModel;
+                int        _millisecond;
+
+                ProgressBarThread(QueryModel queryModel, int millisecond)
+                {
+                    _queryModel      = queryModel;
+                    _millisecond     = millisecond;
+                }
+
+                public void run()
+                {
+                    for (int i = 0; i <= _queryModel.getTotalStep(); i++)
+                    {
+                        _queryModel.setCurrentStep(i);
+
+                        try
+                        {
+                            Thread.sleep(_millisecond);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                }
+            }
+
+            ProgressBarThread thread = new ProgressBarThread(_queryModel, 200);
+            thread.start();
+
+            try
+            {
+                // TODO temp hack to load a VOTable file name according to the query science object name, for test purpose only
+                //String         fileName   = queryModel.getScienceObjectName() + ".vot";
+                //FileReader     fileReader = new FileReader(fileName);
+                //BufferedReader in         = new BufferedReader(fileReader);
+                String resourceName = "eta_tau.vot";
+                URL    votableURL   = VirtualObservatory.class.getResource(resourceName);
+
+                // Read all the text returned by the embedded file
+                BufferedReader in  = new BufferedReader(new InputStreamReader(
+                            votableURL.openStream()));
+
+                StringBuffer   sb  = new StringBuffer();
+                String         str;
+
+                while ((str = in.readLine()) != null)
+                {
+                    sb.append(str);
+                }
+
+                in.close();
+
+                _calibratorsModel.parseVOTable(sb.toString());
+            }
+            catch (IOException ex)
+            {
+                //throw new Exception(ex.getMessage());
+            }
+
+            // As data are now loaded
+            enableSaveMenus(true);
+        }
+    }
+
+    /**
+     * Called to open files.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class OpenFileAction extends SCAction
+    {
+        public OpenFileAction()
+        {
+            super("openFile");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            JFileChooser fileChooser = new JFileChooser();
+            int          returnVal = fileChooser.showOpenDialog(null);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                _file = fileChooser.getSelectedFile();
+            }
+
+            // Loading the file in the calibrators model and in the query
+            _calibratorsModel.openFile(_file);
+            _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+
+            // Enabling the 'Save' menus
+            enableSaveMenus(true);
+        }
+    }
+
+    /**
+     * Called to save in a file (in a new one if needed).
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class SaveFileAction extends SCAction
+    {
+        public SaveFileAction()
+        {
+            super("saveFile");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            if (_file == null)
+            {
+                JFileChooser fileChooser = new JFileChooser();
+                int          returnVal   = fileChooser.showSaveDialog(null);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION)
+                {
+                    _file = fileChooser.getSelectedFile();
+                }
+            }
+
+            _calibratorsModel.saveVOTableFile(_file);
+        }
+    }
+
+    /**
+     * Called to save in a new files.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class SaveFileAsAction extends SCAction
+    {
+        public SaveFileAsAction()
+        {
+            super("saveFileAs");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            JFileChooser fileChooser = new JFileChooser();
+            int          returnVal   = fileChooser.showSaveDialog(null);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                _file = fileChooser.getSelectedFile();
+            }
+
+            _calibratorsModel.saveVOTableFile(_file);
+        }
+    }
+
+    /**
+     * Called to revert the current state to the last saved state.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class RevertToSavedFileAction extends SCAction
+    {
+        public RevertToSavedFileAction()
+        {
+            super("revertToSavedFile");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // @TODO : display a dialog box to confirm all changes will ber lost
+            _calibratorsModel.openFile(_file);
+        }
+    }
+
+    /**
+     * Called to export current data to a CSV formatted file.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class ExportToCSVFileAction extends SCAction
+    {
+        public ExportToCSVFileAction()
+        {
+            super("exportToCSVFile");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            JFileChooser fileChooser = new JFileChooser();
+            int          returnVal   = fileChooser.showSaveDialog(null);
+
+            File         file        = null;
+
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                file = fileChooser.getSelectedFile();
+            }
+
+            _calibratorsModel.exportVOTableToCSV(_file, file);
+        }
+    }
+
+    /**
+     * Called to export current data to a HTML formatted file.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class ExportToHTMLFileAction extends SCAction
+    {
+        public ExportToHTMLFileAction()
+        {
+            super("exportToHTMLFile");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            JFileChooser fileChooser = new JFileChooser();
+            int          returnVal   = fileChooser.showSaveDialog(null);
+
+            File         file        = null;
+
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                file = fileChooser.getSelectedFile();
+            }
+
+            _calibratorsModel.exportVOTableToHTML(_file, file);
+        }
     }
 }
 /*___oOo___*/

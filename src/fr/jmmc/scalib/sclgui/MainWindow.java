@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.12 2006-10-16 14:29:51 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.13 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/10/16 14:29:51  lafrasse
+ * Updated to reflect MCSLogger API changes.
+ *
  * Revision 1.11  2006/08/04 16:53:54  lafrasse
  * Re-added preliminary print support
  *
@@ -60,15 +63,8 @@ import java.io.*;
 
 import java.net.*;
 
-import java.util.logging.Logger;
-
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
 
 
 /**
@@ -81,6 +77,9 @@ public class MainWindow extends JFrame
 
     /** Main window menu */
     MainMenuBar _menuBar;
+
+    /** Virtual Observatory */
+    public VirtualObservatory _vo;
 
     /** Query view */
     public QueryView _queryView;
@@ -100,10 +99,11 @@ public class MainWindow extends JFrame
     /**
      * Constructor.
      */
-    public MainWindow(QueryView queryView, CalibratorsView calibratorsView,
-        PreferencesView preferencesView, FiltersView filtersView,
-        StatusBar statusBar)
+    public MainWindow(VirtualObservatory vo, QueryView queryView,
+        CalibratorsView calibratorsView, PreferencesView preferencesView,
+        FiltersView filtersView, StatusBar statusBar)
     {
+        _vo                  = vo;
         _queryView           = queryView;
         _calibratorsView     = calibratorsView;
         _preferencesView     = preferencesView;
@@ -176,92 +176,6 @@ public class MainWindow extends JFrame
         MCSLogger.trace();
 
         _preferencesView.setVisible(true);
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param inFilename DOCUMENT ME!
-     * @param outFilename DOCUMENT ME!
-     * @param xslFilename DOCUMENT ME!
-     */
-    private void doXsl(URL inFilename, String outFilename, URL xslFilename)
-    {
-        MCSLogger.trace();
-        MCSLogger.info("xsl='" + xslFilename + "', xml='" + inFilename +
-            "', out='" + outFilename + "'");
-
-        try
-        {
-            // Create transformer factory
-            TransformerFactory factory = TransformerFactory.newInstance();
-
-            // Use the factory to create a template containing the xsl file
-            Templates template = factory.newTemplates(new StreamSource("" +
-                        xslFilename));
-
-            // Use the template to create a transformer
-            Transformer xformer = template.newTransformer();
-
-            // Prepare the input and output files
-            Source source = new StreamSource("" + inFilename);
-            Result result = new StreamResult(new FileOutputStream(outFilename));
-
-            // Apply the xsl file to the source file and write the result to
-            // the output file
-            xformer.transform(source, result);
-        }
-        catch (FileNotFoundException e)
-        {
-            MCSLogger.error("File not found '" + e + "'");
-        }
-        catch (TransformerConfigurationException e)
-        {
-            // An error occurred in the XSL file
-            MCSLogger.error("One error occured into the xsl file '" +
-                xslFilename + "'");
-        }
-        catch (TransformerException e)
-        {
-            // An error occurred while applying the XSL file
-            // Get location of error in input file
-            SourceLocator locator  = e.getLocator();
-            int           col      = locator.getColumnNumber();
-            int           line     = locator.getLineNumber();
-            String        publicId = locator.getPublicId();
-            String        systemId = locator.getSystemId();
-            MCSLogger.error("One error occured applying xsl (xsl='" +
-                xslFilename + "', xml='" + inFilename + "' error on line " +
-                line + " column " + col + ")");
-        }
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param outputFilename DOCUMENT ME!
-     */
-    public void exportVOTableToCSV(String outputFilename)
-    {
-        MCSLogger.trace();
-
-        URL xslURL = MainWindow.class.getResource("voTableToCSV.xsl");
-        URL xmlURL = MainWindow.class.getResource("eta_tau.vot");
-        doXsl(xmlURL, outputFilename, xslURL);
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param outputFilename DOCUMENT ME!
-     */
-    public void exportVOTableToHTML(String outputFilename)
-    {
-        MCSLogger.trace();
-
-        URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
-        URL xmlURL = MainWindow.class.getResource("eta_tau.vot");
-        doXsl(xmlURL, outputFilename, xslURL);
     }
 }
 /*___oOo___*/

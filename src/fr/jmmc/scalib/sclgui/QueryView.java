@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.22 2006-09-15 14:20:54 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.23 2006-11-13 17:12:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2006/09/15 14:20:54  lafrasse
+ * Added query default values support.
+ *
  * Revision 1.21  2006/08/10 15:27:41  lafrasse
  * Code refinments
  * Used Double as default numeric type
@@ -271,7 +274,7 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectNameTextfield.addPropertyChangeListener(this);
         tempPanel.add(_scienceObjectNameTextfield, c);
         c.gridx = 1;
-        tempPanel.add(new JButton(new SearchScienceObjectAction()));
+        tempPanel.add(new JButton(_vo._getStarAction));
         _scienceObjectPanel.add(tempPanel, c);
         // RA coordinate field
         c.gridy++;
@@ -375,7 +378,7 @@ public class QueryView extends JPanel implements Observer,
         // Fixed space
         queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Search Button
-        _searchButton = new JButton(new SearchCalibratorsAction());
+        _searchButton = new JButton(_vo._getCalAction);
         queryStatusPanel.add(_searchButton);
         // Fixed space
         queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
@@ -422,7 +425,19 @@ public class QueryView extends JPanel implements Observer,
         _instrumentalMaxBaselineTextField.setValue(_queryModel.getInstrumentalMaxBaseLine());
 
         // Science object parameters
-        _scienceObjectNameTextfield.setText(_queryModel.getScienceObjectName());
+        String scienceObjectName = _queryModel.getScienceObjectName();
+        _scienceObjectNameTextfield.setText(scienceObjectName);
+
+        // If the science object contains something
+        if (scienceObjectName.length() < 1)
+        {
+            _vo._getStarAction.setEnabled(true);
+        }
+        else
+        {
+            _vo._getStarAction.setEnabled(false);
+        }
+
         _scienceObjectDECTextfield.setText(_queryModel.getScienceObjectDEC());
         _scienceObjectRATextfield.setText(_queryModel.getScienceObjectRA());
         _scienceObjectMagnitudeLabel.setText(magnitudeWithBand);
@@ -449,6 +464,16 @@ public class QueryView extends JPanel implements Observer,
         _progressBar.setValue(_queryModel.getCurrentStep());
         _progressBar.setMaximum(_queryModel.getTotalStep());
         _progressBar.setString(_queryModel.getCurrentStatus());
+
+        // If the query seems complete
+        if (_queryModel.isConsumable() == true)
+        {
+            _vo._getCalAction.setEnabled(true);
+        }
+        else
+        {
+            _vo._getCalAction.setEnabled(false);
+        }
     }
 
     /** Called when a widget triggered an action. */
@@ -656,37 +681,6 @@ public class QueryView extends JPanel implements Observer,
         return (Printable.PAGE_EXISTS);
     }
 
-    protected class SearchScienceObjectAction extends SCAction
-    {
-        public SearchScienceObjectAction()
-        {
-            super("searchScienceObject");
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            if (_scienceObjectNameTextfield.getText().length() == 0)
-            {
-                // @TODO
-                _queryModel.example();
-            }
-            else
-            {
-                try
-                {
-                    _vo.getScienceObject();
-                }
-                catch (Exception ex)
-                {
-                    StatusBar.show("GETSTAR webservice unreachable.");
-                    ex.printStackTrace();
-                }
-            }
-        }
-    }
-
     protected class BrightQueryAction extends SCAction
     {
         public BrightQueryAction()
@@ -738,43 +732,6 @@ public class QueryView extends JPanel implements Observer,
                 boolean        b      = button.isSelected();
 
                 // @todo add line to adjust QueryModel according b value
-            }
-        }
-    }
-
-    protected class SearchCalibratorsAction extends SCAction
-    {
-        /** Store wether the query is running or not */
-        boolean running;
-
-        public SearchCalibratorsAction()
-        {
-            super("searchCalibrators");
-            running = false;
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            // If the model seems complete, launch query execution
-            if (_queryModel.isConsumable())
-            {
-                StatusBar.show("query parameters seem OK.");
-
-                try
-                {
-                    _vo.getCal();
-                }
-                catch (Exception ex)
-                {
-                    StatusBar.show("GETCAL webservice unreachable.");
-                    ex.printStackTrace();
-                }
-            }
-            else
-            {
-                StatusBar.show("query parameters seem wrong.");
             }
         }
     }
