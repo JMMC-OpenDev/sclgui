@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.8 2006-11-09 15:39:35 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.9 2006-11-14 14:44:56 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/11/09 15:39:35  lafrasse
+ * Removed unnecessary Observer code.
+ * Code refinments.
+ *
  * Revision 1.7  2006/11/09 14:02:40  lafrasse
  * Added "Multiple luminosity classes in on spectral type" support and test code.
  *
@@ -33,6 +37,8 @@
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
+
+import jmmc.mcs.astro.ALX;
 
 import jmmc.mcs.log.MCSLogger;
 
@@ -69,63 +75,6 @@ public class LuminosityFilter extends Filter
         MCSLogger.trace();
 
         return "Reject Luminosity Classes other than :";
-    }
-
-    /**
-     * Extract one or more luminosity classes of the given spectral type.
-     *
-     * @param rawSpectralType the spectral type to analyze.
-     *
-     * @return a Vector of String containing found luminosity classes (if any).
-     */
-    public static Vector luminosityClasses(String rawSpectralType)
-    {
-        MCSLogger.trace();
-
-        Vector  foundLuminosityClasses = new Vector();
-        String  foundLuminosityClass   = "";
-        boolean luminosityClassFound   = false;
-
-        int     rawSpectralTypeSize    = rawSpectralType.length();
-
-        // Scan every given spectral type characters
-        for (int i = 0; i < rawSpectralTypeSize; i++)
-        {
-            char c = rawSpectralType.charAt(i);
-
-            // If a luminosity class has been reached
-            // eg. a part of a spectral type composed of I & V (roman numbers)
-            if ((c == 'I') || (c == 'V'))
-            {
-                // Re-copy its content to build a result string
-                foundLuminosityClass     = foundLuminosityClass + c;
-
-                // Mark the discovery
-                luminosityClassFound     = true;
-
-                // If we are on the last char of the spectral type
-                if (i == (rawSpectralTypeSize - 1))
-                {
-                    // Store the luminosity class as a result
-                    foundLuminosityClasses.add(foundLuminosityClass);
-                }
-            }
-            else
-            {
-                // if a luminosiy class was just entirely found
-                if (luminosityClassFound == true)
-                {
-                    // Store the luminosity class as a result
-                    foundLuminosityClasses.add(foundLuminosityClass);
-
-                    // Reset in case another luminosity class can be found
-                    foundLuminosityClass     = "";
-                    luminosityClassFound     = false;
-                }
-            }
-        }
-
-        return foundLuminosityClasses;
     }
 
     /**
@@ -188,7 +137,7 @@ public class LuminosityFilter extends Filter
         String rawSpectralType = (String) cell.getValue();
 
         // Get back the luminosity classes found in the given spectral type
-        Vector luminosityClasses = luminosityClasses(rawSpectralType);
+        Vector luminosityClasses = ALX.luminosityClasses(rawSpectralType);
 
         // For each found luminosity class
         for (int i = 0; i < luminosityClasses.size(); i++)
