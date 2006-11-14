@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.8 2006-11-09 16:03:41 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.9 2006-11-14 14:44:56 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/11/09 16:03:41  lafrasse
+ * Added "Multiple spectral types in on spectral type" support and test code.
+ * Removed unnecessary Observer code.
+ *
  * Revision 1.7  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -33,6 +37,8 @@
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
+
+import jmmc.mcs.astro.ALX;
 
 import jmmc.mcs.log.MCSLogger;
 
@@ -72,41 +78,6 @@ public class SpectralTypeFilter extends Filter
         MCSLogger.trace();
 
         return "Reject Spectral Types other than :";
-    }
-
-    /**
-     * Extract one or more spectral types of the given spectral type.
-     *
-     * @param rawSpectralType the spectral type to analyze.
-     *
-     * @return a Vector of String containing found spectral types (if any).
-     */
-    public static Vector spectralTypes(String rawSpectralType)
-    {
-        Vector foundSpectralTypes = new Vector();
-
-        for (int i = 0; i < rawSpectralType.length(); i++)
-        {
-            char c = rawSpectralType.charAt(i);
-
-            // If the luminosity class has been reached
-            if ((c == 'I') || (c == 'V'))
-            {
-                // Skip those characters
-                continue;
-            }
-
-            // If the spectral type has been reached
-            // eg. the uppercase alphabetic parts of a spectral type
-            if ((Character.isLetter(c) == true) &&
-                    (Character.isUpperCase(c) == true))
-            {
-                // Re-copy its content for later use (as a String object)
-                foundSpectralTypes.add("" + c);
-            }
-        }
-
-        return foundSpectralTypes;
     }
 
     /**
@@ -167,7 +138,7 @@ public class SpectralTypeFilter extends Filter
         String       rawSpectralType = (String) cell.getValue();
 
         // Get back the spectral types found in the given spectral type
-        Vector spectralTypes = spectralTypes(rawSpectralType);
+        Vector spectralTypes = ALX.spectralTypes(rawSpectralType);
 
         // For each found spectral type
         for (int i = 0; i < spectralTypes.size(); i++)

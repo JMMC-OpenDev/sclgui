@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.4 2006-11-08 22:25:00 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.5 2006-11-14 14:44:56 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/11/08 22:25:00  lafrasse
+ * Implemented filtering algorithm.
+ *
  * Revision 1.3  2006/08/08 16:13:21  lafrasse
  * Updated to properly handle widget order
  *
@@ -17,6 +20,8 @@
  *
  ******************************************************************************/
 package jmmc.scalib.sclgui;
+
+import jmmc.mcs.astro.ALX;
 
 import jmmc.mcs.log.MCSLogger;
 
@@ -70,8 +75,8 @@ public class DistanceFilter extends Filter
         //_deltaRA        = new Double(0.0);
         //_deltaDEC       = new Double(0.0);
         // @TODO : remove the demo values
-        _deltaRA        = new Double(57.0);
-        _deltaDEC       = new Double(24.0);
+        _deltaRA        = new Double(0.2);
+        _deltaDEC       = new Double(0.2);
 
         setConstraint(_deltaRAConstraintName, _deltaRA);
         setConstraint(_deltaDECConstraintName, _deltaDEC);
@@ -99,8 +104,8 @@ public class DistanceFilter extends Filter
         MCSLogger.trace();
 
         // Get the science objct 'RA' and 'DEC' properties
-        _scienceObjectRA      = convertRA(_queryModel.getScienceObjectRA());
-        _scienceObjectDEC     = convertDEC(_queryModel.getScienceObjectDEC());
+        _scienceObjectRA      = ALX.convertRA(_queryModel.getScienceObjectRA());
+        _scienceObjectDEC     = ALX.convertDEC(_queryModel.getScienceObjectDEC());
     }
 
     /**
@@ -136,12 +141,12 @@ public class DistanceFilter extends Filter
         // Get the current star RA value
         StarProperty raCell    = ((StarProperty) row.elementAt(raId));
         String       raString  = (String) raCell.getValue();
-        double       currentRA = convertRA(raString);
+        double       currentRA = ALX.convertRA(raString);
 
         // Get the current star DEC value
         StarProperty decCell    = ((StarProperty) row.elementAt(decId));
         String       decString  = (String) decCell.getValue();
-        double       currentDEC = convertDEC(decString);
+        double       currentDEC = ALX.convertDEC(decString);
 
         // if the current star is farther than the science object
         retrieveScienceObjectCoordinates();
@@ -160,104 +165,6 @@ public class DistanceFilter extends Filter
 
         // Otherwise the current star should be kept
         return false;
-    }
-
-    /**
-     * Convert the given Right Ascension (RA).
-     *
-     * @param raHms the right ascension as a HH:MM:SS.TT or HH MM SS.TT string.
-     *
-     * @return the right ascension as a double in degrees.
-     */
-    private double convertRA(String raHms)
-    {
-        MCSLogger.trace();
-
-        double hh;
-        double hm;
-        double hs;
-
-        // RA can be given as HH:MM:SS.TT or HH MM SS.TT. 
-        // Replace ':' by ' ', and remove trailing and leading pace
-        raHms.replace(':', ' ');
-        raHms.trim();
-
-        // Parse the given string
-        // sscanf(raHms, "%f %f %f", &hh, &hm, &hs)
-        try
-        {
-            Scanner s = new Scanner(raHms).useDelimiter(" ");
-            hh     = s.nextDouble();
-            hm     = s.nextDouble();
-            hs     = s.nextDouble();
-            s.close();
-        }
-        catch (Exception e)
-        {
-            hh     = 0.0;
-            hm     = 0.0;
-            hs     = 0.0;
-        }
-
-        // Get sign of hh which has to be propagated to hm and hs
-        double sign = (raHms.startsWith("-")) ? (-1.0) : 1.0;
-
-        // Convert to degrees
-        double ra = (hh + ((sign * hm) / 60.0) + ((sign * hs) / 3600.0)) * 15.0;
-
-        // Set angle range [-180 - 180]
-        if (ra > 180)
-        {
-            ra = -1.0 * (360 - ra);
-        }
-
-        return ra;
-    }
-
-    /**
-     * Convert the given Declinaison (DEC).
-     *
-     * @param raHms the declinaison as a DD:MM:SS.TT or DD MM SS.TT string.
-     *
-     * @return the declinaison as a double in degrees.
-     */
-    private double convertDEC(String decDms)
-    {
-        MCSLogger.trace();
-
-        double dd;
-        double dm;
-        double ds;
-
-        // DEC can be given as DD:MM:SS.TT or DD MM SS.TT. 
-        // Replace ':' by ' ', and remove trailing and leading pace
-        decDms.replace(':', ' ');
-        decDms.trim();
-
-        // Parse the given string
-        // sscanf(decDms, "%f %f %f", &dd, &dm, &ds)
-        try
-        {
-            Scanner s = new Scanner(decDms).useDelimiter(" ");
-            dd     = s.nextDouble();
-            dm     = s.nextDouble();
-            ds     = s.nextDouble();
-            s.close();
-        }
-        catch (Exception e)
-        {
-            dd     = 0.0;
-            dm     = 0.0;
-            ds     = 0.0;
-        }
-
-        // Get sign of hh which has to be propagated to hm and hs
-        double sign = (decDms.startsWith("-")) ? (-1.0) : 1.0;
-
-        // Convert to degrees
-        double dec = dd + ((sign * dm) / 60.0) + ((sign * ds) / 3600.0);
-
-        return dec;
     }
 }
 /*___oOo___*/
