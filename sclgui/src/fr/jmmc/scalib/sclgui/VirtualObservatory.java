@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.8 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.9 2006-11-18 23:09:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.7  2006/10/16 14:29:51  lafrasse
  * Updated to reflect MCSLogger API changes.
  *
@@ -30,7 +36,9 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import jmmc.mcs.log.*;
+
+import jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -82,6 +90,9 @@ public class VirtualObservatory
     /** Export to HTML File action */
     public ExportToHTMLFileAction _exportToHTMLFileAction;
 
+    /** Quit action */
+    public QuitAction _quitAction;
+
     /** Path to an open or saved file */
     File _file;
 
@@ -106,6 +117,9 @@ public class VirtualObservatory
         _revertToSavedFileAction     = new RevertToSavedFileAction();
         _exportToCSVFileAction       = new ExportToCSVFileAction();
         _exportToHTMLFileAction      = new ExportToHTMLFileAction();
+
+        // Quit
+        _quitAction                  = new QuitAction();
     }
 
     /**
@@ -129,7 +143,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class GetStarAction extends SCAction
+    protected class GetStarAction extends MCSAction
     {
         public GetStarAction()
         {
@@ -153,7 +167,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class GetCalAction extends SCAction
+    protected class GetCalAction extends MCSAction
     {
         public GetCalAction()
         {
@@ -235,7 +249,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class OpenFileAction extends SCAction
+    protected class OpenFileAction extends MCSAction
     {
         public OpenFileAction()
         {
@@ -268,7 +282,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class SaveFileAction extends SCAction
+    protected class SaveFileAction extends MCSAction
     {
         public SaveFileAction()
         {
@@ -300,7 +314,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class SaveFileAsAction extends SCAction
+    protected class SaveFileAsAction extends MCSAction
     {
         public SaveFileAsAction()
         {
@@ -329,7 +343,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class RevertToSavedFileAction extends SCAction
+    protected class RevertToSavedFileAction extends MCSAction
     {
         public RevertToSavedFileAction()
         {
@@ -351,7 +365,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class ExportToCSVFileAction extends SCAction
+    protected class ExportToCSVFileAction extends MCSAction
     {
         public ExportToCSVFileAction()
         {
@@ -382,7 +396,7 @@ public class VirtualObservatory
      *
      * @throws java.lang.Exception << TODO a mettre !!!
      */
-    protected class ExportToHTMLFileAction extends SCAction
+    protected class ExportToHTMLFileAction extends MCSAction
     {
         public ExportToHTMLFileAction()
         {
@@ -405,6 +419,40 @@ public class VirtualObservatory
             }
 
             _calibratorsModel.exportVOTableToHTML(_file, file);
+        }
+    }
+
+    /**
+     * Called to quit SearchCal.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class QuitAction extends MCSAction
+    {
+        public QuitAction()
+        {
+            super("quit");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // @TODO : Check if the data are NOT saved before loosing any results !!!
+            if (_calibratorsModel.dataHaveChanged() == true)
+            {
+                // @TODO : Ask the user if he wants to save modifications
+                System.out.println("Do you want to save modifications ?");
+
+                /*
+                   if (saveModificationDialog() == true)
+                   {
+                           _saveFileAction.perform();
+                   }
+                 */
+            }
+
+            System.exit(0);
         }
     }
 }
