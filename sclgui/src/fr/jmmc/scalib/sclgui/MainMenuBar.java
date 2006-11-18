@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.17 2006-11-18 23:21:57 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.18 2006-11-18 23:28:26 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2006/11/18 23:21:57  lafrasse
+ * *** empty log message ***
+ *
  * Revision 1.16  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -321,3 +324,4 @@ public class MainMenuBar extends JMenuBar
     }
 }
 /*___oOo___*/
+
