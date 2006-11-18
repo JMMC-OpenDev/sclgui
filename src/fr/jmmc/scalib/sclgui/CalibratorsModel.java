@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.11 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.12 2006-11-18 23:00:24 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.10  2006/10/16 14:29:51  lafrasse
  * Updated to reflect MCSLogger API changes.
  *
@@ -99,6 +105,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Filters */
     private ParamSet _paramSet;
 
+    /** Flag indicated whether data have changed or not */
+    boolean _dataHaveChanged;
+
     /**
      * Constructor.
      *
@@ -115,10 +124,22 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _columnNames          = new Vector();
 
         _paramSet             = null;
+        _dataHaveChanged      = false;
+    }
+
+    /**
+     * Returns whether data have changed or not.
+     *
+     * @return true if inner data have changed, false otherwise
+     */
+    public boolean dataHaveChanged()
+    {
+        return _dataHaveChanged;
     }
 
     /**
      * Returns false regardless of parameter values.
+     *
      * @return false
      */
     public boolean isCellEditable(int row, int column)
@@ -555,6 +576,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         // Ask all the attached JTable views to update
         fireTableDataChanged();
+
+        // Remember that data have changed
+        _dataHaveChanged = true;
     }
 }
 /*___oOo___*/
