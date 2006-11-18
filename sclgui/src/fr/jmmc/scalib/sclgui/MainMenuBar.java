@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.16 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.17 2006-11-18 23:21:57 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.15  2006/10/16 14:29:51  lafrasse
  * Updated to reflect MCSLogger API changes.
  *
@@ -55,7 +61,7 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import jmmc.mcs.log.*;
 
 import jmmc.mcs.util.*;
 
@@ -63,12 +69,10 @@ import java.awt.*;
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
 import java.awt.event.*;
-import java.awt.print.*;
 
 import java.io.*;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -78,16 +82,13 @@ import javax.swing.text.BadLocationException;
 /**
  * Handle main application menu bar.
  */
-public class MainMenuBar extends JMenuBar implements ActionListener
+public class MainMenuBar extends JMenuBar
 {
     /** The window in which the menu bar should be displayed */
     MainWindow _mainWindow;
 
     /** Shared instances */
     Preferences _preferences;
-
-    /** Interaction with Aladin */
-    VOInteraction _aladinInteraction = null;
 
     /**
      * Constructor.
@@ -104,7 +105,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         fileMenu();
         editMenu();
         queryMenu();
-        viewMenu();
+        calibratorsMenu();
         helpMenu();
     }
 
@@ -124,90 +125,42 @@ public class MainMenuBar extends JMenuBar implements ActionListener
 
         // Open... menu item
         fileMenu.add(_mainWindow._vo._openFileAction);
-        /*
-           // Open... menu item
-           menuItem = new JMenuItem("Open...");
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
 
         // Save menu item
         fileMenu.add(_mainWindow._vo._saveFileAction);
-        /*
-           // Save menu item
-           menuItem = new JMenuItem("Save");
-           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                   ActionEvent.CTRL_MASK));
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
 
         // Save As... menu item
         fileMenu.add(_mainWindow._vo._saveFileAsAction);
-        /*
-           // Save As... menu item
-           menuItem = new JMenuItem("Save As...");
-           menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                   ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
 
         // Revert to Saved menu item
         fileMenu.add(_mainWindow._vo._revertToSavedFileAction);
-        /*
-           menuItem = new JMenuItem("Revert to Saved");
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
 
         // Export as CSV... menu item
         fileMenu.add(_mainWindow._vo._exportToCSVFileAction);
-        /*
-           menuItem = new JMenuItem("Export as CSV...");
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
 
         // Export as HTML... menu item
         fileMenu.add(_mainWindow._vo._exportToHTMLFileAction);
-        /*
-           menuItem = new JMenuItem("Export as HTML...");
-           menuItem.addActionListener(this);
-           fileMenu.add(menuItem);
-         */
 
         // Add a separator
         fileMenu.add(new JSeparator());
 
         // Page Setup... menu item
-        menuItem = new JMenuItem("Page Setup...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._pageSetupAction);
+
         // Print... menu item
-        menuItem = new JMenuItem("Print...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._printAction);
 
         // Add a separator
         fileMenu.add(new JSeparator());
 
         // Quit menu item
-        menuItem = new JMenuItem("Quit");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        fileMenu.add(menuItem);
+        fileMenu.add(_mainWindow._vo._quitAction);
     }
 
     /**
@@ -224,50 +177,36 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Create each Edit menu item
         JMenuItem menuItem;
 
-        // Undo menu item
-        menuItem = new JMenuItem("Undo");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
+        // The following 3 actions come from the default editor kit.
+        // Cut menu item
+        Action cutAction = new DefaultEditorKit.CutAction();
+        cutAction.putValue(Action.NAME, "Cut");
+        cutAction.putValue(Action.ACCELERATOR_KEY,
+            KeyStroke.getKeyStroke("ctrl X"));
+        editMenu.add(cutAction);
 
-        // Redo menu item
-        menuItem = new JMenuItem("Redo");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-                ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
+        // Copy menu item
+        Action copyAction = new DefaultEditorKit.CopyAction();
+        copyAction.putValue(Action.NAME, "Copy");
+        copyAction.putValue(Action.ACCELERATOR_KEY,
+            KeyStroke.getKeyStroke("ctrl C"));
+        editMenu.add(copyAction);
 
-        // Add a separator
-        editMenu.add(new JSeparator());
-
-        //These actions come from the default editor kit.
-        //Get the ones we want and stick them in the menu.
-        editMenu.add(new DefaultEditorKit.CutAction());
-        editMenu.add(new DefaultEditorKit.CopyAction());
-        editMenu.add(new DefaultEditorKit.PasteAction());
+        // Paste menu item
+        Action pasteAction = new DefaultEditorKit.PasteAction();
+        pasteAction.putValue(Action.NAME, "Paste");
+        pasteAction.putValue(Action.ACCELERATOR_KEY,
+            KeyStroke.getKeyStroke("ctrl V"));
+        editMenu.add(pasteAction);
 
         // Delete menu item
-        Action action;
-        action = _mainWindow._calibratorsView._deleteAction;
-        editMenu.add(action);
-
-        // Select All menu item
-        menuItem = new JMenuItem("Select All");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
+        editMenu.add(_mainWindow._calibratorsView._deleteAction);
 
         // Add a separator
         editMenu.add(new JSeparator());
 
         // Preferences... menu item
-        menuItem = new JMenuItem("Preferences...");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_COMMA,
-                ActionEvent.CTRL_MASK));
-        menuItem.addActionListener(this);
-        editMenu.add(menuItem);
+        editMenu.add(_mainWindow._showPreferencesAction);
     }
 
     /**
@@ -287,42 +226,34 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JMenuItem menuItem;
 
         // Reset Values menu item
-        menuItem = new JMenuItem("Reset Values");
-        menuItem.addActionListener(this);
-        queryMenu.add(menuItem);
+        queryMenu.add(_mainWindow._queryView._resetValuesAction);
+
+        // Default Values menu item
+        queryMenu.add(_mainWindow._queryView._loadDefaultValuesAction);
+
+        // Save Values as Default Values menu item
+        queryMenu.add(_mainWindow._queryView._saveValuesAction);
+
+        // Add a separator
+        queryMenu.add(new JSeparator());
 
         // Get Star menu item
         queryMenu.add(_mainWindow._vo._getStarAction);
 
         // Get Cal menu item
         queryMenu.add(_mainWindow._vo._getCalAction);
-
-        // Add a separator
-        queryMenu.add(new JSeparator());
-
-        // Default Values menu item
-        menuItem = new JMenuItem("Load Default Values");
-        menuItem.addActionListener(this);
-        queryMenu.add(menuItem);
-
-        // Save Values as Default Values menu item
-        menuItem = new JMenuItem("Save Current Values as Default");
-        menuItem.addActionListener(this);
-        queryMenu.add(menuItem);
     }
 
     /**
-     * Create and populate the 'View' menu
+     * Create and populate the 'Calibrators' menu
      */
-    void viewMenu()
+    void calibratorsMenu()
     {
         MCSLogger.trace();
 
-        Action action;
-
         // Create the View menu.
-        JMenu viewMenu = new JMenu("View");
-        add(viewMenu);
+        JMenu calibratorsMenu = new JMenu("Calibrators");
+        add(calibratorsMenu);
 
         // Create each View menu item
         JMenuItem menuItem;
@@ -331,25 +262,21 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JCheckBoxMenuItem _showDetailsMenuItem = new JCheckBoxMenuItem();
         _showDetailsMenuItem.setModel(PreferencedButtonModel.getInstance(
                 _preferences, "view.details.show"));
-        action = CalibratorsView._showDetailsAction;
-        _showDetailsMenuItem.setAction(action);
-        viewMenu.add(_showDetailsMenuItem);
+        _showDetailsMenuItem.setAction(CalibratorsView._showDetailsAction);
+        calibratorsMenu.add(_showDetailsMenuItem);
 
         // Show Legend item
         JCheckBoxMenuItem _showLegendMenuItem = new JCheckBoxMenuItem();
         _showLegendMenuItem.setModel(PreferencedButtonModel.getInstance(
                 _preferences, "view.legend.show"));
-        action = CalibratorsView._showLegendAction;
-        _showLegendMenuItem.setAction(action);
-        viewMenu.add(_showLegendMenuItem);
+        _showLegendMenuItem.setAction(CalibratorsView._showLegendAction);
+        calibratorsMenu.add(_showLegendMenuItem);
 
         // Add a separator
-        viewMenu.add(new JSeparator());
+        calibratorsMenu.add(new JSeparator());
 
         // Plot in Aladin... menu item
-        menuItem = new JMenuItem("Plot in Aladin...");
-        menuItem.addActionListener(this);
-        viewMenu.add(menuItem);
+        calibratorsMenu.add(_mainWindow._plotInAladinAction);
     }
 
     /**
@@ -367,32 +294,22 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         JMenuItem menuItem;
 
         // About SearchCal... menu item
-        menuItem = new JMenuItem("About SearchCal...");
-        menuItem.addActionListener(this);
-        helpMenu.add(menuItem);
+        helpMenu.add(_mainWindow._aboutAction);
 
         // Add a separator
         helpMenu.add(new JSeparator());
 
         // SearchCal Tutorial menu item
-        menuItem = new JMenuItem("SearchCal Tutorial");
-        menuItem.addActionListener(this);
-        helpMenu.add(menuItem);
+        helpMenu.add(_mainWindow._helpView._tutorialAction);
 
         // SearchCal FAQ menu item
-        menuItem = new JMenuItem("SearchCal FAQ");
-        menuItem.addActionListener(this);
-        helpMenu.add(menuItem);
+        helpMenu.add(_mainWindow._helpView._faqAction);
 
         // SearchCal Help menu item
-        menuItem = new JMenuItem("SearchCal Help");
-        menuItem.addActionListener(this);
-        helpMenu.add(menuItem);
+        helpMenu.add(_mainWindow._helpView._helpAction);
 
         // SearchCal Feedback menu item
-        menuItem = new JMenuItem("SearchCal Feedback");
-        menuItem.addActionListener(this);
-        helpMenu.add(menuItem);
+        helpMenu.add(_mainWindow._helpView._feedbackAction);
 
         // Add a separator
         helpMenu.add(new JSeparator());
@@ -400,199 +317,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener
         // Activate Help menu item
         PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Show Tooltips",
                 _preferences, "help.tooltips.show");
-
         helpMenu.add(_activeHelpMenuItem);
-    }
-
-    /**
-     * Menu controller.
-     *
-     * TODO split inner code!
-     *
-     * @param evt ActionEvent to handle
-     */
-    public void actionPerformed(ActionEvent evt)
-    {
-        MCSLogger.trace();
-
-        String actionName = evt.getActionCommand();
-
-        // Display configuration opening
-        if (actionName.equals("Data display configuration"))
-        {
-            _mainWindow.showPreferencesView();
-        }
-
-        // Revert to Saved handler
-        if (actionName.equals("Revert to Saved"))
-        {
-            // TODO reparse VOTable
-        }
-
-        // Export as HTML... handler
-        if (actionName.equals("Export as HTML..."))
-        {
-            /*
-               int returnVal = _fileChooser.showDialog(this, "Export");
-               if (returnVal == JFileChooser.APPROVE_OPTION)
-               {
-                   File file = _fileChooser.getSelectedFile();
-                   _mainWindow.exportVOTableToHTML(file.getName());
-               }
-               else
-               {
-                   System.out.println("'" + actionName + "' command cancelled.");
-               }
-             */
-        }
-
-        // Export as CSV... handler
-        if (actionName.equals("Export as CSV..."))
-        {
-            /*
-               int returnVal = _fileChooser.showDialog(this, "Export");
-               if (returnVal == JFileChooser.APPROVE_OPTION)
-               {
-                   File file = _fileChooser.getSelectedFile();
-                   _mainWindow.exportVOTableToCSV(file.getName());
-               }
-               else
-               {
-                   System.out.println("'" + actionName + "' command cancelled.");
-               }
-             */
-        }
-
-        // Page Setup... handler
-        if (actionName.equals("Page Setup..."))
-        {
-            // TODO put printJob, landscape upward to be shared with Print... handler below
-            PrinterJob printJob = PrinterJob.getPrinterJob();
-
-            // Set up Book
-            PageFormat landscape = printJob.defaultPage();
-            landscape.setOrientation(PageFormat.LANDSCAPE);
-            printJob.pageDialog(landscape);
-        }
-
-        // Print... handler
-        if (actionName.equals("Print..."))
-        {
-            // TODO put printJob, landscape upward to be shared with Print... handler below
-            PrinterJob printJob  = PrinterJob.getPrinterJob();
-            PageFormat landscape = printJob.defaultPage();
-            landscape.setOrientation(PageFormat.LANDSCAPE);
-
-            Book book = new Book();
-            book.append((Printable) _mainWindow._queryView, landscape);
-            book.append((Printable) _mainWindow._calibratorsView, landscape);
-            book.append((Printable) _mainWindow._filtersView, landscape);
-
-            // TODO check if previous line is not sufficient
-            //book.append((Printable) _mainWindow.resultspanel, landscape);
-            printJob.setPageable(book);
-
-            //Print dialog
-            if (printJob.printDialog())
-            {
-                try
-                {
-                    printJob.print();
-                }
-                catch (PrinterException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        // Quit handler
-        if (actionName.equals("Quit"))
-        {
-            // TODO check if unsaved before this !!!
-            System.exit(0);
-        }
-
-        // Undo handler
-        if (actionName.equals("Undo"))
-        {
-        }
-
-        // Redo handler
-        if (actionName.equals("Redo"))
-        {
-        }
-
-        // Add a Comment... handler
-        if (actionName.equals("Add a Comment..."))
-        {
-            // _mainWindow.showCommentView();
-        }
-
-        // Preferences... handler
-        if (actionName.equals("Preferences..."))
-        {
-            _mainWindow.showPreferencesView();
-        }
-
-        // Reset Values handler
-        if (actionName.equals("Reset Values"))
-        {
-            _mainWindow._queryView._queryModel.reset();
-        }
-
-        // Default Values handler
-        if (actionName.equals("Load Default Values"))
-        {
-            _mainWindow._queryView._queryModel.loadDefaultValues();
-        }
-
-        // Save Values as Default handler
-        if (actionName.equals("Save Current Values as Default"))
-        {
-            _mainWindow._queryView._queryModel.saveDefaultValues();
-        }
-
-        // Show Details handler
-        if (actionName.equals("Show Details"))
-        {
-            // TODO
-        }
-
-        // Show Legend handler
-        if (actionName.equals("Show Legend"))
-        {
-            // TODO _mainWindow.showLegendView();
-            //            legendView.setVisible(true);
-        }
-
-        // Plot data in Aladin handler
-        if (actionName.equals("Plot in Aladin..."))
-        {
-            CalibratorsModel calibratorsModel = _mainWindow._calibratorsView._calibratorsModel;
-
-            if (calibratorsModel.getVOTable() != null)
-            {
-                if (_aladinInteraction == null)
-                {
-                    //
-                    _aladinInteraction = new VOInteraction();
-                    _aladinInteraction.startAladin(calibratorsModel.getVOTable());
-                    _aladinInteraction._aladin.execCommand("sync");
-                }
-                else
-                {
-                    InputStream in  = new StringBufferInputStream(calibratorsModel.getVOTable());
-                    String      oid;
-                    oid             = _aladinInteraction.putVOTable(_aladinInteraction,
-                            in, "SearchCal");
-                    MCSLogger.info("Aladin return new oid for votable : " +
-                        oid);
-                    //
-                    _aladinInteraction._aladin.setVisible(true);
-                }
-            }
-        }
     }
 }
 /*___oOo___*/
