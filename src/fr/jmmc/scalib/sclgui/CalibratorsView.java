@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.25 2006-11-13 13:28:23 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.26 2006-11-18 23:01:46 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2006/11/13 13:28:23  lafrasse
+ * Documentation refinment.
+ *
  * Revision 1.24  2006/10/10 09:09:37  lafrasse
  * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
  *
@@ -269,20 +272,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         MCSLogger.trace();
         _deleteAction.setEnabled(true);
 
-        // update identification table if bae table has a minimum of one column
-        if (_calibratorsTable.getColumnModel().getColumnCount() > 0) //        if (_calibratorsTable.getColumnModel().getColumnCount()>1110 )
+        // Update identification table if bae table has a minimum of one column
+        if (_calibratorsTable.getColumnModel().getColumnCount() > 0)
         {
-            // if _calibratorsIdTable has not exactly one column
-            // remove every other column
-            // and append coorect one
-            // @todo manage selection of one named column instead of first one
+            /*
+             * If _calibratorsIdTable has not exactly one column
+             * remove every other column and append correct one
+             * @todo manage selection of one named column instead of first one
+             */
             if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1)
             {
                 MCSLogger.debug(
                     "Setting first column of table to Identification table");
 
-                // @todo try to make next line run without eating all cpu
-                // resource
+                // @todo try to make next line run without eating all cpu resource
                 // _calibratorsIdTable.getColumnModel().addColumn(_calibratorsTable.getColumnModel().getColumn(0));
             }
         }
@@ -371,7 +374,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         return (Printable.PAGE_EXISTS);
     }
 
-    protected class DeleteAction extends SCAction
+    protected class DeleteAction extends MCSAction
     {
         public DeleteAction()
         {
@@ -386,7 +389,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         }
     }
 
-    protected class ShowLegendAction extends SCAction
+    protected class ShowLegendAction extends MCSAction
     {
         Preferences _preferences = Preferences.getInstance();
 
@@ -407,7 +410,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         }
     }
 
-    protected class ShowDetailsAction extends SCAction
+    protected class ShowDetailsAction extends MCSAction
     {
         Preferences _preferences = Preferences.getInstance();
 
