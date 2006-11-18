@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.13 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.14 2006-11-18 23:21:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.12  2006/10/16 14:29:51  lafrasse
  * Updated to reflect MCSLogger API changes.
  *
@@ -48,9 +54,11 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import jmmc.mcs.gui.*;
 
-import jmmc.mcs.util.StatusBar;
+import jmmc.mcs.log.*;
+
+import jmmc.mcs.util.*;
 
 import org.w3c.dom.*;
 
@@ -58,6 +66,7 @@ import org.xml.sax.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.print.*;
 
 import java.io.*;
 
@@ -96,6 +105,33 @@ public class MainWindow extends JFrame
     /** Preferences view */
     PreferencesView _preferencesView;
 
+    /** Help view */
+    HelpView _helpView;
+
+    /** Preferences... action */
+    public ShowPreferencesAction _showPreferencesAction;
+
+    /** Page Setup... action */
+    public PageSetupAction _pageSetupAction;
+
+    /** Print... action */
+    public PrintAction _printAction;
+
+    /** Printer job */
+    PrinterJob _printJob;
+
+    /** PAge format */
+    PageFormat _landscape;
+
+    /** Plot in Aladin action */
+    public PlotInAladinAction _plotInAladinAction;
+
+    /** About window action */
+    public AboutAction _aboutAction;
+
+    /** Interaction with Aladin */
+    VOInteraction _aladinInteraction = null;
+
     /**
      * Constructor.
      */
@@ -103,12 +139,30 @@ public class MainWindow extends JFrame
         CalibratorsView calibratorsView, PreferencesView preferencesView,
         FiltersView filtersView, StatusBar statusBar)
     {
-        _vo                  = vo;
-        _queryView           = queryView;
-        _calibratorsView     = calibratorsView;
-        _preferencesView     = preferencesView;
-        _filtersView         = filtersView;
-        _statusBar           = statusBar;
+        _vo                        = vo;
+        _queryView                 = queryView;
+        _calibratorsView           = calibratorsView;
+        _filtersView               = filtersView;
+        _statusBar                 = statusBar;
+
+        _helpView                  = new HelpView();
+
+        // Preferences
+        _preferencesView           = preferencesView;
+        _showPreferencesAction     = new ShowPreferencesAction();
+
+        // Printing
+        _printJob                  = PrinterJob.getPrinterJob();
+        _landscape                 = _printJob.defaultPage();
+        _landscape.setOrientation(PageFormat.LANDSCAPE);
+        _pageSetupAction        = new PageSetupAction();
+        _printAction            = new PrintAction();
+
+        // Plot in Aladin
+        _plotInAladinAction     = new PlotInAladinAction();
+
+        // About... window
+        _aboutAction            = new AboutAction();
 
         try
         {
@@ -169,13 +223,158 @@ public class MainWindow extends JFrame
     }
 
     /**
-     * Display the registered preferences view
+     * Called to show the preferences window.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
      */
-    public void showPreferencesView()
+    protected class ShowPreferencesAction extends MCSAction
     {
-        MCSLogger.trace();
+        public ShowPreferencesAction()
+        {
+            super("preferences");
+        }
 
-        _preferencesView.setVisible(true);
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // Show the Preferences window
+            _preferencesView.setVisible(true);
+        }
+    }
+
+    /**
+     * Called to setup printed page layout.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class PageSetupAction extends MCSAction
+    {
+        public PageSetupAction()
+        {
+            super("pageSetup");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // Show Page Setup GUI
+            _landscape = _printJob.pageDialog(_landscape);
+        }
+    }
+
+    /**
+     * Called to print data.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class PrintAction extends MCSAction
+    {
+        public PrintAction()
+        {
+            super("print");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            Book book = new Book();
+            book.append((Printable) _queryView, _landscape);
+            book.append((Printable) _calibratorsView, _landscape);
+            book.append((Printable) _filtersView, _landscape);
+
+            _printJob.setPageable(book);
+
+            // Print dialog
+            if (_printJob.printDialog())
+            {
+                try
+                {
+                    _printJob.print();
+                }
+                catch (PrinterException ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Called to plot data in Aladin.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class PlotInAladinAction extends MCSAction
+    {
+        public PlotInAladinAction()
+        {
+            super("plotCalibratorsInAladin");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            CalibratorsModel calibratorsModel = _calibratorsView._calibratorsModel;
+
+            if (calibratorsModel.getVOTable() != null)
+            {
+                if (_aladinInteraction == null)
+                {
+                    //
+                    _aladinInteraction = new VOInteraction();
+                    _aladinInteraction.startAladin(calibratorsModel.getVOTable());
+                    _aladinInteraction._aladin.execCommand("sync");
+                }
+                else
+                {
+                    InputStream in  = new StringBufferInputStream(calibratorsModel.getVOTable());
+                    String      oid;
+                    oid             = _aladinInteraction.putVOTable(_aladinInteraction,
+                            in, "SearchCal");
+                    MCSLogger.info("Aladin return new oid for votable : " +
+                        oid);
+                    //
+                    _aladinInteraction._aladin.setVisible(true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Called to show the About window.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class AboutAction extends MCSAction
+    {
+        public AboutAction()
+        {
+            super("about");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            String greetings = "";
+            greetings += "Specifications :\n";
+            greetings += "\tDaniel BONNEAU\n";
+            greetings += "\tGilles DUVERT\n";
+            greetings += "\tFabien MALBET\n";
+            greetings += "\tDenis MOURARD\n";
+            greetings += "\n";
+            greetings += "Programming :\n";
+            greetings += "\tSylvain LAFRASSE\n";
+            greetings += "\tGuillaume MELLA\n";
+            greetings += "\tYannick VANDERSCHUEREN\n";
+
+            AboutWindow aboutWindow = new AboutWindow("SearchCal",
+                    "4.0 beta 2", greetings, "Copyright 2006 JMMC");
+        }
     }
 }
 /*___oOo___*/
