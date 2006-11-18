@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.23 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.24 2006-11-18 23:05:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.22  2006/09/15 14:20:54  lafrasse
  * Added query default values support.
  *
@@ -79,9 +85,11 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
+import jmmc.mcs.gui.*;
+
 import jmmc.mcs.log.MCSLogger;
 
-import jmmc.mcs.util.StatusBar;
+import jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -204,6 +212,15 @@ public class QueryView extends JPanel implements Observer,
     /** Query progress bar */
     JProgressBar _progressBar = new JProgressBar();
 
+    /** Reset Values action */
+    public ResetValuesAction _resetValuesAction;
+
+    /** Reset Values action */
+    public LoadDefaultValuesAction _loadDefaultValuesAction;
+
+    /** Reset Values action */
+    public SaveValuesAction _saveValuesAction;
+
     /**
      * Constructor.
      *
@@ -222,6 +239,15 @@ public class QueryView extends JPanel implements Observer,
 
         // Init every actions
         _includeScienceObjectAction     = new IncludeScienceObjectAction();
+
+        // Reset values action
+        _resetValuesAction              = new ResetValuesAction();
+
+        // Load default values action
+        _loadDefaultValuesAction        = new LoadDefaultValuesAction();
+
+        // Save values action
+        _saveValuesAction               = new SaveValuesAction();
 
         // Form panel global attributes and common objects
         JPanel             tempPanel;
@@ -681,7 +707,7 @@ public class QueryView extends JPanel implements Observer,
         return (Printable.PAGE_EXISTS);
     }
 
-    protected class BrightQueryAction extends SCAction
+    protected class BrightQueryAction extends MCSAction
     {
         public BrightQueryAction()
         {
@@ -697,7 +723,7 @@ public class QueryView extends JPanel implements Observer,
         }
     }
 
-    protected class FaintQueryAction extends SCAction
+    protected class FaintQueryAction extends MCSAction
     {
         public FaintQueryAction()
         {
@@ -713,7 +739,7 @@ public class QueryView extends JPanel implements Observer,
         }
     }
 
-    protected class IncludeScienceObjectAction extends SCAction
+    protected class IncludeScienceObjectAction extends MCSAction
     {
         Preferences _preferences = Preferences.getInstance();
 
@@ -733,6 +759,51 @@ public class QueryView extends JPanel implements Observer,
 
                 // @todo add line to adjust QueryModel according b value
             }
+        }
+    }
+
+    protected class ResetValuesAction extends MCSAction
+    {
+        public ResetValuesAction()
+        {
+            super("resetQueryValues");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            _queryModel.reset();
+        }
+    }
+
+    protected class LoadDefaultValuesAction extends MCSAction
+    {
+        public LoadDefaultValuesAction()
+        {
+            super("loadDefaultQueryValues");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            _queryModel.loadDefaultValues();
+        }
+    }
+
+    protected class SaveValuesAction extends MCSAction
+    {
+        public SaveValuesAction()
+        {
+            super("saveQueryValues");
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            _queryModel.saveDefaultValues();
         }
     }
 }
