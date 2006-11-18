@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.12 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.13 2006-11-18 23:10:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.11  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -44,14 +50,11 @@
  ******************************************************************************/
 package jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import jmmc.mcs.gui.*;
 
-import jmmc.mcs.util.StatusBar;
+import jmmc.mcs.log.*;
 
 import gnu.getopt.Getopt;
-
-import java.util.logging.*;
-import java.util.logging.Logger;
 
 
 /**
