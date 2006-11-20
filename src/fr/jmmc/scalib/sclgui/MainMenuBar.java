@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.18 2006-11-18 23:28:26 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.19 2006-11-20 15:40:25 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2006/11/18 23:28:26  lafrasse
+ * Double commit to add commit log after wrong manipulation.
+ * Moved all menus support to the Action mecanism through MCSActions.
+ *
  * Revision 1.17  2006/11/18 23:21:57  lafrasse
  * *** empty log message ***
  *
@@ -324,4 +328,3 @@ public class MainMenuBar extends JMenuBar
     }
 }
 /*___oOo___*/
-
