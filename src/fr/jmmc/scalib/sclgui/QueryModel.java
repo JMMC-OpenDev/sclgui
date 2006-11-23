@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.12 2006-11-13 17:12:18 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.13 2006-11-23 16:24:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/11/13 17:12:18  lafrasse
+ * Moved all file Open, Save, and Export code into CalibratorsModel.
+ * Moved to Action based management for File menu and Query buttons.
+ * Added preliminary file Param parsing.
+ * Code and documentation refinments.
+ *
  * Revision 1.11  2006/10/04 11:34:31  lafrasse
  * Added support for preferenced science object detection distance.
  *
@@ -132,6 +138,9 @@ public class QueryModel extends Observable implements Observer
      */
     private int _totalStep;
 
+    /** Remind whether the query can be edited or not (when loaded fromfile for example) */
+    private boolean _isEditable;
+
     /**
      * Default constructor.
      */
@@ -155,7 +164,8 @@ public class QueryModel extends Observable implements Observer
 
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
 
-        reset();
+        // Initialize values from user defined preferences
+        loadDefaultValues();
     }
 
     /**
@@ -179,7 +189,6 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        // @TODO : retrieve all those values from preference
         setInstrumentalMagnitudeBand("K");
         setInstrumentalMaxBaseLine(100.0);
 
@@ -196,6 +205,9 @@ public class QueryModel extends Observable implements Observer
 
         setCurrentStep(0);
         setTotalStep(0);
+
+        // Enable the edition as the values where not loaded from file
+        setEditableState(true);
     }
 
     /**
@@ -233,6 +245,9 @@ public class QueryModel extends Observable implements Observer
                 "query.queryDiffDECSize"));
         setQueryRadialSize(_preferences.getPreferenceAsDouble(
                 "query.queryRadialSize"));
+
+        // Enable the edition as the values where not loaded from file
+        setEditableState(true);
     }
 
     /**
@@ -244,8 +259,6 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        System.out.println("start");
-
         // Convert the ParamSet in an HashTable on parameters name -> value
         Hashtable parameters = new Hashtable();
 
@@ -254,29 +267,33 @@ public class QueryModel extends Observable implements Observer
             SavotParam param      = (SavotParam) paramSet.getItemAt(i);
             String     paramName  = param.getName();
             String     paramValue = param.getValue();
-            System.out.println(paramName + " = '" + paramValue + "'");
+
+            MCSLogger.debug(paramName + " = '" + paramValue + "'");
             parameters.put(paramName, paramValue);
         }
 
-        System.out.println("stop");
+        // Set the query members from the ParamSet values
+        setInstrumentalMagnitudeBand((String) parameters.get("band"));
+        setInstrumentalWavelength(Double.valueOf(
+                (String) parameters.get("wlen")));
+        setInstrumentalMaxBaseLine(Double.valueOf(
+                (String) parameters.get("baseMax")));
+        setScienceObjectName((String) parameters.get("objectName"));
+        setScienceObjectRA((String) parameters.get("ra"));
+        setScienceObjectDEC((String) parameters.get("dec"));
+        setScienceObjectMagnitude(Double.valueOf((String) parameters.get("mag")));
+        setQueryMinMagnitude(Double.valueOf(
+                (String) parameters.get("minMagRange")));
+        setQueryMaxMagnitude(Double.valueOf(
+                (String) parameters.get("maxMagRange")));
+        setQueryBrightScenarioFlag(Boolean.valueOf(
+                (String) parameters.get("bright")));
+        setQueryDiffRASize(Double.valueOf((String) parameters.get("diffRa")));
+        setQueryDiffDECSize(Double.valueOf((String) parameters.get("diffDec")));
+        setQueryRadialSize(Double.valueOf((String) parameters.get("radius")));
 
-        /*
-           setInstrumentalMagnitudeBand((String) parameters.get("band"));
-           setInstrumentalWavelength((Double) parameters.get("wlen"));
-           setInstrumentalMaxBaseLine((Double) parameters.get("baseMax"));
-           setScienceObjectName((String) parameters.get("objectName"));
-           setScienceObjectRA((String) parameters.get("ra"));
-           setScienceObjectDEC((String) parameters.get("dec"));
-           setScienceObjectMagnitude((Double) parameters.get("mag"));
-           // @TODO : should the inclusion falg be part of the query VOT params ?
-           //setScienceObjectInclusionFlag((String) parameters.get("objectName"));
-           setQueryMinMagnitude((Double) parameters.get("minMagRange"));
-           setQueryMaxMagnitude((Double) parameters.get("maxMagRange"));
-           setQueryBrightScenarioFlag((Boolean) parameters.get("bright"));
-           setQueryDiffRASize((Double) parameters.get("diffRa"));
-           setQueryDiffDECSize((Double) parameters.get("diffDec"));
-           setQueryRadialSize((Double) parameters.get("radius"));
-         */
+        // Disable the edition as the values where loaded from file
+        setEditableState(false);
     }
 
     /**
@@ -542,7 +559,7 @@ public class QueryModel extends Observable implements Observer
         }
 
         // Validate the format of the given value
-        if (rightAscension.matches("[+|-][0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
+        if (rightAscension.matches("[+|-]?[0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
         {
             throw new IllegalArgumentException("wrong RA format: +30:00:00.00");
         }
@@ -582,7 +599,7 @@ public class QueryModel extends Observable implements Observer
         }
 
         // Validate the format of the given value
-        if (declinaison.matches("[+|-][0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
+        if (declinaison.matches("[+|-]?[0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
         {
             throw new IllegalArgumentException("wrong DEC format: +30:00:00.00");
         }
@@ -1111,6 +1128,33 @@ public class QueryModel extends Observable implements Observer
 
         // The magnitude is not tested as any Double value is valid
         return true;
+    }
+
+    /**
+     * Return whether the query can be edited or not.
+     *
+     * @return true if the query can be edited, false otherwise.
+     */
+    public boolean getEditableState()
+    {
+        MCSLogger.trace();
+
+        return _isEditable;
+    }
+
+    /**
+     * Set whether the query can be edited or not.
+     *
+     * @param state true if the query can be edited, false otherwise.
+     */
+    public void setEditableState(boolean state)
+    {
+        MCSLogger.trace();
+
+        _isEditable = state;
+
+        setChanged();
+        notifyObservers();
     }
 }
 /*___oOo___*/

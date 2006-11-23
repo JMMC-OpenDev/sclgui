@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.12 2006-11-18 23:00:24 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.13 2006-11-23 16:24:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/11/18 23:00:24  lafrasse
+ * Added support for unchanged modification detection before quitting.
+ *
  * Revision 1.11  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -210,11 +213,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         // Parse the VOTable
         SavotVOTable parsedVOTable = parser.getVOTable();
 
-        // Retrieve VOTable parameters
-        _paramSet = parsedVOTable.getParams();
-        System.out.println("_paramSet[" + _paramSet.getItemCount() + "] = " +
-            _paramSet);
-
         // Get the VOTable resources
         ResourceSet resourceSet = parsedVOTable.getResources();
 
@@ -223,6 +221,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
         SavotTable    table    = (SavotTable) resource.getTables().getItemAt(0);
         GroupSet      groupSet = table.getGroups();
+
+        // Retrieve VOTable parameters
+        _paramSet = table.getParams();
 
         /*
          * For each group of the table, put its name and its index in a

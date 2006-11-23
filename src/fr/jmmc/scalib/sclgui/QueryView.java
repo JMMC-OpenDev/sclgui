@@ -1,11 +1,16 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.24 2006-11-18 23:05:39 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.25 2006-11-23 16:24:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2006/11/18 23:05:39  lafrasse
+ * Handled SCAction change to MCSAction.
+ * Added actions for ResetValuesAction, LoadDefaultValuesAction and
+ * SaveValuesAction.
+ *
  * Revision 1.23  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -439,8 +444,6 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        QueryModel queryModel = (QueryModel) o;
-
         // Compute all the magnitude labels from the current magnitude band
         String magnitudeWithBand = "Magnitude (" +
             _queryModel.getInstrumentalMagnitudeBand() + ") : ";
@@ -500,6 +503,16 @@ public class QueryView extends JPanel implements Observer,
         {
             _vo._getCalAction.setEnabled(false);
         }
+
+        /*
+           // @TODO : debug circular reference "Model<->View" leading to a stack explosion !!!
+           // If the query model should not be edited (eg was loaded from file)
+           if (_queryModel.getEditableState() == false)
+           {
+               // Disable all the query view components
+               setEnabledComponents(this, false);
+           }
+         */
     }
 
     /** Called when a widget triggered an action. */
@@ -630,57 +643,6 @@ public class QueryView extends JPanel implements Observer,
             component.setEnabled(flag);
         }
     }
-
-    /**
-     * Read the model to update view according status changes.
-     */
-
-    /*
-       private void updateStatusView(QueryModel queryModel)
-       {
-           MCSLogger.trace();
-              // Depending on the queryModel state, change view...
-              if (false)
-              { // TODO Change condition
-                //Prepare barprogress
-                  _progressBar.setVisible(true);
-                  _progressBar.setIndeterminate(true);
-                  labelBlank.setVisible(false);
-                  //change cursor
-                  setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                  //panels enabled false
-                  setEnabledComponents(this, false);
-                  StatusBar.show("query is beeing resolved ... please wait.");
-              }
-              if (false)
-              { // TODO Change condiion
-                //default cursor
-                  setCursor(Cursor.getDefaultCursor());
-                  //begin state
-                  labelBlank.setVisible(true);
-                  _progressBar.setVisible(false);
-                  _progressBar.setIndeterminate(false);
-                  //panel enabled true
-                  setEnabledComponents(this, true);
-                  // Should get completion status to indicate proper work or not...TBD
-                  // @TODO : show time elapsed ?
-                  StatusBar.show("query has been resolved successfully.");
-              }
-              if (false)
-              { // TODO Change condiion
-                //default cursor
-                  setCursor(Cursor.getDefaultCursor());
-                  //begin state
-                  labelBlank.setVisible(true);
-                  _progressBar.setVisible(false);
-                  _progressBar.setIndeterminate(false);
-                  //panel enabled true
-                  setEnabledComponents(this, true);
-                  // Should get completion status to indicate proper work or not...TBD
-                  StatusBar.show("query has not been resolved.");
-              }
-       }
-     */
 
     /**
      * @sa java.awt.print
