@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.13 2006-11-18 23:10:59 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.14 2006-11-23 16:20:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/11/18 23:10:59  lafrasse
+ * Handled StatusBar move.
+ *
  * Revision 1.12  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -55,6 +58,8 @@ import jmmc.mcs.gui.*;
 import jmmc.mcs.log.*;
 
 import gnu.getopt.Getopt;
+
+import java.util.*;
 
 
 /**
@@ -183,6 +188,9 @@ public class SearchCalibrators
                 MCSLogger.error("getopt() returned '" + (char) option + "'.\n");
             }
         }
+
+        // Set the default locale to custom locale (for Numerical Fields "." ",")
+        Locale.setDefault(new Locale("en", "US"));
 
         // Launch application
         SearchCalibrators searchCalibrators = new SearchCalibrators();
