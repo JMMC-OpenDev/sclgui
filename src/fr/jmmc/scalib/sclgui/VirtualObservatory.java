@@ -1,11 +1,16 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.9 2006-11-18 23:09:58 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.10 2006-11-23 16:22:57 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/11/18 23:09:58  lafrasse
+ * Handled SCAction change to MCSAction.
+ * Added Quit action.
+ * Added support for unsaved changes detection on quit.
+ *
  * Revision 1.8  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -118,7 +123,6 @@ public class VirtualObservatory
         _exportToCSVFileAction       = new ExportToCSVFileAction();
         _exportToHTMLFileAction      = new ExportToHTMLFileAction();
 
-        // Quit
         _quitAction                  = new QuitAction();
     }
 
@@ -136,6 +140,47 @@ public class VirtualObservatory
         _revertToSavedFileAction.setEnabled(true);
         _exportToCSVFileAction.setEnabled(true);
         _exportToHTMLFileAction.setEnabled(true);
+    }
+
+    /**
+     * If any modification were applied, ask the user if we ditch them.
+     *
+     * @return true if the modifications can be ignored, false otherwise.
+     */
+    public boolean canLostModifications()
+    {
+        MCSLogger.trace();
+
+        boolean canLostModifications = true;
+
+        // Check if the data are NOT saved before loosing any results !!!
+        if (_calibratorsModel.dataHaveChanged() == true)
+        {
+            // Ask the user if he wants to save modifications
+            Object[] options = { "Save", "Cancel", "Don't Save" };
+            int      result  = JOptionPane.showOptionDialog(null,
+                    "Do you want to save changes to this document before closing ?\nIf you don't save, your changes will be lost.\n\n",
+                    null, JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+            // If the User clicked the "Save" button
+            if (result == 0)
+            {
+                // Save the current data
+                _saveFileAction.actionPerformed(null);
+            }
+
+            // If the ucer clicked the "Cancel" button
+            if (result == 1)
+            {
+                // Cancel the exit
+                canLostModifications = false;
+            }
+
+            // If the user clicked the "Don't Save" button, do nothing !
+        }
+
+        return canLostModifications;
     }
 
     /**
@@ -260,20 +305,54 @@ public class VirtualObservatory
         {
             MCSLogger.trace();
 
-            JFileChooser fileChooser = new JFileChooser();
-            int          returnVal = fileChooser.showOpenDialog(null);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION)
+            // If we can lost current modifications
+            if (canLostModifications() == true)
             {
-                _file = fileChooser.getSelectedFile();
+                JFileChooser fileChooser = new JFileChooser();
+                int          returnVal = fileChooser.showOpenDialog(null);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION)
+                {
+                    _file = fileChooser.getSelectedFile();
+
+                    // If a file was defined (No cancel in the dialog)
+                    if (_file != null)
+                    {
+                        // Loading the file in the calibrators model and in the query
+                        _calibratorsModel.openFile(_file);
+                        _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+
+                        // Enabling the 'Save' menus
+                        enableSaveMenus(true);
+                    }
+                }
             }
+        }
+    }
 
-            // Loading the file in the calibrators model and in the query
-            _calibratorsModel.openFile(_file);
-            _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+    /**
+     * Called to revert the current state to the last saved state.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class RevertToSavedFileAction extends MCSAction
+    {
+        public RevertToSavedFileAction()
+        {
+            super("revertToSavedFile");
+            setEnabled(false);
+        }
 
-            // Enabling the 'Save' menus
-            enableSaveMenus(true);
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // If we can lost current modifications
+            if (canLostModifications() == true)
+            {
+                // Loading a new file
+                _calibratorsModel.openFile(_file);
+            }
         }
     }
 
@@ -294,6 +373,7 @@ public class VirtualObservatory
         {
             MCSLogger.trace();
 
+            // If the current data were never saved yet
             if (_file == null)
             {
                 JFileChooser fileChooser = new JFileChooser();
@@ -305,7 +385,11 @@ public class VirtualObservatory
                 }
             }
 
-            _calibratorsModel.saveVOTableFile(_file);
+            // If a file was defined (No cancel in the dialog)
+            if (_file != null)
+            {
+                _calibratorsModel.saveVOTableFile(_file);
+            }
         }
     }
 
@@ -332,31 +416,8 @@ public class VirtualObservatory
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                 _file = fileChooser.getSelectedFile();
+                _calibratorsModel.saveVOTableFile(_file);
             }
-
-            _calibratorsModel.saveVOTableFile(_file);
-        }
-    }
-
-    /**
-     * Called to revert the current state to the last saved state.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
-     */
-    protected class RevertToSavedFileAction extends MCSAction
-    {
-        public RevertToSavedFileAction()
-        {
-            super("revertToSavedFile");
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            // @TODO : display a dialog box to confirm all changes will ber lost
-            _calibratorsModel.openFile(_file);
         }
     }
 
@@ -387,7 +448,12 @@ public class VirtualObservatory
                 file = fileChooser.getSelectedFile();
             }
 
-            _calibratorsModel.exportVOTableToCSV(_file, file);
+            // If a file was defined (No cancel in the dialog)
+            if ((_file != null) && (file != null))
+            {
+                // @TODO : save current data before ?
+                _calibratorsModel.exportVOTableToCSV(_file, file);
+            }
         }
     }
 
@@ -418,7 +484,12 @@ public class VirtualObservatory
                 file = fileChooser.getSelectedFile();
             }
 
-            _calibratorsModel.exportVOTableToHTML(_file, file);
+            // If a file was defined (No cancel in the dialog)
+            if ((_file != null) && (file != null))
+            {
+                // @TODO : save current data before ?
+                _calibratorsModel.exportVOTableToHTML(_file, file);
+            }
         }
     }
 
@@ -438,21 +509,11 @@ public class VirtualObservatory
         {
             MCSLogger.trace();
 
-            // @TODO : Check if the data are NOT saved before loosing any results !!!
-            if (_calibratorsModel.dataHaveChanged() == true)
+            if (canLostModifications() == true)
             {
-                // @TODO : Ask the user if he wants to save modifications
-                System.out.println("Do you want to save modifications ?");
-
-                /*
-                   if (saveModificationDialog() == true)
-                   {
-                           _saveFileAction.perform();
-                   }
-                 */
+                // Quitting
+                System.exit(0);
             }
-
-            System.exit(0);
         }
     }
 }
