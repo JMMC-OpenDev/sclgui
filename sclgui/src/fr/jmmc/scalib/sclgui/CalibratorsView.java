@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.26 2006-11-18 23:01:46 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.27 2006-11-27 16:38:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2006/11/18 23:01:46  lafrasse
+ * Handled SCAction change to MCSAction.
+ *
  * Revision 1.25  2006/11/13 13:28:23  lafrasse
  * Documentation refinment.
  *
@@ -121,11 +124,11 @@ import javax.swing.table.*;
 public class CalibratorsView extends JPanel implements TableModelListener,
     Observer, Printable
 {
-    /** Show Details action */
-    static Action _showDetailsAction;
-
     /** Show Legend action */
-    static Action _showLegendAction;
+    static ShowLegendAction _showLegendAction;
+
+    /** Show Details action */
+    static ShowDetailsAction _showDetailsAction;
 
     /** The monitored data source displayed by the embedded JTable */
     CalibratorsModel _calibratorsModel;
@@ -270,7 +273,18 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public void tableChanged(TableModelEvent e)
     {
         MCSLogger.trace();
-        _deleteAction.setEnabled(true);
+
+        // If there is anu row in the table
+        if (_calibratorsTable.getRowCount() > 0)
+        {
+            // Enable the delte menu item
+            _deleteAction.setEnabled(true);
+        }
+        else
+        {
+            // Disable the delte menu item
+            _deleteAction.setEnabled(false);
+        }
 
         // Update identification table if bae table has a minimum of one column
         if (_calibratorsTable.getColumnModel().getColumnCount() > 0)
@@ -303,24 +317,15 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsIdTable.repaint();
 
         // Check associated preference to be consistent
-        boolean showLegendPref = _preferences.getPreferenceAsBoolean(
+        boolean legendShouldBeVisible = _preferences.getPreferenceAsBoolean(
                 "view.legend.show");
-        showLegend(showLegendPref);
-    }
-
-    /**
-     * Tell to the associated model to remove selected rows.
-     */
-    public void deleteSelectedRows()
-    {
-        MCSLogger.trace();
-        _calibratorsModel.deleteShownStars(_calibratorsTable.getSelectedRows());
+        showLegend(legendShouldBeVisible);
     }
 
     /**
      * Tell GUI to show or hide legend panel
      */
-    public void showLegend(boolean flag)
+    public void showLegend(boolean visible)
     {
         MCSLogger.trace();
 
@@ -329,7 +334,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             _tableAndLegendPane.getDividerSize();
         int loc                 = tableAndLegendWidth;
 
-        if (flag)
+        if (visible == true)
         {
             Component legend = _tableAndLegendPane.getRightComponent();
             loc = tableAndLegendWidth -
@@ -342,7 +347,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * Tell GUI to show or hide detailled column info
      */
-    public void showDetails(boolean flag)
+    public void showDetails(boolean visible)
     {
         MCSLogger.trace();
 
@@ -385,7 +390,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             MCSLogger.trace();
-            deleteSelectedRows();
+
+            _calibratorsModel.deleteShownStars(_calibratorsTable.getSelectedRows());
         }
     }
 
@@ -427,7 +433,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             {
                 AbstractButton button = (AbstractButton) e.getSource();
                 showDetails(button.isSelected());
-                MCSLogger.debug("Button.selected = " + button.isSelected());
             }
         }
     }
