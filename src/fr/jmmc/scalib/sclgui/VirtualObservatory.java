@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.10 2006-11-23 16:22:57 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.11 2006-11-27 15:01:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/11/23 16:22:57  lafrasse
+ * Added detection and handling of unsaved modifications about to be lost (Quit).
+ *
  * Revision 1.9  2006/11/18 23:09:58  lafrasse
  * Handled SCAction change to MCSAction.
  * Added Quit action.
@@ -71,11 +74,8 @@ public class VirtualObservatory
     /** Filters model */
     FiltersModel _filtersModel;
 
-    /** Get Star action */
-    public GetStarAction _getStarAction;
-
-    /** Get Cal action */
-    public GetCalAction _getCalAction;
+    /** Path to an open or saved file */
+    File _file;
 
     /** Open file... action */
     public OpenFileAction _openFileAction;
@@ -98,8 +98,17 @@ public class VirtualObservatory
     /** Quit action */
     public QuitAction _quitAction;
 
-    /** Path to an open or saved file */
-    File _file;
+    /** Get Star action */
+    public GetStarAction _getStarAction;
+
+    /** Get Cal action */
+    public GetCalAction _getCalAction;
+
+    /** Plot in Aladin action */
+    public PlotInAladinAction _plotInAladinAction;
+
+    /** Interaction with Aladin */
+    VOInteraction _aladinInteraction;
 
     /**
      * Contructor.
@@ -111,19 +120,23 @@ public class VirtualObservatory
         _calibratorsModel            = calibratorsModel;
         _filtersModel                = filtersModel;
 
+        // File related members
         _file                        = null;
-
-        _getStarAction               = new GetStarAction();
-        _getCalAction                = new GetCalAction();
-
         _openFileAction              = new OpenFileAction();
         _saveFileAction              = new SaveFileAction();
         _saveFileAsAction            = new SaveFileAsAction();
         _revertToSavedFileAction     = new RevertToSavedFileAction();
         _exportToCSVFileAction       = new ExportToCSVFileAction();
         _exportToHTMLFileAction      = new ExportToHTMLFileAction();
-
         _quitAction                  = new QuitAction();
+
+        // Query related members
+        _getStarAction               = new GetStarAction();
+        _getCalAction                = new GetCalAction();
+
+        // Calibrators related members
+        _aladinInteraction           = null;
+        _plotInAladinAction          = new PlotInAladinAction();
     }
 
     /**
@@ -140,6 +153,7 @@ public class VirtualObservatory
         _revertToSavedFileAction.setEnabled(true);
         _exportToCSVFileAction.setEnabled(true);
         _exportToHTMLFileAction.setEnabled(true);
+        _plotInAladinAction.setEnabled(true);
     }
 
     /**
@@ -184,112 +198,6 @@ public class VirtualObservatory
     }
 
     /**
-     * Get science object properties from is name through Simbad web service.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
-     */
-    protected class GetStarAction extends MCSAction
-    {
-        public GetStarAction()
-        {
-            // @TODO : set button image
-            super("getStar");
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            // @TODO : Querying Simbad and fill the query model accordinally
-            _queryModel.reset();
-            _queryModel.example();
-        }
-    }
-
-    /**
-     * Get calibrator list as a raw VOTable from JMMC web service.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
-     */
-    protected class GetCalAction extends MCSAction
-    {
-        public GetCalAction()
-        {
-            super("getCal");
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-            class ProgressBarThread extends Thread
-            {
-                QueryModel _queryModel;
-                int        _millisecond;
-
-                ProgressBarThread(QueryModel queryModel, int millisecond)
-                {
-                    _queryModel      = queryModel;
-                    _millisecond     = millisecond;
-                }
-
-                public void run()
-                {
-                    for (int i = 0; i <= _queryModel.getTotalStep(); i++)
-                    {
-                        _queryModel.setCurrentStep(i);
-
-                        try
-                        {
-                            Thread.sleep(_millisecond);
-                        }
-                        catch (Exception e)
-                        {
-                        }
-                    }
-                }
-            }
-
-            ProgressBarThread thread = new ProgressBarThread(_queryModel, 200);
-            thread.start();
-
-            try
-            {
-                // TODO temp hack to load a VOTable file name according to the query science object name, for test purpose only
-                //String         fileName   = queryModel.getScienceObjectName() + ".vot";
-                //FileReader     fileReader = new FileReader(fileName);
-                //BufferedReader in         = new BufferedReader(fileReader);
-                String resourceName = "eta_tau.vot";
-                URL    votableURL   = VirtualObservatory.class.getResource(resourceName);
-
-                // Read all the text returned by the embedded file
-                BufferedReader in  = new BufferedReader(new InputStreamReader(
-                            votableURL.openStream()));
-
-                StringBuffer   sb  = new StringBuffer();
-                String         str;
-
-                while ((str = in.readLine()) != null)
-                {
-                    sb.append(str);
-                }
-
-                in.close();
-
-                _calibratorsModel.parseVOTable(sb.toString());
-            }
-            catch (IOException ex)
-            {
-                //throw new Exception(ex.getMessage());
-            }
-
-            // As data are now loaded
-            enableSaveMenus(true);
-        }
-    }
-
-    /**
      * Called to open files.
      *
      * @throws java.lang.Exception << TODO a mettre !!!
@@ -309,7 +217,7 @@ public class VirtualObservatory
             if (canLostModifications() == true)
             {
                 JFileChooser fileChooser = new JFileChooser();
-                int          returnVal = fileChooser.showOpenDialog(null);
+                int          returnVal   = fileChooser.showOpenDialog(null);
 
                 if (returnVal == JFileChooser.APPROVE_OPTION)
                 {
@@ -513,6 +421,153 @@ public class VirtualObservatory
             {
                 // Quitting
                 System.exit(0);
+            }
+        }
+    }
+
+    /**
+     * Get science object properties from is name through Simbad web service.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class GetStarAction extends MCSAction
+    {
+        public GetStarAction()
+        {
+            // @TODO : set button image
+            super("getStar");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            // @TODO : Querying Simbad and fill the query model accordinally
+            _queryModel.reset();
+            _queryModel.example();
+        }
+    }
+
+    /**
+     * Get calibrator list as a raw VOTable from JMMC web service.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class GetCalAction extends MCSAction
+    {
+        public GetCalAction()
+        {
+            super("getCal");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+            class ProgressBarThread extends Thread
+            {
+                QueryModel _queryModel;
+                int        _millisecond;
+
+                ProgressBarThread(QueryModel queryModel, int millisecond)
+                {
+                    _queryModel      = queryModel;
+                    _millisecond     = millisecond;
+                }
+
+                public void run()
+                {
+                    for (int i = 0; i <= _queryModel.getTotalStep(); i++)
+                    {
+                        _queryModel.setCurrentStep(i);
+
+                        try
+                        {
+                            Thread.sleep(_millisecond);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                }
+            }
+
+            ProgressBarThread thread = new ProgressBarThread(_queryModel, 200);
+            thread.start();
+
+            try
+            {
+                // TODO temp hack to load a VOTable file name according to the query science object name, for test purpose only
+                //String         fileName   = queryModel.getScienceObjectName() + ".vot";
+                //FileReader     fileReader = new FileReader(fileName);
+                //BufferedReader in         = new BufferedReader(fileReader);
+                String resourceName = "eta_tau.vot";
+                URL    votableURL   = VirtualObservatory.class.getResource(resourceName);
+
+                // Read all the text returned by the embedded file
+                BufferedReader in  = new BufferedReader(new InputStreamReader(
+                            votableURL.openStream()));
+
+                StringBuffer   sb  = new StringBuffer();
+                String         str;
+
+                while ((str = in.readLine()) != null)
+                {
+                    sb.append(str);
+                }
+
+                in.close();
+
+                _calibratorsModel.parseVOTable(sb.toString());
+            }
+            catch (IOException ex)
+            {
+                //throw new Exception(ex.getMessage());
+            }
+
+            // As data are now loaded
+            enableSaveMenus(true);
+        }
+    }
+
+    /**
+     * Called to plot data in Aladin.
+     *
+     * @throws java.lang.Exception << TODO a mettre !!!
+     */
+    protected class PlotInAladinAction extends MCSAction
+    {
+        public PlotInAladinAction()
+        {
+            super("plotCalibratorsInAladin");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            if (_calibratorsModel.getVOTable() != null)
+            {
+                if (_aladinInteraction == null)
+                {
+                    //
+                    _aladinInteraction = new VOInteraction();
+                    _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
+                    _aladinInteraction._aladin.execCommand("sync");
+                }
+                else
+                {
+                    InputStream in  = new StringBufferInputStream(_calibratorsModel.getVOTable());
+                    String      oid;
+                    oid             = _aladinInteraction.putVOTable(_aladinInteraction,
+                            in, "SearchCal");
+                    MCSLogger.info("Aladin return new oid for votable : " +
+                        oid);
+                    //
+                    _aladinInteraction._aladin.setVisible(true);
+                }
             }
         }
     }

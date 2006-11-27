@@ -1,11 +1,16 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.14 2006-11-18 23:21:10 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.15 2006-11-27 15:01:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/11/18 23:21:10  lafrasse
+ * Handled SCAction change to MCSAction and StatusBar move.
+ * Added AboutWindow and HelpView support, plus actions for ShowPreferencesAction,
+ * PageSetupAction, PrintAction, PlotInAladinAction and AboutAction.
+ *
  * Revision 1.13  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -59,10 +64,6 @@ import jmmc.mcs.gui.*;
 import jmmc.mcs.log.*;
 
 import jmmc.mcs.util.*;
-
-import org.w3c.dom.*;
-
-import org.xml.sax.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -123,14 +124,8 @@ public class MainWindow extends JFrame
     /** PAge format */
     PageFormat _landscape;
 
-    /** Plot in Aladin action */
-    public PlotInAladinAction _plotInAladinAction;
-
     /** About window action */
     public AboutAction _aboutAction;
-
-    /** Interaction with Aladin */
-    VOInteraction _aladinInteraction = null;
 
     /**
      * Constructor.
@@ -155,14 +150,11 @@ public class MainWindow extends JFrame
         _printJob                  = PrinterJob.getPrinterJob();
         _landscape                 = _printJob.defaultPage();
         _landscape.setOrientation(PageFormat.LANDSCAPE);
-        _pageSetupAction        = new PageSetupAction();
-        _printAction            = new PrintAction();
-
-        // Plot in Aladin
-        _plotInAladinAction     = new PlotInAladinAction();
+        _pageSetupAction     = new PageSetupAction();
+        _printAction         = new PrintAction();
 
         // About... window
-        _aboutAction            = new AboutAction();
+        _aboutAction         = new AboutAction();
 
         try
         {
@@ -297,48 +289,6 @@ public class MainWindow extends JFrame
                 catch (PrinterException ex)
                 {
                     ex.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**
-     * Called to plot data in Aladin.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
-     */
-    protected class PlotInAladinAction extends MCSAction
-    {
-        public PlotInAladinAction()
-        {
-            super("plotCalibratorsInAladin");
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            CalibratorsModel calibratorsModel = _calibratorsView._calibratorsModel;
-
-            if (calibratorsModel.getVOTable() != null)
-            {
-                if (_aladinInteraction == null)
-                {
-                    //
-                    _aladinInteraction = new VOInteraction();
-                    _aladinInteraction.startAladin(calibratorsModel.getVOTable());
-                    _aladinInteraction._aladin.execCommand("sync");
-                }
-                else
-                {
-                    InputStream in  = new StringBufferInputStream(calibratorsModel.getVOTable());
-                    String      oid;
-                    oid             = _aladinInteraction.putVOTable(_aladinInteraction,
-                            in, "SearchCal");
-                    MCSLogger.info("Aladin return new oid for votable : " +
-                        oid);
-                    //
-                    _aladinInteraction._aladin.setVisible(true);
                 }
             }
         }
