@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.13 2006-11-23 16:24:41 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.14 2006-11-27 15:49:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/11/23 16:24:41  lafrasse
+ * Added query parameters parsing and loading from VOTable files.
+ *
  * Revision 1.12  2006/11/13 17:12:18  lafrasse
  * Moved all file Open, Save, and Export code into CalibratorsModel.
  * Moved to Action based management for File menu and Query buttons.
@@ -235,10 +238,14 @@ public class QueryModel extends Observable implements Observer
 
         setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
                 "query.queryMinMagnitude"));
+        setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
+                "query.queryMinMagnitudeDelta"));
         setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
                 "query.queryMaxMagnitude"));
+        setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
+                "query.queryMaxMagnitudeDelta"));
         setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
-                "query.brightScenario"));
+                "query.queryBrightScenarioFlag"));
         setQueryDiffRASize(_preferences.getPreferenceAsDouble(
                 "query.queryDiffRASize"));
         setQueryDiffDECSize(_preferences.getPreferenceAsDouble(
@@ -320,14 +327,12 @@ public class QueryModel extends Observable implements Observer
                 getScienceObjectDEC());
             _preferences.setPreference("query.scienceObjectMagnitude",
                 getScienceObjectMagnitude());
-            _preferences.setPreference("query.scienceObjectInclusionFlag",
-                getScienceObjectInclusionFlag());
 
             _preferences.setPreference("query.queryMinMagnitude",
                 getQueryMinMagnitude());
             _preferences.setPreference("query.queryMaxMagnitude",
                 getQueryMaxMagnitude());
-            _preferences.setPreference("query.brightScenario",
+            _preferences.setPreference("query.queryBrightScenarioFlag",
                 getQueryBrightScenarioFlag());
             _preferences.setPreference("query.queryDiffRASize",
                 getQueryDiffRASize());
