@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.25 2006-11-23 16:24:41 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.26 2006-11-27 15:51:01 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2006/11/23 16:24:41  lafrasse
+ * Added query parameters parsing and loading from VOTable files.
+ *
  * Revision 1.24  2006/11/18 23:05:39  lafrasse
  * Handled SCAction change to MCSAction.
  * Added actions for ResetValuesAction, LoadDefaultValuesAction and
@@ -360,7 +363,6 @@ public class QueryView extends JPanel implements Observer,
         _searchCalPanel.add(new JLabel("Scenario : "), c);
         tempPanel              = new JPanel();
         _brightRadioButton     = new JRadioButton(new BrightQueryAction());
-        _brightRadioButton.setSelected(true);
         _brightFaintButtonGroup.add(_brightRadioButton);
         tempPanel.add(_brightRadioButton);
         _faintRadioButton = new JRadioButton(new FaintQueryAction());
@@ -435,6 +437,7 @@ public class QueryView extends JPanel implements Observer,
 
         // Refresh the GUI with the model values
         update(null, null);
+        update(null, null);
     }
 
     /**
@@ -444,7 +447,7 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        // Compute all the magnitude labels from the current magnitude band
+        // Computeall the magnitude labels from the current magnitude band
         String magnitudeWithBand = "Magnitude (" +
             _queryModel.getInstrumentalMagnitudeBand() + ") : ";
 
@@ -478,13 +481,16 @@ public class QueryView extends JPanel implements Observer,
         _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
 
+        // Bright/faint scenarii handling
         boolean brightScenarioFlag = _queryModel.getQueryBrightScenarioFlag();
+        _brightRadioButton.setSelected(brightScenarioFlag);
         _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASize());
         _diffRASizeTextfield.setVisible(brightScenarioFlag);
         _diffRASizeLabel.setVisible(brightScenarioFlag);
         _diffDECSizeTextfield.setValue(_queryModel.getQueryDiffDECSize());
         _diffDECSizeTextfield.setVisible(brightScenarioFlag);
         _diffDECSizeLabel.setVisible(brightScenarioFlag);
+        _faintRadioButton.setSelected(! brightScenarioFlag);
         _radialSizeTextfield.setValue(_queryModel.getQueryRadialSize());
         _radialSizeTextfield.setVisible(! brightScenarioFlag);
         _radialSizeLabel.setVisible(! brightScenarioFlag);
