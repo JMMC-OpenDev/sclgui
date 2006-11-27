@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.19 2006-11-20 15:40:25 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.20 2006-11-27 15:01:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2006/11/20 15:40:25  lafrasse
+ * Jalopization.
+ *
  * Revision 1.18  2006/11/18 23:28:26  lafrasse
  * Double commit to add commit log after wrong manipulation.
  * Moved all menus support to the Action mecanism through MCSActions.
@@ -283,7 +286,7 @@ public class MainMenuBar extends JMenuBar
         calibratorsMenu.add(new JSeparator());
 
         // Plot in Aladin... menu item
-        calibratorsMenu.add(_mainWindow._plotInAladinAction);
+        calibratorsMenu.add(_mainWindow._vo._plotInAladinAction);
     }
 
     /**
