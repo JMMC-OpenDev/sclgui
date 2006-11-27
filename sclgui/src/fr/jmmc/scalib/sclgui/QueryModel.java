@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.14 2006-11-27 15:49:23 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.15 2006-11-27 16:58:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/11/27 15:49:23  lafrasse
+ * Update preferences string tokens.
+ *
  * Revision 1.13  2006/11/23 16:24:41  lafrasse
  * Added query parameters parsing and loading from VOTable files.
  *
@@ -154,8 +157,8 @@ public class QueryModel extends Observable implements Observer
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        String[] magnitudeBands = { "I", "J", "H", "K", "V" };
-        double[] wavelengths    = { 1.1, 2.2, 3.3, 4.4, 5.5 };
+        String[] magnitudeBands = { "V", "I", "J", "H", "K" };
+        double[] wavelengths    = { 0.55, 0.9, 1.25, 1.64, 2.2 };
 
         // For each "magnitude band-predefined wavelength" couple
         for (int i = 0; i < magnitudeBands.length; i++)
