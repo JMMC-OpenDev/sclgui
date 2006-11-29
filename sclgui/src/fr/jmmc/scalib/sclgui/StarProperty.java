@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.5 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.6 2006-11-29 17:32:24 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.4  2006/04/07 08:04:32  mella
  * Remove too often log calls
  *
@@ -95,6 +98,17 @@ public class StarProperty implements Comparable
     {
         // MCSLogger.trace();
         return Double.parseDouble(_value.toString());
+    }
+
+    /**
+     * Get the value of the star property as a Boolean object.
+     *
+     * @return a Boolean object representing the star property value.
+     */
+    public boolean getBooleanValue()
+    {
+        // MCSLogger.trace();
+        return Boolean.parseBoolean(_value.toString());
     }
 
     /**
