@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.27 2006-11-27 16:38:19 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.28 2006-11-29 17:34:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2006/11/27 16:38:19  lafrasse
+ * Added delete menu item disabling on emptied JTable.
+ *
  * Revision 1.26  2006/11/18 23:01:46  lafrasse
  * Handled SCAction change to MCSAction.
  *
@@ -145,29 +148,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** Calibrators table and Legend container */
     JSplitPane _tableAndLegendPane;
 
-    /** Save action */
-    Action _saveAction;
-
-    /** Save As... action */
-    Action _saveAsAction;
-
-    /** Revert to Saved action */
-    Action _revertToSavedAction;
-
-    /** Export as HTML action */
-    Action _exportAsHtmlAction;
-
-    /** Export as CSV action */
-    Action _exportAsCsvAction;
-
     /** Delete action */
-    Action _deleteAction;
+    DeleteAction _deleteAction;
 
-    /** Select All action */
-    Action _selectAllAction;
-
-    /** Plot in Aladin action */
-    Action _plotInAladinAction;
+    /** Undelete action */
+    UndeleteAction _undeleteAction;
 
     /**
      * Constructor.
@@ -182,6 +167,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Create actions
         _deleteAction          = new DeleteAction();
+        _undeleteAction        = new UndeleteAction();
         _showLegendAction      = new ShowLegendAction();
         _showDetailsAction     = new ShowDetailsAction();
 
@@ -274,7 +260,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
-        // If there is anu row in the table
+        // If there is any row in the table
         if (_calibratorsTable.getRowCount() > 0)
         {
             // Enable the delte menu item
@@ -285,6 +271,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             // Disable the delte menu item
             _deleteAction.setEnabled(false);
         }
+
+        // Enable/disable the Undelete menu item
+        _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
 
         // Update identification table if bae table has a minimum of one column
         if (_calibratorsTable.getColumnModel().getColumnCount() > 0)
@@ -391,7 +380,27 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         {
             MCSLogger.trace();
 
-            _calibratorsModel.deleteShownStars(_calibratorsTable.getSelectedRows());
+            _calibratorsModel.deleteStars(_calibratorsTable.getSelectedRows());
+
+            //_undeleteAction.setEnabled(true);
+        }
+    }
+
+    protected class UndeleteAction extends MCSAction
+    {
+        public UndeleteAction()
+        {
+            super("undeleteAll");
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            MCSLogger.trace();
+
+            _calibratorsModel.undeleteStars();
+
+            //_undeleteAction.setEnabled(false);
         }
     }
 

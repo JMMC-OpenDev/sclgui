@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.20 2006-11-27 15:01:50 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.21 2006-11-29 17:34:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2006/11/27 15:01:50  lafrasse
+ * Moved PlotInAladin action from MainWindow to VirtualObservatory in order to
+ * ensure menu ennabling/disabling.
+ *
  * Revision 1.19  2006/11/20 15:40:25  lafrasse
  * Jalopization.
  *
@@ -211,6 +215,9 @@ public class MainMenuBar extends JMenuBar
 
         // Delete menu item
         editMenu.add(_mainWindow._calibratorsView._deleteAction);
+
+        // Undelete menu item
+        editMenu.add(_mainWindow._calibratorsView._undeleteAction);
 
         // Add a separator
         editMenu.add(new JSeparator());
