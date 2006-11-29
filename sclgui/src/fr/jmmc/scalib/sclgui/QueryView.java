@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.26 2006-11-27 15:51:01 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.27 2006-11-29 22:44:20 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2006/11/27 15:51:01  lafrasse
+ * Added support for bright/faint button status change according to query model
+ * values.
+ *
  * Revision 1.25  2006/11/23 16:24:41  lafrasse
  * Added query parameters parsing and loading from VOTable files.
  *
@@ -237,8 +241,6 @@ public class QueryView extends JPanel implements Observer,
      */
     public QueryView(QueryModel queryModel, VirtualObservatory vo)
     {
-        MCSLogger.trace();
-
         // Store the model
         _queryModel                     = queryModel;
 
@@ -460,16 +462,6 @@ public class QueryView extends JPanel implements Observer,
         String scienceObjectName = _queryModel.getScienceObjectName();
         _scienceObjectNameTextfield.setText(scienceObjectName);
 
-        // If the science object contains something
-        if (scienceObjectName.length() < 1)
-        {
-            _vo._getStarAction.setEnabled(true);
-        }
-        else
-        {
-            _vo._getStarAction.setEnabled(false);
-        }
-
         _scienceObjectDECTextfield.setText(_queryModel.getScienceObjectDEC());
         _scienceObjectRATextfield.setText(_queryModel.getScienceObjectRA());
         _scienceObjectMagnitudeLabel.setText(magnitudeWithBand);
@@ -500,6 +492,16 @@ public class QueryView extends JPanel implements Observer,
         _progressBar.setMaximum(_queryModel.getTotalStep());
         _progressBar.setString(_queryModel.getCurrentStatus());
 
+        // If the science object contains something
+        if (scienceObjectName.length() > 0)
+        {
+            _vo._getStarAction.setEnabled(true);
+        }
+        else
+        {
+            _vo._getStarAction.setEnabled(false);
+        }
+
         // If the query seems complete
         if (_queryModel.isConsumable() == true)
         {
@@ -509,16 +511,6 @@ public class QueryView extends JPanel implements Observer,
         {
             _vo._getCalAction.setEnabled(false);
         }
-
-        /*
-           // @TODO : debug circular reference "Model<->View" leading to a stack explosion !!!
-           // If the query model should not be edited (eg was loaded from file)
-           if (_queryModel.getEditableState() == false)
-           {
-               // Disable all the query view components
-               setEnabledComponents(this, false);
-           }
-         */
     }
 
     /** Called when a widget triggered an action. */
@@ -554,20 +546,25 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        Object source = e.getSource();
+        // Test if instrumental panel must be enabled
+        boolean fileLoadedOk = (_queryModel.canBeEdited() == true);
+        setEnabledComponents(_instrumentPanel, fileLoadedOk);
 
-        // test if science object panel must be shown
+        // Test if science object panel must be enabled
         boolean instrumentConfigOk = _instrumentalWavelengthTextfield.isEditValid() &&
             (_instrumentalWavelengthTextfield.getText().length() > 0) &&
-            _instrumentalMaxBaselineTextField.isEditValid() &&
-            (_instrumentalMaxBaselineTextField.getText().length() > 0);
+            (_instrumentalMaxBaselineTextField.isEditValid() == true) &&
+            (_instrumentalMaxBaselineTextField.getText().length() > 0) &&
+            (_queryModel.canBeEdited() == true);
         setEnabledComponents(_scienceObjectPanel, instrumentConfigOk);
 
-        // test if searchCal parameters must be shown 
-        boolean sciencObjectOk = instrumentConfigOk &&
-            (_scienceObjectNameTextfield.getText().length() > 0);
-
+        // Test if SearchCal parameters panel must be enabled
+        boolean sciencObjectOk = (instrumentConfigOk == true) &&
+            (_scienceObjectNameTextfield.getText().length() > 0) &&
+            (_queryModel.canBeEdited() == true);
         setEnabledComponents(_searchCalPanel, sciencObjectOk);
+
+        Object source = e.getSource();
 
         if (source == _instrumentalMaxBaselineTextField)
         {
@@ -622,8 +619,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public static void setEnabledComponents(JComponent component, boolean flag)
     {
-        // Disabled traces as it is recursively called !
-        // MCSLogger.trace();
+        MCSLogger.trace();
 
         // If the given component contains sub-components
         if (component.getComponentCount() > 0)
@@ -635,8 +631,12 @@ public class QueryView extends JPanel implements Observer,
             for (int i = 0; i < components.length; i++)
             {
                 // If the sub-component is not a combobox
-                // SL -> GM : pourquoi ?
-                if (components[i].getClass() != JComboBox.class)
+                if (components[i].getClass() == JComboBox.class)
+                {
+                    // Try to enable/disable the combobox
+                    ((JComponent) components[i]).setEnabled(flag);
+                }
+                else
                 {
                     // Try to enable/disable any contained sub-sub-component
                     setEnabledComponents((JComponent) components[i], flag);
@@ -656,6 +656,8 @@ public class QueryView extends JPanel implements Observer,
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
         throws PrinterException
     {
+        MCSLogger.trace();
+
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
