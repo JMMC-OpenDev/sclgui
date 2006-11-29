@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.13 2006-11-23 16:24:41 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.14 2006-11-29 17:33:28 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/11/23 16:24:41  lafrasse
+ * Added query parameters parsing and loading from VOTable files.
+ *
  * Revision 1.12  2006/11/18 23:00:24  lafrasse
  * Added support for unchanged modification detection before quitting.
  *
@@ -137,6 +140,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public boolean dataHaveChanged()
     {
+        MCSLogger.trace();
+
         return _dataHaveChanged;
     }
 
@@ -147,6 +152,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public boolean isCellEditable(int row, int column)
     {
+        MCSLogger.trace();
+
         return false;
     }
 
@@ -157,6 +164,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public Object getValueAt(int row, int column)
     {
+        MCSLogger.trace();
+
         // Return the StarProperty value
         return getStarProperty(row, column).getValue();
     }
@@ -169,6 +178,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void parseVOTable(BufferedReader reader)
     {
+        MCSLogger.trace();
+
         try
         {
             StringBuffer sb  = new StringBuffer();
@@ -296,6 +307,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         // Copy content of originalStarList into currentStarList
         _currentStarList = (StarList) _originalStarList.clone();
 
+        // Remove all the stars flagged as deleted
+        _currentStarList.removeAllDeletedStars();
+
         // Update any attached observer
         update(null, null);
     }
@@ -319,6 +333,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public StarProperty getStarProperty(int row, int column)
     {
+        MCSLogger.trace();
+
         // The real column index
         Vector starsProperties = (Vector) _filteredStarList.get(row);
 
@@ -338,9 +354,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     private SavotVOTable getSavotVOTable()
     {
+        MCSLogger.trace();
+
         // This method must be optimized (if no change occured do not generate
         // again...)
-        MCSLogger.trace();
 
         // Put the whole original VOTable file into memory
         SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
@@ -361,7 +378,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         rows.removeAllItems();
 
         // And create one row per star entry
-        Enumeration stars = _currentStarList.elements();
+        Enumeration stars = _originalStarList.elements();
 
         while (stars.hasMoreElements())
         {
@@ -450,24 +467,50 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * Return whether the star list has some stars flagged deleted.
+     *
+     * @return true if the list contains some stars flagged, false otherwise.
+     */
+    public boolean hasSomeDeletedStars()
+    {
+        MCSLogger.trace();
+
+        return _originalStarList.hasSomeDeletedStars();
+    }
+
+    /**
      * Delete the shown elements according given index. The shown elements are
      * the not filtered elements.
+     *
      * @param indices array of indices.
      */
-    public void deleteShownStars(int[] indices)
+    public void deleteStars(int[] indices)
     {
         MCSLogger.trace();
 
         for (int i = 0; i < indices.length; i++)
         {
-            MCSLogger.warning("deleting shown star ->" + indices[i]);
-
-            Object o = (Object) _filteredStarList.get(indices[i]);
-            _currentStarList.removeElement(o);
+            Vector star = (Vector) _filteredStarList.get(indices[i]);
+            _currentStarList.markAsDeleted(star);
+            _currentStarList.removeElement(star);
         }
 
-        MCSLogger.info("_currentStarList size is now " +
-            _currentStarList.size());
+        update(null, null);
+    }
+
+    /**
+     * Undelete all stars previously flagged as deleted.
+     */
+    public void undeleteStars()
+    {
+        MCSLogger.trace();
+
+        // Unflag all previously flagged stars
+        _originalStarList.undeleteAll();
+
+        // Copy content of originalStarList into currentStarList
+        _currentStarList = (StarList) _originalStarList.clone();
+
         update(null, null);
     }
 
@@ -481,6 +524,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     private void doXsl(File inFilename, File outFilename, URL xslFilename)
     {
         MCSLogger.trace();
+
         MCSLogger.info("xsl='" + xslFilename + "', xml='" + inFilename +
             "', out='" + outFilename + "'");
 
@@ -554,7 +598,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         MCSLogger.trace();
 
         URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
-        URL xmlURL = MainWindow.class.getResource("eta_tau.vot");
         doXsl(in, out, xslURL);
     }
 
@@ -563,6 +606,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void update(Observable o, Object arg)
     {
+        MCSLogger.trace();
+
         // TODO : the clone operation should only be done when the ay filter
         // has been deactivated, otherwise currentStarList is sufficient
 
