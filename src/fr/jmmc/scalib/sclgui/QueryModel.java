@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.15 2006-11-27 16:58:37 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.16 2006-11-29 22:44:20 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/11/27 16:58:37  lafrasse
+ * Updated magnitude bands order and corresponding wavelength values.
+ *
  * Revision 1.14  2006/11/27 15:49:23  lafrasse
  * Update preferences string tokens.
  *
@@ -1143,7 +1146,7 @@ public class QueryModel extends Observable implements Observer
      *
      * @return true if the query can be edited, false otherwise.
      */
-    public boolean getEditableState()
+    public boolean canBeEdited()
     {
         MCSLogger.trace();
 
