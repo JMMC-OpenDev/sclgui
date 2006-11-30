@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.29 2006-11-30 14:54:27 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.30 2006-11-30 23:03:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2006/11/30 14:54:27  lafrasse
+ * Added support for hidden legend view on startup.
+ *
  * Revision 1.28  2006/11/29 17:34:19  lafrasse
  * Added new menu item to undelete stars flagged as deleted.
  *
@@ -107,7 +110,6 @@ import java.awt.print.*;
 import java.io.*;
 
 import java.util.*;
-import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -204,9 +206,22 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         scrollPane.setMinimumSize(new Dimension(570, 160));
         scrollPane.setPreferredSize(new Dimension(570, 260));
 
-        JScrollPane leftScrollPane = new JScrollPane(_calibratorsIdTable);
-        leftScrollPane.setMinimumSize(new Dimension(100, 160));
-        leftScrollPane.setPreferredSize(new Dimension(100, 260));
+        // Fixed Row Table Headers
+        JTable rowHeader = new JTable(_calibratorsModel._rowHeadersModel);
+        rowHeader.setIntercellSpacing(new Dimension(0, 0));
+
+        Dimension d = rowHeader.getPreferredScrollableViewportSize();
+        d.width = 50;
+        rowHeader.setPreferredScrollableViewportSize(d);
+        rowHeader.setRowHeight(_calibratorsTable.getRowHeight());
+        // @TODO : allow selection that select main table correspondins rows -> must derive JTable :((
+        rowHeader.setRowSelectionAllowed(false);
+        scrollPane.setRowHeaderView(rowHeader);
+
+        JTableHeader corner = rowHeader.getTableHeader();
+        corner.setReorderingAllowed(false);
+        corner.setResizingAllowed(false);
+        scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, corner);
 
         // Set Minimum Width of legend component
         JPanel legendPanel = new LegendView();
@@ -220,11 +235,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _tableAndLegendPane.setOneTouchExpandable(true);
         _tableAndLegendPane.setResizeWeight(1.0);
         _tableAndLegendPane.setContinuousLayout(true);
-
-        JSplitPane tablesPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                leftScrollPane, _tableAndLegendPane);
-        tablesPane.setAlignmentX(Float.parseFloat(".5"));
-        add(tablesPane);
+        add(_tableAndLegendPane);
 
         // Make data refreshed according prefs
         update(null, null);
