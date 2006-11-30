@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.11 2006-11-27 15:01:50 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.12 2006-11-30 16:02:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2006/11/27 15:01:50  lafrasse
+ * Moved PlotInAladin action from MainWindow to VirtualObservatory in order to
+ * ensure menu ennabling/disabling.
+ *
  * Revision 1.10  2006/11/23 16:22:57  lafrasse
  * Added detection and handling of unsaved modifications about to be lost (Quit).
  *
@@ -357,10 +361,9 @@ public class VirtualObservatory
             }
 
             // If a file was defined (No cancel in the dialog)
-            if ((_file != null) && (file != null))
+            if (file != null)
             {
-                // @TODO : save current data before ?
-                _calibratorsModel.exportVOTableToCSV(_file, file);
+                _calibratorsModel.exportCurrentVOTableToCSV(file);
             }
         }
     }
@@ -393,10 +396,9 @@ public class VirtualObservatory
             }
 
             // If a file was defined (No cancel in the dialog)
-            if ((_file != null) && (file != null))
+            if (file != null)
             {
-                // @TODO : save current data before ?
-                _calibratorsModel.exportVOTableToHTML(_file, file);
+                _calibratorsModel.exportCurrentVOTableToHTML(file);
             }
         }
     }
