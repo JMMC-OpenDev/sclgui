@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.14 2006-11-23 16:20:39 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.15 2006-11-30 14:54:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/11/23 16:20:39  lafrasse
+ * Added different location (US, Fr, ...) handling for Double input (, vs .).
+ *
  * Revision 1.13  2006/11/18 23:10:59  lafrasse
  * Handled StatusBar move.
  *
@@ -158,7 +161,7 @@ public class SearchCalibrators
                 preferencesView, filtersView, statusBar);
 
         // Make application presentation coherent with preferences
-        Preferences.getInstance().notifyObservers();
+        Preferences.getInstance().trulyNotifyObservers();
     }
 
     /**
