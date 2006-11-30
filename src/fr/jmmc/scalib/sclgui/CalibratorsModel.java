@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.14 2006-11-29 17:33:28 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.15 2006-11-30 16:02:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2006/11/29 17:33:28  lafrasse
+ * Added support for stars flagged as deleted.
+ * Added support undelete stars flagged as deleted.
+ *
  * Revision 1.13  2006/11/23 16:24:41  lafrasse
  * Added query parameters parsing and loading from VOTable files.
  *
@@ -131,6 +135,32 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         _paramSet             = null;
         _dataHaveChanged      = false;
+    }
+
+    /**
+     * @sa java.util.Observer
+     */
+    public void update(Observable o, Object arg)
+    {
+        MCSLogger.trace();
+
+        // TODO : the clone operation should only be done when the ay filter
+        // has been deactivated, otherwise currentStarList is sufficient
+
+        // Back up the original list for later use (reset, updated filter list)
+        _filteredStarList = (StarList) _currentStarList.clone();
+
+        // Filter the displayed stra list
+        _filtersModel.process(_filteredStarList);
+
+        // As a DefaultTableModel instance, set all the JTable needed vectors
+        setDataVector(_filteredStarList, _columnNames);
+
+        // Ask all the attached JTable views to update
+        fireTableDataChanged();
+
+        // Remember that data have changed
+        _dataHaveChanged = true;
     }
 
     /**
@@ -352,7 +382,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @return DOCUMENT ME!
      */
-    private SavotVOTable getSavotVOTable()
+    private SavotVOTable getSavotVOTable(StarList starList)
     {
         MCSLogger.trace();
 
@@ -378,7 +408,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         rows.removeAllItems();
 
         // And create one row per star entry
-        Enumeration stars = _originalStarList.elements();
+        Enumeration stars = starList.elements();
 
         while (stars.hasMoreElements())
         {
@@ -442,7 +472,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         String       filename = file.getAbsolutePath();
 
-        SavotVOTable voTable  = getSavotVOTable();
+        SavotVOTable voTable  = getSavotVOTable(_originalStarList);
         SavotWriter  wd       = new SavotWriter();
         wd.generateDocument(voTable, filename);
     }
@@ -456,7 +486,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
-        SavotVOTable          voTable      = getSavotVOTable();
+        SavotVOTable          voTable      = getSavotVOTable(_currentStarList);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         SavotWriter           wd           = new SavotWriter();
@@ -515,18 +545,43 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * DOCUMENT ME!
+     * Convert a given VOTable file to the CSV format.
      *
-     * @param inFilename DOCUMENT ME!
-     * @param outFilename DOCUMENT ME!
-     * @param xslFilename DOCUMENT ME!
+     * @param in the file to convert
+     * @param out the converted file
      */
-    private void doXsl(File inFilename, File outFilename, URL xslFilename)
+    public void exportCurrentVOTableToCSV(File out)
     {
         MCSLogger.trace();
 
-        MCSLogger.info("xsl='" + xslFilename + "', xml='" + inFilename +
-            "', out='" + outFilename + "'");
+        URL xslURL = MainWindow.class.getResource("voTableToCSV.xsl");
+        applyXSLTranformationOnCurrentVOTable(out, xslURL);
+    }
+
+    /**
+     * Convert a given VOTable file to the HTML format.
+     *
+     * @param in the file to convert
+     * @param out the converted file
+     */
+    public void exportCurrentVOTableToHTML(File out)
+    {
+        MCSLogger.trace();
+
+        URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
+        applyXSLTranformationOnCurrentVOTable(out, xslURL);
+    }
+
+    /**
+     * Apply the given xsl transformation on the current VOTable.
+     *
+     * @param outputFile the File in which the transformation result should be written.
+     * @param xslFile the XSL file containing the transformation to be applied
+     */
+    private void applyXSLTranformationOnCurrentVOTable(File outputFile,
+        URL xslFile)
+    {
+        MCSLogger.trace();
 
         try
         {
@@ -535,14 +590,17 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
             // Use the factory to create a template containing the xsl file
             Templates template = factory.newTemplates(new StreamSource("" +
-                        xslFilename));
+                        xslFile));
 
             // Use the template to create a transformer
             Transformer xformer = template.newTransformer();
 
             // Prepare the input and output files
-            Source source = new StreamSource("" + inFilename);
-            Result result = new StreamResult(new FileOutputStream(outFilename));
+            String currentVOTable = getVOTable();
+            Source source         = new StreamSource(new StringBufferInputStream(
+                        currentVOTable));
+            Result result         = new StreamResult(new FileOutputStream(
+                        outputFile));
 
             // Apply the xsl file to the source file and write the result to
             // the output file
@@ -555,8 +613,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         catch (TransformerConfigurationException e)
         {
             // An error occurred in the XSL file
-            MCSLogger.error("One error occured into the xsl file '" +
-                xslFilename + "'");
+            MCSLogger.error("One error occured into the xsl file '" + xslFile +
+                "'");
         }
         catch (TransformerException e)
         {
@@ -567,64 +625,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             int           line     = locator.getLineNumber();
             String        publicId = locator.getPublicId();
             String        systemId = locator.getSystemId();
-            MCSLogger.error("One error occured applying xsl (xsl='" +
-                xslFilename + "', xml='" + inFilename + "' error on line " +
-                line + " column " + col + ")");
+            MCSLogger.error("One error occured applying xsl (xsl='" + xslFile +
+                "', error on line " + line + " column " + col + ")");
         }
-    }
-
-    /**
-     * Convert a given VOTable file to the CSV format.
-     *
-     * @param in the file to convert
-     * @param out the converted file
-     */
-    public void exportVOTableToCSV(File in, File out)
-    {
-        MCSLogger.trace();
-
-        URL xslURL = MainWindow.class.getResource("voTableToCSV.xsl");
-        doXsl(in, out, xslURL);
-    }
-
-    /**
-     * Convert a given VOTable file to the HTML format.
-     *
-     * @param in the file to convert
-     * @param out the converted file
-     */
-    public void exportVOTableToHTML(File in, File out)
-    {
-        MCSLogger.trace();
-
-        URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
-        doXsl(in, out, xslURL);
-    }
-
-    /**
-     * @sa java.util.Observer
-     */
-    public void update(Observable o, Object arg)
-    {
-        MCSLogger.trace();
-
-        // TODO : the clone operation should only be done when the ay filter
-        // has been deactivated, otherwise currentStarList is sufficient
-
-        // Back up the original list for later use (reset, updated filter list)
-        _filteredStarList = (StarList) _currentStarList.clone();
-
-        // Filter the displayed stra list
-        _filtersModel.process(_filteredStarList);
-
-        // As a DefaultTableModel instance, set all the JTable needed vectors
-        setDataVector(_filteredStarList, _columnNames);
-
-        // Ask all the attached JTable views to update
-        fireTableDataChanged();
-
-        // Remember that data have changed
-        _dataHaveChanged = true;
     }
 }
 /*___oOo___*/
