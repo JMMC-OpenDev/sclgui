@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.15 2006-11-30 16:02:33 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.16 2006-11-30 23:03:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/11/30 16:02:33  lafrasse
+ * Changed exporting rules to only export currently displayed stars.
+ *
  * Revision 1.14  2006/11/29 17:33:28  lafrasse
  * Added support for stars flagged as deleted.
  * Added support undelete stars flagged as deleted.
@@ -118,6 +121,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Flag indicated whether data have changed or not */
     boolean _dataHaveChanged;
 
+    /** Raw headers */
+    public RowHeadersModel _rowHeadersModel;
+
     /**
      * Constructor.
      *
@@ -135,6 +141,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         _paramSet             = null;
         _dataHaveChanged      = false;
+
+        _rowHeadersModel      = new RowHeadersModel();
     }
 
     /**
@@ -155,6 +163,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         // As a DefaultTableModel instance, set all the JTable needed vectors
         setDataVector(_filteredStarList, _columnNames);
+
+        // Generate as many raw headers as data raws
+        _rowHeadersModel.populate(_filteredStarList.size());
 
         // Ask all the attached JTable views to update
         fireTableDataChanged();
@@ -518,6 +529,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
+        // Remove each selected row
         for (int i = 0; i < indices.length; i++)
         {
             Vector star = (Vector) _filteredStarList.get(indices[i]);
@@ -627,6 +639,40 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             String        systemId = locator.getSystemId();
             MCSLogger.error("One error occured applying xsl (xsl='" + xslFile +
                 "', error on line " + line + " column " + col + ")");
+        }
+    }
+
+    protected class RowHeadersModel extends DefaultTableModel
+    {
+        public RowHeadersModel()
+        {
+            // Initialize the model with 0 row and 0 column
+            super(0, 0);
+
+            // Add one column labeled "Index"
+            addColumn("Index");
+        }
+
+        public boolean isCellEditable(int row, int column)
+        {
+            MCSLogger.trace();
+
+            // Return always false as no row header should be editable
+            return false;
+        }
+
+        public void populate(int nbOfRows)
+        {
+            MCSLogger.trace();
+
+            // Empty all the current row headers
+            dataVector.clear();
+
+            // Generate as many row headers as the given number of data rows
+            for (int i = 1; i < (nbOfRows + 1); i++)
+            {
+                addRow(new Object[] { i });
+            }
         }
     }
 }
