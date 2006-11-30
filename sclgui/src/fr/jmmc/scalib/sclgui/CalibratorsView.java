@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.28 2006-11-29 17:34:19 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.29 2006-11-30 14:54:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2006/11/29 17:34:19  lafrasse
+ * Added new menu item to undelete stars flagged as deleted.
+ *
  * Revision 1.27  2006/11/27 16:38:19  lafrasse
  * Added delete menu item disabling on emptied JTable.
  *
@@ -205,10 +208,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         leftScrollPane.setMinimumSize(new Dimension(100, 160));
         leftScrollPane.setPreferredSize(new Dimension(100, 260));
 
-        //set Minimum Width of legend component
+        // Set Minimum Width of legend component
         JPanel legendPanel = new LegendView();
         int    legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
         legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
+        legendPanel.setSize(new Dimension(0, 0));
 
         // Set and place TableId, Table and Legend group
         _tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
@@ -219,7 +223,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         JSplitPane tablesPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 leftScrollPane, _tableAndLegendPane);
-        //        tablesPane.setResizeWeight(1.0);
         tablesPane.setAlignmentX(Float.parseFloat(".5"));
         add(tablesPane);
 
@@ -318,19 +321,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         MCSLogger.trace();
 
-        int tableAndLegendWidth = ((int) _tableAndLegendPane.getBounds()
-                                                            .getWidth()) -
-            _tableAndLegendPane.getDividerSize();
-        int loc                 = tableAndLegendWidth;
+        int totalWidth          = (int) _tableAndLegendPane.getBounds()
+                                                           .getWidth();
+        int dividerWidth        = _tableAndLegendPane.getDividerSize();
+        int tableAndLegendWidth = totalWidth - dividerWidth;
+        int legendWidth         = tableAndLegendWidth;
 
         if (visible == true)
         {
-            Component legend = _tableAndLegendPane.getRightComponent();
-            loc = tableAndLegendWidth -
-                ((int) legend.getMinimumSize().getWidth());
+            Component legend         = _tableAndLegendPane.getRightComponent();
+            int       legendMinWidth = (int) legend.getMinimumSize().getWidth();
+            legendWidth              = tableAndLegendWidth - legendMinWidth;
         }
 
-        _tableAndLegendPane.setDividerLocation(loc);
+        _tableAndLegendPane.setDividerLocation(legendWidth);
     }
 
     /**
@@ -381,8 +385,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             MCSLogger.trace();
 
             _calibratorsModel.deleteStars(_calibratorsTable.getSelectedRows());
-
-            //_undeleteAction.setEnabled(true);
         }
     }
 
@@ -399,8 +401,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             MCSLogger.trace();
 
             _calibratorsModel.undeleteStars();
-
-            //_undeleteAction.setEnabled(false);
         }
     }
 
