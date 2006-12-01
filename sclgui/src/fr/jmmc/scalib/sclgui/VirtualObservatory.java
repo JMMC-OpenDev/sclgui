@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.12 2006-11-30 16:02:33 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.13 2006-12-01 17:43:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2006/11/30 16:02:33  lafrasse
+ * Changed exporting rules to only export currently displayed stars.
+ *
  * Revision 1.11  2006/11/27 15:01:50  lafrasse
  * Moved PlotInAladin action from MainWindow to VirtualObservatory in order to
  * ensure menu ennabling/disabling.
@@ -65,7 +68,7 @@ import javax.swing.*;
 
 
 /**
- * Handle JMMC GETCAL WebServices interactions.
+ * Handle JMMC WebServices interactions and file input/ouput.
  */
 public class VirtualObservatory
 {
@@ -154,7 +157,6 @@ public class VirtualObservatory
 
         _saveFileAction.setEnabled(true);
         _saveFileAsAction.setEnabled(true);
-        _revertToSavedFileAction.setEnabled(true);
         _exportToCSVFileAction.setEnabled(true);
         _exportToHTMLFileAction.setEnabled(true);
         _plotInAladinAction.setEnabled(true);
@@ -238,6 +240,9 @@ public class VirtualObservatory
                         enableSaveMenus(true);
                     }
                 }
+
+                // Now that a file has been loaded
+                _revertToSavedFileAction.setEnabled(true);
             }
         }
     }
@@ -302,6 +307,9 @@ public class VirtualObservatory
             {
                 _calibratorsModel.saveVOTableFile(_file);
             }
+
+            // Now that a file has been saved
+            _revertToSavedFileAction.setEnabled(true);
         }
     }
 
@@ -330,6 +338,9 @@ public class VirtualObservatory
                 _file = fileChooser.getSelectedFile();
                 _calibratorsModel.saveVOTableFile(_file);
             }
+
+            // Now that a file has been saved
+            _revertToSavedFileAction.setEnabled(true);
         }
     }
 
@@ -554,7 +565,6 @@ public class VirtualObservatory
             {
                 if (_aladinInteraction == null)
                 {
-                    //
                     _aladinInteraction = new VOInteraction();
                     _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
                     _aladinInteraction._aladin.execCommand("sync");
@@ -562,12 +572,11 @@ public class VirtualObservatory
                 else
                 {
                     InputStream in  = new StringBufferInputStream(_calibratorsModel.getVOTable());
-                    String      oid;
-                    oid             = _aladinInteraction.putVOTable(_aladinInteraction,
+                    String      oid = _aladinInteraction.putVOTable(_aladinInteraction,
                             in, "SearchCal");
                     MCSLogger.info("Aladin return new oid for votable : " +
                         oid);
-                    //
+
                     _aladinInteraction._aladin.setVisible(true);
                 }
             }
