@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.27 2006-11-29 22:44:20 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.28 2006-12-04 12:32:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2006/11/29 22:44:20  lafrasse
+ * Added support for the whole query panel disabling on values loaded from file.
+ *
  * Revision 1.26  2006/11/27 15:51:01  lafrasse
  * Added support for bright/faint button status change according to query model
  * values.
@@ -218,6 +221,9 @@ public class QueryView extends JPanel implements Observer,
     JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
                 0));
 
+    /** Query action and progression panel */
+    JPanel _actionPanel = new JPanel();
+
     /** Query launcher/canceler */
     JButton _searchButton;
 
@@ -398,25 +404,23 @@ public class QueryView extends JPanel implements Observer,
         _searchCalPanel.add(_radialSizeTextfield, c);
 
         // Status panel global attributes and common objects
-        JPanel queryStatusPanel = new JPanel();
-        queryStatusPanel.setLayout(new BoxLayout(queryStatusPanel,
-                BoxLayout.X_AXIS));
+        _actionPanel.setLayout(new BoxLayout(_actionPanel, BoxLayout.X_AXIS));
         // Fixed space
-        queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Progress label
-        queryStatusPanel.add(new JLabel("Progress : "));
+        _actionPanel.add(new JLabel("Progress : "));
         // Fixed space
-        queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Progressbar
         _progressBar.setStringPainted(true);
-        queryStatusPanel.add(_progressBar);
+        _actionPanel.add(_progressBar);
         // Fixed space
-        queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Search Button
         _searchButton = new JButton(_vo._getCalAction);
-        queryStatusPanel.add(_searchButton);
+        _actionPanel.add(_searchButton);
         // Fixed space
-        queryStatusPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 
         // Query panel global construction
         setBorder(new TitledBorder("Query Parameters"));
@@ -432,7 +436,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx         = 0;
         c.gridwidth     = 3;
-        add(queryStatusPanel, c);
+        add(_actionPanel, c);
 
         // Start listening to any updates of the model
         _queryModel.addObserver(this);
@@ -546,9 +550,10 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        // Test if instrumental panel must be enabled
+        // Test if the instrumental and action panels must be enabled
         boolean fileLoadedOk = (_queryModel.canBeEdited() == true);
         setEnabledComponents(_instrumentPanel, fileLoadedOk);
+        setEnabledComponents(_actionPanel, fileLoadedOk);
 
         // Test if science object panel must be enabled
         boolean instrumentConfigOk = _instrumentalWavelengthTextfield.isEditValid() &&
@@ -606,6 +611,8 @@ public class QueryView extends JPanel implements Observer,
         {
             _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
         }
+
+        repaint();
     }
 
     /**
