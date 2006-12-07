@@ -21,23 +21,22 @@ run(){
 clean(){
     find  . -name "*.class" -exec rm {} \;
 }
-
-if [ -z "$1" ]
-then
-    echo "usage: $0 [compile|run|clean]"
-	clean
-    compile
-	exit
-fi
-
 # define classpath
 CP=.
 for j in ../lib/*.jar
 do
- CP=$CP:$j
+  CP=$CP:$j
 done
 export CLASSPATH=$CP
 echo CLASSPATH is $CLASSPATH
+
+if [ -z "$1" ]
+then
+    echo "usage: $0 [compile|run|clean]"
+    clean
+    compile
+    exit
+fi
 
 
 for cmd in $*
