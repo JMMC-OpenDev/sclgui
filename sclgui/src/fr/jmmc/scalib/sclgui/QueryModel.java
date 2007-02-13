@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.18 2007-02-13 15:34:39 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.19 2007-02-13 16:16:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2007/02/13 15:34:39  lafrasse
+ * Jalopyzation.
+ *
  * Revision 1.17  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -361,16 +364,60 @@ public class QueryModel extends Observable implements Observer
     }
 
     /**
-     * Set default values for a bright search on ETA_TAU.
+     * Return all current properties as an MCS-like sclsvr-formatted query.
+     *
+     * @return the query as a string.
      */
-    public void example()
+    public String getQueryAsMCSString()
     {
         MCSLogger.trace();
 
-        // @TODO : this method should diappear at last !
-        loadDefaultValues();
+        String query = "";
 
-        setTotalStep(11);
+        // Object name
+        query += "-objectName " + getScienceObjectName() + " ";
+
+        // Magnitude
+        query += "-mag " + getScienceObjectMagnitude() + " ";
+
+        // Diff RA
+        query += "-diffRa " + getQueryDiffRASize() + " ";
+
+        // Diff DEC
+        query += "-diffDec " + getQueryDiffDECSize() + " ";
+
+        // Band
+        query += "-band " + getInstrumentalMagnitudeBand() + " ";
+
+        // Min Magnitude
+        query += "-minMagRange " + getQueryMinMagnitude() + " ";
+
+        // Max Magnitude
+        query += "-maxMagRange " + getQueryMaxMagnitude() + " ";
+
+        // RA
+        query += "-ra " + getScienceObjectRA() + " ";
+
+        // DEC
+        query += "-dec " + getScienceObjectDEC() + " ";
+
+        // Max Baseline
+        query += "-baseMax " + getInstrumentalMaxBaseLine() + " ";
+
+        // Wavelength
+        query += "-wlen " + getInstrumentalWavelength() + " ";
+
+        // Radius
+        Boolean brightFlag = getQueryBrightScenarioFlag();
+        if (brightFlag == false)
+        {
+            query += "-radius " + getQueryRadialSize() + " ";
+        }
+
+        // Bright/Faint flag
+        query += "-bright " + brightFlag;
+
+        return query;
     }
 
     /**

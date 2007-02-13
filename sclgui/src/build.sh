@@ -1,10 +1,19 @@
 #!/bin/bash
 
 # You should only have to define properly two next lines
-MAINCLASS=jmmc/scalib/sclgui/SearchCalibrators
+MAINCLASS=fr/jmmc/scalib/sclgui/SearchCalibrators
 ARGS="-v 5"
+ARGS="-v 0"
 
 
+wsdl2java(){
+    INPUTPATH="../../sclws/include/sclws.wsdl"
+    OUTPUTPATH="./"
+	CMD="java -classpath $CLASSPATH org.apache.axis.wsdl.WSDL2Java $INPUTPATH -o $OUTPUTPATH"
+	#CMD="java -classpath $CLASSPATH org.apache.axis.wsdl.WSDL2Java -h"
+    echo $CMD
+    $CMD
+}
 
 compile(){
 	CMD="javac $MAINCLASS.java"
@@ -21,22 +30,23 @@ run(){
 clean(){
     find  . -name "*.class" -exec rm {} \;
 }
+
+if [ -z "$1" ]
+then
+    echo "usage: $0 [compile|run|clean]"
+	clean
+    compile
+	exit
+fi
+
 # define classpath
 CP=.
-for j in ../lib/*.jar
+for j in ../lib/*.jar ../../../../INTROOT/lib/*.jar
 do
   CP=$CP:$j
 done
 export CLASSPATH=$CP
 echo CLASSPATH is $CLASSPATH
-
-if [ -z "$1" ]
-then
-    echo "usage: $0 [compile|run|clean]"
-    clean
-    compile
-    exit
-fi
 
 
 for cmd in $*
