@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.29 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.30 2007-02-13 16:13:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.28  2006/12/04 12:32:18  lafrasse
  * Enhanced support for the whole query panel disabling on values loaded from file.
  *
@@ -515,7 +518,9 @@ public class QueryView extends JPanel implements Observer,
         }
     }
 
-    /** Called when a widget triggered an action. */
+    /**
+     * Called when a widget triggered an action.
+     */
     public void actionPerformed(ActionEvent e)
     {
         MCSLogger.trace();
@@ -527,23 +532,12 @@ public class QueryView extends JPanel implements Observer,
             _queryModel.setInstrumentalMagnitudeBands((DefaultComboBoxModel) _instrumentalMagnitudeBandCombo.getModel());
         }
 
-        if (source == _instrumentalWavelengthTextfield)
-        {
-            _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
-        }
-
-        if (source == _minMagnitudeTextfield)
-        {
-            _queryModel.setQueryMinMagnitude((Double) _minMagnitudeTextfield.getValue());
-        }
-
-        if (source == _maxMagnitudeTextfield)
-        {
-            _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
-        }
+        MCSLogger.info("Query = '" + _queryModel.getQueryAsMCSString() + "'.");
     }
 
-    /** Called when a field's "value" property changes. */
+    /**
+     * Called when a field's "value" property changes.
+     */
     public void propertyChange(PropertyChangeEvent e)
     {
         MCSLogger.trace();
@@ -568,7 +562,7 @@ public class QueryView extends JPanel implements Observer,
         setEnabledComponents(_searchCalPanel, sciencObjectOk);
 
         Object source = e.getSource();
-
+/*
         if (source == _instrumentalMaxBaselineTextField)
         {
             _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
@@ -609,6 +603,23 @@ public class QueryView extends JPanel implements Observer,
         {
             _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
         }
+*/
+        // Try to inject user values into the model
+        _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
+        _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
+        _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
+        _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
+        _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
+        _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
+        _queryModel.setQueryMinMagnitude((Double) _minMagnitudeTextfield.getValue());
+        _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
+        _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
+        _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
+        _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
+
+        _queryModel.notifyObservers();
+
+        MCSLogger.info("Query = '" + _queryModel.getQueryAsMCSString() + "'.");
 
         repaint();
     }
