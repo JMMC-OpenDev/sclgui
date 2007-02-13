@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.31 2006-12-04 12:35:49 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.32 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2006/12/04 12:35:49  lafrasse
+ * Enhanced delete menu item enabling, now based on JTable row selection detection.
+ *
  * Revision 1.30  2006/11/30 23:03:53  lafrasse
  * Added a fixed column on the left with generated star IDs.
  *
@@ -100,13 +103,11 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.gui.StatusBar;
-
-import jmmc.mcs.log.MCSLogger;
-
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;

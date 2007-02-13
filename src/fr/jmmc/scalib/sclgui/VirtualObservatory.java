@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.13 2006-12-01 17:43:42 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.14 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/12/01 17:43:42  lafrasse
+ * Changed "revert" menu enabling only if a file has been loaded or saved.
+ *
  * Revision 1.12  2006/11/30 16:02:33  lafrasse
  * Changed exporting rules to only export currently displayed stars.
  *
@@ -49,11 +52,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.*;
-
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.9 2006-08-09 13:53:24 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.10 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/08/09 13:53:24  lafrasse
+ * Generalized code for ParamXListener
+ *
  * Revision 1.8  2006/08/08 16:13:21  lafrasse
  * Updated to properly handle widget order
  *
@@ -31,9 +34,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.MCSLogger;
 
 import java.awt.*;
 import java.awt.event.*;

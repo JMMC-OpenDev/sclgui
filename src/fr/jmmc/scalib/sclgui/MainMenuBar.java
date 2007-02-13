@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.21 2006-11-29 17:34:19 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.22 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2006/11/29 17:34:19  lafrasse
+ * Added new menu item to undelete stars flagged as deleted.
+ *
  * Revision 1.20  2006/11/27 15:01:50  lafrasse
  * Moved PlotInAladin action from MainWindow to VirtualObservatory in order to
  * ensure menu ennabling/disabling.
@@ -73,11 +76,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.*;
-
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.Toolkit;

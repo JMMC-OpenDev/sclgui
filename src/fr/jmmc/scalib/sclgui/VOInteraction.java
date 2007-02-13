@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VOInteraction.java,v 1.3 2006-06-23 09:19:41 mella Exp $"
+ * "@(#) $Id: VOInteraction.java,v 1.4 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2006/06/23 09:19:41  mella
+ * Jalopization
+ *
  * Revision 1.2  2006/04/07 13:07:09  mella
  * jolyzation
  *
@@ -16,16 +19,13 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
+
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import cds.aladin.*;
-
-import cds.tools.VOApp;
-import cds.tools.VOObserver;
-
-import jmmc.mcs.log.MCSLogger;
-
-import jmmc.mcs.util.*;
+import cds.tools.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -44,7 +44,7 @@ import javax.swing.table.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class VOInteraction implements VOApp
 {

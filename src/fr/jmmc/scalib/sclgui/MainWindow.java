@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.15 2006-11-27 15:01:50 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.16 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/11/27 15:01:50  lafrasse
+ * Moved PlotInAladin action from MainWindow to VirtualObservatory in order to
+ * ensure menu ennabling/disabling.
+ *
  * Revision 1.14  2006/11/18 23:21:10  lafrasse
  * Handled SCAction change to MCSAction and StatusBar move.
  * Added AboutWindow and HelpView support, plus actions for ShowPreferencesAction,
@@ -57,13 +61,11 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.gui.*;
-
-import jmmc.mcs.log.*;
-
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;

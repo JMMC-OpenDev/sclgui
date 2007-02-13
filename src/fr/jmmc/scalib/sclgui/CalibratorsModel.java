@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.16 2006-11-30 23:03:53 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.17 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/11/30 23:03:53  lafrasse
+ * Added a fixed column on the left with generated star IDs.
+ *
  * Revision 1.15  2006/11/30 16:02:33  lafrasse
  * Changed exporting rules to only export currently displayed stars.
  *
@@ -57,7 +60,7 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
 import cds.savot.model.*;
 
@@ -65,7 +68,7 @@ import cds.savot.pull.*;
 
 import cds.savot.writer.*;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.MCSLogger;
 
 import java.io.*;
 

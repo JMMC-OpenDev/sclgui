@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.10 2006-11-08 22:25:00 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.11 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2006/11/08 22:25:00  lafrasse
+ * Implemented filtering algorithm.
+ *
  * Revision 1.9  2006/08/03 14:47:29  lafrasse
  * Jalopyzation
  *
@@ -35,12 +38,11 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
 
-import java.util.Observer;
-import java.util.Vector;
+import java.util.*;
 
 import javax.swing.table.*;
 

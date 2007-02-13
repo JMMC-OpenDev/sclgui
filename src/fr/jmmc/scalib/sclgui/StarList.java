@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarList.java,v 1.4 2006-11-29 17:33:28 lafrasse Exp $"
+ * "@(#) $Id: StarList.java,v 1.5 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2006/11/29 17:33:28  lafrasse
+ * Added support for stars flagged as deleted.
+ * Added support undelete stars flagged as deleted.
+ *
  * Revision 1.3  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -17,9 +21,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
 
 import java.util.*;
 

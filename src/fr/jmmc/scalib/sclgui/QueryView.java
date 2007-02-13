@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.28 2006-12-04 12:32:18 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.29 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2006/12/04 12:32:18  lafrasse
+ * Enhanced support for the whole query panel disabling on values loaded from file.
+ *
  * Revision 1.27  2006/11/29 22:44:20  lafrasse
  * Added support for the whole query panel disabling on values loaded from file.
  *
@@ -98,26 +101,21 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.gui.*;
-
-import jmmc.mcs.log.MCSLogger;
-
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.*;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.beans.*;
 
 import java.text.*;
 
 import java.util.*;
-import java.util.logging.*;
-import java.util.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.border.*;

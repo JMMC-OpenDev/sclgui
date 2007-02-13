@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.16 2006-11-29 22:44:20 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.17 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2006/11/29 22:44:20  lafrasse
+ * Added support for the whole query panel disabling on values loaded from file.
+ *
  * Revision 1.15  2006/11/27 16:58:37  lafrasse
  * Updated magnitude bands order and corresponding wavelength values.
  *
@@ -60,14 +63,13 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
+
+import fr.jmmc.mcs.log.*;
 
 import cds.savot.model.*;
 
-import jmmc.mcs.log.MCSLogger;
-
 import java.util.*;
-import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 

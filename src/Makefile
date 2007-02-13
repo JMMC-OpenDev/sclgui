@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.16 2006-08-22 15:55:35 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.17 2007-02-13 13:58:44 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.16  2006/08/22 15:55:35  gzins
+# Commented java generation (waiting java program fixes)
+#
 # Revision 1.15  2006/07/05 11:27:27  mella
 # Replace Resources.prop by Resources.properties
 #
@@ -161,14 +164,13 @@ PY_SCRIPTS_L   =
 # Jarfiles and their directories
 # ---------------------------------
 JARFILES        = sclgui
-JARFILES        = 
 
 #
 # <brief description of sclgui jar files>
-sclgui_DIRS     = jmmc 
-sclgui_EXTRAS   = jmmc/scalib/sclgui/eta_tau.vot \
-                  jmmc/scalib/sclgui/Resources.properties \
-                  jmmc/scalib/sclgui/search.png
+sclgui_DIRS     = fr 
+sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/eta_tau.vot \
+                  fr/jmmc/scalib/sclgui/Resources.properties \
+                  fr/jmmc/scalib/sclgui/search.png
 
 #
 # Java programs
@@ -179,13 +181,13 @@ JAVA_EXECUTABLES =
 #
 # other Jar Files
 #
-JAVA_JAR = cds.savot.common.jar \
+JAVA_JAR = jmcs.jar             \
+           cds.savot.common.jar \
 		   cds.savot.pull.jar   \
 		   cds.savot.writer.jar \
 		   kxml2-min.jar        \
 		   cds.savot.model.jar  \
 		   cds.savot.sax.jar   
-JAVA_JAR=
 
 #
 # <brief description of SearchCalibrators java program>

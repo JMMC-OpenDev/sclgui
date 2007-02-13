@@ -1,13 +1,16 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibratorsApplet.java,v 1.1 2006-03-27 11:59:58 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibratorsApplet.java,v 1.2 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2006/03/27 11:59:58  lafrasse
+ * Added new experimental Java GUI
+ *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
 import javax.swing.JApplet;
 
