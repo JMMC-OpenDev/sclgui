@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.30 2007-02-13 16:13:18 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.31 2007-02-13 16:17:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2007/02/13 16:13:18  lafrasse
+ * Rationalized field changes tracking.
+ *
  * Revision 1.29  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -562,48 +565,42 @@ public class QueryView extends JPanel implements Observer,
         setEnabledComponents(_searchCalPanel, sciencObjectOk);
 
         Object source = e.getSource();
-/*
-        if (source == _instrumentalMaxBaselineTextField)
-        {
-            _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
-        }
+        /*
+           if (source == _instrumentalMaxBaselineTextField)
+           {
+               _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
+           }
+           // Try to inject user values into the model
+           if (source == _scienceObjectNameTextfield)
+           {
+               _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
+           }
+           if (source == _scienceObjectRATextfield)
+           {
+               _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
+           }
+           if (source == _scienceObjectDECTextfield)
+           {
+               _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
+           }
+           if (source == _scienceObjectMagnitudeTextfield)
+           {
+               _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
+           }
+           if (source == _diffRASizeTextfield)
+           {
+               _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
+           }
+           if (source == _diffDECSizeTextfield)
+           {
+               _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
+           }
+           if (source == _radialSizeTextfield)
+           {
+               _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
+           }
+         */
 
-        // Try to inject user values into the model
-        if (source == _scienceObjectNameTextfield)
-        {
-            _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
-        }
-
-        if (source == _scienceObjectRATextfield)
-        {
-            _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
-        }
-
-        if (source == _scienceObjectDECTextfield)
-        {
-            _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
-        }
-
-        if (source == _scienceObjectMagnitudeTextfield)
-        {
-            _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
-        }
-
-        if (source == _diffRASizeTextfield)
-        {
-            _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
-        }
-
-        if (source == _diffDECSizeTextfield)
-        {
-            _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
-        }
-
-        if (source == _radialSizeTextfield)
-        {
-            _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
-        }
-*/
         // Try to inject user values into the model
         _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
         _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
