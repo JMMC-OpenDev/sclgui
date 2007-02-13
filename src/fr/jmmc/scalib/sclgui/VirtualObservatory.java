@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.15 2007-02-13 16:16:12 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.16 2007-02-13 16:17:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2007/02/13 16:16:12  lafrasse
+ * Enabled JMMC SearchCal SOAP webservice querying.
+ *
  * Revision 1.14  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -60,6 +63,8 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
+import fr.jmmc.sclws_wsdl.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -70,9 +75,8 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.swing.*;
-import javax.xml.rpc.holders.*;
 
-import fr.jmmc.sclws_wsdl.*;
+import javax.xml.rpc.holders.*;
 
 
 /**
@@ -488,41 +492,41 @@ public class VirtualObservatory
         {
             MCSLogger.trace();
 
-            SclwsLocator loc;
-            SclwsPortType s = null;
-            String id = "";
-            
+            SclwsLocator  loc;
+            SclwsPortType s  = null;
+            String        id = "";
+
             // Get the connection ID
             try
             {
-                loc = new SclwsLocator();
-                s = loc.getsclws();
+                loc     = new SclwsLocator();
+                s       = loc.getsclws();
 
                 // Get the connection ID
-                id = s.getCalAsyncID();
-                
+                id      = s.getCalAsyncID();
+
                 MCSLogger.test("Connection ID = '" + id + "'.");
             }
             catch (Exception exc)
             {
-                    // @TODO
-                    MCSLogger.error("Connection failed. Exception: " + exc);
+                // @TODO
+                MCSLogger.error("Connection failed. Exception: " + exc);
             }
 
             // Launch the query in the background
             class QueryThread extends Thread
             {
                 SclwsPortType _s;
-                String _id;
-                String _query;
-                String _result;
+                String        _id;
+                String        _query;
+                String        _result;
 
                 QueryThread(SclwsPortType s, String id, String query)
                 {
-                    _s = s;
-                    _query = query;
-                    _id = id;
-                    _result = "";
+                    _s          = s;
+                    _query      = query;
+                    _id         = id;
+                    _result     = "";
                 }
 
                 String getResult()
@@ -561,22 +565,25 @@ public class VirtualObservatory
             Integer catalogIndex       = 0;
             Integer nbOfCatalogs       = 0;
             Boolean lastCatalog        = false;
+
             do
             {
                 // Get query progression status
                 try
                 {
-                    currentCatalogName = s.getCalWaitForCurrentCatalogName(id);
+                    currentCatalogName     = s.getCalWaitForCurrentCatalogName(id);
 
-                    nbOfCatalogs       = s.getCalNbOfCatalogs(id);
+                    nbOfCatalogs           = s.getCalNbOfCatalogs(id);
                     _queryModel.setTotalStep(nbOfCatalogs);
 
-                    catalogIndex       = s.getCalCurrentCatalogIndex(id);
+                    catalogIndex = s.getCalCurrentCatalogIndex(id);
                     _queryModel.setCurrentStep(catalogIndex);
 
-                    lastCatalog        = s.getCalIsLastCatalog(id);
+                    lastCatalog = s.getCalIsLastCatalog(id);
 
-                    MCSLogger.test("Status = '" + currentCatalogName + "' - " + catalogIndex + "/" + nbOfCatalogs + " (" + lastCatalog + ").");
+                    MCSLogger.test("Status = '" + currentCatalogName + "' - " +
+                        catalogIndex + "/" + nbOfCatalogs + " (" + lastCatalog +
+                        ").");
                 }
                 catch (Exception exc)
                 {
@@ -584,7 +591,7 @@ public class VirtualObservatory
                     MCSLogger.error("Status failed. Exception: " + exc);
                 }
             }
-            while(lastCatalog == false);
+            while (lastCatalog == false);
 
             // Wait for the query result
             try
@@ -599,17 +606,19 @@ public class VirtualObservatory
             }
 
             String result = queryThread.getResult();
+
             if (result.length() > 0)
             {
-//                try
-//                {
+                //                try
+                //                {
                 // Parse the received VOTable
                 _calibratorsModel.parseVOTable(result);
-//                }
-//                catch (IOException ex)
-//                {
-//                    throw new Exception(ex.getMessage());
-//                }
+
+                //                }
+                //                catch (IOException ex)
+                //                {
+                //                    throw new Exception(ex.getMessage());
+                //                }
             }
             else
             {

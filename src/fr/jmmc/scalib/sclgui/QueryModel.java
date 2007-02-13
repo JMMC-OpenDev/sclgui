@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.19 2007-02-13 16:16:12 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.20 2007-02-13 16:17:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/02/13 16:16:12  lafrasse
+ * Enabled JMMC SearchCal SOAP webservice querying.
+ *
  * Revision 1.18  2007/02/13 15:34:39  lafrasse
  * Jalopyzation.
  *
@@ -375,47 +378,48 @@ public class QueryModel extends Observable implements Observer
         String query = "";
 
         // Object name
-        query += "-objectName " + getScienceObjectName() + " ";
+        query += ("-objectName " + getScienceObjectName() + " ");
 
         // Magnitude
-        query += "-mag " + getScienceObjectMagnitude() + " ";
+        query += ("-mag " + getScienceObjectMagnitude() + " ");
 
         // Diff RA
-        query += "-diffRa " + getQueryDiffRASize() + " ";
+        query += ("-diffRa " + getQueryDiffRASize() + " ");
 
         // Diff DEC
-        query += "-diffDec " + getQueryDiffDECSize() + " ";
+        query += ("-diffDec " + getQueryDiffDECSize() + " ");
 
         // Band
-        query += "-band " + getInstrumentalMagnitudeBand() + " ";
+        query += ("-band " + getInstrumentalMagnitudeBand() + " ");
 
         // Min Magnitude
-        query += "-minMagRange " + getQueryMinMagnitude() + " ";
+        query += ("-minMagRange " + getQueryMinMagnitude() + " ");
 
         // Max Magnitude
-        query += "-maxMagRange " + getQueryMaxMagnitude() + " ";
+        query += ("-maxMagRange " + getQueryMaxMagnitude() + " ");
 
         // RA
-        query += "-ra " + getScienceObjectRA() + " ";
+        query += ("-ra " + getScienceObjectRA() + " ");
 
         // DEC
-        query += "-dec " + getScienceObjectDEC() + " ";
+        query += ("-dec " + getScienceObjectDEC() + " ");
 
         // Max Baseline
-        query += "-baseMax " + getInstrumentalMaxBaseLine() + " ";
+        query += ("-baseMax " + getInstrumentalMaxBaseLine() + " ");
 
         // Wavelength
-        query += "-wlen " + getInstrumentalWavelength() + " ";
+        query += ("-wlen " + getInstrumentalWavelength() + " ");
 
         // Radius
         Boolean brightFlag = getQueryBrightScenarioFlag();
+
         if (brightFlag == false)
         {
-            query += "-radius " + getQueryRadialSize() + " ";
+            query += ("-radius " + getQueryRadialSize() + " ");
         }
 
         // Bright/Faint flag
-        query += "-bright " + brightFlag;
+        query += ("-bright " + brightFlag);
 
         return query;
     }
