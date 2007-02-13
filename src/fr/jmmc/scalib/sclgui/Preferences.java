@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.14 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.15 2007-02-13 16:15:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.13  2006/11/07 17:14:48  lafrasse
  * Updated query default magnitudeBand to K and instrumentalWavelength to 1.0 .
  *
@@ -135,24 +138,25 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
                 /* Query default values preferences  */
                 defaults.setPreference("query.magnitudeBand", "K");
-                defaults.setPreference("query.instrumentalWavelength", "1.0");
-                defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
-                defaults.setPreference("query.scienceObjectName", "eta_tau");
-                defaults.setPreference("query.scienceObjectRA", "+03:47:29.79");
-                defaults.setPreference("query.scienceObjectDEC", "+24:06:18.50");
-                defaults.setPreference("query.scienceObjectMagnitude", "0.0");
+                defaults.setPreference("query.instrumentalWavelength", "2.2");
+                defaults.setPreference("query.instrumentalMaxBaseLine", "56.56854");
+                defaults.setPreference("query.scienceObjectName", "Achernar");
+                defaults.setPreference("query.scienceObjectRA", "01:37:42.847");
+                defaults.setPreference("query.scienceObjectDEC", "-57:14:12.327");
+                defaults.setPreference("query.scienceObjectMagnitude", "0.88");
                 defaults.setPreference("query.scienceObjectInclusionFlag",
                     "true");
                 defaults.setPreference("query.scienceObjectDetectionDistance",
                     "0.1");
-                defaults.setPreference("query.queryMinMagnitude", "2.0");
-                defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
-                defaults.setPreference("query.queryMaxMagnitude", "4.0");
-                defaults.setPreference("query.queryMaxMagnitudeDelta", "4.0");
+                defaults.setPreference("query.queryMinMagnitude", "-1");
+                defaults.setPreference("query.queryMaxMagnitude", "3");
                 defaults.setPreference("query.queryBrightScenarioFlag", "true");
-                defaults.setPreference("query.queryDiffRASize", "60.0");
-                defaults.setPreference("query.queryDiffDECSize", "5.0");
+                defaults.setPreference("query.queryDiffRASize", "1800");
+                defaults.setPreference("query.queryDiffDECSize", "600");
                 defaults.setPreference("query.queryRadialSize", "0.0");
+
+                defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
+                defaults.setPreference("query.queryMaxMagnitudeDelta", "4.0");
             }
             catch (Exception e)
             {
