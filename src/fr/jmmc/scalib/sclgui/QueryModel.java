@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.17 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.18 2007-02-13 15:34:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.16  2006/11/29 22:44:20  lafrasse
  * Added support for the whole query panel disabling on values loaded from file.
  *
@@ -65,9 +68,9 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import cds.savot.model.*;
+
+import fr.jmmc.mcs.log.*;
 
 import java.util.*;
 

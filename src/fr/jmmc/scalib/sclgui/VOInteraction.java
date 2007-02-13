@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VOInteraction.java,v 1.4 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: VOInteraction.java,v 1.5 2007-02-13 15:34:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.3  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -21,11 +24,12 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import cds.aladin.*;
+
+import cds.tools.*;
+
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
-
-import cds.aladin.*;
-import cds.tools.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -44,7 +48,7 @@ import javax.swing.table.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class VOInteraction implements VOApp
 {
