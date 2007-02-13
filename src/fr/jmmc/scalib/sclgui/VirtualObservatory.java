@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.14 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.15 2007-02-13 16:16:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.13  2006/12/01 17:43:42  lafrasse
  * Changed "revert" menu enabling only if a file has been loaded or saved.
  *
@@ -67,6 +70,9 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.swing.*;
+import javax.xml.rpc.holders.*;
+
+import fr.jmmc.sclws_wsdl.*;
 
 
 /**
@@ -460,7 +466,7 @@ public class VirtualObservatory
 
             // @TODO : Querying Simbad and fill the query model accordinally
             _queryModel.reset();
-            _queryModel.example();
+            _queryModel.loadDefaultValues();
         }
     }
 
@@ -474,71 +480,140 @@ public class VirtualObservatory
         public GetCalAction()
         {
             super("getCal");
+
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             MCSLogger.trace();
-            class ProgressBarThread extends Thread
-            {
-                QueryModel _queryModel;
-                int        _millisecond;
 
-                ProgressBarThread(QueryModel queryModel, int millisecond)
+            SclwsLocator loc;
+            SclwsPortType s = null;
+            String id = "";
+            
+            // Get the connection ID
+            try
+            {
+                loc = new SclwsLocator();
+                s = loc.getsclws();
+
+                // Get the connection ID
+                id = s.getCalAsyncID();
+                
+                MCSLogger.test("Connection ID = '" + id + "'.");
+            }
+            catch (Exception exc)
+            {
+                    // @TODO
+                    MCSLogger.error("Connection failed. Exception: " + exc);
+            }
+
+            // Launch the query in the background
+            class QueryThread extends Thread
+            {
+                SclwsPortType _s;
+                String _id;
+                String _query;
+                String _result;
+
+                QueryThread(SclwsPortType s, String id, String query)
                 {
-                    _queryModel      = queryModel;
-                    _millisecond     = millisecond;
+                    _s = s;
+                    _query = query;
+                    _id = id;
+                    _result = "";
+                }
+
+                String getResult()
+                {
+                    return _result;
                 }
 
                 public void run()
                 {
-                    for (int i = 0; i <= _queryModel.getTotalStep(); i++)
+                    try
                     {
-                        _queryModel.setCurrentStep(i);
-
-                        try
-                        {
-                            Thread.sleep(_millisecond);
-                        }
-                        catch (Exception e)
-                        {
-                        }
+                        // Launch the query
+                        _result = _s.getCalAsyncQuery(_id, _query);
+                    }
+                    catch (Exception exc)
+                    {
+                        // @TODO
+                        MCSLogger.error("Query failed. Exception: " + exc);
                     }
                 }
             }
 
-            ProgressBarThread thread = new ProgressBarThread(_queryModel, 200);
-            thread.start();
+            // Get the query from the GUI
+            String query = _queryModel.getQueryAsMCSString();
+            MCSLogger.test("Query = '" + query + "'.");
 
+            // Launch the querying thread
+            QueryThread queryThread = new QueryThread(s, id, query);
+            queryThread.start();
+
+            // @TODO : See for thread destruction on Cancel click
+            // queryThread.interrupt();
+
+            // GetCal status polling to update ProgressBar
+            String  currentCatalogName = "";
+            Integer catalogIndex       = 0;
+            Integer nbOfCatalogs       = 0;
+            Boolean lastCatalog        = false;
+            do
+            {
+                // Get query progression status
+                try
+                {
+                    currentCatalogName = s.getCalWaitForCurrentCatalogName(id);
+
+                    nbOfCatalogs       = s.getCalNbOfCatalogs(id);
+                    _queryModel.setTotalStep(nbOfCatalogs);
+
+                    catalogIndex       = s.getCalCurrentCatalogIndex(id);
+                    _queryModel.setCurrentStep(catalogIndex);
+
+                    lastCatalog        = s.getCalIsLastCatalog(id);
+
+                    MCSLogger.test("Status = '" + currentCatalogName + "' - " + catalogIndex + "/" + nbOfCatalogs + " (" + lastCatalog + ").");
+                }
+                catch (Exception exc)
+                {
+                    // @TODO
+                    MCSLogger.error("Status failed. Exception: " + exc);
+                }
+            }
+            while(lastCatalog == false);
+
+            // Wait for the query result
             try
             {
-                // TODO temp hack to load a VOTable file name according to the query science object name, for test purpose only
-                //String         fileName   = queryModel.getScienceObjectName() + ".vot";
-                //FileReader     fileReader = new FileReader(fileName);
-                //BufferedReader in         = new BufferedReader(fileReader);
-                String resourceName = "eta_tau.vot";
-                URL    votableURL   = VirtualObservatory.class.getResource(resourceName);
-
-                // Read all the text returned by the embedded file
-                BufferedReader in  = new BufferedReader(new InputStreamReader(
-                            votableURL.openStream()));
-
-                StringBuffer   sb  = new StringBuffer();
-                String         str;
-
-                while ((str = in.readLine()) != null)
-                {
-                    sb.append(str);
-                }
-
-                in.close();
-
-                _calibratorsModel.parseVOTable(sb.toString());
+                // Wait for the thread to end
+                queryThread.join();
             }
-            catch (IOException ex)
+            catch (Exception exc)
             {
-                //throw new Exception(ex.getMessage());
+                // @TODO
+                MCSLogger.error("Thread failed. Exception: " + exc);
+            }
+
+            String result = queryThread.getResult();
+            if (result.length() > 0)
+            {
+//                try
+//                {
+                // Parse the received VOTable
+                _calibratorsModel.parseVOTable(result);
+//                }
+//                catch (IOException ex)
+//                {
+//                    throw new Exception(ex.getMessage());
+//                }
+            }
+            else
+            {
+                MCSLogger.test("No stars found.");
             }
 
             // As data are now loaded
