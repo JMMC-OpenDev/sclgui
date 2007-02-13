@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.7 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.8 2007-02-13 14:15:30 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.6  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -25,9 +28,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.*;
+import fr.jmmc.mcs.log.*;
 
 import java.util.Vector;
 
