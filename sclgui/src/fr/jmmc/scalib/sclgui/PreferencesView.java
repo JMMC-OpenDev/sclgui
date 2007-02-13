@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.18 2006-10-10 09:09:37 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.19 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2006/10/10 09:09:37  lafrasse
+ * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
+ *
  * Revision 1.17  2006/10/04 11:34:31  lafrasse
  * Added support for preferenced science object detection distance.
  *
@@ -58,11 +61,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
-
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;

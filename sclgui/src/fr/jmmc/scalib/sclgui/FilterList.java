@@ -1,18 +1,21 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterList.java,v 1.2 2006-08-04 14:09:10 lafrasse Exp $"
+ * "@(#) $Id: FilterList.java,v 1.3 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2006/08/04 14:09:10  lafrasse
+ * Added GUI enabling/disabling feature to filters
+ *
  * Revision 1.1  2006/03/27 11:59:58  lafrasse
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
 
 import java.util.*;
 

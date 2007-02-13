@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.5 2006-11-14 14:44:56 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/11/14 14:44:56  lafrasse
+ * Moved all astronomical-related computations in the new jmmc.mcs.astro package.
+ *
  * Revision 1.4  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -19,11 +22,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.astro.ALX;
-
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.astro.*;
+import fr.jmmc.mcs.log.*;
 
 import java.lang.Math;
 

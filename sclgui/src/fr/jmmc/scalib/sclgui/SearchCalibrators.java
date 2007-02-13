@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.15 2006-11-30 14:54:27 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.16 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2006/11/30 14:54:27  lafrasse
+ * Added support for hidden legend view on startup.
+ *
  * Revision 1.14  2006/11/23 16:20:39  lafrasse
  * Added different location (US, Fr, ...) handling for Double input (, vs .).
  *
@@ -54,11 +57,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.gui.*;
-
-import jmmc.mcs.log.*;
+import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.log.*;
 
 import gnu.getopt.Getopt;
 
@@ -128,7 +130,7 @@ public class SearchCalibrators
     public SearchCalibrators()
     {
         // Set default resource    
-        jmmc.mcs.util.Resources.setResourceName("jmmc/scalib/sclgui/Resources");
+        fr.jmmc.mcs.util.Resources.setResourceName("jmmc/scalib/sclgui/Resources");
 
         // Create a query model
         QueryModel queryModel = new QueryModel();

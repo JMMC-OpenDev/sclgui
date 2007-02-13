@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersView.java,v 1.5 2006-08-04 16:53:54 lafrasse Exp $"
+ * "@(#) $Id: FiltersView.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/08/04 16:53:54  lafrasse
+ * Re-added preliminary print support
+ *
  * Revision 1.4  2006/08/04 14:09:10  lafrasse
  * Added GUI enabling/disabling feature to filters
  *
@@ -19,9 +22,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
 
 import java.awt.*;
 import java.awt.event.*;

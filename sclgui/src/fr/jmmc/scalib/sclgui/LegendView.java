@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.8 2006-10-03 15:25:20 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.9 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2006/10/03 15:25:20  lafrasse
+ * Use of the Preference shared instance instead of receiving it through the
+ * constructor.
+ *
  * Revision 1.7  2006/09/28 15:23:29  lafrasse
  * Updated to handle jmmc.util.Preferences API modifications.
  *
@@ -29,9 +33,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.util.*;
+import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

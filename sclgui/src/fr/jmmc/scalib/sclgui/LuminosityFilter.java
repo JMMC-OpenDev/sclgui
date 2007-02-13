@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.9 2006-11-14 14:44:56 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.10 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2006/11/14 14:44:56  lafrasse
+ * Moved all astronomical-related computations in the new jmmc.mcs.astro package.
+ *
  * Revision 1.8  2006/11/09 15:39:35  lafrasse
  * Removed unnecessary Observer code.
  * Code refinments.
@@ -36,11 +39,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.astro.ALX;
-
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.astro.*;
+import fr.jmmc.mcs.log.*;
 
 import java.util.*;
 

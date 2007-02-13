@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.5 2006-11-08 22:25:00 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2006/11/08 22:25:00  lafrasse
+ * Implemented filtering algorithm.
+ *
  * Revision 1.4  2006/07/18 14:52:49  lafrasse
  * Changed name and behavior according to preliminary review scientists feedback
  *
@@ -25,9 +28,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
 
 import java.util.Vector;
 

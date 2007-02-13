@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.6 2006-11-29 17:32:24 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.7 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2006/11/29 17:32:24  lafrasse
+ * Added support for boolean values.
+ *
  * Revision 1.5  2006/06/23 09:19:41  mella
  * Jalopization
  *
@@ -23,9 +26,9 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
 
 import java.lang.Float;
 

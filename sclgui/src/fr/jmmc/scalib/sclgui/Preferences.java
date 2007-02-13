@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.13 2006-11-07 17:14:48 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.14 2007-02-13 13:58:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2006/11/07 17:14:48  lafrasse
+ * Updated query default magnitudeBand to K and instrumentalWavelength to 1.0 .
+ *
  * Revision 1.12  2006/10/10 09:09:37  lafrasse
  * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
  *
@@ -44,9 +47,10 @@
  * Added new experimental Java GUI
  *
  ******************************************************************************/
-package jmmc.scalib.sclgui;
+package fr.jmmc.scalib.sclgui;
 
-import jmmc.mcs.log.MCSLogger;
+import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.util.*;
 
 import java.util.Properties;
 
@@ -54,7 +58,7 @@ import java.util.Properties;
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
-public class Preferences extends jmmc.mcs.util.Preferences
+public class Preferences extends fr.jmmc.mcs.util.Preferences
 {
     /** Preference file name */
     static String _shortPreferenceFilename = "fr.jmmc.scalib.sclgui.properties";
