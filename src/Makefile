@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.17 2007-02-13 13:58:44 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.18 2007-02-14 13:50:16 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.17  2007/02/13 13:58:44  lafrasse
+# Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+#
 # Revision 1.16  2006/08/22 15:55:35  gzins
 # Commented java generation (waiting java program fixes)
 #
@@ -161,6 +164,17 @@ PY_SCRIPTS     =
 PY_SCRIPTS_L   =
 
 #
+# SOAP targets
+# ---------------------------------
+wsld_file = $(INTROOT)/include/sclws.wsdl
+do_soap :
+	export CLASSPATH=$CLASSPATH:`mkfMakeJavaClasspath`
+	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(wsld_file)
+
+clean_soap :
+	rm -rf fr/jmmc/sclws_wsdl
+
+#
 # Jarfiles and their directories
 # ---------------------------------
 JARFILES        = sclgui
@@ -168,30 +182,22 @@ JARFILES        = sclgui
 #
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr 
-sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/eta_tau.vot \
-                  fr/jmmc/scalib/sclgui/Resources.properties \
+sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
                   fr/jmmc/scalib/sclgui/search.png
 
 #
 # Java programs
 # ---------------------------------
 JAVA_EXECUTABLES = SearchCalibrators 
-JAVA_EXECUTABLES = 
 
 #
 # other Jar Files
 #
-JAVA_JAR = jmcs.jar             \
-           cds.savot.common.jar \
-		   cds.savot.pull.jar   \
-		   cds.savot.writer.jar \
-		   kxml2-min.jar        \
-		   cds.savot.model.jar  \
-		   cds.savot.sax.jar   
+JAVA_JAR = 
 
 #
 # <brief description of SearchCalibrators java program>
-SearchCalibrators_CLASS = jmmc.scalib.sclgui.SearchCalibrators 
+SearchCalibrators_CLASS = fr.jmmc.scalib.sclgui.SearchCalibrators 
 
 #
 # Command Definition Files (CDF)
@@ -232,10 +238,10 @@ include $(MAKEDIR)/mkfMakefile
 #
 # TARGETS
 # -------
-all:	do_all
+all:	do_soap do_all
 	@echo " . . . 'all' done" 
 
-clean : clean_all 
+clean : clean_soap clean_all 
 	@echo " . . . clean done"
 
 man   : do_man 
