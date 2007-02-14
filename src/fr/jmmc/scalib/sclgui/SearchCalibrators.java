@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.17 2007-02-13 15:34:39 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.18 2007-02-14 13:51:17 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2007/02/13 15:34:39  lafrasse
+ * Jalopyzation.
+ *
  * Revision 1.16  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -134,7 +137,7 @@ public class SearchCalibrators
     {
         // Set default resource    
         fr.jmmc.mcs.util.Resources.setResourceName(
-            "jmmc/scalib/sclgui/Resources");
+            "fr/jmmc/scalib/sclgui/Resources");
 
         // Create a query model
         QueryModel queryModel = new QueryModel();
