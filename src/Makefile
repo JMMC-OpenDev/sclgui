@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.18 2007-02-14 13:50:16 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.19 2007-02-16 13:55:37 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.18  2007/02/14 13:50:16  lafrasse
+# Added and integrated SOAP targets, plus some cleaning.
+#
 # Revision 1.17  2007/02/13 13:58:44  lafrasse
 # Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
 #
@@ -166,10 +169,10 @@ PY_SCRIPTS_L   =
 #
 # SOAP targets
 # ---------------------------------
-wsld_file = $(INTROOT)/include/sclws.wsdl
+CLASSPATH = $(shell mkfMakeJavaClasspath)
+WSLD_FILE = $(INTROOT)/include/sclws.wsdl
 do_soap :
-	export CLASSPATH=$CLASSPATH:`mkfMakeJavaClasspath`
-	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(wsld_file)
+	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(WSLD_FILE)
 
 clean_soap :
 	rm -rf fr/jmmc/sclws_wsdl
