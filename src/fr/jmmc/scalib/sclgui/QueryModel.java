@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.21 2007-02-16 15:20:54 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.22 2007-02-16 17:17:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2007/02/16 15:20:54  lafrasse
+ * Enhanced min & max magnitude interdependance.
+ *
  * Revision 1.20  2007/02/13 16:17:58  lafrasse
  * Jalopyzation.
  *
@@ -161,6 +164,9 @@ public class QueryModel extends Observable implements Observer
      */
     private int _totalStep;
 
+    /** The current catalog name of the querying progress step. */
+    private String _catalogName;
+
     /** Remind whether the query can be edited or not (when loaded fromfile for example) */
     private boolean _isEditable;
 
@@ -214,6 +220,7 @@ public class QueryModel extends Observable implements Observer
 
         setInstrumentalMagnitudeBand("K");
         setInstrumentalMaxBaseLine(100.0);
+        setInstrumentalWavelength(1.0);
 
         setScienceObjectName("");
         setScienceObjectRA("+00:00:00.00");
@@ -228,6 +235,7 @@ public class QueryModel extends Observable implements Observer
 
         setCurrentStep(0);
         setTotalStep(0);
+        setCatalogName("");
 
         // Enable the edition as the values where not loaded from file
         setEditableState(true);
@@ -1151,11 +1159,11 @@ public class QueryModel extends Observable implements Observer
     }
 
     /**
-     * Return the current querying status.
+     * Return the current catalog name.
      *
-     * @return the current querying status.
+     * @return the current catalog name.
      */
-    public String getCurrentStatus()
+    public String getCatalogName()
     {
         MCSLogger.trace();
 
@@ -1164,7 +1172,22 @@ public class QueryModel extends Observable implements Observer
             return " ";
         }
 
-        return "Catalog " + getCurrentStep() + "/" + getTotalStep();
+        return _catalogName;
+    }
+
+    /**
+     * Set the current catalog name of query.
+     *
+     * @param the catalog name of querying step.
+     */
+    public void setCatalogName(String catalogName)
+    {
+        MCSLogger.trace();
+
+        _catalogName = catalogName;
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
