@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.32 2007-02-16 15:20:54 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.33 2007-02-16 17:17:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2007/02/16 15:20:54  lafrasse
+ * Enhanced min & max magnitude interdependance.
+ *
  * Revision 1.31  2007/02/13 16:17:58  lafrasse
  * Jalopyzation.
  *
@@ -501,7 +504,7 @@ public class QueryView extends JPanel implements Observer,
         // Progress bar
         _progressBar.setValue(_queryModel.getCurrentStep());
         _progressBar.setMaximum(_queryModel.getTotalStep());
-        _progressBar.setString(_queryModel.getCurrentStatus());
+        _progressBar.setString(_queryModel.getCatalogName());
 
         // If the science object contains something
         if (scienceObjectName.length() > 0)
