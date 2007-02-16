@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.16 2007-02-13 16:17:58 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.17 2007-02-16 17:19:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2007/02/13 16:17:58  lafrasse
+ * Jalopyzation.
+ *
  * Revision 1.15  2007/02/13 16:16:12  lafrasse
  * Enabled JMMC SearchCal SOAP webservice querying.
  *
@@ -492,54 +495,162 @@ public class VirtualObservatory
         {
             MCSLogger.trace();
 
-            SclwsLocator  loc;
-            SclwsPortType s  = null;
-            String        id = "";
-
-            // Get the connection ID
-            try
+            // Launch the query in the background in order to keed GUI updated
+            class GetCalThread extends Thread
             {
-                loc     = new SclwsLocator();
-                s       = loc.getsclws();
-
-                // Get the connection ID
-                id      = s.getCalAsyncID();
-
-                MCSLogger.test("Connection ID = '" + id + "'.");
-            }
-            catch (Exception exc)
-            {
-                // @TODO
-                MCSLogger.error("Connection failed. Exception: " + exc);
-            }
-
-            // Launch the query in the background
-            class QueryThread extends Thread
-            {
-                SclwsPortType _s;
-                String        _id;
-                String        _query;
-                String        _result;
-
-                QueryThread(SclwsPortType s, String id, String query)
+                GetCalThread()
                 {
-                    _s          = s;
-                    _query      = query;
-                    _id         = id;
-                    _result     = "";
-                }
-
-                String getResult()
-                {
-                    return _result;
                 }
 
                 public void run()
                 {
                     try
                     {
-                        // Launch the query
-                        _result = _s.getCalAsyncQuery(_id, _query);
+                        SclwsLocator  loc;
+                        SclwsPortType s  = null;
+                        String        id = "";
+
+                        // Get the connection ID
+                        try
+                        {
+                            loc     = new SclwsLocator();
+                            s       = loc.getsclws();
+
+                            // Get the connection ID
+                            id      = s.getCalAsyncID();
+
+                            MCSLogger.test("Connection ID = '" + id + "'.");
+                        }
+                        catch (Exception exc)
+                        {
+                            // @TODO
+                            MCSLogger.error("Connection failed. Exception: " +
+                                exc);
+                        }
+
+                        // Launch the query in the background
+                        class QueryThread extends Thread
+                        {
+                            SclwsPortType _s;
+                            String        _id;
+                            String        _query;
+                            String        _result;
+
+                            QueryThread(SclwsPortType s, String id, String query)
+                            {
+                                _s          = s;
+                                _query      = query;
+                                _id         = id;
+                                _result     = "";
+                            }
+
+                            String getResult()
+                            {
+                                return _result;
+                            }
+
+                            public void run()
+                            {
+                                try
+                                {
+                                    // Launch the query
+                                    _result = _s.getCalAsyncQuery(_id, _query);
+                                }
+                                catch (Exception exc)
+                                {
+                                    // @TODO
+                                    MCSLogger.error("Query failed. Exception: " +
+                                        exc);
+                                }
+                            }
+                        }
+
+                        // Get the query from the GUI
+                        String query = _queryModel.getQueryAsMCSString();
+                        MCSLogger.test("Query = '" + query + "'.");
+
+                        // Launch the querying thread
+                        QueryThread queryThread = new QueryThread(s, id, query);
+                        queryThread.start();
+
+                        // @TODO : See for thread destruction on Cancel click
+                        // queryThread.interrupt();
+
+                        // GetCal status polling to update ProgressBar
+                        String  currentCatalogName = "";
+                        Integer catalogIndex       = 0;
+                        Integer nbOfCatalogs       = 0;
+                        Boolean lastCatalog        = false;
+
+                        do
+                        {
+                            // Get query progression status
+                            try
+                            {
+                                currentCatalogName = s.getCalWaitForCurrentCatalogName(id);
+                                _queryModel.setCatalogName(currentCatalogName);
+
+                                nbOfCatalogs = s.getCalNbOfCatalogs(id);
+                                _queryModel.setTotalStep(nbOfCatalogs);
+
+                                catalogIndex = s.getCalCurrentCatalogIndex(id);
+                                _queryModel.setCurrentStep(catalogIndex);
+
+                                lastCatalog = s.getCalIsLastCatalog(id);
+                                /*
+                                   pm.setMinimum(catalogIndex);
+                                   pm.setMaximum(nbOfCatalogs);
+                                   pm.setNote(currentCatalogName);
+                                 */
+                                MCSLogger.test("Status = '" +
+                                    currentCatalogName + "' - " + catalogIndex +
+                                    "/" + nbOfCatalogs + " (" + lastCatalog +
+                                    ").");
+                            }
+                            catch (Exception exc)
+                            {
+                                // @TODO
+                                MCSLogger.error("Status failed. Exception: " +
+                                    exc);
+                            }
+                        }
+                        while (lastCatalog == false);
+
+                        // Wait for the query thread
+                        try
+                        {
+                            // Wait for the thread to end
+                            queryThread.join();
+                        }
+                        catch (Exception exc)
+                        {
+                            // @TODO
+                            MCSLogger.error("Query thread failed. Exception: " +
+                                exc);
+                        }
+
+                        String result = queryThread.getResult();
+
+                        if (result.length() > 0)
+                        {
+                            //                try
+                            //                {
+                            // Parse the received VOTable
+                            _calibratorsModel.parseVOTable(result);
+
+                            //                }
+                            //                catch (IOException ex)
+                            //                {
+                            //                    throw new Exception(ex.getMessage());
+                            //                }
+                        }
+                        else
+                        {
+                            MCSLogger.test("No stars found.");
+                        }
+
+                        // As data are now loaded
+                        enableSaveMenus(true);
                     }
                     catch (Exception exc)
                     {
@@ -549,84 +660,9 @@ public class VirtualObservatory
                 }
             }
 
-            // Get the query from the GUI
-            String query = _queryModel.getQueryAsMCSString();
-            MCSLogger.test("Query = '" + query + "'.");
-
-            // Launch the querying thread
-            QueryThread queryThread = new QueryThread(s, id, query);
-            queryThread.start();
-
-            // @TODO : See for thread destruction on Cancel click
-            // queryThread.interrupt();
-
-            // GetCal status polling to update ProgressBar
-            String  currentCatalogName = "";
-            Integer catalogIndex       = 0;
-            Integer nbOfCatalogs       = 0;
-            Boolean lastCatalog        = false;
-
-            do
-            {
-                // Get query progression status
-                try
-                {
-                    currentCatalogName     = s.getCalWaitForCurrentCatalogName(id);
-
-                    nbOfCatalogs           = s.getCalNbOfCatalogs(id);
-                    _queryModel.setTotalStep(nbOfCatalogs);
-
-                    catalogIndex = s.getCalCurrentCatalogIndex(id);
-                    _queryModel.setCurrentStep(catalogIndex);
-
-                    lastCatalog = s.getCalIsLastCatalog(id);
-
-                    MCSLogger.test("Status = '" + currentCatalogName + "' - " +
-                        catalogIndex + "/" + nbOfCatalogs + " (" + lastCatalog +
-                        ").");
-                }
-                catch (Exception exc)
-                {
-                    // @TODO
-                    MCSLogger.error("Status failed. Exception: " + exc);
-                }
-            }
-            while (lastCatalog == false);
-
-            // Wait for the query result
-            try
-            {
-                // Wait for the thread to end
-                queryThread.join();
-            }
-            catch (Exception exc)
-            {
-                // @TODO
-                MCSLogger.error("Thread failed. Exception: " + exc);
-            }
-
-            String result = queryThread.getResult();
-
-            if (result.length() > 0)
-            {
-                //                try
-                //                {
-                // Parse the received VOTable
-                _calibratorsModel.parseVOTable(result);
-
-                //                }
-                //                catch (IOException ex)
-                //                {
-                //                    throw new Exception(ex.getMessage());
-                //                }
-            }
-            else
-            {
-                MCSLogger.test("No stars found.");
-            }
-
-            // As data are now loaded
-            enableSaveMenus(true);
+            // Launch the GetCal thread
+            GetCalThread getCalThread = new GetCalThread();
+            getCalThread.start();
         }
     }
 
