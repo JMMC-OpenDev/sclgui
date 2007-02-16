@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.31 2007-02-13 16:17:58 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.32 2007-02-16 15:20:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2007/02/13 16:17:58  lafrasse
+ * Jalopyzation.
+ *
  * Revision 1.30  2007/02/13 16:13:18  lafrasse
  * Rationalized field changes tracking.
  *
@@ -302,7 +305,7 @@ public class QueryView extends JPanel implements Observer,
         _instrumentPanel.add(new JLabel("Max. Baseline [m] : "), c);
         _instrumentalMaxBaselineTextField.setMinimumSize(textfieldDimension);
         _instrumentalMaxBaselineTextField.setPreferredSize(textfieldDimension);
-        _instrumentalMaxBaselineTextField.addPropertyChangeListener(this);
+        _instrumentalMaxBaselineTextField.addActionListener(this);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalMaxBaselineTextField, c);
 
@@ -317,7 +320,7 @@ public class QueryView extends JPanel implements Observer,
         tempPanel = new JPanel(new GridBagLayout());
         _scienceObjectNameTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectNameTextfield.setPreferredSize(textfieldDimension);
-        _scienceObjectNameTextfield.addPropertyChangeListener(this);
+        _scienceObjectNameTextfield.addActionListener(this);
         tempPanel.add(_scienceObjectNameTextfield, c);
         c.gridx = 1;
         tempPanel.add(new JButton(_vo._getStarAction));
@@ -344,7 +347,7 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(_scienceObjectMagnitudeLabel, c);
         _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
-        _scienceObjectMagnitudeTextfield.addPropertyChangeListener(this);
+        _scienceObjectMagnitudeTextfield.addActionListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectMagnitudeTextfield, c);
         // Searching Parameters panel
@@ -530,12 +533,31 @@ public class QueryView extends JPanel implements Observer,
 
         Object source = e.getSource();
 
-        if (source == _instrumentalMagnitudeBandCombo)
+        // Check origin to mutualy exclude min and max magnitude as they depend on each other values
+        if (source == _minMagnitudeTextfield)
         {
-            _queryModel.setInstrumentalMagnitudeBands((DefaultComboBoxModel) _instrumentalMagnitudeBandCombo.getModel());
+            _queryModel.setQueryMinMagnitude((Double) _minMagnitudeTextfield.getValue());
         }
 
-        MCSLogger.info("Query = '" + _queryModel.getQueryAsMCSString() + "'.");
+        if (source == _maxMagnitudeTextfield)
+        {
+            _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
+        }
+
+        // Try to inject user values into the model
+        _queryModel.setInstrumentalMagnitudeBands((DefaultComboBoxModel) _instrumentalMagnitudeBandCombo.getModel());
+        _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
+        _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
+        _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
+        _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
+        _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
+        _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
+        _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
+        _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
+        _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
+
+        // Refress the whole view
+        _queryModel.notifyObservers();
     }
 
     /**
@@ -563,60 +585,6 @@ public class QueryView extends JPanel implements Observer,
             (_scienceObjectNameTextfield.getText().length() > 0) &&
             (_queryModel.canBeEdited() == true);
         setEnabledComponents(_searchCalPanel, sciencObjectOk);
-
-        Object source = e.getSource();
-        /*
-           if (source == _instrumentalMaxBaselineTextField)
-           {
-               _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
-           }
-           // Try to inject user values into the model
-           if (source == _scienceObjectNameTextfield)
-           {
-               _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
-           }
-           if (source == _scienceObjectRATextfield)
-           {
-               _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
-           }
-           if (source == _scienceObjectDECTextfield)
-           {
-               _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
-           }
-           if (source == _scienceObjectMagnitudeTextfield)
-           {
-               _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
-           }
-           if (source == _diffRASizeTextfield)
-           {
-               _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
-           }
-           if (source == _diffDECSizeTextfield)
-           {
-               _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
-           }
-           if (source == _radialSizeTextfield)
-           {
-               _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
-           }
-         */
-
-        // Try to inject user values into the model
-        _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
-        _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
-        _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
-        _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
-        _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
-        _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
-        _queryModel.setQueryMinMagnitude((Double) _minMagnitudeTextfield.getValue());
-        _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
-        _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
-        _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
-        _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
-
-        _queryModel.notifyObservers();
-
-        MCSLogger.info("Query = '" + _queryModel.getQueryAsMCSString() + "'.");
 
         repaint();
     }

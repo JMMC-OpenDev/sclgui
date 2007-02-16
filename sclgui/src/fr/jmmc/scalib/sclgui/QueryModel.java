@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.20 2007-02-13 16:17:58 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.21 2007-02-16 15:20:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/02/13 16:17:58  lafrasse
+ * Jalopyzation.
+ *
  * Revision 1.19  2007/02/13 16:16:12  lafrasse
  * Enabled JMMC SearchCal SOAP webservice querying.
  *
@@ -228,6 +231,8 @@ public class QueryModel extends Observable implements Observer
 
         // Enable the edition as the values where not loaded from file
         setEditableState(true);
+
+        notifyObservers();
     }
 
     /**
@@ -272,6 +277,8 @@ public class QueryModel extends Observable implements Observer
 
         // Enable the edition as the values where not loaded from file
         setEditableState(true);
+
+        notifyObservers();
     }
 
     /**
@@ -318,6 +325,8 @@ public class QueryModel extends Observable implements Observer
 
         // Disable the edition as the values where loaded from file
         setEditableState(false);
+
+        notifyObservers();
     }
 
     /**
@@ -453,7 +462,6 @@ public class QueryModel extends Observable implements Observer
         setInstrumentalMagnitudeBand(magnitudeBand);
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -488,7 +496,6 @@ public class QueryModel extends Observable implements Observer
         }
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -519,7 +526,6 @@ public class QueryModel extends Observable implements Observer
         _instrumentalWavelength               = wavelength;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -557,7 +563,6 @@ public class QueryModel extends Observable implements Observer
         _instrumentalMaxBaseLine = maxBaseLine;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -594,7 +599,6 @@ public class QueryModel extends Observable implements Observer
         _scienceObjectName = scienceObjectName;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -634,7 +638,6 @@ public class QueryModel extends Observable implements Observer
         _scienceObjectRA = rightAscension;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -674,7 +677,6 @@ public class QueryModel extends Observable implements Observer
         _scienceObjectDEC = declinaison;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -715,7 +717,6 @@ public class QueryModel extends Observable implements Observer
         }
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -749,7 +750,6 @@ public class QueryModel extends Observable implements Observer
         _scienceObjectInclusionFlag = flag;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -785,7 +785,6 @@ public class QueryModel extends Observable implements Observer
         }
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -812,16 +811,18 @@ public class QueryModel extends Observable implements Observer
         MCSLogger.trace();
 
         // This value should never be auto-updated anymore
-        _queryMinMagnitudeAutoUpdate = false;
+        _queryMinMagnitudeAutoUpdate     = false;
 
-        // Update only if the given value is less or equal to the minimum one
-        if (minMagnitude <= _queryMaxMagnitude)
-        {
-            _queryMinMagnitude = minMagnitude;
-        }
-
+        _queryMinMagnitude               = minMagnitude;
         setChanged();
-        notifyObservers();
+
+        // If the given min value is greater than the max magnitude
+        if (_queryMinMagnitude > _queryMaxMagnitude)
+        {
+            // Update max magnitude accordinaly
+            _queryMaxMagnitude = _queryMinMagnitude;
+            notifyObservers();
+        }
     }
 
     /**
@@ -869,7 +870,6 @@ public class QueryModel extends Observable implements Observer
         }
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -896,16 +896,18 @@ public class QueryModel extends Observable implements Observer
         MCSLogger.trace();
 
         // This value should never be auto-updated anymore
-        _queryMaxMagnitudeAutoUpdate = false;
+        _queryMaxMagnitudeAutoUpdate     = false;
 
-        // Update only if the given value is greater or equal to the minimum one
-        if (maxMagnitude >= _queryMinMagnitude)
-        {
-            _queryMaxMagnitude = maxMagnitude;
-        }
-
+        _queryMaxMagnitude               = maxMagnitude;
         setChanged();
-        notifyObservers();
+
+        // If the given max value is lower than to the min magnitude
+        if (_queryMaxMagnitude < _queryMinMagnitude)
+        {
+            // Update min magnitude accordinaly
+            _queryMinMagnitude = _queryMaxMagnitude;
+            notifyObservers();
+        }
     }
 
     /**
@@ -953,7 +955,6 @@ public class QueryModel extends Observable implements Observer
         }
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -976,8 +977,8 @@ public class QueryModel extends Observable implements Observer
     {
         _queryBrightScenarioFlag = flag;
 
-        setChanged();
         notifyObservers();
+        setChanged();
     }
 
     /**
@@ -1004,7 +1005,6 @@ public class QueryModel extends Observable implements Observer
         _queryDiffRASize = diffRASize;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -1041,7 +1041,6 @@ public class QueryModel extends Observable implements Observer
         _queryDiffDECSize = diffDECSize;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -1078,7 +1077,6 @@ public class QueryModel extends Observable implements Observer
         _queryRadialSize = radiusSize;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -1221,7 +1219,6 @@ public class QueryModel extends Observable implements Observer
         _isEditable = state;
 
         setChanged();
-        notifyObservers();
     }
 }
 /*___oOo___*/
