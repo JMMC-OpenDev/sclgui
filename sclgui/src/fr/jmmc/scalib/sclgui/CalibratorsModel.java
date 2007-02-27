@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.17 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.18 2007-02-27 12:52:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.16  2006/11/30 23:03:53  lafrasse
  * Added a fixed column on the left with generated star IDs.
  *
@@ -121,7 +124,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Filters */
     private ParamSet _paramSet;
 
-    /** Flag indicated whether data have changed or not */
+    /** Flag indicating whether data have changed or not */
     boolean _dataHaveChanged;
 
     /** Raw headers */
@@ -180,7 +183,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Returns whether data have changed or not.
      *
-     * @return true if inner data have changed, false otherwise
+     * @return true if inner data have changed, false otherwise.
      */
     public boolean dataHaveChanged()
     {
@@ -192,6 +195,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Returns false regardless of parameter values.
      *
+     * @param row
+     * @param column
+     *
      * @return false
      */
     public boolean isCellEditable(int row, int column)
@@ -202,7 +208,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * This method is called when a cell value is needed by the attached view.
+     * Called when a cell value is needed by the attached view.
+     *
+     * @param row
+     * @param column
      *
      * @return the specified cell value.
      */
@@ -247,7 +256,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Parse a given string as a VOTable and update any attached JTable to show
      * its content.
-     * @param voTable the voTable content
+     *
+     * @param voTable the string to parse.
      */
     public void parseVOTable(String voTable)
     {
@@ -371,9 +381,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * getStarProperty.
+     * Return the star property at the given row & column.
      *
-     * Return the StarProperty corresponding to the cell.
+     * @param row
+     * @param column
+     *
+     * @return the StarProperty corresponding to the cell.
      */
     public StarProperty getStarProperty(int row, int column)
     {
@@ -392,9 +405,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * DOCUMENT ME!
+     * Return a SavotVOTable object of the given StarList object.
      *
-     * @return DOCUMENT ME!
+     * @param starList the list of stars to be converted.
+     *
+     * @return a Savot VOTable object.
      */
     private SavotVOTable getSavotVOTable(StarList starList)
     {
@@ -455,6 +470,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
     /**
      * Open the given file as a VOTable.
+     *
+     * @param file the file to be read.
      */
     public void openFile(File file)
     {
@@ -478,7 +495,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * Save the current votable into the given file.
+     * Save the original star list into the given file.
+     *
+     * @param file the file to be written.
      */
     public void saveVOTableFile(File file)
     {
@@ -492,7 +511,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * getVOTable.
+     * Return a string containing the current star list as a VOTable.
      *
      * @return the VOTable corresponding to the SearchCal initial result.
      */
@@ -523,10 +542,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
-     * Delete the shown elements according given index. The shown elements are
-     * the not filtered elements.
+     * Delete the shown elements according to the given row indexes. The shown
+     * elements are the not filtered elements.
      *
-     * @param indices array of indices.
+     * @param indices indices of the row to be removed.
      */
     public void deleteStars(int[] indices)
     {
@@ -562,7 +581,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Convert a given VOTable file to the CSV format.
      *
-     * @param in the file to convert
      * @param out the converted file
      */
     public void exportCurrentVOTableToCSV(File out)
@@ -576,7 +594,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Convert a given VOTable file to the HTML format.
      *
-     * @param in the file to convert
      * @param out the converted file
      */
     public void exportCurrentVOTableToHTML(File out)
