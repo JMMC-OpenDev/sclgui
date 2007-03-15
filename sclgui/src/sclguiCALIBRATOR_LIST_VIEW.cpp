@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.17 2006-08-23 12:12:36 gzins Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.18 2007-03-15 12:13:09 scetre Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2006/08/23 12:12:36  gzins
+ * Re-arranged GetLabel() methods
+ *
  * Revision 1.16  2006/04/18 14:57:38  gzins
  * Changed UNSO to USNO
  *
@@ -63,7 +66,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.17 2006-08-23 12:12:36 gzins Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.18 2007-03-15 12:13:09 scetre Exp $"; 
 
 /* 
  * System Headers 
@@ -586,6 +589,8 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::GetLabelForBrightKV
         label->push_back(vobsSTAR_POS_EQ_PMRA);
         label->push_back(vobsSTAR_POS_PARLX_TRIG);
         label->push_back(vobsSTAR_SPECT_TYPE_MK);
+        label->push_back(vobsSTAR_CODE_VARIAB_V1);
+        label->push_back(vobsSTAR_CODE_VARIAB_V2);
         label->push_back(vobsSTAR_CODE_VARIAB_V3);
         label->push_back(vobsSTAR_CODE_MULT_FLAG);
         label->push_back(vobsSTAR_POS_GAL_LAT);
