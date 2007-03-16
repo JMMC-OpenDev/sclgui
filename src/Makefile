@@ -1,13 +1,17 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.20 2007-03-15 15:56:24 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.21 2007-03-16 10:07:34 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.20  2007/03/15 15:56:24  lafrasse
+# Replaced reference to INTROOT with a call to miscLocateFile to find sclws.wsdl
+# in order to ensure installation by th swmgr user that has no INTROOT at all.
+#
 # Revision 1.19  2007/02/16 13:55:37  lafrasse
 # Finished SOAP preprocessing target (Java classpath retireving).
 #
@@ -223,7 +227,7 @@ MAN8 =
 #
 # other files to be installed
 #----------------------------
-INSTALL_FILES =
+INSTALL_FILES = $(shell ls ../lib/*.jar)
 
 #
 # list of all possible C-sources (used to create automatic dependencies)

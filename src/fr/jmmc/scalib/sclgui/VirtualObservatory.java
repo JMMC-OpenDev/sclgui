@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.17 2007-02-16 17:19:03 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.18 2007-03-16 10:07:34 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2007/02/16 17:19:03  lafrasse
+ * Threaded the GetCal actionPerformed() method in order to let the GUI updates (progres bar) while the query is ongoing.
+ * Added support for true catalog named queried.
+ *
  * Revision 1.16  2007/02/13 16:17:58  lafrasse
  * Jalopyzation.
  *
@@ -216,6 +220,23 @@ public class VirtualObservatory
         }
 
         return canLostModifications;
+    }
+
+    /**
+     * Launch the webservice querying with the given query (for ASPRO launch).
+     *
+     * @param query the query parameters as an empty SearchCal VOTable.
+     */
+    public void executeQuery(String query)
+    {
+        MCSLogger.debug("Received query = " + query);
+
+        // Parse the query
+        _calibratorsModel.parseVOTable(query);
+        _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+
+        // Launch the resquest
+        _getCalAction.actionPerformed(null);
     }
 
     /**

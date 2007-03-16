@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.18 2007-02-14 13:51:17 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.19 2007-03-16 10:07:34 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2007/02/14 13:51:17  lafrasse
+ * Corrected path for resources.
+ *
  * Revision 1.17  2007/02/13 15:34:39  lafrasse
  * Jalopyzation.
  *
@@ -133,9 +136,9 @@ public class SearchCalibrators
      * Create all objects needed by SearchCalibrators and plug event responding
      * loop (Listener/Listenable, Observer/Observable) in.
      */
-    public SearchCalibrators()
+    public SearchCalibrators(String query)
     {
-        // Set default resource    
+        // Set default resource
         fr.jmmc.mcs.util.Resources.setResourceName(
             "fr/jmmc/scalib/sclgui/Resources");
 
@@ -171,6 +174,21 @@ public class SearchCalibrators
 
         // Make application presentation coherent with preferences
         Preferences.getInstance().trulyNotifyObservers();
+
+        // If a query was received (when instaciated by ASPRO)
+        if (query != null)
+        {
+            // Launch the request
+            vo.executeQuery(query);
+        }
+    }
+
+    /**
+     * Creates a new SearchCalibrators object.
+     */
+    public SearchCalibrators()
+    {
+        this(null);
     }
 
     /**
