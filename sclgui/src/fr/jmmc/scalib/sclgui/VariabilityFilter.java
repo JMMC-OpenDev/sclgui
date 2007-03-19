@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.7 2007-03-19 08:54:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.5  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -78,8 +81,9 @@ public class VariabilityFilter extends Filter
         StarProperty cell            = (StarProperty) row.elementAt(variability3ID);
         String       variabilityFlag = (String) cell.getValue();
 
-        // If the "variability3" flag was found in the current line
-        if ((variabilityFlag != null) && (variabilityFlag.length() != 0))
+        // If "variability3" flag was found in the current line, and is not "C"
+        if ((variabilityFlag != null) && (variabilityFlag.length() != 0) &&
+                (variabilityFlag.trim().equalsIgnoreCase("C") == false))
         {
             // This row should be removed
             return true;
