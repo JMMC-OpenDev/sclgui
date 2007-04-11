@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.33 2007-02-16 17:17:18 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.34 2007-04-11 13:52:57 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2007/02/16 17:17:18  lafrasse
+ * Added support for true catalog namei queried.
+ *
  * Revision 1.32  2007/02/16 15:20:54  lafrasse
  * Enhanced min & max magnitude interdependance.
  *
@@ -334,6 +337,7 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(new JLabel("RA 2000 (mn) : "), c);
         _scienceObjectRATextfield.setMinimumSize(textfieldDimension);
         _scienceObjectRATextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectRATextfield.addActionListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectRATextfield, c);
         // DEG coordinate field
@@ -342,6 +346,7 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(new JLabel("DEC 2000 (deg) : "), c);
         _scienceObjectDECTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectDECTextfield.setPreferredSize(textfieldDimension);
+        _scienceObjectDECTextfield.addActionListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectDECTextfield, c);
         // Magnitude field
@@ -394,6 +399,7 @@ public class QueryView extends JPanel implements Observer,
         _searchCalPanel.add(_diffRASizeLabel, c);
         _diffRASizeTextfield.setMinimumSize(textfieldDimension);
         _diffRASizeTextfield.setPreferredSize(textfieldDimension);
+        _diffRASizeTextfield.addActionListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_diffRASizeTextfield, c);
         // DEC delta field
@@ -402,6 +408,7 @@ public class QueryView extends JPanel implements Observer,
         _searchCalPanel.add(_diffDECSizeLabel, c);
         _diffDECSizeTextfield.setMinimumSize(textfieldDimension);
         _diffDECSizeTextfield.setPreferredSize(textfieldDimension);
+        _diffDECSizeTextfield.addActionListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_diffDECSizeTextfield, c);
         // Radial size field
@@ -410,6 +417,7 @@ public class QueryView extends JPanel implements Observer,
         _searchCalPanel.add(_radialSizeLabel, c);
         _radialSizeTextfield.setMinimumSize(textfieldDimension);
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
+        _radialSizeTextfield.addActionListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_radialSizeTextfield, c);
 
@@ -547,9 +555,15 @@ public class QueryView extends JPanel implements Observer,
             _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
         }
 
+        // Update instrumental wavelength only if the textfield was used
+        // (done through the model when using _instrumentalMagnitudeBandCombo
+        if (source == _instrumentalWavelengthTextfield)
+        {
+            _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
+        }
+
         // Try to inject user values into the model
         _queryModel.setInstrumentalMagnitudeBands((DefaultComboBoxModel) _instrumentalMagnitudeBandCombo.getModel());
-        _queryModel.setInstrumentalWavelength(((Double) _instrumentalWavelengthTextfield.getValue()));
         _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
         _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
         _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
