@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.22 2007-02-16 17:17:18 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.23 2007-04-11 13:51:47 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2007/02/16 17:17:18  lafrasse
+ * Added support for true catalog namei queried.
+ *
  * Revision 1.21  2007/02/16 15:20:54  lafrasse
  * Enhanced min & max magnitude interdependance.
  *
@@ -252,8 +255,7 @@ public class QueryModel extends Observable implements Observer
 
         setInstrumentalMagnitudeBand(_preferences.getPreference(
                 "query.magnitudeBand"));
-        setInstrumentalWavelength(_preferences.getPreferenceAsDouble(
-                "query.instrumentalWavelength"));
+
         setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
                 "query.instrumentalMaxBaseLine"));
 
