@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.10 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.11 2007-04-13 13:25:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.9  2006/08/09 13:53:24  lafrasse
  * Generalized code for ParamXListener
  *
@@ -100,7 +103,7 @@ public class FilterView extends JPanel implements Observer
             // Get the constraint name
             String constraintName = _filter.getConstraintNameByOrder(i);
 
-            // Get the correspondingconstraint value
+            // Get the corresponding constraint value
             Object constraintObject = _filter.getConstraintByName(constraintName);
 
             // Add the corresponding widget to the current filter view
@@ -136,9 +139,8 @@ public class FilterView extends JPanel implements Observer
     {
         MCSLogger.trace();
 
-        JLabel         label         = new JLabel(constraintName);
-        JComponent     widget;
-        ActionListener paramListener;
+        JLabel        label         = new JLabel(constraintName);
+        ParamListener paramListener;
 
         // If the constraint is a Double object
         if (constraintValue.getClass() == java.lang.Double.class)
@@ -147,10 +149,10 @@ public class FilterView extends JPanel implements Observer
             panel.add(label);
 
             // Create the constraint widget
-            widget                   = new JFormattedTextField((Double) constraintValue);
-            paramListener            = new ParamListener(_filter,
-                    constraintName, (JFormattedTextField) widget);
-            ((JFormattedTextField) widget).addActionListener(paramListener);
+            JFormattedTextField widget = new JFormattedTextField((Double) constraintValue);
+            paramListener = new ParamListener(_filter, constraintName, widget);
+            widget.addActionListener(paramListener);
+            widget.addFocusListener(paramListener);
             _widgets.put(constraintName, widget);
             _orderedWidgets.add(widget);
             panel.add(widget);
@@ -164,10 +166,10 @@ public class FilterView extends JPanel implements Observer
             panel.add(label);
 
             // Create the constraint widget
-            widget            = new JTextField((String) constraintValue);
-            paramListener     = new ParamListener(_filter, constraintName,
-                    (JTextField) widget);
-            ((JTextField) widget).addActionListener(paramListener);
+            JTextField widget = new JTextField((String) constraintValue);
+            paramListener = new ParamListener(_filter, constraintName, widget);
+            widget.addActionListener(paramListener);
+            widget.addFocusListener(paramListener);
             _widgets.put(constraintName, widget);
             _orderedWidgets.add(widget);
             panel.add(widget);
@@ -178,11 +180,10 @@ public class FilterView extends JPanel implements Observer
         else if (constraintValue.getClass() == java.lang.Boolean.class)
         {
             // Create the constraint widget
-            widget            = new JCheckBox(constraintName,
+            JCheckBox widget = new JCheckBox(constraintName,
                     ((Boolean) constraintValue).booleanValue());
-            paramListener     = new ParamListener(_filter, constraintName,
-                    (JCheckBox) widget);
-            ((JCheckBox) widget).addActionListener(paramListener);
+            paramListener = new ParamListener(_filter, constraintName, widget);
+            widget.addActionListener(paramListener);
             _widgets.put(constraintName, widget);
             _orderedWidgets.add(widget);
             panel.add(widget);
@@ -248,7 +249,7 @@ public class FilterView extends JPanel implements Observer
 /**
  * Handle any event coming from a given parameter widget.
  */
-class ParamListener implements ActionListener
+class ParamListener implements ActionListener, FocusListener
 {
     /** The filter to update */
     Filter _filter;
@@ -275,14 +276,42 @@ class ParamListener implements ActionListener
     }
 
     /**
-     * Called whenever an event was issued by the GUI component.
+     * Called when the focus enters a widget.
+     */
+    public void focusGained(FocusEvent e)
+    {
+        // Does nothing (not needed)
+    }
+
+    /**
+     * Called when the focus leaves a widget.
      *
-     * @param e the event.
+     * Used to validate and store TextFields data when tabbing between them.
+     */
+    public void focusLost(FocusEvent e)
+    {
+        MCSLogger.trace();
+
+        // Store new data
+        storeValues(e);
+    }
+
+    /**
+     * Called when a widget triggered an action.
      */
     public void actionPerformed(ActionEvent e)
     {
         MCSLogger.trace();
 
+        // Store new data
+        storeValues(e);
+    }
+
+    /**
+     * Store form values in the model.
+     */
+    public void storeValues(AWTEvent e)
+    {
         // If there is no constraint name
         if (_constraintName == null)
         {
@@ -298,6 +327,16 @@ class ParamListener implements ActionListener
             // If the constraint is a Double object
             if (constraintValue.getClass() == java.lang.Double.class)
             {
+                try
+                {
+                    // Convert and commit the new value (focus lost)
+                    ((JFormattedTextField) _widget).commitEdit();
+                }
+                catch (Exception ex)
+                {
+                    MCSLogger.error("Could not handle input");
+                }
+
                 _filter.setConstraint(_constraintName,
                     (Double) ((JFormattedTextField) _widget).getValue());
             }
