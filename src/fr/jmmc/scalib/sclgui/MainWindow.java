@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.17 2007-02-16 15:19:55 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.18 2007-04-13 14:36:07 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2007/02/16 15:19:55  lafrasse
+ * Updated software version number in the About window.
+ *
  * Revision 1.16  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -316,19 +319,15 @@ public class MainWindow extends JFrame
             MCSLogger.trace();
 
             String greetings = "";
-            greetings += "Specifications :\n";
-            greetings += "\tDaniel BONNEAU\n";
-            greetings += "\tGilles DUVERT\n";
-            greetings += "\tFabien MALBET\n";
-            greetings += "\tDenis MOURARD\n";
             greetings += "\n";
-            greetings += "Programming :\n";
-            greetings += "\tSylvain LAFRASSE\n";
-            greetings += "\tGuillaume MELLA\n";
-            greetings += "\tYannick VANDERSCHUEREN\n";
+            greetings += "Brought to you by :\n";
+            greetings += "\n";
+            greetings += "\t\tThe JMMC Team.\n";
+            greetings += "\n";
+            greetings += "\n";
 
             AboutWindow aboutWindow = new AboutWindow("SearchCal",
-                    "4.0 beta 3", greetings, "Copyright 2006 JMMC");
+                    "4.0 beta 4", greetings, "Copyright 2007 JMMC");
         }
     }
 }
