@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.10 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.11 2007-04-13 13:26:28 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.9  2006/11/14 14:44:56  lafrasse
  * Moved all astronomical-related computations in the new jmmc.mcs.astro package.
  *
@@ -61,13 +64,13 @@ public class SpectralTypeFilter extends Filter
     {
         super();
 
-        setConstraint("O", new Boolean(false));
-        setConstraint("B", new Boolean(false));
-        setConstraint("A", new Boolean(false));
-        setConstraint("F", new Boolean(false));
-        setConstraint("G", new Boolean(false));
-        setConstraint("K", new Boolean(false));
-        setConstraint("M", new Boolean(false));
+        setConstraint("O", new Boolean(true));
+        setConstraint("B", new Boolean(true));
+        setConstraint("A", new Boolean(true));
+        setConstraint("F", new Boolean(true));
+        setConstraint("G", new Boolean(true));
+        setConstraint("K", new Boolean(true));
+        setConstraint("M", new Boolean(true));
     }
 
     /**
