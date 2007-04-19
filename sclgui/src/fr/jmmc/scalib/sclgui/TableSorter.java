@@ -898,7 +898,7 @@ public class TableSorter extends AbstractTableModel
             // Get StarProperty selected using modelIndex Method
             CalibratorsModel calModel     = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
             StarProperty     starProperty = calModel.getStarProperty(modelIndex(
-                        row), column);
+                        row), table.convertColumnIndexToModel(column));
 
             // do not change color if cell is located onto a selected row
             int[] selectedRows = table.getSelectedRows();
