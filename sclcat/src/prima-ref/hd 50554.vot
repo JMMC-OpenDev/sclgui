@@ -8,20 +8,20 @@
  <DESCRIPTION>
   SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)
   Request parameters: -minMagRange 1 -mag 0 -objectName hd 50554 -ra 06 54 42.8253 -wlen 1 -band K -bright false -baseMax 200 -maxMagRange 20 -file hd 50554.vot -radius 1.03444124417 -dec +24 14 44.011 -visErr 1  
-  Generated on (UTC): 2007-04-27T13:55:37
+  Generated on (UTC): 2007-05-09T09:22:28
  </DESCRIPTION>
 
  <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
 
- <RESOURCE name="SearchCal v3.3.6">
+ <RESOURCE name="SearchCal v3.3.6a">
   <TABLE
  name="hd 50554.vot">
 
 <PARAM name="objectName" datatype="char" arraysize="*" unit="" value="hd 50554"/>
 <PARAM name="mag" datatype="double" unit="" value="0"/>
-<PARAM name="diffRa" datatype="int" unit="arcmin" value="1800"/>
-<PARAM name="diffDec" datatype="int" unit="arcmin" value="600"/>
-<PARAM name="radius" datatype="int" unit="arcmin" value="1.03444124417"/>
+<PARAM name="diffRa" datatype="double" unit="arcmin" value="1800"/>
+<PARAM name="diffDec" datatype="double" unit="arcmin" value="600"/>
+<PARAM name="radius" datatype="double" unit="arcmin" value="1.03444124417"/>
 <PARAM name="band" datatype="char" arraysize="*" unit="" value="K"/>
 <PARAM name="minMagRange" datatype="double" unit="" value="1"/>
 <PARAM name="maxMagRange" datatype="double" unit="" value="20"/>

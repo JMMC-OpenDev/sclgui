@@ -8,20 +8,20 @@
  <DESCRIPTION>
   SearchCal software: http://www.mariotti.fr/aspro_page.htm (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)
   Request parameters: -minMagRange 1 -mag 0 -objectName NAME WASP-2 -ra 20 30 54.130 -wlen 1 -band K -bright false -baseMax 200 -maxMagRange 20 -file NAME WASP-2.vot -radius 1.01772822608 -dec +06 25 46.37 -visErr 1  
-  Generated on (UTC): 2007-04-27T14:10:10
+  Generated on (UTC): 2007-05-09T09:37:35
  </DESCRIPTION>
 
  <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
 
- <RESOURCE name="SearchCal v3.3.6">
+ <RESOURCE name="SearchCal v3.3.6a">
   <TABLE
  name="NAME WASP-2.vot">
 
 <PARAM name="objectName" datatype="char" arraysize="*" unit="" value="NAME WASP-2"/>
 <PARAM name="mag" datatype="double" unit="" value="0"/>
-<PARAM name="diffRa" datatype="int" unit="arcmin" value="1800"/>
-<PARAM name="diffDec" datatype="int" unit="arcmin" value="600"/>
-<PARAM name="radius" datatype="int" unit="arcmin" value="1.01772822608"/>
+<PARAM name="diffRa" datatype="double" unit="arcmin" value="1800"/>
+<PARAM name="diffDec" datatype="double" unit="arcmin" value="600"/>
+<PARAM name="radius" datatype="double" unit="arcmin" value="1.01772822608"/>
 <PARAM name="band" datatype="char" arraysize="*" unit="" value="K"/>
 <PARAM name="minMagRange" datatype="double" unit="" value="1"/>
 <PARAM name="maxMagRange" datatype="double" unit="" value="20"/>
