@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.21 2007-03-16 10:07:34 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.22 2007-05-22 14:20:51 gzins Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.21  2007/03/16 10:07:34  lafrasse
+# Added support for instanciation and execution from ASPRO.
+#
 # Revision 1.20  2007/03/15 15:56:24  lafrasse
 # Replaced reference to INTROOT with a call to miscLocateFile to find sclws.wsdl
 # in order to ensure installation by th swmgr user that has no INTROOT at all.
@@ -174,17 +177,6 @@ PY_SCRIPTS     =
 PY_SCRIPTS_L   =
 
 #
-# SOAP targets
-# ---------------------------------
-CLASSPATH = $(shell mkfMakeJavaClasspath)
-WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
-do_soap :
-	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(WSLD_FILE)
-
-clean_soap :
-	rm -rf fr/jmmc/sclws_wsdl
-
-#
 # Jarfiles and their directories
 # ---------------------------------
 JARFILES        = sclgui
@@ -259,5 +251,16 @@ man   : do_man
 
 install : install_all
 	@echo " . . . installation done"
+
+#
+# SOAP targets
+# ---------------------------------
+CLASSPATH = $(shell mkfMakeJavaClasspath)
+WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
+do_soap :
+	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(WSLD_FILE)
+
+clean_soap :
+	rm -rf fr/jmmc/sclws_wsdl
 
 #___oOo___

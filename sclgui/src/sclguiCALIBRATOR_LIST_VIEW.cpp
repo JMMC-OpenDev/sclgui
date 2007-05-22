@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.18 2007-03-15 12:13:09 scetre Exp $"
+ * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.19 2007-05-22 14:20:51 gzins Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2007/03/15 12:13:09  scetre
+ * Added visualisaiton of varflag1 and varflag2 oin detailled view in Bright case
+ *
  * Revision 1.17  2006/08/23 12:12:36  gzins
  * Re-arranged GetLabel() methods
  *
@@ -66,7 +69,7 @@
  *  Definition of sclguiCALIBRATOR_LIST_VIEW class.
  */
 
-static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.18 2007-03-15 12:13:09 scetre Exp $"; 
+static char *rcsId __attribute__ ((unused))="@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.cpp,v 1.19 2007-05-22 14:20:51 gzins Exp $"; 
 
 /* 
  * System Headers 
@@ -724,6 +727,7 @@ mcsCOMPL_STAT sclguiCALIBRATOR_LIST_VIEW::GetLabelForFaintK
         label->push_back(sclsvrCALIBRATOR_DIST);
         label->push_back(sclsvrCALIBRATOR_VIS2);
         label->push_back(sclsvrCALIBRATOR_VIS2_ERROR);
+        label->push_back(sclsvrCALIBRATOR_DIAM_VK);
         label->push_back(sclsvrCALIBRATOR_DIAM_IJ);
         label->push_back(sclsvrCALIBRATOR_DIAM_IK);
         label->push_back(sclsvrCALIBRATOR_DIAM_JH);
