@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.18 2007-02-27 12:52:58 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.19 2007-05-28 16:25:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2007/02/27 12:52:58  lafrasse
+ * Completed Doxygen documentation.
+ *
  * Revision 1.17  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -130,6 +133,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** Raw headers */
     public RowHeadersModel _rowHeadersModel;
 
+    /** Column data types */
+    public Vector _columnClasses;
+
     /**
      * Constructor.
      *
@@ -149,6 +155,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _dataHaveChanged      = false;
 
         _rowHeadersModel      = new RowHeadersModel();
+
+        _columnClasses        = null;
     }
 
     /**
@@ -195,6 +203,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /**
      * Returns false regardless of parameter values.
      *
+     * Because the Jtable should not allow data edition at all.
+     *
      * @param row
      * @param column
      *
@@ -219,8 +229,28 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
+        Object _value = getStarProperty(row, column).getValue();
+
         // Return the StarProperty value
-        return getStarProperty(row, column).getValue();
+        return _value;
+    }
+
+    /**
+     * Called when a column class is needed by the attached view.
+     *
+     * @param column
+     *
+     * @return the specified cell value.
+     */
+    public Class getColumnClass(int column)
+    {
+        MCSLogger.trace();
+
+        if (_columnClasses != null)
+        {
+            return (Class) _columnClasses.elementAt(column);
+        }
+        return null;
     }
 
     /**
@@ -286,6 +316,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
         SavotTable    table    = (SavotTable) resource.getTables().getItemAt(0);
         GroupSet      groupSet = table.getGroups();
+        FieldSet      fieldSet = table.getFields();
 
         // Retrieve VOTable parameters
         _paramSet = table.getParams();
@@ -298,6 +329,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         // @TODO this is may not be compatible with other VOTable than JMMC ones
         Hashtable groupNameToGroupId = new Hashtable();
+        _columnClasses = new Vector();
 
         for (int groupId = 0; groupId < groupSet.getItemCount(); groupId++)
         {
@@ -305,10 +337,37 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
             String     groupName    = currentGroup.getName();
 
+            // Associate the group name with its index as a table column
             groupNameToGroupId.put(groupName, new Integer(groupId));
             _columnNames.add(groupName);
 
             // @todo : store the datatype to later affect the right object (amongst String, Double, RA & Dec) as each starProperty value.
+            // Get back the field type
+            SavotField field     = (SavotField) fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
+            String     fieldType = field.getDataType();
+            if (fieldType != null)
+            {
+                // Default class
+                Class columnClass = Object.class;
+                if (fieldType.equals("char"))
+                {
+                    columnClass = String.class;
+                }
+                else if (fieldType.equals("float"))
+                {
+                    columnClass = Double.class;
+                }
+                else if (fieldType.equals("boolean"))
+                {
+                    columnClass = Boolean.class;
+                }
+
+                _columnClasses.add(columnClass);
+            }
+            else
+            {
+                // @todo : handle assertion failed
+            }
         }
 
         // Add the group name to group id conversion table to the star list
@@ -336,6 +395,36 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
                 // Store the group value (always the first group cell)
                 Object value = row.getContent(mainGroupCellId + 0);
+
+                // Get back the value type and convert the value accordinaly
+                SavotField field     = (SavotField) fieldSet.getItemAt(mainGroupCellId + 0);
+                String     fieldType = field.getDataType();
+                if (fieldType.equals("char"))
+                {
+                    value = (String) value;
+                }
+                else if (fieldType.equals("float"))
+                {
+                    try
+                    {
+                        value = Double.valueOf((String) value);
+                    }
+                    catch(Exception e)
+                    {
+                        value = null;
+                    }
+                }
+                else if (fieldType.equals("boolean"))
+                {
+                    try
+                    {
+                        value = Boolean.valueOf((String) value);
+                    }
+                    catch(Exception e)
+                    {
+                        value = null;
+                    }
+                }
 
                 // Store the group origin (always the second group cell)
                 String origin = row.getContent(mainGroupCellId + 1);
