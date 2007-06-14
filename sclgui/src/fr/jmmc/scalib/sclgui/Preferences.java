@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.16 2007-02-13 16:17:58 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.17 2007-06-14 08:39:25 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2007/02/13 16:17:58  lafrasse
+ * Jalopyzation.
+ *
  * Revision 1.15  2007/02/13 16:15:51  lafrasse
  * Changed default query from ETA_TAU to Archenor.
  *
@@ -135,9 +138,11 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 /* Place view behaviour */
                 defaults.setPreference("view.legend.show", "false");
                 defaults.setPreference("view.details.show", "false");
-
-                /* Place star properties order */
-                defaults.setPreference("star.properties.order", "HD HIP RAJ2000");
+                /* Simple View Columns */
+                defaults.setPreference("view.simple.columns",
+                    "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
+                defaults.setPreference("view.detailled.columns",
+                    "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
 
                 /* Query default values preferences  */
                 defaults.setPreference("query.magnitudeBand", "K");
