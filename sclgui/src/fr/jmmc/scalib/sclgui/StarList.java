@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarList.java,v 1.5 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: StarList.java,v 1.6 2007-06-14 08:43:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.4  2006/11/29 17:33:28  lafrasse
  * Added support for stars flagged as deleted.
  * Added support undelete stars flagged as deleted.
@@ -69,9 +72,19 @@ public class StarList extends Vector
     {
         MCSLogger.trace();
 
-        Integer index = ((Integer) _fieldIdToColNumber.get(groupName));
+        int columnId = -1;
 
-        return index.intValue();
+        if (groupName != null)
+        {
+            Integer foundIndex = ((Integer) _fieldIdToColNumber.get(groupName));
+
+            if (foundIndex != null)
+            {
+                columnId = foundIndex.intValue();
+            }
+        }
+
+        return columnId;
     }
 
     /**
