@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.32 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.33 2007-06-14 11:59:40 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.31  2006/12/04 12:35:49  lafrasse
  * Enhanced delete menu item enabling, now based on JTable row selection detection.
  *
@@ -202,8 +205,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // Handle the selection listener
         _calibratorsTable.getSelectionModel().addListSelectionListener(this);
 
-        TableSorter tableSorter = new TableSorter(_calibratorsModel);
-        tableSorter.setTableHeader(_calibratorsTable.getTableHeader());
+        // Configure table sorting
+        TableSorter tableSorter = new TableSorter(_calibratorsModel,
+                _calibratorsTable.getTableHeader());
         _calibratorsTable.setModel(tableSorter);
         _calibratorsIdTable = new JTable(tableSorter,
                 new DefaultTableColumnModel(), null);
@@ -299,6 +303,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 // _calibratorsIdTable.getColumnModel().addColumn(_calibratorsTable.getColumnModel().getColumn(0));
             }
         }
+
+        update(null, null);
     }
 
     /**
