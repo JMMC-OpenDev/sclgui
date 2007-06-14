@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.19 2007-05-28 16:25:49 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.20 2007-06-14 11:59:40 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/05/28 16:25:49  lafrasse
+ * Added support for typed values with column classes in order to trully support typed comparisons (eg: columns are not all treated like strings anymore !) for column sorting.
+ *
  * Revision 1.18  2007/02/27 12:52:58  lafrasse
  * Completed Doxygen documentation.
  *
@@ -184,6 +187,18 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         // Ask all the attached JTable views to update
         fireTableDataChanged();
 
+        // If the update was launched from TableSorter(just for a GUI refresh)
+        if (arg != null)
+        {
+            String argClassName = arg.getClass().getName();
+
+            if (argClassName.equals("fr.jmmc.scalib.sclgui.TableSorter") == true)
+            {
+                // Don't consider it as a data modification
+                return;
+            }
+        }
+
         // Remember that data have changed
         _dataHaveChanged = true;
     }
@@ -250,6 +265,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         {
             return (Class) _columnClasses.elementAt(column);
         }
+
         return null;
     }
 
@@ -345,10 +361,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             // Get back the field type
             SavotField field     = (SavotField) fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
             String     fieldType = field.getDataType();
+
             if (fieldType != null)
             {
                 // Default class
                 Class columnClass = Object.class;
+
                 if (fieldType.equals("char"))
                 {
                     columnClass = String.class;
@@ -397,8 +415,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
                 Object value = row.getContent(mainGroupCellId + 0);
 
                 // Get back the value type and convert the value accordinaly
-                SavotField field     = (SavotField) fieldSet.getItemAt(mainGroupCellId + 0);
+                SavotField field     = (SavotField) fieldSet.getItemAt(mainGroupCellId +
+                        0);
                 String     fieldType = field.getDataType();
+
                 if (fieldType.equals("char"))
                 {
                     value = (String) value;
@@ -409,7 +429,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
                     {
                         value = Double.valueOf((String) value);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         value = null;
                     }
@@ -420,7 +440,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
                     {
                         value = Boolean.valueOf((String) value);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         value = null;
                     }
@@ -491,6 +511,20 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         }
 
         return null;
+    }
+
+    /**
+     * Give back the column ID from its name.
+     *
+     * @param groupName name of the column's group we are looking for the ID.
+     *
+     * @return the column ID, or -1 if nothing found.
+     */
+    public int getColumnIdByName(String groupName)
+    {
+        MCSLogger.trace();
+
+        return _originalStarList.getColumnIdByName(groupName);
     }
 
     /**
