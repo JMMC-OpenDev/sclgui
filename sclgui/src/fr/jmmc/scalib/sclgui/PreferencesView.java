@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.19 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.20 2007-06-14 13:33:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.18  2006/10/10 09:09:37  lafrasse
  * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
  *
@@ -127,7 +130,7 @@ public class PreferencesView extends JFrame implements ActionListener
 
         // Add the columns preferences pane
         ColumnsPreferencesView columnsView = new ColumnsPreferencesView(
-                "star.properties.order");
+                "view.simple.columns");
         tabbedPane.add("Columns", columnsView);
 
         // Add the catalog preferences pane
@@ -366,9 +369,6 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 
     /** Add Button */
     private JButton _addWordButton;
-
-    /** Remove  Button */
-    private JButton _removeWordButton;
 
     /**
      * Constructor.
