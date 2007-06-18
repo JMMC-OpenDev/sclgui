@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.7 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.8 2007-06-18 13:59:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.6  2006/11/29 17:32:24  lafrasse
  * Added support for boolean values.
  *
@@ -89,6 +92,11 @@ public class StarProperty implements Comparable
     public String getStringValue()
     {
         // MCSLogger.trace();
+        if (_value == null)
+        {
+            return "";
+        }
+
         return _value.toString();
     }
 
