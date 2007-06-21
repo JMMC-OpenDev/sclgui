@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.22 2007-05-22 14:20:51 gzins Exp $"
+# "@(#) $Id: Makefile,v 1.23 2007-06-21 07:39:31 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.22  2007/05/22 14:20:51  gzins
+# Added diamVk in 'faint' scenario case
+#
 # Revision 1.21  2007/03/16 10:07:34  lafrasse
 # Added support for instanciation and execution from ASPRO.
 #
@@ -185,7 +188,9 @@ JARFILES        = sclgui
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr 
 sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
-                  fr/jmmc/scalib/sclgui/search.png
+                  fr/jmmc/scalib/sclgui/voTableToCSV.xsl \
+                  fr/jmmc/scalib/sclgui/voTableToHTML.xsl \
+                  fr/jmmc/scalib/sclgui/search.png \
 
 #
 # Java programs
