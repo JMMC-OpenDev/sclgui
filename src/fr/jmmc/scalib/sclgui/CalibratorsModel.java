@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.20 2007-06-14 11:59:40 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.21 2007-06-21 07:43:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/06/14 11:59:40  lafrasse
+ * Added support for simple/detailled view.
+ *
  * Revision 1.19  2007/05/28 16:25:49  lafrasse
  * Added support for typed values with column classes in order to trully support typed comparisons (eg: columns are not all treated like strings anymore !) for column sorting.
  *
@@ -710,8 +713,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
-        URL xslURL = MainWindow.class.getResource("voTableToCSV.xsl");
-        applyXSLTranformationOnCurrentVOTable(out, xslURL);
+        applyXSLTranformationOnCurrentVOTable(out, "voTableToCSV.xsl");
     }
 
     /**
@@ -723,8 +725,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
-        URL xslURL = MainWindow.class.getResource("voTableToHTML.xsl");
-        applyXSLTranformationOnCurrentVOTable(out, xslURL);
+        applyXSLTranformationOnCurrentVOTable(out, "voTableToHTML.xsl");
     }
 
     /**
@@ -734,9 +735,16 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      * @param xslFile the XSL file containing the transformation to be applied
      */
     private void applyXSLTranformationOnCurrentVOTable(File outputFile,
-        URL xslFile)
+        String xslFileName)
     {
         MCSLogger.trace();
+
+        URL xslFile = getClass().getResource(xslFileName);
+        if (xslFile == null)
+        {
+            MCSLogger.error("Could not load XSL file '" + xslFileName + "'.");
+            return;
+        }
 
         try
         {
