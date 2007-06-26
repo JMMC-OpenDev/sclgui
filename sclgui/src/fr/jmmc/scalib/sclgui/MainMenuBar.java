@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.22 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.23 2007-06-26 08:34:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.21  2006/11/29 17:34:19  lafrasse
  * Added new menu item to undelete stars flagged as deleted.
  *
@@ -100,6 +103,10 @@ import javax.swing.text.BadLocationException;
  */
 public class MainMenuBar extends JMenuBar
 {
+    /** Store whether the execution platform is a Mac or not */
+    public static boolean MAC_OS_X = (System.getProperty("os.name").toLowerCase()
+                                            .startsWith("mac os x"));
+
     /** The window in which the menu bar should be displayed */
     MainWindow _mainWindow;
 
@@ -194,25 +201,35 @@ public class MainMenuBar extends JMenuBar
         JMenuItem menuItem;
 
         // The following 3 actions come from the default editor kit.
+        // The 'control' key is used on Linux and Windows
+        // If the execution is on Mac OS X
+        String keyStringPrefix = "ctrl ";
+
+        if (MAC_OS_X == true)
+        {
+            // The 'command' key (aka Apple key) is used
+            keyStringPrefix = "meta ";
+        }
+
         // Cut menu item
         Action cutAction = new DefaultEditorKit.CutAction();
         cutAction.putValue(Action.NAME, "Cut");
         cutAction.putValue(Action.ACCELERATOR_KEY,
-            KeyStroke.getKeyStroke("ctrl X"));
+            KeyStroke.getKeyStroke(keyStringPrefix + "X"));
         editMenu.add(cutAction);
 
         // Copy menu item
         Action copyAction = new DefaultEditorKit.CopyAction();
         copyAction.putValue(Action.NAME, "Copy");
         copyAction.putValue(Action.ACCELERATOR_KEY,
-            KeyStroke.getKeyStroke("ctrl C"));
+            KeyStroke.getKeyStroke(keyStringPrefix + "C"));
         editMenu.add(copyAction);
 
         // Paste menu item
         Action pasteAction = new DefaultEditorKit.PasteAction();
         pasteAction.putValue(Action.NAME, "Paste");
         pasteAction.putValue(Action.ACCELERATOR_KEY,
-            KeyStroke.getKeyStroke("ctrl V"));
+            KeyStroke.getKeyStroke(keyStringPrefix + "V"));
         editMenu.add(pasteAction);
 
         // Delete menu item
