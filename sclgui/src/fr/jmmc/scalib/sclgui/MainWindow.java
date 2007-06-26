@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.18 2007-04-13 14:36:07 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.19 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2007/04/13 14:36:07  lafrasse
+ * Updated version number and greeting.
+ *
  * Revision 1.17  2007/02/16 15:19:55  lafrasse
  * Updated software version number in the About window.
  *
@@ -224,8 +227,6 @@ public class MainWindow extends JFrame
 
     /**
      * Called to show the preferences window.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
      */
     protected class ShowPreferencesAction extends MCSAction
     {
@@ -245,8 +246,6 @@ public class MainWindow extends JFrame
 
     /**
      * Called to setup printed page layout.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
      */
     protected class PageSetupAction extends MCSAction
     {
@@ -266,8 +265,6 @@ public class MainWindow extends JFrame
 
     /**
      * Called to print data.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
      */
     protected class PrintAction extends MCSAction
     {
@@ -304,8 +301,6 @@ public class MainWindow extends JFrame
 
     /**
      * Called to show the About window.
-     *
-     * @throws java.lang.Exception << TODO a mettre !!!
      */
     protected class AboutAction extends MCSAction
     {

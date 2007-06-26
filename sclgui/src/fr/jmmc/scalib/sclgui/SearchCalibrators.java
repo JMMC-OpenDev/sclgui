@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.19 2007-03-16 10:07:34 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.20 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/03/16 10:07:34  lafrasse
+ * Added support for instanciation and execution from ASPRO.
+ *
  * Revision 1.18  2007/02/14 13:51:17  lafrasse
  * Corrected path for resources.
  *
@@ -142,44 +145,51 @@ public class SearchCalibrators
         fr.jmmc.mcs.util.Resources.setResourceName(
             "fr/jmmc/scalib/sclgui/Resources");
 
-        // Create a query model
-        QueryModel queryModel = new QueryModel();
-
-        // Create filters
-        FiltersModel filtersModel = new FiltersModel(queryModel);
-        FiltersView  filtersView  = new FiltersView(filtersModel);
-
-        // Create a calibrators model and attach it to a calibrators view
-        CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
-        CalibratorsView  calibratorsView  = new CalibratorsView(calibratorsModel);
-
-        filtersModel.addObserver(calibratorsModel);
-
-        // Link everything up
-        VirtualObservatory vo = new VirtualObservatory(queryModel,
-                calibratorsModel, filtersModel);
-
-        // Attach the query model to its query view
-        QueryView queryView = new QueryView(queryModel, vo);
-
-        // Retrieve application preferences and attach them to their view
-        // (This instance must be instanciated after dependencies)
-        PreferencesView preferencesView = new PreferencesView();
-        StatusBar       statusBar       = new StatusBar();
-        // Show the user the app is been initialized
-        StatusBar.show("application initialization...");
-
-        MainWindow window = new MainWindow(vo, queryView, calibratorsView,
-                preferencesView, filtersView, statusBar);
-
-        // Make application presentation coherent with preferences
-        Preferences.getInstance().trulyNotifyObservers();
-
-        // If a query was received (when instaciated by ASPRO)
-        if (query != null)
+        try
         {
-            // Launch the request
-            vo.executeQuery(query);
+            // Create a query model
+            QueryModel queryModel = new QueryModel();
+
+            // Create filters
+            FiltersModel filtersModel = new FiltersModel(queryModel);
+            FiltersView  filtersView  = new FiltersView(filtersModel);
+
+            // Create a calibrators model and attach it to a calibrators view
+            CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
+            CalibratorsView  calibratorsView  = new CalibratorsView(calibratorsModel);
+
+            filtersModel.addObserver(calibratorsModel);
+
+            // Link everything up
+            VirtualObservatory vo = new VirtualObservatory(queryModel,
+                    calibratorsModel, filtersModel);
+
+            // Attach the query model to its query view
+            QueryView queryView = new QueryView(queryModel, vo);
+
+            // Retrieve application preferences and attach them to their view
+            // (This instance must be instanciated after dependencies)
+            PreferencesView preferencesView = new PreferencesView();
+            StatusBar       statusBar       = new StatusBar();
+            // Show the user the app is been initialized
+            StatusBar.show("application initialization...");
+
+            MainWindow window = new MainWindow(vo, queryView, calibratorsView,
+                    preferencesView, filtersView, statusBar);
+
+            // Make application presentation coherent with preferences
+            Preferences.getInstance().trulyNotifyObservers();
+
+            // If a query was received (when instaciated by ASPRO)
+            if (query != null)
+            {
+                // Launch the request
+                vo.executeQuery(query);
+            }
+        }
+        catch (Exception e)
+        {
+            MCSLogger.error("Initialization error : " + e);
         }
     }
 

@@ -1112,6 +1112,14 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         // If something bad appent, write text in red !
                         setForeground(Color.RED);
                     }
+
+                    /* @TODO : put the science object in BOLD
+                       if (row % 2 == 0)
+                       {
+                           setFont(new java.awt.Font("Lucida Console", 0, 10));
+                           //setFont(java.awt.Font.BOLD);
+                       }
+                     */
                 }
             }
 
@@ -1146,8 +1154,9 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     }
                     catch (PreferencesException ex)
                     {
-                        // TODO log as error instead of stderr...
-                        ex.printStackTrace();
+                        MCSLogger.warning(
+                            "Could not get catalog color from preference : " +
+                            ex);
                     }
                 }
 
@@ -1168,8 +1177,9 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     }
                     catch (PreferencesException ex)
                     {
-                        // TODO log as error instead of stderr...
-                        ex.printStackTrace();
+                        MCSLogger.warning(
+                            "Could not get confidence color from preference : " +
+                            ex);
                     }
                 }
             }

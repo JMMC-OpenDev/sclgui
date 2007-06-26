@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.7 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.5  2006/11/14 14:44:56  lafrasse
  * Moved all astronomical-related computations in the new jmmc.mcs.astro package.
  *
@@ -37,8 +40,6 @@ import java.util.*;
  */
 public class DistanceFilter extends Filter
 {
-    //TODO place a constant for every "dist" ;))
-
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).

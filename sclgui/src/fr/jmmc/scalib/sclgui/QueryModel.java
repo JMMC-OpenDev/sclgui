@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.23 2007-04-11 13:51:47 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.24 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2007/04/11 13:51:47  lafrasse
+ * Corrected a bug that prevented automatic update of wavelength on magnitude band changes.
+ *
  * Revision 1.22  2007/02/16 17:17:18  lafrasse
  * Added support for true catalog namei queried.
  *
@@ -176,7 +179,7 @@ public class QueryModel extends Observable implements Observer
     /**
      * Default constructor.
      */
-    public QueryModel()
+    public QueryModel() throws Exception
     {
         MCSLogger.trace();
 
@@ -197,7 +200,14 @@ public class QueryModel extends Observable implements Observer
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
 
         // Initialize values from user defined preferences
-        loadDefaultValues();
+        try
+        {
+            loadDefaultValues();
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
     /**
@@ -249,41 +259,50 @@ public class QueryModel extends Observable implements Observer
     /**
      * Reset all properties to their default values.
      */
-    public void loadDefaultValues()
+    public void loadDefaultValues() throws Exception
     {
         MCSLogger.trace();
 
-        setInstrumentalMagnitudeBand(_preferences.getPreference(
-                "query.magnitudeBand"));
+        try
+        {
+            setInstrumentalMagnitudeBand(_preferences.getPreference(
+                    "query.magnitudeBand"));
 
-        setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
-                "query.instrumentalMaxBaseLine"));
+            setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
+                    "query.instrumentalMaxBaseLine"));
 
-        setScienceObjectName(_preferences.getPreference(
-                "query.scienceObjectName"));
-        setScienceObjectRA(_preferences.getPreference("query.scienceObjectRA"));
-        setScienceObjectDEC(_preferences.getPreference("query.scienceObjectDEC"));
-        setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
-                "query.scienceObjectMagnitude"));
-        setScienceObjectInclusionFlag(_preferences.getPreferenceAsBoolean(
-                "query.scienceObjectInclusionFlag"));
+            setScienceObjectName(_preferences.getPreference(
+                    "query.scienceObjectName"));
+            setScienceObjectRA(_preferences.getPreference(
+                    "query.scienceObjectRA"));
+            setScienceObjectDEC(_preferences.getPreference(
+                    "query.scienceObjectDEC"));
+            setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
+                    "query.scienceObjectMagnitude"));
+            setScienceObjectInclusionFlag(_preferences.getPreferenceAsBoolean(
+                    "query.scienceObjectInclusionFlag"));
 
-        setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
-                "query.queryMinMagnitude"));
-        setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                "query.queryMinMagnitudeDelta"));
-        setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
-                "query.queryMaxMagnitude"));
-        setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                "query.queryMaxMagnitudeDelta"));
-        setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
-                "query.queryBrightScenarioFlag"));
-        setQueryDiffRASize(_preferences.getPreferenceAsDouble(
-                "query.queryDiffRASize"));
-        setQueryDiffDECSize(_preferences.getPreferenceAsDouble(
-                "query.queryDiffDECSize"));
-        setQueryRadialSize(_preferences.getPreferenceAsDouble(
-                "query.queryRadialSize"));
+            setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
+                    "query.queryMinMagnitude"));
+            setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
+                    "query.queryMinMagnitudeDelta"));
+            setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
+                    "query.queryMaxMagnitude"));
+            setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
+                    "query.queryMaxMagnitudeDelta"));
+            setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
+                    "query.queryBrightScenarioFlag"));
+            setQueryDiffRASize(_preferences.getPreferenceAsDouble(
+                    "query.queryDiffRASize"));
+            setQueryDiffDECSize(_preferences.getPreferenceAsDouble(
+                    "query.queryDiffDECSize"));
+            setQueryRadialSize(_preferences.getPreferenceAsDouble(
+                    "query.queryRadialSize"));
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
 
         // Enable the edition as the values where not loaded from file
         setEditableState(true);
@@ -342,7 +361,7 @@ public class QueryModel extends Observable implements Observer
     /**
      * Store all current properties as the futur default values.
      */
-    public void saveDefaultValues()
+    public void saveDefaultValues() throws Exception
     {
         MCSLogger.trace();
 
@@ -381,7 +400,7 @@ public class QueryModel extends Observable implements Observer
         }
         catch (Exception e)
         {
-            // @TODO
+            throw e;
         }
     }
 
@@ -781,6 +800,7 @@ public class QueryModel extends Observable implements Observer
      * @param distance the new tolerated distance as a double value.
      */
     public void setScienceObjectDetectionDistance(double distance)
+        throws Exception
     {
         MCSLogger.trace();
 
@@ -791,7 +811,7 @@ public class QueryModel extends Observable implements Observer
         }
         catch (Exception e)
         {
-            // @TODO
+            throw e;
         }
 
         setChanged();
@@ -866,6 +886,7 @@ public class QueryModel extends Observable implements Observer
      * @param delta the new delta as a double value.
      */
     public void setQueryMinMagnitudeDelta(double delta)
+        throws Exception
     {
         MCSLogger.trace();
 
@@ -876,7 +897,7 @@ public class QueryModel extends Observable implements Observer
         }
         catch (Exception e)
         {
-            // @TODO
+            throw e;
         }
 
         setChanged();
@@ -951,6 +972,7 @@ public class QueryModel extends Observable implements Observer
      * @param delta the new delta as a double value.
      */
     public void setQueryMaxMagnitudeDelta(double delta)
+        throws Exception
     {
         MCSLogger.trace();
 
@@ -961,7 +983,7 @@ public class QueryModel extends Observable implements Observer
         }
         catch (Exception e)
         {
-            // @TODO
+            throw e;
         }
 
         setChanged();
@@ -1195,8 +1217,6 @@ public class QueryModel extends Observable implements Observer
     /**
      * Indicates to listener if this query is well filled and can be consumed.
      * If it returns false, then one reason must be given TBD...
-     *
-     * TODO add exception
      */
     public boolean isConsumable()
     {
