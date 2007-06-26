@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.9 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.10 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.8  2006/10/03 15:25:20  lafrasse
  * Use of the Preference shared instance instead of receiving it through the
  * constructor.
@@ -35,6 +38,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
@@ -302,7 +306,7 @@ public class LegendView extends JPanel
                 }
                 catch (Exception e)
                 {
-                    // @TODO
+                    MCSLogger.error("Could not set preference : " + e);
                 }
             }
         }

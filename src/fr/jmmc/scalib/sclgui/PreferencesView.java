@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.20 2007-06-14 13:33:42 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.21 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/06/14 13:33:42  lafrasse
+ * Corrected column sorting preference entry name.
+ *
  * Revision 1.19  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -171,10 +174,10 @@ public class PreferencesView extends JFrame implements ActionListener
             {
                 _preferences.resetToDefaultPreferences();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // TODO criez fort!!
-                e.printStackTrace();
+                MCSLogger.warning("Could not reset preferences to default : " +
+                    ex);
             }
         }
 
@@ -185,10 +188,9 @@ public class PreferencesView extends JFrame implements ActionListener
             {
                 _preferences.saveToFile();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // TODO criez fort!!
-                e.printStackTrace();
+                MCSLogger.warning("Could not save preferences : " + ex);
             }
         }
     }
@@ -308,7 +310,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
             }
             catch (Exception ex)
             {
-                //@TODO
+                MCSLogger.warning("Could not set preference : " + ex);
             }
         }
 
@@ -321,7 +323,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
             }
             catch (Exception ex)
             {
-                //@TODO
+                MCSLogger.warning("Could not set preference : " + ex);
             }
         }
 
@@ -334,7 +336,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
             }
             catch (Exception ex)
             {
-                //@TODO
+                MCSLogger.warning("Could not set preference : " + ex);
             }
         }
     }
@@ -505,9 +507,10 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
             {
                 _preferences.setPreference(_preferenceName, sb.toString());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // @TODO
+                MCSLogger.warning("Could not set '" + _preferenceName +
+                    "' preference : " + ex);
             }
         }
     }
@@ -645,9 +648,9 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
                 _preferences.setPreference("help.tooltips.show",
                     _enableToolTipCheckBox.isSelected());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // @TODO
+                MCSLogger.warning("Could not set preference : " + ex);
             }
         }
     }

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.21 2007-06-21 07:43:23 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.22 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2007/06/21 07:43:23  lafrasse
+ * Rationnalized XSLT sheets loading.
+ *
  * Revision 1.20  2007/06/14 11:59:40  lafrasse
  * Added support for simple/detailled view.
  *
@@ -172,7 +175,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         MCSLogger.trace();
 
-        // TODO : the clone operation should only be done when the ay filter
+        // OPTIMIZE : the clone operation should only be done when the ay filter
         // has been deactivated, otherwise currentStarList is sufficient
 
         // Back up the original list for later use (reset, updated filter list)
@@ -278,7 +281,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @param reader BufferedReader used to read the voTable.
      */
-    public void parseVOTable(BufferedReader reader)
+    public void parseVOTable(BufferedReader reader) throws Exception
     {
         MCSLogger.trace();
 
@@ -297,8 +300,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         }
         catch (Exception e)
         {
-            // TODO handle exception
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -308,7 +310,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @param voTable the string to parse.
      */
-    public void parseVOTable(String voTable)
+    public void parseVOTable(String voTable) throws Exception
     {
         MCSLogger.trace();
 
@@ -331,7 +333,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         ResourceSet resourceSet = parsedVOTable.getResources();
 
         // Get the first table of the first resource
-        // TODO this is may not be compatible with other VOTable than JMMC ones
+        // WARNING : this is not compatible with other VOTable than JMMC ones
+        // (0 should not be used, but the name of the Resource instead)
         SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
         SavotTable    table    = (SavotTable) resource.getTables().getItemAt(0);
         GroupSet      groupSet = table.getGroups();
@@ -346,7 +349,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
          * definition.
          */
 
-        // @TODO this is may not be compatible with other VOTable than JMMC ones
+        // WARNING : this is not compatible with other VOTable than JMMC ones
         Hashtable groupNameToGroupId = new Hashtable();
         _columnClasses = new Vector();
 
@@ -360,7 +363,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             groupNameToGroupId.put(groupName, new Integer(groupId));
             _columnNames.add(groupName);
 
-            // @todo : store the datatype to later affect the right object (amongst String, Double, RA & Dec) as each starProperty value.
             // Get back the field type
             SavotField field     = (SavotField) fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
             String     fieldType = field.getDataType();
@@ -387,7 +389,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             }
             else
             {
-                // @todo : handle assertion failed
+                throw new Exception("Invalid VOTable - empty fieldType");
             }
         }
 
@@ -555,7 +557,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         ResourceSet resourceSet = parsedVOTable.getResources();
 
         // Get the first table of the first resource
-        // TODO this is may not be compatible with other VOTable than JMMC ones
+        // WARNING : this is not compatible with other VOTable than JMMC ones
         SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
 
         // Remove every row
@@ -599,7 +601,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @param file the file to be read.
      */
-    public void openFile(File file)
+    public void openFile(File file) throws Exception
     {
         MCSLogger.trace();
 
@@ -615,8 +617,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         }
         catch (Exception e)
         {
-            // TODO handle this exception
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -740,9 +741,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         MCSLogger.trace();
 
         URL xslFile = getClass().getResource(xslFileName);
+
         if (xslFile == null)
         {
             MCSLogger.error("Could not load XSL file '" + xslFileName + "'.");
+
             return;
         }
 

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.33 2007-06-14 11:59:40 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.34 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2007/06/14 11:59:40  lafrasse
+ * Added support for simple/detailled view.
+ *
  * Revision 1.32  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -350,38 +353,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     /**
-     * Open the given file and display it. In fact it tells to the inner model to parse it.
-     *
-     * @param file the file to display.
-     */
-    public void openFile(File file)
-    {
-        try
-        {
-            // Get a BufferedReader from file
-            String         fileName   = file.getAbsolutePath();
-            FileReader     fileReader = new FileReader(fileName);
-            BufferedReader in         = new BufferedReader(fileReader);
-
-            StatusBar.show("loading file...");
-            System.out.println("loading file...");
-
-            // Build CalibratorModel and parse votable
-            _calibratorsModel.parseVOTable(in);
-
-            StatusBar.show("file succesfully loaded.");
-            System.out.println("file succesfully loaded.");
-        }
-        catch (Exception e)
-        {
-            StatusBar.show("an error occured while trying to load file !");
-
-            // TODO handle this exception
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Tell GUI to show or hide legend panel
      */
     public void showLegend(boolean visible)
@@ -402,16 +373,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         }
 
         _tableAndLegendPane.setDividerLocation(legendWidth);
-    }
-
-    /**
-     * Tell GUI to show or hide detailled column info
-     */
-    public void showDetails(boolean visible)
-    {
-        MCSLogger.trace();
-
-        //@todo implement
     }
 
     protected class DeleteAction extends MCSAction
@@ -479,12 +440,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             MCSLogger.trace();
-
-            if (e.getSource() instanceof AbstractButton)
-            {
-                AbstractButton button = (AbstractButton) e.getSource();
-                showDetails(button.isSelected());
-            }
         }
     }
 }

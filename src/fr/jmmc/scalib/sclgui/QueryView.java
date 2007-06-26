@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.35 2007-04-12 15:51:11 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.36 2007-06-26 08:39:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2007/04/12 15:51:11  lafrasse
+ * Added value storing on widget focus leaves (when tabbing between fields).
+ *
  * Revision 1.34  2007/04/11 13:52:57  lafrasse
  * Corrected a bug that prevented automatic update of wavelength on magnitude band
  * changes.
@@ -132,6 +135,8 @@ import java.awt.event.*;
 import java.awt.print.*;
 
 import java.beans.*;
+
+import java.net.URL;
 
 import java.text.*;
 
@@ -337,6 +342,11 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectNameTextfield.addFocusListener(this);
         tempPanel.add(_scienceObjectNameTextfield, c);
         c.gridx = 1;
+        /* @TODO : decide whether we should display icon, text or icon+text
+           String fullIconPath = "search.png";
+           URL imgURL = getClass().getResource(fullIconPath);
+           _vo._getStarAction.putValue(Action.SMALL_ICON, new ImageIcon(imgURL));
+         */
         tempPanel.add(new JButton(_vo._getStarAction));
         _scienceObjectPanel.add(tempPanel, c);
         // RA coordinate field
@@ -472,8 +482,9 @@ public class QueryView extends JPanel implements Observer,
         c.gridwidth     = 3;
         add(_actionPanel, c);
 
-        // Start listening to any updates of the model
+        // Start listening to any updates of the monitored objects
         _queryModel.addObserver(this);
+        _vo.addObserver(this);
 
         // Refresh the GUI with the model values
         update(null, null);
@@ -821,7 +832,14 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            _queryModel.loadDefaultValues();
+            try
+            {
+                _queryModel.loadDefaultValues();
+            }
+            catch (Exception ex)
+            {
+                MCSLogger.error("LoadDefaultValuesAction error : " + ex);
+            }
         }
     }
 
@@ -836,7 +854,14 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            _queryModel.saveDefaultValues();
+            try
+            {
+                _queryModel.saveDefaultValues();
+            }
+            catch (Exception ex)
+            {
+                MCSLogger.error("SaveValuesAction error : " + ex);
+            }
         }
     }
 }
