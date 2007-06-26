@@ -1088,6 +1088,29 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 }
             }
 
+            // Get the 'distance' column Id
+            int distId = calModel.getColumnIdByName("dist");
+
+            // Get the row's distance star property
+            StarProperty distanceProperty = calModel.getStarProperty(modelIndex(
+                        row), distId);
+            Double       rowDistance      = distanceProperty.getDoubleValue();
+
+            // Get the prefered distance to detect the science object
+            Double prefDistance = _preferences.getPreferenceAsDouble(
+                    "query.scienceObjectDetectionDistance");
+
+            // If the current row distance is close enough to be detected as a science object
+            if (rowDistance < prefDistance)
+            {
+                // Put the corresponding row font in bold
+                Font f = getFont();
+                setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+                MCSLogger.debug("Put rows['" + modelIndex(row) +
+                    "'] in BOLD : rowDistance (= '" + rowDistance +
+                    "') < prefDistance (= '" + prefDistance + "')= '').");
+            }
+
             // If cell is not selected and not focused 
             if (! (isSelected && hasFocus))
             {
@@ -1112,14 +1135,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         // If something bad appent, write text in red !
                         setForeground(Color.RED);
                     }
-
-                    /* @TODO : put the science object in BOLD
-                       if (row % 2 == 0)
-                       {
-                           setFont(new java.awt.Font("Lucida Console", 0, 10));
-                           //setFont(java.awt.Font.BOLD);
-                       }
-                     */
                 }
             }
 
