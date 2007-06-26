@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.19 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.20 2007-06-26 16:04:09 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.18  2007/04/13 14:36:07  lafrasse
  * Updated version number and greeting.
  *
@@ -322,7 +325,7 @@ public class MainWindow extends JFrame
             greetings += "\n";
 
             AboutWindow aboutWindow = new AboutWindow("SearchCal",
-                    "4.0 beta 4", greetings, "Copyright 2007 JMMC");
+                    "4.0 beta 5", greetings, "Copyright 2007 JMMC");
         }
     }
 }
