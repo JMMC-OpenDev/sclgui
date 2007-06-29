@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.24 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.25 2007-06-29 09:56:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.23  2007/04/11 13:51:47  lafrasse
  * Corrected a bug that prevented automatic update of wavelength on magnitude band changes.
  *
@@ -457,7 +460,10 @@ public class QueryModel extends Observable implements Observer
         }
 
         // Bright/Faint flag
-        query += ("-bright " + brightFlag);
+        query += ("-bright " + brightFlag + " ");
+
+        // Get the science star
+        query += ("-noScienceStar false");
 
         return query;
     }
