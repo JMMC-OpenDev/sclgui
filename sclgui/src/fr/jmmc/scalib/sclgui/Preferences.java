@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.17 2007-06-14 08:39:25 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.18 2007-06-29 09:55:14 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2007/06/14 08:39:25  lafrasse
+ * Added true column selection for the simple/detailled views.
+ *
  * Revision 1.16  2007/02/13 16:17:58  lafrasse
  * Jalopyzation.
  *
@@ -147,21 +150,20 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 /* Query default values preferences  */
                 defaults.setPreference("query.magnitudeBand", "K");
                 defaults.setPreference("query.instrumentalWavelength", "2.2");
-                defaults.setPreference("query.instrumentalMaxBaseLine",
-                    "56.56854");
-                defaults.setPreference("query.scienceObjectName", "Achernar");
-                defaults.setPreference("query.scienceObjectRA", "01:37:42.847");
-                defaults.setPreference("query.scienceObjectDEC", "-57:14:12.327");
-                defaults.setPreference("query.scienceObjectMagnitude", "0.88");
+                defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
+                defaults.setPreference("query.scienceObjectName", "alf_PsA");
+                defaults.setPreference("query.scienceObjectRA", "22:57:39.047");
+                defaults.setPreference("query.scienceObjectDEC", "-29:37:20.050");
+                defaults.setPreference("query.scienceObjectMagnitude", "0.83");
                 defaults.setPreference("query.scienceObjectInclusionFlag",
                     "true");
                 defaults.setPreference("query.scienceObjectDetectionDistance",
-                    "0.1");
-                defaults.setPreference("query.queryMinMagnitude", "-1");
-                defaults.setPreference("query.queryMaxMagnitude", "3");
+                    "0.01");
+                defaults.setPreference("query.queryMinMagnitude", "0.5");
+                defaults.setPreference("query.queryMaxMagnitude", "2");
                 defaults.setPreference("query.queryBrightScenarioFlag", "true");
-                defaults.setPreference("query.queryDiffRASize", "1800");
-                defaults.setPreference("query.queryDiffDECSize", "600");
+                defaults.setPreference("query.queryDiffRASize", "3600");
+                defaults.setPreference("query.queryDiffDECSize", "1200");
                 defaults.setPreference("query.queryRadialSize", "0.0");
 
                 defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
