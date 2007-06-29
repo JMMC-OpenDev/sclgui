@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.36 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.37 2007-06-29 09:57:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.36  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.35  2007/04/12 15:51:11  lafrasse
  * Added value storing on widget focus leaves (when tabbing between fields).
  *
@@ -347,7 +350,9 @@ public class QueryView extends JPanel implements Observer,
            URL imgURL = getClass().getResource(fullIconPath);
            _vo._getStarAction.putValue(Action.SMALL_ICON, new ImageIcon(imgURL));
          */
-        tempPanel.add(new JButton(_vo._getStarAction));
+
+        // @TODO : disabled GetStar button untill it works
+        //tempPanel.add(new JButton(_vo._getStarAction));
         _scienceObjectPanel.add(tempPanel, c);
         // RA coordinate field
         c.gridy++;
