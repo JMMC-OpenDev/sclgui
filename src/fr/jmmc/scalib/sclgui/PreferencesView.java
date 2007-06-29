@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.21 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.22 2007-06-29 09:56:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.20  2007/06/14 13:33:42  lafrasse
  * Corrected column sorting preference entry name.
  *
@@ -142,7 +145,9 @@ public class PreferencesView extends JFrame implements ActionListener
 
         // Add the network preferences pane
         NetworkPreferencesView networkView = new NetworkPreferencesView();
-        tabbedPane.add("Network", networkView);
+
+        // @TODO : disabled un-implemented Network Preferences Pane
+        //tabbedPane.add("Network", networkView);
 
         // Add the help preferences pane
         HelpPreferencesView helpView = new HelpPreferencesView();
@@ -229,8 +234,9 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
         JCheckBox cb = new JCheckBox(QueryView._includeScienceObjectAction);
         cb.setModel(PreferencedButtonModel.getInstance(_preferences,
                 "science.includeObject"));
-        add(cb);
 
+        // @TODO : removed (not implemented)
+        // add(cb);
         JPanel    panel;
         JLabel    label;
         Dimension textfieldDimension = new Dimension(100, 20);
