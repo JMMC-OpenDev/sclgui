@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.19 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.20 2007-07-03 17:05:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.18  2007/03/16 10:07:34  lafrasse
  * Added support for instanciation and execution from ASPRO.
  *
@@ -211,6 +214,9 @@ public class VirtualObservatory extends Observable
         {
             // Change button title to 'Get Calibrators'
             _getCalAction.putValue(Action.NAME, "Get Calibrators");
+            _queryModel.setCurrentStep(0);
+            _queryModel.setTotalStep(0);
+            _queryModel.setCatalogName("");
         }
 
         setChanged();
@@ -591,6 +597,10 @@ public class VirtualObservatory extends Observable
      */
     protected class GetCalAction extends MCSAction
     {
+        SclwsLocator  loc = null;
+        SclwsPortType s   = null;
+        String        id  = null;
+
         public GetCalAction()
         {
             super("getCal");
@@ -622,10 +632,6 @@ public class VirtualObservatory extends Observable
                     {
                         try
                         {
-                            SclwsLocator  loc = null;
-                            SclwsPortType s   = null;
-                            String        id  = null;
-
                             // Get the connection ID
                             try
                             {
@@ -648,6 +654,7 @@ public class VirtualObservatory extends Observable
                                 JOptionPane.showMessageDialog(null,
                                     "Could not connect to JMMC server.",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+
                                 setQueryLaunchedState(false);
 
                                 return;
@@ -701,6 +708,7 @@ public class VirtualObservatory extends Observable
                                         JOptionPane.showMessageDialog(null,
                                             "Could not send query to JMMC server.",
                                             "Error", JOptionPane.ERROR_MESSAGE);
+
                                         setQueryLaunchedState(false);
 
                                         return;
@@ -759,8 +767,7 @@ public class VirtualObservatory extends Observable
                                     JOptionPane.showMessageDialog(null,
                                         "Communication with the JMMC server failed.",
                                         "Error", JOptionPane.ERROR_MESSAGE);
-                                    MCSLogger.error(
-                                        "Status failed. Exception: " + ex);
+
                                     setQueryLaunchedState(false);
 
                                     return;
@@ -786,6 +793,7 @@ public class VirtualObservatory extends Observable
                                 JOptionPane.showMessageDialog(null,
                                     "Could not get result from JMMC server.",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+
                                 setQueryLaunchedState(false);
 
                                 return;
@@ -815,6 +823,7 @@ public class VirtualObservatory extends Observable
                                     JOptionPane.showMessageDialog(null,
                                         "Search failed (invalid VOTable received).",
                                         "Error", JOptionPane.ERROR_MESSAGE);
+
                                     setQueryLaunchedState(false);
 
                                     return;
@@ -823,7 +832,9 @@ public class VirtualObservatory extends Observable
                             else
                             {
                                 MCSLogger.test("No calibrators found.");
+
                                 StatusBar.show("no calibrators found.");
+
                                 setQueryLaunchedState(false);
 
                                 return;
@@ -859,6 +870,28 @@ public class VirtualObservatory extends Observable
 
                 // @TODO : dispose thread and cancel query
                 StatusBar.show("search cancelled.");
+
+                Boolean isOk = false;
+
+                // Get query progression status
+                try
+                {
+                    isOk = s.getCalCancelID(id);
+                }
+                catch (Exception ex)
+                {
+                    StatusBar.show(
+                        "Could not cancel request (communication error) !");
+                    MCSLogger.error("Could not cancel request : " + ex);
+
+                    JOptionPane.showMessageDialog(null,
+                        "Request cancellation failed.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+
+                    setQueryLaunchedState(false);
+
+                    return;
+                }
 
                 // Query is finished
                 setQueryLaunchedState(false);
