@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.5 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.6 2007-07-09 12:53:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.4  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -163,6 +166,39 @@ public abstract class Filter extends Observable
     }
 
     /**
+     * Return whether the given row is th science object or not.
+     *
+     * @param starList the list of stars from which the row must be tested.
+     * @param row the star properties to be evaluated.
+     *
+     * @return true if the given row is the science object, false otherwise.
+     */
+    public boolean isScienceObject(StarList starList, Vector row)
+    {
+        boolean isScienceObject = false;
+
+        // Get the 'distance' column Id
+        int distId = starList.getColumnIdByName("dist");
+
+        // Get the row's distance star property
+        StarProperty distanceProperty = (StarProperty) row.elementAt(distId);
+        Double       rowDistance      = distanceProperty.getDoubleValue();
+
+        // Get the prefered distance to detect the science object
+        Preferences preferences  = Preferences.getInstance();
+        Double      prefDistance = preferences.getPreferenceAsDouble(
+                "query.scienceObjectDetectionDistance");
+
+        // If the current row distance is close enough to be detected as a science object
+        if (rowDistance < prefDistance)
+        {
+            isScienceObject = true;
+        }
+
+        return isScienceObject;
+    }
+
+    /**
      * Apply the filter (if enabled) to the given star list.
      *
      * @param starList the list of star to filter.
@@ -182,7 +218,8 @@ public abstract class Filter extends Observable
                 Vector row = ((Vector) starList.elementAt(rowId));
 
                 // If the luminosity class was found in the current line
-                if (shouldRemoveRow(starList, row) == true)
+                if ((shouldRemoveRow(starList, row) == true) &&
+                        (isScienceObject(starList, row) == false))
                 {
                     // Remove the current star row from the star list
                     starList.remove(rowId);
