@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.20 2007-07-03 17:05:00 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.21 2007-07-10 17:34:55 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/07/03 17:05:00  lafrasse
+ * Added support for query cancellation.
+ *
  * Revision 1.19  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -597,9 +600,7 @@ public class VirtualObservatory extends Observable
      */
     protected class GetCalAction extends MCSAction
     {
-        SclwsLocator  loc = null;
-        SclwsPortType s   = null;
-        String        id  = null;
+        GetCalThread _getCalThread = null;
 
         public GetCalAction()
         {
@@ -622,258 +623,270 @@ public class VirtualObservatory extends Observable
                     "searching calibrators... (please wait, this may take a while)");
 
                 // Launch the query in the background in order to keed GUI updated
-                class GetCalThread extends Thread
-                {
-                    GetCalThread()
-                    {
-                    }
-
-                    public void run()
-                    {
-                        try
-                        {
-                            // Get the connection ID
-                            try
-                            {
-                                loc     = new SclwsLocator();
-                                s       = loc.getsclws();
-
-                                // Get the connection ID
-                                id      = s.getCalAsyncID();
-
-                                MCSLogger.test("Connection ID = '" + id + "'.");
-                                StatusBar.show(
-                                    "searching calibrators... (connection established)");
-                            }
-                            catch (Exception ex)
-                            {
-                                StatusBar.show(
-                                    "search aborted (connection refused) !");
-                                MCSLogger.error("Connection failed : " + ex);
-
-                                JOptionPane.showMessageDialog(null,
-                                    "Could not connect to JMMC server.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-
-                                setQueryLaunchedState(false);
-
-                                return;
-                            }
-
-                            // Get the query from the GUI
-                            String query = _queryModel.getQueryAsMCSString();
-                            MCSLogger.test("Query = '" + query + "'.");
-
-                            // Launch the query in the background
-                            class QueryThread extends Thread
-                            {
-                                SclwsPortType _s;
-                                String        _id;
-                                String        _query;
-                                String        _result;
-
-                                QueryThread(SclwsPortType s, String id,
-                                    String query)
-                                {
-                                    _s          = s;
-                                    _query      = query;
-                                    _id         = id;
-                                    _result     = null;
-                                }
-
-                                String getResult()
-                                {
-                                    return _result;
-                                }
-
-                                public void run()
-                                {
-                                    try
-                                    {
-                                        // Launch the query
-                                        StatusBar.show(
-                                            "searching calibrators... (sending query)");
-                                        _result = _s.getCalAsyncQuery(_id,
-                                                _query);
-                                        StatusBar.show(
-                                            "searching calibrators... (query sent)");
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        StatusBar.show(
-                                            "search aborted (could not send query) !");
-                                        MCSLogger.error(
-                                            "Could not send query : " + ex);
-
-                                        JOptionPane.showMessageDialog(null,
-                                            "Could not send query to JMMC server.",
-                                            "Error", JOptionPane.ERROR_MESSAGE);
-
-                                        setQueryLaunchedState(false);
-
-                                        return;
-                                    }
-                                }
-                            }
-
-                            // Launch the querying thread
-                            QueryThread queryThread = new QueryThread(s, id,
-                                    query);
-                            queryThread.start();
-
-                            // @TODO : See for thread destruction on Cancel click
-                            // queryThread.interrupt();
-                            StatusBar.show(
-                                "searching calibrators... (querying catalogs)");
-
-                            // GetCal status polling to update ProgressBar
-                            String  currentCatalogName = "";
-                            Integer catalogIndex       = 0;
-                            Integer nbOfCatalogs       = 0;
-                            Boolean lastCatalog        = false;
-
-                            do
-                            {
-                                // Get query progression status
-                                try
-                                {
-                                    currentCatalogName = s.getCalWaitForCurrentCatalogName(id);
-                                    _queryModel.setCatalogName(currentCatalogName);
-
-                                    nbOfCatalogs = s.getCalNbOfCatalogs(id);
-                                    _queryModel.setTotalStep(nbOfCatalogs);
-
-                                    catalogIndex = s.getCalCurrentCatalogIndex(id);
-                                    _queryModel.setCurrentStep(catalogIndex);
-
-                                    lastCatalog = s.getCalIsLastCatalog(id);
-                                    /*
-                                       pm.setMinimum(catalogIndex);
-                                       pm.setMaximum(nbOfCatalogs);
-                                       pm.setNote(currentCatalogName);
-                                     */
-                                    MCSLogger.test("Status = '" +
-                                        currentCatalogName + "' - " +
-                                        catalogIndex + "/" + nbOfCatalogs +
-                                        " (" + lastCatalog + ").");
-                                }
-                                catch (Exception ex)
-                                {
-                                    StatusBar.show(
-                                        "search aborted (catalog error) !");
-                                    MCSLogger.error(
-                                        "Status retrieving error : " + ex);
-
-                                    JOptionPane.showMessageDialog(null,
-                                        "Communication with the JMMC server failed.",
-                                        "Error", JOptionPane.ERROR_MESSAGE);
-
-                                    setQueryLaunchedState(false);
-
-                                    return;
-                                }
-                            }
-                            while (lastCatalog == false);
-
-                            StatusBar.show(
-                                "searching calibrators... (waiting for result)");
-
-                            // Wait for the query thread
-                            try
-                            {
-                                // Wait for the thread to end
-                                queryThread.join();
-                            }
-                            catch (Exception ex)
-                            {
-                                StatusBar.show(
-                                    "search aborted (could not get result) !");
-                                MCSLogger.error("Could not get result : " + ex);
-
-                                JOptionPane.showMessageDialog(null,
-                                    "Could not get result from JMMC server.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-
-                                setQueryLaunchedState(false);
-
-                                return;
-                            }
-
-                            String result = queryThread.getResult();
-
-                            if (result.length() > 0)
-                            {
-                                StatusBar.show(
-                                    "parsing calibrators... (please wait, this may take a while)");
-
-                                try
-                                {
-                                    // Parse the received VOTable
-                                    _calibratorsModel.parseVOTable(result);
-                                    StatusBar.show(
-                                        "searching calibrators... done.");
-                                }
-                                catch (IOException ex)
-                                {
-                                    StatusBar.show("parsing aborted !");
-                                    MCSLogger.error(
-                                        "Could not parse received VOTable : " +
-                                        ex);
-
-                                    JOptionPane.showMessageDialog(null,
-                                        "Search failed (invalid VOTable received).",
-                                        "Error", JOptionPane.ERROR_MESSAGE);
-
-                                    setQueryLaunchedState(false);
-
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                MCSLogger.test("No calibrators found.");
-
-                                StatusBar.show("no calibrators found.");
-
-                                setQueryLaunchedState(false);
-
-                                return;
-                            }
-
-                            // As data are now loaded
-                            enableSaveMenus(true);
-                        }
-                        catch (Exception ex)
-                        {
-                            StatusBar.show(
-                                "search aborted (communication error) !");
-                            MCSLogger.error(
-                                "Could not communicate with server : " + ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                "Communication failed.", "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        }
-
-                        // Query is finished
-                        setQueryLaunchedState(false);
-                    }
-                }
-
-                // Launch the GetCal thread
-                GetCalThread getCalThread = new GetCalThread();
-                getCalThread.start();
+                _getCalThread = new GetCalThread();
+                _getCalThread.start();
             }
             else
             {
                 StatusBar.show("cancelling current search...");
 
-                // @TODO : dispose thread and cancel query
-                StatusBar.show("search cancelled.");
+                // If the GetCal thread has already been launched
+                if (_getCalThread != null)
+                {
+                    // Kill it
+                    MCSLogger.debug("Killing GetCal thread ... ");
+                    _getCalThread.interrupt();
+                    _getCalThread = null;
+                    MCSLogger.debug("GetCal thread killed.");
+                }
 
+                // Query is finished
+                setQueryLaunchedState(false);
+
+                StatusBar.show("search cancelled.");
+            }
+        }
+
+        class GetCalThread extends Thread
+        {
+            QueryResultThread _queryResultThread = null;
+            SclwsLocator      loc                = null;
+            SclwsPortType     s                  = null;
+            String            id                 = null;
+
+            GetCalThread()
+            {
+                _queryResultThread = null;
+            }
+
+            public void run()
+            {
+                getCal();
+            }
+
+            public void getCal()
+            {
+                try
+                {
+                    // Get the connection ID
+                    try
+                    {
+                        // Start the webservice connection
+                        loc     = new SclwsLocator();
+                        s       = loc.getsclws();
+
+                        // Define the webservice timeout (default = 10min)
+                        //org.apache.axis.client.Stub stub = (SclwsStub) s;
+                        //stub.setTimeout(20000); // 20 second, in miliseconds
+
+                        // Get the connection ID
+                        id      = s.getCalAsyncID();
+
+                        MCSLogger.test("Connection ID = '" + id + "'.");
+                        StatusBar.show(
+                            "searching calibrators... (connection established)");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle error when no manual cancel
+                        if (_getCalThread != null)
+                        {
+                            StatusBar.show(
+                                "search aborted (connection refused) !");
+                            MCSLogger.error("Connection failed : " + ex);
+
+                            JOptionPane.showMessageDialog(null,
+                                "Could not connect to JMMC server.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+
+                            setQueryLaunchedState(false);
+                        }
+                        else
+                        {
+                            MCSLogger.debug("Silenced error (cancellation) : " +
+                                ex);
+                        }
+
+                        return;
+                    }
+
+                    // Get the query from the GUI
+                    String query = _queryModel.getQueryAsMCSString();
+                    MCSLogger.test("Query = '" + query + "'.");
+
+                    // Launch the querying thread
+                    _queryResultThread = new QueryResultThread(s, id, query);
+                    _queryResultThread.start();
+
+                    StatusBar.show(
+                        "searching calibrators... (querying catalogs)");
+
+                    // GetCal status polling to update ProgressBar
+                    String  currentCatalogName = "";
+                    Integer catalogIndex       = 0;
+                    Integer nbOfCatalogs       = 0;
+                    Boolean lastCatalog        = false;
+
+                    do
+                    {
+                        // Get query progression status
+                        try
+                        {
+                            currentCatalogName = s.getCalWaitForCurrentCatalogName(id);
+                            _queryModel.setCatalogName(currentCatalogName);
+
+                            nbOfCatalogs = s.getCalNbOfCatalogs(id);
+                            _queryModel.setTotalStep(nbOfCatalogs);
+
+                            catalogIndex = s.getCalCurrentCatalogIndex(id);
+                            _queryModel.setCurrentStep(catalogIndex);
+
+                            lastCatalog = s.getCalIsLastCatalog(id);
+
+                            MCSLogger.test("Status = '" + currentCatalogName +
+                                "' - " + catalogIndex + "/" + nbOfCatalogs +
+                                " (" + lastCatalog + ").");
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle error when no manual cancel
+                            if (_getCalThread != null)
+                            {
+                                StatusBar.show(
+                                    "search aborted (catalog error) !");
+                                MCSLogger.error("Status retrieving error : " +
+                                    ex);
+
+                                JOptionPane.showMessageDialog(null,
+                                    "Communication with the JMMC server failed.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+
+                                setQueryLaunchedState(false);
+                            }
+                            else
+                            {
+                                MCSLogger.debug(
+                                    "Silenced error (cancellation) : " + ex);
+                            }
+
+                            return;
+                        }
+                    }
+                    while (lastCatalog == false);
+
+                    StatusBar.show(
+                        "searching calibrators... (waiting for result)");
+
+                    // Wait for the query thread
+                    try
+                    {
+                        // Wait for the thread to end
+                        _queryResultThread.join();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle error when no manual cancel
+                        if (_getCalThread != null)
+                        {
+                            StatusBar.show(
+                                "search aborted (could not get result) !");
+                            MCSLogger.error("Could not get result : " + ex);
+
+                            JOptionPane.showMessageDialog(null,
+                                "Could not get result from JMMC server.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+
+                            setQueryLaunchedState(false);
+                        }
+                        else
+                        {
+                            MCSLogger.debug("Silenced error (cancellation) : " +
+                                ex);
+                        }
+
+                        return;
+                    }
+
+                    String result = _queryResultThread.getResult();
+
+                    if (result.length() > 0)
+                    {
+                        StatusBar.show(
+                            "parsing calibrators... (please wait, this may take a while)");
+
+                        try
+                        {
+                            // Parse the received VOTable
+                            _calibratorsModel.parseVOTable(result);
+                            StatusBar.show("searching calibrators... done.");
+                        }
+                        catch (IOException ex)
+                        {
+                            // Handle error when no manual cancel
+                            if (_getCalThread != null)
+                            {
+                                StatusBar.show("parsing aborted !");
+                                MCSLogger.error(
+                                    "Could not parse received VOTable : " + ex);
+
+                                JOptionPane.showMessageDialog(null,
+                                    "Search failed (invalid VOTable received).",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+
+                                setQueryLaunchedState(false);
+                            }
+                            else
+                            {
+                                MCSLogger.debug(
+                                    "Silenced error (cancellation) : " + ex);
+                            }
+
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MCSLogger.test("No calibrators found.");
+
+                        StatusBar.show("no calibrators found.");
+
+                        setQueryLaunchedState(false);
+
+                        return;
+                    }
+
+                    // As data are now loaded
+                    enableSaveMenus(true);
+                }
+                catch (Exception ex)
+                {
+                    // Handle error when no manual cancel
+                    if (_getCalThread != null)
+                    {
+                        StatusBar.show("search aborted (communication error) !");
+                        MCSLogger.error("Could not communicate with server : " +
+                            ex);
+
+                        JOptionPane.showMessageDialog(null,
+                            "Communication failed.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                    else
+                    {
+                        MCSLogger.debug("Silenced error (cancellation) : " +
+                            ex);
+                    }
+                }
+
+                // Query is finished
+                setQueryLaunchedState(false);
+            }
+
+            public void interrupt()
+            {
                 Boolean isOk = false;
 
-                // Get query progression status
+                // Ask for query cancellation
                 try
                 {
                     isOk = s.getCalCancelID(id);
@@ -881,7 +894,7 @@ public class VirtualObservatory extends Observable
                 catch (Exception ex)
                 {
                     StatusBar.show(
-                        "Could not cancel request (communication error) !");
+                        "could not cancel request (communication error) !");
                     MCSLogger.error("Could not cancel request : " + ex);
 
                     JOptionPane.showMessageDialog(null,
@@ -893,8 +906,78 @@ public class VirtualObservatory extends Observable
                     return;
                 }
 
-                // Query is finished
-                setQueryLaunchedState(false);
+                // If the QueryResult thread has already been launched
+                if (_queryResultThread != null)
+                {
+                    // Kill it
+                    MCSLogger.debug("Killing QueryResult thread ... ");
+                    _queryResultThread.interrupt();
+                    _queryResultThread = null;
+                    MCSLogger.debug("QueryResult thread killed.");
+                }
+
+                super.interrupt();
+            }
+
+            class QueryResultThread extends Thread
+            {
+                SclwsPortType _s;
+                String        _id;
+                String        _query;
+                String        _result;
+
+                QueryResultThread(SclwsPortType s, String id, String query)
+                {
+                    _s          = s;
+                    _query      = query;
+                    _id         = id;
+                    _result     = null;
+                }
+
+                public void run()
+                {
+                    queryResult();
+                }
+
+                public void queryResult()
+                {
+                    try
+                    {
+                        // Launch the query
+                        StatusBar.show(
+                            "searching calibrators... (sending query)");
+                        _result = _s.getCalAsyncQuery(_id, _query);
+                        StatusBar.show("searching calibrators... (query sent)");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle error when no manual cancel
+                        if (_queryResultThread != null)
+                        {
+                            StatusBar.show(
+                                "search aborted (could not send query) !");
+                            MCSLogger.error("Could not send query : " + ex);
+
+                            JOptionPane.showMessageDialog(null,
+                                "Could not send query to JMMC server.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+
+                            setQueryLaunchedState(false);
+                        }
+                        else
+                        {
+                            MCSLogger.debug("Silenced error (cancellation) : " +
+                                ex);
+                        }
+
+                        return;
+                    }
+                }
+
+                String getResult()
+                {
+                    return _result;
+                }
             }
         }
     }
