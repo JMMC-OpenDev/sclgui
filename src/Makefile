@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.23 2007-06-21 07:39:31 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.24 2007-07-11 15:59:13 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.23  2007/06/21 07:39:31  lafrasse
+# Added XSLT sheets to Java packaging.
+#
 # Revision 1.22  2007/05/22 14:20:51  gzins
 # Added diamVk in 'faint' scenario case
 #
@@ -267,5 +270,16 @@ do_soap :
 
 clean_soap :
 	rm -rf fr/jmmc/sclws_wsdl
+
+#
+# JNLP targets
+# ---------------------------------
+CLASSPATH = $(shell mkfMakeJavaClasspath)
+WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
+install_jnlp :
+	./InstallJNLP.sh    
+
+clean_jnlp :
+	rm -rf ~/public_html/SearchCal
 
 #___oOo___
