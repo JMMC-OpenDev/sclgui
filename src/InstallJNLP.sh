@@ -1,11 +1,14 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: InstallJNLP.sh,v 1.1 2007-07-11 15:59:13 lafrasse Exp $"
+# "@(#) $Id: InstallJNLP.sh,v 1.2 2007-07-11 16:09:45 lafrasse Exp $"
 #
 # History
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2007/07/11 15:59:13  lafrasse
+# Added automatic JNLP and Jar files generation and installation.
+#
 #
 #*******************************************************************************
 
@@ -26,7 +29,7 @@ for i in $INTROOT/lib/*.jar ../../lib/*.jar
 do 
     echo "Copy and sign $i"
     cp $i jar 
-    jarsigner jar/$(basename $i) mykey < $passwdFile
+    jarsigner -keystore ../config/keystore jar/$(basename $i) mykey < $passwdFile
 done
 
 rm $passwdFile
