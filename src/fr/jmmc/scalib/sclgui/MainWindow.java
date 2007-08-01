@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.20 2007-06-26 16:04:09 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.21 2007-08-01 15:30:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/06/26 16:04:09  lafrasse
+ * Updated version number to 4.0b5.
+ *
  * Revision 1.19  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -323,9 +326,10 @@ public class MainWindow extends JFrame
             greetings += "\t\tThe JMMC Team.\n";
             greetings += "\n";
             greetings += "\n";
+            greetings += "This software uses source code created at the Centre de Données astronomiques de Strasbourg, France.\n";
 
             AboutWindow aboutWindow = new AboutWindow("SearchCal",
-                    "4.0 beta 5", greetings, "Copyright 2007 JMMC");
+                    "4.0 beta 6", greetings, "Copyright 2007 JMMC");
         }
     }
 }
