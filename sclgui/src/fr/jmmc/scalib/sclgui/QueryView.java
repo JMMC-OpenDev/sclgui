@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.37 2007-06-29 09:57:23 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.38 2007-08-01 15:29:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.37  2007/06/29 09:57:23  lafrasse
+ * Reomoed unimplemented 'Get Star' button.
+ *
  * Revision 1.36  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -350,9 +353,7 @@ public class QueryView extends JPanel implements Observer,
            URL imgURL = getClass().getResource(fullIconPath);
            _vo._getStarAction.putValue(Action.SMALL_ICON, new ImageIcon(imgURL));
          */
-
-        // @TODO : disabled GetStar button untill it works
-        //tempPanel.add(new JButton(_vo._getStarAction));
+        tempPanel.add(new JButton(_vo._getStarAction));
         _scienceObjectPanel.add(tempPanel, c);
         // RA coordinate field
         c.gridy++;
@@ -546,6 +547,16 @@ public class QueryView extends JPanel implements Observer,
         _progressBar.setMaximum(_queryModel.getTotalStep());
         _progressBar.setString(_queryModel.getCatalogName());
 
+        // If the virtual obervatory is busy
+        if (_vo.isBusy() == true)
+        {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        }
+        else
+        {
+            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        }
+
         // If the science object contains something
         if (scienceObjectName.length() > 0)
         {
@@ -647,7 +658,14 @@ public class QueryView extends JPanel implements Observer,
         _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
         _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
         _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
-        _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
+
+        // Update science object magnitude only if the textfield was used
+        // (done through the model when using _instrumentalMagnitudeBandCombo
+        if (source == _scienceObjectMagnitudeTextfield)
+        {
+            _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
+        }
+
         _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
         _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
         _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());

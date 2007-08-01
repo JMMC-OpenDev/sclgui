@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.21 2007-07-10 17:34:55 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.22 2007-08-01 15:29:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2007/07/10 17:34:55  lafrasse
+ * Added proper thread termination and communication exception handling.
+ *
  * Revision 1.20  2007/07/03 17:05:00  lafrasse
  * Added support for query cancellation.
  *
@@ -76,6 +79,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import cds.simbad.uif.*;
+
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
@@ -87,7 +92,7 @@ import java.awt.event.*;
 
 import java.io.*;
 
-import java.net.URL;
+import java.net.*;
 
 import java.util.*;
 
@@ -112,6 +117,9 @@ public class VirtualObservatory extends Observable
 
     /** Path to an open or saved file */
     private File _file;
+
+    /** Store wether the CDS is queried or not */
+    private boolean _CDSIsQueried = false;
 
     /** Store wether the Query has be launched or not */
     private boolean _queryIsLaunched = false;
@@ -179,6 +187,57 @@ public class VirtualObservatory extends Observable
 
         // WebService related members
         setQueryLaunchedState(false);
+        setCDSQueringState(false);
+    }
+
+    /**
+     * Return whether the virtual observatory is busy or not.
+     *
+     * @return true if the VO is busy querying either CDS or JMMC, false otherwise.
+     */
+    protected synchronized boolean isBusy()
+    {
+        MCSLogger.trace();
+
+        return (isQueryLaunched() || isCDSQueried());
+    }
+
+    /**
+     * Return whether the CDS is accessed or not or not.
+     *
+     * @return true if the CDS is accessed, false otherwise.
+     */
+    protected synchronized boolean isCDSQueried()
+    {
+        MCSLogger.trace();
+
+        return _CDSIsQueried;
+    }
+
+    /**
+     * Set whether the CDS is accessed or not.
+     *
+     * @param flag true to enable all menus, false otherwise.
+     */
+    protected synchronized void setCDSQueringState(boolean flag)
+    {
+        MCSLogger.trace();
+
+        _CDSIsQueried = flag;
+
+        if (_CDSIsQueried == true)
+        {
+            // Change button title to 'Cancel'
+            _getStarAction.putValue(Action.NAME, "Cancel");
+        }
+        else
+        {
+            // Change button title to 'Get Calibrators'
+            _getStarAction.putValue(Action.NAME, "Get Star");
+        }
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -301,7 +360,8 @@ public class VirtualObservatory extends Observable
         }
         catch (Exception ex)
         {
-            StatusBar.show("search aborted (could not parse query) !");
+            StatusBar.show(
+                "calibrator search aborted (could not parse query) !");
             MCSLogger.error("Could not parse query : " + ex);
 
             JOptionPane.showMessageDialog(null, "Could not parse query.",
@@ -569,6 +629,8 @@ public class VirtualObservatory extends Observable
      */
     protected class GetStarAction extends MCSAction
     {
+        GetStarThread _getStarThread = null;
+
         public GetStarAction()
         {
             // @TODO : set button image
@@ -582,15 +644,289 @@ public class VirtualObservatory extends Observable
             MCSLogger.trace();
 
             // @TODO : Querying Simbad and fill the query model accordinally
-            _queryModel.reset();
+            /*
+               _queryModel.reset();
+               try
+               {
+                   _queryModel.loadDefaultValues();
+               }
+               catch (Exception ex)
+               {
+                   MCSLogger.error("GetStar error : " + ex);
+               }
+             */
 
-            try
+            // Launch a new thread only if no other one has been launched yet
+            if (isCDSQueried() == false)
             {
-                _queryModel.loadDefaultValues();
+                // Query is stating
+                setCDSQueringState(true);
+
+                StatusBar.show(
+                    "searching science object... (please wait, this may take a while)");
+
+                // Launch the query in the background in order to keed GUI updated
+                _getStarThread = new GetStarThread();
+                _getStarThread.start();
             }
-            catch (Exception ex)
+            else
             {
-                MCSLogger.error("GetStar error : " + ex);
+                StatusBar.show("cancelling science object search...");
+
+                // If the thread has already been launched
+                if (_getStarThread != null)
+                {
+                    // Kill it
+                    MCSLogger.debug("Killing GetStar thread ... ");
+                    _getStarThread.interrupt();
+                    _getStarThread = null;
+                    MCSLogger.debug("GetStar thread killed.");
+                }
+
+                // Query is finished
+                setCDSQueringState(false);
+
+                StatusBar.show("science object search cancelled.");
+            }
+        }
+
+        class GetStarThread extends Thread
+        {
+            String _result;
+
+            GetStarThread()
+            {
+            }
+
+            public void run()
+            {
+                simbadResult();
+            }
+
+            public void simbadResult()
+            {
+                // Re-initializing the result
+                _result = "";
+
+                // Ask CDS Simbad for our science object (if any) properties
+                String id = _queryModel.getScienceObjectName();
+
+                if (id.length() != 0)
+                {
+                    // Simbad URL
+                    String simbadBaseURL = "http://simbad.u-strasbg.fr/simbad/sim-script?script=";
+
+                    // The script to execute
+                    String simbadScript = "output console=off script=off\n"; // Just data
+                    simbadScript += "votable {"; // Desired VOTable format definition start
+                    simbadScript += "ra,"; // RA value
+                    simbadScript += "dec,"; // DEC Value
+                    simbadScript += "flux(V),"; // V magnitude value
+                    simbadScript += "flux(I),"; // I magnitude value
+                    simbadScript += "flux(J),"; // J magnitude value
+                    simbadScript += "flux(H),"; // H magnitude value
+                    simbadScript += "flux(K)"; // K magnitude value
+                    simbadScript += "}\n"; // Desired VOTable format definition end
+                    simbadScript += "votable open\n"; // Set our VOTable as the desired output format
+                    simbadScript += "set frame FK5\n"; // Set the FK5 frame as coord system
+                    simbadScript += ("query id " + id); // Add the object name we are looking for
+
+                    // Getting the result
+                    try
+                    {
+                        // Forging the URL int UTF8 unicode charset
+                        String simbadURL = simbadBaseURL +
+                            URLEncoder.encode(simbadScript, "UTF-8");
+                        URL    url       = new URL(simbadURL);
+
+                        MCSLogger.debug("simbadURL : " + simbadURL);
+
+                        // Launching the query
+                        BufferedReader rdr = new BufferedReader(new InputStreamReader(
+                                    url.openStream()));
+
+                        // Reading the result line by line
+                        String currentLine;
+
+                        while ((currentLine = rdr.readLine()) != null)
+                        {
+                            if (_result.length() > 0)
+                            {
+                                _result += "\n";
+                            }
+
+                            _result += currentLine;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle error when no manual cancel
+                        if (_getStarThread != null)
+                        {
+                            StatusBar.show(
+                                "science object search aborted (connection refused) !");
+                            MCSLogger.error("CDS Connection failed : " + ex);
+
+                            JOptionPane.showMessageDialog(null,
+                                "Could not connect to CDS Simbad server.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+
+                            setCDSQueringState(false);
+                        }
+                        else
+                        {
+                            MCSLogger.debug("Silenced error (cancellation) : " +
+                                ex);
+                        }
+
+                        return;
+                    }
+
+                    MCSLogger.debug("VOTable :\n" + _result);
+
+                    // Parsing the result
+                    try
+                    {
+                        // If the result srting is empty
+                        if (_result.length() < 1)
+                        {
+                            throw new Exception("SIMBAD Empty result");
+                        }
+
+                        // If there was an error during query
+                        if (_result.startsWith("::error"))
+                        {
+                            throw new Exception("SIMBAD Error result");
+                        }
+
+                        // Giving the result to _queryModel for parsing
+                        _queryModel.loadFromSimbadVOTable(_result);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle error when no manual cancel
+                        if (_getStarThread != null)
+                        {
+                            StatusBar.show(
+                                "science object search aborted (parsing error) !");
+                            MCSLogger.error("CDS Result parsing failed : " +
+                                ex);
+
+                            JOptionPane.showMessageDialog(null,
+                                "Could not parse to CDS Simbad result.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+
+                            setCDSQueringState(false);
+                        }
+                        else
+                        {
+                            MCSLogger.debug("Silenced error (cancellation) : " +
+                                ex);
+                        }
+
+                        return;
+                    }
+                }
+                else
+                {
+                    //@TODO : Assertion - should never receive an empty scence object name
+                    MCSLogger.error(
+                        "Received an empty scence object name for CDS Sibad search");
+                }
+
+                setCDSQueringState(false);
+            }
+
+            /*
+               // Not in use (do not work from here)
+               public void SOAPsimbadResult()
+               {
+                   WSQueryInterface myv = null;
+                   // CDS Simbad connection
+                   try
+                   {
+                       // Locator creation
+                       System.out.print("Creating locator ... ");
+                       WSQueryInterfaceService locator = new WSQueryInterfaceServiceLocator();
+                       System.out.println("OK.");
+                       //@TODO : try catch this -> opening
+                       // Sesame object
+                       System.out.print("Getting WSQuery ... ");
+                       myv = locator.getWSQuery();
+                       System.out.println("OK.");
+                       // Define the webservice timeout (default = ???min)
+                       org.apache.axis.client.Stub stub = (WSQuerySoapBindingStub) myv;
+                       stub.setTimeout(15000); // 15 second, in miliseconds
+                   }
+                   catch (Exception ex)
+                   {
+                       // Handle error when no manual cancel
+                       if (_getStarThread != null)
+                       {
+                           StatusBar.show(
+                               "science object search aborted (connection refused) !");
+                           MCSLogger.error("CDS Connection failed : " + ex);
+                           JOptionPane.showMessageDialog(null,
+                               "Could not connect to CDS Simbad server.", "Error",
+                               JOptionPane.ERROR_MESSAGE);
+                           setCDSQueringState(false);
+                       }
+                       else
+                       {
+                           MCSLogger.debug("Silenced error (cancellation) : " +
+                               ex);
+                       }
+                       return;
+                   }
+                   // Ask CDS Simbad for our science object (if any) properties
+                   String id = _queryModel.getScienceObjectName();
+                   if (id.length() != 0)
+                   {
+                       try
+                       {
+                           String fields = "ra dec flux(V) flux(I) flux(J) flux(H) flux(k)"; // Fields needed.
+                           String format = "vo"; // XML result.
+                           System.out.print("Getting queryObjectById('" + id +
+                               "', '" + fields + "', '" + format + "') ... ");
+                           String result = myv.queryObjectById(id, fields, format);
+                           System.out.println("OK.");
+                           System.out.println("\n\n\n\n\nResult = '" + result +
+                               "'.\n\n\n\n\n\n\n");
+                           // @TODO : _queryModel.setCDSSimbadResult(_getStarThread.getResult());
+                       }
+                       catch (Exception ex)
+                       {
+                           // Handle error when no manual cancel
+                           if (_getStarThread != null)
+                           {
+                               System.out.println("KO.");
+                               StatusBar.show(
+                                   "science object search aborted (communication failed) !");
+                               MCSLogger.error("CDS communication failed : " + ex);
+                               JOptionPane.showMessageDialog(null,
+                                   "Could not connect to CDS server.", "Error",
+                                   JOptionPane.ERROR_MESSAGE);
+                               System.out.println("GetStar error : " + ex);
+                           }
+                           else
+                           {
+                               MCSLogger.debug("Silenced error (cancellation) : " +
+                                   ex);
+                           }
+                       }
+                   }
+                   else
+                   {
+                       //@TODO : Assertion - should never receive an empty scence object name
+                       MCSLogger.error(
+                           "Received an empty scence object name for CDS Sibad search");
+                   }
+                   setCDSQueringState(false);
+               }
+             */
+            String getResult()
+            {
+                return _result;
             }
         }
     }
@@ -600,7 +936,7 @@ public class VirtualObservatory extends Observable
      */
     protected class GetCalAction extends MCSAction
     {
-        GetCalThread _getCalThread = null;
+        GetCalThread _getCalThread         = null;
 
         public GetCalAction()
         {
@@ -628,7 +964,7 @@ public class VirtualObservatory extends Observable
             }
             else
             {
-                StatusBar.show("cancelling current search...");
+                StatusBar.show("cancelling current callibrator search...");
 
                 // If the GetCal thread has already been launched
                 if (_getCalThread != null)
@@ -643,7 +979,7 @@ public class VirtualObservatory extends Observable
                 // Query is finished
                 setQueryLaunchedState(false);
 
-                StatusBar.show("search cancelled.");
+                StatusBar.show("callibrator search cancelled.");
             }
         }
 
@@ -682,7 +1018,7 @@ public class VirtualObservatory extends Observable
                         // Get the connection ID
                         id      = s.getCalAsyncID();
 
-                        MCSLogger.test("Connection ID = '" + id + "'.");
+                        MCSLogger.test("JMMC Connection ID = '" + id + "'.");
                         StatusBar.show(
                             "searching calibrators... (connection established)");
                     }
@@ -692,13 +1028,14 @@ public class VirtualObservatory extends Observable
                         if (_getCalThread != null)
                         {
                             StatusBar.show(
-                                "search aborted (connection refused) !");
+                                "calibrator search aborted (connection refused) !");
                             MCSLogger.error("Connection failed : " + ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not connect to JMMC server.", "Error",
                                 JOptionPane.ERROR_MESSAGE);
 
+                            interrupt();
                             setQueryLaunchedState(false);
                         }
                         else
@@ -753,14 +1090,15 @@ public class VirtualObservatory extends Observable
                             if (_getCalThread != null)
                             {
                                 StatusBar.show(
-                                    "search aborted (catalog error) !");
-                                MCSLogger.error("Status retrieving error : " +
-                                    ex);
+                                    "calibrator search aborted (catalog error) !");
+                                MCSLogger.error(
+                                    "JMMC Status retrieving error : " + ex);
 
                                 JOptionPane.showMessageDialog(null,
                                     "Communication with the JMMC server failed.",
                                     "Error", JOptionPane.ERROR_MESSAGE);
 
+                                interrupt();
                                 setQueryLaunchedState(false);
                             }
                             else
@@ -789,13 +1127,15 @@ public class VirtualObservatory extends Observable
                         if (_getCalThread != null)
                         {
                             StatusBar.show(
-                                "search aborted (could not get result) !");
-                            MCSLogger.error("Could not get result : " + ex);
+                                "calibrator search aborted (could not get result) !");
+                            MCSLogger.error("Could not get JMMC result : " +
+                                ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not get result from JMMC server.",
                                 "Error", JOptionPane.ERROR_MESSAGE);
 
+                            interrupt();
                             setQueryLaunchedState(false);
                         }
                         else
@@ -825,14 +1165,16 @@ public class VirtualObservatory extends Observable
                             // Handle error when no manual cancel
                             if (_getCalThread != null)
                             {
-                                StatusBar.show("parsing aborted !");
+                                StatusBar.show("calibrator parsing aborted !");
                                 MCSLogger.error(
-                                    "Could not parse received VOTable : " + ex);
+                                    "Could not parse received JMMC VOTable : " +
+                                    ex);
 
                                 JOptionPane.showMessageDialog(null,
-                                    "Search failed (invalid VOTable received).",
+                                    "Calibrator search failed (invalid VOTable received).",
                                     "Error", JOptionPane.ERROR_MESSAGE);
 
+                                interrupt();
                                 setQueryLaunchedState(false);
                             }
                             else
@@ -863,9 +1205,10 @@ public class VirtualObservatory extends Observable
                     // Handle error when no manual cancel
                     if (_getCalThread != null)
                     {
-                        StatusBar.show("search aborted (communication error) !");
-                        MCSLogger.error("Could not communicate with server : " +
-                            ex);
+                        StatusBar.show(
+                            "calibrator search aborted (communication error) !");
+                        MCSLogger.error(
+                            "Could not communicate with JMMC server : " + ex);
 
                         JOptionPane.showMessageDialog(null,
                             "Communication failed.", "Error",
@@ -894,11 +1237,11 @@ public class VirtualObservatory extends Observable
                 catch (Exception ex)
                 {
                     StatusBar.show(
-                        "could not cancel request (communication error) !");
-                    MCSLogger.error("Could not cancel request : " + ex);
+                        "could not cancel calibrator search (communication error) !");
+                    MCSLogger.error("Could not cancel JMMC request : " + ex);
 
                     JOptionPane.showMessageDialog(null,
-                        "Request cancellation failed.", "Error",
+                        "JMMC request cancellation failed.", "Error",
                         JOptionPane.ERROR_MESSAGE);
 
                     setQueryLaunchedState(false);
@@ -955,13 +1298,15 @@ public class VirtualObservatory extends Observable
                         if (_queryResultThread != null)
                         {
                             StatusBar.show(
-                                "search aborted (could not send query) !");
-                            MCSLogger.error("Could not send query : " + ex);
+                                "calibrator search aborted (could not send query) !");
+                            MCSLogger.error("Could not send JMMC query : " +
+                                ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not send query to JMMC server.",
                                 "Error", JOptionPane.ERROR_MESSAGE);
 
+                            interrupt();
                             setQueryLaunchedState(false);
                         }
                         else

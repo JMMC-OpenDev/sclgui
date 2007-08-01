@@ -7,12 +7,18 @@ ARGS="-v 0"
 
 
 wsdl2java(){
-    INPUTPATH="../../sclws/include/sclws.wsdl"
+    INPUTPATHES="../../sclws/include/sclws.wsdl"
+services/WSQuery?wsdl"
+    ## We don't need SIMBAD wsdl for the moment (DO NOT WORK FROM HERE)
+    # INPUTPATHES="../../sclws/include/sclws.wsdl http://simweb.u-strasbg.fr/axis/
     OUTPUTPATH="./"
-	CMD="java -classpath $CLASSPATH org.apache.axis.wsdl.WSDL2Java $INPUTPATH -o $OUTPUTPATH"
-	#CMD="java -classpath $CLASSPATH org.apache.axis.wsdl.WSDL2Java -h"
-    echo $CMD
-    $CMD
+
+	for INPUTPATH in $INPUTPATHES
+	do
+       CMD="java -classpath $CLASSPATH org.apache.axis.wsdl.WSDL2Java $INPUTPATH -o $OUTPUTPATH"
+       echo $CMD
+ 	   $CMD
+    done
 }
 
 compile(){
@@ -47,7 +53,7 @@ do
 done
 export CLASSPATH=$CP
 echo CLASSPATH is $CLASSPATH
-
+echo
 
 for cmd in $*
 do

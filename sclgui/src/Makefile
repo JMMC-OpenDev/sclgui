@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.24 2007-07-11 15:59:13 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.25 2007-08-01 15:29:22 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.24  2007/07/11 15:59:13  lafrasse
+# Added automatic JNLP and Jar files generation and installation.
+#
 # Revision 1.23  2007/06/21 07:39:31  lafrasse
 # Added XSLT sheets to Java packaging.
 #
@@ -186,6 +189,12 @@ PY_SCRIPTS_L   =
 # Jarfiles and their directories
 # ---------------------------------
 JARFILES        = sclgui
+## For SIMBAD SOAP WebService (do not work here)
+#JARFILES        = simbad sclgui
+
+#
+# <brief description of sclgui jar files>
+simbad_DIRS     = cds 
 
 #
 # <brief description of sclgui jar files>
@@ -267,9 +276,13 @@ CLASSPATH = $(shell mkfMakeJavaClasspath)
 WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
 do_soap :
 	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(WSLD_FILE)
+    ## For SIMBAD SOAP WebService (do not work here)
+    # java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java http://simweb.u-strasbg.fr/axis/services/WSQuery?wsdl
 
 clean_soap :
 	rm -rf fr/jmmc/sclws_wsdl
+    ## For SIMBAD SOAP WebService (do not work here)
+    # rm -rf cds/
 
 #
 # JNLP targets
