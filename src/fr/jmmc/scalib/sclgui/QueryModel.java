@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.25 2007-06-29 09:56:50 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.26 2007-08-01 15:29:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2007/06/29 09:56:50  lafrasse
+ * Added support for science object inclusion.
+ *
  * Revision 1.24  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -91,7 +94,13 @@ package fr.jmmc.scalib.sclgui;
 
 import cds.savot.model.*;
 
+import cds.savot.pull.*;
+
+import cds.savot.writer.*;
+
 import fr.jmmc.mcs.log.*;
+
+import java.io.*;
 
 import java.util.*;
 
@@ -110,7 +119,7 @@ public class QueryModel extends Observable implements Observer
     private DefaultComboBoxModel _instrumentalMagnitudeBands;
 
     /** Magnitude to Preselected Wavelength conversion table */
-    Hashtable _magnitudeBandToWavelength = new Hashtable();
+    private Hashtable _magnitudeBandToWavelength = new Hashtable();
 
     /** The instrumental wavelength */
     private double _instrumentalWavelength;
@@ -130,8 +139,14 @@ public class QueryModel extends Observable implements Observer
     /** The science object declinaison coordinate */
     private String _scienceObjectDEC;
 
-    /** The science object right magnitude */
+    /** The science object right magnitudes */
     private double _scienceObjectMagnitude;
+
+    /** Band to Science Object Loaded Magnitude conversion table */
+    private Hashtable _scienceObjectMagnitudes = new Hashtable();
+
+    /** The instrumental wavelength auto-update flag */
+    private boolean _scienceObjectMagnitudeAutoUpdate = true;
 
     /** The science object inclusion flag */
     private boolean _scienceObjectInclusionFlag;
@@ -198,6 +213,13 @@ public class QueryModel extends Observable implements Observer
             // Construct the conversion table between both
             _magnitudeBandToWavelength.put(magnitudeBands[i],
                 new Double(wavelengths[i]));
+        }
+
+        // For each "band-predefined magnitudes" couple
+        for (int i = 0; i < magnitudeBands.length; i++)
+        {
+            // Construct the conversion table between both
+            _scienceObjectMagnitudes.put(magnitudeBands[i], new Double(0.0));
         }
 
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
@@ -280,7 +302,7 @@ public class QueryModel extends Observable implements Observer
                     "query.scienceObjectRA"));
             setScienceObjectDEC(_preferences.getPreference(
                     "query.scienceObjectDEC"));
-            setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
+            setScienceObjectMagnitudeForCurrentBand(_preferences.getPreferenceAsDouble(
                     "query.scienceObjectMagnitude"));
             setScienceObjectInclusionFlag(_preferences.getPreferenceAsBoolean(
                     "query.scienceObjectInclusionFlag"));
@@ -358,6 +380,118 @@ public class QueryModel extends Observable implements Observer
         // Disable the edition as the values where loaded from file
         setEditableState(false);
 
+        notifyObservers();
+    }
+
+    /**
+     * Reset all properties to their default values.
+     */
+    public void loadFromSimbadVOTable(String simbadVOTable)
+        throws Exception
+    {
+        MCSLogger.trace();
+
+        try
+        {
+            // Parse using SAVOT
+            // Put the whole VOTable file into memory
+            SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
+                        simbadVOTable), SavotPullEngine.FULL, "UTF-8");
+
+            // Parse the VOTable
+            SavotVOTable parsedVOTable = parser.getVOTable();
+
+            // Get the VOTable resources
+            ResourceSet resourceSet = parsedVOTable.getResources();
+
+            // Get the first table of the first resource
+            // WARNING : this is not compatible with other VOTable than JMMC ones
+            // (0 should not be used, but the name of the Resource instead)
+            SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
+            SavotTable    table    = (SavotTable) resource.getTables()
+                                                          .getItemAt(0);
+            FieldSet      fieldSet = table.getFields();
+
+            // For first data row (if any)
+            TRSet rows = resource.getTRSet(0);
+
+            for (int rowId = 0; rowId < Math.min(1, rows.getItemCount());
+                    rowId++)
+            {
+                // Get the data corresponding to the current row
+                TDSet row = rows.getTDSet(rowId);
+
+                // @TODO : highly unportable as it is heavily dependant on the order of
+                //         the desired SIMBAD VOTable defined in
+                //         VirtualObservatory::GetStarAction::GetStarThread::simbadResult()
+                int    index = 0;
+                String str;
+                str          = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    str = str.replace(' ', ':');
+                    MCSLogger.debug("loaded RA = '" + str + "'.");
+                    setScienceObjectRA(str);
+                }
+
+                str = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    str = str.replace(' ', ':');
+                    MCSLogger.debug("loaded DEC = '" + str + "'.");
+                    setScienceObjectDEC(str);
+                }
+
+                str = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    MCSLogger.debug("loaded vMag = '" + str + "'.");
+                    _scienceObjectMagnitudes.put("V", new Double(str));
+                }
+
+                str = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    MCSLogger.debug("loaded iMag = '" + str + "'.");
+                    _scienceObjectMagnitudes.put("I", new Double(str));
+                }
+
+                str = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    MCSLogger.debug("loaded jMag = '" + str + "'.");
+                    _scienceObjectMagnitudes.put("J", new Double(str));
+                }
+
+                str = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    MCSLogger.debug("loaded hMag = '" + str + "'.");
+                    _scienceObjectMagnitudes.put("H", new Double(str));
+                }
+
+                str = (String) row.getContent(index++);
+
+                if (str.length() != 0)
+                {
+                    MCSLogger.debug("loaded kMag = '" + str + "'.");
+                    _scienceObjectMagnitudes.put("K", new Double(str));
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+
+        // Enable the edition as the values where not loaded from file
+        setEditableState(true);
         notifyObservers();
     }
 
@@ -528,6 +662,13 @@ public class QueryModel extends Observable implements Observer
         {
             Double d = (Double) _magnitudeBandToWavelength.get(magnitudeBand);
             _instrumentalWavelength = d.doubleValue();
+        }
+
+        // Modify _scienceObjectMagnitude automatically if needed
+        if (_scienceObjectMagnitudeAutoUpdate == true)
+        {
+            Double d = (Double) _scienceObjectMagnitudes.get(magnitudeBand);
+            _scienceObjectMagnitude = d.doubleValue();
         }
 
         setChanged();
@@ -723,7 +864,49 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        return new Double(_scienceObjectMagnitude);
+        Double currentMagnitude = new Double(_scienceObjectMagnitude);
+
+        // If the user has not yet define is own value
+        if (_scienceObjectMagnitudeAutoUpdate == true)
+        {
+            // Return the pre-defined one for the currently selected instrumental band
+            String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
+            currentMagnitude = (Double) _scienceObjectMagnitudes.get(currentBand);
+        }
+
+        // Otherwise the user-defined one is returned
+        return currentMagnitude;
+    }
+
+    /**
+     * Change the magnitude parameter for the current band.
+     *
+     * @param magnitude the new magnitude as a double value.
+     */
+    public void setScienceObjectMagnitudeForCurrentBand(double magnitude)
+    {
+        MCSLogger.trace();
+
+        _scienceObjectMagnitude = magnitude;
+
+        String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
+        _scienceObjectMagnitudes.put(currentBand, new Double(magnitude));
+
+        // Modify _queryMinMagnitude automatically if needed
+        if (_queryMinMagnitudeAutoUpdate == true)
+        {
+            _queryMinMagnitude = _scienceObjectMagnitude +
+                getQueryMinMagnitudeDelta();
+        }
+
+        // Modify _queryMaxMagnitude automatically if needed
+        if (_queryMaxMagnitudeAutoUpdate == true)
+        {
+            _queryMaxMagnitude = _scienceObjectMagnitude +
+                getQueryMaxMagnitudeDelta();
+        }
+
+        setChanged();
     }
 
     /**
@@ -735,7 +918,10 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        _scienceObjectMagnitude = magnitude;
+        // This value should never be auto-updated anymore
+        _scienceObjectMagnitudeAutoUpdate     = false;
+
+        _scienceObjectMagnitude               = magnitude;
 
         // Modify _queryMinMagnitude automatically if needed
         if (_queryMinMagnitudeAutoUpdate == true)
@@ -760,6 +946,17 @@ public class QueryModel extends Observable implements Observer
      * @param magnitude the new magnitude as a Double value.
      */
     public void setScienceObjectMagnitude(Double magnitude)
+    {
+        setScienceObjectMagnitude(magnitude.doubleValue());
+    }
+
+    /**
+     * Change the magnitude parameter for the given band.
+     *
+     * @param band the band for the magitude as a String value.
+     * @param magnitude the new magnitude as a Double value.
+     */
+    public void setScienceObjectMagnitude(String band, Double magnitude)
     {
         setScienceObjectMagnitude(magnitude.doubleValue());
     }
