@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.8 2007-06-18 13:59:32 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.9 2007-08-02 12:45:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2007/06/18 13:59:32  lafrasse
+ * Enhanced getStringValue() to handle 'null' value properties.
+ *
  * Revision 1.7  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -123,6 +126,22 @@ public class StarProperty implements Comparable
     }
 
     /**
+     * Return whether the star property has a value.
+     *
+     * @return true if a value is set, false otherwise.
+     */
+    public boolean hasValue()
+    {
+        // MCSLogger.trace();
+        if (getStringValue().length() > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Set the origin of the star property.
      *
      * @param origin the new star property origin.
@@ -145,9 +164,9 @@ public class StarProperty implements Comparable
     }
 
     /**
-     * Indicates if the star property has a catalog origin.
+     * Return whether the star property has a catalog origin.
      *
-     * @return true if a confidence index is set or false
+     * @return true if a confidence index is set, false otherwise.
      */
     public boolean hasOrigin()
     {
@@ -188,9 +207,9 @@ public class StarProperty implements Comparable
     }
 
     /**
-     * Indicates if the star property has a confidence index.
+     * Return whether the star property has a confidence index.
      *
-     * @return true if a confidence index is set or false
+     * @return true if a confidence index is set, false otherwise.
      */
     public boolean hasConfidence()
     {
