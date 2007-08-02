@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.39 2007-08-02 09:11:16 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.40 2007-08-02 12:19:57 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.39  2007/08/02 09:11:16  lafrasse
+ * Changed coordinates and box size units according to Daniel BONNEAU review
+ * comments.
+ *
  * Revision 1.38  2007/08/01 15:29:22  lafrasse
  * Added support for SIMDAD science object querying through URL+script (plus proof
  * of disfunctionning through SOAP).
@@ -687,7 +691,6 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        // Test if the instrumental and action panels must be enabled
         boolean fileLoadedOk = (_queryModel.canBeEdited() == true);
         setEnabledComponents(_instrumentPanel, fileLoadedOk);
         setEnabledComponents(_actionPanel, fileLoadedOk);

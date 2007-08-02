@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.26 2007-08-01 15:29:22 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.27 2007-08-02 12:19:57 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2007/08/01 15:29:22  lafrasse
+ * Added support for SIMDAD science object querying through URL+script (plus proof
+ * of disfunctionning through SOAP).
+ *
  * Revision 1.25  2007/06/29 09:56:50  lafrasse
  * Added support for science object inclusion.
  *
@@ -244,7 +248,7 @@ public class QueryModel extends Observable implements Observer
     public void update(Observable o, Object arg)
     {
         // Called if the observe shared instance Preference object was updated.
-        // Then inform any object than observe us that we also probably change.
+        // Then inform any object that observe us that we also probably change.
         setChanged();
         notifyObservers();
     }
@@ -1212,8 +1216,8 @@ public class QueryModel extends Observable implements Observer
     {
         _queryBrightScenarioFlag = flag;
 
-        notifyObservers();
         setChanged();
+        notifyObservers();
     }
 
     /**
