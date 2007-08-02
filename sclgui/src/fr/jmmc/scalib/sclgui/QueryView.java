@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.38 2007-08-01 15:29:22 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.39 2007-08-02 09:11:16 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.38  2007/08/01 15:29:22  lafrasse
+ * Added support for SIMDAD science object querying through URL+script (plus proof
+ * of disfunctionning through SOAP).
+ *
  * Revision 1.37  2007/06/29 09:57:23  lafrasse
  * Reomoed unimplemented 'Get Star' button.
  *
@@ -230,14 +234,14 @@ public class QueryView extends JPanel implements Observer,
     JRadioButton _faintRadioButton;
 
     /** Search box RA size label */
-    JLabel _diffRASizeLabel = new JLabel("Diff RA (arcmin) : ");
+    JLabel _diffRASizeLabel = new JLabel("RA Range (arcmin) : ");
 
     /** Search box RA size */
     JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search box DEC size label */
-    JLabel _diffDECSizeLabel = new JLabel("Diff DEC (arcmin) : ");
+    JLabel _diffDECSizeLabel = new JLabel("DEC Range (arcmin) : ");
 
     /** Search box DEC size */
     JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(
@@ -358,7 +362,7 @@ public class QueryView extends JPanel implements Observer,
         // RA coordinate field
         c.gridy++;
         c.gridx = 0;
-        _scienceObjectPanel.add(new JLabel("RA 2000 (mn) : "), c);
+        _scienceObjectPanel.add(new JLabel("RA 2000 (hh:mm:ss) : "), c);
         _scienceObjectRATextfield.setMinimumSize(textfieldDimension);
         _scienceObjectRATextfield.setPreferredSize(textfieldDimension);
         _scienceObjectRATextfield.addActionListener(this);
@@ -368,7 +372,7 @@ public class QueryView extends JPanel implements Observer,
         // DEG coordinate field
         c.gridy++;
         c.gridx = 0;
-        _scienceObjectPanel.add(new JLabel("DEC 2000 (deg) : "), c);
+        _scienceObjectPanel.add(new JLabel("DEC 2000 (+/-dd:mm:ss) : "), c);
         _scienceObjectDECTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectDECTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectDECTextfield.addActionListener(this);
