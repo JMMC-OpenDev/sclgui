@@ -8,9 +8,8 @@ ARGS="-v 0"
 
 wsdl2java(){
     INPUTPATHES="../../sclws/include/sclws.wsdl"
-services/WSQuery?wsdl"
     ## We don't need SIMBAD wsdl for the moment (DO NOT WORK FROM HERE)
-    # INPUTPATHES="../../sclws/include/sclws.wsdl http://simweb.u-strasbg.fr/axis/
+    # INPUTPATHES="../../sclws/include/sclws.wsdl http://simweb.u-strasbg.fr/axis/services/WSQuery?wsdl"
     OUTPUTPATH="./"
 
 	for INPUTPATH in $INPUTPATHES
