@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.11 2007-04-13 13:26:28 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.12 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2007/04/13 13:26:28  lafrasse
+ * Changed default CheckBox state to checked.
+ *
  * Revision 1.10  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -57,6 +60,9 @@ import java.util.*;
  */
 public class SpectralTypeFilter extends Filter
 {
+    /** Store the spectral type column name */
+    private String _spTypeColumnName = "SpType";
+
     /**
      * Default constructor.
      */
@@ -64,13 +70,13 @@ public class SpectralTypeFilter extends Filter
     {
         super();
 
-        setConstraint("O", new Boolean(true));
-        setConstraint("B", new Boolean(true));
-        setConstraint("A", new Boolean(true));
-        setConstraint("F", new Boolean(true));
-        setConstraint("G", new Boolean(true));
-        setConstraint("K", new Boolean(true));
-        setConstraint("M", new Boolean(true));
+        setConstraint("O", new Boolean(false));
+        setConstraint("B", new Boolean(false));
+        setConstraint("A", new Boolean(false));
+        setConstraint("F", new Boolean(false));
+        setConstraint("G", new Boolean(false));
+        setConstraint("K", new Boolean(false));
+        setConstraint("M", new Boolean(false));
     }
 
     /**
@@ -82,7 +88,7 @@ public class SpectralTypeFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Spectral Types other than :";
+        return "Reject Spectral Types (and unknowns) :";
     }
 
     /**
@@ -136,27 +142,36 @@ public class SpectralTypeFilter extends Filter
          */
 
         // Get the ID of the column contaning 'SpType' star property
-        int rawSpectralTypeID = starList.getColumnIdByName("SpType");
+        int rawSpectralTypeID = starList.getColumnIdByName(_spTypeColumnName);
 
-        // Get the spectral type from the row
-        StarProperty cell            = (StarProperty) row.elementAt(rawSpectralTypeID);
-        String       rawSpectralType = (String) cell.getValue();
-
-        // Get back the spectral types found in the given spectral type
-        Vector spectralTypes = ALX.spectralTypes(rawSpectralType);
-
-        // For each found spectral type
-        for (int i = 0; i < spectralTypes.size(); i++)
+        // If the desired column name exists
+        if (rawSpectralTypeID != -1)
         {
-            // Get the spectral type check box boolean state
-            String  spectralTypeName  = (String) spectralTypes.elementAt(i);
-            boolean spectralTypeState = ((Boolean) getConstraintByName(spectralTypeName)).booleanValue();
+            // Get the spectral type from the row
+            StarProperty cell = (StarProperty) row.elementAt(rawSpectralTypeID);
 
-            // If the current spectral type must be kept
-            if (spectralTypeState == true)
+            // If spectral type was found in the current line
+            if (cell.hasValue() == true)
             {
-                // This line must be kept
-                return false;
+                String rawSpectralType = (String) cell.getValue();
+
+                // Get back the spectral types found in the given spectral type
+                Vector spectralTypes = ALX.spectralTypes(rawSpectralType);
+
+                // For each found spectral type
+                for (int i = 0; i < spectralTypes.size(); i++)
+                {
+                    // Get the spectral type check box boolean state
+                    String  spectralTypeName  = (String) spectralTypes.elementAt(i);
+                    Boolean spectralTypeState = (Boolean) getConstraintByName(spectralTypeName);
+
+                    // If the current spectral type must be kept
+                    if (spectralTypeState == false)
+                    {
+                        // This line must be kept
+                        return false;
+                    }
+                }
             }
         }
 

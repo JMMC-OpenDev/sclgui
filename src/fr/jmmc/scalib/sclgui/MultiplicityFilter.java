@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.8 2007-02-13 14:15:30 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.9 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2007/02/13 14:15:30  lafrasse
+ * Corrected package and import pathes.
+ *
  * Revision 1.7  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -40,6 +43,9 @@ import java.util.Vector;
  */
 public class MultiplicityFilter extends Filter
 {
+    /** Store the variability flag 1 column name */
+    private String _multFlag1ColumnName = "MultFlag";
+
     /**
      * Default constructor.
      */
@@ -73,16 +79,20 @@ public class MultiplicityFilter extends Filter
         MCSLogger.trace();
 
         // Get the id of the column contaning 'multiplicity' star property
-        int          multiplicityId   = starList.getColumnIdByName("MultFlag");
+        int multiplicityId = starList.getColumnIdByName(_multFlag1ColumnName);
 
-        StarProperty cell             = ((StarProperty) row.elementAt(multiplicityId));
-        String       multiplicityFlag = cell.getStringValue();
-
-        // if the multiplicity flag exist
-        if ((multiplicityFlag != null) && (multiplicityFlag.length() != 0))
+        // If the desired column name exists
+        if (multiplicityId != -1)
         {
-            // This row should be removed
-            return true;
+            // Get the cell of the desired column
+            StarProperty cell = ((StarProperty) row.elementAt(multiplicityId));
+
+            // if the multiplicity flag exist
+            if (cell.hasValue() == true)
+            {
+                // This row should be removed
+                return true;
+            }
         }
 
         // Otherwise this row should be kept

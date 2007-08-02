@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MagnitudeFilter.java,v 1.5 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: MagnitudeFilter.java,v 1.6 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.4  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -31,14 +34,14 @@ import java.util.Vector;
  */
 public class MagnitudeFilter extends Filter
 {
+    /** Store the magnitude constraint name */
+    private String _magnitudeConstraintName = "Magnitude";
+
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
      */
     private QueryModel _queryModel;
-
-    /** Store the magnitude constraint name */
-    private String _magnitudeConstraintName = "Magnitude";
 
     /**
      * Default constructor.
@@ -53,7 +56,7 @@ public class MagnitudeFilter extends Filter
 
         //setConstraint(_magnitudeConstraintName, new Double(0.0));
         // @TODO : remove the demo values
-        setConstraint(_magnitudeConstraintName, new Double(6.0));
+        setConstraint(_magnitudeConstraintName, new Double(1.5));
     }
 
     /**
@@ -93,19 +96,29 @@ public class MagnitudeFilter extends Filter
         MCSLogger.trace();
 
         // Get the query magnitude band
-        String magnitudeBang = _queryModel.getInstrumentalMagnitudeBand();
+        String magnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
 
         // Get the id of the column contaning the good magnitude
-        int          magnitudeId      = starList.getColumnIdByName(magnitudeBang);
+        int magnitudeId = starList.getColumnIdByName(magnitudeBand);
 
-        StarProperty cell             = ((StarProperty) row.elementAt(magnitudeId));
-        double       currentMagnitude = cell.getDoubleValue();
-
-        // if the magnitude is greater than the allowed one
-        if (currentMagnitude > getAllowedMagnitude())
+        // If the desired column name exists
+        if (magnitudeId != -1)
         {
-            // This row should be removed
-            return true;
+            // Get the cell of the desired column
+            StarProperty cell = ((StarProperty) row.elementAt(magnitudeId));
+
+            // Only test and eventualy remove if the cell has a value
+            if (cell.hasValue() == true)
+            {
+                double currentMagnitude = cell.getDoubleValue();
+
+                // if the magnitude is greater than the allowed one
+                if (currentMagnitude > getAllowedMagnitude())
+                {
+                    // This row should be removed
+                    return true;
+                }
+            }
         }
 
         // Otherwise this row should be kept
