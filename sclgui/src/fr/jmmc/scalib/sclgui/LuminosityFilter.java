@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.11 2007-04-13 13:26:28 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.12 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2007/04/13 13:26:28  lafrasse
+ * Changed default CheckBox state to checked.
+ *
  * Revision 1.10  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -55,6 +58,9 @@ import java.util.*;
  */
 public class LuminosityFilter extends Filter
 {
+    /** Store the spectral type column name */
+    private String _spTypeColumnName = "SpType";
+
     /**
      * Default constructor.
      */
@@ -62,12 +68,12 @@ public class LuminosityFilter extends Filter
     {
         super();
 
-        setConstraint("I", new Boolean(true));
-        setConstraint("II", new Boolean(true));
-        setConstraint("III", new Boolean(true));
-        setConstraint("IV", new Boolean(true));
-        setConstraint("V", new Boolean(true));
-        setConstraint("VI", new Boolean(true));
+        setConstraint("I", new Boolean(false));
+        setConstraint("II", new Boolean(false));
+        setConstraint("III", new Boolean(false));
+        setConstraint("IV", new Boolean(false));
+        setConstraint("V", new Boolean(false));
+        setConstraint("VI", new Boolean(false));
     }
 
     /**
@@ -79,7 +85,7 @@ public class LuminosityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Luminosity Classes other than :";
+        return "Reject Luminosity Classes (and unknowns) :";
     }
 
     /**
@@ -133,29 +139,37 @@ public class LuminosityFilter extends Filter
          */
 
         // Get the ID of the column contaning 'SpType' star property
-        int rawSpectralTypeID = starList.getColumnIdByName("SpType");
+        int rawSpectralTypeID = starList.getColumnIdByName(_spTypeColumnName);
 
-        // Get the corresponding cell the given row
-        StarProperty cell = (StarProperty) row.elementAt(rawSpectralTypeID);
-
-        // Extract the spectral type from the cell
-        String rawSpectralType = (String) cell.getValue();
-
-        // Get back the luminosity classes found in the given spectral type
-        Vector luminosityClasses = ALX.luminosityClasses(rawSpectralType);
-
-        // For each found luminosity class
-        for (int i = 0; i < luminosityClasses.size(); i++)
+        // If the desired column name exists
+        if (rawSpectralTypeID != -1)
         {
-            // Get the luminosity class check box boolean state
-            String  luminosityClassName  = (String) luminosityClasses.elementAt(i);
-            boolean luminosityClassState = ((Boolean) getConstraintByName(luminosityClassName)).booleanValue();
+            // Get the corresponding cell the given row
+            StarProperty cell = (StarProperty) row.elementAt(rawSpectralTypeID);
 
-            // If the current luminosity class must be kept
-            if (luminosityClassState == true)
+            // If spectral type was found in the current line
+            if (cell.hasValue() == true)
             {
-                // This line must be kept
-                return false;
+                // Extract the spectral type from the cell
+                String rawSpectralType = cell.getStringValue();
+
+                // Get back the luminosity classes found in the given spectral type
+                Vector luminosityClasses = ALX.luminosityClasses(rawSpectralType);
+
+                // For each found luminosity class
+                for (int i = 0; i < luminosityClasses.size(); i++)
+                {
+                    // Get the luminosity class check box boolean state
+                    String  luminosityClassName  = (String) luminosityClasses.elementAt(i);
+                    Boolean luminosityClassState = (Boolean) getConstraintByName(luminosityClassName);
+
+                    // If the current luminosity class must be kept
+                    if (luminosityClassState == false)
+                    {
+                        // This line must be kept
+                        return false;
+                    }
+                }
             }
         }
 

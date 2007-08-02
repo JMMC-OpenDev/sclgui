@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.7 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.8 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.6  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -40,6 +43,12 @@ import java.util.*;
  */
 public class DistanceFilter extends Filter
 {
+    /** Store the RA column name */
+    private String _raColumnName = "RAJ2000";
+
+    /** Store the DEC column name */
+    private String _decColumnName = "DEJ2000";
+
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
@@ -78,8 +87,8 @@ public class DistanceFilter extends Filter
         //_deltaRA        = new Double(0.0);
         //_deltaDEC       = new Double(0.0);
         // @TODO : remove the demo values
-        _deltaRA        = new Double(0.2);
-        _deltaDEC       = new Double(0.2);
+        _deltaRA        = new Double(10.0);
+        _deltaDEC       = new Double(10.0);
 
         setConstraint(_deltaRAConstraintName, _deltaRA);
         setConstraint(_deltaDECConstraintName, _deltaDEC);
@@ -138,32 +147,49 @@ public class DistanceFilter extends Filter
         MCSLogger.trace();
 
         // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
-        int raId  = starList.getColumnIdByName("RAJ2000");
-        int decId = starList.getColumnIdByName("DEJ2000");
+        int raId  = starList.getColumnIdByName(_raColumnName);
+        int decId = starList.getColumnIdByName(_decColumnName);
 
-        // Get the current star RA value
-        StarProperty raCell    = ((StarProperty) row.elementAt(raId));
-        String       raString  = (String) raCell.getValue();
-        double       currentRA = ALX.convertRA(raString);
-
-        // Get the current star DEC value
-        StarProperty decCell    = ((StarProperty) row.elementAt(decId));
-        String       decString  = (String) decCell.getValue();
-        double       currentDEC = ALX.convertDEC(decString);
-
-        // if the current star is farther than the science object
-        retrieveScienceObjectCoordinates();
-        retrieveDeltas();
-
-        // Compute separation between science object & the current star
-        double raSeparation  = Math.abs(_scienceObjectRA - currentRA);
-        double decSeparation = Math.abs(_scienceObjectDEC - currentDEC);
-
-        // If the current star is out of range
-        if ((raSeparation > _deltaRA) || (decSeparation > _deltaDEC))
+        // If the desired column names exists
+        if ((raId != -1) && (decId != -1))
         {
-            // The current star row from the star list should be removed
-            return true;
+            // Get the current star RA value
+            StarProperty raCell = ((StarProperty) row.elementAt(raId));
+
+            // Get the current star DEC value
+            StarProperty decCell = ((StarProperty) row.elementAt(decId));
+
+            // If the 2 values were found in the current line
+            if ((raCell.hasValue() == true) && (decCell.hasValue() == true))
+            {
+                // Convert RA cell value
+                String raString  = (String) raCell.getValue();
+                double currentRA = ALX.convertRA(raString);
+
+                // Convert DEC cell value
+                String decString  = (String) decCell.getValue();
+                double currentDEC = ALX.convertDEC(decString);
+
+                // Get back query and filter values
+                retrieveScienceObjectCoordinates();
+                retrieveDeltas();
+
+                // Compute separation between science object & the current star
+                double raSeparation  = Math.abs(_scienceObjectRA - currentRA);
+                double decSeparation = Math.abs(_scienceObjectDEC - currentDEC);
+
+                // If the current star is out of range
+                if ((raSeparation > _deltaRA) || (decSeparation > _deltaDEC))
+                {
+                    // The current star row should be removed
+                    return true;
+                }
+            }
+            else // If any value is missing
+            {
+                // This row should be removed
+                return false;
+            }
         }
 
         // Otherwise the current star should be kept

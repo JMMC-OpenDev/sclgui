@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.7 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.5  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -36,8 +39,14 @@ import java.util.Vector;
  */
 public class VisibilityFilter extends Filter
 {
+    /** Store the visibility constraint name */
+    private String _visibilityColumnName = "vis2";
+
+    /** Store the visibility error constraint name */
+    private String _visibilityErrorColumnName = "vis2Err";
+
     /** Store the visibility accuracy constraint name */
-    private String _visibilityAccuracyConstraintName = "Accuracy (%)";
+    private String _visibilityAccuracyConstraintName = "vis2Err/vis2 (%)";
 
     /**
      * Default constructor.
@@ -48,7 +57,7 @@ public class VisibilityFilter extends Filter
 
         //setConstraint(_visibilityAccuracyConstraintName, new Double(0.0));
         // @TODO : remove the demo value
-        setConstraint(_visibilityAccuracyConstraintName, new Double(0.2));
+        setConstraint(_visibilityAccuracyConstraintName, new Double(2.0));
     }
 
     /**
@@ -60,7 +69,7 @@ public class VisibilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Visibility Accuracy above :";
+        return "Reject Visibility Accuracy above (or unknown) :";
     }
 
     /**
@@ -68,7 +77,7 @@ public class VisibilityFilter extends Filter
      *
      * @return the visibility accuracy allowed by this filter.
      */
-    private double getAllowedVisibiliy()
+    private double getAllowedVisibiliyAccurancy()
     {
         MCSLogger.trace();
 
@@ -90,22 +99,40 @@ public class VisibilityFilter extends Filter
         MCSLogger.trace();
 
         // Get the ID of the column contaning 'visibility' star property
-        int vis2Id = starList.getColumnIdByName("vis2");
+        int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
 
         // Get the ID of the column contaning 'visibilityErr' star property
-        int          vis2errId      = starList.getColumnIdByName("vis2Err");
+        int vis2errId = starList.getColumnIdByName(_visibilityErrorColumnName);
 
-        StarProperty cell1          = ((StarProperty) row.elementAt(vis2Id));
-        double       currentVis2    = cell1.getDoubleValue();
-
-        StarProperty cell2          = ((StarProperty) row.elementAt(vis2errId));
-        double       currentVis2err = cell2.getDoubleValue();
-
-        // if the visibility value is greater than the allowed one
-        if (Math.abs(currentVis2err / currentVis2) >= getAllowedVisibiliy())
+        // If the desired column names exists
+        if ((vis2Id != -1) && (vis2errId != -1))
         {
-            // This row should be removed
-            return true;
+            // Get the cell of the desired column
+            StarProperty vis2Cell = ((StarProperty) row.elementAt(vis2Id));
+
+            // Get the cell of the desired column
+            StarProperty vis2ErrCell = ((StarProperty) row.elementAt(vis2errId));
+
+            // If the 2 values were found in the current line
+            if ((vis2Cell.hasValue() == true) &&
+                    (vis2ErrCell.hasValue() == true))
+            {
+                double currentVis2        = vis2Cell.getDoubleValue();
+                double currentVis2err     = vis2ErrCell.getDoubleValue();
+                double visibilityAccuracy = Math.abs(currentVis2err / currentVis2);
+
+                // if the visibility value is greater than the allowed one
+                if (visibilityAccuracy >= getAllowedVisibiliyAccurancy())
+                {
+                    // This row should be removed
+                    return true;
+                }
+            }
+            else // If any value is missing
+            {
+                // This row should be removed
+                return true;
+            }
         }
 
         // Otherwise this row should be kept

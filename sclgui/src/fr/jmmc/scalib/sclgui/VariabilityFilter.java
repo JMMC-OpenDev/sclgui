@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.8 2007-04-13 14:17:40 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.9 2007-08-02 15:35:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2007/04/13 14:17:40  lafrasse
+ * Modified to also remove lines with VarFlag1 and/or VarFlag2 not empty.
+ *
  * Revision 1.7  2007/03/19 08:54:33  lafrasse
  * Modified to keep lines with 'VarFlag3 = C'.
  *
@@ -46,6 +49,15 @@ import java.util.Vector;
  */
 public class VariabilityFilter extends Filter
 {
+    /** Store the variability flag 1 column name */
+    private String _varFlag1ColumnName = "VarFlag1";
+
+    /** Store the variability flag 2 column name */
+    private String _varFlag2ColumnName = "VarFlag2";
+
+    /** Store the variability flag 3 column name */
+    private String _varFlag3ColumnName = "VarFlag3";
+
     /**
      * Default constructor.
      */
@@ -78,40 +90,65 @@ public class VariabilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        // Get the ID of the column contaning 'variability3' star property
-        int          variability1ID   = starList.getColumnIdByName("VarFlag1");
-        int          variability2ID   = starList.getColumnIdByName("VarFlag2");
-        int          variability3ID   = starList.getColumnIdByName("VarFlag3");
+        int          varFlagID = -1;
+        StarProperty cell      = null;
 
-        StarProperty cell             = (StarProperty) row.elementAt(variability1ID);
-        String       variability1Flag = (String) cell.getValue();
-        cell                          = (StarProperty) row.elementAt(variability2ID);
+        // Get the ID of the column contaning 'varFlag1' star property
+        varFlagID = starList.getColumnIdByName(_varFlag1ColumnName);
 
-        String variability2Flag       = (String) cell.getValue();
-        cell                          = (StarProperty) row.elementAt(variability3ID);
-
-        String variability3Flag       = (String) cell.getValue();
-
-        // If "variability1" flag was found in the current line
-        if ((variability1Flag != null) && (variability1Flag.length() != 0))
+        // If the desired column name exists
+        if (varFlagID != -1)
         {
-            // This row should be removed
-            return true;
+            // Get the cell of the desired column
+            cell = (StarProperty) row.elementAt(varFlagID);
+
+            // If "variability1" flag was found in the current line
+            if (cell.hasValue() == true)
+            {
+                // This row should be removed
+                return true;
+            }
         }
 
-        // If "variability2" flag was found in the current line
-        if ((variability2Flag != null) && (variability2Flag.length() != 0))
+        // Get the ID of the column contaning 'varFlag2' star property
+        varFlagID = starList.getColumnIdByName(_varFlag2ColumnName);
+
+        // If the desired column name exists
+        if (varFlagID != -1)
         {
-            // This row should be removed
-            return true;
+            // Get the cell of the desired column
+            cell = (StarProperty) row.elementAt(varFlagID);
+
+            // If "variability1" flag was found in the current line
+            if (cell.hasValue() == true)
+            {
+                // This row should be removed
+                return true;
+            }
         }
 
-        // If "variability3" flag was found in the current line, and is not "C"
-        if ((variability3Flag != null) && (variability3Flag.length() != 0) &&
-                (variability3Flag.trim().equalsIgnoreCase("C") == false))
+        // Get the ID of the column contaning 'varFlag3' star property
+        varFlagID = starList.getColumnIdByName(_varFlag3ColumnName);
+
+        // If the desired column name exists
+        if (varFlagID != -1)
         {
-            // This row should be removed
-            return true;
+            // Get the cell of the desired column
+            cell = (StarProperty) row.elementAt(varFlagID);
+
+            // If "variability3" flag was found in the current line
+            if (cell.hasValue() == true)
+            {
+                // If "variability3" value is not "C"
+                String varFlag3Flag = cell.getStringValue();
+                varFlag3Flag = varFlag3Flag.trim();
+
+                if (varFlag3Flag.equalsIgnoreCase("C") == false)
+                {
+                    // This row should be removed
+                    return true;
+                }
+            }
         }
 
         // Otherwise this row should be kept
