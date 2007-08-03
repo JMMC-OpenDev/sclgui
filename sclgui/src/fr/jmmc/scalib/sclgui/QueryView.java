@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.40 2007-08-02 12:19:57 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.41 2007-08-03 13:11:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.40  2007/08/02 12:19:57  lafrasse
+ * Corrected delayed GUI updated when changing bright/faint scenarion radio buttons
+ * as noted in Denis MOURARD review comments.
+ *
  * Revision 1.39  2007/08/02 09:11:16  lafrasse
  * Changed coordinates and box size units according to Daniel BONNEAU review
  * comments.
@@ -183,6 +187,9 @@ public class QueryView extends JPanel implements Observer,
     /** Instrument magnitude band */
     JComboBox _instrumentalMagnitudeBandCombo = new JComboBox();
 
+    /** Instrument wavelentgh label */
+    JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ");
+
     /** Instrument wavelentgh */
     JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(
                 0));
@@ -323,7 +330,7 @@ public class QueryView extends JPanel implements Observer,
         // Wavelength field
         c.gridy++;
         c.gridx = 0;
-        _instrumentPanel.add(new JLabel("Wavelength [µm] : "), c);
+        _instrumentPanel.add(_instrumentalWavelengthLabel, c);
         _instrumentalWavelengthTextfield.setMinimumSize(textfieldDimension);
         _instrumentalWavelengthTextfield.setPreferredSize(textfieldDimension);
         _instrumentalWavelengthTextfield.addActionListener(this);
@@ -512,14 +519,18 @@ public class QueryView extends JPanel implements Observer,
     {
         MCSLogger.trace();
 
-        // Computeall the magnitude labels from the current magnitude band
-        String magnitudeWithBand = "Magnitude (" +
-            _queryModel.getInstrumentalMagnitudeBand() + ") : ";
+        String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
 
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
+        _instrumentalWavelengthLabel.setText("Wavelength (" +
+            instrumentalMagnitudeBand + ") [µm] : ");
         _instrumentalWavelengthTextfield.setValue(_queryModel.getInstrumentalWavelength());
         _instrumentalMaxBaselineTextField.setValue(_queryModel.getInstrumentalMaxBaseLine());
+
+        // Compute all the magnitude labels from the current magnitude band
+        String magnitudeWithBand = "Magnitude (" + instrumentalMagnitudeBand +
+            ") : ";
 
         // Science object parameters
         String scienceObjectName = _queryModel.getScienceObjectName();
