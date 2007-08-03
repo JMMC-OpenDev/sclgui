@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.28 2007-08-03 13:11:41 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.29 2007-08-03 13:21:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2007/08/03 13:11:41  lafrasse
+ * Enhanced wavelengthes et and science object magnitudes management according to
+ * comments from Daniel BONNEAU.
+ *
  * Revision 1.27  2007/08/02 12:19:57  lafrasse
  * Corrected delayed GUI updated when changing bright/faint scenarion radio buttons
  * as noted in Denis MOURARD review comments.
@@ -265,7 +269,7 @@ public class QueryModel extends Observable implements Observer
         setQueryDiffDECSize(5.0);
         setQueryRadialSize(0.0);
 
-        resetMinMaxMagnitudeFieldsAutoUpdating(true);
+        restoreMinMaxMagnitudeFieldsAutoUpdating();
 
         setCurrentStep(0);
         setTotalStep(0);
@@ -311,7 +315,7 @@ public class QueryModel extends Observable implements Observer
                     "query.queryMaxMagnitude"));
             setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
                     "query.queryMaxMagnitudeDelta"));
-            resetMinMaxMagnitudeFieldsAutoUpdating();
+            restoreMinMaxMagnitudeFieldsAutoUpdating();
 
             setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
                     "query.queryBrightScenarioFlag"));
@@ -983,7 +987,7 @@ public class QueryModel extends Observable implements Observer
     /**
      * Restore min & max magnitude fields auto-updating.
      */
-    public void resetMinMaxMagnitudeFieldsAutoUpdating()
+    public void restoreMinMaxMagnitudeFieldsAutoUpdating()
     {
         _queryMinMagnitudeAutoUpdate     = true;
         _queryMaxMagnitudeAutoUpdate     = true;
