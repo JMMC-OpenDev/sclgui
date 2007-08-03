@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.27 2007-08-02 12:19:57 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.28 2007-08-03 13:11:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2007/08/02 12:19:57  lafrasse
+ * Corrected delayed GUI updated when changing bright/faint scenarion radio buttons
+ * as noted in Denis MOURARD review comments.
+ *
  * Revision 1.26  2007/08/01 15:29:22  lafrasse
  * Added support for SIMDAD science object querying through URL+script (plus proof
  * of disfunctionning through SOAP).
@@ -117,7 +121,7 @@ import javax.swing.DefaultComboBoxModel;
 public class QueryModel extends Observable implements Observer
 {
     /** For default values */
-    Preferences _preferences;
+    private Preferences _preferences;
 
     /** The instrumental magnitude band */
     private DefaultComboBoxModel _instrumentalMagnitudeBands;
@@ -125,11 +129,11 @@ public class QueryModel extends Observable implements Observer
     /** Magnitude to Preselected Wavelength conversion table */
     private Hashtable _magnitudeBandToWavelength = new Hashtable();
 
-    /** The instrumental wavelength */
-    private double _instrumentalWavelength;
+    /** Default magnitude bands */
+    private String[] _magnitudeBands = { "V", "I", "J", "H", "K" };
 
-    /** The instrumental wavelength auto-update flag */
-    private boolean _instrumentalWavelengthAutoUpdate = true;
+    /** Default magnitude band wavelengthes */
+    private double[] _defaultWavelengths = { 0.55, 0.9, 1.25, 1.65, 2.2 };
 
     /** The instrumental maximum base line */
     private double _instrumentalMaxBaseLine;
@@ -143,14 +147,8 @@ public class QueryModel extends Observable implements Observer
     /** The science object declinaison coordinate */
     private String _scienceObjectDEC;
 
-    /** The science object right magnitudes */
-    private double _scienceObjectMagnitude;
-
     /** Band to Science Object Loaded Magnitude conversion table */
     private Hashtable _scienceObjectMagnitudes = new Hashtable();
-
-    /** The instrumental wavelength auto-update flag */
-    private boolean _scienceObjectMagnitudeAutoUpdate = true;
 
     /** The science object inclusion flag */
     private boolean _scienceObjectInclusionFlag;
@@ -195,7 +193,7 @@ public class QueryModel extends Observable implements Observer
     /** The current catalog name of the querying progress step. */
     private String _catalogName;
 
-    /** Remind whether the query can be edited or not (when loaded fromfile for example) */
+    /** Remind whether the query can be edited or not (when loaded from file for example) */
     private boolean _isEditable;
 
     /**
@@ -208,25 +206,16 @@ public class QueryModel extends Observable implements Observer
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        String[] magnitudeBands = { "V", "I", "J", "H", "K" };
-        double[] wavelengths    = { 0.55, 0.9, 1.25, 1.64, 2.2 };
-
-        // For each "magnitude band-predefined wavelength" couple
-        for (int i = 0; i < magnitudeBands.length; i++)
-        {
-            // Construct the conversion table between both
-            _magnitudeBandToWavelength.put(magnitudeBands[i],
-                new Double(wavelengths[i]));
-        }
+        resetInstrumentalWavelengthes();
 
         // For each "band-predefined magnitudes" couple
-        for (int i = 0; i < magnitudeBands.length; i++)
+        for (int i = 0; i < _magnitudeBands.length; i++)
         {
             // Construct the conversion table between both
-            _scienceObjectMagnitudes.put(magnitudeBands[i], new Double(0.0));
+            _scienceObjectMagnitudes.put(_magnitudeBands[i], new Double(0.0));
         }
 
-        _instrumentalMagnitudeBands = new DefaultComboBoxModel(magnitudeBands);
+        _instrumentalMagnitudeBands = new DefaultComboBoxModel(_magnitudeBands);
 
         // Initialize values from user defined preferences
         try
@@ -262,18 +251,21 @@ public class QueryModel extends Observable implements Observer
 
         setInstrumentalMagnitudeBand("K");
         setInstrumentalMaxBaseLine(100.0);
-        setInstrumentalWavelength(1.0);
+        resetInstrumentalWavelengthes();
 
         setScienceObjectName("");
         setScienceObjectRA("+00:00:00.00");
         setScienceObjectDEC("+00:00:00.00");
-        setScienceObjectMagnitude(0.0);
+        resetScienceObjectMagnitudes();
+
         setScienceObjectInclusionFlag(true);
 
         setQueryBrightScenarioFlag(true);
         setQueryDiffRASize(10.0);
         setQueryDiffDECSize(5.0);
         setQueryRadialSize(0.0);
+
+        resetMinMaxMagnitudeFieldsAutoUpdating(true);
 
         setCurrentStep(0);
         setTotalStep(0);
@@ -306,7 +298,7 @@ public class QueryModel extends Observable implements Observer
                     "query.scienceObjectRA"));
             setScienceObjectDEC(_preferences.getPreference(
                     "query.scienceObjectDEC"));
-            setScienceObjectMagnitudeForCurrentBand(_preferences.getPreferenceAsDouble(
+            setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
                     "query.scienceObjectMagnitude"));
             setScienceObjectInclusionFlag(_preferences.getPreferenceAsBoolean(
                     "query.scienceObjectInclusionFlag"));
@@ -319,6 +311,8 @@ public class QueryModel extends Observable implements Observer
                     "query.queryMaxMagnitude"));
             setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
                     "query.queryMaxMagnitudeDelta"));
+            resetMinMaxMagnitudeFieldsAutoUpdating();
+
             setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
                     "query.queryBrightScenarioFlag"));
             setQueryDiffRASize(_preferences.getPreferenceAsDouble(
@@ -661,18 +655,26 @@ public class QueryModel extends Observable implements Observer
 
         _instrumentalMagnitudeBands.setSelectedItem(magnitudeBand);
 
-        // Modify _instrumentalWavelength automatically if needed
-        if (_instrumentalWavelengthAutoUpdate == true)
-        {
-            Double d = (Double) _magnitudeBandToWavelength.get(magnitudeBand);
-            _instrumentalWavelength = d.doubleValue();
-        }
+        setChanged();
+    }
 
-        // Modify _scienceObjectMagnitude automatically if needed
-        if (_scienceObjectMagnitudeAutoUpdate == true)
+    /**
+     * Reset the instrumental wavelength parameters.
+     *
+     * @param wavelength the new instrumental wavelength as a double value.
+     */
+    public void resetInstrumentalWavelengthes()
+    {
+        MCSLogger.trace();
+
+        _magnitudeBandToWavelength = new Hashtable();
+
+        // For each "magnitude band-predefined wavelength" couple
+        for (int i = 0; i < _magnitudeBands.length; i++)
         {
-            Double d = (Double) _scienceObjectMagnitudes.get(magnitudeBand);
-            _scienceObjectMagnitude = d.doubleValue();
+            // Construct the conversion table between both
+            _magnitudeBandToWavelength.put(_magnitudeBands[i],
+                new Double(_defaultWavelengths[i]));
         }
 
         setChanged();
@@ -687,7 +689,9 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        return new Double(_instrumentalWavelength);
+        String currentMagnitudeBand = getInstrumentalMagnitudeBand();
+
+        return (Double) _magnitudeBandToWavelength.get(currentMagnitudeBand);
     }
 
     /**
@@ -700,12 +704,7 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        // This value should never be auto-updated anymore
-        _instrumentalWavelengthAutoUpdate     = false;
-
-        _instrumentalWavelength               = wavelength;
-
-        setChanged();
+        setInstrumentalWavelength(new Double(wavelength));
     }
 
     /**
@@ -716,7 +715,10 @@ public class QueryModel extends Observable implements Observer
      */
     public void setInstrumentalWavelength(Double wavelength)
     {
-        setInstrumentalWavelength(wavelength.doubleValue());
+        String currentMagnitudeBand = getInstrumentalMagnitudeBand();
+        _magnitudeBandToWavelength.put(currentMagnitudeBand, wavelength);
+
+        setChanged();
     }
 
     /**
@@ -860,7 +862,28 @@ public class QueryModel extends Observable implements Observer
     }
 
     /**
-     * Return the science object magnitude for the actual query.
+     * Reset the science object magnitudes.
+     *
+     * @param wavelength the new instrumental wavelength as a double value.
+     */
+    public void resetScienceObjectMagnitudes()
+    {
+        MCSLogger.trace();
+
+        _scienceObjectMagnitudes = new Hashtable();
+
+        // For each "magnitude-band" couple
+        for (int i = 0; i < _magnitudeBands.length; i++)
+        {
+            // Construct the conversion table between both
+            _scienceObjectMagnitudes.put(_magnitudeBands[i], new Double(0.0));
+        }
+
+        setChanged();
+    }
+
+    /**
+     * Return the science object magnitude for the current band.
      *
      * @return the science object magnitude as a Double value.
      */
@@ -868,18 +891,9 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        Double currentMagnitude = new Double(_scienceObjectMagnitude);
+        String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
 
-        // If the user has not yet define is own value
-        if (_scienceObjectMagnitudeAutoUpdate == true)
-        {
-            // Return the pre-defined one for the currently selected instrumental band
-            String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
-            currentMagnitude = (Double) _scienceObjectMagnitudes.get(currentBand);
-        }
-
-        // Otherwise the user-defined one is returned
-        return currentMagnitude;
+        return (Double) _scienceObjectMagnitudes.get(currentBand);
     }
 
     /**
@@ -887,28 +901,12 @@ public class QueryModel extends Observable implements Observer
      *
      * @param magnitude the new magnitude as a double value.
      */
-    public void setScienceObjectMagnitudeForCurrentBand(double magnitude)
+    public void setScienceObjectMagnitude(Double magnitude)
     {
         MCSLogger.trace();
 
-        _scienceObjectMagnitude = magnitude;
-
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
-        _scienceObjectMagnitudes.put(currentBand, new Double(magnitude));
-
-        // Modify _queryMinMagnitude automatically if needed
-        if (_queryMinMagnitudeAutoUpdate == true)
-        {
-            _queryMinMagnitude = _scienceObjectMagnitude +
-                getQueryMinMagnitudeDelta();
-        }
-
-        // Modify _queryMaxMagnitude automatically if needed
-        if (_queryMaxMagnitudeAutoUpdate == true)
-        {
-            _queryMaxMagnitude = _scienceObjectMagnitude +
-                getQueryMaxMagnitudeDelta();
-        }
+        _scienceObjectMagnitudes.put(currentBand, magnitude);
 
         setChanged();
     }
@@ -916,53 +914,11 @@ public class QueryModel extends Observable implements Observer
     /**
      * Change the magnitude parameter.
      *
-     * @param magnitude the new magnitude as a double value.
+     * @param magnitude the new magnitude as a Double value.
      */
     public void setScienceObjectMagnitude(double magnitude)
     {
-        MCSLogger.trace();
-
-        // This value should never be auto-updated anymore
-        _scienceObjectMagnitudeAutoUpdate     = false;
-
-        _scienceObjectMagnitude               = magnitude;
-
-        // Modify _queryMinMagnitude automatically if needed
-        if (_queryMinMagnitudeAutoUpdate == true)
-        {
-            _queryMinMagnitude = _scienceObjectMagnitude +
-                getQueryMinMagnitudeDelta();
-        }
-
-        // Modify _queryMaxMagnitude automatically if needed
-        if (_queryMaxMagnitudeAutoUpdate == true)
-        {
-            _queryMaxMagnitude = _scienceObjectMagnitude +
-                getQueryMaxMagnitudeDelta();
-        }
-
-        setChanged();
-    }
-
-    /**
-     * Change the magnitude parameter.
-     *
-     * @param magnitude the new magnitude as a Double value.
-     */
-    public void setScienceObjectMagnitude(Double magnitude)
-    {
-        setScienceObjectMagnitude(magnitude.doubleValue());
-    }
-
-    /**
-     * Change the magnitude parameter for the given band.
-     *
-     * @param band the band for the magitude as a String value.
-     * @param magnitude the new magnitude as a Double value.
-     */
-    public void setScienceObjectMagnitude(String band, Double magnitude)
-    {
-        setScienceObjectMagnitude(magnitude.doubleValue());
+        setScienceObjectMagnitude(new Double(magnitude));
     }
 
     /**
@@ -1025,6 +981,15 @@ public class QueryModel extends Observable implements Observer
     }
 
     /**
+     * Restore min & max magnitude fields auto-updating.
+     */
+    public void resetMinMaxMagnitudeFieldsAutoUpdating()
+    {
+        _queryMinMagnitudeAutoUpdate     = true;
+        _queryMaxMagnitudeAutoUpdate     = true;
+    }
+
+    /**
      * Return the minimun calibrator magnitude for the actual query.
      *
      * @return the minimum magnitude as a Double value.
@@ -1033,7 +998,16 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        return new Double(_queryMinMagnitude);
+        Double minMagnitude = new Double(_queryMinMagnitude);
+
+        // Modify _queryMaxMagnitude automatically if needed
+        if (_queryMaxMagnitudeAutoUpdate == true)
+        {
+            minMagnitude = getScienceObjectMagnitude() +
+                getQueryMinMagnitudeDelta();
+        }
+
+        return minMagnitude;
     }
 
     /**
@@ -1119,7 +1093,16 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        return new Double(_queryMaxMagnitude);
+        Double maxMagnitude = new Double(_queryMaxMagnitude);
+
+        // Modify _queryMaxMagnitude automatically if needed
+        if (_queryMaxMagnitudeAutoUpdate == true)
+        {
+            maxMagnitude = getScienceObjectMagnitude() +
+                getQueryMaxMagnitudeDelta();
+        }
+
+        return maxMagnitude;
     }
 
     /**
