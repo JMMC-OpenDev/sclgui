@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.12 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.13 2007-08-03 10:35:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.11  2007/04/13 13:26:28  lafrasse
  * Changed default CheckBox state to checked.
  *
@@ -154,29 +157,50 @@ public class SpectralTypeFilter extends Filter
             if (cell.hasValue() == true)
             {
                 String rawSpectralType = (String) cell.getValue();
+                MCSLogger.debug("rawSpectralType = '" + rawSpectralType + "'.");
 
                 // Get back the spectral types found in the given spectral type
-                Vector spectralTypes = ALX.spectralTypes(rawSpectralType);
+                Vector foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
+                MCSLogger.debug("foundSpectralTypes = '" + foundSpectralTypes +
+                    "'.");
 
-                // For each found spectral type
-                for (int i = 0; i < spectralTypes.size(); i++)
+                // For each spectral type found
+                for (int i = 0; i < foundSpectralTypes.size(); i++)
                 {
                     // Get the spectral type check box boolean state
-                    String  spectralTypeName  = (String) spectralTypes.elementAt(i);
-                    Boolean spectralTypeState = (Boolean) getConstraintByName(spectralTypeName);
+                    String  spectralTypeName          = (String) foundSpectralTypes.elementAt(i);
+                    Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
+
+                    MCSLogger.debug("spectralTypeName = '" + spectralTypeName +
+                        "'.");
+                    MCSLogger.debug("spectralTypeCheckBoxState = '" +
+                        spectralTypeCheckBoxState + "'.");
+
+                    // If the current spectral type is not handled (eg R, N ,S, ...)
+                    if (spectralTypeCheckBoxState == null)
+                    {
+                        MCSLogger.debug("spType not handled -> skipped.");
+
+                        // Skip it
+                        continue;
+                    }
 
                     // If the current spectral type must be kept
-                    if (spectralTypeState == false)
+                    if (spectralTypeCheckBoxState == true)
                     {
-                        // This line must be kept
-                        return false;
+                        MCSLogger.debug("Line removed.\n");
+
+                        // This line must be removed
+                        return true;
                     }
                 }
             }
         }
 
-        // Otherwise the current star row from the star list should be removed
-        return true;
+        MCSLogger.debug("Line kept.\n");
+
+        // Otherwise the current star row from the star list should be kept
+        return false;
     }
 }
 /*___oOo___*/
