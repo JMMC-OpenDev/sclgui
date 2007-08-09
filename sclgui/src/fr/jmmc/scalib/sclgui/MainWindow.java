@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.21 2007-08-01 15:30:31 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.22 2007-08-09 12:27:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2007/08/01 15:30:31  lafrasse
+ * Updated version number to 4.0b6.
+ * Added greeting to CDS as required.
+ *
  * Revision 1.20  2007/06/26 16:04:09  lafrasse
  * Updated version number to 4.0b5.
  *
@@ -329,7 +333,7 @@ public class MainWindow extends JFrame
             greetings += "This software uses source code created at the Centre de Données astronomiques de Strasbourg, France.\n";
 
             AboutWindow aboutWindow = new AboutWindow("SearchCal",
-                    "4.0 beta 6", greetings, "Copyright 2007 JMMC");
+                    "4.0 beta 7", greetings, "Copyright 2007 JMMC");
         }
     }
 }
