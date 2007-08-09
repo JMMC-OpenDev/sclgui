@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.13 2007-08-03 10:35:27 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.14 2007-08-09 12:23:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2007/08/03 10:35:27  lafrasse
+ * Correted a bud found by Gilles DUVERT with 'Uy_Aur', causing the filter to crash when encounting a not handled spectral type (eg R, S, N, ...).
+ *
  * Revision 1.12  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -185,7 +188,7 @@ public class SpectralTypeFilter extends Filter
                         continue;
                     }
 
-                    // If the current spectral type must be kept
+                    // If the current spectral type checkbox is checked
                     if (spectralTypeCheckBoxState == true)
                     {
                         MCSLogger.debug("Line removed.\n");
@@ -195,6 +198,19 @@ public class SpectralTypeFilter extends Filter
                     }
                 }
             }
+            else // If the spectral type is undefined
+            {
+                MCSLogger.debug("Undefined Spectral Type.\n");
+
+                // This line must be removed
+                return true;
+            }
+        }
+        else
+        {
+            // @TODO : ASSERTION FAILED
+            MCSLogger.warning("Unknown Spectral Type Column Name = '" +
+                _spTypeColumnName + "'.");
         }
 
         MCSLogger.debug("Line kept.\n");
