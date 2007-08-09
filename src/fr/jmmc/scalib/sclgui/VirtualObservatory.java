@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.22 2007-08-01 15:29:22 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.23 2007-08-09 07:48:52 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2007/08/01 15:29:22  lafrasse
+ * Added support for SIMDAD science object querying through URL+script (plus proof
+ * of disfunctionning through SOAP).
+ *
  * Revision 1.21  2007/07/10 17:34:55  lafrasse
  * Added proper thread termination and communication exception handling.
  *
@@ -79,8 +83,11 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import cds.simbad.uif.*;
 
+/*
+   // Not in use (do not work from here)
+   import cds.simbad.uif.*;
+ */
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
