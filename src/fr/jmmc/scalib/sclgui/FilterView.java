@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.11 2007-04-13 13:25:49 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.12 2007-08-16 06:17:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2007/04/13 13:25:49  lafrasse
+ * Added value storing on widget focus leaves (when tabbing between fields).
+ *
  * Revision 1.10  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -240,8 +243,11 @@ public class FilterView extends JPanel implements Observer
             setParam(constraintName, constraintObject);
         }
 
-        // Enable or disable all the constraint widgets
-        QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
+        // Disabled to make filter GUI always enabled.
+        /*
+           // Enable or disable all the constraint widgets
+           QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
+         */
     }
 }
 
