@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.12 2007-08-16 06:17:49 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.13 2007-08-16 12:19:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2007/08/16 06:17:49  lafrasse
+ * Maded filters GUI always enabled according to feedback from Daniel BONNEAU and
+ * Gilles DUVERT.
+ *
  * Revision 1.11  2007/04/13 13:25:49  lafrasse
  * Added value storing on widget focus leaves (when tabbing between fields).
  *
@@ -55,6 +59,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import javax.swing.text.*;
 
 
 // Actuellement pour raison de simplicite de codage, on dispose d'une instance
@@ -82,6 +87,9 @@ public class FilterView extends JPanel implements Observer
     /** Widgets panel */
     JPanel _widgetsPanel = new JPanel();
 
+    /** JFormattedTextField formatter for Double constraints */
+    DefaultFormatterFactory _doubleFormaterFactory;
+
     /**
      * Default constructor.
      */
@@ -91,8 +99,16 @@ public class FilterView extends JPanel implements Observer
         _filter = filter;
         _filter.addObserver(this);
 
+        // JFormattedTextField formatter creation
+        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
+                    "0.0####"));
+        doubleFormater.setValueClass(java.lang.Double.class);
+        _doubleFormaterFactory     = new DefaultFormatterFactory(doubleFormater,
+                doubleFormater, doubleFormater);
+
         // Create the filter enable/disable checkbox
-        _enabledCheckbox = new JCheckBox(_filter.getName(), _filter.isEnabled());
+        _enabledCheckbox           = new JCheckBox(_filter.getName(),
+                _filter.isEnabled());
         _enabledCheckbox.addActionListener(new ParamListener(_filter, null,
                 _enabledCheckbox));
         add(_enabledCheckbox);
@@ -152,8 +168,12 @@ public class FilterView extends JPanel implements Observer
             panel.add(label);
 
             // Create the constraint widget
-            JFormattedTextField widget = new JFormattedTextField((Double) constraintValue);
+            JFormattedTextField widget = new JFormattedTextField();
+            widget.setFormatterFactory(_doubleFormaterFactory);
+            widget.setValue((Double) constraintValue);
             paramListener = new ParamListener(_filter, constraintName, widget);
+            System.out.println("new JFormattedTextField for '" +
+                constraintName + "'.");
             widget.addActionListener(paramListener);
             widget.addFocusListener(paramListener);
             _widgets.put(constraintName, widget);

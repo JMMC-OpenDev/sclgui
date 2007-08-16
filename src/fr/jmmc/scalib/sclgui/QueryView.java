@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.41 2007-08-03 13:11:41 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.42 2007-08-16 12:19:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.41  2007/08/03 13:11:41  lafrasse
+ * Enhanced wavelengthes et and science object magnitudes management according to
+ * comments from Daniel BONNEAU.
+ *
  * Revision 1.40  2007/08/02 12:19:57  lafrasse
  * Corrected delayed GUI updated when changing bright/faint scenarion radio buttons
  * as noted in Denis MOURARD review comments.
@@ -309,12 +313,20 @@ public class QueryView extends JPanel implements Observer,
         // Save values action
         _saveValuesAction               = new SaveValuesAction();
 
+        // JFormattedTextField formatter creation
+        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
+                    "0.0####"));
+        doubleFormater.setValueClass(java.lang.Double.class);
+
+        DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
+                doubleFormater, doubleFormater);
+
         // Form panel global attributes and common objects
         JPanel             tempPanel;
-        Dimension          textfieldDimension = new Dimension(100, 20);
-        GridBagConstraints c                  = new GridBagConstraints();
-        c.fill                                = GridBagConstraints.HORIZONTAL;
-        c.weightx                             = 1;
+        Dimension          textfieldDimension         = new Dimension(100, 20);
+        GridBagConstraints c                          = new GridBagConstraints();
+        c.fill                                        = GridBagConstraints.HORIZONTAL;
+        c.weightx                                     = 1;
 
         // Instrumental Configuration panel
         _instrumentPanel.setBorder(new TitledBorder(
@@ -331,6 +343,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _instrumentPanel.add(_instrumentalWavelengthLabel, c);
+        _instrumentalWavelengthTextfield.setFormatterFactory(doubleFormaterFactory);
         _instrumentalWavelengthTextfield.setMinimumSize(textfieldDimension);
         _instrumentalWavelengthTextfield.setPreferredSize(textfieldDimension);
         _instrumentalWavelengthTextfield.addActionListener(this);
@@ -341,6 +354,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _instrumentPanel.add(new JLabel("Max. Baseline [m] : "), c);
+        _instrumentalMaxBaselineTextField.setFormatterFactory(doubleFormaterFactory);
         _instrumentalMaxBaselineTextField.setMinimumSize(textfieldDimension);
         _instrumentalMaxBaselineTextField.setPreferredSize(textfieldDimension);
         _instrumentalMaxBaselineTextField.addActionListener(this);
@@ -357,6 +371,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridx     = 0;
         _scienceObjectPanel.add(new JLabel("Name : "), c);
         tempPanel = new JPanel(new GridBagLayout());
+        _scienceObjectNameTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectNameTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectNameTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectNameTextfield.addActionListener(this);
@@ -394,6 +409,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _scienceObjectPanel.add(_scienceObjectMagnitudeLabel, c);
+        _scienceObjectMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.addActionListener(this);
@@ -408,6 +424,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy     = 0;
         c.gridx     = 0;
         _searchCalPanel.add(_minMagnitudeLabel, c);
+        _minMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
         _minMagnitudeTextfield.addActionListener(this);
@@ -418,6 +435,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_maxMagnitudeLabel, c);
+        _maxMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
         _maxMagnitudeTextfield.addActionListener(this);
@@ -441,6 +459,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_diffRASizeLabel, c);
+        _diffRASizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _diffRASizeTextfield.setMinimumSize(textfieldDimension);
         _diffRASizeTextfield.setPreferredSize(textfieldDimension);
         _diffRASizeTextfield.addActionListener(this);
@@ -451,6 +470,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_diffDECSizeLabel, c);
+        _diffDECSizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _diffDECSizeTextfield.setMinimumSize(textfieldDimension);
         _diffDECSizeTextfield.setPreferredSize(textfieldDimension);
         _diffDECSizeTextfield.addActionListener(this);
@@ -461,6 +481,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_radialSizeLabel, c);
+        _radialSizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _radialSizeTextfield.setMinimumSize(textfieldDimension);
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
         _radialSizeTextfield.addActionListener(this);

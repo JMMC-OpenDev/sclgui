@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.22 2007-06-29 09:56:12 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.23 2007-08-16 12:19:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2007/06/29 09:56:12  lafrasse
+ * Removed unimplemented widget (science object inclusion checkbox, Network pane).
+ *
  * Revision 1.21  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -78,6 +81,8 @@ import fr.jmmc.mcs.util.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.text.*;
+
 import java.util.*;
 import java.util.logging.*;
 
@@ -86,6 +91,7 @@ import javax.swing.border.*;
 import javax.swing.colorchooser.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import javax.swing.text.*;
 
 
 // @TODO handle close button correctly
@@ -112,7 +118,7 @@ public class PreferencesView extends JFrame implements ActionListener
         super("Preferences");
 
         // Window size
-        setSize(480, 360);
+        setSize(600, 400);
         setResizable(false);
 
         // Window screen position (centered)
@@ -132,26 +138,20 @@ public class PreferencesView extends JFrame implements ActionListener
 
         // Add the query preferences pane
         QueryPreferencesView queryView = new QueryPreferencesView();
-        tabbedPane.add("Query", queryView);
+        tabbedPane.add("Query Settings", queryView);
 
         // Add the columns preferences pane
         ColumnsPreferencesView columnsView = new ColumnsPreferencesView(
                 "view.simple.columns");
-        tabbedPane.add("Columns", columnsView);
+        tabbedPane.add("Simple Columns Order", columnsView);
 
         // Add the catalog preferences pane
         JPanel catalogView = new LegendView();
-        tabbedPane.add("Catalogs", catalogView);
-
-        // Add the network preferences pane
-        NetworkPreferencesView networkView = new NetworkPreferencesView();
-
-        // @TODO : disabled un-implemented Network Preferences Pane
-        //tabbedPane.add("Network", networkView);
+        tabbedPane.add("Legend Colors", catalogView);
 
         // Add the help preferences pane
         HelpPreferencesView helpView = new HelpPreferencesView();
-        tabbedPane.add("Help", helpView);
+        tabbedPane.add("Help Settings", helpView);
 
         // Add the restore and sace buttons
         JPanel buttonsPanel = new JPanel();
@@ -168,6 +168,7 @@ public class PreferencesView extends JFrame implements ActionListener
 
     /**
      * actionPerformed  -  Listener
+     *
      * @param evt ActionEvent
      */
     public void actionPerformed(ActionEvent evt)
@@ -205,19 +206,23 @@ public class PreferencesView extends JFrame implements ActionListener
 /**
  * This panel is dedicated to query default values configuration.
  */
-class QueryPreferencesView extends JPanel implements Observer, ActionListener
+class QueryPreferencesView extends JPanel implements Observer, ActionListener,
+    FocusListener
 {
     /** Data model */
     private Preferences _preferences;
 
     /** Science object distance tolerance */
-    private JFormattedTextField _scienceObjectDetectionDistanceTextfield;
+    private JFormattedTextField _scienceObjectDetectionDistanceTextfield = new JFormattedTextField(new Double(
+                0.0));
 
     /** Min magnitude delta textfield */
-    private JFormattedTextField _minMagnitudeDeltaTextfield;
+    private JFormattedTextField _minMagnitudeDeltaTextfield = new JFormattedTextField(new Double(
+                0.0));
 
     /** Max magnitude delta textfield */
-    private JFormattedTextField _maxMagnitudeDeltaTextfield;
+    private JFormattedTextField _maxMagnitudeDeltaTextfield = new JFormattedTextField(new Double(
+                0.0));
 
     /**
      * Constructor.
@@ -237,15 +242,24 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
 
         // @TODO : removed (not implemented)
         // add(cb);
-        JPanel    panel;
-        JLabel    label;
-        Dimension textfieldDimension = new Dimension(100, 20);
 
-        panel     = new JPanel();
-        label     = new JLabel("Science Object Detection Distance :");
+        // JFormattedTextField formatter creation
+        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
+                    "0.0####"));
+        doubleFormater.setValueClass(java.lang.Double.class);
+
+        DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
+                doubleFormater, doubleFormater);
+
+        JPanel                  panel;
+        JLabel                  label;
+        Dimension               textfieldDimension    = new Dimension(100, 20);
+
+        panel                                         = new JPanel();
+        label                                         = new JLabel(
+                "Science Object Detection Distance :");
         panel.add(label);
-        _scienceObjectDetectionDistanceTextfield = new JFormattedTextField(new Double(
-                    0));
+        _scienceObjectDetectionDistanceTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectDetectionDistanceTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectDetectionDistanceTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectDetectionDistanceTextfield.addActionListener(this);
@@ -255,7 +269,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
         panel     = new JPanel();
         label     = new JLabel("Minimum Magnitude Delta :");
         panel.add(label);
-        _minMagnitudeDeltaTextfield = new JFormattedTextField(new Double(0));
+        _minMagnitudeDeltaTextfield.setFormatterFactory(doubleFormaterFactory);
         _minMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
         _minMagnitudeDeltaTextfield.addActionListener(this);
@@ -265,7 +279,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
         panel     = new JPanel();
         label     = new JLabel("Maximum Magnitude Delta :");
         panel.add(label);
-        _maxMagnitudeDeltaTextfield = new JFormattedTextField(new Double(0));
+        _maxMagnitudeDeltaTextfield.setFormatterFactory(doubleFormaterFactory);
         _maxMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
         _maxMagnitudeDeltaTextfield.addActionListener(this);
@@ -298,14 +312,45 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
     }
 
     /**
-     * actionPerformed  -  Listener
-     * @param evt ActionEvent
+     * Called when the focus enters a widget.
      */
-    public void actionPerformed(ActionEvent evt)
+    public void focusGained(FocusEvent e)
+    {
+        // Does nothing (not needed)
+    }
+
+    /**
+     * Called when the focus leaves a widget.
+     *
+     * Used to validate and store TextFields data when tabbing between them.
+     */
+    public void focusLost(FocusEvent e)
     {
         MCSLogger.trace();
 
-        Object source = evt.getSource();
+        // Store new data
+        storeValues(e);
+    }
+
+    /**
+     * Called when a widget triggered an action.
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        MCSLogger.trace();
+
+        // Store new data
+        storeValues(e);
+    }
+
+    /**
+     * Store form values in the model.
+     */
+    public void storeValues(AWTEvent e)
+    {
+        MCSLogger.trace();
+
+        Object source = e.getSource();
 
         if (source.equals(_scienceObjectDetectionDistanceTextfield))
         {
@@ -313,6 +358,9 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener
             {
                 _preferences.setPreference("query.scienceObjectDetectionDistance",
                     ((Double) _scienceObjectDetectionDistanceTextfield.getValue()));
+                System.out.println(
+                    "_scienceObjectDetectionDistanceTextfield.getValue() = '" +
+                    _scienceObjectDetectionDistanceTextfield.getValue() + "'.");
             }
             catch (Exception ex)
             {
@@ -357,7 +405,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
     /** Data model */
     private Preferences _preferences;
 
-    /** The name of preference that must be managed as a ordered words. */
+    /** The name of preference that must be managed as ordered words. */
     private String _preferenceName;
 
     /** The widget that dispaly the list of words */
@@ -524,43 +572,6 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 
 
 /**
- * This Panel is dedicated to manage network preferences.
- */
-class NetworkPreferencesView extends JPanel implements Observer
-{
-    /** Data model */
-    private Preferences _preferences;
-
-    /**
-     * Constructor.
-     * @param preferences the application preferences
-     */
-    public NetworkPreferencesView()
-    {
-        _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
-
-        // @TODO : implement
-        add(new JLabel("TODO"));
-
-        // Make data filled
-        update(null, null);
-    }
-
-    /**
-     * Present fresh content according preference content.
-     *
-     * @param o preferences
-     * @param arg not used
-     */
-    public void update(Observable o, Object arg)
-    {
-        // Fill with preferences entries
-    }
-}
-
-
-/**
  * This Panel is dedicated to manage help behaviour configuration.
  */
 class HelpPreferencesView extends JPanel implements Observer, ChangeListener
@@ -568,14 +579,10 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
     /** Data model */
     private Preferences _preferences;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** Tooltip enabling checkbox */
     private JCheckBox _enableToolTipCheckBox;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** Tooltip manager */
     private ToolTipManager _sharedToolTipManager;
 
     /**
