@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.11 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.12 2007-08-16 09:47:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.10  2006/11/08 22:25:00  lafrasse
  * Implemented filtering algorithm.
  *
@@ -74,6 +77,10 @@ public class FiltersModel
         _filterList     = new FilterList();
         _filterList.setEnabled(Boolean.TRUE);
         _filterViews = new Vector();
+
+        // Non Calibrators filter (faceless)
+        FacelessNonCalibratorsFilter facelessNonCalibratorsFilter = new FacelessNonCalibratorsFilter();
+        _filterList.add(facelessNonCalibratorsFilter);
 
         // Distance filter
         DistanceFilter distanceFilter = new DistanceFilter(_queryModel);
