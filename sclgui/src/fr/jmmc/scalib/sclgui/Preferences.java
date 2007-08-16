@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.18 2007-06-29 09:55:14 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.19 2007-08-16 13:43:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2007/06/29 09:55:14  lafrasse
+ * Changed default query to 'alf_Psa'.
+ *
  * Revision 1.17  2007/06/14 08:39:25  lafrasse
  * Added true column selection for the simple/detailled views.
  *
@@ -107,7 +110,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             try
             {
                 // Store preference file version number
-                defaults.setPreference("scalib.version", "1.0");
+                defaults.setPreference("scalib.version", "4.0");
 
                 // Place catalog origin colors
                 defaults.setPreference("catalog.color.I/280", "#FFB6B6");
