@@ -21,6 +21,10 @@ wsdl2java(){
 }
 
 compile(){
+	CMD="javac fr/jmmc/scalib/sclgui/OSXAdapter.java"
+    echo $CMD
+    $CMD
+
 	CMD="javac $MAINCLASS.java"
     echo $CMD
     $CMD

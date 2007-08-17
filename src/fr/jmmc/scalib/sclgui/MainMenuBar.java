@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.23 2007-06-26 08:34:41 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.24 2007-08-17 12:09:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2007/06/26 08:34:41  lafrasse
+ * Added support for customizek keybord shortcut on Mac OS X.
+ *
  * Revision 1.22  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -91,6 +94,8 @@ import java.awt.event.*;
 
 import java.io.*;
 
+import java.lang.reflect.*;
+
 import java.util.*;
 
 import javax.swing.*;
@@ -104,14 +109,15 @@ import javax.swing.text.BadLocationException;
 public class MainMenuBar extends JMenuBar
 {
     /** Store whether the execution platform is a Mac or not */
-    public static boolean MAC_OS_X = (System.getProperty("os.name").toLowerCase()
-                                            .startsWith("mac os x"));
+    private static boolean MAC_OS_X = (System.getProperty("os.name")
+                                             .toLowerCase()
+                                             .startsWith("mac os x"));
 
     /** The window in which the menu bar should be displayed */
-    MainWindow _mainWindow;
+    private MainWindow _mainWindow;
 
     /** Shared instances */
-    Preferences _preferences;
+    private Preferences _preferences;
 
     /**
      * Constructor.
@@ -130,6 +136,8 @@ public class MainMenuBar extends JMenuBar
         queryMenu();
         calibratorsMenu();
         helpMenu();
+
+        macOSXRegistration();
     }
 
     /**
@@ -179,11 +187,17 @@ public class MainMenuBar extends JMenuBar
         // Print... menu item
         fileMenu.add(_mainWindow._printAction);
 
-        // Add a separator
-        fileMenu.add(new JSeparator());
+        // If not running under Mac OS X
+        if (MAC_OS_X == false)
+        {
+            // Quit menu item is provided on Mac OS X.
 
-        // Quit menu item
-        fileMenu.add(_mainWindow._vo._quitAction);
+            // Add a separator
+            fileMenu.add(new JSeparator());
+
+            // Quit menu item
+            fileMenu.add(_mainWindow._vo._quitAction);
+        }
     }
 
     /**
@@ -205,6 +219,7 @@ public class MainMenuBar extends JMenuBar
         // If the execution is on Mac OS X
         String keyStringPrefix = "ctrl ";
 
+        // If running under Mac OS X
         if (MAC_OS_X == true)
         {
             // The 'command' key (aka Apple key) is used
@@ -238,11 +253,17 @@ public class MainMenuBar extends JMenuBar
         // Undelete menu item
         editMenu.add(_mainWindow._calibratorsView._undeleteAction);
 
-        // Add a separator
-        editMenu.add(new JSeparator());
+        // If not running under Mac OS X
+        if (MAC_OS_X == false)
+        {
+            // Preferences menu item is provided on Mac OS X.
 
-        // Preferences... menu item
-        editMenu.add(_mainWindow._showPreferencesAction);
+            // Add a separator
+            editMenu.add(new JSeparator());
+
+            // Preferences... menu item
+            editMenu.add(_mainWindow._showPreferencesAction);
+        }
     }
 
     /**
@@ -329,11 +350,17 @@ public class MainMenuBar extends JMenuBar
         // Create each Help menu item
         JMenuItem menuItem;
 
-        // About SearchCal... menu item
-        helpMenu.add(_mainWindow._aboutAction);
+        // If not running under Mac OS X
+        if (MAC_OS_X == false)
+        {
+            // About... menu item is provided on Mac OS X.
 
-        // Add a separator
-        helpMenu.add(new JSeparator());
+            // About SearchCal... menu item
+            helpMenu.add(_mainWindow._aboutAction);
+
+            // Add a separator
+            helpMenu.add(new JSeparator());
+        }
 
         // SearchCal Tutorial menu item
         helpMenu.add(_mainWindow._helpView._tutorialAction);
@@ -354,6 +381,69 @@ public class MainMenuBar extends JMenuBar
         PreferencedCheckBoxMenuItem _activeHelpMenuItem = new PreferencedCheckBoxMenuItem("Show Tooltips",
                 _preferences, "help.tooltips.show");
         helpMenu.add(_activeHelpMenuItem);
+    }
+
+    /**
+     * Generic registration with the Mac OS X application menu.
+     *
+     * Checks the platform, then attempts.
+     */
+    public void macOSXRegistration()
+    {
+        // If running under Mac OS X
+        if (MAC_OS_X == true)
+        {
+            try
+            {
+                Class   osxAdapter     = this.getClass().getClassLoader()
+                                             .loadClass("fr.jmmc.scalib.sclgui.OSXAdapter");
+
+                Class[] defArgs        = { MainWindow.class };
+                Method  registerMethod = osxAdapter.getDeclaredMethod("registerMacOSXApplication",
+                        defArgs);
+
+                if (registerMethod != null)
+                {
+                    Object[] args = { _mainWindow };
+                    registerMethod.invoke(osxAdapter, args);
+                }
+
+                // This is slightly gross.  to reflectively access methods with boolean args, 
+                // use "boolean.class", then pass a Boolean object in as the arg, which apparently
+                // gets converted for you by the reflection system.
+                defArgs[0] = boolean.class;
+
+                Method prefsEnableMethod = osxAdapter.getDeclaredMethod("enablePrefs",
+                        defArgs);
+
+                if (prefsEnableMethod != null)
+                {
+                    Object[] args = { Boolean.TRUE };
+                    prefsEnableMethod.invoke(osxAdapter, args);
+                }
+            }
+            catch (NoClassDefFoundError e)
+            {
+                // This will be thrown first if the OSXAdapter is loaded on a system without the EAWT
+                // because OSXAdapter extends ApplicationAdapter in its def
+                System.err.println(
+                    "This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" +
+                    e + ")");
+            }
+            catch (ClassNotFoundException e)
+            {
+                // This shouldn't be reached; if there's a problem with the OSXAdapter we should get the 
+                // above NoClassDefFoundError first.
+                System.err.println(
+                    "This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" +
+                    e + ")");
+            }
+            catch (Exception e)
+            {
+                System.err.println("Exception while loading the OSXAdapter:");
+                e.printStackTrace();
+            }
+        }
     }
 }
 /*___oOo___*/

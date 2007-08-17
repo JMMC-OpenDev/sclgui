@@ -1,13 +1,17 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.25 2007-08-01 15:29:22 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.26 2007-08-17 12:09:33 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.25  2007/08/01 15:29:22  lafrasse
+# Added support for SIMDAD science object querying through URL+script (plus proof
+# of disfunctionning through SOAP).
+#
 # Revision 1.24  2007/07/11 15:59:13  lafrasse
 # Added automatic JNLP and Jar files generation and installation.
 #
@@ -216,7 +220,8 @@ JAVA_JAR =
 
 #
 # <brief description of SearchCalibrators java program>
-SearchCalibrators_CLASS = fr.jmmc.scalib.sclgui.SearchCalibrators 
+SearchCalibrators_CLASS = fr.jmmc.scalib.sclgui.SearchCalibrators \
+                          fr.jmmc.scalib.sclgui.OSXAdapter
 
 #
 # Command Definition Files (CDF)
