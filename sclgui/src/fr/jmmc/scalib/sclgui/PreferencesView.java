@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.24 2007-08-17 10:23:35 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.25 2007-08-17 12:06:58 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2007/08/17 10:23:35  lafrasse
+ * Enhanced "Simple Columns Order" view.
+ *
  * Revision 1.23  2007/08/16 12:19:58  lafrasse
  * Enhanced precision of formatted textfields for double values.
  *
@@ -453,10 +456,10 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         // Add scrolling capacity to the list
         JScrollPane scrollingList = new JScrollPane(_wordsList);
         scrollingList.setPreferredSize(new Dimension(400, 250));
-		scrollingList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollingList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollingList.getVerticalScrollBar().setFocusable(false);
-		scrollingList.setBorder(BorderFactory.createLoweredBevelBorder());
+        scrollingList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollingList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollingList.getVerticalScrollBar().setFocusable(false);
+        scrollingList.setBorder(BorderFactory.createLoweredBevelBorder());
         add(scrollingList);
 
         // Append 'Up' & 'Down' buttons
