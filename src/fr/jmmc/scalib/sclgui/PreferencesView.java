@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.23 2007-08-16 12:19:58 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.24 2007-08-17 10:23:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2007/08/16 12:19:58  lafrasse
+ * Enhanced precision of formatted textfields for double values.
+ *
  * Revision 1.22  2007/06/29 09:56:12  lafrasse
  * Removed unimplemented widget (science object inclusion checkbox, Network pane).
  *
@@ -155,7 +158,7 @@ public class PreferencesView extends JFrame implements ActionListener
 
         // Add the restore and sace buttons
         JPanel buttonsPanel = new JPanel();
-        _restoreDefaultButton = new JButton("Restore to Default Settings");
+        _restoreDefaultButton = new JButton("Restore Default Settings");
         _restoreDefaultButton.addActionListener(this);
         buttonsPanel.add(_restoreDefaultButton);
         _saveModificationButton = new JButton("Save Modifications");
@@ -358,9 +361,6 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
             {
                 _preferences.setPreference("query.scienceObjectDetectionDistance",
                     ((Double) _scienceObjectDetectionDistanceTextfield.getValue()));
-                System.out.println(
-                    "_scienceObjectDetectionDistanceTextfield.getValue() = '" +
-                    _scienceObjectDetectionDistanceTextfield.getValue() + "'.");
             }
             catch (Exception ex)
             {
@@ -400,7 +400,8 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
 /**
  * This Panel is dedicated to manage one ordered list of words.
  */
-class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
+class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
+    ListSelectionListener
 {
     /** Data model */
     private Preferences _preferences;
@@ -423,9 +424,6 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
     /** Move down Button */
     private JButton _moveDownButton;
 
-    /** Add Button */
-    private JButton _addWordButton;
-
     /**
      * Constructor.
      * @param preferences the application preferences
@@ -439,32 +437,46 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
 
         _preferenceName = preferenceName;
 
-        //Set vertical layout
+        // Set vertical layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Append list with associated model into a scrollPane
         _listModel     = new DefaultListModel();
         _wordsList     = new JList(_listModel);
 
+        // Only one item can be selected at a time.
+        _wordsList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+
+        // Add a 'selection modification' listener to enable 'Up' & 'Down buttons
+        _wordsList.addListSelectionListener(this);
+
+        // Add scrolling capacity to the list
         JScrollPane scrollingList = new JScrollPane(_wordsList);
+        scrollingList.setPreferredSize(new Dimension(400, 250));
+		scrollingList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollingList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollingList.getVerticalScrollBar().setFocusable(false);
+		scrollingList.setBorder(BorderFactory.createLoweredBevelBorder());
         add(scrollingList);
 
-        // Append move buttons
+        // Append 'Up' & 'Down' buttons
         JPanel panel = new JPanel();
         _moveUpButton = new JButton("Up");
         _moveUpButton.addActionListener(this);
+        _moveUpButton.setEnabled(false);
         panel.add(_moveUpButton);
         _moveDownButton = new JButton("Down");
         _moveDownButton.addActionListener(this);
+        _moveDownButton.setEnabled(false);
         panel.add(_moveDownButton);
         add(panel);
 
-        // Make data filled
+        // Populate GUI
         update(null, null);
     }
 
     /**
-     * Present fresh content according preference content.
+     * Present fresh content according to preference content.
      *
      * @param o preferences
      * @param arg not used
@@ -481,10 +493,12 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
             return;
         }
 
-        if (! words.equals(_actualWords))
+        // If the preference is different than the current list
+        if (words.equals(_actualWords) == false)
         {
             _actualWords = words;
 
+            // Serialize the new list to update the GUI
             StringTokenizer st = new StringTokenizer(_actualWords);
 
             while (st.hasMoreTokens())
@@ -497,57 +511,124 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
     }
 
     /**
+     * This method is called each time the user changes the set of selected items
+     *
+     * @param evt ListSelectionEvent
+     */
+    public void valueChanged(ListSelectionEvent evt)
+    {
+        // When the user release the mouse button and completes the selection,
+        // getValueIsAdjusting() becomes false
+        if (evt.getValueIsAdjusting() == false)
+        {
+            JList list  = (JList) evt.getSource();
+            int   index = list.getSelectedIndex();
+            int   size  = _listModel.size();
+
+            // If no item is selected
+            if (index == -1)
+            {
+                MCSLogger.debug("Buttons DISABLED (no selection).");
+                _moveUpButton.setEnabled(false);
+                _moveDownButton.setEnabled(false);
+
+                return;
+            }
+
+            // If the first item is selected
+            if (index == 0)
+            {
+                // Disable the 'Up' button.
+                MCSLogger.debug(
+                    "'Up' Button DISABLED (the first item IS selected).");
+                _moveUpButton.setEnabled(false);
+            }
+            else
+            {
+                // Enable the 'Up' button.
+                MCSLogger.debug(
+                    "'Up' Button ENABLED (the first item is NOT selected).");
+                _moveUpButton.setEnabled(true);
+            }
+
+            // If the last item is selected
+            if (index == (size - 1))
+            {
+                // Disable the 'Down' button.
+                MCSLogger.debug(
+                    "'Down' Button DISABLED (the last item IS selected).");
+                _moveDownButton.setEnabled(false);
+            }
+            else
+            {
+                // Enable the 'Down' button.
+                MCSLogger.debug(
+                    "'Down' Button ENABLED (the last item is NOT selected).");
+                _moveDownButton.setEnabled(true);
+            }
+        }
+    }
+
+    /**
      * actionPerformed  -  Listener
+     *
      * @param evt ActionEvent
      */
     public void actionPerformed(ActionEvent evt)
     {
         boolean listModified = false;
 
-        // test pressed button origin
+        // Get the index of the current selected item
+        int currentSelection = _wordsList.getSelectedIndex();
+        int futureSelection  = currentSelection;
+
+        // If the 'Down' button was pressed
         if (evt.getSource().equals(_moveDownButton))
         {
-            // Get the index of the first selected item
-            int firstSelIx = _wordsList.getSelectedIndex();
-            int nextIx     = firstSelIx + 1;
+            // Compute the future index
+            futureSelection++;
 
-            if ((nextIx < _listModel.size()) && (firstSelIx != -1))
+            if ((currentSelection != -1) &&
+                    (futureSelection < _listModel.size()))
             {
-                Object el = _listModel.getElementAt(firstSelIx);
-                _listModel.removeElementAt(firstSelIx);
+                Object el = _listModel.getElementAt(currentSelection);
 
-                if (nextIx == _listModel.size())
+                _listModel.removeElementAt(currentSelection);
+
+                if (futureSelection == _listModel.size())
                 {
                     _listModel.addElement(el);
                 }
                 else
                 {
-                    _listModel.add(nextIx, el);
+                    _listModel.add(futureSelection, el);
                 }
 
-                _wordsList.setSelectionInterval(nextIx, nextIx);
                 listModified = true;
             }
         }
 
+        // If the 'Up' button was pressed
         if (evt.getSource().equals(_moveUpButton))
         {
-            // Get the index of the first selected item
-            int firstSelIx = _wordsList.getSelectedIndex();
-            int nextIx     = firstSelIx - 1;
+            // Compute the future index
+            futureSelection--;
 
-            if ((firstSelIx > 0) && (firstSelIx != -1))
+            if ((currentSelection != -1) && (currentSelection > 0))
             {
-                Object el = _listModel.getElementAt(firstSelIx);
-                _listModel.removeElementAt(firstSelIx);
-                _listModel.add(nextIx, el);
-                _wordsList.setSelectionInterval(nextIx, nextIx);
+                Object el = _listModel.getElementAt(currentSelection);
+
+                _listModel.removeElementAt(currentSelection);
+                _listModel.add(futureSelection, el);
+
                 listModified = true;
             }
         }
 
-        if (listModified)
+        // If the list has been modified
+        if (listModified == true)
         {
+            // Serialize columns name order
             StringBuffer sb = new StringBuffer();
             Enumeration  en = _listModel.elements();
 
@@ -557,6 +638,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
                 sb.append(" " + o);
             }
 
+            // Save this order in preference
             try
             {
                 _preferences.setPreference(_preferenceName, sb.toString());
@@ -566,6 +648,8 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener
                 MCSLogger.warning("Could not set '" + _preferenceName +
                     "' preference : " + ex);
             }
+
+            _wordsList.setSelectionInterval(futureSelection, futureSelection);
         }
     }
 }
