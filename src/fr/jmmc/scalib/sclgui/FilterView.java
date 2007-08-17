@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.13 2007-08-16 12:19:58 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.14 2007-08-17 09:16:15 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2007/08/16 12:19:58  lafrasse
+ * Enhanced precision of formatted textfields for double values.
+ *
  * Revision 1.12  2007/08/16 06:17:49  lafrasse
  * Maded filters GUI always enabled according to feedback from Daniel BONNEAU and
  * Gilles DUVERT.
@@ -172,8 +175,6 @@ public class FilterView extends JPanel implements Observer
             widget.setFormatterFactory(_doubleFormaterFactory);
             widget.setValue((Double) constraintValue);
             paramListener = new ParamListener(_filter, constraintName, widget);
-            System.out.println("new JFormattedTextField for '" +
-                constraintName + "'.");
             widget.addActionListener(paramListener);
             widget.addFocusListener(paramListener);
             _widgets.put(constraintName, widget);
