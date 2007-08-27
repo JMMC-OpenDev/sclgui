@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.25 2007-08-17 12:06:58 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.26 2007-08-27 07:39:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2007/08/17 12:06:58  lafrasse
+ * Jalopization.
+ *
  * Revision 1.24  2007/08/17 10:23:35  lafrasse
  * Enhanced "Simple Columns Order" view.
  *
@@ -239,15 +242,14 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Layout management
+        JPanel tempPanel = new JPanel();
+        add(tempPanel);
+        tempPanel.setLayout(new GridBagLayout());
 
-        // Include Science Object Checkbox
-        JCheckBox cb = new JCheckBox(QueryView._includeScienceObjectAction);
-        cb.setModel(PreferencedButtonModel.getInstance(_preferences,
-                "science.includeObject"));
-
-        // @TODO : removed (not implemented)
-        // add(cb);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill        = GridBagConstraints.HORIZONTAL;
+        c.weightx     = 1;
 
         // JFormattedTextField formatter creation
         DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
@@ -256,41 +258,55 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
 
         DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
                 doubleFormater, doubleFormater);
-
-        JPanel                  panel;
-        JLabel                  label;
         Dimension               textfieldDimension    = new Dimension(100, 20);
+        JLabel                  label;
 
-        panel                                         = new JPanel();
-        label                                         = new JLabel(
-                "Science Object Detection Distance :");
-        panel.add(label);
+        // Include Science Object Checkbox
+        JCheckBox cb = new JCheckBox(QueryView._includeScienceObjectAction);
+        cb.setModel(PreferencedButtonModel.getInstance(_preferences,
+                "science.includeObject"));
+        // @TODO : removed (not implemented)
+        // add(cb);
+
+        // Science Object Detection Distance
+        c.gridy     = 0;
+        c.gridx     = 0;
+        label       = new JLabel("Science Object Detection Distance :",
+                JLabel.TRAILING);
+        tempPanel.add(label, c);
+        label.setLabelFor(_scienceObjectDetectionDistanceTextfield);
         _scienceObjectDetectionDistanceTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectDetectionDistanceTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectDetectionDistanceTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectDetectionDistanceTextfield.addActionListener(this);
-        panel.add(_scienceObjectDetectionDistanceTextfield);
-        add(panel);
+        c.gridx = 1;
+        tempPanel.add(_scienceObjectDetectionDistanceTextfield, c);
 
-        panel     = new JPanel();
-        label     = new JLabel("Minimum Magnitude Delta :");
-        panel.add(label);
+        // Minimum Magnitude Delta
+        c.gridy++;
+        c.gridx     = 0;
+        label       = new JLabel("Minimum Magnitude Delta :", JLabel.TRAILING);
+        tempPanel.add(label, c);
+        label.setLabelFor(_minMagnitudeDeltaTextfield);
         _minMagnitudeDeltaTextfield.setFormatterFactory(doubleFormaterFactory);
         _minMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
         _minMagnitudeDeltaTextfield.addActionListener(this);
-        panel.add(_minMagnitudeDeltaTextfield);
-        add(panel);
+        c.gridx = 1;
+        tempPanel.add(_minMagnitudeDeltaTextfield, c);
 
-        panel     = new JPanel();
-        label     = new JLabel("Maximum Magnitude Delta :");
-        panel.add(label);
+        // Maximum Magnitude Delta
+        c.gridy++;
+        c.gridx     = 0;
+        label       = new JLabel("Maximum Magnitude Delta :", JLabel.TRAILING);
+        tempPanel.add(label, c);
+        label.setLabelFor(_maxMagnitudeDeltaTextfield);
         _maxMagnitudeDeltaTextfield.setFormatterFactory(doubleFormaterFactory);
         _maxMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
         _maxMagnitudeDeltaTextfield.addActionListener(this);
-        panel.add(_maxMagnitudeDeltaTextfield);
-        add(panel);
+        c.gridx = 1;
+        tempPanel.add(_maxMagnitudeDeltaTextfield, c);
 
         // Make data filled
         update(null, null);
@@ -681,20 +697,30 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Layout management
+        JPanel tempPanel = new JPanel();
+        add(tempPanel);
+        tempPanel.setLayout(new GridBagLayout());
 
-        // get instance of shared tooltip to adjust behaviour in update code
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill                     = GridBagConstraints.HORIZONTAL;
+        c.weightx                  = 1;
+        c.gridy                    = 0;
+        c.gridx                    = 0;
+
+        // Get instance of shared tooltip to adjust behaviour in update code
         _sharedToolTipManager      = ToolTipManager.sharedInstance();
 
         // Handle tooltips
-        _enableToolTipCheckBox     = new JCheckBox("Show tooltips");
+        _enableToolTipCheckBox     = new JCheckBox("Show Tooltips");
 
         String ttt                 = Resources.getToolTipText(
                 "_enableToolTipCheckBox");
         _enableToolTipCheckBox.setToolTipText(ttt);
         _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
         _enableToolTipCheckBox.addChangeListener(this);
-        add(_enableToolTipCheckBox);
+        tempPanel.add(_enableToolTipCheckBox, c);
+        c.gridy++;
 
         // Handle include science object name
         Hashtable booleanPrefs = new Hashtable(); // Table of:  pref->Action
@@ -708,7 +734,8 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
             Action    action = (Action) booleanPrefs.get(pref);
             JCheckBox cb     = new JCheckBox(action);
             cb.setModel(PreferencedButtonModel.getInstance(_preferences, pref));
-            add(cb);
+            tempPanel.add(cb, c);
+            c.gridy++;
         }
 
         // Make data filled
