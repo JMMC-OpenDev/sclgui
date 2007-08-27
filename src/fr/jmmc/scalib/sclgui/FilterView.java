@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.14 2007-08-17 09:16:15 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.15 2007-08-27 07:38:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2007/08/17 09:16:15  lafrasse
+ * Removed a forgotten debugging trace.
+ *
  * Revision 1.13  2007/08/16 12:19:58  lafrasse
  * Enhanced precision of formatted textfields for double values.
  *
@@ -161,7 +164,8 @@ public class FilterView extends JPanel implements Observer
     {
         MCSLogger.trace();
 
-        JLabel        label         = new JLabel(constraintName);
+        JLabel        label         = new JLabel(constraintName + " : ",
+                JLabel.TRAILING);
         ParamListener paramListener;
 
         // If the constraint is a Double object
@@ -172,6 +176,7 @@ public class FilterView extends JPanel implements Observer
 
             // Create the constraint widget
             JFormattedTextField widget = new JFormattedTextField();
+            label.setLabelFor(widget);
             widget.setFormatterFactory(_doubleFormaterFactory);
             widget.setValue((Double) constraintValue);
             paramListener = new ParamListener(_filter, constraintName, widget);
@@ -191,6 +196,7 @@ public class FilterView extends JPanel implements Observer
 
             // Create the constraint widget
             JTextField widget = new JTextField((String) constraintValue);
+            label.setLabelFor(widget);
             paramListener = new ParamListener(_filter, constraintName, widget);
             widget.addActionListener(paramListener);
             widget.addFocusListener(paramListener);
