@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.42 2007-08-16 12:19:58 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.43 2007-08-27 07:38:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.42  2007/08/16 12:19:58  lafrasse
+ * Enhanced precision of formatted textfields for double values.
+ *
  * Revision 1.41  2007/08/03 13:11:41  lafrasse
  * Enhanced wavelengthes et and science object magnitudes management according to
  * comments from Daniel BONNEAU.
@@ -192,7 +195,8 @@ public class QueryView extends JPanel implements Observer,
     JComboBox _instrumentalMagnitudeBandCombo = new JComboBox();
 
     /** Instrument wavelentgh label */
-    JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ");
+    JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
+            JLabel.TRAILING);
 
     /** Instrument wavelentgh */
     JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(
@@ -216,7 +220,8 @@ public class QueryView extends JPanel implements Observer,
     JTextField _scienceObjectDECTextfield = new JTextField();
 
     /** Science object magnitude label */
-    JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ");
+    JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ",
+            JLabel.TRAILING);
 
     /** Science object magnitude */
     JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(
@@ -226,14 +231,14 @@ public class QueryView extends JPanel implements Observer,
     JPanel _searchCalPanel;
 
     /** Search minimum magnitude label */
-    JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ");
+    JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ", JLabel.TRAILING);
 
     /** Search minimum magnitude */
     JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search maximum magnitude label */
-    JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ");
+    JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ", JLabel.TRAILING);
 
     /** Search maximum magnitude */
     JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
@@ -249,21 +254,22 @@ public class QueryView extends JPanel implements Observer,
     JRadioButton _faintRadioButton;
 
     /** Search box RA size label */
-    JLabel _diffRASizeLabel = new JLabel("RA Range (arcmin) : ");
+    JLabel _diffRASizeLabel = new JLabel("RA Range [arcmin] : ", JLabel.TRAILING);
 
     /** Search box RA size */
     JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search box DEC size label */
-    JLabel _diffDECSizeLabel = new JLabel("DEC Range (arcmin) : ");
+    JLabel _diffDECSizeLabel = new JLabel("DEC Range [arcmin] : ",
+            JLabel.TRAILING);
 
     /** Search box DEC size */
     JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search box radial size label */
-    JLabel _radialSizeLabel = new JLabel("Radius (arcmin) : ");
+    JLabel _radialSizeLabel = new JLabel("Radius [arcmin] : ", JLabel.TRAILING);
 
     /** Search box radial size */
     JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
@@ -313,6 +319,8 @@ public class QueryView extends JPanel implements Observer,
         // Save values action
         _saveValuesAction               = new SaveValuesAction();
 
+        JLabel label;
+
         // JFormattedTextField formatter creation
         DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
                     "0.0####"));
@@ -335,7 +343,9 @@ public class QueryView extends JPanel implements Observer,
         // Magnitude band field
         c.gridy     = 0;
         c.gridx     = 0;
-        _instrumentPanel.add(new JLabel("Magnitude Band : "), c);
+        label       = new JLabel("Magnitude Band : ", JLabel.TRAILING);
+        _instrumentPanel.add(label, c);
+        label.setLabelFor(_instrumentalMagnitudeBandCombo);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalMagnitudeBandCombo, c);
         _instrumentalMagnitudeBandCombo.addActionListener(this);
@@ -343,6 +353,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _instrumentPanel.add(_instrumentalWavelengthLabel, c);
+        _instrumentalWavelengthLabel.setLabelFor(_instrumentalWavelengthTextfield);
         _instrumentalWavelengthTextfield.setFormatterFactory(doubleFormaterFactory);
         _instrumentalWavelengthTextfield.setMinimumSize(textfieldDimension);
         _instrumentalWavelengthTextfield.setPreferredSize(textfieldDimension);
@@ -352,8 +363,10 @@ public class QueryView extends JPanel implements Observer,
         _instrumentPanel.add(_instrumentalWavelengthTextfield, c);
         // Maximum baseline
         c.gridy++;
-        c.gridx = 0;
-        _instrumentPanel.add(new JLabel("Max. Baseline [m] : "), c);
+        c.gridx     = 0;
+        label       = new JLabel("Max. Baseline [m] : ", JLabel.TRAILING);
+        _instrumentPanel.add(label, c);
+        label.setLabelFor(_instrumentalMaxBaselineTextField);
         _instrumentalMaxBaselineTextField.setFormatterFactory(doubleFormaterFactory);
         _instrumentalMaxBaselineTextField.setMinimumSize(textfieldDimension);
         _instrumentalMaxBaselineTextField.setPreferredSize(textfieldDimension);
@@ -369,7 +382,9 @@ public class QueryView extends JPanel implements Observer,
         // Star name field
         c.gridy     = 0;
         c.gridx     = 0;
-        _scienceObjectPanel.add(new JLabel("Name : "), c);
+        label       = new JLabel("Name : ", JLabel.TRAILING);
+        _scienceObjectPanel.add(label, c);
+        label.setLabelFor(_scienceObjectNameTextfield);
         tempPanel = new JPanel(new GridBagLayout());
         _scienceObjectNameTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectNameTextfield.setMinimumSize(textfieldDimension);
@@ -387,8 +402,10 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(tempPanel, c);
         // RA coordinate field
         c.gridy++;
-        c.gridx = 0;
-        _scienceObjectPanel.add(new JLabel("RA 2000 (hh:mm:ss) : "), c);
+        c.gridx     = 0;
+        label       = new JLabel("RA 2000 [hh:mm:ss] : ", JLabel.TRAILING);
+        _scienceObjectPanel.add(label, c);
+        label.setLabelFor(_scienceObjectRATextfield);
         _scienceObjectRATextfield.setMinimumSize(textfieldDimension);
         _scienceObjectRATextfield.setPreferredSize(textfieldDimension);
         _scienceObjectRATextfield.addActionListener(this);
@@ -397,8 +414,10 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(_scienceObjectRATextfield, c);
         // DEG coordinate field
         c.gridy++;
-        c.gridx = 0;
-        _scienceObjectPanel.add(new JLabel("DEC 2000 (+/-dd:mm:ss) : "), c);
+        c.gridx     = 0;
+        label       = new JLabel("DEC 2000 [+/-dd:mm:ss] : ", JLabel.TRAILING);
+        _scienceObjectPanel.add(label, c);
+        label.setLabelFor(_scienceObjectDECTextfield);
         _scienceObjectDECTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectDECTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectDECTextfield.addActionListener(this);
@@ -409,6 +428,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _scienceObjectPanel.add(_scienceObjectMagnitudeLabel, c);
+        _scienceObjectMagnitudeLabel.setLabelFor(_scienceObjectMagnitudeTextfield);
         _scienceObjectMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
@@ -424,6 +444,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy     = 0;
         c.gridx     = 0;
         _searchCalPanel.add(_minMagnitudeLabel, c);
+        _minMagnitudeLabel.setLabelFor(_minMagnitudeTextfield);
         _minMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
@@ -435,6 +456,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_maxMagnitudeLabel, c);
+        _maxMagnitudeLabel.setLabelFor(_maxMagnitudeTextfield);
         _maxMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
@@ -444,8 +466,9 @@ public class QueryView extends JPanel implements Observer,
         _searchCalPanel.add(_maxMagnitudeTextfield, c);
         // Bright/Faint Scenario
         c.gridy++;
-        c.gridx = 0;
-        _searchCalPanel.add(new JLabel("Scenario : "), c);
+        c.gridx     = 0;
+        label       = new JLabel("Scenario : ", JLabel.TRAILING);
+        _searchCalPanel.add(label, c);
         tempPanel              = new JPanel();
         _brightRadioButton     = new JRadioButton(new BrightQueryAction());
         _brightFaintButtonGroup.add(_brightRadioButton);
@@ -454,11 +477,13 @@ public class QueryView extends JPanel implements Observer,
         _brightFaintButtonGroup.add(_faintRadioButton);
         c.gridx = 1;
         tempPanel.add(_faintRadioButton);
+        label.setLabelFor(tempPanel);
         _searchCalPanel.add(tempPanel, c);
         // RA delta field
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_diffRASizeLabel, c);
+        _diffRASizeLabel.setLabelFor(_diffRASizeTextfield);
         _diffRASizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _diffRASizeTextfield.setMinimumSize(textfieldDimension);
         _diffRASizeTextfield.setPreferredSize(textfieldDimension);
@@ -470,6 +495,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_diffDECSizeLabel, c);
+        _diffDECSizeLabel.setLabelFor(_diffDECSizeTextfield);
         _diffDECSizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _diffDECSizeTextfield.setMinimumSize(textfieldDimension);
         _diffDECSizeTextfield.setPreferredSize(textfieldDimension);
@@ -481,6 +507,7 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_radialSizeLabel, c);
+        _radialSizeLabel.setLabelFor(_radialSizeTextfield);
         _radialSizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _radialSizeTextfield.setMinimumSize(textfieldDimension);
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
@@ -494,7 +521,9 @@ public class QueryView extends JPanel implements Observer,
         // Fixed space
         _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Progress label
-        _actionPanel.add(new JLabel("Progress : "));
+        label = new JLabel("Progress : ", JLabel.TRAILING);
+        _actionPanel.add(label);
+        label.setLabelFor(_progressBar);
         // Fixed space
         _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Progressbar
