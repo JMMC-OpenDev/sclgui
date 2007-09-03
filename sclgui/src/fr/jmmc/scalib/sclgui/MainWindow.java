@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.23 2007-08-16 13:44:32 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.24 2007-09-03 05:59:45 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2007/08/16 13:44:32  lafrasse
+ * Updated version number to 4.0b8.
+ *
  * Revision 1.22  2007/08/09 12:27:41  lafrasse
  * Updated version number to 4.0b7.
  *
@@ -158,6 +161,8 @@ public class MainWindow extends JFrame
         CalibratorsView calibratorsView, PreferencesView preferencesView,
         FiltersView filtersView, StatusBar statusBar)
     {
+        super("SearchCal");
+
         _vo                        = vo;
         _queryView                 = queryView;
         _calibratorsView           = calibratorsView;
@@ -336,7 +341,7 @@ public class MainWindow extends JFrame
             greetings += "This software uses source code created at the Centre de Données astronomiques de Strasbourg, France.\n";
 
             AboutWindow aboutWindow = new AboutWindow("SearchCal",
-                    "4.0 beta 8", greetings, "Copyright 2007 JMMC");
+                    "4.0 beta 9", greetings, "Copyright 2007 JMMC");
         }
     }
 }
