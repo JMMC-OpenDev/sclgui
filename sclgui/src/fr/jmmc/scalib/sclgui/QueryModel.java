@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.30 2007-08-09 07:54:33 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.31 2007-09-18 11:28:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2007/08/09 07:54:33  lafrasse
+ * Reverted automatic min and max magnitude computation.
+ *
  * Revision 1.29  2007/08/03 13:21:32  lafrasse
  * Corrected a typo.
  *
@@ -228,7 +231,7 @@ public class QueryModel extends Observable implements Observer
         for (int i = 0; i < _magnitudeBands.length; i++)
         {
             // Construct the conversion table between both
-            _scienceObjectMagnitudes.put(_magnitudeBands[i], new Double(0.0));
+            _scienceObjectMagnitudes.put(_magnitudeBands[i], Double.NaN);
         }
 
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(_magnitudeBands);
@@ -469,6 +472,13 @@ public class QueryModel extends Observable implements Observer
                             "' Mag = '" + str + "'.");
                         _scienceObjectMagnitudes.put(currentMagnitudeBand,
                             new Double(str));
+                    }
+                    else
+                    {
+                        MCSLogger.debug("loaded '" + currentMagnitudeBand +
+                            "' Mag = 'NaN'.");
+                        _scienceObjectMagnitudes.put(currentMagnitudeBand,
+                            Double.NaN);
                     }
                 }
             }
@@ -868,7 +878,7 @@ public class QueryModel extends Observable implements Observer
         for (int i = 0; i < _magnitudeBands.length; i++)
         {
             // Construct the conversion table between both
-            _scienceObjectMagnitudes.put(_magnitudeBands[i], new Double(0.0));
+            _scienceObjectMagnitudes.put(_magnitudeBands[i], Double.NaN);
         }
 
         setChanged();
