@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.43 2007-08-27 07:38:49 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.44 2007-09-18 11:28:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.43  2007/08/27 07:38:49  lafrasse
+ * TextFileds label enhancement.
+ *
  * Revision 1.42  2007/08/16 12:19:58  lafrasse
  * Enhanced precision of formatted textfields for double values.
  *
@@ -322,8 +325,11 @@ public class QueryView extends JPanel implements Observer,
         JLabel label;
 
         // JFormattedTextField formatter creation
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setNaN("???"); // Set the symbol for a Double.NaN to an empty String
+
         DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
-                    "0.0####"));
+                    "0.0####", symbols));
         doubleFormater.setValueClass(java.lang.Double.class);
 
         DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
@@ -585,7 +591,6 @@ public class QueryView extends JPanel implements Observer,
         // Science object parameters
         String scienceObjectName = _queryModel.getScienceObjectName();
         _scienceObjectNameTextfield.setText(scienceObjectName);
-
         _scienceObjectDECTextfield.setText(_queryModel.getScienceObjectDEC());
         _scienceObjectRATextfield.setText(_queryModel.getScienceObjectRA());
         _scienceObjectMagnitudeLabel.setText(magnitudeWithBand);
