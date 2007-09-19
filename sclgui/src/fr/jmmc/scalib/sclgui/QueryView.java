@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.44 2007-09-18 11:28:33 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.45 2007-09-19 12:11:28 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.44  2007/09/18 11:28:33  lafrasse
+ * Handle undefined magnitudde values returned by Simbad CDS.
+ *
  * Revision 1.43  2007/08/27 07:38:49  lafrasse
  * TextFileds label enhancement.
  *
@@ -213,8 +216,7 @@ public class QueryView extends JPanel implements Observer,
     JPanel _scienceObjectPanel;
 
     /** Science object name */
-    JFormattedTextField _scienceObjectNameTextfield = new JFormattedTextField(new MessageFormat(
-                "{0}"));
+    JTextField _scienceObjectNameTextfield = new JTextField();
 
     /** Science object right ascension coordinate */
     JTextField _scienceObjectRATextfield = new JTextField();
@@ -392,7 +394,6 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(label, c);
         label.setLabelFor(_scienceObjectNameTextfield);
         tempPanel = new JPanel(new GridBagLayout());
-        _scienceObjectNameTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectNameTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectNameTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectNameTextfield.addActionListener(this);
