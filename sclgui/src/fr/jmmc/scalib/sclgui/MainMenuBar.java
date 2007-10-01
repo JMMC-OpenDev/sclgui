@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.24 2007-08-17 12:09:33 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.25 2007-10-01 07:53:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2007/08/17 12:09:33  lafrasse
+ * Added tight integration into Mac OS X default menubar layout when running on Mac.
+ *
  * Revision 1.23  2007/06/26 08:34:41  lafrasse
  * Added support for customizek keybord shortcut on Mac OS X.
  *
@@ -127,9 +130,6 @@ public class MainMenuBar extends JMenuBar
         _mainWindow      = mainWindow;
 
         _preferences     = Preferences.getInstance();
-
-        LegendView legendView = new LegendView();
-        legendView.setVisible(false);
 
         fileMenu();
         editMenu();
