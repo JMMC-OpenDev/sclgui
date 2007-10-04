@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.45 2007-09-19 12:11:28 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.46 2007-10-04 15:04:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.45  2007/09/19 12:11:28  lafrasse
+ * Chnged Science Object name field to a standard JTextField
+ *
  * Revision 1.44  2007/09/18 11:28:33  lafrasse
  * Handle undefined magnitudde values returned by Simbad CDS.
  *
@@ -651,6 +654,24 @@ public class QueryView extends JPanel implements Observer,
         {
             _vo._getCalAction.setEnabled(false);
         }
+
+        // If the magnitude band is 'V'
+        if (_queryModel.getInstrumentalMagnitudeBand().matches("V") == true)
+        {
+            // Disable bright/faint buttons
+            _brightRadioButton.setEnabled(false);
+            _faintRadioButton.setEnabled(false);
+
+            // Select bright scenario
+            _brightRadioButton.setSelected(true);
+            _queryModel.setQueryBrightScenarioFlag(true);
+        }
+        else
+        {
+            // Enable bright/faint buttons
+            _brightRadioButton.setEnabled(true);
+            _faintRadioButton.setEnabled(true);
+        }
     }
 
     /**
@@ -861,6 +882,7 @@ public class QueryView extends JPanel implements Observer,
 
             StatusBar.show("bright scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(true);
+            _queryModel.notifyObservers();
         }
     }
 
@@ -877,6 +899,7 @@ public class QueryView extends JPanel implements Observer,
 
             StatusBar.show("faint scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(false);
+            _queryModel.notifyObservers();
         }
     }
 
