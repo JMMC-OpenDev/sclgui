@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.31 2007-09-18 11:28:33 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.32 2007-10-04 10:54:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2007/09/18 11:28:33  lafrasse
+ * Handle undefined magnitudde values returned by Simbad CDS.
+ *
  * Revision 1.30  2007/08/09 07:54:33  lafrasse
  * Reverted automatic min and max magnitude computation.
  *
@@ -144,15 +147,15 @@ public class QueryModel extends Observable implements Observer
      *
      * @warning Do not change the order, as it is used to parse Simbad VOTables.
      */
-    private String[] _magnitudeBands = { "V", "I", "J", "H", "K" };
+    private String[] _magnitudeBands = { "V", "I", "J", "H", "K", "N" };
 
     /**
-     * Default magnitude band wavelengthes.
+     * Default magnitude band wavelengthes in micrometer.
      *
      * @warning Do not change the order,as it is linked to _magnitudeBands.
      * @sa _magnitudeBands
      */
-    private double[] _defaultWavelengths = { 0.55, 0.9, 1.25, 1.65, 2.2 };
+    private double[] _defaultWavelengths = { 0.55, 0.9, 1.25, 1.65, 2.2, 10 };
 
     /** The instrumental maximum base line */
     private double _instrumentalMaxBaseLine;
@@ -464,22 +467,32 @@ public class QueryModel extends Observable implements Observer
                 for (int i = 0; i < _magnitudeBands.length; i++)
                 {
                     String currentMagnitudeBand = _magnitudeBands[i];
-                    str = (String) row.getContent(index++);
+                    Double loadedValue          = Double.NaN;
 
-                    if (str.length() != 0)
+                    try
                     {
-                        MCSLogger.debug("loaded '" + currentMagnitudeBand +
-                            "' Mag = '" + str + "'.");
-                        _scienceObjectMagnitudes.put(currentMagnitudeBand,
-                            new Double(str));
+                        str = (String) row.getContent(index++);
+
+                        if (str.length() != 0)
+                        {
+                            MCSLogger.debug("loaded '" + currentMagnitudeBand +
+                                "' Mag = '" + str + "'.");
+                            loadedValue = new Double(str);
+                        }
+                        else
+                        {
+                            MCSLogger.debug("loaded '" + currentMagnitudeBand +
+                                "' Mag = 'NaN'.");
+                        }
                     }
-                    else
+                    catch (Exception exc)
                     {
-                        MCSLogger.debug("loaded '" + currentMagnitudeBand +
+                        MCSLogger.debug("blanked '" + currentMagnitudeBand +
                             "' Mag = 'NaN'.");
-                        _scienceObjectMagnitudes.put(currentMagnitudeBand,
-                            Double.NaN);
                     }
+
+                    _scienceObjectMagnitudes.put(currentMagnitudeBand,
+                        loadedValue);
                 }
             }
         }
