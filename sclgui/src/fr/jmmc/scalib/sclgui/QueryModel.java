@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.32 2007-10-04 10:54:53 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.33 2007-10-04 15:04:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2007/10/04 10:54:53  lafrasse
+ * Added 'N' magnitude band support.
+ *
  * Revision 1.31  2007/09/18 11:28:33  lafrasse
  * Handle undefined magnitudde values returned by Simbad CDS.
  *
@@ -1209,7 +1212,6 @@ public class QueryModel extends Observable implements Observer
         _queryBrightScenarioFlag = flag;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
