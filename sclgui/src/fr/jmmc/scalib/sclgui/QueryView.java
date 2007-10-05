@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.46 2007-10-04 15:04:00 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.47 2007-10-05 07:31:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.46  2007/10/04 15:04:00  lafrasse
+ * Added bright/faint radio button disabled when 'V' magnitude band is selected.
+ *
  * Revision 1.45  2007/09/19 12:11:28  lafrasse
  * Chnged Science Object name field to a standard JTextField
  *
@@ -658,6 +661,24 @@ public class QueryView extends JPanel implements Observer,
         // If the magnitude band is 'V'
         if (_queryModel.getInstrumentalMagnitudeBand().matches("V") == true)
         {
+            // Enable min & max magnitude textfields
+            _minMagnitudeTextfield.setEnabled(true);
+            _maxMagnitudeTextfield.setEnabled(true);
+
+            // Disable bright/faint buttons
+            _brightRadioButton.setEnabled(false);
+            _faintRadioButton.setEnabled(false);
+
+            // Select bright scenario
+            _brightRadioButton.setSelected(true);
+            _queryModel.setQueryBrightScenarioFlag(true);
+        }
+        else if (_queryModel.getInstrumentalMagnitudeBand().matches("N") == true)
+        {
+            // Disable min & max magnitude textfields
+            _minMagnitudeTextfield.setEnabled(false);
+            _maxMagnitudeTextfield.setEnabled(false);
+
             // Disable bright/faint buttons
             _brightRadioButton.setEnabled(false);
             _faintRadioButton.setEnabled(false);
@@ -668,6 +689,10 @@ public class QueryView extends JPanel implements Observer,
         }
         else
         {
+            // Enable min & max magnitude textfields
+            _minMagnitudeTextfield.setEnabled(true);
+            _maxMagnitudeTextfield.setEnabled(true);
+
             // Enable bright/faint buttons
             _brightRadioButton.setEnabled(true);
             _faintRadioButton.setEnabled(true);
