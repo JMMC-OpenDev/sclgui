@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.19 2007-08-16 13:43:58 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.20 2007-10-09 14:41:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2007/08/16 13:43:58  lafrasse
+ * Updated preference file version number.
+ *
  * Revision 1.18  2007/06/29 09:55:14  lafrasse
  * Changed default query to 'alf_Psa'.
  *
@@ -132,23 +135,46 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 defaults.setPreference("catalog.color.MIDI", "#C994CA");
                 defaults.setPreference("catalog.color.V/36B/bsc4s", "#88A0A6");
 
-                /* Place confidence indexes color */
+                // Place confidence indexes color
                 int i = 0;
                 defaults.setPreference("confidence.color.LOW", i++, "#6E6E6E");
                 defaults.setPreference("confidence.color.MEDIUM", i++, "#D8D8D8");
                 defaults.setPreference("confidence.color.HIGH", i++, "#EFEFEF");
 
-                /* Place help behaviour */
+                // Place help behaviour
                 defaults.setPreference("help.tooltips.show", "true");
 
-                /* Place view behaviour */
+                // Place view behaviour
                 defaults.setPreference("view.legend.show", "false");
                 defaults.setPreference("view.details.show", "false");
-                /* Simple View Columns */
-                defaults.setPreference("view.simple.columns",
+
+                // Simple 'Bright N' view
+                defaults.setPreference("view.columns.simple.bright.N",
+                    "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
+                // Detailled 'Bright N' view
+                defaults.setPreference("view.columns.detailled.bright.N",
+                    "dist HD RAJ2000 DEJ2000 vis2Flag vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
+
+                // Simple 'Bright V' view
+                defaults.setPreference("view.columns.simple.bright.V",
                     "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
-                defaults.setPreference("view.detailled.columns",
+                // Detailled 'Bright V' view
+                defaults.setPreference("view.columns.detailled.bright.V",
                     "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+
+                // Simple 'Bright K' view
+                defaults.setPreference("view.columns.simple.bright.K",
+                    "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
+                // Detailled 'Bright K' view
+                defaults.setPreference("view.columns.detailled.bright.K",
+                    "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+
+                // Simple 'Faint K' view
+                defaults.setPreference("view.columns.simple.faint.K",
+                    "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Vphg I Icous Iphg J Jcous H Hcous K Kcous");
+                // Detailled 'Bright K' view
+                defaults.setPreference("view.columns.detailled.faint.K",
+                    "dist vis2 vis2Err diam_vk diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
 
                 /* Query default values preferences  */
                 defaults.setPreference("query.magnitudeBand", "K");

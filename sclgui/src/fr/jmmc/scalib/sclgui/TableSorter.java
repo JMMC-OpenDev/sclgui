@@ -156,9 +156,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     private List sortingColumns = new ArrayList();
 
     ////////////////////////////////////////////////////////////////////////////
-    /** Store wether the view should be detailled, or simple. */
-    private boolean _detailled = true;
-
     /**
      * Indirection array.
      *
@@ -660,15 +657,36 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     {
         MCSLogger.trace();
 
-        // Get the detailled/simple view flag state
-        String selectedView = "view.simple.columns";
-        _detailled = _preferences.getPreferenceAsBoolean("view.details.show");
+        String view      = "simple";
+        String scenario  = "bright";
+        String magnitude = "V";
 
-        if (_detailled == true)
+        // Get the detailled/simple view flag state
+        if (_preferences.getPreferenceAsBoolean("view.details.show") == true)
         {
-            selectedView = "view.detailled.columns";
+            view = "detailled";
+        }
+        else
+        {
+            view = "simple";
         }
 
+        // Get the scenario
+        if (_calibratorsModel.getBrightScenarioFlag() == true)
+        {
+            scenario = "bright";
+        }
+        else
+        {
+            scenario = "faint";
+        }
+
+        // Get the magnitude band
+        magnitude = _calibratorsModel.getMagnitudeBand();
+
+        // Compute the corresponding preference path
+        String selectedView = "view.columns." + view + "." + scenario + "." +
+            magnitude;
         MCSLogger.debug("Selected view = '" + selectedView + "'.");
 
         // Get the selected ordered column name table
