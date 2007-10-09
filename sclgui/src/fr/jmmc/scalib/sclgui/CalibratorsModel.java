@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.22 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.23 2007-10-09 14:38:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.21  2007/06/21 07:43:23  lafrasse
  * Rationnalized XSLT sheets loading.
  *
@@ -144,6 +147,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
     /** Column data types */
     public Vector _columnClasses;
+
+    /** Selected magnitude band */
+    private String _magnitudeBand = "V";
+
+    /** Selected scenarion */
+    private Boolean _brightScenarioFlag = true;
 
     /**
      * Constructor.
@@ -302,6 +311,31 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         {
             throw e;
         }
+    }
+
+    /**
+     * Return the current magnitude band.
+     *
+     * @return the current magnitude band.
+     */
+    public String getMagnitudeBand()
+    {
+        MCSLogger.trace();
+
+        return _magnitudeBand;
+    }
+
+    /**
+     * Return the current scenario bright flag.
+     *
+     * @return true wether the query is of the bright type, otherwise false for
+     * the faint ones.
+     */
+    public Boolean getBrightScenarioFlag()
+    {
+        MCSLogger.trace();
+
+        return _brightScenarioFlag;
     }
 
     /**
@@ -477,6 +511,31 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         // Remove all the stars flagged as deleted
         _currentStarList.removeAllDeletedStars();
+
+        // Compute selected magnitude band and scenario
+        Hashtable parameters = new Hashtable();
+
+        for (int i = 0; i < _paramSet.getItemCount(); i++)
+        {
+            SavotParam param      = (SavotParam) _paramSet.getItemAt(i);
+            String     paramName  = param.getName();
+            String     paramValue = param.getValue();
+
+            MCSLogger.debug(paramName + " = '" + paramValue + "'");
+            parameters.put(paramName, paramValue);
+        }
+
+        _magnitudeBand = (String) parameters.get("band");
+
+        if (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") ||
+                _magnitudeBand.matches("H"))
+        {
+            _magnitudeBand = "K";
+        }
+
+        _brightScenarioFlag = Boolean.valueOf((String) parameters.get("bright"));
+        MCSLogger.debug("magnitude band = '" + _magnitudeBand +
+            "'; bright scenario = '" + _brightScenarioFlag + "'.");
 
         // Update any attached observer
         update(null, null);
