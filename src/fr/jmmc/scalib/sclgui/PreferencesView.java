@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.26 2007-08-27 07:39:21 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.27 2007-10-09 14:41:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2007/08/27 07:39:21  lafrasse
+ * TextFields label and GUI layout enhancements.
+ *
  * Revision 1.25  2007/08/17 12:06:58  lafrasse
  * Jalopization.
  *
@@ -151,8 +154,8 @@ public class PreferencesView extends JFrame implements ActionListener
 
         // Add the columns preferences pane
         ColumnsPreferencesView columnsView = new ColumnsPreferencesView(
-                "view.simple.columns");
-        tabbedPane.add("Simple Columns Order", columnsView);
+                "view.columns");
+        tabbedPane.add("Columns Order", columnsView);
 
         // Add the catalog preferences pane
         JPanel catalogView = new LegendView();
@@ -417,7 +420,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
 
 
 /**
- * This Panel is dedicated to manage one ordered list of words.
+ * This Panel is dedicated to manage one ordered list of columns.
  */
 class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     ListSelectionListener
@@ -425,17 +428,26 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     /** Data model */
     private Preferences _preferences;
 
-    /** The name of preference that must be managed as ordered words. */
-    private String _preferenceName;
+    /** The name of preference that must be managed as ordered columns. */
+    private String _preferencePath;
 
-    /** The widget that dispaly the list of words */
-    private JList _wordsList;
+    /** The widget that dispaly the list of columns */
+    private JList _columnList;
 
-    /** The model associated to the widget that dispaly the list of words */
+    /** The model associated to the widget that dispaly the list of columns */
     private DefaultListModel _listModel;
 
-    /** The actual shown list of words */
-    private String _actualWords = "";
+    /** The actual shown list of columns */
+    private String _shownColumns = "";
+
+    /** All available columns set */
+    JComboBox _columnsSetCombobox;
+
+    /** The column sets combobox model */
+    private DefaultComboBoxModel _columsSetModel;
+
+    /** The column sets combobox names to path correspondance table */
+    private Hashtable _columnSetNameToPathHashtable;
 
     /** Move up Button */
     private JButton _moveUpButton;
@@ -445,32 +457,68 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
 
     /**
      * Constructor.
-     * @param preferences the application preferences
-     * @param preferenceName the preference name that list the words separated
-     * by spaces
+     *
+     * @param preferenceName the preference name root that is the prefix to all
+     * the lists of words separated by spaces composing columns sets.
      */
-    public ColumnsPreferencesView(String preferenceName)
+    public ColumnsPreferencesView(String preferencePrefix)
     {
+        // Register against shared application preferences
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        _preferenceName = preferenceName;
-
-        // Set vertical layout
+        // Set the pane vertical layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // Append list with associated model into a scrollPane
-        _listModel     = new DefaultListModel();
-        _wordsList     = new JList(_listModel);
+        // Column sets combobox creation
+        JPanel headPanel = new JPanel();
+        headPanel.setLayout(new BorderLayout());
 
-        // Only one item can be selected at a time.
-        _wordsList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("Column Set : ", JLabel.TRAILING);
+        panel.add(label);
+        _columnsSetCombobox = new JComboBox();
+        label.setLabelFor(_columnsSetCombobox);
+        panel.add(_columnsSetCombobox);
+        _columnsSetCombobox.addActionListener(this);
+        headPanel.add(panel, BorderLayout.LINE_START);
+        add(headPanel);
 
-        // Add a 'selection modification' listener to enable 'Up' & 'Down buttons
-        _wordsList.addListSelectionListener(this);
+        // Fullfil the combobox model with each desired columns set names
+        _columsSetModel                   = new DefaultComboBoxModel();
+        _columnSetNameToPathHashtable     = new Hashtable();
+
+        Enumeration e                     = _preferences.getPreferences(preferencePrefix);
+
+        while (e.hasMoreElements())
+        {
+            String preferencePath = (String) e.nextElement();
+
+            // Compute the column set name
+            String columnSetName = preferencePath.substring(preferencePrefix.length() +
+                    1);
+            columnSetName = columnSetName.replace('.', ' ');
+
+            // Fullfil the Combobox model and 'name to path' table
+            _columnSetNameToPathHashtable.put(columnSetName, preferencePath);
+            _columsSetModel.addElement(columnSetName);
+        }
+
+        _columnsSetCombobox.setModel(_columsSetModel);
+        _preferencePath     = (String) _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
+
+        // Instanciate the list widget and its associated model
+        _listModel          = new DefaultListModel();
+        _columnList         = new JList(_listModel);
+
+        // Only one item can be selected at ance.
+        _columnList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+
+        // Add a 'selection modification' listener to enable/disable 'Up' & 'Down' buttons
+        _columnList.addListSelectionListener(this);
 
         // Add scrolling capacity to the list
-        JScrollPane scrollingList = new JScrollPane(_wordsList);
+        JScrollPane scrollingList = new JScrollPane(_columnList);
         scrollingList.setPreferredSize(new Dimension(400, 250));
         scrollingList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollingList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -478,9 +526,9 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         scrollingList.setBorder(BorderFactory.createLoweredBevelBorder());
         add(scrollingList);
 
-        // Append 'Up' & 'Down' buttons
-        JPanel panel = new JPanel();
-        _moveUpButton = new JButton("Up");
+        // Add 'Up' & 'Down' buttons
+        panel             = new JPanel();
+        _moveUpButton     = new JButton("Up");
         _moveUpButton.addActionListener(this);
         _moveUpButton.setEnabled(false);
         panel.add(_moveUpButton);
@@ -490,7 +538,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         panel.add(_moveDownButton);
         add(panel);
 
-        // Populate GUI
+        // Initialise GUI
         update(null, null);
     }
 
@@ -502,29 +550,31 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void update(Observable o, Object arg)
     {
-        // Fill list with ordered words if _actualWord is not equal
-        String words = _preferences.getPreference(_preferenceName);
+        // Fill list with ordered columns if _actualWord is not equal
+        String columns = _preferences.getPreference(_preferencePath);
 
-        if (words == null)
+        if (columns == null)
         {
-            MCSLogger.debug(_preferenceName + " not found into preferences");
+            MCSLogger.debug(_preferencePath + " not found into preferences");
 
             return;
         }
 
         // If the preference is different than the current list
-        if (words.equals(_actualWords) == false)
+        if (columns.equals(_shownColumns) == false)
         {
-            _actualWords = words;
+            _shownColumns = columns;
+
+            // Clear the list
+            _listModel.clear();
 
             // Serialize the new list to update the GUI
-            StringTokenizer st = new StringTokenizer(_actualWords);
+            StringTokenizer st = new StringTokenizer(_shownColumns);
 
             while (st.hasMoreTokens())
             {
-                String word = st.nextToken();
-                _listModel.removeElement(word);
-                _listModel.addElement(word);
+                String columnName = st.nextToken();
+                _listModel.addElement(columnName);
             }
         }
     }
@@ -595,81 +645,99 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void actionPerformed(ActionEvent evt)
     {
-        boolean listModified = false;
+        // If the ComboBox was used
+        if (evt.getSource().equals(_columnsSetCombobox))
+        {
+            // Get the the newly selected column set preference path
+            _preferencePath = (String) _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
+
+            // Refresh the GUI to update the list
+            update(null, null);
+
+            return;
+        }
 
         // Get the index of the current selected item
-        int currentSelection = _wordsList.getSelectedIndex();
-        int futureSelection  = currentSelection;
+        int currentSelection = _columnList.getSelectedIndex();
+
+        // Hold the future index of the selected item
+        int futureSelection = 0;
 
         // If the 'Down' button was pressed
         if (evt.getSource().equals(_moveDownButton))
         {
-            // Compute the future index
-            futureSelection++;
+            // Compute the future index of the selected item
+            futureSelection = currentSelection + 1;
 
-            if ((currentSelection != -1) &&
-                    (futureSelection < _listModel.size()))
+            // If current and future selection indexes are out of range
+            if ((currentSelection == -1) ||
+                    (futureSelection >= _listModel.size()))
             {
-                Object el = _listModel.getElementAt(currentSelection);
+                MCSLogger.debug("Assertion failed : selection out of range.");
 
-                _listModel.removeElementAt(currentSelection);
+                return;
+            }
 
-                if (futureSelection == _listModel.size())
-                {
-                    _listModel.addElement(el);
-                }
-                else
-                {
-                    _listModel.add(futureSelection, el);
-                }
+            // Move the selected item
+            Object column = _listModel.getElementAt(currentSelection);
+            _listModel.removeElementAt(currentSelection); // Remove original
 
-                listModified = true;
+            if (futureSelection == _listModel.size())
+            {
+                _listModel.addElement(column); // Add at list tail
+            }
+            else
+            {
+                _listModel.add(futureSelection, column); // Insert at position
             }
         }
 
         // If the 'Up' button was pressed
         if (evt.getSource().equals(_moveUpButton))
         {
-            // Compute the future index
-            futureSelection--;
+            // Compute the future index of the selected item
+            futureSelection = currentSelection - 1;
 
-            if ((currentSelection != -1) && (currentSelection > 0))
+            // If current and future selection indexes are out of range
+            if ((currentSelection == -1) || (futureSelection < 0))
             {
-                Object el = _listModel.getElementAt(currentSelection);
+                MCSLogger.debug("Assertion failed : selection out of range.");
 
-                _listModel.removeElementAt(currentSelection);
-                _listModel.add(futureSelection, el);
-
-                listModified = true;
+                return;
             }
+
+            // Move the selected item
+            Object column = _listModel.getElementAt(currentSelection);
+            _listModel.removeElementAt(currentSelection); // Remove original
+            _listModel.add(futureSelection, column); // Insert at position
         }
 
-        // If the list has been modified
-        if (listModified == true)
+        // Serialize the new columns name order
+        StringBuffer sb = new StringBuffer();
+        Enumeration  en = _listModel.elements();
+
+        while (en.hasMoreElements())
         {
-            // Serialize columns name order
-            StringBuffer sb = new StringBuffer();
-            Enumeration  en = _listModel.elements();
-
-            while (en.hasMoreElements())
-            {
-                Object o = en.nextElement();
-                sb.append(" " + o);
-            }
-
-            // Save this order in preference
-            try
-            {
-                _preferences.setPreference(_preferenceName, sb.toString());
-            }
-            catch (Exception ex)
-            {
-                MCSLogger.warning("Could not set '" + _preferenceName +
-                    "' preference : " + ex);
-            }
-
-            _wordsList.setSelectionInterval(futureSelection, futureSelection);
+            Object o = en.nextElement();
+            sb.append(" " + o);
         }
+
+        // Save the new order in preference
+        try
+        {
+            _preferences.setPreference(_preferencePath, sb.toString());
+        }
+        catch (Exception ex)
+        {
+            MCSLogger.warning("Could not set '" + _preferencePath +
+                "' preference : " + ex);
+        }
+
+        /*
+         * Update selection to follow the moved item (at end: after preference
+         * changes triggered GUI update, otherwise selection disapears)
+         */
+        _columnList.setSelectionInterval(futureSelection, futureSelection);
     }
 }
 
