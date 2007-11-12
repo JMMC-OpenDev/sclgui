@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.23 2007-08-09 07:48:52 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.24 2007-11-12 10:53:11 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2007/08/09 07:48:52  lafrasse
+ * Disabled SIMBAD SOAP package import directive.
+ *
  * Revision 1.22  2007/08/01 15:29:22  lafrasse
  * Added support for SIMDAD science object querying through URL+script (plus proof
  * of disfunctionning through SOAP).
@@ -994,7 +997,7 @@ public class VirtualObservatory extends Observable
         {
             QueryResultThread _queryResultThread = null;
             SclwsLocator      loc                = null;
-            SclwsPortType     s                  = null;
+            SclwsPortType     sclws              = null;
             String            id                 = null;
 
             GetCalThread()
@@ -1015,15 +1018,15 @@ public class VirtualObservatory extends Observable
                     try
                     {
                         // Start the webservice connection
-                        loc     = new SclwsLocator();
-                        s       = loc.getsclws();
+                        loc       = new SclwsLocator();
+                        sclws     = loc.getsclws();
 
                         // Define the webservice timeout (default = 10min)
                         //org.apache.axis.client.Stub stub = (SclwsStub) s;
                         //stub.setTimeout(20000); // 20 second, in miliseconds
 
                         // Get the connection ID
-                        id      = s.getCalAsyncID();
+                        id        = sclws.getCalOpenSession();
 
                         MCSLogger.test("JMMC Connection ID = '" + id + "'.");
                         StatusBar.show(
@@ -1059,37 +1062,59 @@ public class VirtualObservatory extends Observable
                     MCSLogger.test("Query = '" + query + "'.");
 
                     // Launch the querying thread
-                    _queryResultThread = new QueryResultThread(s, id, query);
+                    _queryResultThread = new QueryResultThread(sclws, id, query);
                     _queryResultThread.start();
 
                     StatusBar.show(
                         "searching calibrators... (querying catalogs)");
 
                     // GetCal status polling to update ProgressBar
-                    String  currentCatalogName = "";
-                    Integer catalogIndex       = 0;
-                    Integer nbOfCatalogs       = 0;
-                    Boolean lastCatalog        = false;
+                    String  currentStatus       = "";
+                    String  currentCatalogName  = "";
+                    String  composedQueryStatus = "";
+                    Integer catalogIndex        = 0;
+                    Integer nbOfCatalogs        = 0;
+                    Integer requestStatus       = 0;
 
                     do
                     {
-                        // Get query progression status
                         try
                         {
-                            currentCatalogName = s.getCalWaitForCurrentCatalogName(id);
-                            _queryModel.setCatalogName(currentCatalogName);
+                            // Get query progression status
+                            currentStatus = sclws.getCalQueryStatus(id);
 
-                            nbOfCatalogs = s.getCalNbOfCatalogs(id);
-                            _queryModel.setTotalStep(nbOfCatalogs);
+                            // Deserialize the new status to update the GUI
+                            String[] splittedStatus = currentStatus.split("\t");
 
-                            catalogIndex = s.getCalCurrentCatalogIndex(id);
-                            _queryModel.setCurrentStep(catalogIndex);
+                            // Parse the received status
+                            int i = 0;
+                            requestStatus = Integer.parseInt(splittedStatus[i++]);
 
-                            lastCatalog = s.getCalIsLastCatalog(id);
+                            if (splittedStatus.length == 4)
+                            {
+                                // Get the catalog name
+                                currentCatalogName      = splittedStatus[i++];
+
+                                // Get the catalog index
+                                catalogIndex            = Integer.parseInt(splittedStatus[i++]);
+
+                                // Get the total number of catalogs
+                                nbOfCatalogs            = Integer.parseInt(splittedStatus[i++]);
+
+                                // Compose the dispalyed query status
+                                composedQueryStatus     = currentCatalogName +
+                                    " - (" + catalogIndex + "/" + nbOfCatalogs +
+                                    ")";
+
+                                // Update the query model accordinaly
+                                _queryModel.setCatalogName(composedQueryStatus);
+                                _queryModel.setCurrentStep(catalogIndex.intValue());
+                                _queryModel.setTotalStep(nbOfCatalogs.intValue());
+                            }
 
                             MCSLogger.test("Status = '" + currentCatalogName +
                                 "' - " + catalogIndex + "/" + nbOfCatalogs +
-                                " (" + lastCatalog + ").");
+                                " (status = '" + requestStatus + "').");
                         }
                         catch (Exception ex)
                         {
@@ -1117,7 +1142,7 @@ public class VirtualObservatory extends Observable
                             return;
                         }
                     }
-                    while (lastCatalog == false);
+                    while (requestStatus == 1);
 
                     StatusBar.show(
                         "searching calibrators... (waiting for result)");
@@ -1236,10 +1261,10 @@ public class VirtualObservatory extends Observable
             {
                 Boolean isOk = false;
 
-                // Ask for query cancellation
                 try
                 {
-                    isOk = s.getCalCancelID(id);
+                    // Ask for query cancellation
+                    isOk = sclws.getCalCancelSession(id);
                 }
                 catch (Exception ex)
                 {
@@ -1271,14 +1296,14 @@ public class VirtualObservatory extends Observable
 
             class QueryResultThread extends Thread
             {
-                SclwsPortType _s;
+                SclwsPortType _sclws;
                 String        _id;
                 String        _query;
                 String        _result;
 
                 QueryResultThread(SclwsPortType s, String id, String query)
                 {
-                    _s          = s;
+                    _sclws      = s;
                     _query      = query;
                     _id         = id;
                     _result     = null;
@@ -1293,11 +1318,14 @@ public class VirtualObservatory extends Observable
                 {
                     try
                     {
-                        // Launch the query
                         StatusBar.show(
                             "searching calibrators... (sending query)");
-                        _result = _s.getCalAsyncQuery(_id, _query);
-                        StatusBar.show("searching calibrators... (query sent)");
+
+                        // Launch the query
+                        _result = _sclws.getCalSearchCal(_id, _query);
+
+                        StatusBar.show(
+                            "searching calibrators... (result received)");
                     }
                     catch (Exception ex)
                     {
