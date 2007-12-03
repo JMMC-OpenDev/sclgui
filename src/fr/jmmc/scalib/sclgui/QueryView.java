@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.47 2007-10-05 07:31:22 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.48 2007-12-03 14:43:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.47  2007/10/05 07:31:22  lafrasse
+ * Added min/max magnitude textfields disabled when 'N' magnitude band is selected.
+ *
  * Revision 1.46  2007/10/04 15:04:00  lafrasse
  * Added bright/faint radio button disabled when 'V' magnitude band is selected.
  *
@@ -191,9 +194,6 @@ import javax.swing.text.*;
 public class QueryView extends JPanel implements Observer,
     PropertyChangeListener, ActionListener, FocusListener, Printable
 {
-    /** Include Science Object action */
-    static Action _includeScienceObjectAction;
-
     /** MVC associated model */
     public QueryModel _queryModel;
 
@@ -286,6 +286,9 @@ public class QueryView extends JPanel implements Observer,
     JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
                 0));
 
+    /** Search box auto radial size checkbox */
+    JCheckBox _autoRadiusCheckBox;
+
     /** Query action and progression panel */
     JPanel _actionPanel = new JPanel();
 
@@ -313,22 +316,19 @@ public class QueryView extends JPanel implements Observer,
     public QueryView(QueryModel queryModel, VirtualObservatory vo)
     {
         // Store the model
-        _queryModel                     = queryModel;
+        _queryModel                  = queryModel;
 
         // Store the virtual observatory
-        _vo                             = vo;
-
-        // Init every actions
-        _includeScienceObjectAction     = new IncludeScienceObjectAction();
+        _vo                          = vo;
 
         // Reset values action
-        _resetValuesAction              = new ResetValuesAction();
+        _resetValuesAction           = new ResetValuesAction();
 
         // Load default values action
-        _loadDefaultValuesAction        = new LoadDefaultValuesAction();
+        _loadDefaultValuesAction     = new LoadDefaultValuesAction();
 
         // Save values action
-        _saveValuesAction               = new SaveValuesAction();
+        _saveValuesAction            = new SaveValuesAction();
 
         JLabel label;
 
@@ -521,13 +521,18 @@ public class QueryView extends JPanel implements Observer,
         c.gridx = 0;
         _searchCalPanel.add(_radialSizeLabel, c);
         _radialSizeLabel.setLabelFor(_radialSizeTextfield);
+        tempPanel               = new JPanel();
+        _autoRadiusCheckBox     = new JCheckBox(new AutoRadiusAction());
+        tempPanel.add(_autoRadiusCheckBox);
+        _radialSizeTextfield.setEnabled(false);
         _radialSizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _radialSizeTextfield.setMinimumSize(textfieldDimension);
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
         _radialSizeTextfield.addActionListener(this);
         _radialSizeTextfield.addFocusListener(this);
+        tempPanel.add(_radialSizeTextfield);
         c.gridx = 1;
-        _searchCalPanel.add(_radialSizeTextfield, c);
+        _searchCalPanel.add(tempPanel, c);
 
         // Status panel global attributes and common objects
         _actionPanel.setLayout(new BoxLayout(_actionPanel, BoxLayout.X_AXIS));
@@ -609,19 +614,26 @@ public class QueryView extends JPanel implements Observer,
         _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
 
+        // Search box size handling
+        _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASize());
+        _diffDECSizeTextfield.setValue(_queryModel.getQueryDiffDECSize());
+        _radialSizeTextfield.setValue(_queryModel.getQueryRadialSize());
+
+        boolean autoRadiusFlag = _queryModel.getQueryAutoRadiusFlag();
+        _radialSizeTextfield.setEnabled(! autoRadiusFlag);
+        _autoRadiusCheckBox.setSelected(autoRadiusFlag);
+
         // Bright/faint scenarii handling
         boolean brightScenarioFlag = _queryModel.getQueryBrightScenarioFlag();
         _brightRadioButton.setSelected(brightScenarioFlag);
-        _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASize());
+        _faintRadioButton.setSelected(! brightScenarioFlag);
         _diffRASizeTextfield.setVisible(brightScenarioFlag);
         _diffRASizeLabel.setVisible(brightScenarioFlag);
-        _diffDECSizeTextfield.setValue(_queryModel.getQueryDiffDECSize());
         _diffDECSizeTextfield.setVisible(brightScenarioFlag);
         _diffDECSizeLabel.setVisible(brightScenarioFlag);
-        _faintRadioButton.setSelected(! brightScenarioFlag);
-        _radialSizeTextfield.setValue(_queryModel.getQueryRadialSize());
         _radialSizeTextfield.setVisible(! brightScenarioFlag);
         _radialSizeLabel.setVisible(! brightScenarioFlag);
+        _autoRadiusCheckBox.setVisible(! brightScenarioFlag);
 
         // Progress bar
         _progressBar.setValue(_queryModel.getCurrentStep());
@@ -928,26 +940,18 @@ public class QueryView extends JPanel implements Observer,
         }
     }
 
-    protected class IncludeScienceObjectAction extends MCSAction
+    protected class AutoRadiusAction extends MCSAction
     {
-        Preferences _preferences = Preferences.getInstance();
-
-        public IncludeScienceObjectAction()
+        public AutoRadiusAction()
         {
-            super("scienceObject");
+            super("autoRadius");
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             MCSLogger.trace();
 
-            if (e.getSource() instanceof AbstractButton)
-            {
-                AbstractButton button = (AbstractButton) e.getSource();
-                boolean        b      = button.isSelected();
-
-                // @todo add line to adjust QueryModel according b value
-            }
+            _queryModel.setQueryAutoRadiusFlag(_autoRadiusCheckBox.isSelected());
         }
     }
 
