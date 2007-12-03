@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.33 2007-10-04 15:04:00 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.34 2007-12-03 14:43:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2007/10/04 15:04:00  lafrasse
+ * Added bright/faint radio button disabled when 'V' magnitude band is selected.
+ *
  * Revision 1.32  2007/10/04 10:54:53  lafrasse
  * Added 'N' magnitude band support.
  *
@@ -175,9 +178,6 @@ public class QueryModel extends Observable implements Observer
     /** Band to Science Object Loaded Magnitude conversion table */
     private Hashtable _scienceObjectMagnitudes = new Hashtable();
 
-    /** The science object inclusion flag */
-    private boolean _scienceObjectInclusionFlag;
-
     /** The science object detection distance */
     private boolean _scienceObjectDetectionDistance;
 
@@ -204,6 +204,9 @@ public class QueryModel extends Observable implements Observer
 
     /** The query radius */
     private double _queryRadialSize;
+
+    /** The query radius automatic computation flag */
+    private boolean _queryAutoRadiusFlag;
 
     /** The current step of the querying progress.
      * 0 < _currentStep < _totalStep
@@ -275,7 +278,7 @@ public class QueryModel extends Observable implements Observer
         MCSLogger.trace();
 
         setInstrumentalMagnitudeBand("K");
-        setInstrumentalMaxBaseLine(100.0);
+        setInstrumentalMaxBaseLine(0.0);
         resetInstrumentalWavelengthes();
 
         setScienceObjectName("");
@@ -283,11 +286,10 @@ public class QueryModel extends Observable implements Observer
         setScienceObjectDEC("+00:00:00.00");
         resetScienceObjectMagnitudes();
 
-        setScienceObjectInclusionFlag(true);
-
         setQueryBrightScenarioFlag(true);
-        setQueryDiffRASize(10.0);
-        setQueryDiffDECSize(5.0);
+        setQueryDiffRASize(0.0);
+        setQueryDiffDECSize(0.0);
+        setQueryAutoRadiusFlag(false);
         setQueryRadialSize(0.0);
 
         restoreMinMaxMagnitudeFieldsAutoUpdating();
@@ -325,8 +327,6 @@ public class QueryModel extends Observable implements Observer
                     "query.scienceObjectDEC"));
             setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
                     "query.scienceObjectMagnitude"));
-            setScienceObjectInclusionFlag(_preferences.getPreferenceAsBoolean(
-                    "query.scienceObjectInclusionFlag"));
 
             setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
                     "query.queryMinMagnitude"));
@@ -345,6 +345,8 @@ public class QueryModel extends Observable implements Observer
                     "query.queryDiffDECSize"));
             setQueryRadialSize(_preferences.getPreferenceAsDouble(
                     "query.queryRadialSize"));
+            setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(
+                    "query.queryAutoRadius"));
         }
         catch (Exception e)
         {
@@ -606,7 +608,20 @@ public class QueryModel extends Observable implements Observer
 
         if (brightFlag == false)
         {
-            query += ("-radius " + getQueryRadialSize() + " ");
+            Double  queryRadialSize = getQueryRadialSize();
+            Boolean autoRadiusFlag  = getQueryAutoRadiusFlag();
+
+            if (autoRadiusFlag == true)
+            {
+                queryRadialSize = 0.0;
+            }
+
+            if (queryRadialSize == Double.NaN)
+            {
+                queryRadialSize = 0.0;
+            }
+
+            query += ("-radius " + queryRadialSize + " ");
         }
 
         // Bright/Faint flag
@@ -614,6 +629,8 @@ public class QueryModel extends Observable implements Observer
 
         // Get the science star
         query += ("-noScienceStar false");
+
+        MCSLogger.debug("query = '" + query + "'.");
 
         return query;
     }
@@ -952,29 +969,6 @@ public class QueryModel extends Observable implements Observer
     }
 
     /**
-     * Indicates wether the query result should include the science object.
-     *
-     * @return true wether the query results should include the science object,
-     * false otherwise.
-     */
-    public Boolean getScienceObjectInclusionFlag()
-    {
-        return _scienceObjectInclusionFlag;
-    }
-
-    /**
-     * Set wether the result should include the science object or not.
-     *
-     * @param flag true for scinec objection inclusion, false otherwise.
-     */
-    public void setScienceObjectInclusionFlag(boolean flag)
-    {
-        _scienceObjectInclusionFlag = flag;
-
-        setChanged();
-    }
-
-    /**
      * Return the tolerated distance to detect the science object.
      *
      * @return the tolerated distance as a Double value.
@@ -1295,6 +1289,11 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
+        if (getQueryAutoRadiusFlag() == true)
+        {
+            return Double.NaN;
+        }
+
         return new Double(_queryRadialSize);
     }
 
@@ -1320,6 +1319,29 @@ public class QueryModel extends Observable implements Observer
     public void setQueryRadialSize(Double radiusSize)
     {
         setQueryRadialSize(radiusSize.doubleValue());
+    }
+
+    /**
+     * Indicates wether the query should use automatic radius computation or not.
+     *
+     * @return true wether the radius will be automatically computed, false otherwise.
+     */
+    public Boolean getQueryAutoRadiusFlag()
+    {
+        return _queryAutoRadiusFlag;
+    }
+
+    /**
+     * Set wether the query should use automatic radius computation or not.
+     *
+     * @param flag true for the radius to be automatically computed, false otherwise.
+     */
+    public void setQueryAutoRadiusFlag(boolean flag)
+    {
+        _queryAutoRadiusFlag = flag;
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
