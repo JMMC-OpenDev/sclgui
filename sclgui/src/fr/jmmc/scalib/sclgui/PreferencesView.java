@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.27 2007-10-09 14:41:04 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.28 2007-12-03 14:41:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2007/10/09 14:41:04  lafrasse
+ * Added handling of all different sets of columns order.
+ *
  * Revision 1.26  2007/08/27 07:39:21  lafrasse
  * TextFields label and GUI layout enhancements.
  *
@@ -263,13 +266,6 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
                 doubleFormater, doubleFormater);
         Dimension               textfieldDimension    = new Dimension(100, 20);
         JLabel                  label;
-
-        // Include Science Object Checkbox
-        JCheckBox cb = new JCheckBox(QueryView._includeScienceObjectAction);
-        cb.setModel(PreferencedButtonModel.getInstance(_preferences,
-                "science.includeObject"));
-        // @TODO : removed (not implemented)
-        // add(cb);
 
         // Science Object Detection Distance
         c.gridy     = 0;
