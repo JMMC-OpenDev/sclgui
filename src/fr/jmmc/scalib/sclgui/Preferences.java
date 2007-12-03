@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.20 2007-10-09 14:41:04 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.21 2007-12-03 14:41:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/10/09 14:41:04  lafrasse
+ * Added handling of all different sets of columns order.
+ *
  * Revision 1.19  2007/08/16 13:43:58  lafrasse
  * Updated preference file version number.
  *
@@ -176,25 +179,24 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 defaults.setPreference("view.columns.detailled.faint.K",
                     "dist vis2 vis2Err diam_vk diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
 
-                /* Query default values preferences  */
-                defaults.setPreference("query.magnitudeBand", "K");
-                defaults.setPreference("query.instrumentalWavelength", "2.2");
+                // Query default values preferences
+                defaults.setPreference("query.magnitudeBand", "V");
+                defaults.setPreference("query.instrumentalWavelength", "1.0");
                 defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
-                defaults.setPreference("query.scienceObjectName", "alf_PsA");
-                defaults.setPreference("query.scienceObjectRA", "22:57:39.047");
-                defaults.setPreference("query.scienceObjectDEC", "-29:37:20.050");
-                defaults.setPreference("query.scienceObjectMagnitude", "0.83");
-                defaults.setPreference("query.scienceObjectInclusionFlag",
-                    "true");
+                defaults.setPreference("query.scienceObjectName", "ETA_TAU");
+                defaults.setPreference("query.scienceObjectRA", "03:47:29.800");
+                defaults.setPreference("query.scienceObjectDEC", "24:06:18.500");
+                defaults.setPreference("query.scienceObjectMagnitude", "2.636");
+                defaults.setPreference("query.queryMinMagnitude", "2.0");
+                defaults.setPreference("query.queryMaxMagnitude", "4.0");
+                defaults.setPreference("query.queryBrightScenarioFlag", "true");
+                defaults.setPreference("query.queryDiffRASize", "1800");
+                defaults.setPreference("query.queryDiffDECSize", "600");
+                defaults.setPreference("query.queryRadialSize", "5.0");
+                defaults.setPreference("query.queryManualRadius", "true");
+
                 defaults.setPreference("query.scienceObjectDetectionDistance",
                     "0.01");
-                defaults.setPreference("query.queryMinMagnitude", "0.5");
-                defaults.setPreference("query.queryMaxMagnitude", "2");
-                defaults.setPreference("query.queryBrightScenarioFlag", "true");
-                defaults.setPreference("query.queryDiffRASize", "3600");
-                defaults.setPreference("query.queryDiffDECSize", "1200");
-                defaults.setPreference("query.queryRadialSize", "0.0");
-
                 defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
                 defaults.setPreference("query.queryMaxMagnitudeDelta", "4.0");
             }
