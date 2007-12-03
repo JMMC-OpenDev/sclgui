@@ -6,6 +6,17 @@ ARGS="-v 5"
 ARGS="-v 0"
 
 
+all(){
+    clean;
+    wsdl2java;
+    compile;
+    run;
+}
+
+clean(){
+    find  . -name "*.class" -exec rm {} \;
+}
+
 wsdl2java(){
     INPUTPATHES="../../sclws/include/sclws.wsdl"
     ## We don't need SIMBAD wsdl for the moment (DO NOT WORK FROM HERE)
@@ -36,10 +47,6 @@ run(){
     $CMD
 }
 
-clean(){
-    find  . -name "*.class" -exec rm {} \;
-}
-
 if [ -z "$1" ]
 then
     echo "usage: $0 [compile|run|clean]"
@@ -62,3 +69,4 @@ for cmd in $*
 do
     $cmd
 done
+
