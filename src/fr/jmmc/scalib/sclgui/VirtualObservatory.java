@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.24 2007-11-12 10:53:11 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.25 2007-12-04 11:00:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2007/11/12 10:53:11  lafrasse
+ * Updated to follow web service function call changes.
+ *
  * Revision 1.23  2007/08/09 07:48:52  lafrasse
  * Disabled SIMBAD SOAP package import directive.
  *
@@ -412,23 +415,52 @@ public class VirtualObservatory extends Observable
                     // If a file was defined (No cancel in the dialog)
                     if (_file != null)
                     {
-                        // Loading the file in the calibrators model and in the query
+                        StatusBar.show("loading file...");
+
+                        // Loading the file in the calibrators model
                         try
                         {
-                            StatusBar.show("loading file...");
+                            StatusBar.show(
+                                "loading file (parsing calibrators)...");
                             _calibratorsModel.openFile(_file);
-                            _queryModel.loadParamSet(_calibratorsModel.getParamSet());
-                            StatusBar.show("file succesfully loaded.");
+                            StatusBar.show(
+                                "loading file (calibrators successfully parsed)...");
                         }
                         catch (Exception ex)
                         {
-                            StatusBar.show("loading aborted (file error) !");
-                            MCSLogger.error("Could not open file : " + ex);
+                            StatusBar.show(
+                                "loading aborted (calibrators parsing error) !");
+                            MCSLogger.error(
+                                "Could not open file (calibrators parsing error) : " +
+                                ex);
 
                             JOptionPane.showMessageDialog(null,
-                                "Could not open file.", "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                                "Could not open file (calibrators parsing error).",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                         }
+
+                        // Loading the file in the query model
+                        try
+                        {
+                            StatusBar.show("loading file (parsing query)...");
+                            _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+                            StatusBar.show(
+                                "loading file (query successfully parsed)...");
+                        }
+                        catch (Exception ex)
+                        {
+                            StatusBar.show(
+                                "loading aborted (query parsing error) !");
+                            MCSLogger.error(
+                                "Could not open file (query parsing error) : " +
+                                ex);
+
+                            JOptionPane.showMessageDialog(null,
+                                "Could not open file (query parsing error).",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        StatusBar.show("file succesfully loaded.");
 
                         // Enabling the 'Save' menus
                         enableSaveMenus(true);
