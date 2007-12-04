@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.34 2007-12-03 14:43:35 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.35 2007-12-04 11:00:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2007/12/03 14:43:35  lafrasse
+ * Added the possibility to explicitly ask for an automatically calculated radius
+ * for a faint query.
+ *
  * Revision 1.33  2007/10/04 15:04:00  lafrasse
  * Added bright/faint radio button disabled when 'V' magnitude band is selected.
  *
@@ -399,7 +403,23 @@ public class QueryModel extends Observable implements Observer
                 (String) parameters.get("bright")));
         setQueryDiffRASize(Double.valueOf((String) parameters.get("diffRa")));
         setQueryDiffDECSize(Double.valueOf((String) parameters.get("diffDec")));
-        setQueryRadialSize(Double.valueOf((String) parameters.get("radius")));
+        setQueryAutoRadiusFlag(true);
+
+        String radius      = (String) parameters.get("radius");
+        Double radiusValue = Double.NaN;
+
+        // If radius exists
+        if (radius.length() != 0)
+        {
+            radiusValue = Double.valueOf(radius);
+            setQueryRadialSize(radiusValue);
+
+            // If radius is not irrevelant
+            if (radiusValue > 0.0)
+            {
+                setQueryAutoRadiusFlag(false);
+            }
+        }
 
         // Disable the edition as the values where loaded from file
         setEditableState(false);
