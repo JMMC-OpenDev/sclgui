@@ -3,11 +3,14 @@
 ********************************************************************************
 JMMC project
 
-"@(#) $Id: sclguiVOTableToCSV.xsl,v 1.3 2008-02-06 14:54:03 mella Exp $"
+"@(#) $Id: sclguiVOTableToCSV.xsl,v 1.4 2008-02-06 14:55:01 mella Exp $"
 
 History
 ~~~~~~~
 $Log: not supported by cvs2svn $
+Revision 1.3  2008/02/06 14:54:03  mella
+Output non hidden field only with comma as default field separator
+
 Revision 1.2  2007/06/26 15:06:39  lafrasse
 Corrected by Guillaume MELLA (different namespace handling).
 
@@ -27,7 +30,7 @@ voTableToCSV.xsl
     <xsl:output method="text" encoding="UTF-8" />
 
     <xsl:param name="fieldSeparator">,</xsl:param>
-    <xsl:variable name="rcsId">$Id voTableToCSV.xsl,v 1.2 2007/06/26 15:06:39 lafrasse Exp $</xsl:variable>
+    <xsl:variable name="rcsId">$Id: sclguiVOTableToCSV.xsl,v 1.4 2008-02-06 14:55:01 mella Exp $</xsl:variable>
 
     <!--  This template try to apply-template for /VOTABLE nodes that have no namespace 
     and make the same treatment on a copy of the xml document handled 
