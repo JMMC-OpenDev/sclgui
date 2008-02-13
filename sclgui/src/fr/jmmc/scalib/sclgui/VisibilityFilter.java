@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.7 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.8 2008-02-13 12:16:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.6  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -120,6 +123,13 @@ public class VisibilityFilter extends Filter
                 double currentVis2        = vis2Cell.getDoubleValue();
                 double currentVis2err     = vis2ErrCell.getDoubleValue();
                 double visibilityAccuracy = Math.abs(currentVis2err / currentVis2);
+
+                // if the visibility is not a number (eg. 0.0/0.0)
+                if (Double.isNaN(visibilityAccuracy) == true)
+                {
+                    // This row should be removed
+                    return true;
+                }
 
                 // if the visibility value is greater than the allowed one
                 if (visibilityAccuracy >= getAllowedVisibiliyAccurancy())
