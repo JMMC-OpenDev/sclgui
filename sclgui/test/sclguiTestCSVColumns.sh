@@ -2,11 +2,14 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: sclguiTestCSVColumns.sh,v 1.1 2008-01-28 14:06:29 lafrasse Exp $"
+# "@(#) $Id: sclguiTestCSVColumns.sh,v 1.2 2008-02-13 14:03:09 lafrasse Exp $"
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2008/01/28 14:06:29  lafrasse
+# Creation
+#
 #*******************************************************************************
 
 #/**
@@ -35,20 +38,21 @@ import sys
 import os
 
 try :
-    fileName=sys.argv[1]
-    searchedColumns=sys.argv[2:]
+    fileName = sys.argv[1]
+    searchedColumns = sys.argv[2:]
 except:
-    sys.stderr.write("Please give one filename and (at least) one column name as argument\n")
+    sys.stderr.write("Please give one filename and (at least) one column name as argument.\n")
     sys.exit(1)
 
-file = open(fileName,"r")
-columnNames=[]
-searchedColumnIndexes=[]
-numberOfLines=0
+file = open(fileName, "r")
+columnNames = []
+searchedColumnIndexes = []
+numberOfLines = 0
+separator = ","
 # For each line of the CSV file
 for currentLine in file:
     # If the current line length is less than 2 char
-    if len(currentLine)<2:
+    if len(currentLine) < 2:
         # Skip the current line
         pass
     # If the current line is a comment
@@ -56,23 +60,29 @@ for currentLine in file:
         # Skip the current line
         pass
     # If the column name list has not been built yet
-    elif len(columnNames)==0:
-        columnNames=currentLine.split("\t")
+    elif len(columnNames) == 0:
+        columnNames = currentLine.split(separator)
+        print "Found %d columns."%(len(columnNames))
         # For each searched column
         for currentColumnName in searchedColumns:
             # Find its index
-            searchedColumnIndexes.append(columnNames.index(currentColumnName))
-        # Add all columns if no one specified by the user
-        if len(searchedColumnIndexes)==0:
-            searchedColumnIndexes=range(len(columnNames))
-    # Seek each column values
+            if currentColumnName in columnNames:
+                index = columnNames.index(currentColumnName)
+                searchedColumnIndexes.append(index)
+                print "Column '%s' found at index %d."%(currentColumnName, index)
+            else:
+                print "Column '%s' NOT found."%(currentColumnName)
+        # Add all columns if none specified by the user
+        if len(searchedColumnIndexes) == 0:
+            searchedColumnIndexes = range(len(columnNames))
+    # Output each column values
     else:
-        numberOfLines+=1
-        lineValues=currentLine.split("\t")
-        outputBuffer=""
+        numberOfLines += 1
+        lineValues = currentLine.split(separator)
+        outputBuffer = ""
         # For each column indexes searched
         for currentColumnIndex in searchedColumnIndexes:
-            outputBuffer+="\t\t%s = '%s';"%(columnNames[currentColumnIndex], lineValues[currentColumnIndex])
-        print "[%d]:%s"%(numberOfLines, outputBuffer)
+            outputBuffer += "%s = '%s';\t"%(columnNames[currentColumnIndex], lineValues[currentColumnIndex])
+        print "[row %d]: %s"%(numberOfLines, outputBuffer)
 
 #___oOo___
