@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.21 2007-12-03 14:41:59 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.22 2008-04-15 15:59:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2007/12/03 14:41:59  lafrasse
+ * Removed science object inclusion preference.
+ * Changed default query to match the one of the previous version.
+ *
  * Revision 1.20  2007/10/09 14:41:04  lafrasse
  * Added handling of all different sets of columns order.
  *
@@ -184,16 +188,16 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 defaults.setPreference("query.instrumentalWavelength", "1.0");
                 defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
                 defaults.setPreference("query.scienceObjectName", "ETA_TAU");
-                defaults.setPreference("query.scienceObjectRA", "03:47:29.800");
-                defaults.setPreference("query.scienceObjectDEC", "24:06:18.500");
-                defaults.setPreference("query.scienceObjectMagnitude", "2.636");
+                defaults.setPreference("query.scienceObjectRA", "03:47:29.0765");
+                defaults.setPreference("query.scienceObjectDEC", "24:06:18.494");
+                defaults.setPreference("query.scienceObjectMagnitude", "0");
                 defaults.setPreference("query.queryMinMagnitude", "2.0");
                 defaults.setPreference("query.queryMaxMagnitude", "4.0");
                 defaults.setPreference("query.queryBrightScenarioFlag", "true");
-                defaults.setPreference("query.queryDiffRASize", "1800");
-                defaults.setPreference("query.queryDiffDECSize", "600");
+                defaults.setPreference("query.queryDiffRASize", "60");
+                defaults.setPreference("query.queryDiffDECSize", "5");
                 defaults.setPreference("query.queryRadialSize", "5.0");
-                defaults.setPreference("query.queryManualRadius", "true");
+                defaults.setPreference("query.queryAutoRadius", "true");
 
                 defaults.setPreference("query.scienceObjectDetectionDistance",
                     "0.01");
