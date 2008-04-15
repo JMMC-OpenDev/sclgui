@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.35 2007-12-04 11:00:50 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.36 2008-04-15 15:59:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2007/12/04 11:00:50  lafrasse
+ * Corrected a bug during file loading that was preventing query parsing.
+ *
  * Revision 1.34  2007/12/03 14:43:35  lafrasse
  * Added the possibility to explicitly ask for an automatically calculated radius
  * for a faint query.
@@ -570,6 +573,8 @@ public class QueryModel extends Observable implements Observer
                 getQueryDiffDECSize());
             _preferences.setPreference("query.queryRadialSize",
                 getQueryRadialSize());
+            _preferences.setPreference("query.queryAutoRadius",
+                getQueryAutoRadiusFlag());
 
             _preferences.saveToFile();
         }
@@ -597,10 +602,12 @@ public class QueryModel extends Observable implements Observer
         query += ("-mag " + getScienceObjectMagnitude() + " ");
 
         // Diff RA
-        query += ("-diffRa " + getQueryDiffRASize() + " ");
+        double ArcminRA = getQueryDiffRASize() * 15;
+        query += ("-diffRa " + ArcminRA + " ");
 
         // Diff DEC
-        query += ("-diffDec " + getQueryDiffDECSize() + " ");
+        double ArcminDEC = getQueryDiffDECSize() * 60;
+        query += ("-diffDec " + ArcminDEC + " ");
 
         // Band
         query += ("-band " + getInstrumentalMagnitudeBand() + " ");
@@ -1338,7 +1345,10 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryRadialSize(Double radiusSize)
     {
-        setQueryRadialSize(radiusSize.doubleValue());
+        if (radiusSize.isNaN() == false)
+        {
+            setQueryRadialSize(radiusSize.doubleValue());
+        }
     }
 
     /**

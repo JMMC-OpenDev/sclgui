@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.48 2007-12-03 14:43:35 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.49 2008-04-15 15:59:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.48  2007/12/03 14:43:35  lafrasse
+ * Added the possibility to explicitly ask for an automatically calculated radius
+ * for a faint query.
+ *
  * Revision 1.47  2007/10/05 07:31:22  lafrasse
  * Added min/max magnitude textfields disabled when 'N' magnitude band is selected.
  *
@@ -265,15 +269,14 @@ public class QueryView extends JPanel implements Observer,
     JRadioButton _faintRadioButton;
 
     /** Search box RA size label */
-    JLabel _diffRASizeLabel = new JLabel("RA Range [arcmin] : ", JLabel.TRAILING);
+    JLabel _diffRASizeLabel = new JLabel("RA Range [mn] : ", JLabel.TRAILING);
 
     /** Search box RA size */
     JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search box DEC size label */
-    JLabel _diffDECSizeLabel = new JLabel("DEC Range [arcmin] : ",
-            JLabel.TRAILING);
+    JLabel _diffDECSizeLabel = new JLabel("DEC Range [deg] : ", JLabel.TRAILING);
 
     /** Search box DEC size */
     JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(
@@ -525,7 +528,18 @@ public class QueryView extends JPanel implements Observer,
         _autoRadiusCheckBox     = new JCheckBox(new AutoRadiusAction());
         tempPanel.add(_autoRadiusCheckBox);
         _radialSizeTextfield.setEnabled(false);
-        _radialSizeTextfield.setFormatterFactory(doubleFormaterFactory);
+
+        // _radialSizeTextfield formatter creation
+        DecimalFormatSymbols radialSymbols = new DecimalFormatSymbols();
+        radialSymbols.setNaN("auto"); // Set the symbol for a Double.NaN to an "auto" String
+
+        DefaultFormatter radialDoubleFormater = new NumberFormatter(new DecimalFormat(
+                    "0.0####", radialSymbols));
+        radialDoubleFormater.setValueClass(java.lang.Double.class);
+
+        DefaultFormatterFactory radialDoubleFormaterFactory = new DefaultFormatterFactory(radialDoubleFormater,
+                radialDoubleFormater, radialDoubleFormater);
+        _radialSizeTextfield.setFormatterFactory(radialDoubleFormaterFactory);
         _radialSizeTextfield.setMinimumSize(textfieldDimension);
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
         _radialSizeTextfield.addActionListener(this);
@@ -621,7 +635,7 @@ public class QueryView extends JPanel implements Observer,
 
         boolean autoRadiusFlag = _queryModel.getQueryAutoRadiusFlag();
         _radialSizeTextfield.setEnabled(! autoRadiusFlag);
-        _autoRadiusCheckBox.setSelected(autoRadiusFlag);
+        _autoRadiusCheckBox.setSelected(! autoRadiusFlag);
 
         // Bright/faint scenarii handling
         boolean brightScenarioFlag = _queryModel.getQueryBrightScenarioFlag();
@@ -951,7 +965,7 @@ public class QueryView extends JPanel implements Observer,
         {
             MCSLogger.trace();
 
-            _queryModel.setQueryAutoRadiusFlag(_autoRadiusCheckBox.isSelected());
+            _queryModel.setQueryAutoRadiusFlag(! _autoRadiusCheckBox.isSelected());
         }
     }
 
