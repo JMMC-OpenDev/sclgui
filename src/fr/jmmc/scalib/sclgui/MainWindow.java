@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.27 2008-03-10 08:09:59 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.28 2008-05-19 15:39:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2008/03/10 08:09:59  lafrasse
+ * Updated version number to 4.0b12.
+ *
  * Revision 1.26  2007/11/12 10:55:08  lafrasse
  * Updated version number to 4.0b11.
  *
@@ -160,9 +163,6 @@ public class MainWindow extends JFrame
     /** PAge format */
     PageFormat _landscape;
 
-    /** About window action */
-    public AboutAction _aboutAction;
-
     /**
      * Constructor.
      */
@@ -190,9 +190,6 @@ public class MainWindow extends JFrame
         _landscape.setOrientation(PageFormat.LANDSCAPE);
         _pageSetupAction     = new PageSetupAction();
         _printAction         = new PrintAction();
-
-        // About... window
-        _aboutAction         = new AboutAction();
 
         try
         {
@@ -323,34 +320,6 @@ public class MainWindow extends JFrame
                     ex.printStackTrace();
                 }
             }
-        }
-    }
-
-    /**
-     * Called to show the About window.
-     */
-    protected class AboutAction extends MCSAction
-    {
-        public AboutAction()
-        {
-            super("about");
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            String greetings = "";
-            greetings += "\n";
-            greetings += "Brought to you by :\n";
-            greetings += "\n";
-            greetings += "\t\tThe JMMC Team.\n";
-            greetings += "\n";
-            greetings += "\n";
-            greetings += "This software uses source code created at the Centre de Donnees astronomiques de Strasbourg, France.\n";
-
-            AboutWindow aboutWindow = new AboutWindow("SearchCal",
-                    "4.0 beta 12", greetings, "Copyright 2007 JMMC");
         }
     }
 }

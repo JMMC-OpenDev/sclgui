@@ -41,7 +41,7 @@
    AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
    STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE.
-   Copyright © 2003-2006 Apple Computer, Inc., All Rights Reserved
+   Copyright ï¿½ 2003-2006 Apple Computer, Inc., All Rights Reserved
  */
 package fr.jmmc.scalib.sclgui;
 
@@ -52,7 +52,7 @@ import com.apple.eawt.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OSXAdapter extends ApplicationAdapter
 {
@@ -94,7 +94,8 @@ public class OSXAdapter extends ApplicationAdapter
         if (mainApp != null)
         {
             ae.setHandled(true);
-            mainApp._aboutAction.actionPerformed(null);
+            //mainApp._aboutAction.actionPerformed(null);
+            SearchCalibrators.aboutBoxAction().actionPerformed(null);
         }
         else
         {
