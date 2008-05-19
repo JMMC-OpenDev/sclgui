@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainMenuBar.java,v 1.25 2007-10-01 07:53:05 lafrasse Exp $"
+ * "@(#) $Id: MainMenuBar.java,v 1.26 2008-05-19 15:39:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2007/10/01 07:53:05  lafrasse
+ * Removed not needed code.
+ *
  * Revision 1.24  2007/08/17 12:09:33  lafrasse
  * Added tight integration into Mac OS X default menubar layout when running on Mac.
  *
@@ -356,23 +359,25 @@ public class MainMenuBar extends JMenuBar
             // About... menu item is provided on Mac OS X.
 
             // About SearchCal... menu item
-            helpMenu.add(_mainWindow._aboutAction);
+            //helpMenu.add(_mainWindow._aboutAction);
+            helpMenu.add(SearchCalibrators.aboutBoxAction());
 
             // Add a separator
             helpMenu.add(new JSeparator());
         }
 
         // SearchCal Tutorial menu item
-        helpMenu.add(_mainWindow._helpView._tutorialAction);
+        //helpMenu.add(_mainWindow._helpView._tutorialAction);
 
         // SearchCal FAQ menu item
-        helpMenu.add(_mainWindow._helpView._faqAction);
+        //helpMenu.add(_mainWindow._helpView._faqAction);
 
         // SearchCal Help menu item
-        helpMenu.add(_mainWindow._helpView._helpAction);
+        //helpMenu.add(_mainWindow._helpView._helpAction);
 
         // SearchCal Feedback menu item
-        helpMenu.add(_mainWindow._helpView._feedbackAction);
+        //helpMenu.add(_mainWindow._helpView._feedbackAction);
+        helpMenu.add(SearchCalibrators.feedbackReportAction());
 
         // Add a separator
         helpMenu.add(new JSeparator());

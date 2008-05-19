@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.20 2007-06-26 08:39:27 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.21 2008-05-19 15:39:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.20  2007/06/26 08:39:27  lafrasse
+ * Removed most TODOs by adding error handling through exceptions.
+ *
  * Revision 1.19  2007/03/16 10:07:34  lafrasse
  * Added support for instanciation and execution from ASPRO.
  *
@@ -133,14 +136,74 @@ import java.util.*;
  * @todo Action 1 : action 1 description
  *
  */
-public class SearchCalibrators
+public class SearchCalibrators extends App
 {
+    /** Store the optionnal query received from ASPRO by constructor */
+    private String _query = null;
+
+    /** Main application object used to perform the optionnal query received from ASPRO */
+    private VirtualObservatory _vo = null;
+
     /**
+     * Launch the SearchCalibrators application.
+     *
      * Create all objects needed by SearchCalibrators and plug event responding
      * loop (Listener/Listenable, Observer/Observable) in.
+     *
+     * @param args command-line options.
      */
-    public SearchCalibrators(String query)
+    public SearchCalibrators(String[] args)
     {
+        this(args, null);
+    }
+
+    /**
+     * Launch the SearchCalibrators application, plus automatically perform the given query if any.
+     *
+     * @param args command-line options.
+     * @param query an XML formatted string containing an SCLSVR-like query.
+     */
+    public SearchCalibrators(String[] args, String query)
+    {
+        // Launch application initialization with execution delayed for further initilization.
+        super(args, true);
+
+        // Store received query for later execution
+        _query = query;
+
+        // Set default log level
+        MCSLogger.setLevel("0");
+
+        // Parse the command-line options in search of the '-v' option and its argument
+        Getopt commandLineParser = new Getopt("SearchCalibrators", args, "v:");
+        int    option;
+        String optionArgument;
+
+        while ((option = commandLineParser.getopt()) != -1)
+        {
+            switch (option)
+            {
+            case 'v':
+                optionArgument = commandLineParser.getOptarg();
+                MCSLogger.setLevel(optionArgument);
+
+                break;
+
+            default:
+                MCSLogger.error("getopt() returned '" + (char) option + "'.\n");
+            }
+        }
+
+        // Perform received query if any
+        run();
+    }
+
+    /** Initialize application objects */
+    protected void init()
+    {
+        // Set the default locale to custom locale (for Numerical Fields "." ",")
+        Locale.setDefault(new Locale("en", "US"));
+
         // Set default resource
         fr.jmmc.mcs.util.Resources.setResourceName(
             "fr/jmmc/scalib/sclgui/Resources");
@@ -161,11 +224,11 @@ public class SearchCalibrators
             filtersModel.addObserver(calibratorsModel);
 
             // Link everything up
-            VirtualObservatory vo = new VirtualObservatory(queryModel,
-                    calibratorsModel, filtersModel);
+            _vo = new VirtualObservatory(queryModel, calibratorsModel,
+                    filtersModel);
 
             // Attach the query model to its query view
-            QueryView queryView = new QueryView(queryModel, vo);
+            QueryView queryView = new QueryView(queryModel, _vo);
 
             // Retrieve application preferences and attach them to their view
             // (This instance must be instanciated after dependencies)
@@ -174,18 +237,11 @@ public class SearchCalibrators
             // Show the user the app is been initialized
             StatusBar.show("application initialization...");
 
-            MainWindow window = new MainWindow(vo, queryView, calibratorsView,
+            MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
                     preferencesView, filtersView, statusBar);
 
             // Make application presentation coherent with preferences
             Preferences.getInstance().trulyNotifyObservers();
-
-            // If a query was received (when instaciated by ASPRO)
-            if (query != null)
-            {
-                // Launch the request
-                vo.executeQuery(query);
-            }
         }
         catch (Exception e)
         {
@@ -193,12 +249,20 @@ public class SearchCalibrators
         }
     }
 
-    /**
-     * Creates a new SearchCalibrators object.
-     */
-    public SearchCalibrators()
+    /** Execute application body */
+    protected void execute()
     {
-        this(null);
+        // If a query was received (when instaciated by ASPRO)
+        if (_query != null)
+        {
+            // Launch the request
+            _vo.executeQuery(_query);
+        }
+    }
+
+    /** Execute operations before closing application */
+    protected void exit()
+    {
     }
 
     /**
@@ -206,34 +270,8 @@ public class SearchCalibrators
      */
     public static void main(String[] args)
     {
-        // Set default log level
-        MCSLogger.setLevel("0");
-
-        // Parse the command line in search of the -v' option ans its argument
-        Getopt commandLineParser = new Getopt("SearchCalibrators", args, "v:");
-        int    option;
-        String optionArgument;
-
-        while ((option = commandLineParser.getopt()) != -1)
-        {
-            switch (option)
-            {
-            case 'v':
-                optionArgument = commandLineParser.getOptarg();
-                MCSLogger.setLevel(optionArgument);
-
-                break;
-
-            default:
-                MCSLogger.error("getopt() returned '" + (char) option + "'.\n");
-            }
-        }
-
-        // Set the default locale to custom locale (for Numerical Fields "." ",")
-        Locale.setDefault(new Locale("en", "US"));
-
-        // Launch application
-        SearchCalibrators searchCalibrators = new SearchCalibrators();
+        // Start application
+        SearchCalibrators searchCalibrators = new SearchCalibrators(args);
     }
 }
 /*___oOo___*/
