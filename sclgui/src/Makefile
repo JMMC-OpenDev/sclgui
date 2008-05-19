@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.26 2007-08-17 12:09:33 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.27 2008-05-19 15:17:45 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.26  2007/08/17 12:09:33  lafrasse
+# Added tight integration into Mac OS X default menubar layout when running on Mac.
+#
 # Revision 1.25  2007/08/01 15:29:22  lafrasse
 # Added support for SIMDAD science object querying through URL+script (plus proof
 # of disfunctionning through SOAP).
@@ -207,6 +210,7 @@ sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
                   fr/jmmc/scalib/sclgui/voTableToCSV.xsl \
                   fr/jmmc/scalib/sclgui/voTableToHTML.xsl \
                   fr/jmmc/scalib/sclgui/search.png \
+                  fr/jmmc/scalib/sclgui/ApplicationData.xml \
 
 #
 # Java programs
