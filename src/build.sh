@@ -42,7 +42,7 @@ compile(){
 }
 
 run(){
-	CMD="java -classpath $CLASSPATH $MAINCLASS $ARGS"
+	CMD="java -Djava.util.logging.config.file=../../../../../../.java/logging.properties -classpath $CLASSPATH $MAINCLASS $ARGS"
     echo $CMD
     $CMD
 }
