@@ -1,11 +1,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.36 2008-04-15 15:59:33 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.37 2008-05-20 15:36:46 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.36  2008/04/15 15:59:33  lafrasse
+ * Changed RA unit to minutes and DEC unit to degrees.
+ * Corrected auto radius checkbox behavior to be selected only when the associateds
+ * textfield is enabled.
+ * Corrected auto radius status loading to match preference state.
+ * Changed default query preference to match the ASPRO default settings.
+ *
  * Revision 1.35  2007/12/04 11:00:50  lafrasse
  * Corrected a bug during file loading that was preventing query parsing.
  *
@@ -296,7 +303,7 @@ public class QueryModel extends Observable implements Observer
         setQueryBrightScenarioFlag(true);
         setQueryDiffRASize(0.0);
         setQueryDiffDECSize(0.0);
-        setQueryAutoRadiusFlag(false);
+        setQueryAutoRadiusFlag(true);
         setQueryRadialSize(0.0);
 
         restoreMinMaxMagnitudeFieldsAutoUpdating();
@@ -1316,11 +1323,6 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        if (getQueryAutoRadiusFlag() == true)
-        {
-            return Double.NaN;
-        }
-
         return new Double(_queryRadialSize);
     }
 
@@ -1333,7 +1335,7 @@ public class QueryModel extends Observable implements Observer
     {
         MCSLogger.trace();
 
-        _queryRadialSize = radiusSize;
+        _queryRadialSize = Math.abs(radiusSize);
 
         setChanged();
     }
