@@ -1,11 +1,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.49 2008-04-15 15:59:33 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.50 2008-05-20 15:33:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.49  2008/04/15 15:59:33  lafrasse
+ * Changed RA unit to minutes and DEC unit to degrees.
+ * Corrected auto radius checkbox behavior to be selected only when the associateds
+ * textfield is enabled.
+ * Corrected auto radius status loading to match preference state.
+ * Changed default query preference to match the ASPRO default settings.
+ *
  * Revision 1.48  2007/12/03 14:43:35  lafrasse
  * Added the possibility to explicitly ask for an automatically calculated radius
  * for a faint query.
@@ -259,7 +266,7 @@ public class QueryView extends JPanel implements Observer,
     JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
 
-    /** Bright/Faint query radion button group */
+    /** Bright/Faint query radio button group */
     ButtonGroup _brightFaintButtonGroup = new ButtonGroup();
 
     /** Bright query button */
@@ -285,12 +292,21 @@ public class QueryView extends JPanel implements Observer,
     /** Search box radial size label */
     JLabel _radialSizeLabel = new JLabel("Radius [arcmin] : ", JLabel.TRAILING);
 
+    /** Auto/Manual radius radio button group */
+    ButtonGroup _radiusButtonGroup = new ButtonGroup();
+
+    /** Auto radius radio button */
+    JRadioButton _autoRadiusRadioButton;
+
+    /** Auto radius radio button label */
+    JLabel _autoRadiusRadioButtonLabel = new JLabel("Auto", JLabel.LEADING);
+
+    /** Manual radius radio button */
+    JRadioButton _manualRadiusRadioButton;
+
     /** Search box radial size */
     JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
                 0));
-
-    /** Search box auto radial size checkbox */
-    JCheckBox _autoRadiusCheckBox;
 
     /** Query action and progression panel */
     JPanel _actionPanel = new JPanel();
@@ -523,15 +539,33 @@ public class QueryView extends JPanel implements Observer,
         c.gridy++;
         c.gridx = 0;
         _searchCalPanel.add(_radialSizeLabel, c);
-        _radialSizeLabel.setLabelFor(_radialSizeTextfield);
-        tempPanel               = new JPanel();
-        _autoRadiusCheckBox     = new JCheckBox(new AutoRadiusAction());
-        tempPanel.add(_autoRadiusCheckBox);
-        _radialSizeTextfield.setEnabled(false);
+        tempPanel = new JPanel();
+        tempPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints c2 = new GridBagConstraints();
+        c2.fill                    = GridBagConstraints.HORIZONTAL;
+        c2.weightx                 = 1;
+        c2.gridy                   = 0;
+        c2.gridx                   = 0;
+        _autoRadiusRadioButton     = new JRadioButton(new AutoManualRadiusAction());
+        _radiusButtonGroup.add(_autoRadiusRadioButton);
+        tempPanel.add(_autoRadiusRadioButton, c2);
+        c2.gridx = 1;
+        tempPanel.add(_autoRadiusRadioButtonLabel, c2);
+        c2.gridy++;
+        c2.gridx                     = 0;
+        _manualRadiusRadioButton     = new JRadioButton(new AutoManualRadiusAction());
+        _radiusButtonGroup.add(_manualRadiusRadioButton);
+        tempPanel.add(_manualRadiusRadioButton, c2);
+        c2.gridx = 1;
+        tempPanel.add(_radialSizeTextfield, c2);
+        _radialSizeLabel.setLabelFor(tempPanel);
+        c.gridx = 1;
+        _searchCalPanel.add(tempPanel, c);
 
         // _radialSizeTextfield formatter creation
         DecimalFormatSymbols radialSymbols = new DecimalFormatSymbols();
-        radialSymbols.setNaN("auto"); // Set the symbol for a Double.NaN to an "auto" String
+        radialSymbols.setNaN("0.0"); // Set the symbol for a Double.NaN to an "auto" String
 
         DefaultFormatter radialDoubleFormater = new NumberFormatter(new DecimalFormat(
                     "0.0####", radialSymbols));
@@ -544,9 +578,6 @@ public class QueryView extends JPanel implements Observer,
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
         _radialSizeTextfield.addActionListener(this);
         _radialSizeTextfield.addFocusListener(this);
-        tempPanel.add(_radialSizeTextfield);
-        c.gridx = 1;
-        _searchCalPanel.add(tempPanel, c);
 
         // Status panel global attributes and common objects
         _actionPanel.setLayout(new BoxLayout(_actionPanel, BoxLayout.X_AXIS));
@@ -633,9 +664,11 @@ public class QueryView extends JPanel implements Observer,
         _diffDECSizeTextfield.setValue(_queryModel.getQueryDiffDECSize());
         _radialSizeTextfield.setValue(_queryModel.getQueryRadialSize());
 
+        // Auto/Manual radius widgets handling
         boolean autoRadiusFlag = _queryModel.getQueryAutoRadiusFlag();
+        _autoRadiusRadioButton.setSelected(autoRadiusFlag);
+        _manualRadiusRadioButton.setSelected(! autoRadiusFlag);
         _radialSizeTextfield.setEnabled(! autoRadiusFlag);
-        _autoRadiusCheckBox.setSelected(! autoRadiusFlag);
 
         // Bright/faint scenarii handling
         boolean brightScenarioFlag = _queryModel.getQueryBrightScenarioFlag();
@@ -645,9 +678,11 @@ public class QueryView extends JPanel implements Observer,
         _diffRASizeLabel.setVisible(brightScenarioFlag);
         _diffDECSizeTextfield.setVisible(brightScenarioFlag);
         _diffDECSizeLabel.setVisible(brightScenarioFlag);
+        _autoRadiusRadioButton.setVisible(! brightScenarioFlag);
+        _autoRadiusRadioButtonLabel.setVisible(! brightScenarioFlag);
+        _manualRadiusRadioButton.setVisible(! brightScenarioFlag);
         _radialSizeTextfield.setVisible(! brightScenarioFlag);
         _radialSizeLabel.setVisible(! brightScenarioFlag);
-        _autoRadiusCheckBox.setVisible(! brightScenarioFlag);
 
         // Progress bar
         _progressBar.setValue(_queryModel.getCurrentStep());
@@ -954,18 +989,18 @@ public class QueryView extends JPanel implements Observer,
         }
     }
 
-    protected class AutoRadiusAction extends MCSAction
+    protected class AutoManualRadiusAction extends MCSAction
     {
-        public AutoRadiusAction()
+        public AutoManualRadiusAction()
         {
-            super("autoRadius");
+            super("autoManualRadius");
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             MCSLogger.trace();
 
-            _queryModel.setQueryAutoRadiusFlag(! _autoRadiusCheckBox.isSelected());
+            _queryModel.setQueryAutoRadiusFlag(_autoRadiusRadioButton.isSelected());
         }
     }
 
