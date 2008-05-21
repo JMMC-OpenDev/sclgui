@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.2 2007-08-16 10:46:22 lafrasse Exp $"
+ * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.3 2008-05-21 15:24:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2007/08/16 10:46:22  lafrasse
+ * Disabled diameter-based removal accorting to informations from Gerard ZINS.
+ *
  * Revision 1.1  2007/08/16 09:46:30  lafrasse
  * Creation.
  *
@@ -18,7 +21,7 @@ import java.util.Vector;
 
 
 /**
- * Reject stars that are not calibrators (no visibility, no diameters).
+ * Reject stars that are not calibrators (no visibility or visibility < 0.5, no diameters).
  */
 public class FacelessNonCalibratorsFilter extends Filter
 {
@@ -83,6 +86,15 @@ public class FacelessNonCalibratorsFilter extends Filter
             if (vis2Cell.hasValue() == false)
             {
                 MCSLogger.debug("No vis2 - Line removed.");
+
+                // This row should be removed
+                return true;
+            }
+
+            // If the visibility is less than 0.5
+            if (vis2Cell.getDoubleValue() < 0.5)
+            {
+                MCSLogger.debug("vis2 < 0.5 - Line removed.");
 
                 // This row should be removed
                 return true;
