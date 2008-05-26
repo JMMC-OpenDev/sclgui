@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.9 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.10 2008-05-26 16:11:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.8  2007/02/13 14:15:30  lafrasse
  * Corrected package and import pathes.
  *
@@ -63,7 +66,7 @@ public class MultiplicityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Multiplicity :";
+        return "Reject Multiplicity";
     }
 
     /**

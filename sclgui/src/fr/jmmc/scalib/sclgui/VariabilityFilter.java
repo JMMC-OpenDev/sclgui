@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.9 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.10 2008-05-26 16:11:18 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.8  2007/04/13 14:17:40  lafrasse
  * Modified to also remove lines with VarFlag1 and/or VarFlag2 not empty.
  *
@@ -75,7 +78,7 @@ public class VariabilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Variability :";
+        return "Reject Variability";
     }
 
     /**
