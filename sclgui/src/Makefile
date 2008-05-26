@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.27 2008-05-19 15:17:45 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.28 2008-05-26 16:16:04 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.27  2008/05/19 15:17:45  lafrasse
+# Added ApplicationData.xml file handling.
+#
 # Revision 1.26  2007/08/17 12:09:33  lafrasse
 # Added tight integration into Mac OS X default menubar layout when running on Mac.
 #
@@ -299,9 +302,6 @@ clean_soap :
 CLASSPATH = $(shell mkfMakeJavaClasspath)
 WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
 install_jnlp :
-	./InstallJNLP.sh    
-
-clean_jnlp :
-	rm -rf ~/public_html/SearchCal
+	jmcsDeployJnlp SearchCal.jnlp    
 
 #___oOo___
