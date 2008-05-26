@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.12 2007-08-16 09:47:32 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.13 2008-05-26 16:01:49 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2007/08/16 09:47:32  lafrasse
+ * Added support for FacelessNonCalibratorsFilter to hide found stars without
+ * visibilty nor diameters.
+ *
  * Revision 1.11  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -86,50 +90,57 @@ public class FiltersModel
         DistanceFilter distanceFilter = new DistanceFilter(_queryModel);
         _filterList.add(distanceFilter);
 
-        FilterView distanceFilterView = new FilterView(distanceFilter);
-        _filterViews.add(distanceFilterView);
+        FilterView filterView = new FilterView(distanceFilter);
+        _filterViews.add(filterView);
 
         // Magnitude filter
         MagnitudeFilter magnitudeFilter = new MagnitudeFilter(_queryModel);
         _filterList.add(magnitudeFilter);
 
-        FilterView magnitudeFilterView = new FilterView(magnitudeFilter);
-        _filterViews.add(magnitudeFilterView);
+        filterView = new FilterView(magnitudeFilter);
+        _filterViews.add(filterView);
 
         // Spectral Type filter
         SpectralTypeFilter spectralTypeFilter = new SpectralTypeFilter();
         _filterList.add(spectralTypeFilter);
 
-        FilterView spectralTypeFilterView = new FilterView(spectralTypeFilter);
-        _filterViews.add(spectralTypeFilterView);
+        filterView = new FilterView(spectralTypeFilter);
+        _filterViews.add(filterView);
 
         // Luminosity filter
         LuminosityFilter luminosityFilter = new LuminosityFilter();
         _filterList.add(luminosityFilter);
 
-        FilterView luminosityFilterView = new FilterView(luminosityFilter);
-        _filterViews.add(luminosityFilterView);
+        filterView = new FilterView(luminosityFilter);
+        _filterViews.add(filterView);
 
         // Visibiliy filter
         VisibilityFilter visibiliyFilter = new VisibilityFilter();
         _filterList.add(visibiliyFilter);
 
-        FilterView visibiliyFilterView = new FilterView(visibiliyFilter);
-        _filterViews.add(visibiliyFilterView);
+        filterView = new FilterView(visibiliyFilter);
+        _filterViews.add(filterView);
+
+        // Visibility accuracy filter
+        VisibilityAccuracyFilter visibilityAccuracyFilter = new VisibilityAccuracyFilter();
+        _filterList.add(visibilityAccuracyFilter);
+
+        filterView = new FilterView(visibilityAccuracyFilter);
+        _filterViews.add(filterView);
 
         // Variability filter
         VariabilityFilter variabilityFilter = new VariabilityFilter();
         _filterList.add(variabilityFilter);
 
-        FilterView variabilityFilterView = new FilterView(variabilityFilter);
-        _filterViews.add(variabilityFilterView);
+        filterView = new FilterView(variabilityFilter);
+        _filterViews.add(filterView);
 
         // Multiplicity filter
         MultiplicityFilter multiplicityFilter = new MultiplicityFilter();
         _filterList.add(multiplicityFilter);
 
-        FilterView multiplicityFilterView = new FilterView(multiplicityFilter);
-        _filterViews.add(multiplicityFilterView);
+        filterView = new FilterView(multiplicityFilter);
+        _filterViews.add(filterView);
     }
 
     /**
