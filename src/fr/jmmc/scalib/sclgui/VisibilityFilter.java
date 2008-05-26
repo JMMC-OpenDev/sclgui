@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.8 2008-02-13 12:16:50 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.9 2008-05-26 16:01:49 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2008/02/13 12:16:50  lafrasse
+ * Corrected a bug reported by Myriam BENISTY that prevented calibrator with a NaN accurancy (0.0/0.0) to be properly rejected.
+ *
  * Revision 1.7  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -45,11 +48,8 @@ public class VisibilityFilter extends Filter
     /** Store the visibility constraint name */
     private String _visibilityColumnName = "vis2";
 
-    /** Store the visibility error constraint name */
-    private String _visibilityErrorColumnName = "vis2Err";
-
-    /** Store the visibility accuracy constraint name */
-    private String _visibilityAccuracyConstraintName = "vis2Err/vis2 (%)";
+    /** Store the visibility constraint name */
+    private String _visibilityConstraintName = "vis2";
 
     /**
      * Default constructor.
@@ -58,9 +58,8 @@ public class VisibilityFilter extends Filter
     {
         super();
 
-        //setConstraint(_visibilityAccuracyConstraintName, new Double(0.0));
-        // @TODO : remove the demo value
-        setConstraint(_visibilityAccuracyConstraintName, new Double(2.0));
+        setConstraint(_visibilityConstraintName, new Double(0.5));
+        setEnabled(true);
     }
 
     /**
@@ -72,7 +71,7 @@ public class VisibilityFilter extends Filter
     {
         MCSLogger.trace();
 
-        return "Reject Visibility Accuracy above (or unknown) :";
+        return "Reject Visiblity below :";
     }
 
     /**
@@ -80,13 +79,13 @@ public class VisibilityFilter extends Filter
      *
      * @return the visibility accuracy allowed by this filter.
      */
-    private double getAllowedVisibiliyAccurancy()
+    private double getAllowedVisibiliy()
     {
         MCSLogger.trace();
 
-        Double d = (Double) getConstraintByName(_visibilityAccuracyConstraintName);
+        Double d = (Double) getConstraintByName(_visibilityConstraintName);
 
-        return d.doubleValue() / 100;
+        return d.doubleValue();
     }
 
     /**
@@ -104,42 +103,27 @@ public class VisibilityFilter extends Filter
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
 
-        // Get the ID of the column contaning 'visibilityErr' star property
-        int vis2errId = starList.getColumnIdByName(_visibilityErrorColumnName);
-
         // If the desired column names exists
-        if ((vis2Id != -1) && (vis2errId != -1))
+        if (vis2Id != -1)
         {
             // Get the cell of the desired column
             StarProperty vis2Cell = ((StarProperty) row.elementAt(vis2Id));
 
-            // Get the cell of the desired column
-            StarProperty vis2ErrCell = ((StarProperty) row.elementAt(vis2errId));
-
-            // If the 2 values were found in the current line
-            if ((vis2Cell.hasValue() == true) &&
-                    (vis2ErrCell.hasValue() == true))
+            // If the visibility is undefined
+            if (vis2Cell.hasValue() == false)
             {
-                double currentVis2        = vis2Cell.getDoubleValue();
-                double currentVis2err     = vis2ErrCell.getDoubleValue();
-                double visibilityAccuracy = Math.abs(currentVis2err / currentVis2);
+                MCSLogger.debug("No vis2 - Line removed.");
 
-                // if the visibility is not a number (eg. 0.0/0.0)
-                if (Double.isNaN(visibilityAccuracy) == true)
-                {
-                    // This row should be removed
-                    return true;
-                }
-
-                // if the visibility value is greater than the allowed one
-                if (visibilityAccuracy >= getAllowedVisibiliyAccurancy())
-                {
-                    // This row should be removed
-                    return true;
-                }
+                // This row should be removed
+                return true;
             }
-            else // If any value is missing
+
+            // If the visibility is less than 0.5
+            if (vis2Cell.getDoubleValue() < getAllowedVisibiliy())
             {
+                MCSLogger.debug("vis2 < " + getAllowedVisibiliy() +
+                    " - Line removed.");
+
                 // This row should be removed
                 return true;
             }

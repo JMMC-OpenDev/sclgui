@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.8 2008-02-13 12:16:50 lafrasse Exp $"
+ * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.9 2008-05-26 16:01:49 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2008/02/13 12:16:50  lafrasse
+ * Corrected a bug reported by Myriam BENISTY that prevented calibrator with a NaN accurancy (0.0/0.0) to be properly rejected.
+ *
  * Revision 1.7  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -38,9 +41,9 @@ import java.util.Vector;
 
 
 /**
- * Visibiliy filter.
+ * Visibiliy accuracy filter.
  */
-public class VisibilityFilter extends Filter
+public class VisibilityAccuracyFilter extends Filter
 {
     /** Store the visibility constraint name */
     private String _visibilityColumnName = "vis2";
@@ -54,7 +57,7 @@ public class VisibilityFilter extends Filter
     /**
      * Default constructor.
      */
-    public VisibilityFilter()
+    public VisibilityAccuracyFilter()
     {
         super();
 
