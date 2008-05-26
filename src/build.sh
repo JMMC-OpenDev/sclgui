@@ -2,8 +2,8 @@
 
 # You should only have to define properly two next lines
 MAINCLASS=fr/jmmc/scalib/sclgui/SearchCalibrators
-ARGS="-v 5"
-ARGS="-v 0"
+ARGS="-v5"
+ARGS=""
 
 
 all(){
