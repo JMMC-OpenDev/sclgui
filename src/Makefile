@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.28 2008-05-26 16:16:04 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.29 2008-05-27 14:21:08 mella Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.28  2008/05/26 16:16:04  lafrasse
+# Updated install_jnlp target to use jmcsDeployJnlp script.
+#
 # Revision 1.27  2008/05/19 15:17:45  lafrasse
 # Added ApplicationData.xml file handling.
 #
@@ -279,6 +282,8 @@ man   : do_man
 	@echo " . . . man page(s) done"
 
 install : install_all
+	@echo "......jnlps:"
+	jmcsDeployJnlp SearchCal.jnlp    
 	@echo " . . . installation done"
 
 #
@@ -296,12 +301,5 @@ clean_soap :
     ## For SIMBAD SOAP WebService (do not work here)
     # rm -rf cds/
 
-#
-# JNLP targets
-# ---------------------------------
-CLASSPATH = $(shell mkfMakeJavaClasspath)
-WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
-install_jnlp :
-	jmcsDeployJnlp SearchCal.jnlp    
 
 #___oOo___
