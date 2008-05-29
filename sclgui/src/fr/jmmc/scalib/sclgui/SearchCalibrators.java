@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.21 2008-05-19 15:39:29 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.22 2008-05-29 10:10:16 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.21  2008/05/19 15:39:29  lafrasse
+ * Updated to add preliminary support for the new JMCS application framework.
+ *
  * Revision 1.20  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -175,22 +178,27 @@ public class SearchCalibrators extends App
         MCSLogger.setLevel("0");
 
         // Parse the command-line options in search of the '-v' option and its argument
-        Getopt commandLineParser = new Getopt("SearchCalibrators", args, "v:");
-        int    option;
-        String optionArgument;
-
-        while ((option = commandLineParser.getopt()) != -1)
+        if (args != null)
         {
-            switch (option)
+            Getopt commandLineParser = new Getopt("SearchCalibrators", args,
+                    "v:");
+            int    option;
+            String optionArgument;
+
+            while ((option = commandLineParser.getopt()) != -1)
             {
-            case 'v':
-                optionArgument = commandLineParser.getOptarg();
-                MCSLogger.setLevel(optionArgument);
+                switch (option)
+                {
+                case 'v':
+                    optionArgument = commandLineParser.getOptarg();
+                    MCSLogger.setLevel(optionArgument);
 
-                break;
+                    break;
 
-            default:
-                MCSLogger.error("getopt() returned '" + (char) option + "'.\n");
+                default:
+                    MCSLogger.error("getopt() returned '" + (char) option +
+                        "'.\n");
+                }
             }
         }
 
