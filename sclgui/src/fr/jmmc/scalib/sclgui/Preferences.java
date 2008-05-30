@@ -1,11 +1,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.22 2008-04-15 15:59:33 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.23 2008-05-30 12:44:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2008/04/15 15:59:33  lafrasse
+ * Changed RA unit to minutes and DEC unit to degrees.
+ * Corrected auto radius checkbox behavior to be selected only when the associateds
+ * textfield is enabled.
+ * Corrected auto radius status loading to match preference state.
+ * Changed default query preference to match the ASPRO default settings.
+ *
  * Revision 1.21  2007/12/03 14:41:59  lafrasse
  * Removed science object inclusion preference.
  * Changed default query to match the one of the previous version.
@@ -194,8 +201,8 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 defaults.setPreference("query.queryMinMagnitude", "2.0");
                 defaults.setPreference("query.queryMaxMagnitude", "4.0");
                 defaults.setPreference("query.queryBrightScenarioFlag", "true");
-                defaults.setPreference("query.queryDiffRASize", "60");
-                defaults.setPreference("query.queryDiffDECSize", "5");
+                defaults.setPreference("query.queryDiffRASize", "3600");
+                defaults.setPreference("query.queryDiffDECSize", "1200");
                 defaults.setPreference("query.queryRadialSize", "5.0");
                 defaults.setPreference("query.queryAutoRadius", "true");
 
