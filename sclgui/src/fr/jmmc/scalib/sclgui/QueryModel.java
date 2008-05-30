@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.37 2008-05-20 15:36:46 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.38 2008-05-30 12:47:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.37  2008/05/20 15:36:46  lafrasse
+ * Changed default radius flag value from false to true.
+ * Added handling of hypothetical negative radius values.
+ *
  * Revision 1.36  2008/04/15 15:59:33  lafrasse
  * Changed RA unit to minutes and DEC unit to degrees.
  * Corrected auto radius checkbox behavior to be selected only when the associateds
@@ -139,6 +143,7 @@ import cds.savot.pull.*;
 
 import cds.savot.writer.*;
 
+import fr.jmmc.mcs.astro.*;
 import fr.jmmc.mcs.log.*;
 
 import java.io.*;
@@ -301,8 +306,8 @@ public class QueryModel extends Observable implements Observer
         resetScienceObjectMagnitudes();
 
         setQueryBrightScenarioFlag(true);
-        setQueryDiffRASize(0.0);
-        setQueryDiffDECSize(0.0);
+        setQueryDiffRASizeInMinutes(0.0);
+        setQueryDiffDECSizeInDegrees(0.0);
         setQueryAutoRadiusFlag(true);
         setQueryRadialSize(0.0);
 
@@ -353,10 +358,10 @@ public class QueryModel extends Observable implements Observer
 
             setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
                     "query.queryBrightScenarioFlag"));
-            setQueryDiffRASize(_preferences.getPreferenceAsDouble(
-                    "query.queryDiffRASize"));
-            setQueryDiffDECSize(_preferences.getPreferenceAsDouble(
-                    "query.queryDiffDECSize"));
+            setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(
+                    _preferences.getPreferenceAsDouble("query.queryDiffRASize")));
+            setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(
+                    _preferences.getPreferenceAsDouble("query.queryDiffDECSize")));
             setQueryRadialSize(_preferences.getPreferenceAsDouble(
                     "query.queryRadialSize"));
             setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(
@@ -411,8 +416,10 @@ public class QueryModel extends Observable implements Observer
                 (String) parameters.get("maxMagRange")));
         setQueryBrightScenarioFlag(Boolean.valueOf(
                 (String) parameters.get("bright")));
-        setQueryDiffRASize(Double.valueOf((String) parameters.get("diffRa")));
-        setQueryDiffDECSize(Double.valueOf((String) parameters.get("diffDec")));
+        setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(Double.valueOf(
+                    (String) parameters.get("diffRa"))));
+        setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(Double.valueOf(
+                    (String) parameters.get("diffDec"))));
         setQueryAutoRadiusFlag(true);
 
         String radius      = (String) parameters.get("radius");
@@ -575,9 +582,9 @@ public class QueryModel extends Observable implements Observer
             _preferences.setPreference("query.queryBrightScenarioFlag",
                 getQueryBrightScenarioFlag());
             _preferences.setPreference("query.queryDiffRASize",
-                getQueryDiffRASize());
+                getQueryDiffRASizeInMinutes());
             _preferences.setPreference("query.queryDiffDECSize",
-                getQueryDiffDECSize());
+                getQueryDiffDECSizeInDegrees());
             _preferences.setPreference("query.queryRadialSize",
                 getQueryRadialSize());
             _preferences.setPreference("query.queryAutoRadius",
@@ -609,11 +616,11 @@ public class QueryModel extends Observable implements Observer
         query += ("-mag " + getScienceObjectMagnitude() + " ");
 
         // Diff RA
-        double ArcminRA = getQueryDiffRASize() * 15;
+        double ArcminRA = ALX.minutes2arcmin(getQueryDiffRASizeInMinutes());
         query += ("-diffRa " + ArcminRA + " ");
 
         // Diff DEC
-        double ArcminDEC = getQueryDiffDECSize() * 60;
+        double ArcminDEC = ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees());
         query += ("-diffDec " + ArcminDEC + " ");
 
         // Band
@@ -1247,7 +1254,7 @@ public class QueryModel extends Observable implements Observer
      *
      * @return the query box differential RA size.
      */
-    public Double getQueryDiffRASize()
+    public Double getQueryDiffRASizeInMinutes()
     {
         MCSLogger.trace();
 
@@ -1259,7 +1266,7 @@ public class QueryModel extends Observable implements Observer
      *
      * @param diffRASize the new query box differential RA size as a double.
      */
-    public void setQueryDiffRASize(double diffRASize)
+    public void setQueryDiffRASizeInMinutes(double diffRASize)
     {
         MCSLogger.trace();
 
@@ -1273,9 +1280,9 @@ public class QueryModel extends Observable implements Observer
      *
      * @param diffRASize the new query box differential RA size as a Double.
      */
-    public void setQueryDiffRASize(Double diffRASize)
+    public void setQueryDiffRASizeInMinutes(Double diffRASize)
     {
-        setQueryDiffRASize(diffRASize.doubleValue());
+        setQueryDiffRASizeInMinutes(diffRASize.doubleValue());
     }
 
     /**
@@ -1283,7 +1290,7 @@ public class QueryModel extends Observable implements Observer
      *
      * @return the query box differential DEC size.
      */
-    public Double getQueryDiffDECSize()
+    public Double getQueryDiffDECSizeInDegrees()
     {
         MCSLogger.trace();
 
@@ -1295,7 +1302,7 @@ public class QueryModel extends Observable implements Observer
      *
      * @param radiusSize the new query box differential DEC size as a double.
      */
-    public void setQueryDiffDECSize(double diffDECSize)
+    public void setQueryDiffDECSizeInDegrees(double diffDECSize)
     {
         MCSLogger.trace();
 
@@ -1309,9 +1316,9 @@ public class QueryModel extends Observable implements Observer
      *
      * @param radiusSize the new query box differential DEC size as a Double.
      */
-    public void setQueryDiffDECSize(Double diffDECSize)
+    public void setQueryDiffDECSizeInDegrees(Double diffDECSize)
     {
-        setQueryDiffDECSize(diffDECSize.doubleValue());
+        setQueryDiffDECSizeInDegrees(diffDECSize.doubleValue());
     }
 
     /**

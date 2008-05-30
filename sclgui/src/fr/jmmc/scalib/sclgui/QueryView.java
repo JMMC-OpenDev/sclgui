@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.50 2008-05-20 15:33:44 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.51 2008-05-30 12:47:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.50  2008/05/20 15:33:44  lafrasse
+ * Updated graphical interface for automatic/manual selection of radius in faint
+ * mode.
+ *
  * Revision 1.49  2008/04/15 15:59:33  lafrasse
  * Changed RA unit to minutes and DEC unit to degrees.
  * Corrected auto radius checkbox behavior to be selected only when the associateds
@@ -660,8 +664,8 @@ public class QueryView extends JPanel implements Observer,
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
 
         // Search box size handling
-        _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASize());
-        _diffDECSizeTextfield.setValue(_queryModel.getQueryDiffDECSize());
+        _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASizeInMinutes());
+        _diffDECSizeTextfield.setValue(_queryModel.getQueryDiffDECSizeInDegrees());
         _radialSizeTextfield.setValue(_queryModel.getQueryRadialSize());
 
         // Auto/Manual radius widgets handling
@@ -848,8 +852,8 @@ public class QueryView extends JPanel implements Observer,
             _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
         }
 
-        _queryModel.setQueryDiffRASize((Double) _diffRASizeTextfield.getValue());
-        _queryModel.setQueryDiffDECSize((Double) _diffDECSizeTextfield.getValue());
+        _queryModel.setQueryDiffRASizeInMinutes((Double) _diffRASizeTextfield.getValue());
+        _queryModel.setQueryDiffDECSizeInDegrees((Double) _diffDECSizeTextfield.getValue());
         _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
 
         // Refress the whole view
