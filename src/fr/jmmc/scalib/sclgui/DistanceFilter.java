@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.8 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.9 2008-05-30 12:39:54 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.7  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -116,8 +119,8 @@ public class DistanceFilter extends Filter
         MCSLogger.trace();
 
         // Get the science objct 'RA' and 'DEC' properties
-        _scienceObjectRA      = ALX.convertRA(_queryModel.getScienceObjectRA());
-        _scienceObjectDEC     = ALX.convertDEC(_queryModel.getScienceObjectDEC());
+        _scienceObjectRA      = ALX.parseRA(_queryModel.getScienceObjectRA());
+        _scienceObjectDEC     = ALX.parseDEC(_queryModel.getScienceObjectDEC());
     }
 
     /**
@@ -164,11 +167,11 @@ public class DistanceFilter extends Filter
             {
                 // Convert RA cell value
                 String raString  = (String) raCell.getValue();
-                double currentRA = ALX.convertRA(raString);
+                double currentRA = ALX.parseRA(raString);
 
                 // Convert DEC cell value
                 String decString  = (String) decCell.getValue();
-                double currentDEC = ALX.convertDEC(decString);
+                double currentDEC = ALX.parseDEC(decString);
 
                 // Get back query and filter values
                 retrieveScienceObjectCoordinates();
