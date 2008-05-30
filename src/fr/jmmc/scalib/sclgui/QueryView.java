@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.51 2008-05-30 12:47:51 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.52 2008-05-30 13:11:29 ccmgr Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.51  2008/05/30 12:47:51  lafrasse
+ * Changed QueryDiffRA & QueryDiffDEC APIs to more precisely handle unit conversion
+ * between minutes/degrees and arcmin.
+ *
  * Revision 1.50  2008/05/20 15:33:44  lafrasse
  * Updated graphical interface for automatic/manual selection of radius in faint
  * mode.
@@ -222,7 +226,7 @@ public class QueryView extends JPanel implements Observer,
     JComboBox _instrumentalMagnitudeBandCombo = new JComboBox();
 
     /** Instrument wavelentgh label */
-    JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
+    JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [Âµm] : ",
             JLabel.TRAILING);
 
     /** Instrument wavelentgh */
@@ -641,7 +645,7 @@ public class QueryView extends JPanel implements Observer,
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
         _instrumentalWavelengthLabel.setText("Wavelength (" +
-            instrumentalMagnitudeBand + ") [µm] : ");
+            instrumentalMagnitudeBand + ") [Âµm] : ");
         _instrumentalWavelengthTextfield.setValue(_queryModel.getInstrumentalWavelength());
         _instrumentalMaxBaselineTextField.setValue(_queryModel.getInstrumentalMaxBaseLine());
 
