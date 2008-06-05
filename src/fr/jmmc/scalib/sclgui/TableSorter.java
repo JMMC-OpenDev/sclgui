@@ -1129,6 +1129,9 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     "') < prefDistance (= '" + prefDistance + "')= '').");
             }
 
+            // Generated tooltip
+            String tooltip = null;
+
             // If cell is not selected and not focused 
             if (! (isSelected && hasFocus))
             {
@@ -1140,20 +1143,38 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     // Set Background Color corresponding to the Catalog Origin Color or confidence index
                     if (starProperty.hasOrigin() == true)
                     {
-                        setBackground((Color) _hashColors.get(
-                                starProperty.getOrigin()));
+                        // Get origin and set it as tooltip
+                        String origin = starProperty.getOrigin();
+                        tooltip = "origin: " + origin;
+
+                        // Get origin color and set it as cell backgroung color
+                        Color originColor = (Color) _hashColors.get(origin);
+                        setBackground(originColor);
                     }
                     else if (starProperty.hasConfidence() == true)
                     {
-                        setBackground((Color) _hashConfidence.get(
-                                starProperty.getConfidence()));
+                        // Get confidence and set it as tooltip
+                        String confidence = starProperty.getConfidence();
+                        tooltip = "confidence: " + confidence;
+
+                        // Get confidence color and set it as cell backgroung color
+                        Color confidenceColor = (Color) _hashColors.get(confidence);
+                        setBackground(confidenceColor);
                     }
                     else
                     {
                         // If something bad appent, write text in red !
                         setForeground(Color.RED);
+                        tooltip = "!!! BUG !!!";
                     }
                 }
+            }
+
+            // If tooltip was defined
+            if (tooltip != null)
+            {
+                // Set tooltip
+                setToolTipText(tooltip);
             }
 
             // Return the component
