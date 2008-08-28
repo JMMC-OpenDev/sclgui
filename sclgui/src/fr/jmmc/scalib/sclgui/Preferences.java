@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.23 2008-05-30 12:44:12 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.24 2008-08-28 14:16:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2008/05/30 12:44:12  lafrasse
+ * Updated queryDiffRASize & queryDiffiDECSize default values to match previous
+ * SearchCal version.
+ *
  * Revision 1.22  2008/04/15 15:59:33  lafrasse
  * Changed RA unit to minutes and DEC unit to degrees.
  * Corrected auto radius checkbox behavior to be selected only when the associateds
@@ -42,7 +46,7 @@
  * Updated query default magnitudeBand to K and instrumentalWavelength to 1.0 .
  *
  * Revision 1.12  2006/10/10 09:09:37  lafrasse
- * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
+ * Updated _logger APIs to more tightly reflect standard MCS 'log' module levels.
  *
  * Revision 1.11  2006/10/04 11:34:31  lafrasse
  * Added support for preferenced science object detection distance.
@@ -81,7 +85,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
 import java.util.Properties;
@@ -92,8 +95,9 @@ import java.util.Properties;
  */
 public class Preferences extends fr.jmmc.mcs.util.Preferences
 {
-    /** Preference file name */
-    static String _shortPreferenceFilename = "fr.jmmc.scalib.sclgui.properties";
+    /** Logger */
+    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.Preferences");
 
     /** Singleton instance */
     private static Preferences _singleton = null;
@@ -106,29 +110,40 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
+     * Return the preference filename.
+     */
+    protected String getPreferenceFilename()
+    {
+        return "fr.jmmc.searchcal.properties";
+    }
+
+    /**
+     * Return the preference revision number.
+     */
+    protected int getPreferencesVersionNumber()
+    {
+        return 1;
+    }
+
+    /**
      * Return the singleton instance of Preferences.
      *
      * @return the singleton preference instance
      */
     public static Preferences getInstance()
     {
-        MCSLogger.trace();
+        _logger.entering("Preferences", "TBD");
 
         // Build new reference if singleton does not already exist
         // or return previous reference
         if (_singleton == null)
         {
             _singleton = new Preferences();
-            _singleton.setShortPreferenceFilename(_shortPreferenceFilename);
-            _singleton.loadFromFile();
 
             Preferences defaults = new Preferences();
 
             try
             {
-                // Store preference file version number
-                defaults.setPreference("scalib.version", "4.0");
-
                 // Place catalog origin colors
                 defaults.setPreference("catalog.color.I/280", "#FFB6B6");
                 defaults.setPreference("catalog.color.I/284", "#F1FB58");
@@ -213,7 +228,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             }
             catch (Exception e)
             {
-                MCSLogger.debug("Default preference values creation FAILED.");
+                _logger.fine("Default preference values creation FAILED.");
             }
 
             _singleton.setDefaultPreferences(defaults);
