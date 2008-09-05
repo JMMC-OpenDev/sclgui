@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal_page.htm">
-	<program name="SearchCal" version="4.0b13"/>
-	<compilation date="23/05/2008" compiler="javac 1.5.0_02"/>
+	<program name="SearchCal" version="4.0b14"/>
+	<compilation date="01/09/2008" compiler="JDK 1.5.0_16"/>
 	<text>Brought to you by The JMMC Team.</text>
-	<copyright>Copyright © 1999 – 2007 Apple Inc.
-All rights reserved.</copyright>
 	<dependences>
-		<package name="Aladin" description="This software uses source code created at the Centre de Donnees astronomiques de Strasbourg, France." link="http://aladin.u-strasbg.fr/aladin.gml"/>
+        <package name="Aladin" description="SearchCal uses source code created at the Centre de Donnees astronomiques de Strasbourg, France." link="http://aladin.u-strasbg.fr/aladin.gml"/>
+        <package name="SAVOT" description="SearchCal uses source code created at the Centre de Donnees astronomiques de Strasbourg, France." link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"/>
 	</dependences>
+    <menubar>
+      <menu label="File">
+        <menu label="Open..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_openFileAction" accelerator="O"/>
+        <menu/>
+        <menu label="Save" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_saveFileAction" accelerator="S"/>
+        <menu label="Save As..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_saveFileAsAction" accelerator="shift S"/>
+        <menu label="Revert to saved..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_revertToSavedFileAction"/>
+        <menu/>
+        <menu label="Export to CSV" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_exportToCSVFileAction"/>
+        <menu label="Export to HTML" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_exportToHTMLFileAction"/>
+        <menu/>
+        <menu label="Page Setup..." classpath="fr.jmmc.scalib.sclgui.MainWindow" action="_pageSetupAction" accelerator="shift P"/>
+        <menu label="Print..." classpath="fr.jmmc.scalib.sclgui.MainWindow" action="_printAction" accelerator="P"/>
+      </menu>
+      <menu label="Edit">
+        <menu label="Delete" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_deleteAction"/>
+        <menu label="Undelete" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_undeleteAction"/>
+      </menu>
+      <menu label="Query">
+        <menu label="Reset values" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_resetValuesAction"/>
+        <menu label="Load default values" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_loadDefaultValuesAction"/>
+        <menu label="Save values as default" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_saveValuesAction"/>
+        <menu/>
+        <menu label="Get Star" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getStarAction"/>
+        <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction"/>
+      </menu>
+      <menu label="Calibrators">
+        <menu label="Show detailed data" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true"/>
+        <menu label="Show legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true"/>
+        <menu/>
+        <menu label="Plot in Aladin" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_plotInAladinAction"/>
+      </menu>
+    </menubar>
 </ApplicationData>
