@@ -2,8 +2,13 @@
 
 # You should only have to define properly two next lines
 MAINCLASS=fr/jmmc/scalib/sclgui/SearchCalibrators
-ARGS="-v5"
-ARGS=""
+ARGS="-v0"
+#ARGS="-v1"
+#ARGS="-v2"
+#ARGS="-v3"
+#ARGS="-v4"
+#ARGS="-v5"
+#ARGS="--loggui"
 
 
 all(){
@@ -15,6 +20,7 @@ all(){
 
 clean(){
     find  . -name "*.class" -exec rm {} \;
+    rm -f ../lib/sclgui.jar ../../../../../INTROOT/lib/sclgui.jar
 }
 
 wsdl2java(){
@@ -32,10 +38,7 @@ wsdl2java(){
 }
 
 compile(){
-	CMD="javac fr/jmmc/scalib/sclgui/OSXAdapter.java"
-    echo $CMD
-    $CMD
-
+	#CMD="javac -Xlint:unchecked $MAINCLASS.java"
 	CMD="javac $MAINCLASS.java"
     echo $CMD
     $CMD
@@ -57,7 +60,7 @@ fi
 
 # define classpath
 CP=.
-for j in ../lib/*.jar ../../../../INTROOT/lib/*.jar
+for j in ../lib/*.jar ../../../../../INTROOT/lib/*.jar
 do
   CP=$CP:$j
 done
