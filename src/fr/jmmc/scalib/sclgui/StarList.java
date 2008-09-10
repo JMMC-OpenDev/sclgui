@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarList.java,v 1.6 2007-06-14 08:43:00 lafrasse Exp $"
+ * "@(#) $Id: StarList.java,v 1.7 2008-09-10 22:38:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/06/14 08:43:00  lafrasse
+ * Enhanced getColumnIdByName() by returning -1 if no index was found for the given group name.
+ *
  * Revision 1.5  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -29,6 +32,7 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.log.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 
 /**
@@ -36,6 +40,10 @@ import java.util.*;
  */
 public class StarList extends Vector
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.StarList");
+
     /** Hashtable linking each colum group name to its ID */
     private Hashtable _fieldIdToColNumber;
 
@@ -56,7 +64,7 @@ public class StarList extends Vector
      */
     public void setHashTable(Hashtable fieldIdToColNumber)
     {
-        MCSLogger.trace();
+        _logger.entering("StarList", "setHashTable");
 
         _fieldIdToColNumber = fieldIdToColNumber;
     }
@@ -70,7 +78,7 @@ public class StarList extends Vector
      */
     public int getColumnIdByName(String groupName)
     {
-        MCSLogger.trace();
+        _logger.entering("StarList", "getColumnIdByName");
 
         int columnId = -1;
 
@@ -94,6 +102,8 @@ public class StarList extends Vector
      */
     public boolean hasSomeDeletedStars()
     {
+        _logger.entering("StarList", "hasSomeDeletedStars");
+
         for (int i = 0; i < size(); i++)
         {
             Vector       star                = (Vector) elementAt(i);
@@ -103,13 +113,13 @@ public class StarList extends Vector
 
             if (starShouldBeRemoved == true)
             {
-                MCSLogger.debug("hasSomeDeletedStars = 'true'");
+                _logger.fine("hasSomeDeletedStars = 'true'");
 
                 return true;
             }
         }
 
-        MCSLogger.debug("hasSomeDeletedStars = 'false'");
+        _logger.fine("hasSomeDeletedStars = 'false'");
 
         return false;
     }
@@ -119,6 +129,8 @@ public class StarList extends Vector
      */
     public void markAsDeleted(Vector star)
     {
+        _logger.entering("StarList", "markAsDeleted");
+
         int          deletedFlagColumnID = getColumnIdByName("deletedFlag");
         StarProperty deletedFlag         = (StarProperty) star.elementAt(deletedFlagColumnID);
         deletedFlag.setValue(Boolean.TRUE);
@@ -129,6 +141,8 @@ public class StarList extends Vector
      */
     public void removeAllDeletedStars()
     {
+        _logger.entering("StarList", "removeAllDeletedStars");
+
         int i = 0;
 
         while (i < size())
@@ -155,6 +169,8 @@ public class StarList extends Vector
      */
     public void undeleteAll()
     {
+        _logger.entering("StarList", "undeleteAll");
+
         for (int i = 0; i < size(); i++)
         {
             int          deletedFlagColumnID = getColumnIdByName("deletedFlag");

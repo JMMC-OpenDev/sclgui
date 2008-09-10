@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.9 2008-05-26 16:01:49 mella Exp $"
+ * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.10 2008-09-10 22:41:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2008/05/26 16:01:49  mella
+ * Rename VisibilityFilter to VisibilityAccuracyFilter
+ * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
+ *
  * Revision 1.8  2008/02/13 12:16:50  lafrasse
  * Corrected a bug reported by Myriam BENISTY that prevented calibrator with a NaN accurancy (0.0/0.0) to be properly rejected.
  *
@@ -38,6 +42,7 @@ import fr.jmmc.mcs.log.*;
 import java.lang.Math;
 
 import java.util.Vector;
+import java.util.logging.*;
 
 
 /**
@@ -45,6 +50,10 @@ import java.util.Vector;
  */
 public class VisibilityAccuracyFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.VisibilityAccuracyFilter");
+
     /** Store the visibility constraint name */
     private String _visibilityColumnName = "vis2";
 
@@ -73,7 +82,7 @@ public class VisibilityAccuracyFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("VisibilityAccuracyFilter", "getName");
 
         return "Reject Visibility Accuracy above (or unknown) :";
     }
@@ -85,7 +94,8 @@ public class VisibilityAccuracyFilter extends Filter
      */
     private double getAllowedVisibiliyAccurancy()
     {
-        MCSLogger.trace();
+        _logger.entering("VisibilityAccuracyFilter",
+            "getAllowedVisibiliyAccurancy");
 
         Double d = (Double) getConstraintByName(_visibilityAccuracyConstraintName);
 
@@ -102,7 +112,7 @@ public class VisibilityAccuracyFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("VisibilityAccuracyFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);

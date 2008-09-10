@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.15 2007-08-27 07:38:49 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.16 2008-09-10 22:24:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2007/08/27 07:38:49  lafrasse
+ * TextFileds label enhancement.
+ *
  * Revision 1.14  2007/08/17 09:16:15  lafrasse
  * Removed a forgotten debugging trace.
  *
@@ -52,14 +55,13 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.MCSLogger;
-
 import java.awt.*;
 import java.awt.event.*;
 
 import java.text.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -78,6 +80,10 @@ import javax.swing.text.*;
  */
 public class FilterView extends JPanel implements Observer
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.FilterView");
+
     /** The filter to represent */
     Filter _filter;
 
@@ -162,7 +168,7 @@ public class FilterView extends JPanel implements Observer
     private void addParam(JPanel panel, String constraintName,
         Object constraintValue)
     {
-        MCSLogger.trace();
+        _logger.entering("FilterView", "addParam");
 
         JLabel        label         = new JLabel(constraintName + " : ",
                 JLabel.TRAILING);
@@ -229,7 +235,7 @@ public class FilterView extends JPanel implements Observer
      */
     private void setParam(String constraintName, Object constraintValue)
     {
-        MCSLogger.trace();
+        _logger.entering("FilterView", "setParam");
 
         JComponent widget = (JComponent) _widgets.get(constraintName);
 
@@ -257,6 +263,8 @@ public class FilterView extends JPanel implements Observer
      */
     public void update(Observable o, Object arg)
     {
+        _logger.entering("FilterView", "update");
+
         // For each constraint of the associated filter
         for (int i = 0; i < _filter.getNbOfConstraints(); i++)
         {
@@ -284,6 +292,10 @@ public class FilterView extends JPanel implements Observer
  */
 class ParamListener implements ActionListener, FocusListener
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.ParamListener");
+
     /** The filter to update */
     Filter _filter;
 
@@ -323,7 +335,7 @@ class ParamListener implements ActionListener, FocusListener
      */
     public void focusLost(FocusEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("ParamListener", "focusLost");
 
         // Store new data
         storeValues(e);
@@ -334,7 +346,7 @@ class ParamListener implements ActionListener, FocusListener
      */
     public void actionPerformed(ActionEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("ParamListener", "actionPerformed");
 
         // Store new data
         storeValues(e);
@@ -345,6 +357,8 @@ class ParamListener implements ActionListener, FocusListener
      */
     public void storeValues(AWTEvent e)
     {
+        _logger.entering("ParamListener", "storeValues");
+
         // If there is no constraint name
         if (_constraintName == null)
         {
@@ -367,7 +381,7 @@ class ParamListener implements ActionListener, FocusListener
                 }
                 catch (Exception ex)
                 {
-                    MCSLogger.error("Could not handle input");
+                    _logger.severe("Could not handle input");
                 }
 
                 _filter.setConstraint(_constraintName,

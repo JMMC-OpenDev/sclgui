@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.12 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.13 2008-09-10 22:26:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.11  2007/04/13 13:26:28  lafrasse
  * Changed default CheckBox state to checked.
  *
@@ -48,9 +51,9 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.*;
-import fr.jmmc.mcs.log.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 
 /**
@@ -58,6 +61,10 @@ import java.util.*;
  */
 public class LuminosityFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.LuminosityFilter");
+
     /** Store the spectral type column name */
     private String _spTypeColumnName = "SpType";
 
@@ -83,7 +90,7 @@ public class LuminosityFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("LuminosityFilter", "getName");
 
         return "Reject Luminosity Classes (and unknowns) :";
     }
@@ -98,7 +105,7 @@ public class LuminosityFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("LuminosityFilter", "shouldRemoveRow");
 
         /*
            // DO NOT REMOVE !!! - Validity test code

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.9 2008-05-30 12:39:54 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.10 2008-09-10 22:20:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2008/05/30 12:39:54  lafrasse
+ * Updated according to jmcs ALX API changes.
+ *
  * Revision 1.8  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -34,11 +37,11 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.*;
-import fr.jmmc.mcs.log.*;
 
 import java.lang.Math;
 
 import java.util.*;
+import java.util.logging.*;
 
 
 /**
@@ -46,6 +49,10 @@ import java.util.*;
  */
 public class DistanceFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.DistanceFilter");
+
     /** Store the RA column name */
     private String _raColumnName = "RAJ2000";
 
@@ -106,7 +113,7 @@ public class DistanceFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("DistanceFilter", "getName");
 
         return "Reject stars farther than :";
     }
@@ -116,7 +123,7 @@ public class DistanceFilter extends Filter
      */
     private void retrieveScienceObjectCoordinates()
     {
-        MCSLogger.trace();
+        _logger.entering("DistanceFilter", "retrieveScienceObjectCoordinates");
 
         // Get the science objct 'RA' and 'DEC' properties
         _scienceObjectRA      = ALX.parseRA(_queryModel.getScienceObjectRA());
@@ -128,7 +135,7 @@ public class DistanceFilter extends Filter
      */
     private void retrieveDeltas()
     {
-        MCSLogger.trace();
+        _logger.entering("DistanceFilter", "retrieveDeltas");
 
         Double ra = (Double) getConstraintByName(_deltaRAConstraintName);
         _deltaRA = ra.doubleValue();
@@ -147,7 +154,7 @@ public class DistanceFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("DistanceFilter", "shouldRemoveRow");
 
         // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
         int raId  = starList.getColumnIdByName(_raColumnName);

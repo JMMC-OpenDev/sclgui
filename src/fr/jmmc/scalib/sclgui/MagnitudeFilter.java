@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MagnitudeFilter.java,v 1.6 2007-08-02 15:35:51 lafrasse Exp $"
+ * "@(#) $Id: MagnitudeFilter.java,v 1.7 2008-09-10 22:27:12 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/08/02 15:35:51  lafrasse
+ * Streamlined GUI and enfored protection against missing data.
+ *
  * Revision 1.5  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -24,9 +27,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import java.util.Vector;
+import java.util.logging.*;
 
 
 /**
@@ -34,6 +36,10 @@ import java.util.Vector;
  */
 public class MagnitudeFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.MagnitudeFilter");
+
     /** Store the magnitude constraint name */
     private String _magnitudeConstraintName = "Magnitude";
 
@@ -66,7 +72,7 @@ public class MagnitudeFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("MagnitudeFilter", "getName");
 
         return "Reject stars with magnitude above :";
     }
@@ -76,7 +82,7 @@ public class MagnitudeFilter extends Filter
      */
     private double getAllowedMagnitude()
     {
-        MCSLogger.trace();
+        _logger.entering("MagnitudeFilter", "getAllowedMagnitude");
 
         Double magnitude = (Double) getConstraintByName(_magnitudeConstraintName);
 
@@ -93,7 +99,7 @@ public class MagnitudeFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("MagnitudeFilter", "shouldRemoveRow");
 
         // Get the query magnitude band
         String magnitudeBand = _queryModel.getInstrumentalMagnitudeBand();

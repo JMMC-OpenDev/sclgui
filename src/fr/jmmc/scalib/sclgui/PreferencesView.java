@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.28 2007-12-03 14:41:59 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.29 2008-09-10 22:31:06 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2007/12/03 14:41:59  lafrasse
+ * Removed science object inclusion preference.
+ * Changed default query to match the one of the previous version.
+ *
  * Revision 1.27  2007/10/09 14:41:04  lafrasse
  * Added handling of all different sets of columns order.
  *
@@ -34,7 +38,7 @@
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
  * Revision 1.18  2006/10/10 09:09:37  lafrasse
- * Updated MCSLogger APIs to more tightly reflect standard MCS 'log' module levels.
+ * Updated _logger APIs to more tightly reflect standard MCS 'log' module levels.
  *
  * Revision 1.17  2006/10/04 11:34:31  lafrasse
  * Added support for preferenced science object detection distance.
@@ -90,7 +94,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
@@ -116,6 +119,10 @@ import javax.swing.text.*;
  */
 public class PreferencesView extends JFrame implements ActionListener
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.PreferencesView");
+
     /** Data model */
     Preferences _preferences;
 
@@ -161,7 +168,7 @@ public class PreferencesView extends JFrame implements ActionListener
         tabbedPane.add("Columns Order", columnsView);
 
         // Add the catalog preferences pane
-        JPanel catalogView = new LegendView();
+        JPanel catalogView = new LegendView(true);
         tabbedPane.add("Legend Colors", catalogView);
 
         // Add the help preferences pane
@@ -188,6 +195,8 @@ public class PreferencesView extends JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent evt)
     {
+        _logger.entering("PreferencesView", "actionPerformed");
+
         // If the "Restore to default settings" button has been pressed
         if (evt.getSource().equals(_restoreDefaultButton))
         {
@@ -197,8 +206,8 @@ public class PreferencesView extends JFrame implements ActionListener
             }
             catch (Exception ex)
             {
-                MCSLogger.warning("Could not reset preferences to default : " +
-                    ex);
+                _logger.log(Level.WARNING,
+                    "Could not reset preferences to default.", ex);
             }
         }
 
@@ -211,7 +220,7 @@ public class PreferencesView extends JFrame implements ActionListener
             }
             catch (Exception ex)
             {
-                MCSLogger.warning("Could not save preferences : " + ex);
+                _logger.log(Level.WARNING, "Could not save preferences.", ex);
             }
         }
     }
@@ -224,6 +233,10 @@ public class PreferencesView extends JFrame implements ActionListener
 class QueryPreferencesView extends JPanel implements Observer, ActionListener,
     FocusListener
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.QueryPreferencesView");
+
     /** Data model */
     private Preferences _preferences;
 
@@ -319,6 +332,8 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void update(Observable o, Object arg)
     {
+        _logger.entering("QueryPreferencesView", "update");
+
         Double d;
 
         d = _preferences.getPreferenceAsDouble(
@@ -347,7 +362,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void focusLost(FocusEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryPreferencesView", "focusLost");
 
         // Store new data
         storeValues(e);
@@ -358,7 +373,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void actionPerformed(ActionEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryPreferencesView", "actionPerformed");
 
         // Store new data
         storeValues(e);
@@ -369,7 +384,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void storeValues(AWTEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryPreferencesView", "storeValues");
 
         Object source = e.getSource();
 
@@ -382,7 +397,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
             }
             catch (Exception ex)
             {
-                MCSLogger.warning("Could not set preference : " + ex);
+                _logger.log(Level.WARNING, "Could not set preference.", ex);
             }
         }
 
@@ -395,7 +410,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
             }
             catch (Exception ex)
             {
-                MCSLogger.warning("Could not set preference : " + ex);
+                _logger.log(Level.WARNING, "Could not set preference.", ex);
             }
         }
 
@@ -408,7 +423,7 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
             }
             catch (Exception ex)
             {
-                MCSLogger.warning("Could not set preference : " + ex);
+                _logger.log(Level.WARNING, "Could not set preference.", ex);
             }
         }
     }
@@ -421,6 +436,10 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
 class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     ListSelectionListener
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.ColumnsPreferencesView");
+
     /** Data model */
     private Preferences _preferences;
 
@@ -546,12 +565,14 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void update(Observable o, Object arg)
     {
+        _logger.entering("ColumnsPreferencesView", "update");
+
         // Fill list with ordered columns if _actualWord is not equal
         String columns = _preferences.getPreference(_preferencePath);
 
         if (columns == null)
         {
-            MCSLogger.debug(_preferencePath + " not found into preferences");
+            _logger.fine(_preferencePath + " not found into preferences");
 
             return;
         }
@@ -582,6 +603,8 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void valueChanged(ListSelectionEvent evt)
     {
+        _logger.entering("ColumnsPreferencesView", "valueChanged");
+
         // When the user release the mouse button and completes the selection,
         // getValueIsAdjusting() becomes false
         if (evt.getValueIsAdjusting() == false)
@@ -593,7 +616,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             // If no item is selected
             if (index == -1)
             {
-                MCSLogger.debug("Buttons DISABLED (no selection).");
+                _logger.fine("Buttons DISABLED (no selection).");
                 _moveUpButton.setEnabled(false);
                 _moveDownButton.setEnabled(false);
 
@@ -604,14 +627,14 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             if (index == 0)
             {
                 // Disable the 'Up' button.
-                MCSLogger.debug(
+                _logger.fine(
                     "'Up' Button DISABLED (the first item IS selected).");
                 _moveUpButton.setEnabled(false);
             }
             else
             {
                 // Enable the 'Up' button.
-                MCSLogger.debug(
+                _logger.fine(
                     "'Up' Button ENABLED (the first item is NOT selected).");
                 _moveUpButton.setEnabled(true);
             }
@@ -620,14 +643,14 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             if (index == (size - 1))
             {
                 // Disable the 'Down' button.
-                MCSLogger.debug(
+                _logger.fine(
                     "'Down' Button DISABLED (the last item IS selected).");
                 _moveDownButton.setEnabled(false);
             }
             else
             {
                 // Enable the 'Down' button.
-                MCSLogger.debug(
+                _logger.fine(
                     "'Down' Button ENABLED (the last item is NOT selected).");
                 _moveDownButton.setEnabled(true);
             }
@@ -641,6 +664,8 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      */
     public void actionPerformed(ActionEvent evt)
     {
+        _logger.entering("ColumnsPreferencesView", "actionPerformed");
+
         // If the ComboBox was used
         if (evt.getSource().equals(_columnsSetCombobox))
         {
@@ -669,7 +694,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             if ((currentSelection == -1) ||
                     (futureSelection >= _listModel.size()))
             {
-                MCSLogger.debug("Assertion failed : selection out of range.");
+                _logger.fine("Assertion failed : selection out of range.");
 
                 return;
             }
@@ -697,7 +722,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             // If current and future selection indexes are out of range
             if ((currentSelection == -1) || (futureSelection < 0))
             {
-                MCSLogger.debug("Assertion failed : selection out of range.");
+                _logger.fine("Assertion failed : selection out of range.");
 
                 return;
             }
@@ -725,7 +750,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         }
         catch (Exception ex)
         {
-            MCSLogger.warning("Could not set '" + _preferencePath +
+            _logger.warning("Could not set '" + _preferencePath +
                 "' preference : " + ex);
         }
 
@@ -743,6 +768,10 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
  */
 class HelpPreferencesView extends JPanel implements Observer, ChangeListener
 {
+    /** Logger */
+    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.HelpPreferencesView");
+
     /** Data model */
     private Preferences _preferences;
 
@@ -797,7 +826,6 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
             String    pref   = (String) e.nextElement();
             Action    action = (Action) booleanPrefs.get(pref);
             JCheckBox cb     = new JCheckBox(action);
-            cb.setModel(PreferencedButtonModel.getInstance(_preferences, pref));
             tempPanel.add(cb, c);
             c.gridy++;
         }
@@ -814,6 +842,8 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
      */
     public void update(Observable o, Object arg)
     {
+        _logger.entering("HelpPreferencesView", "update");
+
         // Adjust view and behaviour according preferences entries
         boolean b;
 
@@ -828,7 +858,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
      */
     public void stateChanged(ChangeEvent ev)
     {
-        MCSLogger.trace();
+        _logger.entering("HelpPreferencesView", "stateChanged");
 
         Object source = ev.getSource();
 
@@ -841,7 +871,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
             }
             catch (Exception ex)
             {
-                MCSLogger.warning("Could not set preference : " + ex);
+                _logger.warning("Could not set preference : " + ex);
             }
         }
     }

@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.4 2008-05-26 16:01:49 mella Exp $"
+ * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.5 2008-09-10 22:21:27 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2008/05/26 16:01:49  mella
+ * Rename VisibilityFilter to VisibilityAccuracyFilter
+ * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
+ *
  * Revision 1.3  2008/05/21 15:24:18  lafrasse
  * Added systematic deletion of calibrators with Vis2 < 0.5 .
  *
@@ -18,9 +22,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import java.util.Vector;
+import java.util.logging.*;
 
 
 /**
@@ -28,6 +31,10 @@ import java.util.Vector;
  */
 public class FacelessNonCalibratorsFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.FacelessNonCalibratorsFilter");
+
     /** Store the visibility column name */
     private String _visibilityColumnName = "vis2";
 
@@ -59,7 +66,7 @@ public class FacelessNonCalibratorsFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("FacelessNonCalibratorsFilter", "getName");
 
         return "Faceless Non-Calibrators Filter";
     }
@@ -74,7 +81,7 @@ public class FacelessNonCalibratorsFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("FacelessNonCalibratorsFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
@@ -88,7 +95,7 @@ public class FacelessNonCalibratorsFilter extends Filter
             // If the visibility is undefined
             if (vis2Cell.hasValue() == false)
             {
-                MCSLogger.debug("No vis2 - Line removed.");
+                _logger.fine("No vis2 - Line removed.");
 
                 // This row should be removed
                 return true;
@@ -118,13 +125,13 @@ public class FacelessNonCalibratorsFilter extends Filter
                        (diamVRCell.hasValue() == false) &&
                        (diamVKCell.hasValue() == false))
                {
-                   MCSLogger.debug("No diam_xx defined - Line removed.");
+                   _logger.fine("No diam_xx defined - Line removed.");
                    // This row should be removed
                    return true;
                }
            }
          */
-        MCSLogger.debug("Line kept.");
+        _logger.fine("Line kept.");
 
         // Otherwise this row should be kept
         return false;

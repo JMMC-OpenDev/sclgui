@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.6 2007-07-09 12:53:37 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.7 2008-09-10 22:22:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/07/09 12:53:37  lafrasse
+ * Updated to keep the science object when present.
+ *
  * Revision 1.5  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -25,9 +28,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.MCSLogger;
-
 import java.util.*;
+import java.util.logging.*;
 
 
 /**
@@ -35,6 +37,10 @@ import java.util.*;
  */
 public abstract class Filter extends Observable
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.Filter");
+
     /** Enabled flag */
     private Boolean _enabledFlag;
 
@@ -66,7 +72,7 @@ public abstract class Filter extends Observable
      */
     public boolean isEnabled()
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "isEnabled");
 
         return _enabledFlag.booleanValue();
     }
@@ -79,7 +85,7 @@ public abstract class Filter extends Observable
      */
     public Boolean getEnabled()
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "getEnabled");
 
         return _enabledFlag;
     }
@@ -91,7 +97,7 @@ public abstract class Filter extends Observable
      */
     public void setEnabled(Boolean enabledFlag)
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "setEnabled");
 
         _enabledFlag = enabledFlag;
 
@@ -106,7 +112,7 @@ public abstract class Filter extends Observable
      */
     public int getNbOfConstraints()
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "getNbOfConstraints");
 
         return _orderedConstraintNames.size();
     }
@@ -118,7 +124,7 @@ public abstract class Filter extends Observable
      */
     public String getConstraintNameByOrder(int index)
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "getConstraintNameByOrder");
 
         return (String) _orderedConstraintNames.elementAt(index);
     }
@@ -130,7 +136,7 @@ public abstract class Filter extends Observable
      */
     public Object getConstraintByName(String constraintName)
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "getConstraintByName");
 
         return _constraints.get(constraintName);
     }
@@ -143,7 +149,7 @@ public abstract class Filter extends Observable
      */
     public void setConstraint(String constraintName, Object constraintValue)
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "setConstraint");
 
         _constraints.put(constraintName, constraintValue);
         _orderedConstraintNames.add(constraintName);
@@ -162,6 +168,8 @@ public abstract class Filter extends Observable
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
+        _logger.entering("Filter", "shouldRemoveRow");
+
         return true;
     }
 
@@ -175,6 +183,8 @@ public abstract class Filter extends Observable
      */
     public boolean isScienceObject(StarList starList, Vector row)
     {
+        _logger.entering("Filter", "isScienceObject");
+
         boolean isScienceObject = false;
 
         // Get the 'distance' column Id
@@ -205,7 +215,7 @@ public abstract class Filter extends Observable
      */
     public void process(StarList starList)
     {
-        MCSLogger.trace();
+        _logger.entering("Filter", "process");
 
         // If the filter is enabled
         if ((isEnabled() == true))
@@ -240,6 +250,8 @@ public abstract class Filter extends Observable
      */
     public String toString()
     {
+        _logger.entering("Filter", "toString");
+
         String filter = "Filter '" + getName() + "' ";
         filter += (((isEnabled() == true) ? "enabled" : "disabled") + " :");
         filter += _constraints;

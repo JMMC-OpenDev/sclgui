@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.9 2008-05-26 16:01:49 mella Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.10 2008-09-10 22:41:09 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2008/05/26 16:01:49  mella
+ * Rename VisibilityFilter to VisibilityAccuracyFilter
+ * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
+ *
  * Revision 1.8  2008/02/13 12:16:50  lafrasse
  * Corrected a bug reported by Myriam BENISTY that prevented calibrator with a NaN accurancy (0.0/0.0) to be properly rejected.
  *
@@ -45,6 +49,10 @@ import java.util.Vector;
  */
 public class VisibilityFilter extends Filter
 {
+    /** Logger */
+    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.VisibilityFilter");
+
     /** Store the visibility constraint name */
     private String _visibilityColumnName = "vis2";
 
@@ -69,7 +77,7 @@ public class VisibilityFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("VisibilityFilter", "getName");
 
         return "Reject Visiblity below :";
     }
@@ -81,7 +89,7 @@ public class VisibilityFilter extends Filter
      */
     private double getAllowedVisibiliy()
     {
-        MCSLogger.trace();
+        _logger.entering("VisibilityFilter", "getAllowedVisibiliy");
 
         Double d = (Double) getConstraintByName(_visibilityConstraintName);
 
@@ -98,7 +106,7 @@ public class VisibilityFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("VisibilityFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
@@ -112,7 +120,7 @@ public class VisibilityFilter extends Filter
             // If the visibility is undefined
             if (vis2Cell.hasValue() == false)
             {
-                MCSLogger.debug("No vis2 - Line removed.");
+                _logger.fine("No vis2 - Line removed.");
 
                 // This row should be removed
                 return true;
@@ -121,7 +129,7 @@ public class VisibilityFilter extends Filter
             // If the visibility is less than 0.5
             if (vis2Cell.getDoubleValue() < getAllowedVisibiliy())
             {
-                MCSLogger.debug("vis2 < " + getAllowedVisibiliy() +
+                _logger.fine("vis2 < " + getAllowedVisibiliy() +
                     " - Line removed.");
 
                 // This row should be removed
