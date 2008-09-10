@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.23 2007-10-09 14:38:12 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.24 2008-09-10 22:19:08 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2007/10/09 14:38:12  lafrasse
+ * Added the ability to return the current scenario and magnitude band.
+ *
  * Revision 1.22  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -86,13 +89,12 @@ import cds.savot.pull.*;
 
 import cds.savot.writer.*;
 
-import fr.jmmc.mcs.log.MCSLogger;
-
 import java.io.*;
 
 import java.net.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -113,6 +115,10 @@ import javax.xml.transform.stream.*;
  */
 public class CalibratorsModel extends DefaultTableModel implements Observer
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.CalibratorsModel");
+
     /** Original VOTable as a string */
     private String _voTable;
 
@@ -182,7 +188,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "update");
 
         // OPTIMIZE : the clone operation should only be done when the ay filter
         // has been deactivated, otherwise currentStarList is sufficient
@@ -225,7 +231,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public boolean dataHaveChanged()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "dataHaveChanged");
 
         return _dataHaveChanged;
     }
@@ -242,9 +248,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public boolean isCellEditable(int row, int column)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "isCellEditable");
 
-        return false;
+        // Fake editor in order to handle clickable cell to open page in browser (in TableSorter)
+        return true;
     }
 
     /**
@@ -257,7 +264,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public Object getValueAt(int row, int column)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getValueAt");
 
         Object _value = getStarProperty(row, column).getValue();
 
@@ -274,7 +281,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public Class getColumnClass(int column)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getColumnClass");
 
         if (_columnClasses != null)
         {
@@ -292,7 +299,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void parseVOTable(BufferedReader reader) throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "parseVOTable");
 
         try
         {
@@ -320,7 +327,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public String getMagnitudeBand()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getMagnitudeBand");
 
         return _magnitudeBand;
     }
@@ -333,7 +340,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public Boolean getBrightScenarioFlag()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getBrightScenarioFlag");
 
         return _brightScenarioFlag;
     }
@@ -346,7 +353,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void parseVOTable(String voTable) throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "parseVOTable");
 
         _voTable             = voTable;
         _currentVOTable      = voTable;
@@ -521,7 +528,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             String     paramName  = param.getName();
             String     paramValue = param.getValue();
 
-            MCSLogger.debug(paramName + " = '" + paramValue + "'");
+            _logger.fine(paramName + " = '" + paramValue + "'");
             parameters.put(paramName, paramValue);
         }
 
@@ -534,7 +541,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         }
 
         _brightScenarioFlag = Boolean.valueOf((String) parameters.get("bright"));
-        MCSLogger.debug("magnitude band = '" + _magnitudeBand +
+        _logger.fine("magnitude band = '" + _magnitudeBand +
             "'; bright scenario = '" + _brightScenarioFlag + "'.");
 
         // Update any attached observer
@@ -548,7 +555,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public ParamSet getParamSet()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getParamSet");
 
         return _paramSet;
     }
@@ -563,7 +570,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public StarProperty getStarProperty(int row, int column)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getStarProperty");
 
         // The real column index
         Vector starsProperties = (Vector) _filteredStarList.get(row);
@@ -586,7 +593,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public int getColumnIdByName(String groupName)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getColumnIdByName");
 
         return _originalStarList.getColumnIdByName(groupName);
     }
@@ -600,7 +607,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     private SavotVOTable getSavotVOTable(StarList starList)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getSavotVOTable");
 
         // This method must be optimized (if no change occured do not generate
         // again...)
@@ -662,7 +669,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void openFile(File file) throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "openFile");
 
         try
         {
@@ -687,7 +694,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void saveVOTableFile(File file)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "saveVOTableFile");
 
         String       filename = file.getAbsolutePath();
 
@@ -703,7 +710,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public String getVOTable()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "getVOTable");
 
         SavotVOTable          voTable      = getSavotVOTable(_currentStarList);
 
@@ -722,7 +729,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public boolean hasSomeDeletedStars()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "hasSomeDeletedStars");
 
         return _originalStarList.hasSomeDeletedStars();
     }
@@ -735,7 +742,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void deleteStars(int[] indices)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "deleteStars");
 
         // Remove each selected row
         for (int i = 0; i < indices.length; i++)
@@ -753,7 +760,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void undeleteStars()
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "undeleteStars");
 
         // Unflag all previously flagged stars
         _originalStarList.undeleteAll();
@@ -771,7 +778,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void exportCurrentVOTableToCSV(File out)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "exportCurrentVOTableToCSV");
 
         applyXSLTranformationOnCurrentVOTable(out, "voTableToCSV.xsl");
     }
@@ -783,7 +790,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public void exportCurrentVOTableToHTML(File out)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel", "exportCurrentVOTableToHTML");
 
         applyXSLTranformationOnCurrentVOTable(out, "voTableToHTML.xsl");
     }
@@ -797,13 +804,14 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     private void applyXSLTranformationOnCurrentVOTable(File outputFile,
         String xslFileName)
     {
-        MCSLogger.trace();
+        _logger.entering("CalibratorsModel",
+            "applyXSLTranformationOnCurrentVOTable");
 
         URL xslFile = getClass().getResource(xslFileName);
 
         if (xslFile == null)
         {
-            MCSLogger.error("Could not load XSL file '" + xslFileName + "'.");
+            _logger.severe("Could not load XSL file '" + xslFileName + "'.");
 
             return;
         }
@@ -831,27 +839,28 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             // the output file
             xformer.transform(source, result);
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException ex)
         {
-            MCSLogger.error("File not found '" + e + "'");
+            _logger.log(Level.SEVERE, "File not found", ex);
         }
-        catch (TransformerConfigurationException e)
+        catch (TransformerConfigurationException ex)
         {
             // An error occurred in the XSL file
-            MCSLogger.error("One error occured into the xsl file '" + xslFile +
-                "'");
+            _logger.log(Level.SEVERE,
+                "One error occured into the XSL file '" + xslFile + "'", ex);
         }
-        catch (TransformerException e)
+        catch (TransformerException ex)
         {
             // An error occurred while applying the XSL file
             // Get location of error in input file
-            SourceLocator locator  = e.getLocator();
+            SourceLocator locator  = ex.getLocator();
             int           col      = locator.getColumnNumber();
             int           line     = locator.getLineNumber();
             String        publicId = locator.getPublicId();
             String        systemId = locator.getSystemId();
-            MCSLogger.error("One error occured applying xsl (xsl='" + xslFile +
-                "', error on line " + line + " column " + col + ")");
+            _logger.log(Level.SEVERE,
+                "One error occured while applying XSL file '" + xslFile +
+                "', on line '" + line + "' and column '" + col + "'", ex);
         }
     }
 
@@ -868,7 +877,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         public boolean isCellEditable(int row, int column)
         {
-            MCSLogger.trace();
+            _logger.entering("RowHeadersModel", "isCellEditable");
 
             // Return always false as no row header should be editable
             return false;
@@ -876,7 +885,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         public void populate(int nbOfRows)
         {
-            MCSLogger.trace();
+            _logger.entering("RowHeadersModel", "populate");
 
             // Empty all the current row headers
             dataVector.clear();
