@@ -1050,13 +1050,13 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     private class TableCellColors extends DefaultTableCellRenderer
         implements Observer
     {
-        Hashtable _hashColors;
-        Hashtable _hashConfidence;
-        Preferences _preferences;
+        Hashtable        _hashColors;
+        Hashtable        _hashConfidence;
+        Preferences      _preferences;
         CalibratorsModel _calModel;
-        int _distId;
-        int _hiptId;
-        int _hdtId;
+        int              _distId;
+        int              _hiptId;
+        int              _hdtId;
 
         // Get the prefered distance to detect the science object
         Double _prefDistance = 0.0;
