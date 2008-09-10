@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersView.java,v 1.6 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: FiltersView.java,v 1.7 2008-09-10 22:25:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.5  2006/08/04 16:53:54  lafrasse
  * Re-added preliminary print support
  *
@@ -24,8 +27,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.*;
@@ -43,6 +44,10 @@ import javax.swing.table.*;
  */
 public class FiltersView extends JPanel implements Printable
 {
+    /** Logger */
+    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.FiltersView");
+
     /**
      * Constructor.
      *
@@ -79,13 +84,15 @@ public class FiltersView extends JPanel implements Printable
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
         throws PrinterException
     {
+        _logger.entering("FiltersView", "print");
+
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
         int fontHeight  = g2d.getFontMetrics().getHeight();
         int fontDescent = g2d.getFontMetrics().getDescent();
 
-        // laisser de l'espace pour le numero de page
+        // Keep some space for page numbers
         double pageHeight = pageFormat.getImageableHeight() - fontHeight;
         double pageWidth  = pageFormat.getImageableWidth();
 
