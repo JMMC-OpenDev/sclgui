@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
@@ -10,6 +11,7 @@ import java.awt.event.*;
 
 import java.util.*;
 import java.util.List;
+import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -73,6 +75,10 @@ import javax.swing.table.*;
 public class TableSorter extends AbstractTableModel implements Observer ////////////////////////////////////////////////////////////////////////////////
                                                                         // public class TableSorter extends AbstractTableModel
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.TableSorter");
+
     /**
      * DOCUMENT ME!
      */
@@ -173,6 +179,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     /** The cellrendered that works with every columns */
     private TableCellColors _tableCellColors;
 
+    /**
+     * DOCUMENT ME!
+     */
+    private TableCellColorsEditor _tableCellColorsEditor;
+
     ////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -225,7 +236,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         _preferences          = Preferences.getInstance();
         _preferences.addObserver(this);
 
-        _tableCellColors = new TableCellColors();
+        _tableCellColors           = new TableCellColors();
+        _tableCellColorsEditor     = new TableCellColorsEditor();
 
         computeSimpleDetailedViewArray();
     }
@@ -655,7 +667,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
      */
     public void computeSimpleDetailedViewArray()
     {
-        MCSLogger.trace();
+        _logger.entering("TableSorter", "computeSimpleDetailedViewArray");
 
         String view      = "simple";
         String scenario  = "bright";
@@ -687,7 +699,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         // Compute the corresponding preference path
         String selectedView = "view.columns." + view + "." + scenario + "." +
             magnitude;
-        MCSLogger.debug("Selected view = '" + selectedView + "'.");
+        _logger.fine("Selected view = '" + selectedView + "'.");
 
         // Get the selected ordered column name table
         String[] columnStrings = _preferences.getPreference(selectedView)
@@ -711,11 +723,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // If no column Id was found for the given column name
                 if (columnId < 0)
                 {
-                    MCSLogger.warning("No column called '" + columnName + "'.");
+                    _logger.warning("No column called '" + columnName + "'.");
                 }
                 else
                 {
-                    MCSLogger.debug("_viewIndex[" + i + "] = '" + columnId +
+                    _logger.fine("_viewIndex[" + i + "] = '" + columnId +
                         "' -> '" + columnName + "'.");
                 }
             }
@@ -751,7 +763,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
      */
     public void update(Observable o, Object arg)
     {
-        MCSLogger.trace();
+        _logger.entering("TableSorter", "update");
 
         computeSimpleDetailedViewArray();
 
@@ -826,6 +838,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             {
                 TableColumn tc = tableHeader.getColumnModel().getColumn(i);
                 tc.setCellRenderer(_tableCellColors);
+                tc.setCellEditor(_tableCellColorsEditor);
             }
 
             ////////////////////////////////////////////////////////////////////////
@@ -1037,20 +1050,16 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     private class TableCellColors extends DefaultTableCellRenderer
         implements Observer
     {
-        /**
-         * DOCUMENT ME!
-         */
         Hashtable _hashColors;
-
-        /**
-         * DOCUMENT ME!
-         */
         Hashtable _hashConfidence;
-
-        /**
-         * DOCUMENT ME!
-         */
         Preferences _preferences;
+        CalibratorsModel _calModel;
+        int _distId;
+        int _hiptId;
+        int _hdtId;
+
+        // Get the prefered distance to detect the science object
+        Double _prefDistance = 0.0;
 
         /**
          * TableCellColors  -  Constructor
@@ -1062,9 +1071,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             // Store the application preferences and register against it
             _preferences = Preferences.getInstance();
             _preferences.addObserver(this);
-
-            // Force to load Preferences at first moment
-            update(_preferences, null);
         }
 
         /**
@@ -1081,19 +1087,33 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             Object value, boolean isSelected, boolean hasFocus, int row,
             int column)
         {
-            // MCSLogger.trace();
-            // MCSLogger.debug("getTableCellRendererComponent(" + row +
+            // _logger.entering("TableCellColors", "getTableCellRendererComponent");
+            // _logger.fine("getTableCellRendererComponent(" + row +
             //  "," + column + ")");
 
             // Set default renderer to the component
             super.getTableCellRendererComponent(table, value, isSelected,
                 hasFocus, row, column);
 
+            // Generated tooltip
+            String tooltip = "";
+
+            _calModel     = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
+            _distId       = _calModel.getColumnIdByName("dist");
+            _hiptId       = _calModel.getColumnIdByName("HIP");
+            _hdtId        = _calModel.getColumnIdByName("HD");
+
             // Get StarProperty selected using modelIndex Method
-            CalibratorsModel calModel     = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
-            StarProperty     starProperty = calModel.getStarProperty(modelIndex(
-                        row),
-                    _viewIndex[table.convertColumnIndexToModel(column)]);
+            int          modelRow     = modelIndex(row);
+            int          modelColumn  = _viewIndex[table.convertColumnIndexToModel(column)];
+            String       cellValue    = "";
+            StarProperty starProperty = _calModel.getStarProperty(modelRow,
+                    modelColumn);
+
+            if (starProperty != null)
+            {
+                cellValue = starProperty.getStringValue();
+            }
 
             // Do not change color if cell is located onto a selected row
             int[] selectedRows = table.getSelectedRows();
@@ -1102,80 +1122,99 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             {
                 if (selectedRows[i] == row)
                 {
+                    // Should provide tooltips before !!!
                     return this;
                 }
             }
 
-            // Get the 'distance' column Id
-            int distId = calModel.getColumnIdByName("dist");
-
             // Get the row's distance star property
-            StarProperty distanceProperty = calModel.getStarProperty(modelIndex(
-                        row), distId);
+            StarProperty distanceProperty = _calModel.getStarProperty(modelRow,
+                    _distId);
             Double       rowDistance      = distanceProperty.getDoubleValue();
 
-            // Get the prefered distance to detect the science object
-            Double prefDistance = _preferences.getPreferenceAsDouble(
-                    "query.scienceObjectDetectionDistance");
-
             // If the current row distance is close enough to be detected as a science object
-            if (rowDistance < prefDistance)
+            if (rowDistance < _prefDistance)
             {
                 // Put the corresponding row font in bold
                 Font f = getFont();
                 setFont(f.deriveFont(f.getStyle() | Font.BOLD));
-                MCSLogger.debug("Put rows['" + modelIndex(row) +
-                    "'] in BOLD : rowDistance (= '" + rowDistance +
-                    "') < prefDistance (= '" + prefDistance + "')= '').");
+                _logger.fine("Put row['" + row +
+                    "'] in BOLD : (rowDistance = '" + rowDistance +
+                    "') < (prefDistance = '" + _prefDistance + "').");
             }
 
-            // Generated tooltip
-            String tooltip = null;
+            // Get ID column catalog name
+            String catalogName = null;
+
+            if (modelColumn == _hiptId)
+            {
+                //System.out.println("value is in HIP column.");
+                catalogName = "HIP";
+            }
+
+            if (modelColumn == _hdtId)
+            {
+                //System.out.println("value is in HD column.");
+                catalogName = "HD";
+            }
+
+            // Compose catalog URL
+            if (catalogName != null)
+            {
+                if (cellValue.length() != 0)
+                {
+                    setText("<html><a href='#empty'>" + cellValue +
+                        "</a></html>");
+                    tooltip += ("Click to open '" + catalogName +
+                    "' catalog webpage for star '" + cellValue + "' - ");
+                }
+            }
 
             // If cell is not selected and not focused 
             if (! (isSelected && hasFocus))
             {
+                // Set default text color to black
+                Color foregroundColor = Color.BLACK;
+
+                // Set default cell color to white
+                Color backgroundColor = Color.WHITE;
+
                 if (starProperty != null)
                 {
-                    // Set default text color to black
-                    setForeground(Color.BLACK);
-
                     // Set Background Color corresponding to the Catalog Origin Color or confidence index
                     if (starProperty.hasOrigin() == true)
                     {
                         // Get origin and set it as tooltip
                         String origin = starProperty.getOrigin();
-                        tooltip = "origin: " + origin;
+                        tooltip += ("Catalog origin: " + origin);
 
                         // Get origin color and set it as cell backgroung color
-                        Color originColor = (Color) _hashColors.get(origin);
-                        setBackground(originColor);
+                        backgroundColor = (Color) _hashColors.get(origin);
                     }
                     else if (starProperty.hasConfidence() == true)
                     {
                         // Get confidence and set it as tooltip
                         String confidence = starProperty.getConfidence();
-                        tooltip = "confidence: " + confidence;
+                        tooltip += ("Confidence index: " + confidence);
 
                         // Get confidence color and set it as cell backgroung color
-                        Color confidenceColor = (Color) _hashColors.get(confidence);
-                        setBackground(confidenceColor);
+                        backgroundColor = (Color) _hashColors.get(confidence);
                     }
                     else
                     {
                         // If something bad appent, write text in red !
-                        setForeground(Color.RED);
-                        tooltip = "!!! BUG !!!";
+                        foregroundColor     = Color.RED;
+                        tooltip             = "!!! BUG !!!";
                     }
+
+                    // Apply colors
+                    setForeground(foregroundColor);
+                    setBackground(backgroundColor);
                 }
             }
 
-            // If tooltip was defined
-            if (tooltip != null)
-            {
-                // Set tooltip
-                setToolTipText(tooltip);
-            }
+            // Set tooltip
+            setToolTipText(tooltip);
 
             // Return the component
             return this;
@@ -1186,11 +1225,15 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
          */
         public void update(Observable o, Object arg)
         {
-            MCSLogger.trace();
+            _logger.entering("TableCellColors", "update");
 
             // React to preferences changes
             if (o.equals(_preferences))
             {
+                // Get science object detection distance
+                _prefDistance = _preferences.getPreferenceAsDouble(
+                        "query.scienceObjectDetectionDistance");
+
                 // Read colors preferences for catalogs
                 String      prefix = "catalog.color.";
                 Enumeration e      = _preferences.getPreferences(prefix);
@@ -1208,9 +1251,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     }
                     catch (PreferencesException ex)
                     {
-                        MCSLogger.warning(
-                            "Could not get catalog color from preference : " +
-                            ex);
+                        _logger.log(Level.WARNING,
+                            "Could not get catalog color from preference : ", ex);
                     }
                 }
 
@@ -1231,12 +1273,95 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     }
                     catch (PreferencesException ex)
                     {
-                        MCSLogger.warning(
-                            "Could not get confidence color from preference : " +
+                        _logger.log(Level.WARNING,
+                            "Could not get confidence color from preference : ",
                             ex);
                     }
                 }
             }
+        }
+    }
+
+    class TableCellColorsEditor extends AbstractCellEditor
+        implements TableCellEditor
+    {
+        StarProperty _starProperty = null;
+
+        // This method is called when a cell value is edited by the user.
+        public Component getTableCellEditorComponent(JTable table,
+            Object value, boolean isSelected, int row, int column)
+        {
+            _logger.entering("TableCellColorsEditor",
+                "getTableCellEditorComponent()");
+
+            // Retrieve clicked cell informations
+            int              modelRow    = modelIndex(row);
+            int              modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
+            CalibratorsModel calModel    = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
+            _starProperty                = calModel.getStarProperty(modelRow,
+                    modelColumn);
+
+            String cellValue             = _starProperty.getStringValue();
+
+            // If the cell is empty
+            if (cellValue.length() == 0)
+            {
+                return null; // Exit
+            }
+
+            _logger.finest("getTableCellEditorComponent(" + row + "," + column +
+                ") = '" + value + "' <==> Model[" + modelRow + "," +
+                modelColumn + "] = '" + cellValue + "'.");
+
+            // Get clicked ID column catalog name
+            String catalogName = null;
+            int    hiptId      = calModel.getColumnIdByName("HIP");
+            int    hdtId       = calModel.getColumnIdByName("HD");
+
+            // Is it the 'HIP' column ?
+            if (modelColumn == hiptId)
+            {
+                catalogName = "HIP";
+            }
+
+            // Is it the 'HD' column ?
+            if (modelColumn == hdtId)
+            {
+                catalogName = "HD";
+            }
+
+            // If the clicked cell is not one of catalog column
+            if (catalogName == null)
+            {
+                return null; // Exit
+            }
+
+            _logger.fine("Edited value is in '" + catalogName + "' column.");
+
+            // Compose catalog URL
+            String url = "http://webviz.u-strasbg.fr/viz-bin/VizieR-S?" +
+                catalogName + "%20" + cellValue;
+
+            _logger.finer("User clicked on column '" + catalogName +
+                "' in the CalibratorView, will open '" + url +
+                "' in default browser.");
+
+            // Open web browser with the computed URL
+            BrowserLauncher.openURL(url);
+
+            // Return null to "cancel" editing
+            return null;
+        }
+
+        // This method is called when editing is completed.
+        // It must return the new value to be stored in the cell.
+        public Object getCellEditorValue()
+        {
+            // Should not be called
+            _logger.severe(
+                "TableCellColorsEditor.getCellEditorValue() should have not been called.");
+
+            return _starProperty;
         }
     }
 
