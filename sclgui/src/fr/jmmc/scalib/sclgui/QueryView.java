@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.52 2008-05-30 13:11:29 ccmgr Exp $"
+ * "@(#) $Id: QueryView.java,v 1.53 2008-09-10 22:36:16 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.52  2008/05/30 13:11:29  ccmgr
+ * Fix encoding for µ character
+ *
  * Revision 1.51  2008/05/30 12:47:51  lafrasse
  * Changed QueryDiffRA & QueryDiffDEC APIs to more precisely handle unit conversion
  * between minutes/degrees and arcmin.
@@ -186,7 +189,6 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
@@ -200,6 +202,7 @@ import java.net.URL;
 import java.text.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -213,6 +216,10 @@ import javax.swing.text.*;
 public class QueryView extends JPanel implements Observer,
     PropertyChangeListener, ActionListener, FocusListener, Printable
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.QueryView");
+
     /** MVC associated model */
     public QueryModel _queryModel;
 
@@ -342,6 +349,8 @@ public class QueryView extends JPanel implements Observer,
      */
     public QueryView(QueryModel queryModel, VirtualObservatory vo)
     {
+        String classPath = getClass().getName();
+
         // Store the model
         _queryModel                  = queryModel;
 
@@ -349,13 +358,16 @@ public class QueryView extends JPanel implements Observer,
         _vo                          = vo;
 
         // Reset values action
-        _resetValuesAction           = new ResetValuesAction();
+        _resetValuesAction           = new ResetValuesAction(classPath,
+                "_resetValuesAction");
 
         // Load default values action
-        _loadDefaultValuesAction     = new LoadDefaultValuesAction();
+        _loadDefaultValuesAction     = new LoadDefaultValuesAction(classPath,
+                "_loadDefaultValuesAction");
 
         // Save values action
-        _saveValuesAction            = new SaveValuesAction();
+        _saveValuesAction            = new SaveValuesAction(classPath,
+                "_saveValuesAction");
 
         JLabel label;
 
@@ -638,7 +650,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public void update(Observable o, Object arg)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "update");
 
         String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
 
@@ -783,7 +795,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public void focusLost(FocusEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "focusLost");
 
         // Store new data
         storeValues(e);
@@ -794,7 +806,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public void actionPerformed(ActionEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "actionPerformed");
 
         // Store new data
         storeValues(e);
@@ -805,7 +817,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public void storeValues(AWTEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "storeValues");
 
         // Get back the widget
         Object source = e.getSource();
@@ -820,7 +832,7 @@ public class QueryView extends JPanel implements Observer,
             }
             catch (Exception ex)
             {
-                MCSLogger.error("Could not handle input");
+                _logger.log(Level.SEVERE, "Could not handle input", ex);
             }
         }
 
@@ -863,7 +875,7 @@ public class QueryView extends JPanel implements Observer,
         // Refress the whole view
         _queryModel.notifyObservers();
 
-        MCSLogger.debug("query = " + _queryModel.getQueryAsMCSString());
+        _logger.fine("query = " + _queryModel.getQueryAsMCSString());
     }
 
     /**
@@ -871,7 +883,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public void propertyChange(PropertyChangeEvent e)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "propertyChange");
 
         boolean fileLoadedOk = (_queryModel.canBeEdited() == true);
         setEnabledComponents(_instrumentPanel, fileLoadedOk);
@@ -905,7 +917,7 @@ public class QueryView extends JPanel implements Observer,
      */
     public static void setEnabledComponents(JComponent component, boolean flag)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "setEnabledComponents");
 
         // If the given component contains sub-components
         if (component.getComponentCount() > 0)
@@ -942,7 +954,7 @@ public class QueryView extends JPanel implements Observer,
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
         throws PrinterException
     {
-        MCSLogger.trace();
+        _logger.entering("QueryView", "print");
 
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
@@ -972,7 +984,7 @@ public class QueryView extends JPanel implements Observer,
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("QueryView", "actionPerformed");
 
             StatusBar.show("bright scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(true);
@@ -989,7 +1001,7 @@ public class QueryView extends JPanel implements Observer,
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("FaintQueryAction", "actionPerformed");
 
             StatusBar.show("faint scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(false);
@@ -1006,37 +1018,37 @@ public class QueryView extends JPanel implements Observer,
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("AutoManualRadiusAction", "actionPerformed");
 
             _queryModel.setQueryAutoRadiusFlag(_autoRadiusRadioButton.isSelected());
         }
     }
 
-    protected class ResetValuesAction extends MCSAction
+    protected class ResetValuesAction extends RegisteredAction
     {
-        public ResetValuesAction()
+        public ResetValuesAction(String classPath, String fieldName)
         {
-            super("resetQueryValues");
+            super(classPath, fieldName);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("ResetValuesAction", "actionPerformed");
 
             _queryModel.reset();
         }
     }
 
-    protected class LoadDefaultValuesAction extends MCSAction
+    protected class LoadDefaultValuesAction extends RegisteredAction
     {
-        public LoadDefaultValuesAction()
+        public LoadDefaultValuesAction(String classPath, String fieldName)
         {
-            super("loadDefaultQueryValues");
+            super(classPath, fieldName);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("LoadDefaultValuesAction", "actionPerformed");
 
             try
             {
@@ -1044,21 +1056,21 @@ public class QueryView extends JPanel implements Observer,
             }
             catch (Exception ex)
             {
-                MCSLogger.error("LoadDefaultValuesAction error : " + ex);
+                _logger.log(Level.SEVERE, "LoadDefaultValuesAction error : ", ex);
             }
         }
     }
 
-    protected class SaveValuesAction extends MCSAction
+    protected class SaveValuesAction extends RegisteredAction
     {
-        public SaveValuesAction()
+        public SaveValuesAction(String classPath, String fieldName)
         {
-            super("saveQueryValues");
+            super(classPath, fieldName);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("SaveValuesAction", "actionPerformed");
 
             try
             {
@@ -1066,7 +1078,7 @@ public class QueryView extends JPanel implements Observer,
             }
             catch (Exception ex)
             {
-                MCSLogger.error("SaveValuesAction error : " + ex);
+                _logger.log(Level.SEVERE, "SaveValuesAction error : ", ex);
             }
         }
     }

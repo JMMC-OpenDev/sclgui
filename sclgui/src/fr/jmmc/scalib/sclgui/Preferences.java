@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.24 2008-08-28 14:16:02 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.25 2008-09-10 22:31:30 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2008/08/28 14:16:02  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Moved to new JMCS APIs.
+ *
  * Revision 1.23  2008/05/30 12:44:12  lafrasse
  * Updated queryDiffRASize & queryDiffiDECSize default values to match previous
  * SearchCal version.
@@ -88,6 +92,7 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.util.*;
 
 import java.util.Properties;
+import java.util.logging.*;
 
 
 /**
@@ -96,17 +101,16 @@ import java.util.Properties;
 public class Preferences extends fr.jmmc.mcs.util.Preferences
 {
     /** Logger */
-    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
+    private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.Preferences");
 
     /** Singleton instance */
-    private static Preferences _singleton = null;
+    private static Preferences _instance = null;
 
-    /**
-     * Privatized constructor that must be empty.
-     */
-    private Preferences()
+    /** Hidden constructor */
+    protected Preferences()
     {
+        // Insert your singleton initialization code here
     }
 
     /**
@@ -114,6 +118,8 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
      */
     protected String getPreferenceFilename()
     {
+        _logger.entering("Preferences", "getPreferenceFilename");
+
         return "fr.jmmc.searchcal.properties";
     }
 
@@ -122,119 +128,104 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
      */
     protected int getPreferencesVersionNumber()
     {
+        _logger.entering("Preferences", "getPreferencesVersionNumber");
+
         return 1;
     }
 
-    /**
-     * Return the singleton instance of Preferences.
-     *
-     * @return the singleton preference instance
-     */
-    public static Preferences getInstance()
+    /** Hidden constructor */
+    protected void setDefaultPreferences() throws PreferencesException
     {
-        _logger.entering("Preferences", "TBD");
+        // Place catalog origin colors
+        setDefaultPreference("catalog.color.I/280", "#FFB6B6");
+        setDefaultPreference("catalog.color.I/284", "#F1FB58");
+        setDefaultPreference("catalog.color.II/225/catalog", "#F6B6FF");
+        setDefaultPreference("catalog.color.II/7A/catalog", "#B9B6FF");
+        setDefaultPreference("catalog.color.II/246/out", "#B6E8FF");
+        setDefaultPreference("catalog.color.V/50/catalog", "#B6FFE6");
+        setDefaultPreference("catalog.color.J/A+A/433/1155", "#C89292");
+        setDefaultPreference("catalog.color.J/A+A/386/492/charm", "#DFFFB6");
+        setDefaultPreference("catalog.color.J/A+A/431/773/charm2", "#B7FF5A");
+        setDefaultPreference("catalog.color.B/denis", "#FFF4B6");
+        setDefaultPreference("catalog.color.J/A+A/413/1037", "#FFFADD");
+        setDefaultPreference("catalog.color.I/196/main", "#78FB8B");
+        setDefaultPreference("catalog.color.J/A+A/393/183/catalog", "#9778FB");
+        setDefaultPreference("catalog.color.MIDI", "#C994CA");
+        setDefaultPreference("catalog.color.V/36B/bsc4s", "#88A0A6");
 
-        // Build new reference if singleton does not already exist
-        // or return previous reference
-        if (_singleton == null)
+        // Place confidence indexes color
+        int i = 0;
+        setDefaultPreference("confidence.color.LOW", i++, "#6E6E6E");
+        setDefaultPreference("confidence.color.MEDIUM", i++, "#D8D8D8");
+        setDefaultPreference("confidence.color.HIGH", i++, "#EFEFEF");
+
+        // Place help behaviour
+        setDefaultPreference("help.tooltips.show", "true");
+
+        // Place view behaviour
+        setDefaultPreference("view.legend.show", "false");
+        setDefaultPreference("view.details.show", "false");
+
+        // Simple 'Bright N' view
+        setDefaultPreference("view.columns.simple.bright.N",
+            "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
+        // Detailled 'Bright N' view
+        setDefaultPreference("view.columns.detailled.bright.N",
+            "dist HD RAJ2000 DEJ2000 vis2Flag vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
+
+        // Simple 'Bright V' view
+        setDefaultPreference("view.columns.simple.bright.V",
+            "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
+        // Detailled 'Bright V' view
+        setDefaultPreference("view.columns.detailled.bright.V",
+            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+
+        // Simple 'Bright K' view
+        setDefaultPreference("view.columns.simple.bright.K",
+            "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
+        // Detailled 'Bright K' view
+        setDefaultPreference("view.columns.detailled.bright.K",
+            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+
+        // Simple 'Faint K' view
+        setDefaultPreference("view.columns.simple.faint.K",
+            "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Vphg I Icous Iphg J Jcous H Hcous K Kcous");
+        // Detailled 'Bright K' view
+        setDefaultPreference("view.columns.detailled.faint.K",
+            "dist vis2 vis2Err diam_vk diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
+
+        // Query default values preferences
+        setDefaultPreference("query.magnitudeBand", "V");
+        setDefaultPreference("query.instrumentalWavelength", "1.0");
+        setDefaultPreference("query.instrumentalMaxBaseLine", "102.45");
+        setDefaultPreference("query.scienceObjectName", "ETA_TAU");
+        setDefaultPreference("query.scienceObjectRA", "03:47:29.0765");
+        setDefaultPreference("query.scienceObjectDEC", "24:06:18.494");
+        setDefaultPreference("query.scienceObjectMagnitude", "0");
+        setDefaultPreference("query.queryMinMagnitude", "2.0");
+        setDefaultPreference("query.queryMaxMagnitude", "4.0");
+        setDefaultPreference("query.queryBrightScenarioFlag", "true");
+        setDefaultPreference("query.queryDiffRASize", "3600");
+        setDefaultPreference("query.queryDiffDECSize", "1200");
+        setDefaultPreference("query.queryRadialSize", "5.0");
+        setDefaultPreference("query.queryAutoRadius", "true");
+
+        setDefaultPreference("query.scienceObjectDetectionDistance", "0.01");
+        setDefaultPreference("query.queryMinMagnitudeDelta", "-3.0");
+        setDefaultPreference("query.queryMaxMagnitudeDelta", "4.0");
+    }
+
+    /** Return the singleton instance */
+    public static final synchronized Preferences getInstance()
+    {
+        // DO NOT MODIFY !!!
+        if (_instance == null)
         {
-            _singleton = new Preferences();
-
-            Preferences defaults = new Preferences();
-
-            try
-            {
-                // Place catalog origin colors
-                defaults.setPreference("catalog.color.I/280", "#FFB6B6");
-                defaults.setPreference("catalog.color.I/284", "#F1FB58");
-                defaults.setPreference("catalog.color.II/225/catalog", "#F6B6FF");
-                defaults.setPreference("catalog.color.II/7A/catalog", "#B9B6FF");
-                defaults.setPreference("catalog.color.II/246/out", "#B6E8FF");
-                defaults.setPreference("catalog.color.V/50/catalog", "#B6FFE6");
-                defaults.setPreference("catalog.color.J/A+A/433/1155", "#C89292");
-                defaults.setPreference("catalog.color.J/A+A/386/492/charm",
-                    "#DFFFB6");
-                defaults.setPreference("catalog.color.J/A+A/431/773/charm2",
-                    "#B7FF5A");
-                defaults.setPreference("catalog.color.B/denis", "#FFF4B6");
-                defaults.setPreference("catalog.color.J/A+A/413/1037", "#FFFADD");
-                defaults.setPreference("catalog.color.I/196/main", "#78FB8B");
-                defaults.setPreference("catalog.color.J/A+A/393/183/catalog",
-                    "#9778FB");
-                defaults.setPreference("catalog.color.MIDI", "#C994CA");
-                defaults.setPreference("catalog.color.V/36B/bsc4s", "#88A0A6");
-
-                // Place confidence indexes color
-                int i = 0;
-                defaults.setPreference("confidence.color.LOW", i++, "#6E6E6E");
-                defaults.setPreference("confidence.color.MEDIUM", i++, "#D8D8D8");
-                defaults.setPreference("confidence.color.HIGH", i++, "#EFEFEF");
-
-                // Place help behaviour
-                defaults.setPreference("help.tooltips.show", "true");
-
-                // Place view behaviour
-                defaults.setPreference("view.legend.show", "false");
-                defaults.setPreference("view.details.show", "false");
-
-                // Simple 'Bright N' view
-                defaults.setPreference("view.columns.simple.bright.N",
-                    "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
-                // Detailled 'Bright N' view
-                defaults.setPreference("view.columns.detailled.bright.N",
-                    "dist HD RAJ2000 DEJ2000 vis2Flag vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
-
-                // Simple 'Bright V' view
-                defaults.setPreference("view.columns.simple.bright.V",
-                    "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
-                // Detailled 'Bright V' view
-                defaults.setPreference("view.columns.detailled.bright.V",
-                    "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
-
-                // Simple 'Bright K' view
-                defaults.setPreference("view.columns.simple.bright.K",
-                    "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
-                // Detailled 'Bright K' view
-                defaults.setPreference("view.columns.detailled.bright.K",
-                    "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
-
-                // Simple 'Faint K' view
-                defaults.setPreference("view.columns.simple.faint.K",
-                    "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Vphg I Icous Iphg J Jcous H Hcous K Kcous");
-                // Detailled 'Bright K' view
-                defaults.setPreference("view.columns.detailled.faint.K",
-                    "dist vis2 vis2Err diam_vk diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
-
-                // Query default values preferences
-                defaults.setPreference("query.magnitudeBand", "V");
-                defaults.setPreference("query.instrumentalWavelength", "1.0");
-                defaults.setPreference("query.instrumentalMaxBaseLine", "102.45");
-                defaults.setPreference("query.scienceObjectName", "ETA_TAU");
-                defaults.setPreference("query.scienceObjectRA", "03:47:29.0765");
-                defaults.setPreference("query.scienceObjectDEC", "24:06:18.494");
-                defaults.setPreference("query.scienceObjectMagnitude", "0");
-                defaults.setPreference("query.queryMinMagnitude", "2.0");
-                defaults.setPreference("query.queryMaxMagnitude", "4.0");
-                defaults.setPreference("query.queryBrightScenarioFlag", "true");
-                defaults.setPreference("query.queryDiffRASize", "3600");
-                defaults.setPreference("query.queryDiffDECSize", "1200");
-                defaults.setPreference("query.queryRadialSize", "5.0");
-                defaults.setPreference("query.queryAutoRadius", "true");
-
-                defaults.setPreference("query.scienceObjectDetectionDistance",
-                    "0.01");
-                defaults.setPreference("query.queryMinMagnitudeDelta", "-3.0");
-                defaults.setPreference("query.queryMaxMagnitudeDelta", "4.0");
-            }
-            catch (Exception e)
-            {
-                _logger.fine("Default preference values creation FAILED.");
-            }
-
-            _singleton.setDefaultPreferences(defaults);
-            _singleton.loadFromFile();
+            _instance = new Preferences();
         }
 
-        return _singleton;
+        return _instance;
+
+        // DO NOT MODIFY !!!
     }
 }
