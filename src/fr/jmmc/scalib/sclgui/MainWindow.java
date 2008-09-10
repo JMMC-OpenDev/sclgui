@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.28 2008-05-19 15:39:29 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.29 2008-09-10 22:29:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2008/05/19 15:39:29  lafrasse
+ * Updated to add preliminary support for the new JMCS application framework.
+ *
  * Revision 1.27  2008/03/10 08:09:59  lafrasse
  * Updated version number to 4.0b12.
  *
@@ -59,7 +62,7 @@
  * Code and documentation refinments.
  *
  * Revision 1.12  2006/10/16 14:29:51  lafrasse
- * Updated to reflect MCSLogger API changes.
+ * Updated to reflect _logger API changes.
  *
  * Revision 1.11  2006/08/04 16:53:54  lafrasse
  * Re-added preliminary print support
@@ -101,7 +104,6 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
@@ -112,6 +114,8 @@ import java.io.*;
 
 import java.net.*;
 
+import java.util.logging.*;
+
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
@@ -121,6 +125,10 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  */
 public class MainWindow extends JFrame
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.MainWindow");
+
     /** Main panel container, displaying the query and result views */
     Container _mainPane;
 
@@ -172,6 +180,8 @@ public class MainWindow extends JFrame
     {
         super("SearchCal");
 
+        String classPath = getClass().getName();
+
         _vo                        = vo;
         _queryView                 = queryView;
         _calibratorsView           = calibratorsView;
@@ -182,14 +192,15 @@ public class MainWindow extends JFrame
 
         // Preferences
         _preferencesView           = preferencesView;
-        _showPreferencesAction     = new ShowPreferencesAction();
+        _showPreferencesAction     = new ShowPreferencesAction(classPath,
+                "_showPreferencesAction");
 
         // Printing
         _printJob                  = PrinterJob.getPrinterJob();
         _landscape                 = _printJob.defaultPage();
         _landscape.setOrientation(PageFormat.LANDSCAPE);
-        _pageSetupAction     = new PageSetupAction();
-        _printAction         = new PrintAction();
+        _pageSetupAction     = new PageSetupAction(classPath, "_pageSetupAction");
+        _printAction         = new PrintAction(classPath, "_printAction");
 
         try
         {
@@ -252,16 +263,17 @@ public class MainWindow extends JFrame
     /**
      * Called to show the preferences window.
      */
-    protected class ShowPreferencesAction extends MCSAction
+    protected class ShowPreferencesAction extends RegisteredAction
     {
-        public ShowPreferencesAction()
+        public ShowPreferencesAction(String classPath, String fieldName)
         {
-            super("preferences");
+            super(classPath, fieldName);
+            flagAsPreferenceAction();
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("ShowPreferencesAction", "actionPerformed");
 
             // Show the Preferences window
             _preferencesView.setVisible(true);
@@ -271,16 +283,16 @@ public class MainWindow extends JFrame
     /**
      * Called to setup printed page layout.
      */
-    protected class PageSetupAction extends MCSAction
+    protected class PageSetupAction extends RegisteredAction
     {
-        public PageSetupAction()
+        public PageSetupAction(String classPath, String fieldName)
         {
-            super("pageSetup");
+            super(classPath, fieldName);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("PageSetupAction", "actionPerformed");
 
             // Show Page Setup GUI
             _landscape = _printJob.pageDialog(_landscape);
@@ -290,16 +302,16 @@ public class MainWindow extends JFrame
     /**
      * Called to print data.
      */
-    protected class PrintAction extends MCSAction
+    protected class PrintAction extends RegisteredAction
     {
-        public PrintAction()
+        public PrintAction(String classPath, String fieldName)
         {
-            super("print");
+            super(classPath, fieldName);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("PrintAction", "actionPerformed");
 
             Book book = new Book();
             book.append((Printable) _queryView, _landscape);

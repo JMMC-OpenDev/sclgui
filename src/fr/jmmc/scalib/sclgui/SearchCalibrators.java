@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.22 2008-05-29 10:10:16 mella Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.23 2008-09-10 22:37:25 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2008/05/29 10:10:16  mella
+ * Accept null value for SearchCal Argument
+ *
  * Revision 1.21  2008/05/19 15:39:29  lafrasse
  * Updated to add preliminary support for the new JMCS application framework.
  *
@@ -82,7 +85,12 @@ import fr.jmmc.mcs.log.*;
 
 import gnu.getopt.Getopt;
 
+import java.awt.event.ActionEvent;
+
 import java.util.*;
+import java.util.logging.*;
+
+import javax.swing.*;
 
 
 /**
@@ -141,11 +149,15 @@ import java.util.*;
  */
 public class SearchCalibrators extends App
 {
-    /** Store the optionnal query received from ASPRO by constructor */
-    private String _query = null;
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.SearchCalibrators");
 
     /** Main application object used to perform the optionnal query received from ASPRO */
-    private VirtualObservatory _vo = null;
+    public static VirtualObservatory _vo = null;
+
+    /** Store the optionnal query received from ASPRO by constructor */
+    private String _query = null;
 
     /**
      * Launch the SearchCalibrators application.
@@ -157,7 +169,7 @@ public class SearchCalibrators extends App
      */
     public SearchCalibrators(String[] args)
     {
-        this(args, null);
+        super(args);
     }
 
     /**
@@ -168,46 +180,18 @@ public class SearchCalibrators extends App
      */
     public SearchCalibrators(String[] args, String query)
     {
-        // Launch application initialization with execution delayed for further initilization.
-        super(args, true);
+        // Launch application initialization with execution delayed for further initilization, without splashscreen and without autorization to the current kill process.
+        super(args, false, false, false);
 
         // Store received query for later execution
         _query = query;
-
-        // Set default log level
-        MCSLogger.setLevel("0");
-
-        // Parse the command-line options in search of the '-v' option and its argument
-        if (args != null)
-        {
-            Getopt commandLineParser = new Getopt("SearchCalibrators", args,
-                    "v:");
-            int    option;
-            String optionArgument;
-
-            while ((option = commandLineParser.getopt()) != -1)
-            {
-                switch (option)
-                {
-                case 'v':
-                    optionArgument = commandLineParser.getOptarg();
-                    MCSLogger.setLevel(optionArgument);
-
-                    break;
-
-                default:
-                    MCSLogger.error("getopt() returned '" + (char) option +
-                        "'.\n");
-                }
-            }
-        }
 
         // Perform received query if any
         run();
     }
 
     /** Initialize application objects */
-    protected void init()
+    protected void init(String[] args)
     {
         // Set the default locale to custom locale (for Numerical Fields "." ",")
         Locale.setDefault(new Locale("en", "US"));
@@ -247,20 +231,17 @@ public class SearchCalibrators extends App
 
             MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
                     preferencesView, filtersView, statusBar);
-
-            // Make application presentation coherent with preferences
-            Preferences.getInstance().trulyNotifyObservers();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            MCSLogger.error("Initialization error : " + e);
+            _logger.log(Level.FINE, "Initialization error", ex);
         }
     }
 
     /** Execute application body */
     protected void execute()
     {
-        // If a query was received (when instaciated by ASPRO)
+        // If a query was received (when instanciated by ASPRO)
         if (_query != null)
         {
             // Launch the request
@@ -268,9 +249,10 @@ public class SearchCalibrators extends App
         }
     }
 
-    /** Execute operations before closing application */
-    protected void exit()
+    /** Handle operations before closing application */
+    protected boolean finnish()
     {
+        return _vo.canLostModifications();
     }
 
     /**
