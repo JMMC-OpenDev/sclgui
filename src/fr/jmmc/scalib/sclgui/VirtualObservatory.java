@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.25 2007-12-04 11:00:50 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.26 2008-09-10 22:44:45 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2007/12/04 11:00:50  lafrasse
+ * Corrected a bug during file loading that was preventing query parsing.
+ *
  * Revision 1.24  2007/11/12 10:53:11  lafrasse
  * Updated to follow web service function call changes.
  *
@@ -66,7 +69,7 @@
  * Code and documentation refinments.
  *
  * Revision 1.7  2006/10/16 14:29:51  lafrasse
- * Updated to reflect MCSLogger API changes.
+ * Updated to reflect _logger API changes.
  *
  * Revision 1.6  2006/09/15 14:20:54  lafrasse
  * Added query default values support.
@@ -108,6 +111,7 @@ import java.io.*;
 import java.net.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.*;
 
@@ -119,6 +123,10 @@ import javax.xml.rpc.holders.*;
  */
 public class VirtualObservatory extends Observable
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.VirtualObservatory");
+
     /** Query model */
     private QueryModel _queryModel;
 
@@ -155,20 +163,11 @@ public class VirtualObservatory extends Observable
     /** Export to HTML File action */
     public ExportToHTMLFileAction _exportToHTMLFileAction;
 
-    /** Quit action */
-    public QuitAction _quitAction;
-
     /** Get Star action */
     public GetStarAction _getStarAction;
 
     /** Get Cal action */
     public GetCalAction _getCalAction;
-
-    /** Plot in Aladin action */
-    public PlotInAladinAction _plotInAladinAction;
-
-    /** Interaction with Aladin */
-    VOInteraction _aladinInteraction;
 
     /**
      * Contructor.
@@ -176,27 +175,32 @@ public class VirtualObservatory extends Observable
     public VirtualObservatory(QueryModel queryModel,
         CalibratorsModel calibratorsModel, FiltersModel filtersModel)
     {
+        String classPath = getClass().getName();
+
         _queryModel                  = queryModel;
         _calibratorsModel            = calibratorsModel;
         _filtersModel                = filtersModel;
 
         // File related members
         _file                        = null;
-        _openFileAction              = new OpenFileAction();
-        _saveFileAction              = new SaveFileAction();
-        _saveFileAsAction            = new SaveFileAsAction();
-        _revertToSavedFileAction     = new RevertToSavedFileAction();
-        _exportToCSVFileAction       = new ExportToCSVFileAction();
-        _exportToHTMLFileAction      = new ExportToHTMLFileAction();
-        _quitAction                  = new QuitAction();
+        _openFileAction              = new OpenFileAction(classPath,
+                "_openFileAction");
+        _saveFileAction              = new SaveFileAction(classPath,
+                "_saveFileAction");
+        _saveFileAsAction            = new SaveFileAsAction(classPath,
+                "_saveFileAsAction");
+        _revertToSavedFileAction     = new RevertToSavedFileAction(classPath,
+                "_revertToSavedFileAction");
+        _exportToCSVFileAction       = new ExportToCSVFileAction(classPath,
+                "_exportToCSVFileAction");
+        _exportToHTMLFileAction      = new ExportToHTMLFileAction(classPath,
+                "_exportToHTMLFileAction");
 
         // Query related members
-        _getStarAction               = new GetStarAction();
-        _getCalAction                = new GetCalAction();
-
-        // Calibrators related members
-        _aladinInteraction           = null;
-        _plotInAladinAction          = new PlotInAladinAction();
+        _getStarAction               = new GetStarAction(classPath,
+                "_getStarAction");
+        _getCalAction                = new GetCalAction(classPath,
+                "_getCalAction");
 
         // WebService related members
         setQueryLaunchedState(false);
@@ -210,7 +214,7 @@ public class VirtualObservatory extends Observable
      */
     protected synchronized boolean isBusy()
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "isBusy");
 
         return (isQueryLaunched() || isCDSQueried());
     }
@@ -222,7 +226,7 @@ public class VirtualObservatory extends Observable
      */
     protected synchronized boolean isCDSQueried()
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "isCDSQueried");
 
         return _CDSIsQueried;
     }
@@ -234,7 +238,7 @@ public class VirtualObservatory extends Observable
      */
     protected synchronized void setCDSQueringState(boolean flag)
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "setCDSQueringState");
 
         _CDSIsQueried = flag;
 
@@ -262,7 +266,7 @@ public class VirtualObservatory extends Observable
      */
     protected synchronized boolean isQueryLaunched()
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "isQueryLaunched");
 
         return _queryIsLaunched;
     }
@@ -276,7 +280,7 @@ public class VirtualObservatory extends Observable
      */
     protected synchronized void setQueryLaunchedState(boolean flag)
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "setQueryLaunchedState");
 
         _queryIsLaunched = flag;
 
@@ -305,13 +309,12 @@ public class VirtualObservatory extends Observable
      */
     public void enableSaveMenus(boolean flag)
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "enableSaveMenus");
 
         _saveFileAction.setEnabled(true);
         _saveFileAsAction.setEnabled(true);
         _exportToCSVFileAction.setEnabled(true);
         _exportToHTMLFileAction.setEnabled(true);
-        _plotInAladinAction.setEnabled(true);
     }
 
     /**
@@ -321,35 +324,50 @@ public class VirtualObservatory extends Observable
      */
     public boolean canLostModifications()
     {
-        MCSLogger.trace();
+        _logger.entering("VirtualObservatory", "canLostModifications");
 
-        boolean canLostModifications = true;
+        boolean canLostModifications = false;
 
-        // Check if the data are NOT saved before loosing any results !!!
-        if (_calibratorsModel.dataHaveChanged() == true)
+        // If there is no data to save
+        if (_calibratorsModel.dataHaveChanged() == false)
+        {
+            canLostModifications = true;
+        }
+        else // If the data are NOT saved, handle it before loosing any results !!!
         {
             // Ask the user if he wants to save modifications
             Object[] options = { "Save", "Cancel", "Don't Save" };
             int      result  = JOptionPane.showOptionDialog(null,
-                    "Do you want to save changes to this document before closing ?\nIf you don't save, your changes will be lost.\n\n",
+                    "Do you want to save changes to this document before closing ?\nIf you don't save, your changes will be definitively lost.\n\n",
                     null, JOptionPane.DEFAULT_OPTION,
                     JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
-            // If the User clicked the "Save" button
-            if (result == 0)
+            // Handle user choice
+            switch (result)
             {
-                // Save the current data
-                _saveFileAction.actionPerformed(null);
-            }
+            // If the user clicked the "Save" button
+            case 0: // options[0] = "Save" button
+                    // Save the current data if no cancel occured
+                canLostModifications = _saveFileAction.save();
 
-            // If the ucer clicked the "Cancel" button
-            if (result == 1)
-            {
-                // Cancel the exit
+                break;
+
+            // If the user clicked the "Don't Save" button
+            case 2: // options[2] = "Don't Save" button
+                    // Exit
+                canLostModifications = true;
+
+                break;
+
+            // If the user clicked the "Cancel" button or pressed 'esc' key
+            case 1: // options[1] = "Cancel" button
+            case JOptionPane.CLOSED_OPTION: // 'esc' key
+            default: // Any other case
+                     // Cancel the exit
                 canLostModifications = false;
-            }
 
-            // If the user clicked the "Don't Save" button, do nothing !
+                break;
+            }
         }
 
         return canLostModifications;
@@ -362,7 +380,9 @@ public class VirtualObservatory extends Observable
      */
     public void executeQuery(String query)
     {
-        MCSLogger.debug("Received query = " + query);
+        _logger.entering("VirtualObservatory", "executeQuery");
+
+        _logger.fine("Received query = " + query);
 
         // Parse the query
         try
@@ -375,7 +395,7 @@ public class VirtualObservatory extends Observable
         {
             StatusBar.show(
                 "calibrator search aborted (could not parse query) !");
-            MCSLogger.error("Could not parse query : " + ex);
+            _logger.log(Level.SEVERE, "Could not parse query.", ex);
 
             JOptionPane.showMessageDialog(null, "Could not parse query.",
                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -391,16 +411,16 @@ public class VirtualObservatory extends Observable
     /**
      * Called to open files.
      */
-    protected class OpenFileAction extends MCSAction
+    protected class OpenFileAction extends RegisteredAction
     {
-        public OpenFileAction()
+        public OpenFileAction(String classPath, String fieldName)
         {
-            super("openFile");
+            super(classPath, fieldName);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("OpenFileAction", "actionPerformed");
 
             // If we can lost current modifications
             if (canLostModifications() == true)
@@ -430,8 +450,8 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "loading aborted (calibrators parsing error) !");
-                            MCSLogger.error(
-                                "Could not open file (calibrators parsing error) : " +
+                            _logger.log(Level.SEVERE,
+                                "Could not open file (calibrators parsing error) : ",
                                 ex);
 
                             JOptionPane.showMessageDialog(null,
@@ -451,9 +471,8 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "loading aborted (query parsing error) !");
-                            MCSLogger.error(
-                                "Could not open file (query parsing error) : " +
-                                ex);
+                            _logger.log(Level.SEVERE,
+                                "Could not open file (query parsing error).", ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not open file (query parsing error).",
@@ -476,17 +495,18 @@ public class VirtualObservatory extends Observable
     /**
      * Called to revert the current state to the last saved state.
      */
-    protected class RevertToSavedFileAction extends MCSAction
+    protected class RevertToSavedFileAction extends RegisteredAction
     {
-        public RevertToSavedFileAction()
+        public RevertToSavedFileAction(String classPath, String fieldName)
         {
-            super("revertToSavedFile");
+            super(classPath, fieldName);
+
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("RevertToSavedFileAction", "actionPerformed");
 
             // If we can lost current modifications
             if (canLostModifications() == true)
@@ -501,7 +521,7 @@ public class VirtualObservatory extends Observable
                 catch (Exception ex)
                 {
                     StatusBar.show("re-loading aborted (file error) !");
-                    MCSLogger.error("Could not re-open file : " + ex);
+                    _logger.log(Level.SEVERE, "Could not re-open file.", ex);
 
                     JOptionPane.showMessageDialog(null,
                         "Could not re-open file.", "Error",
@@ -514,18 +534,22 @@ public class VirtualObservatory extends Observable
     /**
      * Called to save in a file (in a new one if needed).
      */
-    protected class SaveFileAction extends MCSAction
+    protected class SaveFileAction extends RegisteredAction
     {
-        public SaveFileAction()
+        public SaveFileAction(String classPath, String fieldName)
         {
-            super("saveFile");
+            super(classPath, fieldName);
+
             setEnabled(false);
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
+        /**
+         * Save data to file.
+         *
+         * @return true if save was done, false if save was cancelled.
+         */
+        public boolean save()
         {
-            MCSLogger.trace();
-
             // If the current data were never saved yet
             if (_file == null)
             {
@@ -535,6 +559,11 @@ public class VirtualObservatory extends Observable
                 if (returnVal == JFileChooser.APPROVE_OPTION)
                 {
                     _file = fileChooser.getSelectedFile();
+                }
+                else
+                {
+                    // Save was cancelled
+                    return false;
                 }
             }
 
@@ -546,23 +575,33 @@ public class VirtualObservatory extends Observable
 
             // Now that a file has been saved
             _revertToSavedFileAction.setEnabled(true);
+
+            return true;
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            _logger.entering("SaveFileAction", "actionPerformed");
+
+            save();
         }
     }
 
     /**
      * Called to save in a new files.
      */
-    protected class SaveFileAsAction extends MCSAction
+    protected class SaveFileAsAction extends RegisteredAction
     {
-        public SaveFileAsAction()
+        public SaveFileAsAction(String classPath, String fieldName)
         {
-            super("saveFileAs");
+            super(classPath, fieldName);
+
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("SaveFileAsAction", "actionPerformed");
 
             JFileChooser fileChooser = new JFileChooser();
             int          returnVal   = fileChooser.showSaveDialog(null);
@@ -581,17 +620,18 @@ public class VirtualObservatory extends Observable
     /**
      * Called to export current data to a CSV formatted file.
      */
-    protected class ExportToCSVFileAction extends MCSAction
+    protected class ExportToCSVFileAction extends RegisteredAction
     {
-        public ExportToCSVFileAction()
+        public ExportToCSVFileAction(String classPath, String fieldName)
         {
-            super("exportToCSVFile");
+            super(classPath, fieldName);
+
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("ExportToCSVFileAction", "actionPerformed");
 
             JFileChooser fileChooser = new JFileChooser();
             int          returnVal   = fileChooser.showSaveDialog(null);
@@ -614,17 +654,18 @@ public class VirtualObservatory extends Observable
     /**
      * Called to export current data to a HTML formatted file.
      */
-    protected class ExportToHTMLFileAction extends MCSAction
+    protected class ExportToHTMLFileAction extends RegisteredAction
     {
-        public ExportToHTMLFileAction()
+        public ExportToHTMLFileAction(String classPath, String fieldName)
         {
-            super("exportToHTMLFile");
+            super(classPath, fieldName);
+
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("ExportToHTMLFileAction", "actionPerformed");
 
             JFileChooser fileChooser = new JFileChooser();
             int          returnVal   = fileChooser.showSaveDialog(null);
@@ -645,45 +686,23 @@ public class VirtualObservatory extends Observable
     }
 
     /**
-     * Called to quit SearchCal.
-     */
-    protected class QuitAction extends MCSAction
-    {
-        public QuitAction()
-        {
-            super("quit");
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            if (canLostModifications() == true)
-            {
-                // Quitting
-                System.exit(0);
-            }
-        }
-    }
-
-    /**
      * Get science object properties from is name through Simbad web service.
      */
-    protected class GetStarAction extends MCSAction
+    protected class GetStarAction extends RegisteredAction
     {
         GetStarThread _getStarThread = null;
 
-        public GetStarAction()
+        public GetStarAction(String classPath, String fieldName)
         {
             // @TODO : set button image
-            super("getStar");
+            super(classPath, fieldName, "Get Star");
 
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("GetStarAction", "actionPerformed");
 
             // @TODO : Querying Simbad and fill the query model accordinally
             /*
@@ -694,7 +713,7 @@ public class VirtualObservatory extends Observable
                }
                catch (Exception ex)
                {
-                   MCSLogger.error("GetStar error : " + ex);
+                   _logger.severe("GetStar error : " + ex);
                }
              */
 
@@ -719,10 +738,10 @@ public class VirtualObservatory extends Observable
                 if (_getStarThread != null)
                 {
                     // Kill it
-                    MCSLogger.debug("Killing GetStar thread ... ");
+                    _logger.fine("Killing GetStar thread ... ");
                     _getStarThread.interrupt();
                     _getStarThread = null;
-                    MCSLogger.debug("GetStar thread killed.");
+                    _logger.fine("GetStar thread killed.");
                 }
 
                 // Query is finished
@@ -781,7 +800,7 @@ public class VirtualObservatory extends Observable
                             URLEncoder.encode(simbadScript, "UTF-8");
                         URL    url       = new URL(simbadURL);
 
-                        MCSLogger.debug("simbadURL : " + simbadURL);
+                        _logger.fine("simbadURL : " + simbadURL);
 
                         // Launching the query
                         BufferedReader rdr = new BufferedReader(new InputStreamReader(
@@ -807,7 +826,8 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "science object search aborted (connection refused) !");
-                            MCSLogger.error("CDS Connection failed : " + ex);
+                            _logger.log(Level.SEVERE, "CDS Connection failed.",
+                                ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not connect to CDS Simbad server.",
@@ -817,14 +837,14 @@ public class VirtualObservatory extends Observable
                         }
                         else
                         {
-                            MCSLogger.debug("Silenced error (cancellation) : " +
-                                ex);
+                            _logger.log(Level.FINE,
+                                "Silenced error (cancellation).", ex);
                         }
 
                         return;
                     }
 
-                    MCSLogger.debug("VOTable :\n" + _result);
+                    _logger.fine("VOTable :\n" + _result);
 
                     // Parsing the result
                     try
@@ -851,8 +871,8 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "science object search aborted (parsing error) !");
-                            MCSLogger.error("CDS Result parsing failed : " +
-                                ex);
+                            _logger.log(Level.SEVERE,
+                                "CDS Result parsing failed", ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not parse to CDS Simbad result.",
@@ -862,8 +882,8 @@ public class VirtualObservatory extends Observable
                         }
                         else
                         {
-                            MCSLogger.debug("Silenced error (cancellation) : " +
-                                ex);
+                            _logger.log(Level.FINE,
+                                "Silenced error (cancellation).", ex);
                         }
 
                         return;
@@ -872,100 +892,13 @@ public class VirtualObservatory extends Observable
                 else
                 {
                     //@TODO : Assertion - should never receive an empty scence object name
-                    MCSLogger.error(
+                    _logger.severe(
                         "Received an empty scence object name for CDS Sibad search");
                 }
 
                 setCDSQueringState(false);
             }
 
-            /*
-               // Not in use (do not work from here)
-               public void SOAPsimbadResult()
-               {
-                   WSQueryInterface myv = null;
-                   // CDS Simbad connection
-                   try
-                   {
-                       // Locator creation
-                       System.out.print("Creating locator ... ");
-                       WSQueryInterfaceService locator = new WSQueryInterfaceServiceLocator();
-                       System.out.println("OK.");
-                       //@TODO : try catch this -> opening
-                       // Sesame object
-                       System.out.print("Getting WSQuery ... ");
-                       myv = locator.getWSQuery();
-                       System.out.println("OK.");
-                       // Define the webservice timeout (default = ???min)
-                       org.apache.axis.client.Stub stub = (WSQuerySoapBindingStub) myv;
-                       stub.setTimeout(15000); // 15 second, in miliseconds
-                   }
-                   catch (Exception ex)
-                   {
-                       // Handle error when no manual cancel
-                       if (_getStarThread != null)
-                       {
-                           StatusBar.show(
-                               "science object search aborted (connection refused) !");
-                           MCSLogger.error("CDS Connection failed : " + ex);
-                           JOptionPane.showMessageDialog(null,
-                               "Could not connect to CDS Simbad server.", "Error",
-                               JOptionPane.ERROR_MESSAGE);
-                           setCDSQueringState(false);
-                       }
-                       else
-                       {
-                           MCSLogger.debug("Silenced error (cancellation) : " +
-                               ex);
-                       }
-                       return;
-                   }
-                   // Ask CDS Simbad for our science object (if any) properties
-                   String id = _queryModel.getScienceObjectName();
-                   if (id.length() != 0)
-                   {
-                       try
-                       {
-                           String fields = "ra dec flux(V) flux(I) flux(J) flux(H) flux(k)"; // Fields needed.
-                           String format = "vo"; // XML result.
-                           System.out.print("Getting queryObjectById('" + id +
-                               "', '" + fields + "', '" + format + "') ... ");
-                           String result = myv.queryObjectById(id, fields, format);
-                           System.out.println("OK.");
-                           System.out.println("\n\n\n\n\nResult = '" + result +
-                               "'.\n\n\n\n\n\n\n");
-                           // @TODO : _queryModel.setCDSSimbadResult(_getStarThread.getResult());
-                       }
-                       catch (Exception ex)
-                       {
-                           // Handle error when no manual cancel
-                           if (_getStarThread != null)
-                           {
-                               System.out.println("KO.");
-                               StatusBar.show(
-                                   "science object search aborted (communication failed) !");
-                               MCSLogger.error("CDS communication failed : " + ex);
-                               JOptionPane.showMessageDialog(null,
-                                   "Could not connect to CDS server.", "Error",
-                                   JOptionPane.ERROR_MESSAGE);
-                               System.out.println("GetStar error : " + ex);
-                           }
-                           else
-                           {
-                               MCSLogger.debug("Silenced error (cancellation) : " +
-                                   ex);
-                           }
-                       }
-                   }
-                   else
-                   {
-                       //@TODO : Assertion - should never receive an empty scence object name
-                       MCSLogger.error(
-                           "Received an empty scence object name for CDS Sibad search");
-                   }
-                   setCDSQueringState(false);
-               }
-             */
             String getResult()
             {
                 return _result;
@@ -976,20 +909,20 @@ public class VirtualObservatory extends Observable
     /**
      * Get calibrator list as a raw VOTable from JMMC web service.
      */
-    protected class GetCalAction extends MCSAction
+    protected class GetCalAction extends RegisteredAction
     {
         GetCalThread _getCalThread         = null;
 
-        public GetCalAction()
+        public GetCalAction(String classPath, String fieldName)
         {
-            super("getCal");
+            super(classPath, fieldName, "Get Calibrators");
 
             setEnabled(false);
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
-            MCSLogger.trace();
+            _logger.entering("GetCalAction", "actionPerformed");
 
             // Launch a new thread only if no other one has been launched yet
             if (isQueryLaunched() == false)
@@ -1012,10 +945,10 @@ public class VirtualObservatory extends Observable
                 if (_getCalThread != null)
                 {
                     // Kill it
-                    MCSLogger.debug("Killing GetCal thread ... ");
+                    _logger.fine("Killing GetCal thread ... ");
                     _getCalThread.interrupt();
                     _getCalThread = null;
-                    MCSLogger.debug("GetCal thread killed.");
+                    _logger.fine("GetCal thread killed.");
                 }
 
                 // Query is finished
@@ -1039,11 +972,15 @@ public class VirtualObservatory extends Observable
 
             public void run()
             {
+                _logger.entering("GetCalThread", "run");
+
                 getCal();
             }
 
             public void getCal()
             {
+                _logger.entering("GetCalThread", "getCal");
+
                 try
                 {
                     // Get the connection ID
@@ -1060,7 +997,7 @@ public class VirtualObservatory extends Observable
                         // Get the connection ID
                         id        = sclws.getCalOpenSession();
 
-                        MCSLogger.test("JMMC Connection ID = '" + id + "'.");
+                        _logger.fine("JMMC Connection ID = '" + id + "'.");
                         StatusBar.show(
                             "searching calibrators... (connection established)");
                     }
@@ -1071,7 +1008,7 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "calibrator search aborted (connection refused) !");
-                            MCSLogger.error("Connection failed : " + ex);
+                            _logger.log(Level.SEVERE, "Connection failed.", ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not connect to JMMC server.", "Error",
@@ -1082,8 +1019,8 @@ public class VirtualObservatory extends Observable
                         }
                         else
                         {
-                            MCSLogger.debug("Silenced error (cancellation) : " +
-                                ex);
+                            _logger.log(Level.FINE,
+                                "Silenced error (cancellation).", ex);
                         }
 
                         return;
@@ -1091,7 +1028,7 @@ public class VirtualObservatory extends Observable
 
                     // Get the query from the GUI
                     String query = _queryModel.getQueryAsMCSString();
-                    MCSLogger.test("Query = '" + query + "'.");
+                    _logger.fine("Query = '" + query + "'.");
 
                     // Launch the querying thread
                     _queryResultThread = new QueryResultThread(sclws, id, query);
@@ -1144,7 +1081,7 @@ public class VirtualObservatory extends Observable
                                 _queryModel.setTotalStep(nbOfCatalogs.intValue());
                             }
 
-                            MCSLogger.test("Status = '" + currentCatalogName +
+                            _logger.fine("Status = '" + currentCatalogName +
                                 "' - " + catalogIndex + "/" + nbOfCatalogs +
                                 " (status = '" + requestStatus + "').");
                         }
@@ -1155,8 +1092,8 @@ public class VirtualObservatory extends Observable
                             {
                                 StatusBar.show(
                                     "calibrator search aborted (catalog error) !");
-                                MCSLogger.error(
-                                    "JMMC Status retrieving error : " + ex);
+                                _logger.log(Level.SEVERE,
+                                    "JMMC Status retrieving error.", ex);
 
                                 JOptionPane.showMessageDialog(null,
                                     "Communication with the JMMC server failed.",
@@ -1167,8 +1104,8 @@ public class VirtualObservatory extends Observable
                             }
                             else
                             {
-                                MCSLogger.debug(
-                                    "Silenced error (cancellation) : " + ex);
+                                _logger.log(Level.FINE,
+                                    "Silenced error (cancellation).", ex);
                             }
 
                             return;
@@ -1192,8 +1129,8 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "calibrator search aborted (could not get result) !");
-                            MCSLogger.error("Could not get JMMC result : " +
-                                ex);
+                            _logger.log(Level.SEVERE,
+                                "Could not get JMMC result.", ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not get result from JMMC server.",
@@ -1204,8 +1141,8 @@ public class VirtualObservatory extends Observable
                         }
                         else
                         {
-                            MCSLogger.debug("Silenced error (cancellation) : " +
-                                ex);
+                            _logger.log(Level.FINE,
+                                "Silenced error (cancellation).", ex);
                         }
 
                         return;
@@ -1230,9 +1167,8 @@ public class VirtualObservatory extends Observable
                             if (_getCalThread != null)
                             {
                                 StatusBar.show("calibrator parsing aborted !");
-                                MCSLogger.error(
-                                    "Could not parse received JMMC VOTable : " +
-                                    ex);
+                                _logger.log(Level.SEVERE,
+                                    "Could not parse received JMMC VOTable.", ex);
 
                                 JOptionPane.showMessageDialog(null,
                                     "Calibrator search failed (invalid VOTable received).",
@@ -1243,8 +1179,8 @@ public class VirtualObservatory extends Observable
                             }
                             else
                             {
-                                MCSLogger.debug(
-                                    "Silenced error (cancellation) : " + ex);
+                                _logger.log(Level.FINE,
+                                    "Silenced error (cancellation).", ex);
                             }
 
                             return;
@@ -1252,7 +1188,7 @@ public class VirtualObservatory extends Observable
                     }
                     else
                     {
-                        MCSLogger.test("No calibrators found.");
+                        _logger.fine("No calibrators found.");
 
                         StatusBar.show("no calibrators found.");
 
@@ -1271,8 +1207,8 @@ public class VirtualObservatory extends Observable
                     {
                         StatusBar.show(
                             "calibrator search aborted (communication error) !");
-                        MCSLogger.error(
-                            "Could not communicate with JMMC server : " + ex);
+                        _logger.log(Level.SEVERE,
+                            "Could not communicate with JMMC server.", ex);
 
                         JOptionPane.showMessageDialog(null,
                             "Communication failed.", "Error",
@@ -1280,8 +1216,8 @@ public class VirtualObservatory extends Observable
                     }
                     else
                     {
-                        MCSLogger.debug("Silenced error (cancellation) : " +
-                            ex);
+                        _logger.log(Level.FINE,
+                            "Silenced error (cancellation).", ex);
                     }
                 }
 
@@ -1291,6 +1227,8 @@ public class VirtualObservatory extends Observable
 
             public void interrupt()
             {
+                _logger.entering("GetCalThread", "interrupt");
+
                 Boolean isOk = false;
 
                 try
@@ -1302,7 +1240,7 @@ public class VirtualObservatory extends Observable
                 {
                     StatusBar.show(
                         "could not cancel calibrator search (communication error) !");
-                    MCSLogger.error("Could not cancel JMMC request : " + ex);
+                    _logger.severe("Could not cancel JMMC request : " + ex);
 
                     JOptionPane.showMessageDialog(null,
                         "JMMC request cancellation failed.", "Error",
@@ -1317,10 +1255,10 @@ public class VirtualObservatory extends Observable
                 if (_queryResultThread != null)
                 {
                     // Kill it
-                    MCSLogger.debug("Killing QueryResult thread ... ");
+                    _logger.fine("Killing QueryResult thread ... ");
                     _queryResultThread.interrupt();
                     _queryResultThread = null;
-                    MCSLogger.debug("QueryResult thread killed.");
+                    _logger.fine("QueryResult thread killed.");
                 }
 
                 super.interrupt();
@@ -1343,11 +1281,15 @@ public class VirtualObservatory extends Observable
 
                 public void run()
                 {
+                    _logger.entering("QueryResultThread", "run");
+
                     queryResult();
                 }
 
                 public void queryResult()
                 {
+                    _logger.entering("QueryResultThread", "queryResult");
+
                     try
                     {
                         StatusBar.show(
@@ -1366,8 +1308,8 @@ public class VirtualObservatory extends Observable
                         {
                             StatusBar.show(
                                 "calibrator search aborted (could not send query) !");
-                            MCSLogger.error("Could not send JMMC query : " +
-                                ex);
+                            _logger.log(Level.SEVERE,
+                                "Could not send JMMC query.", ex);
 
                             JOptionPane.showMessageDialog(null,
                                 "Could not send query to JMMC server.",
@@ -1378,8 +1320,8 @@ public class VirtualObservatory extends Observable
                         }
                         else
                         {
-                            MCSLogger.debug("Silenced error (cancellation) : " +
-                                ex);
+                            _logger.log(Level.FINE,
+                                "Silenced error (cancellation).", ex);
                         }
 
                         return;
@@ -1388,50 +1330,10 @@ public class VirtualObservatory extends Observable
 
                 String getResult()
                 {
+                    _logger.entering("QueryResultThread", "getResult");
+
                     return _result;
                 }
-            }
-        }
-    }
-
-    /**
-     * Called to plot data in Aladin.
-     */
-    protected class PlotInAladinAction extends MCSAction
-    {
-        public PlotInAladinAction()
-        {
-            super("plotCalibratorsInAladin");
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            MCSLogger.trace();
-
-            if (_calibratorsModel.getVOTable() != null)
-            {
-                if (_aladinInteraction == null)
-                {
-                    StatusBar.show("launchin Aladin...");
-                    _aladinInteraction = new VOInteraction();
-                    _aladinInteraction.startAladin(_calibratorsModel.getVOTable());
-                    _aladinInteraction._aladin.execCommand("sync");
-                }
-                else
-                {
-                    InputStream in  = new StringBufferInputStream(_calibratorsModel.getVOTable());
-                    String      oid = _aladinInteraction.putVOTable(_aladinInteraction,
-                            in, "SearchCal");
-                    MCSLogger.info("Aladin return new oid for votable : " +
-                        oid);
-
-                    _aladinInteraction._aladin.setVisible(true);
-                }
-            }
-            else
-            {
-                StatusBar.show("could not launch Aladin (no calibrators).");
             }
         }
     }
