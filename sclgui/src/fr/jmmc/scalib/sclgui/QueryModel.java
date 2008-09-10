@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.38 2008-05-30 12:47:50 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.39 2008-09-10 22:34:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.38  2008/05/30 12:47:50  lafrasse
+ * Changed QueryDiffRA & QueryDiffDEC APIs to more precisely handle unit conversion
+ * between minutes/degrees and arcmin.
+ *
  * Revision 1.37  2008/05/20 15:36:46  lafrasse
  * Changed default radius flag value from false to true.
  * Added handling of hypothetical negative radius values.
@@ -144,11 +148,11 @@ import cds.savot.pull.*;
 import cds.savot.writer.*;
 
 import fr.jmmc.mcs.astro.*;
-import fr.jmmc.mcs.log.*;
 
 import java.io.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.DefaultComboBoxModel;
 
@@ -158,6 +162,10 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class QueryModel extends Observable implements Observer
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.QueryModel");
+
     /** For default values */
     private Preferences _preferences;
 
@@ -248,8 +256,6 @@ public class QueryModel extends Observable implements Observer
      */
     public QueryModel() throws Exception
     {
-        MCSLogger.trace();
-
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
@@ -283,6 +289,8 @@ public class QueryModel extends Observable implements Observer
      */
     public void update(Observable o, Object arg)
     {
+        _logger.entering("QueryModel", "update");
+
         // Called if the observe shared instance Preference object was updated.
         // Then inform any object that observe us that we also probably change.
         setChanged();
@@ -294,7 +302,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void reset()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "reset");
 
         setInstrumentalMagnitudeBand("K");
         setInstrumentalMaxBaseLine(0.0);
@@ -328,7 +336,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void loadDefaultValues() throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "loadDefaultValues");
 
         try
         {
@@ -385,7 +393,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void loadParamSet(ParamSet paramSet)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "loadParamSet");
 
         // Convert the ParamSet in an HashTable on parameters name -> value
         Hashtable parameters = new Hashtable();
@@ -396,7 +404,7 @@ public class QueryModel extends Observable implements Observer
             String     paramName  = param.getName();
             String     paramValue = param.getValue();
 
-            MCSLogger.debug(paramName + " = '" + paramValue + "'");
+            _logger.fine(paramName + " = '" + paramValue + "'");
             parameters.put(paramName, paramValue);
         }
 
@@ -450,7 +458,7 @@ public class QueryModel extends Observable implements Observer
     public void loadFromSimbadVOTable(String simbadVOTable)
         throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "loadFromSimbadVOTable");
 
         try
         {
@@ -492,7 +500,7 @@ public class QueryModel extends Observable implements Observer
                 if (str.length() != 0)
                 {
                     str = str.replace(' ', ':');
-                    MCSLogger.debug("loaded RA = '" + str + "'.");
+                    _logger.fine("loaded RA = '" + str + "'.");
                     setScienceObjectRA(str);
                 }
 
@@ -501,7 +509,7 @@ public class QueryModel extends Observable implements Observer
                 if (str.length() != 0)
                 {
                     str = str.replace(' ', ':');
-                    MCSLogger.debug("loaded DEC = '" + str + "'.");
+                    _logger.fine("loaded DEC = '" + str + "'.");
                     setScienceObjectDEC(str);
                 }
 
@@ -517,19 +525,19 @@ public class QueryModel extends Observable implements Observer
 
                         if (str.length() != 0)
                         {
-                            MCSLogger.debug("loaded '" + currentMagnitudeBand +
+                            _logger.fine("loaded '" + currentMagnitudeBand +
                                 "' Mag = '" + str + "'.");
                             loadedValue = new Double(str);
                         }
                         else
                         {
-                            MCSLogger.debug("loaded '" + currentMagnitudeBand +
+                            _logger.fine("loaded '" + currentMagnitudeBand +
                                 "' Mag = 'NaN'.");
                         }
                     }
                     catch (Exception exc)
                     {
-                        MCSLogger.debug("blanked '" + currentMagnitudeBand +
+                        _logger.fine("blanked '" + currentMagnitudeBand +
                             "' Mag = 'NaN'.");
                     }
 
@@ -555,7 +563,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void saveDefaultValues() throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "saveDefaultValues");
 
         try
         {
@@ -605,7 +613,7 @@ public class QueryModel extends Observable implements Observer
      */
     public String getQueryAsMCSString()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryAsMCSString");
 
         String query = "";
 
@@ -671,7 +679,7 @@ public class QueryModel extends Observable implements Observer
         // Get the science star
         query += ("-noScienceStar false");
 
-        MCSLogger.debug("query = '" + query + "'.");
+        _logger.fine("query = '" + query + "'.");
 
         return query;
     }
@@ -683,7 +691,7 @@ public class QueryModel extends Observable implements Observer
      */
     public DefaultComboBoxModel getInstrumentalMagnitudeBands()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getInstrumentalMagnitudeBands");
 
         return _instrumentalMagnitudeBands;
     }
@@ -697,7 +705,7 @@ public class QueryModel extends Observable implements Observer
     public void setInstrumentalMagnitudeBands(
         DefaultComboBoxModel magnitudeBands)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setInstrumentalMagnitudeBands");
 
         _instrumentalMagnitudeBands = magnitudeBands;
 
@@ -714,7 +722,7 @@ public class QueryModel extends Observable implements Observer
      */
     public String getInstrumentalMagnitudeBand()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getInstrumentalMagnitudeBand");
 
         return (String) _instrumentalMagnitudeBands.getSelectedItem();
     }
@@ -727,7 +735,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setInstrumentalMagnitudeBand(String magnitudeBand)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setInstrumentalMagnitudeBand");
 
         _instrumentalMagnitudeBands.setSelectedItem(magnitudeBand);
 
@@ -741,7 +749,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void resetInstrumentalWavelengthes()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "resetInstrumentalWavelengthes");
 
         _magnitudeBandToWavelength = new Hashtable();
 
@@ -763,7 +771,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getInstrumentalWavelength()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getInstrumentalWavelength");
 
         String currentMagnitudeBand = getInstrumentalMagnitudeBand();
 
@@ -778,8 +786,6 @@ public class QueryModel extends Observable implements Observer
      */
     public void setInstrumentalWavelength(double wavelength)
     {
-        MCSLogger.trace();
-
         setInstrumentalWavelength(new Double(wavelength));
     }
 
@@ -791,6 +797,8 @@ public class QueryModel extends Observable implements Observer
      */
     public void setInstrumentalWavelength(Double wavelength)
     {
+        _logger.entering("QueryModel", "setInstrumentalWavelength");
+
         String currentMagnitudeBand = getInstrumentalMagnitudeBand();
         _magnitudeBandToWavelength.put(currentMagnitudeBand, wavelength);
 
@@ -804,7 +812,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getInstrumentalMaxBaseLine()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getInstrumentalMaxBaseLine");
 
         return new Double(_instrumentalMaxBaseLine);
     }
@@ -816,7 +824,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setInstrumentalMaxBaseLine(double maxBaseLine)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setInstrumentalMaxBaseLine");
 
         _instrumentalMaxBaseLine = maxBaseLine;
 
@@ -840,7 +848,7 @@ public class QueryModel extends Observable implements Observer
      */
     public String getScienceObjectName()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getScienceObjectName");
 
         return _scienceObjectName;
     }
@@ -852,7 +860,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setScienceObjectName(String scienceObjectName)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setScienceObjectName");
 
         _scienceObjectName = scienceObjectName;
 
@@ -866,7 +874,7 @@ public class QueryModel extends Observable implements Observer
      */
     public String getScienceObjectRA()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getScienceObjectRA");
 
         return _scienceObjectRA;
     }
@@ -879,7 +887,7 @@ public class QueryModel extends Observable implements Observer
     public void setScienceObjectRA(String rightAscension)
         throws IllegalArgumentException
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setScienceObjectRA");
 
         // Check if the given parameter is not empty
         if (rightAscension.length() < 1)
@@ -905,7 +913,7 @@ public class QueryModel extends Observable implements Observer
      */
     public String getScienceObjectDEC()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getScienceObjectDEC");
 
         return _scienceObjectDEC;
     }
@@ -918,7 +926,7 @@ public class QueryModel extends Observable implements Observer
     public void setScienceObjectDEC(String declinaison)
         throws IllegalArgumentException
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setScienceObjectDEC");
 
         // Check if given parameter is not empty
         if (declinaison.length() < 1)
@@ -944,7 +952,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void resetScienceObjectMagnitudes()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "resetScienceObjectMagnitudes");
 
         _scienceObjectMagnitudes = new Hashtable();
 
@@ -965,7 +973,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getScienceObjectMagnitude()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getScienceObjectMagnitude");
 
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
 
@@ -979,7 +987,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setScienceObjectMagnitude(Double magnitude)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setScienceObjectMagnitude");
 
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
         _scienceObjectMagnitudes.put(currentBand, magnitude);
@@ -1016,7 +1024,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getScienceObjectDetectionDistance()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getScienceObjectDetectionDistance");
 
         return _preferences.getPreferenceAsDouble(
             "query.scienceObjectDetectionDistance");
@@ -1030,7 +1038,7 @@ public class QueryModel extends Observable implements Observer
     public void setScienceObjectDetectionDistance(double distance)
         throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setScienceObjectDetectionDistance");
 
         try
         {
@@ -1050,6 +1058,9 @@ public class QueryModel extends Observable implements Observer
      */
     public void restoreMinMaxMagnitudeFieldsAutoUpdating()
     {
+        _logger.entering("QueryModel",
+            "restoreMinMaxMagnitudeFieldsAutoUpdating");
+
         _queryMinMagnitudeAutoUpdate     = true;
         _queryMaxMagnitudeAutoUpdate     = true;
     }
@@ -1061,7 +1072,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryMinMagnitude()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryMinMagnitude");
 
         return new Double(_queryMinMagnitude);
     }
@@ -1075,7 +1086,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryMinMagnitude(double minMagnitude)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryMinMagnitude");
 
         // This value should never be auto-updated anymore
         _queryMinMagnitudeAutoUpdate     = false;
@@ -1111,7 +1122,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryMinMagnitudeDelta()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryMinMagnitudeDelta");
 
         return _preferences.getPreferenceAsDouble(
             "query.queryMinMagnitudeDelta");
@@ -1125,7 +1136,7 @@ public class QueryModel extends Observable implements Observer
     public void setQueryMinMagnitudeDelta(double delta)
         throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryMinMagnitudeDelta");
 
         try
         {
@@ -1147,7 +1158,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryMaxMagnitude()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryMaxMagnitude");
 
         return new Double(_queryMaxMagnitude);
     }
@@ -1161,7 +1172,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryMaxMagnitude(double maxMagnitude)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryMaxMagnitude");
 
         // This value should never be auto-updated anymore
         _queryMaxMagnitudeAutoUpdate     = false;
@@ -1197,7 +1208,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryMaxMagnitudeDelta()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryMaxMagnitudeDelta");
 
         return _preferences.getPreferenceAsDouble(
             "query.queryMaxMagnitudeDelta");
@@ -1211,7 +1222,7 @@ public class QueryModel extends Observable implements Observer
     public void setQueryMaxMagnitudeDelta(double delta)
         throws Exception
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryMaxMagnitudeDelta");
 
         try
         {
@@ -1234,6 +1245,8 @@ public class QueryModel extends Observable implements Observer
      */
     public Boolean getQueryBrightScenarioFlag()
     {
+        _logger.entering("QueryModel", "getQueryBrightScenarioFlag");
+
         return _queryBrightScenarioFlag;
     }
 
@@ -1244,6 +1257,8 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryBrightScenarioFlag(boolean flag)
     {
+        _logger.entering("QueryModel", "setQueryBrightScenarioFlag");
+
         _queryBrightScenarioFlag = flag;
 
         setChanged();
@@ -1256,7 +1271,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryDiffRASizeInMinutes()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryDiffRASizeInMinutes");
 
         return new Double(_queryDiffRASize);
     }
@@ -1268,7 +1283,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryDiffRASizeInMinutes(double diffRASize)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryDiffRASizeInMinutes");
 
         _queryDiffRASize = diffRASize;
 
@@ -1292,7 +1307,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryDiffDECSizeInDegrees()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryDiffDECSizeInDegrees");
 
         return new Double(_queryDiffDECSize);
     }
@@ -1304,7 +1319,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryDiffDECSizeInDegrees(double diffDECSize)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryDiffDECSizeInDegrees");
 
         _queryDiffDECSize = diffDECSize;
 
@@ -1328,7 +1343,7 @@ public class QueryModel extends Observable implements Observer
      */
     public Double getQueryRadialSize()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getQueryRadialSize");
 
         return new Double(_queryRadialSize);
     }
@@ -1340,7 +1355,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryRadialSize(double radiusSize)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setQueryRadialSize");
 
         _queryRadialSize = Math.abs(radiusSize);
 
@@ -1367,6 +1382,8 @@ public class QueryModel extends Observable implements Observer
      */
     public Boolean getQueryAutoRadiusFlag()
     {
+        _logger.entering("QueryModel", "getQueryAutoRadiusFlag");
+
         return _queryAutoRadiusFlag;
     }
 
@@ -1377,6 +1394,8 @@ public class QueryModel extends Observable implements Observer
      */
     public void setQueryAutoRadiusFlag(boolean flag)
     {
+        _logger.entering("QueryModel", "setQueryAutoRadiusFlag");
+
         _queryAutoRadiusFlag = flag;
 
         setChanged();
@@ -1390,7 +1409,7 @@ public class QueryModel extends Observable implements Observer
      */
     public int getCurrentStep()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getCurrentStep");
 
         return _currentStep;
     }
@@ -1402,7 +1421,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setCurrentStep(int currentStep)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setCurrentStep");
 
         if (currentStep <= _totalStep)
         {
@@ -1424,7 +1443,7 @@ public class QueryModel extends Observable implements Observer
      */
     public int getTotalStep()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getTotalStep");
 
         return _totalStep;
     }
@@ -1436,7 +1455,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setTotalStep(int totalStep)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setTotalStep");
 
         _totalStep = totalStep;
 
@@ -1451,7 +1470,7 @@ public class QueryModel extends Observable implements Observer
      */
     public String getCatalogName()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "getCatalogName");
 
         if (_currentStep == 0)
         {
@@ -1468,7 +1487,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setCatalogName(String catalogName)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setCatalogName");
 
         _catalogName = catalogName;
 
@@ -1482,7 +1501,7 @@ public class QueryModel extends Observable implements Observer
      */
     public boolean isConsumable()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "isConsumable");
 
         // @TODO : Verify any mandatory missing parameter
 
@@ -1509,7 +1528,7 @@ public class QueryModel extends Observable implements Observer
      */
     public boolean canBeEdited()
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "canBeEdited");
 
         return _isEditable;
     }
@@ -1521,7 +1540,7 @@ public class QueryModel extends Observable implements Observer
      */
     public void setEditableState(boolean state)
     {
-        MCSLogger.trace();
+        _logger.entering("QueryModel", "setEditableState");
 
         _isEditable = state;
 

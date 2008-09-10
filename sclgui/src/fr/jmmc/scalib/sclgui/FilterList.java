@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterList.java,v 1.3 2007-02-13 13:58:44 lafrasse Exp $"
+ * "@(#) $Id: FilterList.java,v 1.4 2008-09-10 22:23:34 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2007/02/13 13:58:44  lafrasse
+ * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
+ *
  * Revision 1.2  2006/08/04 14:09:10  lafrasse
  * Added GUI enabling/disabling feature to filters
  *
@@ -15,9 +18,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import java.util.*;
+import java.util.logging.*;
 
 
 /**
@@ -25,6 +27,10 @@ import java.util.*;
  */
 public class FilterList extends Filter implements Observer
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.FilterList");
+
     /** Filter list */
     private Vector _filters;
 
@@ -44,7 +50,7 @@ public class FilterList extends Filter implements Observer
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("FilterList", "getName");
 
         return "Filter List";
     }
@@ -56,7 +62,7 @@ public class FilterList extends Filter implements Observer
      */
     public void add(Filter filter)
     {
-        MCSLogger.trace();
+        _logger.entering("FilterList", "add");
 
         _filters.add(filter);
         filter.addObserver(this);
@@ -69,7 +75,7 @@ public class FilterList extends Filter implements Observer
      */
     public int size()
     {
-        MCSLogger.trace();
+        _logger.entering("FilterList", "size");
 
         return _filters.size();
     }
@@ -81,7 +87,7 @@ public class FilterList extends Filter implements Observer
      */
     public Filter elementAt(int index)
     {
-        MCSLogger.trace();
+        _logger.entering("FilterList", "elementAt");
 
         return ((Filter) _filters.elementAt(index));
     }
@@ -93,7 +99,7 @@ public class FilterList extends Filter implements Observer
      */
     public void process(StarList starList)
     {
-        MCSLogger.trace();
+        _logger.entering("FilterList", "process");
 
         // If the filter list is enbled
         if (isEnabled() == true)
@@ -113,7 +119,7 @@ public class FilterList extends Filter implements Observer
      */
     public void update(Observable o, Object arg)
     {
-        MCSLogger.trace();
+        _logger.entering("FilterList", "update");
 
         setChanged();
         notifyObservers();

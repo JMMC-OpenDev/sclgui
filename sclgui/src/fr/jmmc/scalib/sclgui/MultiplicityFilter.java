@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.10 2008-05-26 16:11:18 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.11 2008-09-10 22:29:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2008/05/26 16:11:18  lafrasse
+ * Removed un-needed ":" from filter name.
+ *
  * Revision 1.9  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -36,9 +39,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import java.util.Vector;
+import java.util.logging.*;
 
 
 /**
@@ -46,6 +48,10 @@ import java.util.Vector;
  */
 public class MultiplicityFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.MultiplicityFilter");
+
     /** Store the variability flag 1 column name */
     private String _multFlag1ColumnName = "MultFlag";
 
@@ -64,7 +70,7 @@ public class MultiplicityFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("MultiplicityFilter", "getName");
 
         return "Reject Multiplicity";
     }
@@ -79,7 +85,7 @@ public class MultiplicityFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("MultiplicityFilter", "shouldRemoveRow");
 
         // Get the id of the column contaning 'multiplicity' star property
         int multiplicityId = starList.getColumnIdByName(_multFlag1ColumnName);

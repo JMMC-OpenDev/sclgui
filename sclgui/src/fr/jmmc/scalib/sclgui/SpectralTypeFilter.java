@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.14 2007-08-09 12:23:31 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.15 2008-09-10 22:38:06 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2007/08/09 12:23:31  lafrasse
+ * Enhanced to remove undefined spectral types.
+ *
  * Revision 1.13  2007/08/03 10:35:27  lafrasse
  * Correted a bud found by Gilles DUVERT with 'Uy_Aur', causing the filter to crash when encounting a not handled spectral type (eg R, S, N, ...).
  *
@@ -59,6 +62,7 @@ import fr.jmmc.mcs.log.*;
 import java.lang.Character;
 
 import java.util.*;
+import java.util.logging.*;
 
 
 /**
@@ -66,6 +70,10 @@ import java.util.*;
  */
 public class SpectralTypeFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.SpectralTypeFilter");
+
     /** Store the spectral type column name */
     private String _spTypeColumnName = "SpType";
 
@@ -92,7 +100,7 @@ public class SpectralTypeFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("SpectralTypeFilter", "getName");
 
         return "Reject Spectral Types (and unknowns) :";
     }
@@ -107,7 +115,7 @@ public class SpectralTypeFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("SpectralTypeFilter", "shouldRemoveRow");
 
         /*
            // DO NOT REMOVE !!! - Validity test code
@@ -160,11 +168,11 @@ public class SpectralTypeFilter extends Filter
             if (cell.hasValue() == true)
             {
                 String rawSpectralType = (String) cell.getValue();
-                MCSLogger.debug("rawSpectralType = '" + rawSpectralType + "'.");
+                _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
 
                 // Get back the spectral types found in the given spectral type
                 Vector foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
-                MCSLogger.debug("foundSpectralTypes = '" + foundSpectralTypes +
+                _logger.fine("foundSpectralTypes = '" + foundSpectralTypes +
                     "'.");
 
                 // For each spectral type found
@@ -174,15 +182,15 @@ public class SpectralTypeFilter extends Filter
                     String  spectralTypeName          = (String) foundSpectralTypes.elementAt(i);
                     Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
-                    MCSLogger.debug("spectralTypeName = '" + spectralTypeName +
+                    _logger.fine("spectralTypeName = '" + spectralTypeName +
                         "'.");
-                    MCSLogger.debug("spectralTypeCheckBoxState = '" +
+                    _logger.fine("spectralTypeCheckBoxState = '" +
                         spectralTypeCheckBoxState + "'.");
 
                     // If the current spectral type is not handled (eg R, N ,S, ...)
                     if (spectralTypeCheckBoxState == null)
                     {
-                        MCSLogger.debug("spType not handled -> skipped.");
+                        _logger.fine("spType not handled -> skipped.");
 
                         // Skip it
                         continue;
@@ -191,7 +199,7 @@ public class SpectralTypeFilter extends Filter
                     // If the current spectral type checkbox is checked
                     if (spectralTypeCheckBoxState == true)
                     {
-                        MCSLogger.debug("Line removed.\n");
+                        _logger.fine("Line removed.\n");
 
                         // This line must be removed
                         return true;
@@ -200,7 +208,7 @@ public class SpectralTypeFilter extends Filter
             }
             else // If the spectral type is undefined
             {
-                MCSLogger.debug("Undefined Spectral Type.\n");
+                _logger.fine("Undefined Spectral Type.\n");
 
                 // This line must be removed
                 return true;
@@ -209,11 +217,11 @@ public class SpectralTypeFilter extends Filter
         else
         {
             // @TODO : ASSERTION FAILED
-            MCSLogger.warning("Unknown Spectral Type Column Name = '" +
+            _logger.warning("Unknown Spectral Type Column Name = '" +
                 _spTypeColumnName + "'.");
         }
 
-        MCSLogger.debug("Line kept.\n");
+        _logger.fine("Line kept.\n");
 
         // Otherwise the current star row from the star list should be kept
         return false;

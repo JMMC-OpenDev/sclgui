@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.9 2007-08-02 12:45:19 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.10 2008-09-10 22:39:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2007/08/02 12:45:19  lafrasse
+ * Added a method to return whether the star property has a value or not.
+ *
  * Revision 1.8  2007/06/18 13:59:32  lafrasse
  * Enhanced getStringValue() to handle 'null' value properties.
  *
@@ -38,6 +41,8 @@ import fr.jmmc.mcs.log.*;
 
 import java.lang.Float;
 
+import java.util.logging.*;
+
 
 /**
  * Star property.
@@ -45,6 +50,10 @@ import java.lang.Float;
 public class StarProperty implements Comparable
 {
     // Trace has been deactvated because of numerous call
+
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.StarProperty");
 
     /** Value */
     private Object _value;
@@ -72,7 +81,7 @@ public class StarProperty implements Comparable
      */
     public void setValue(Object value)
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "setValue");
         _value = value;
     }
 
@@ -83,7 +92,7 @@ public class StarProperty implements Comparable
      */
     public Object getValue()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "getValue");
         return _value;
     }
 
@@ -94,7 +103,7 @@ public class StarProperty implements Comparable
      */
     public String getStringValue()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "getStringValue");
         if (_value == null)
         {
             return "";
@@ -110,7 +119,7 @@ public class StarProperty implements Comparable
      */
     public double getDoubleValue()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "getDoubleValue");
         return Double.parseDouble(_value.toString());
     }
 
@@ -121,7 +130,7 @@ public class StarProperty implements Comparable
      */
     public boolean getBooleanValue()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "getBooleanValue");
         return Boolean.parseBoolean(_value.toString());
     }
 
@@ -132,7 +141,7 @@ public class StarProperty implements Comparable
      */
     public boolean hasValue()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "hasValue");
         if (getStringValue().length() > 0)
         {
             return true;
@@ -148,7 +157,7 @@ public class StarProperty implements Comparable
      */
     public void setOrigin(String origin)
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "setOrigin");
         _origin = origin;
     }
 
@@ -159,7 +168,7 @@ public class StarProperty implements Comparable
      */
     public String getOrigin()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "getOrigin");
         return _origin;
     }
 
@@ -170,7 +179,7 @@ public class StarProperty implements Comparable
      */
     public boolean hasOrigin()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "hasOrigin");
         if (_confidence.length() > 0)
         {
             return false;
@@ -191,7 +200,7 @@ public class StarProperty implements Comparable
      */
     public void setConfidence(String confidence)
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "setConfidence");
         _confidence = confidence;
     }
 
@@ -202,7 +211,7 @@ public class StarProperty implements Comparable
      */
     public String getConfidence()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "getConfidence");
         return _confidence;
     }
 
@@ -213,7 +222,7 @@ public class StarProperty implements Comparable
      */
     public boolean hasConfidence()
     {
-        // MCSLogger.trace();
+        // _logger.entering("StarProperty", "hasConfidence");
         if (_confidence.length() > 0)
         {
             return true;
@@ -232,8 +241,7 @@ public class StarProperty implements Comparable
      */
     public int compareTo(Object o)
     {
-        MCSLogger.trace();
-
+        //_logger.entering("StarProperty", "compareTo");
         return ((Comparable) _value).compareTo((Comparable) o);
 
         /*

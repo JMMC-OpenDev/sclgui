@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.10 2008-05-26 16:11:18 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.11 2008-09-10 22:40:30 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2008/05/26 16:11:18  lafrasse
+ * Removed un-needed ":" from filter name.
+ *
  * Revision 1.9  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -45,6 +48,7 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.log.*;
 
 import java.util.Vector;
+import java.util.logging.*;
 
 
 /**
@@ -52,6 +56,10 @@ import java.util.Vector;
  */
 public class VariabilityFilter extends Filter
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.VariabilityFilter");
+
     /** Store the variability flag 1 column name */
     private String _varFlag1ColumnName = "VarFlag1";
 
@@ -76,7 +84,7 @@ public class VariabilityFilter extends Filter
      */
     public String getName()
     {
-        MCSLogger.trace();
+        _logger.entering("VariabilityFilter", "getName");
 
         return "Reject Variability";
     }
@@ -91,7 +99,7 @@ public class VariabilityFilter extends Filter
      */
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
-        MCSLogger.trace();
+        _logger.entering("VariabilityFilter", "shouldRemoveRow");
 
         int          varFlagID = -1;
         StarProperty cell      = null;

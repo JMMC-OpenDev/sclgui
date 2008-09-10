@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.13 2008-05-26 16:01:49 mella Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.14 2008-09-10 22:24:48 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2008/05/26 16:01:49  mella
+ * Rename VisibilityFilter to VisibilityAccuracyFilter
+ * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
+ *
  * Revision 1.12  2007/08/16 09:47:32  lafrasse
  * Added support for FacelessNonCalibratorsFilter to hide found stars without
  * visibilty nor diameters.
@@ -47,9 +51,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
 import java.util.*;
+import java.util.logging.*;
 
 import javax.swing.table.*;
 
@@ -59,6 +62,10 @@ import javax.swing.table.*;
  */
 public class FiltersModel
 {
+    /** Logger */
+    private static final Logger _logger = Logger.getLogger(
+            "fr.jmmc.scalib.sclgui.FiltersModel");
+
     /** List of filters to handle */
     private FilterList _filterList;
 
@@ -150,7 +157,7 @@ public class FiltersModel
      */
     public Vector getFilterViewVector()
     {
-        MCSLogger.trace();
+        _logger.entering("FiltersModel", "getFilterViewVector");
 
         return _filterViews;
     }
@@ -162,7 +169,7 @@ public class FiltersModel
      */
     public void addObserver(Observer o)
     {
-        MCSLogger.trace();
+        _logger.entering("FiltersModel", "addObserver");
 
         _filterList.addObserver(o);
     }
@@ -174,7 +181,7 @@ public class FiltersModel
      */
     public void process(StarList starList)
     {
-        MCSLogger.trace();
+        _logger.entering("FiltersModel", "process");
 
         _filterList.process(starList);
     }
