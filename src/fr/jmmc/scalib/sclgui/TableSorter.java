@@ -1339,8 +1339,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             _logger.fine("Edited value is in '" + catalogName + "' column.");
 
             // Compose catalog URL
-            String url = "http://webviz.u-strasbg.fr/viz-bin/VizieR-S?" +
-                catalogName + "%20" + cellValue;
+            String url = "http://simbad.u-strasbg.fr/simbad/sim-id?Ident=";
+            url += (catalogName + "+" + cellValue);
 
             _logger.finer("User clicked on column '" + catalogName +
                 "' in the CalibratorView, will open '" + url +
