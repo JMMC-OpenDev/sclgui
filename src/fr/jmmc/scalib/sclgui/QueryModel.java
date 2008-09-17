@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.39 2008-09-10 22:34:48 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.40 2008-09-17 21:46:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.39  2008/09/10 22:34:48  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.38  2008/05/30 12:47:50  lafrasse
  * Changed QueryDiffRA & QueryDiffDEC APIs to more precisely handle unit conversion
  * between minutes/degrees and arcmin.
@@ -590,9 +593,9 @@ public class QueryModel extends Observable implements Observer
             _preferences.setPreference("query.queryBrightScenarioFlag",
                 getQueryBrightScenarioFlag());
             _preferences.setPreference("query.queryDiffRASize",
-                getQueryDiffRASizeInMinutes());
+                ALX.minutes2arcmin(getQueryDiffRASizeInMinutes()));
             _preferences.setPreference("query.queryDiffDECSize",
-                getQueryDiffDECSizeInDegrees());
+                ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees()));
             _preferences.setPreference("query.queryRadialSize",
                 getQueryRadialSize());
             _preferences.setPreference("query.queryAutoRadius",
