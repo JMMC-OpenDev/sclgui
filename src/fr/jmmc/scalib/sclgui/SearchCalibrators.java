@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.23 2008-09-10 22:37:25 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.24 2008-09-18 21:03:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.23  2008/09/10 22:37:25  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Moved to new JMCS APIs.
+ *
  * Revision 1.22  2008/05/29 10:10:16  mella
  * Accept null value for SearchCal Argument
  *
@@ -202,6 +206,9 @@ public class SearchCalibrators extends App
 
         try
         {
+            // Get preferences
+            Preferences preferences = Preferences.getInstance();
+
             // Create a query model
             QueryModel queryModel = new QueryModel();
 
@@ -231,6 +238,9 @@ public class SearchCalibrators extends App
 
             MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
                     preferencesView, filtersView, statusBar);
+
+            // Triggers all preferences observers notification to finnish GUI setup.
+            preferences.triggerObserversNotification();
         }
         catch (Exception ex)
         {
