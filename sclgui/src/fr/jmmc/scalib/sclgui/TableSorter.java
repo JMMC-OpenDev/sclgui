@@ -1148,13 +1148,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
             if (modelColumn == _hiptId)
             {
-                //System.out.println("value is in HIP column.");
                 catalogName = "HIP";
             }
 
             if (modelColumn == _hdtId)
             {
-                //System.out.println("value is in HD column.");
                 catalogName = "HD";
             }
 
