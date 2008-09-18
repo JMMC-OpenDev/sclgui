@@ -1,11 +1,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.35 2008-09-10 22:19:40 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.36 2008-09-18 21:50:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2008/09/10 22:19:40  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Added clickable cell to open web page on star information from HIP and HD
+ * catalog columns identifier.
+ * Moved to new JMCS APIs.
+ * Code, documentation and log enhancement.
+ *
  * Revision 1.34  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -152,10 +159,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             "fr.jmmc.scalib.sclgui.CalibratorsView");
 
     /** Show Legend action */
-    public static ShowLegendAction _showLegendAction;
+    //public static ShowLegendAction _showLegendAction;
+    public static RegisteredPreferencedBooleanAction _showLegendAction;
 
     /** Show Details action */
-    public static ShowDetailsAction _showDetailsAction;
+    public static RegisteredPreferencedBooleanAction _showDetailsAction;
 
     /** Delete action */
     public DeleteAction _deleteAction;
@@ -191,13 +199,19 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsModel = calibratorsModel;
         _calibratorsModel.addTableModelListener(this);
 
+        // Store the application preferences and register against it
+        _preferences = Preferences.getInstance();
+        _preferences.addObserver(this);
+
         // Create actions
         _deleteAction          = new DeleteAction(classPath, "_deleteAction");
         _undeleteAction        = new UndeleteAction(classPath, "_undeleteAction");
-        _showLegendAction      = new ShowLegendAction(classPath,
-                "_showLegendAction");
-        _showDetailsAction     = new ShowDetailsAction(classPath,
-                "_showDetailsAction");
+        _showLegendAction      = new RegisteredPreferencedBooleanAction(classPath,
+                "_showLegendAction", "Show Legend", _preferences,
+                "view.legend.show");
+        _showDetailsAction     = new RegisteredPreferencedBooleanAction(classPath,
+                "_showDetailsAction", "Show Details", _preferences,
+                "view.details.show");
 
         // Gray border of the view.
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
@@ -260,12 +274,19 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _tableAndLegendPane.setContinuousLayout(true);
         add(_tableAndLegendPane);
 
-        // Store the application preferences and register against it
-        _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
+        // Handle window resize
+        addHierarchyBoundsListener(new HierarchyBoundsListener()
+            {
+                public void ancestorMoved(HierarchyEvent e)
+                {
+                }
 
-        // Make data refreshed according prefs
-        update(null, null);
+                public void ancestorResized(HierarchyEvent e)
+                {
+                    // Properly display (or not) legend view
+                    showLegend();
+                }
+            });
     }
 
     /**
@@ -332,10 +353,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsTable.repaint();
         _calibratorsIdTable.repaint();
 
-        // Check associated preference to be consistent
-        boolean legendShouldBeVisible = _preferences.getPreferenceAsBoolean(
-                "view.legend.show");
-        showLegend(legendShouldBeVisible);
+        // Refresh legend display state
+        showLegend();
     }
 
     /**
@@ -368,17 +387,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * Tell GUI to show or hide legend panel
      */
-    public void showLegend(boolean visible)
+    public void showLegend()
     {
         _logger.entering("CalibratorsView", "showLegend");
 
-        int totalWidth          = (int) _tableAndLegendPane.getBounds()
-                                                           .getWidth();
-        int dividerWidth        = _tableAndLegendPane.getDividerSize();
-        int tableAndLegendWidth = totalWidth - dividerWidth;
-        int legendWidth         = tableAndLegendWidth;
+        boolean preferencedLegendShouldBeVisible = _preferences.getPreferenceAsBoolean(
+                "view.legend.show");
 
-        if (visible == true)
+        int     totalWidth                       = (int) _tableAndLegendPane.getBounds()
+                                                                            .getWidth();
+        int     dividerWidth                     = _tableAndLegendPane.getDividerSize();
+        int     tableAndLegendWidth              = totalWidth - dividerWidth;
+        int     legendWidth                      = tableAndLegendWidth;
+
+        if (preferencedLegendShouldBeVisible == true)
         {
             Component legend         = _tableAndLegendPane.getRightComponent();
             int       legendMinWidth = (int) legend.getMinimumSize().getWidth();
@@ -392,7 +414,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         public DeleteAction(String classPath, String fieldName)
         {
-            //super("deleteTableSelection");
             super(classPath, fieldName);
             setEnabled(false);
         }
@@ -409,7 +430,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     {
         public UndeleteAction(String classPath, String fieldName)
         {
-            //super("undeleteAll");
             super(classPath, fieldName);
             setEnabled(false);
         }
@@ -419,61 +439,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             _logger.entering("UndeleteAction", "actionPerformed");
 
             _calibratorsModel.undeleteStars();
-        }
-    }
-
-    protected class ShowLegendAction extends RegisteredAction
-    {
-        Preferences _preferences = Preferences.getInstance();
-
-        public ShowLegendAction(String classPath, String fieldName)
-        {
-            //super("showLegend");
-            super(classPath, fieldName, "Show Legend");
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            _logger.entering("ShowLegendAction", "actionPerformed");
-
-            if (e.getSource() instanceof AbstractButton)
-            {
-                AbstractButton button = (AbstractButton) e.getSource();
-                showLegend(button.isSelected());
-            }
-        }
-    }
-
-    protected class ShowDetailsAction extends RegisteredAction
-    {
-        Preferences _preferences = Preferences.getInstance();
-
-        public ShowDetailsAction(String classPath, String fieldName)
-        {
-            //super("showDetails");
-            super(classPath, fieldName, "Show Details");
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            _logger.entering("ShowDetailsAction", "actionPerformed");
-
-            if (e.getSource() instanceof AbstractButton)
-            {
-                AbstractButton button     = (AbstractButton) e.getSource();
-                boolean        isSelected = button.isSelected();
-
-                try
-                {
-                    _preferences.setPreference("view.details.show", isSelected);
-                }
-                catch (Exception ex)
-                {
-                    _logger.log(Level.WARNING,
-                        "Cannot set preference 'view.details.show' to '" +
-                        isSelected + "'.", ex);
-                }
-            }
         }
     }
 }
