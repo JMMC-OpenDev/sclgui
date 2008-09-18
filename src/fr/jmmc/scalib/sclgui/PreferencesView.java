@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.29 2008-09-10 22:31:06 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.30 2008-09-18 21:50:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2008/09/10 22:31:06  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.28  2007/12/03 14:41:59  lafrasse
  * Removed science object inclusion preference.
  * Changed default query to match the one of the previous version.
@@ -319,9 +322,6 @@ class QueryPreferencesView extends JPanel implements Observer, ActionListener,
         _maxMagnitudeDeltaTextfield.addActionListener(this);
         c.gridx = 1;
         tempPanel.add(_maxMagnitudeDeltaTextfield, c);
-
-        // Make data filled
-        update(null, null);
     }
 
     /**
@@ -552,9 +552,6 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         _moveDownButton.setEnabled(false);
         panel.add(_moveDownButton);
         add(panel);
-
-        // Initialise GUI
-        update(null, null);
     }
 
     /**
@@ -806,32 +803,22 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
 
         // Handle tooltips
         _enableToolTipCheckBox     = new JCheckBox("Show Tooltips");
-
-        String ttt                 = Resources.getToolTipText(
-                "_enableToolTipCheckBox");
-        _enableToolTipCheckBox.setToolTipText(ttt);
         _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
         _enableToolTipCheckBox.addChangeListener(this);
         tempPanel.add(_enableToolTipCheckBox, c);
         c.gridy++;
 
-        // Handle include science object name
-        Hashtable booleanPrefs = new Hashtable(); // Table of:  pref->Action
-        booleanPrefs.put("view.details.show", CalibratorsView._showDetailsAction);
-        booleanPrefs.put("view.legend.show", CalibratorsView._showLegendAction);
+        // Handle "Show Details" checkbox
+        JCheckBox showDetailsCheckBox = new JCheckBox(CalibratorsView._showDetailsAction);
+        CalibratorsView._showDetailsAction.addBoundButton(showDetailsCheckBox);
+        tempPanel.add(showDetailsCheckBox, c);
+        c.gridy++;
 
-        // Create a checkbox for every pref and action entries
-        for (Enumeration e = booleanPrefs.keys(); e.hasMoreElements();)
-        {
-            String    pref   = (String) e.nextElement();
-            Action    action = (Action) booleanPrefs.get(pref);
-            JCheckBox cb     = new JCheckBox(action);
-            tempPanel.add(cb, c);
-            c.gridy++;
-        }
-
-        // Make data filled
-        update(null, null);
+        // Handle "Show Legend" checkbox
+        JCheckBox showLegendCheckBox = new JCheckBox(CalibratorsView._showLegendAction);
+        CalibratorsView._showLegendAction.addBoundButton(showLegendCheckBox);
+        tempPanel.add(showLegendCheckBox, c);
+        c.gridy++;
     }
 
     /**
@@ -845,10 +832,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
         _logger.entering("HelpPreferencesView", "update");
 
         // Adjust view and behaviour according preferences entries
-        boolean b;
-
-        // Tooltips
-        b = _preferences.getPreferenceAsBoolean("help.tooltips.show");
+        boolean b = _preferences.getPreferenceAsBoolean("help.tooltips.show");
         _enableToolTipCheckBox.setSelected(b);
         _sharedToolTipManager.setEnabled(b);
     }
@@ -862,17 +846,17 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
 
         Object source = ev.getSource();
 
-        if (source.equals(_enableToolTipCheckBox))
+        try
         {
-            try
+            if (source.equals(_enableToolTipCheckBox))
             {
                 _preferences.setPreference("help.tooltips.show",
                     _enableToolTipCheckBox.isSelected());
             }
-            catch (Exception ex)
-            {
-                _logger.warning("Could not set preference : " + ex);
-            }
+        }
+        catch (Exception ex)
+        {
+            _logger.warning("Could not set preference : " + ex);
         }
     }
 }
