@@ -1050,8 +1050,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     private class TableCellColors extends DefaultTableCellRenderer
         implements Observer
     {
-        Hashtable        _hashColors;
-        Hashtable        _hashConfidence;
+        Hashtable        _colorForOrigin;
+        Hashtable        _colorForConfidence;
         Preferences      _preferences;
         CalibratorsModel _calModel;
         int              _distId;
@@ -1189,7 +1189,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         tooltip += ("Catalog origin: " + origin);
 
                         // Get origin color and set it as cell backgroung color
-                        backgroundColor = (Color) _hashColors.get(origin);
+                        backgroundColor = (Color) _colorForOrigin.get(origin);
                     }
                     else if (starProperty.hasConfidence() == true)
                     {
@@ -1198,7 +1198,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         tooltip += ("Confidence index: " + confidence);
 
                         // Get confidence color and set it as cell backgroung color
-                        backgroundColor = (Color) _hashColors.get(confidence);
+                        backgroundColor = (Color) _colorForConfidence.get(confidence);
                     }
                     else
                     {
@@ -1237,7 +1237,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // Read colors preferences for catalogs
                 String      prefix = "catalog.color.";
                 Enumeration e      = _preferences.getPreferences(prefix);
-                _hashColors        = new Hashtable();
+                _colorForOrigin    = new Hashtable();
 
                 while (e.hasMoreElements())
                 {
@@ -1247,7 +1247,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     try
                     {
                         Color catalogColor = _preferences.getPreferenceAsColor(entry);
-                        _hashColors.put(catalogName, catalogColor);
+                        _colorForOrigin.put(catalogName, catalogColor);
                     }
                     catch (PreferencesException ex)
                     {
@@ -1257,9 +1257,9 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 }
 
                 // Read colors preferences for confidences
-                prefix              = "confidence.color.";
-                e                   = _preferences.getPreferences(prefix);
-                _hashConfidence     = new Hashtable();
+                prefix                  = "confidence.color.";
+                e                       = _preferences.getPreferences(prefix);
+                _colorForConfidence     = new Hashtable();
 
                 while (e.hasMoreElements())
                 {
@@ -1269,7 +1269,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     try
                     {
                         Color confidenceColor = _preferences.getPreferenceAsColor(entry);
-                        _hashConfidence.put(confidenceName, confidenceColor);
+                        _colorForConfidence.put(confidenceName, confidenceColor);
                     }
                     catch (PreferencesException ex)
                     {
