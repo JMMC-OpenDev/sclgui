@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ApplicationData link="http://www.jmmc.fr/searchcal_page.htm">
+	<program name="SearchCal" version="4.0b15"/>
+	<compilation date="19/09/2008" compiler="JDK 1.5.0_16"/>
+	<text>Brought to you by The JMMC Team.</text>
+	<dependences>
+        <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
+        <package name="Axis" description="SOAP protocol stack, provided by The Apache Software Foundation." link="http://ws.apache.org/axis/java/"/>
+        <package name="Commons" description="general libraries, provided by The Apache Software Foundation." link="http://commons.apache.org/"/>
+        <package name="JavaMail" description="platform-independent and protocol-independent framework to build mail and messaging applications, provided by Sun Microsystems, Inc." link="http://java.sun.com/products/javamail/"/>
+        <package name="kXML" description="opensource XML pull parser and writer" link="http://kxml.sourceforge.net/"/>
+        <package name="SAVOT" description="SearchCal uses source code created at the Centre de Donnees astronomiques de Strasbourg, France." link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"/>
+        <package name="WSDL4j" description="opensource Web Services description language for Java toolkit." link="http://sourceforge.net/projects/wsdl4j"/>
+	</dependences>
+    <menubar>
+      <menu label="File">
+        <menu label="Open..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_openFileAction" accelerator="O"/>
+        <menu/>
+        <menu label="Save" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_saveFileAction" accelerator="S"/>
+        <menu label="Save As..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_saveFileAsAction" accelerator="shift S"/>
+        <menu label="Revert to Saved" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_revertToSavedFileAction"/>
+        <menu/>
+        <menu label="Export to CSV..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_exportToCSVFileAction"/>
+        <menu label="Export to HTML..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_exportToHTMLFileAction"/>
+        <menu/>
+        <menu label="Page Setup..." classpath="fr.jmmc.scalib.sclgui.MainWindow" action="_pageSetupAction" accelerator="shift P"/>
+        <menu label="Print..." classpath="fr.jmmc.scalib.sclgui.MainWindow" action="_printAction" accelerator="P"/>
+      </menu>
+      <menu label="Edit">
+        <menu label="Delete" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_deleteAction"/>
+        <menu label="Undelete" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_undeleteAction"/>
+      </menu>
+      <menu label="Query">
+        <menu label="Reset Values" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_resetValuesAction"/>
+        <menu label="Load Default Values" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_loadDefaultValuesAction"/>
+        <menu label="Save Values as Default" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_saveValuesAction"/>
+        <menu/>
+        <menu label="Get Star" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getStarAction"/>
+        <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction"/>
+      </menu>
+      <menu label="Calibrators">
+        <menu label="Show Details" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true" checkboxPreferenceName="view.details.show"/>
+        <menu label="Show Legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true" checkboxPreferenceName="view.legend.show"/>
+      </menu>
+    </menubar>
+</ApplicationData>
