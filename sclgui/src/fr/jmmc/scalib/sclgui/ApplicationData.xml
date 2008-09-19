@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal_page.htm">
-	<program name="SearchCal" version="4.0b14"/>
-	<compilation date="10/09/2008" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.0b15"/>
+	<compilation date="11/09/2008" compiler="JDK 1.5.0_16"/>
 	<text>Brought to you by The JMMC Team.</text>
 	<dependences>
+        <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
+        <package name="Axis" description="SOAP protocol stack, provided by The Apache Software Foundation." link="http://ws.apache.org/axis/java/"/>
+        <package name="Commons" description="general libraries, provided by The Apache Software Foundation." link="http://commons.apache.org/"/>
+        <package name="JavaMail" description="platform-independent and protocol-independent framework to build mail and messaging applications, provided by Sun Microsystems, Inc." link="http://java.sun.com/products/javamail/"/>
+        <package name="kXML" description="opensource XML pull parser and writer" link="http://kxml.sourceforge.net/"/>
         <package name="SAVOT" description="SearchCal uses source code created at the Centre de Donnees astronomiques de Strasbourg, France." link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"/>
+        <package name="WSDL4j" description="opensource Web Services description language for Java toolkit." link="http://sourceforge.net/projects/wsdl4j"/>
 	</dependences>
     <menubar>
       <menu label="File">
@@ -34,8 +40,8 @@
         <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction"/>
       </menu>
       <menu label="Calibrators">
-        <menu label="Show Details" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true"/>
-        <menu label="Show Legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true"/>
+        <menu label="Show Details" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true" checkboxPreferenceName="view.details.show"/>
+        <menu label="Show Legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true" checkboxPreferenceName="view.legend.show"/>
       </menu>
     </menubar>
 </ApplicationData>
