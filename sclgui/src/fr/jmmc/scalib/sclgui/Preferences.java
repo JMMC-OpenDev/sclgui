@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.25 2008-09-10 22:31:30 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.26 2008-09-19 08:13:14 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2008/09/10 22:31:30  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Moved to new JMCS APIs.
+ *
  * Revision 1.24  2008/08/28 14:16:02  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Moved to new JMCS APIs.
@@ -175,7 +179,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Simple 'Bright V' view
         setDefaultPreference("view.columns.simple.bright.V",
-            "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
+            "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType B V R I");
         // Detailled 'Bright V' view
         setDefaultPreference("view.columns.detailled.bright.V",
             "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
@@ -189,10 +193,10 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Simple 'Faint K' view
         setDefaultPreference("view.columns.simple.faint.K",
-            "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Vphg I Icous Iphg J Jcous H Hcous K Kcous");
+            "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Icous J H K");
         // Detailled 'Bright K' view
         setDefaultPreference("view.columns.detailled.faint.K",
-            "dist vis2 vis2Err diam_vk diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
+            "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
 
         // Query default values preferences
         setDefaultPreference("query.magnitudeBand", "V");
