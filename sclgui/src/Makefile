@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.29 2008-05-27 14:21:08 mella Exp $"
+# "@(#) $Id: Makefile,v 1.30 2008-10-16 12:37:22 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.29  2008/05/27 14:21:08  mella
+# Add jnlp deployement into install target
+#
 # Revision 1.28  2008/05/26 16:16:04  lafrasse
 # Updated install_jnlp target to use jmcsDeployJnlp script.
 #
@@ -215,7 +218,6 @@ sclgui_DIRS     = fr
 sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
                   fr/jmmc/scalib/sclgui/voTableToCSV.xsl \
                   fr/jmmc/scalib/sclgui/voTableToHTML.xsl \
-                  fr/jmmc/scalib/sclgui/search.png \
                   fr/jmmc/scalib/sclgui/ApplicationData.xml \
 
 #
@@ -231,7 +233,6 @@ JAVA_JAR =
 #
 # <brief description of SearchCalibrators java program>
 SearchCalibrators_CLASS = fr.jmmc.scalib.sclgui.SearchCalibrators \
-                          fr.jmmc.scalib.sclgui.OSXAdapter
 
 #
 # Command Definition Files (CDF)
@@ -293,13 +294,9 @@ CLASSPATH = $(shell mkfMakeJavaClasspath)
 WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
 do_soap :
 	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(WSLD_FILE)
-    ## For SIMBAD SOAP WebService (do not work here)
-    # java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java http://simweb.u-strasbg.fr/axis/services/WSQuery?wsdl
 
 clean_soap :
 	rm -rf fr/jmmc/sclws_wsdl
-    ## For SIMBAD SOAP WebService (do not work here)
-    # rm -rf cds/
 
 
 #___oOo___
