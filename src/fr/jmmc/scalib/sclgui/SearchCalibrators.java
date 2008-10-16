@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.24 2008-09-18 21:03:21 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.25 2008-10-16 12:39:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2008/09/18 21:03:21  lafrasse
+ * Added Preference update notification triggering to fully finish GUI setup
+ * (TableCellColors).
+ *
  * Revision 1.23  2008/09/10 22:37:25  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Moved to new JMCS APIs.
@@ -90,6 +94,8 @@ import fr.jmmc.mcs.log.*;
 import gnu.getopt.Getopt;
 
 import java.awt.event.ActionEvent;
+
+import java.net.URL;
 
 import java.util.*;
 import java.util.logging.*;
@@ -260,7 +266,7 @@ public class SearchCalibrators extends App
     }
 
     /** Handle operations before closing application */
-    protected boolean finnish()
+    protected boolean finish()
     {
         return _vo.canLostModifications();
     }
