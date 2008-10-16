@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.40 2008-09-17 21:46:53 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.41 2008-10-16 12:56:11 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.40  2008/09/17 21:46:53  lafrasse
+ * Added proper unit conversion for DiffRA and DiffDEC in saveDefaultValues().
+ *
  * Revision 1.39  2008/09/10 22:34:48  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -1282,13 +1285,17 @@ public class QueryModel extends Observable implements Observer
     /**
      * Change the query box differential RA size.
      *
+     * @warning negative values will be made positive.
+     * @warning values greater than 240 will be replaced by 240.
+     *
      * @param diffRASize the new query box differential RA size as a double.
      */
     public void setQueryDiffRASizeInMinutes(double diffRASize)
     {
         _logger.entering("QueryModel", "setQueryDiffRASizeInMinutes");
 
-        _queryDiffRASize = diffRASize;
+        // The value shall not be negative, nor greater than 240.
+        _queryDiffRASize = Math.min(240, Math.abs(diffRASize));
 
         setChanged();
     }
@@ -1318,13 +1325,17 @@ public class QueryModel extends Observable implements Observer
     /**
      * Change the query box differential DEC size.
      *
+     * @warning negative values will be made positive.
+     * @warning values greater than 30 will be replaced by 30.
+     *
      * @param radiusSize the new query box differential DEC size as a double.
      */
     public void setQueryDiffDECSizeInDegrees(double diffDECSize)
     {
         _logger.entering("QueryModel", "setQueryDiffDECSizeInDegrees");
 
-        _queryDiffDECSize = diffDECSize;
+        // The value shall not be negative, nor greater than 30.
+        _queryDiffDECSize = Math.min(30, Math.abs(diffDECSize));
 
         setChanged();
     }
