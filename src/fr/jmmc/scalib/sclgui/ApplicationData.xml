@@ -2,7 +2,7 @@
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 	<program name="SearchCal" version="4.0b16"/>
-	<compilation date="29/09/2008" compiler="JDK 1.5.0_16"/>
+    <compilation date="16/10/2008" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -36,13 +36,13 @@
         <menu label="Load Default Values" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_loadDefaultValuesAction"/>
         <menu label="Save Values as Default" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_saveValuesAction"/>
         <menu/>
-        <menu label="Get Star" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getStarAction"/>
+        <menu label="Get Star" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getStarAction" accelerator="G"/>
       </menu>
       <menu label="Calibrators">
-        <menu label="Show Details" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true" checkboxPreferenceName="view.details.show"/>
-        <menu label="Show Legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true" checkboxPreferenceName="view.legend.show"/>
+        <menu label="Show Details" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true" checkboxPreferenceName="view.details.show" accelerator="D"/>
+        <menu label="Show Legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true" checkboxPreferenceName="view.legend.show" accelerator="L"/>
         <menu/>
-        <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction"/>
+        <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction" accelerator="R"/>
       </menu>
     </menubar>
     <releasenotes>
