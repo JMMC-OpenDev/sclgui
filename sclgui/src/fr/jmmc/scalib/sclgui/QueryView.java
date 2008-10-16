@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.53 2008-09-10 22:36:16 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.54 2008-10-16 12:52:43 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.53  2008/09/10 22:36:16  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Moved to new JMCS APIs.
+ *
  * Revision 1.52  2008/05/30 13:11:29  ccmgr
  * Fix encoding for µ character
  *
@@ -862,7 +866,7 @@ public class QueryView extends JPanel implements Observer,
         _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
 
         // Update science object magnitude only if the textfield was used
-        // (done through the model when using _instrumentalMagnitudeBandCombo
+        // (done through the model when using _instrumentalMagnitudeBandCombo)
         if (source == _scienceObjectMagnitudeTextfield)
         {
             _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
@@ -872,7 +876,7 @@ public class QueryView extends JPanel implements Observer,
         _queryModel.setQueryDiffDECSizeInDegrees((Double) _diffDECSizeTextfield.getValue());
         _queryModel.setQueryRadialSize((Double) _radialSizeTextfield.getValue());
 
-        // Refress the whole view
+        // Refresh the whole view
         _queryModel.notifyObservers();
 
         _logger.fine("query = " + _queryModel.getQueryAsMCSString());
