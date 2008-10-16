@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.27 2008-09-22 20:54:13 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.28 2008-10-16 12:38:47 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2008/09/22 20:54:13  lafrasse
+ * Updated log and documntation.
+ *
  * Revision 1.26  2008/09/19 08:13:14  lafrasse
  * Updated columns orders to more tightly match those described in the 'JMMC-SPE-2600-0001' document (as requested by Daniel BONNEAU).
  *
@@ -144,7 +147,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     protected void setDefaultPreferences() throws PreferencesException
     {
         _logger.entering("Preferences", "setDefaultPreferences");
-        
+
         // Place catalog origin colors
         setDefaultPreference("catalog.color.I/280", "#FFB6B6");
         setDefaultPreference("catalog.color.I/284", "#F1FB58");
