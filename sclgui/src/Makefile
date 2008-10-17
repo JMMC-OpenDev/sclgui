@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.31 2008-10-16 14:38:05 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.32 2008-10-17 07:19:47 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.31  2008/10/16 14:38:05  lafrasse
+# Removed non-longer resource files.
+#
 # Revision 1.30  2008/10/16 12:37:22  lafrasse
 # Removed no longer needed EXTRAS (OSXadapters, icons, ...).
 #
@@ -218,7 +221,8 @@ simbad_DIRS     = cds
 #
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr 
-sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/voTableToCSV.xsl \
+sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
+                  fr/jmmc/scalib/sclgui/voTableToCSV.xsl \
                   fr/jmmc/scalib/sclgui/voTableToHTML.xsl \
                   fr/jmmc/scalib/sclgui/ApplicationData.xml \
 
