@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.29 2008-11-18 09:54:43 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.30 2008-11-19 12:22:47 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2008/11/18 09:54:43  lafrasse
+ * Corrected diameter columns in simple bright view for N band.
+ *
  * Revision 1.28  2008/10/16 12:38:47  lafrasse
  * Jalopization.
  *
@@ -160,11 +163,12 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         switch (loadedVersionNumber)
         {
-        // Wrong column identifiers in the the simple bright N columns order list
+        // Wrong column identifiers in the the simple and detailled bright N columns order list
         case 1:
             _logger.info(
                 "Upgrading preference file from version 1 to version 2.");
 
+            // Updating simple bright N columns order list
             String simpleBrightNViewColumnOrder = getPreference(
                     "view.columns.simple.bright.N");
 
@@ -180,11 +184,23 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             simpleBrightNViewColumnOrder = simpleBrightNViewColumnOrder.replaceAll("diam_vk",
                     "Dia12");
 
+            // Updating detailled bright N columns order list
+            String detailledBrightNViewColumnOrder = getPreference(
+                    "view.columns.detailled.bright.N");
+
+            // Should replace "vis2Flag" with "vis2"
+            _logger.finer(
+                "Replacing 'vis2Flag' with 'vis2' in 'view.columns.detailled.bright.N'.");
+            detailledBrightNViewColumnOrder = detailledBrightNViewColumnOrder.replaceAll("vis2Flag",
+                    "vis2");
+
             // Store updated column order
             try
             {
                 setPreference("view.columns.simple.bright.N",
                     simpleBrightNViewColumnOrder);
+                setPreference("view.columns.detailled.bright.N",
+                    detailledBrightNViewColumnOrder);
             }
             catch (Exception ex)
             {
@@ -244,7 +260,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
         // Detailled 'Bright N' view
         setDefaultPreference("view.columns.detailled.bright.N",
-            "dist HD RAJ2000 DEJ2000 vis2Flag vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
+            "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
 
         // Simple 'Bright V' view
         setDefaultPreference("view.columns.simple.bright.V",
