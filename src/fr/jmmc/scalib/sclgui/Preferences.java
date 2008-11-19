@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.30 2008-11-19 12:22:47 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.31 2008-11-19 15:01:24 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2008/11/19 12:22:47  lafrasse
+ * Corrected visibility column in detailled bright view for N band.
+ *
  * Revision 1.29  2008/11/18 09:54:43  lafrasse
  * Corrected diameter columns in simple bright view for N band.
  *
@@ -172,11 +175,11 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             String simpleBrightNViewColumnOrder = getPreference(
                     "view.columns.simple.bright.N");
 
-            // Should replace "e_diam_vk" with "e_dia12"
+            // Should replace "e_diam_vk" with "e_dia12 F12"
             _logger.finer(
-                "Replacing 'e_diam_vk' with 'e_dia12' in 'view.columns.simple.bright.N'.");
+                "Replacing 'e_diam_vk' with 'e_dia12 F12' in 'view.columns.simple.bright.N'.");
             simpleBrightNViewColumnOrder = simpleBrightNViewColumnOrder.replaceAll("e_diam_vk",
-                    "e_dia12");
+                    "e_dia12 F12");
 
             // Should replace "diam_vk" with "Dia12"
             _logger.finer(
@@ -257,7 +260,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Simple 'Bright N' view
         setDefaultPreference("view.columns.simple.bright.N",
-            "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
+            "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
         // Detailled 'Bright N' view
         setDefaultPreference("view.columns.detailled.bright.N",
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
