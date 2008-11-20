@@ -1163,8 +1163,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 {
                     setText("<html><a href='#empty'>" + cellValue +
                         "</a></html>");
-                    tooltip += ("Click to open '" + catalogName +
-                    "' catalog webpage for star '" + cellValue + "' - ");
+                    tooltip += ("Click to open '" + catalogName + " " +
+                    cellValue + "' star SIMBAD webpage - ");
                 }
             }
 
