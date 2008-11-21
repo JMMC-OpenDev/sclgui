@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.32 2008-10-17 07:19:47 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.33 2008-11-21 09:02:52 mella Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.32  2008/10/17 07:19:47  lafrasse
+# Added back Resources.properties file to EXTRAS as it is still needed for MIDI catalog URL and bright/faint radio buttons names and tooltips.
+#
 # Revision 1.31  2008/10/16 14:38:05  lafrasse
 # Removed non-longer resource files.
 #
@@ -286,6 +289,7 @@ clean : clean_soap clean_all
 	@echo " . . . clean done"
 
 man   : do_man 
+	jmcsHTML2HelpSet JMMC-MAN-2600-0001
 	@echo " . . . man page(s) done"
 
 install : install_all
