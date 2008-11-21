@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.33 2008-11-21 09:02:52 mella Exp $"
+# "@(#) $Id: Makefile,v 1.34 2008-11-21 15:18:12 mella Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.33  2008/11/21 09:02:52  mella
+# Added user manual
+#
 # Revision 1.32  2008/10/17 07:19:47  lafrasse
 # Added back Resources.properties file to EXTRAS as it is still needed for MIDI catalog URL and bright/faint radio buttons names and tooltips.
 #
@@ -113,7 +116,9 @@
 #
 # C programs (public and local)
 # -----------------------------
-EXECUTABLES     = sclguiControl
+# Next line was needed in one very old architecture
+#EXECUTABLES     = sclguiControl
+EXECUTABLES     =
 EXECUTABLES_L   = 
 
 #
