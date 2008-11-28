@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.30 2008-09-18 21:50:53 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.31 2008-11-28 13:12:55 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2008/09/18 21:50:53  lafrasse
+ * Moved _showLegendAction and _showDetailsAction to RegisteredPreferencedBooleanAction, in order to properly handle menu items et preference view checkboxes.
+ *
  * Revision 1.29  2008/09/10 22:31:06  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -161,10 +164,6 @@ public class PreferencesView extends JFrame implements ActionListener
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(tabbedPane);
 
-        // Add the query preferences pane
-        QueryPreferencesView queryView = new QueryPreferencesView();
-        tabbedPane.add("Query Settings", queryView);
-
         // Add the columns preferences pane
         ColumnsPreferencesView columnsView = new ColumnsPreferencesView(
                 "view.columns");
@@ -224,206 +223,6 @@ public class PreferencesView extends JFrame implements ActionListener
             catch (Exception ex)
             {
                 _logger.log(Level.WARNING, "Could not save preferences.", ex);
-            }
-        }
-    }
-}
-
-
-/**
- * This panel is dedicated to query default values configuration.
- */
-class QueryPreferencesView extends JPanel implements Observer, ActionListener,
-    FocusListener
-{
-    /** Logger */
-    private static final Logger _logger = Logger.getLogger(
-            "fr.jmmc.scalib.sclgui.QueryPreferencesView");
-
-    /** Data model */
-    private Preferences _preferences;
-
-    /** Science object distance tolerance */
-    private JFormattedTextField _scienceObjectDetectionDistanceTextfield = new JFormattedTextField(new Double(
-                0.0));
-
-    /** Min magnitude delta textfield */
-    private JFormattedTextField _minMagnitudeDeltaTextfield = new JFormattedTextField(new Double(
-                0.0));
-
-    /** Max magnitude delta textfield */
-    private JFormattedTextField _maxMagnitudeDeltaTextfield = new JFormattedTextField(new Double(
-                0.0));
-
-    /**
-     * Constructor.
-     * @param preferences the application preferences
-     */
-    public QueryPreferencesView()
-    {
-        _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
-
-        // Layout management
-        JPanel tempPanel = new JPanel();
-        add(tempPanel);
-        tempPanel.setLayout(new GridBagLayout());
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill        = GridBagConstraints.HORIZONTAL;
-        c.weightx     = 1;
-
-        // JFormattedTextField formatter creation
-        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
-                    "0.0####"));
-        doubleFormater.setValueClass(java.lang.Double.class);
-
-        DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
-                doubleFormater, doubleFormater);
-        Dimension               textfieldDimension    = new Dimension(100, 20);
-        JLabel                  label;
-
-        // Science Object Detection Distance
-        c.gridy     = 0;
-        c.gridx     = 0;
-        label       = new JLabel("Science Object Detection Distance :",
-                JLabel.TRAILING);
-        tempPanel.add(label, c);
-        label.setLabelFor(_scienceObjectDetectionDistanceTextfield);
-        _scienceObjectDetectionDistanceTextfield.setFormatterFactory(doubleFormaterFactory);
-        _scienceObjectDetectionDistanceTextfield.setMinimumSize(textfieldDimension);
-        _scienceObjectDetectionDistanceTextfield.setPreferredSize(textfieldDimension);
-        _scienceObjectDetectionDistanceTextfield.addActionListener(this);
-        c.gridx = 1;
-        tempPanel.add(_scienceObjectDetectionDistanceTextfield, c);
-
-        // Minimum Magnitude Delta
-        c.gridy++;
-        c.gridx     = 0;
-        label       = new JLabel("Minimum Magnitude Delta :", JLabel.TRAILING);
-        tempPanel.add(label, c);
-        label.setLabelFor(_minMagnitudeDeltaTextfield);
-        _minMagnitudeDeltaTextfield.setFormatterFactory(doubleFormaterFactory);
-        _minMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
-        _minMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
-        _minMagnitudeDeltaTextfield.addActionListener(this);
-        c.gridx = 1;
-        tempPanel.add(_minMagnitudeDeltaTextfield, c);
-
-        // Maximum Magnitude Delta
-        c.gridy++;
-        c.gridx     = 0;
-        label       = new JLabel("Maximum Magnitude Delta :", JLabel.TRAILING);
-        tempPanel.add(label, c);
-        label.setLabelFor(_maxMagnitudeDeltaTextfield);
-        _maxMagnitudeDeltaTextfield.setFormatterFactory(doubleFormaterFactory);
-        _maxMagnitudeDeltaTextfield.setMinimumSize(textfieldDimension);
-        _maxMagnitudeDeltaTextfield.setPreferredSize(textfieldDimension);
-        _maxMagnitudeDeltaTextfield.addActionListener(this);
-        c.gridx = 1;
-        tempPanel.add(_maxMagnitudeDeltaTextfield, c);
-    }
-
-    /**
-     * Present fresh content according preference content.
-     *
-     * @param o preferences
-     * @param arg not used
-     */
-    public void update(Observable o, Object arg)
-    {
-        _logger.entering("QueryPreferencesView", "update");
-
-        Double d;
-
-        d = _preferences.getPreferenceAsDouble(
-                "query.scienceObjectDetectionDistance");
-        _scienceObjectDetectionDistanceTextfield.setValue(d);
-
-        d = _preferences.getPreferenceAsDouble("query.queryMinMagnitudeDelta");
-        _minMagnitudeDeltaTextfield.setValue(d);
-
-        d = _preferences.getPreferenceAsDouble("query.queryMaxMagnitudeDelta");
-        _maxMagnitudeDeltaTextfield.setValue(d);
-    }
-
-    /**
-     * Called when the focus enters a widget.
-     */
-    public void focusGained(FocusEvent e)
-    {
-        // Does nothing (not needed)
-    }
-
-    /**
-     * Called when the focus leaves a widget.
-     *
-     * Used to validate and store TextFields data when tabbing between them.
-     */
-    public void focusLost(FocusEvent e)
-    {
-        _logger.entering("QueryPreferencesView", "focusLost");
-
-        // Store new data
-        storeValues(e);
-    }
-
-    /**
-     * Called when a widget triggered an action.
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        _logger.entering("QueryPreferencesView", "actionPerformed");
-
-        // Store new data
-        storeValues(e);
-    }
-
-    /**
-     * Store form values in the model.
-     */
-    public void storeValues(AWTEvent e)
-    {
-        _logger.entering("QueryPreferencesView", "storeValues");
-
-        Object source = e.getSource();
-
-        if (source.equals(_scienceObjectDetectionDistanceTextfield))
-        {
-            try
-            {
-                _preferences.setPreference("query.scienceObjectDetectionDistance",
-                    ((Double) _scienceObjectDetectionDistanceTextfield.getValue()));
-            }
-            catch (Exception ex)
-            {
-                _logger.log(Level.WARNING, "Could not set preference.", ex);
-            }
-        }
-
-        if (source.equals(_minMagnitudeDeltaTextfield))
-        {
-            try
-            {
-                _preferences.setPreference("query.queryMinMagnitudeDelta",
-                    ((Double) _minMagnitudeDeltaTextfield.getValue()));
-            }
-            catch (Exception ex)
-            {
-                _logger.log(Level.WARNING, "Could not set preference.", ex);
-            }
-        }
-
-        if (source.equals(_maxMagnitudeDeltaTextfield))
-        {
-            try
-            {
-                _preferences.setPreference("query.queryMaxMagnitudeDelta",
-                    ((Double) _maxMagnitudeDeltaTextfield.getValue()));
-            }
-            catch (Exception ex)
-            {
-                _logger.log(Level.WARNING, "Could not set preference.", ex);
             }
         }
     }
