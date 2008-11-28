@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.31 2008-11-19 15:01:24 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.32 2008-11-28 13:14:26 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2008/11/19 15:01:24  lafrasse
+ * Added missing F12 column in simple bright view for N band.
+ *
  * Revision 1.30  2008/11/19 12:22:47  lafrasse
  * Corrected visibility column in detailled bright view for N band.
  *
@@ -303,8 +306,8 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         setDefaultPreference("query.queryAutoRadius", "true");
 
         setDefaultPreference("query.scienceObjectDetectionDistance", "0.01");
-        setDefaultPreference("query.queryMinMagnitudeDelta", "-3.0");
-        setDefaultPreference("query.queryMaxMagnitudeDelta", "4.0");
+        setDefaultPreference("query.queryMinMagnitudeDelta", "-2.0");
+        setDefaultPreference("query.queryMaxMagnitudeDelta", "2.0");
     }
 
     /** Return the singleton instance */
