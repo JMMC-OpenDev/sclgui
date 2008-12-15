@@ -1,11 +1,16 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.24 2008-09-10 22:19:08 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.25 2008-12-15 13:32:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.24  2008/09/10 22:19:08  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Added clickable cell to open web page on star information from HIP and HD
+ * catalog columns identifier.
+ *
  * Revision 1.23  2007/10/09 14:38:12  lafrasse
  * Added the ability to return the current scenario and magnitude band.
  *
@@ -807,7 +812,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _logger.entering("CalibratorsModel",
             "applyXSLTranformationOnCurrentVOTable");
 
-        URL xslFile = getClass().getResource(xslFileName);
+        URL xslFile = SearchCalibrators.getSharedInstance()
+                                       .getURLFromResourceFilename(xslFileName);
 
         if (xslFile == null)
         {
@@ -822,8 +828,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             TransformerFactory factory = TransformerFactory.newInstance();
 
             // Use the factory to create a template containing the xsl file
-            Templates template = factory.newTemplates(new StreamSource("" +
-                        xslFile));
+            Templates template = factory.newTemplates(new StreamSource(
+                        xslFile.openStream()));
 
             // Use the template to create a transformer
             Transformer xformer = template.newTransformer();
@@ -861,6 +867,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             _logger.log(Level.SEVERE,
                 "One error occured while applying XSL file '" + xslFile +
                 "', on line '" + line + "' and column '" + col + "'", ex);
+        }
+        catch (IOException ex)
+        {
+            // An error occurred while opening the URL
+            _logger.log(Level.SEVERE,
+                "One error occured while opening URL '" + xslFile + "'", ex);
         }
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.0.1b1"/>
-    <compilation date="27/10/2008" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.0.1b2"/>
+    <compilation date="15/12/2008" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -47,7 +47,7 @@
     </menubar>
     <releasenotes>
         <release version="4.0.1">
-            <prerelease version="4.0.1b1" tag="SC_V4_0_0b1">
+            <prerelease version="4.0.1b1" tag="SC_V4_0_1b1">
                <change type="FEATURE">Added a new application icon.</change>
                <change type="BUGFIX" id="searchcal/16" url="http://jmmc.fr/gnats?cmd=view%20audit-trail&amp;database=JMMC-SW&amp;pr=16">Corrected diameter columns in simple bright view for N band.</change>
                <change type="BUGFIX">Corrected visibility column in detailled bright view for N band.</change>
@@ -55,6 +55,9 @@
                <change type="CHANGE" id="searchcal/15" url="http://jmmc.fr/gnats?cmd=view%20audit-trail&amp;database=JMMC-SW&amp;pr=15">>Changed HD and HIP cells tooltips to make explicit reference to SIMBAD.</change>
                <change type="FEATURE">Added user manual.</change>
                <change type="CHANGE">Removed unused query preference pane.</change>
+            </prerelease>
+            <prerelease version="4.0.1b2" tag="SC_V4_0_1b2">
+               <change type="BUGFIX" id="searchcal/14" url="http://jmmc.fr/gnats?cmd=view%20audit-trail&amp;database=JMMC-SW&amp;pr=14">Corrected CSV and HTML export.</change>
             </prerelease>
         </release>
         <release version="4.0">
