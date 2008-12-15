@@ -1,11 +1,16 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.26 2008-09-10 22:44:45 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.27 2008-12-15 13:32:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2008/09/10 22:44:45  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Moved to new JMCS APIs.
+ * Removed CDS Aladin binding.
+ *
  * Revision 1.25  2007/12/04 11:00:50  lafrasse
  * Corrected a bug during file loading that was preventing query parsing.
  *
@@ -646,7 +651,9 @@ public class VirtualObservatory extends Observable
             // If a file was defined (No cancel in the dialog)
             if (file != null)
             {
+                StatusBar.show("exporting calibrator list to CSV file...");
                 _calibratorsModel.exportCurrentVOTableToCSV(file);
+                StatusBar.show("calibrator list exported to CSV file.");
             }
         }
     }
@@ -680,7 +687,9 @@ public class VirtualObservatory extends Observable
             // If a file was defined (No cancel in the dialog)
             if (file != null)
             {
+                StatusBar.show("exporting calibrator list to HTML file ...");
                 _calibratorsModel.exportCurrentVOTableToHTML(file);
+                StatusBar.show("calibrator list exported to HTML file.");
             }
         }
     }
