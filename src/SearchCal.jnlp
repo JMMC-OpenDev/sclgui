@@ -2,10 +2,13 @@
 <jnlp spec="1.0+" codebase="http://jmmc.fr/~lafrasse/SearchCal" href="SearchCal.jnlp">
     <information>
         <title>SearchCal</title>
-        <vendor>JMMC</vendor>
-        <homepage href="http://www.jmmc.fr"/>
-        <description>SearchCal - JMMC Calibrators Searching Tool Java GUI prototype version.</description>
+        <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
+        <homepage href="http://www.jmmc.fr/searchcal"/>
+        <description kind="tooltip">SearchCal</description>
+        <description kind="short">Search Calibrators tool</description>
         <icon href="AppIcon.png"/>
+        <offline-allowed/> 
+        <association mime-type="application-x/scvot-file" extensions="scvot"/>
     </information>
     <security>
         <all-permissions/>
