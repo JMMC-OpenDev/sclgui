@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.27 2008-12-15 13:32:37 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.28 2009-02-17 14:47:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2008/12/15 13:32:37  lafrasse
+ * Corrected CSV and HTML export exception.
+ *
  * Revision 1.26  2008/09/10 22:44:45  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Moved to new JMCS APIs.
@@ -998,6 +1001,7 @@ public class VirtualObservatory extends Observable
                         // Start the webservice connection
                         loc       = new SclwsLocator();
                         sclws     = loc.getsclws();
+                        _logger.fine("Connected to '" + loc.getsclwsAddress() + "'.");
 
                         // Define the webservice timeout (default = 10min)
                         //org.apache.axis.client.Stub stub = (SclwsStub) s;
