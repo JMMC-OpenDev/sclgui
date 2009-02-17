@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.25 2008-10-16 12:39:33 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.26 2009-02-17 15:44:31 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2008/10/16 12:39:33  lafrasse
+ * Changed finnish() to finish() to reflect JMCS API typo correction.
+ *
  * Revision 1.24  2008/09/18 21:03:21  lafrasse
  * Added Preference update notification triggering to fully finish GUI setup
  * (TableCellColors).
@@ -190,7 +193,11 @@ public class SearchCalibrators extends App
      */
     public SearchCalibrators(String[] args, String query)
     {
-        // Launch application initialization with execution delayed for further initilization, without splashscreen and without autorization to the current kill process.
+        /* Launch application initialization with:
+         *    - execution delayed for further initilization;
+         *    - without splashscreen;
+         *    - without protection against current process killing by its father.
+         */
         super(args, false, false, false);
 
         // Store received query for later execution
