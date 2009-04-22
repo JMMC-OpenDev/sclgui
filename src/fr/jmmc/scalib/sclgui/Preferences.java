@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.32 2008-11-28 13:14:26 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.33 2009-04-22 15:17:06 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2008/11/28 13:14:26  lafrasse
+ * Changed queryMinMagnitudeDelta and queryMaxMagnitudeDelta respectively from -".0
+ * and 4.0 to -2.0 and 2.0 .
+ *
  * Revision 1.31  2008/11/19 15:01:24  lafrasse
  * Added missing F12 column in simple bright view for N band.
  *
@@ -152,7 +156,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 2;
+        return 3;
     }
 
     /**
@@ -211,10 +215,52 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             catch (Exception ex)
             {
                 _logger.log(Level.WARNING,
-                    "Could not store new 'view.columns.simple.bright.N' preference:",
-                    ex);
+                    "Could not store updated preference:", ex);
 
                 return false;
+            }
+
+            // Commit change to file
+            return true;
+
+        // Added SBC9 column to each detailled view
+        case 2:
+            _logger.info(
+                "Upgrading preference file from version 2 to version 3.");
+
+            String preferenceToUpdate = "";
+
+            // Insert "SBC9" after "MultFlag" in the each detailled columns order list
+            String[] viewList = { "bright.V", "bright.K", "faint.K" };
+
+            for (String viewName : viewList)
+            {
+                // Get the current columns order list content
+                String completePreferencePath = "view.columns.detailled." +
+                    viewName;
+                preferenceToUpdate = getPreference(completePreferencePath);
+
+                // Replace 'MultFlag' with 'MultFlag SBC9' in the current columns order list
+                String searchedToken  = "MultFlag";
+                String replacingToken = searchedToken + " " + "SBC9";
+                preferenceToUpdate    = preferenceToUpdate.replaceAll(searchedToken,
+                        replacingToken);
+                _logger.finer("Replaced '" + searchedToken + "' with '" +
+                    replacingToken + "' in '" + completePreferencePath + "'.");
+
+                // Store the updated column order
+                try
+                {
+                    setPreference(completePreferencePath, preferenceToUpdate);
+                }
+                catch (Exception ex)
+                {
+                    _logger.log(Level.WARNING,
+                        "Could not store updated preference in '" +
+                        completePreferencePath + "' : ", ex);
+
+                    return false;
+                }
             }
 
             // Commit change to file
@@ -247,6 +293,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         setDefaultPreference("catalog.color.J/A+A/393/183/catalog", "#9778FB");
         setDefaultPreference("catalog.color.MIDI", "#C994CA");
         setDefaultPreference("catalog.color.V/36B/bsc4s", "#88A0A6");
+        setDefaultPreference("catalog.color.B/sb9/main", "#A688A0");
 
         // Place confidence indexes color
         int i = 0;
@@ -273,21 +320,21 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType B V R I");
         // Detailled 'Bright V' view
         setDefaultPreference("view.columns.detailled.bright.V",
-            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
 
         // Simple 'Bright K' view
         setDefaultPreference("view.columns.simple.bright.K",
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
         // Detailled 'Bright K' view
         setDefaultPreference("view.columns.detailled.bright.K",
-            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
 
         // Simple 'Faint K' view
         setDefaultPreference("view.columns.simple.faint.K",
             "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Icous J H K");
-        // Detailled 'Bright K' view
+        // Detailled 'Faint K' view
         setDefaultPreference("view.columns.detailled.faint.K",
-            "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
+            "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
 
         // Query default values preferences
         setDefaultPreference("query.magnitudeBand", "V");
