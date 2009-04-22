@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.28 2009-02-17 14:47:37 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.29 2009-04-22 14:37:06 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2009/02/17 14:47:37  lafrasse
+ * Added log to monitor the server address and port we connect to.
+ *
  * Revision 1.27  2008/12/15 13:32:37  lafrasse
  * Corrected CSV and HTML export exception.
  *
@@ -1001,14 +1004,15 @@ public class VirtualObservatory extends Observable
                         // Start the webservice connection
                         loc       = new SclwsLocator();
                         sclws     = loc.getsclws();
-                        _logger.fine("Connected to '" + loc.getsclwsAddress() + "'.");
+                        _logger.fine("Connected to '" + loc.getsclwsAddress() +
+                            "'.");
 
                         // Define the webservice timeout (default = 10min)
                         //org.apache.axis.client.Stub stub = (SclwsStub) s;
                         //stub.setTimeout(20000); // 20 second, in miliseconds
 
                         // Get the connection ID
-                        id        = sclws.getCalOpenSession();
+                        id = sclws.getCalOpenSession();
 
                         _logger.fine("JMMC Connection ID = '" + id + "'.");
                         StatusBar.show(
