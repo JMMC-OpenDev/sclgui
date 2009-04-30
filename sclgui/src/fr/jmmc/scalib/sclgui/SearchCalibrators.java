@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.26 2009-02-17 15:44:31 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.27 2009-04-30 12:56:51 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2009/02/17 15:44:31  lafrasse
+ * Updated comments.
+ *
  * Revision 1.25  2008/10/16 12:39:33  lafrasse
  * Changed finnish() to finish() to reflect JMCS API typo correction.
  *
@@ -249,6 +252,7 @@ public class SearchCalibrators extends App
             // Show the user the app is been initialized
             StatusBar.show("application initialization...");
 
+            // Build the main window
             MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
                     preferencesView, filtersView, statusBar);
 
