@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.29 2009-04-22 14:37:06 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.30 2009-04-30 14:36:11 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2009/04/22 14:37:06  lafrasse
+ * Jalopization.
+ *
  * Revision 1.28  2009/02/17 14:47:37  lafrasse
  * Added log to monitor the server address and port we connect to.
  *
@@ -156,6 +159,22 @@ public class VirtualObservatory extends Observable
     /** Store wether the Query has be launched or not */
     private boolean _queryIsLaunched = false;
 
+    /** Proxy to shared FileFilter repository */
+    FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
+
+    /** SearchCal-specific VOTable format */
+    String _scvotMimeType = "application/x-searchcal+votable+xml";
+
+    /**
+     * DOCUMENT ME!
+     */
+    String _csvMimeType = "text/csv";
+
+    /**
+     * DOCUMENT ME!
+     */
+    String _htmlMimeType = "text/html";
+
     /** Open file... action */
     public OpenFileAction _openFileAction;
 
@@ -188,9 +207,17 @@ public class VirtualObservatory extends Observable
     {
         String classPath = getClass().getName();
 
-        _queryModel                  = queryModel;
-        _calibratorsModel            = calibratorsModel;
-        _filtersModel                = filtersModel;
+        _queryModel           = queryModel;
+        _calibratorsModel     = calibratorsModel;
+        _filtersModel         = filtersModel;
+
+        // FileFilter initialiation
+        _fileFilterRepository.put(_scvotMimeType, "scvot",
+            "SearchCal VOTables (SCVOT)");
+        _fileFilterRepository.put(_csvMimeType, "csv",
+            "Comma Separated Values (CSV)");
+        _fileFilterRepository.put(_htmlMimeType, "html",
+            "HyperText Markup Language (HTML)");
 
         // File related members
         _file                        = null;
@@ -329,7 +356,7 @@ public class VirtualObservatory extends Observable
     }
 
     /**
-     * If any modification were applied, ask the user if we ditch them.
+     * If any modification were applied, ask the user if we discard them.
      *
      * @return true if the modifications can be ignored, false otherwise.
      */
@@ -385,6 +412,54 @@ public class VirtualObservatory extends Observable
     }
 
     /**
+     * If the given file exists, ask user whether to overwrite it or not.
+     *
+     * @return true if the file can be overwritten, false otherwise.
+     */
+    public boolean canOverwriteFile(File file)
+    {
+        _logger.entering("VirtualObservatory", "canOverwriteFile");
+
+        // If the given file does not already exists
+        if (file.exists() == false)
+        {
+            return true;
+        }
+
+        boolean canOverwriteFile = false;
+
+        // Ask the user if he wants to save modifications
+        Object[] options = { "Cancel", "Replace" };
+        int      result  = JOptionPane.showOptionDialog(null,
+                "'" + file.getName() +
+                "' alreadey exists. Do you want to replace it ?\nA file or folder with the same name already exists in the current folder.\nReplacing it will overwrite its current contents.\n\n",
+                null, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[0]);
+
+        // Handle user choice
+        switch (result)
+        {
+        // If the user clicked the "Don't Save" button
+        case 1: // options[1] = "Replace" button
+                // Exit
+            canOverwriteFile = true;
+
+            break;
+
+        // If the user clicked the "Cancel" button or pressed 'esc' key
+        case 0: // options[0] = "Cancel" button
+        case JOptionPane.CLOSED_OPTION: // 'esc' key
+        default: // Any other case
+                 // Cancel the exit
+            canOverwriteFile = false;
+
+            break;
+        }
+
+        return canOverwriteFile;
+    }
+
+    /**
      * Launch the webservice querying with the given query (for ASPRO launch).
      *
      * @param query the query parameters as an empty SearchCal VOTable.
@@ -414,7 +489,7 @@ public class VirtualObservatory extends Observable
             return;
         }
 
-        // Launch the resquest
+        // Launch the request
         StatusBar.show("Lauching search...");
         _getCalAction.actionPerformed(null);
     }
@@ -427,6 +502,8 @@ public class VirtualObservatory extends Observable
         public OpenFileAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
+
+            flagAsOpenAction();
         }
 
         public void actionPerformed(java.awt.event.ActionEvent e)
@@ -436,65 +513,78 @@ public class VirtualObservatory extends Observable
             // If we can lost current modifications
             if (canLostModifications() == true)
             {
-                JFileChooser fileChooser = new JFileChooser();
-                int          returnVal   = fileChooser.showOpenDialog(null);
-
-                if (returnVal == JFileChooser.APPROVE_OPTION)
+                // If the action was automatically triggered from App launch
+                if (e.getSource() == ActionRegistrar.getInstance())
                 {
-                    _file = fileChooser.getSelectedFile();
+                    _file = new File(e.getActionCommand());
+                }
+                else
+                {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle(
+                        "Open a calibrator list from file...");
 
-                    // If a file was defined (No cancel in the dialog)
-                    if (_file != null)
+                    fileChooser.setFileFilter(_fileFilterRepository.get(
+                            _scvotMimeType));
+
+                    int returnVal = fileChooser.showOpenDialog(null);
+
+                    if (returnVal == JFileChooser.APPROVE_OPTION)
                     {
-                        StatusBar.show("loading file...");
-
-                        // Loading the file in the calibrators model
-                        try
-                        {
-                            StatusBar.show(
-                                "loading file (parsing calibrators)...");
-                            _calibratorsModel.openFile(_file);
-                            StatusBar.show(
-                                "loading file (calibrators successfully parsed)...");
-                        }
-                        catch (Exception ex)
-                        {
-                            StatusBar.show(
-                                "loading aborted (calibrators parsing error) !");
-                            _logger.log(Level.SEVERE,
-                                "Could not open file (calibrators parsing error) : ",
-                                ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                "Could not open file (calibrators parsing error).",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-
-                        // Loading the file in the query model
-                        try
-                        {
-                            StatusBar.show("loading file (parsing query)...");
-                            _queryModel.loadParamSet(_calibratorsModel.getParamSet());
-                            StatusBar.show(
-                                "loading file (query successfully parsed)...");
-                        }
-                        catch (Exception ex)
-                        {
-                            StatusBar.show(
-                                "loading aborted (query parsing error) !");
-                            _logger.log(Level.SEVERE,
-                                "Could not open file (query parsing error).", ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                "Could not open file (query parsing error).",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-
-                        StatusBar.show("file succesfully loaded.");
-
-                        // Enabling the 'Save' menus
-                        enableSaveMenus(true);
+                        _file = fileChooser.getSelectedFile();
                     }
+                }
+
+                // If a file was defined (No cancel in the dialog)
+                if (_file != null)
+                {
+                    StatusBar.show("loading file...");
+
+                    // Loading the file in the calibrators model
+                    try
+                    {
+                        StatusBar.show("loading file (parsing calibrators)...");
+                        _calibratorsModel.openFile(_file);
+                        StatusBar.show(
+                            "loading file (calibrators successfully parsed)...");
+                    }
+                    catch (Exception ex)
+                    {
+                        StatusBar.show(
+                            "loading aborted (calibrators parsing error) !");
+                        _logger.log(Level.SEVERE,
+                            "Could not open file (calibrators parsing error) : ",
+                            ex);
+
+                        JOptionPane.showMessageDialog(null,
+                            "Could not open file (calibrators parsing error).",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    // Loading the file in the query model
+                    try
+                    {
+                        StatusBar.show("loading file (parsing query)...");
+                        _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+                        StatusBar.show(
+                            "loading file (query successfully parsed)...");
+                    }
+                    catch (Exception ex)
+                    {
+                        StatusBar.show(
+                            "loading aborted (query parsing error) !");
+                        _logger.log(Level.SEVERE,
+                            "Could not open file (query parsing error).", ex);
+
+                        JOptionPane.showMessageDialog(null,
+                            "Could not open file (query parsing error).",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    StatusBar.show("file succesfully loaded.");
+
+                    // Enabling the 'Save' menus
+                    enableSaveMenus(true);
                 }
 
                 // Now that a file has been loaded
@@ -561,31 +651,53 @@ public class VirtualObservatory extends Observable
          */
         public boolean save()
         {
+            StatusBar.show("saving file...");
+
+            File file = null;
+
             // If the current data were never saved yet
             if (_file == null)
             {
                 JFileChooser fileChooser = new JFileChooser();
-                int          returnVal   = fileChooser.showSaveDialog(null);
+                fileChooser.setDialogTitle(
+                    "Save current calibrator list to file...");
+
+                fileChooser.setFileFilter(_fileFilterRepository.get(
+                        _scvotMimeType));
+
+                int returnVal = fileChooser.showSaveDialog(null);
 
                 if (returnVal == JFileChooser.APPROVE_OPTION)
                 {
-                    _file = fileChooser.getSelectedFile();
+                    file = fileChooser.getSelectedFile();
                 }
                 else
                 {
                     // Save was cancelled
+                    StatusBar.show("saving cancelled.");
+
                     return false;
                 }
             }
 
             // If a file was defined (No cancel in the dialog)
-            if (_file != null)
+            if (file != null)
             {
-                _calibratorsModel.saveVOTableFile(_file);
-            }
+                if (canOverwriteFile(file) == false)
+                {
+                    StatusBar.show("overwritting cancelled.");
 
-            // Now that a file has been saved
-            _revertToSavedFileAction.setEnabled(true);
+                    return false;
+                }
+
+                _calibratorsModel.saveVOTableFile(file);
+                _file = file;
+
+                // Now that a file has been saved
+                _revertToSavedFileAction.setEnabled(true);
+
+                StatusBar.show("file saved.");
+            }
 
             return true;
         }
@@ -603,6 +715,9 @@ public class VirtualObservatory extends Observable
      */
     protected class SaveFileAsAction extends RegisteredAction
     {
+        FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
+        String               _scvotMimeType        = "application-x/searchcal-votable-file";
+
         public SaveFileAsAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -614,17 +729,37 @@ public class VirtualObservatory extends Observable
         {
             _logger.entering("SaveFileAsAction", "actionPerformed");
 
+            StatusBar.show("saving file as...");
+
             JFileChooser fileChooser = new JFileChooser();
-            int          returnVal   = fileChooser.showSaveDialog(null);
+            fileChooser.setDialogTitle(
+                "Save current calibrator list to file...");
+
+            fileChooser.setFileFilter(_fileFilterRepository.get(_scvotMimeType));
+
+            int  returnVal = fileChooser.showSaveDialog(null);
+
+            File file      = null;
 
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
-                _file = fileChooser.getSelectedFile();
-                _calibratorsModel.saveVOTableFile(_file);
-            }
+                file = fileChooser.getSelectedFile();
 
-            // Now that a file has been saved
-            _revertToSavedFileAction.setEnabled(true);
+                if (canOverwriteFile(file) == false)
+                {
+                    StatusBar.show("overwritting file as cancelled.");
+
+                    return;
+                }
+
+                _calibratorsModel.saveVOTableFile(file);
+                _file = file;
+
+                // Now that a file has been saved
+                _revertToSavedFileAction.setEnabled(true);
+
+                StatusBar.show("file saved as.");
+            }
         }
     }
 
@@ -644,10 +779,17 @@ public class VirtualObservatory extends Observable
         {
             _logger.entering("ExportToCSVFileAction", "actionPerformed");
 
-            JFileChooser fileChooser = new JFileChooser();
-            int          returnVal   = fileChooser.showSaveDialog(null);
+            StatusBar.show("exporting as CSV...");
 
-            File         file        = null;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle(
+                "Export current calibrator list to CSV file...");
+
+            fileChooser.setFileFilter(_fileFilterRepository.get(_csvMimeType));
+
+            int  returnVal = fileChooser.showSaveDialog(null);
+
+            File file      = null;
 
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
@@ -657,9 +799,19 @@ public class VirtualObservatory extends Observable
             // If a file was defined (No cancel in the dialog)
             if (file != null)
             {
-                StatusBar.show("exporting calibrator list to CSV file...");
+                if (canOverwriteFile(file) == false)
+                {
+                    StatusBar.show("overwritting exported CSV cancelled...");
+
+                    return;
+                }
+
                 _calibratorsModel.exportCurrentVOTableToCSV(file);
                 StatusBar.show("calibrator list exported to CSV file.");
+            }
+            else
+            {
+                StatusBar.show("exporting as CSV cancelled.");
             }
         }
     }
@@ -680,10 +832,17 @@ public class VirtualObservatory extends Observable
         {
             _logger.entering("ExportToHTMLFileAction", "actionPerformed");
 
-            JFileChooser fileChooser = new JFileChooser();
-            int          returnVal   = fileChooser.showSaveDialog(null);
+            StatusBar.show("exporting as HTML...");
 
-            File         file        = null;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle(
+                "Export current calibrator list to HTML file...");
+
+            fileChooser.setFileFilter(_fileFilterRepository.get(_htmlMimeType));
+
+            int  returnVal = fileChooser.showSaveDialog(null);
+
+            File file      = null;
 
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
@@ -693,9 +852,17 @@ public class VirtualObservatory extends Observable
             // If a file was defined (No cancel in the dialog)
             if (file != null)
             {
-                StatusBar.show("exporting calibrator list to HTML file ...");
+                if (canOverwriteFile(file) == false)
+                {
+                    return;
+                }
+
                 _calibratorsModel.exportCurrentVOTableToHTML(file);
                 StatusBar.show("calibrator list exported to HTML file.");
+            }
+            else
+            {
+                StatusBar.show("exporting as HTML cancelled.");
             }
         }
     }
@@ -718,19 +885,6 @@ public class VirtualObservatory extends Observable
         public void actionPerformed(java.awt.event.ActionEvent e)
         {
             _logger.entering("GetStarAction", "actionPerformed");
-
-            // @TODO : Querying Simbad and fill the query model accordinally
-            /*
-               _queryModel.reset();
-               try
-               {
-                   _queryModel.loadDefaultValues();
-               }
-               catch (Exception ex)
-               {
-                   _logger.severe("GetStar error : " + ex);
-               }
-             */
 
             // Launch a new thread only if no other one has been launched yet
             if (isCDSQueried() == false)

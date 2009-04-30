@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.1b1"/>
-    <compilation date="22/04/2009" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.1b2"/>
+    <compilation date="30/04/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -49,6 +49,12 @@
         <release version="4.1">
             <prerelease version="4.1b1" tag="SC_V4_1_b1">
                <change type="FEATURE">Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).</change>
+            </prerelease>
+            <prerelease version="4.1b2" tag="SC_V4_1b2">
+               <change type="FEATURE">Added desktop application creation from JNLP.</change>
+               <change type="BUGFIX">Enforce use of the default Apple menu bar on Mac OS X.</change>
+               <change type="FEATURE">Added automatic opening of '.scvot' files.</change>
+               <change type="BUGFIX">Prevent file overwritting while saving or exporting data.</change>
             </prerelease>
         </release>
         <release version="4.0.1">

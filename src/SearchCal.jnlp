@@ -8,7 +8,13 @@
         <description kind="short">Search Calibrators tool</description>
         <icon href="AppIcon.png"/>
         <offline-allowed/> 
-        <association mime-type="application-x/scvot-file" extensions="scvot"/>
+        <association mime-type="application/x-searchcal+votable+xml" extensions="scvot">
+            <icon href="FileIcon.png"/>
+            <description>SearchCal reads and writes SCVOT files</description>
+        </association>
+        <shortcut>
+            <desktop/>
+        </shortcut>
     </information>
     <security>
         <all-permissions/>
@@ -32,6 +38,7 @@
         <jar href="jar/cds.savot.writer.jar" />
         <jar href="jar/kxml2-min.jar" />
         <extension href="SearchCalContrib.jnlp" />
+        <property name="apple.laf.useScreenMenuBar" value="true"/>
     </resources>
     <application-desc main-class="fr.jmmc.scalib.sclgui.SearchCalibrators"/>
 </jnlp>
