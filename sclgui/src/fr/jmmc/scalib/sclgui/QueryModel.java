@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.42 2009-04-23 13:10:09 mella Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.43 2009-04-30 09:20:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.42  2009/04/23 13:10:09  mella
+ * add better debug message
+ *
  * Revision 1.41  2008/10/16 12:56:11  lafrasse
  * Added limitations to RA and DEC ranges.
  *
@@ -907,7 +910,8 @@ public class QueryModel extends Observable implements Observer
         // Validate the format of the given value
         if (rightAscension.matches("[+|-]?[0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
         {
-            throw new IllegalArgumentException("wrong RA format: '"+rightAscension+"' must be of form +30:00:00.00");
+            throw new IllegalArgumentException("wrong RA format: '" +
+                rightAscension + "' must be of form +30:00:00.00");
         }
 
         _scienceObjectRA = rightAscension;
@@ -946,7 +950,8 @@ public class QueryModel extends Observable implements Observer
         // Validate the format of the given value
         if (declinaison.matches("[+|-]?[0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
         {
-            throw new IllegalArgumentException("wrong DEC format: '"+declinaison+"' must be of form +30:00:00.00");
+            throw new IllegalArgumentException("wrong DEC format: '" +
+                declinaison + "' must be of form +30:00:00.00");
         }
 
         _scienceObjectDEC = declinaison;
