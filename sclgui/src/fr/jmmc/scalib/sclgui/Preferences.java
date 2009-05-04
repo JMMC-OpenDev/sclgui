@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.33 2009-04-22 15:17:06 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.34 2009-05-04 12:04:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2009/04/22 15:17:06  lafrasse
+ * Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).
+ *
  * Revision 1.32  2008/11/28 13:14:26  lafrasse
  * Changed queryMinMagnitudeDelta and queryMaxMagnitudeDelta respectively from -".0
  * and 4.0 to -2.0 and 2.0 .
@@ -156,7 +159,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 3;
+        return 4;
     }
 
     /**
@@ -266,6 +269,19 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             // Commit change to file
             return true;
 
+        // Remove CHARM color preference
+        case 3:
+            _logger.info(
+                "Upgrading preference file from version 3 to version 4.");
+
+            String preferenceToRemove = "catalog.color.J/A+A/386/492/charm";
+            removePreference(preferenceToRemove);
+
+            _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+
+            // Commit change to file
+            return true;
+
         // By default, triggers default values load.
         default:
             return false;
@@ -285,7 +301,6 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         setDefaultPreference("catalog.color.II/246/out", "#B6E8FF");
         setDefaultPreference("catalog.color.V/50/catalog", "#B6FFE6");
         setDefaultPreference("catalog.color.J/A+A/433/1155", "#C89292");
-        setDefaultPreference("catalog.color.J/A+A/386/492/charm", "#DFFFB6");
         setDefaultPreference("catalog.color.J/A+A/431/773/charm2", "#B7FF5A");
         setDefaultPreference("catalog.color.B/denis", "#FFF4B6");
         setDefaultPreference("catalog.color.J/A+A/413/1037", "#FFFADD");
