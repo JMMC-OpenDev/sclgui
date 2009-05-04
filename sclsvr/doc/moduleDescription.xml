@@ -1,0 +1,35 @@
+<!--
+********************************************************************************
+ JMMC project
+
+ "@(#) $Id: moduleDescription.xml,v 1.3 2005-02-15 15:52:00 gzins Exp $"
+
+ History
+ ~~~~~~~
+ $Log: not supported by cvs2svn $
+ sccmgr    23-Nov-2004  Created
+
+********************************************************************************
+ NAME
+ moduleDescription.xml - Give module informations
+ 
+ DESCRIPTION
+ moduleDescription.xml gives informations about: 
+ - the module description
+ - the module responsible
+ - the package whom belongs to this module
+
+ EXAMPLES
+    <module name="dummymod">
+        <desc>Dummy module description</desc>
+        <resp>FirstName LastName</resp>
+        <package>MCS</package>
+    </module>
+
+-->
+
+<module name="sclsvr">
+    <desc>Search calibrators Server</desc>
+    <resp>S. Cetre</resp>
+    <package>SCALIB</package>
+</module>
