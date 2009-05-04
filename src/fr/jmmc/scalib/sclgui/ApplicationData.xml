@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.1b2"/>
-    <compilation date="30/04/2009" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.1b3"/>
+    <compilation date="04/05/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -55,6 +55,9 @@
                <change type="BUGFIX">Enforce use of the default Apple menu bar on Mac OS X.</change>
                <change type="FEATURE">Added automatic opening of '.scvot' files.</change>
                <change type="BUGFIX">Prevent file overwritting while saving or exporting data.</change>
+            </prerelease>
+            <prerelease version="4.1b3" tag="SC_V4_1b3">
+               <change type="CHANGE">Removed all references to unused CHARM catalog.</change>
             </prerelease>
         </release>
         <release version="4.0.1">
