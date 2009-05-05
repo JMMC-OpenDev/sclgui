@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.34 2008-11-21 15:18:12 mella Exp $"
+# "@(#) $Id: Makefile,v 1.35 2009-05-05 13:35:41 lafrasse Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.34  2008/11/21 15:18:12  mella
+# remove CPP programs generation
+#
 # Revision 1.33  2008/11/21 09:02:52  mella
 # Added user manual
 #
@@ -294,10 +297,13 @@ clean : clean_soap clean_all
 	@echo " . . . clean done"
 
 man   : do_man 
-	jmcsHTML2HelpSet JMMC-MAN-2600-0001
 	@echo " . . . man page(s) done"
 
-install : install_all
+../lib/sclgui-doc.jar:
+	jmcsHTML2HelpSet JMMC-MAN-2600-0001
+	@echo " . . . user documentation done"
+
+install : ../lib/sclgui-doc.jar install_all
 	@echo "......jnlps:"
 	jmcsDeployJnlp SearchCal.jnlp    
 	@echo " . . . installation done"
