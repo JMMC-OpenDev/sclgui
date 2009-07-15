@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.34 2009-05-04 12:04:32 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.35 2009-07-15 12:53:43 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2009/05/04 12:04:32  lafrasse
+ * Added hability to remove (ordered) preference.
+ *
  * Revision 1.33  2009/04/22 15:17:06  lafrasse
  * Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).
  *
@@ -136,6 +139,30 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     /** Singleton instance */
     private static Preferences _instance = null;
 
+    /** Detailled bright N columns order list, as of default in preference version 3 */
+    private static String _detailledBrightN_v3 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff";
+
+    /** Detailled bright N columns order list, as of default in preference version 4 */
+    private static String _detailledBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
+
+    /** Detailled bright V columns order list, as of default in preference version 3 */
+    private static String _detailledBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled bright V columns order list, as of default in preference version 4 */
+    private static String _detailledBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled bright K columns order list, as of default in preference version 3 */
+    private static String _detailledBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled bright K columns order list, as of default in preference version 4 */
+    private static String _detailledBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled faint K columns order list, as of default in preference version 3 */
+    private static String _detailledFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+
+    /** Detailled faint K columns order list, as of default in preference version 4 */
+    private static String _detailledFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+
     /** Hidden constructor */
     protected Preferences()
     {
@@ -159,7 +186,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 4;
+        return 5;
     }
 
     /**
@@ -282,6 +309,97 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             // Commit change to file
             return true;
 
+        // Re-order detailled view columns
+        case 4:
+            _logger.info(
+                "Upgrading preference file from version 4 to version 5.");
+            // Updating detailled bright N columns order list if not changed by user
+            detailledBrightNViewColumnOrder = getPreference(
+                    "view.columns.detailled.bright.N");
+
+            if (detailledBrightNViewColumnOrder.equals(_detailledBrightN_v3) == true)
+            {
+                detailledBrightNViewColumnOrder = _detailledBrightN_v4;
+                _logger.finer(
+                    "Re-ordered detailled bright N columns order list.");
+            }
+            else
+            {
+                _logger.finer(
+                    "Lived customized detailled bright N columns order list unchanged.");
+            }
+
+            // Updating detailled bright V columns order list if not changed by user
+            String detailledBrightVViewColumnOrder = getPreference(
+                    "view.columns.detailled.bright.V");
+
+            if (detailledBrightVViewColumnOrder.equals(_detailledBrightV_v3) == true)
+            {
+                detailledBrightVViewColumnOrder = _detailledBrightV_v4;
+                _logger.finer(
+                    "Re-ordered detailled bright V columns order list.");
+            }
+            else
+            {
+                _logger.finer(
+                    "Lived customized detailled bright V columns order list unchanged.");
+            }
+
+            // Updating detailled bright K columns order list if not changed by user
+            String detailledBrightKViewColumnOrder = getPreference(
+                    "view.columns.detailled.bright.K");
+
+            if (detailledBrightKViewColumnOrder.equals(_detailledBrightK_v3) == true)
+            {
+                detailledBrightKViewColumnOrder = _detailledBrightK_v4;
+                _logger.finer(
+                    "Re-ordered detailled bright K columns order list.");
+            }
+            else
+            {
+                _logger.finer(
+                    "Lived customized detailled bright K columns order list unchanged.");
+            }
+
+            // Updating detailled faint K columns order list if not changed by user
+            String detailledFaintKViewColumnOrder = getPreference(
+                    "view.columns.detailled.faint.K");
+
+            if (detailledFaintKViewColumnOrder.equals(_detailledFaintK_v3) == true)
+            {
+                detailledFaintKViewColumnOrder = _detailledFaintK_v4;
+                _logger.finer(
+                    "Re-ordered detailled faint K columns order list.");
+            }
+            else
+            {
+                _logger.finer(
+                    "Lived customized detailled faint K columns order list unchanged.");
+            }
+
+            // Store updated column order
+            try
+            {
+                setPreference("view.columns.detailled.bright.N",
+                    detailledBrightNViewColumnOrder);
+                setPreference("view.columns.detailled.bright.V",
+                    detailledBrightVViewColumnOrder);
+                setPreference("view.columns.detailled.bright.K",
+                    detailledBrightKViewColumnOrder);
+                setPreference("view.columns.detailled.faint.K",
+                    detailledFaintKViewColumnOrder);
+            }
+            catch (Exception ex)
+            {
+                _logger.log(Level.WARNING,
+                    "Could not store updated preference:", ex);
+
+                return false;
+            }
+
+            // Commit change to file
+            return true;
+
         // By default, triggers default values load.
         default:
             return false;
@@ -328,28 +446,28 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
         // Detailled 'Bright N' view
         setDefaultPreference("view.columns.detailled.bright.N",
-            "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff");
+            _detailledBrightN_v4);
 
         // Simple 'Bright V' view
         setDefaultPreference("view.columns.simple.bright.V",
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType B V R I");
         // Detailled 'Bright V' view
         setDefaultPreference("view.columns.detailled.bright.V",
-            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+            _detailledBrightV_v4);
 
         // Simple 'Bright K' view
         setDefaultPreference("view.columns.simple.bright.K",
             "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk SpType V J H K");
         // Detailled 'Bright K' view
         setDefaultPreference("view.columns.detailled.bright.K",
-            "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av");
+            _detailledBrightK_v4);
 
         // Simple 'Faint K' view
         setDefaultPreference("view.columns.simple.faint.K",
             "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Icous J H K");
         // Detailled 'Faint K' view
         setDefaultPreference("view.columns.detailled.faint.K",
-            "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av");
+            _detailledFaintK_v4);
 
         // Query default values preferences
         setDefaultPreference("query.magnitudeBand", "V");
