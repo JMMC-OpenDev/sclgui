@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.35 2009-07-15 12:53:43 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.36 2009-07-16 13:49:59 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2009/07/15 12:53:43  lafrasse
+ * Re-ordered default columns in detailled views.
+ *
  * Revision 1.34  2009/05/04 12:04:32  lafrasse
  * Added hability to remove (ordered) preference.
  *
@@ -186,7 +189,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 5;
+        return 6;
     }
 
     /**
@@ -393,6 +396,39 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             {
                 _logger.log(Level.WARNING,
                     "Could not store updated preference:", ex);
+
+                return false;
+            }
+
+            // Commit change to file
+            return true;
+
+        // Replaced VarFlag3 with VFlag in bright N detailled view
+        case 5:
+            _logger.info(
+                "Upgrading preference file from version 5 to version 6.");
+
+            String completePreferencePath = "view.columns.detailled.bright.N";
+            preferenceToUpdate = getPreference(completePreferencePath);
+
+            // Replace 'VarFlag3' with 'VFlag' in the current columns order list
+            String searchedToken  = "VarFlag3";
+            String replacingToken = "VFlag";
+            preferenceToUpdate = preferenceToUpdate.replaceAll(searchedToken,
+                    replacingToken);
+            _logger.finer("Replaced '" + searchedToken + "' with '" +
+                replacingToken + "' in '" + completePreferencePath + "'.");
+
+            // Store the updated column order
+            try
+            {
+                setPreference(completePreferencePath, preferenceToUpdate);
+            }
+            catch (Exception ex)
+            {
+                _logger.log(Level.WARNING,
+                    "Could not store updated preference in '" +
+                    completePreferencePath + "' : ", ex);
 
                 return false;
             }

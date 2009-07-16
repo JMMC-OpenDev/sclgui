@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.1.1b2"/>
+	<program name="SearchCal" version="4.1.1b3"/>
     <compilation date="15/07/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
@@ -52,6 +52,9 @@
             </prerelease>
             <prerelease version="4.1.1b2" tag="SC_V4_1_1_b2">
                <change type="CHANGE">Re-ordered default columns in detailled views.</change>
+            </prerelease>
+            <prerelease version="4.1.1b3" tag="SC_V4_1_1_b3">
+               <change type="BUGFIX">Changed 'VarFlag3' column for 'VFlag' column in the detailled bright N column set.</change>
             </prerelease>
         </release>
         <release version="4.1">
