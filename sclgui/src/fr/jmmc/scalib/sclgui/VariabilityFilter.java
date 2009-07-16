@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.11 2008-09-10 22:40:30 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.12 2009-07-16 13:51:50 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2008/09/10 22:40:30  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.10  2008/05/26 16:11:18  lafrasse
  * Removed un-needed ":" from filter name.
  *
@@ -60,6 +63,9 @@ public class VariabilityFilter extends Filter
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VariabilityFilter");
 
+    /** Store the variability flag column name (MIDI catalog N-band queries) */
+    private String _varFlagColumnName = "VFlag";
+
     /** Store the variability flag 1 column name */
     private String _varFlag1ColumnName = "VarFlag1";
 
@@ -101,40 +107,32 @@ public class VariabilityFilter extends Filter
     {
         _logger.entering("VariabilityFilter", "shouldRemoveRow");
 
-        int          varFlagID = -1;
-        StarProperty cell      = null;
+        Vector<String> columns   = new Vector();
+        int            varFlagID = -1;
+        StarProperty   cell      = null;
 
-        // Get the ID of the column contaning 'varFlag1' star property
-        varFlagID = starList.getColumnIdByName(_varFlag1ColumnName);
+        // Set columns name whose rows should be removed if cell is not empty
+        columns.add(_varFlagColumnName);
+        columns.add(_varFlag1ColumnName);
+        columns.add(_varFlag2ColumnName);
 
-        // If the desired column name exists
-        if (varFlagID != -1)
+        for (String columnName : columns)
         {
-            // Get the cell of the desired column
-            cell = (StarProperty) row.elementAt(varFlagID);
+            // Get the ID of the column contaning 'varFlag1' star property
+            varFlagID = starList.getColumnIdByName(columnName);
 
-            // If "variability1" flag was found in the current line
-            if (cell.hasValue() == true)
+            // If the desired column name exists
+            if (varFlagID != -1)
             {
-                // This row should be removed
-                return true;
-            }
-        }
+                // Get the cell of the desired column
+                cell = (StarProperty) row.elementAt(varFlagID);
 
-        // Get the ID of the column contaning 'varFlag2' star property
-        varFlagID = starList.getColumnIdByName(_varFlag2ColumnName);
-
-        // If the desired column name exists
-        if (varFlagID != -1)
-        {
-            // Get the cell of the desired column
-            cell = (StarProperty) row.elementAt(varFlagID);
-
-            // If "variability1" flag was found in the current line
-            if (cell.hasValue() == true)
-            {
-                // This row should be removed
-                return true;
+                // If "variability1" flag was found in the current line
+                if (cell.hasValue() == true)
+                {
+                    // This row should be removed
+                    return true;
+                }
             }
         }
 
