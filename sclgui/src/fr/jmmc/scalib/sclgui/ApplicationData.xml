@@ -2,7 +2,7 @@
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 	<program name="SearchCal" version="4.1.2b1"/>
-    <compilation date="24/09/2009" compiler="JDK 1.5.0_16"/>
+    <compilation date="20/10/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -49,6 +49,7 @@
         <release version="4.1.2">
             <prerelease version="4.1.2b1" tag="SC_V4_1_2_b1">
                <change type="CHANGE">Updated acknowledgment to include involved laboratory's names.</change>
+               <change type="BUGFIX" id="1255675722">Fixed unit conversion problem while filtering stars on RA separation.</change>
             </prerelease>
         </release>
         <release version="4.1.1">

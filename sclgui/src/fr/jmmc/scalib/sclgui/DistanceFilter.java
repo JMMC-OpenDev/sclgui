@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.10 2008-09-10 22:20:44 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.11 2009-10-20 13:36:23 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2008/09/10 22:20:44  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.9  2008/05/30 12:39:54  lafrasse
  * Updated according to jmcs ALX API changes.
  *
@@ -94,9 +97,6 @@ public class DistanceFilter extends Filter
 
         _queryModel     = queryModel;
 
-        //_deltaRA        = new Double(0.0);
-        //_deltaDEC       = new Double(0.0);
-        // @TODO : remove the demo values
         _deltaRA        = new Double(10.0);
         _deltaDEC       = new Double(10.0);
 
@@ -138,7 +138,7 @@ public class DistanceFilter extends Filter
         _logger.entering("DistanceFilter", "retrieveDeltas");
 
         Double ra = (Double) getConstraintByName(_deltaRAConstraintName);
-        _deltaRA = ra.doubleValue();
+        _deltaRA = ALX.minutes2degrees(ra.doubleValue());
 
         Double dec = (Double) getConstraintByName(_deltaDECConstraintName);
         _deltaDEC = dec.doubleValue();
