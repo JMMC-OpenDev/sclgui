@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.1.2b1"/>
+	<program name="SearchCal" version="4.1.2b2"/>
     <compilation date="20/10/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
@@ -50,6 +50,10 @@
             <prerelease version="4.1.2b1" tag="SC_V4_1_2_b1">
                <change type="CHANGE">Updated acknowledgment to include involved laboratory's names.</change>
                <change type="BUGFIX" id="1255675722">Fixed unit conversion problem while filtering stars on RA separation.</change>
+            </prerelease>
+            <prerelease version="4.1.2b2" tag="SC_V4_1_2_b2">
+               <change type="FEATURE">Added white spaces as a valid separator for science object coordinates input.</change>
+               <change type="CHANGE">Replaced custom SIMBAD resolution system with common JMMC one.</change>
             </prerelease>
         </release>
         <release version="4.1.1">
