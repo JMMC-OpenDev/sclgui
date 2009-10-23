@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.54 2008-10-16 12:52:43 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.55 2009-10-23 12:54:57 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.54  2008/10/16 12:52:43  lafrasse
+ * Documentation typo correction.
+ *
  * Revision 1.53  2008/09/10 22:36:16  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Moved to new JMCS APIs.
@@ -192,6 +195,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.astro.star.*;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.util.*;
 
@@ -251,8 +255,8 @@ public class QueryView extends JPanel implements Observer,
     /** Science object panel */
     JPanel _scienceObjectPanel;
 
-    /** Science object name */
-    JTextField _scienceObjectNameTextfield = new JTextField();
+    /** Science object name resolver widget */
+    StarResolverWidget _scienceObjectNameTextfield = null;
 
     /** Science object right ascension coordinate */
     JTextField _scienceObjectRATextfield = new JTextField();
@@ -436,26 +440,17 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectPanel = new JPanel();
         _scienceObjectPanel.setBorder(new TitledBorder("2)  Science Object"));
         _scienceObjectPanel.setLayout(new GridBagLayout());
-        // Star name field
+        // Star name search field
         c.gridy     = 0;
         c.gridx     = 0;
         label       = new JLabel("Name : ", JLabel.TRAILING);
         _scienceObjectPanel.add(label, c);
+        _scienceObjectNameTextfield = new StarResolverWidget(_queryModel);
         label.setLabelFor(_scienceObjectNameTextfield);
-        tempPanel = new JPanel(new GridBagLayout());
-        _scienceObjectNameTextfield.setMinimumSize(textfieldDimension);
-        _scienceObjectNameTextfield.setPreferredSize(textfieldDimension);
         _scienceObjectNameTextfield.addActionListener(this);
         _scienceObjectNameTextfield.addFocusListener(this);
-        tempPanel.add(_scienceObjectNameTextfield, c);
         c.gridx = 1;
-        /* @TODO : decide whether we should display icon, text or icon+text
-           String fullIconPath = "search.png";
-           URL imgURL = getClass().getResource(fullIconPath);
-           _vo._getStarAction.putValue(Action.SMALL_ICON, new ImageIcon(imgURL));
-         */
-        tempPanel.add(new JButton(_vo._getStarAction));
-        _scienceObjectPanel.add(tempPanel, c);
+        _scienceObjectPanel.add(_scienceObjectNameTextfield, c);
         // RA coordinate field
         c.gridy++;
         c.gridx     = 0;
@@ -468,7 +463,7 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectRATextfield.addFocusListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectRATextfield, c);
-        // DEG coordinate field
+        // DEC coordinate field
         c.gridy++;
         c.gridx     = 0;
         label       = new JLabel("DEC 2000 [+/-dd:mm:ss] : ", JLabel.TRAILING);
@@ -492,6 +487,7 @@ public class QueryView extends JPanel implements Observer,
         _scienceObjectMagnitudeTextfield.addFocusListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectMagnitudeTextfield, c);
+
         // Searching Parameters panel
         _searchCalPanel = new JPanel();
         _searchCalPanel.setBorder(new TitledBorder("3)  SearchCal Parameters"));
