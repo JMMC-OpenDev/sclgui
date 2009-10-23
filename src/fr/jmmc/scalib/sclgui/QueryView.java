@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.55 2009-10-23 12:54:57 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.56 2009-10-23 15:50:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.55  2009/10/23 12:54:57  lafrasse
+ * Replaced custom SIMBAD resolution system with common JMMC one.
+ *
  * Revision 1.54  2008/10/16 12:52:43  lafrasse
  * Documentation typo correction.
  *
@@ -710,23 +713,13 @@ public class QueryView extends JPanel implements Observer,
         _progressBar.setString(_queryModel.getCatalogName());
 
         // If the virtual obervatory is busy
-        if (_vo.isBusy() == true)
+        if (_vo.isQueryLaunched() == true)
         {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         }
         else
         {
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        }
-
-        // If the science object contains something
-        if (scienceObjectName.length() > 0)
-        {
-            _vo._getStarAction.setEnabled(true);
-        }
-        else
-        {
-            _vo._getStarAction.setEnabled(false);
         }
 
         // If the query seems complete
