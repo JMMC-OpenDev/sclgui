@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.43 2009-04-30 09:20:32 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.44 2009-10-23 12:55:15 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.43  2009/04/30 09:20:32  lafrasse
+ * Jalopization.
+ *
  * Revision 1.42  2009/04/23 13:10:09  mella
  * add better debug message
  *
@@ -160,6 +163,7 @@ import cds.savot.pull.*;
 import cds.savot.writer.*;
 
 import fr.jmmc.mcs.astro.*;
+import fr.jmmc.mcs.astro.star.*;
 
 import java.io.*;
 
@@ -172,7 +176,7 @@ import javax.swing.DefaultComboBoxModel;
 /**
  * Query model.
  */
-public class QueryModel extends Observable implements Observer
+public class QueryModel extends Star implements Observer
 {
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
@@ -207,15 +211,6 @@ public class QueryModel extends Observable implements Observer
 
     /** The science object name */
     private String _scienceObjectName;
-
-    /** The science object right assention coordinate */
-    private String _scienceObjectRA;
-
-    /** The science object declinaison coordinate */
-    private String _scienceObjectDEC;
-
-    /** Band to Science Object Loaded Magnitude conversion table */
-    private Hashtable _scienceObjectMagnitudes = new Hashtable();
 
     /** The science object detection distance */
     private boolean _scienceObjectDetectionDistance;
@@ -272,13 +267,7 @@ public class QueryModel extends Observable implements Observer
         _preferences.addObserver(this);
 
         resetInstrumentalWavelengthes();
-
-        // For each "band-predefined magnitudes" couple
-        for (int i = 0; i < _magnitudeBands.length; i++)
-        {
-            // Construct the conversion table between both
-            _scienceObjectMagnitudes.put(_magnitudeBands[i], Double.NaN);
-        }
+        resetScienceObjectMagnitudes();
 
         _instrumentalMagnitudeBands = new DefaultComboBoxModel(_magnitudeBands);
 
@@ -304,7 +293,7 @@ public class QueryModel extends Observable implements Observer
         _logger.entering("QueryModel", "update");
 
         // Called if the observe shared instance Preference object was updated.
-        // Then inform any object that observe us that we also probably change.
+        // Then inform any object that observe us that we also probably changed.
         setChanged();
         notifyObservers();
     }
@@ -553,8 +542,8 @@ public class QueryModel extends Observable implements Observer
                             "' Mag = 'NaN'.");
                     }
 
-                    _scienceObjectMagnitudes.put(currentMagnitudeBand,
-                        loadedValue);
+                    setPropertyAsDouble(Property.fromString("FLUX_" +
+                            currentMagnitudeBand), loadedValue);
                 }
             }
         }
@@ -888,7 +877,7 @@ public class QueryModel extends Observable implements Observer
     {
         _logger.entering("QueryModel", "getScienceObjectRA");
 
-        return _scienceObjectRA;
+        return getPropertyAsString(Property.RA);
     }
 
     /**
@@ -908,15 +897,13 @@ public class QueryModel extends Observable implements Observer
         }
 
         // Validate the format of the given value
-        if (rightAscension.matches("[+|-]?[0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
+        if (rightAscension.matches("[+|-]?[0-9]+[: ][0-9]+[: ][0-9]+.?[0-9]*") == false)
         {
             throw new IllegalArgumentException("wrong RA format: '" +
                 rightAscension + "' must be of form +30:00:00.00");
         }
 
-        _scienceObjectRA = rightAscension;
-
-        setChanged();
+        setPropertyAsString(Property.RA, rightAscension);
     }
 
     /**
@@ -928,7 +915,7 @@ public class QueryModel extends Observable implements Observer
     {
         _logger.entering("QueryModel", "getScienceObjectDEC");
 
-        return _scienceObjectDEC;
+        return getPropertyAsString(Property.DEC);
     }
 
     /**
@@ -948,15 +935,13 @@ public class QueryModel extends Observable implements Observer
         }
 
         // Validate the format of the given value
-        if (declinaison.matches("[+|-]?[0-9]+:[0-9]+:[0-9]+.?[0-9]*") == false)
+        if (declinaison.matches("[+|-]?[0-9]+[: ][0-9]+[: ][0-9]+.?[0-9]*") == false)
         {
             throw new IllegalArgumentException("wrong DEC format: '" +
                 declinaison + "' must be of form +30:00:00.00");
         }
 
-        _scienceObjectDEC = declinaison;
-
-        setChanged();
+        setPropertyAsString(Property.DEC, declinaison);
     }
 
     /**
@@ -968,16 +953,13 @@ public class QueryModel extends Observable implements Observer
     {
         _logger.entering("QueryModel", "resetScienceObjectMagnitudes");
 
-        _scienceObjectMagnitudes = new Hashtable();
-
         // For each "magnitude-band" couple
         for (int i = 0; i < _magnitudeBands.length; i++)
         {
             // Construct the conversion table between both
-            _scienceObjectMagnitudes.put(_magnitudeBands[i], Double.NaN);
+            setPropertyAsDouble(Property.fromString("FLUX_" +
+                    _magnitudeBands[i]), Double.NaN);
         }
-
-        setChanged();
     }
 
     /**
@@ -991,7 +973,7 @@ public class QueryModel extends Observable implements Observer
 
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
 
-        return (Double) _scienceObjectMagnitudes.get(currentBand);
+        return getPropertyAsDouble(Property.fromString("FLUX_" + currentBand));
     }
 
     /**
@@ -1004,7 +986,8 @@ public class QueryModel extends Observable implements Observer
         _logger.entering("QueryModel", "setScienceObjectMagnitude");
 
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
-        _scienceObjectMagnitudes.put(currentBand, magnitude);
+        setPropertyAsDouble(Property.fromString("FLUX_" + currentBand),
+            magnitude);
 
         // Modify _queryMinMagnitude automatically if needed
         if (_queryMinMagnitudeAutoUpdate == true)
@@ -1017,8 +1000,6 @@ public class QueryModel extends Observable implements Observer
         {
             _queryMaxMagnitude = magnitude + getQueryMaxMagnitudeDelta();
         }
-
-        setChanged();
     }
 
     /**
@@ -1528,13 +1509,13 @@ public class QueryModel extends Observable implements Observer
         // @TODO : Verify any mandatory missing parameter
 
         // If the RA coordinate is not defined
-        if (_scienceObjectRA.length() < 1)
+        if (getPropertyAsString(Property.RA).length() < 1)
         {
             return false;
         }
 
         // If the DEC coordinate is not defined
-        if (_scienceObjectDEC.length() < 1)
+        if (getPropertyAsString(Property.DEC).length() < 1)
         {
             return false;
         }
