@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.31 2009-10-23 15:50:30 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.32 2009-10-23 15:55:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2009/10/23 15:50:30  lafrasse
+ * Removed deprecated GetStarAction and related stuff.
+ *
  * Revision 1.30  2009/04/30 14:36:11  lafrasse
  * Added desktop application creation from JNLP.
  * Enforce use of the default Apple menu bar on Mac OS X.
@@ -819,7 +822,7 @@ public class VirtualObservatory extends Observable
      */
     protected class GetCalAction extends RegisteredAction
     {
-        GetCalThread _getCalThread         = null;
+        GetCalThread _getCalThread = null;
 
         public GetCalAction(String classPath, String fieldName)
         {
