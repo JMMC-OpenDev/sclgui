@@ -1,11 +1,17 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.30 2009-04-30 14:36:11 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.31 2009-10-23 15:50:30 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2009/04/30 14:36:11  lafrasse
+ * Added desktop application creation from JNLP.
+ * Enforce use of the default Apple menu bar on Mac OS X.
+ * Added automatic opening of '.scvot' files.
+ * Prevent file overwritting while saving or exporting data.
+ *
  * Revision 1.29  2009/04/22 14:37:06  lafrasse
  * Jalopization.
  *
@@ -153,9 +159,6 @@ public class VirtualObservatory extends Observable
     /** Path to an open or saved file */
     private File _file;
 
-    /** Store wether the CDS is queried or not */
-    private boolean _CDSIsQueried = false;
-
     /** Store wether the Query has be launched or not */
     private boolean _queryIsLaunched = false;
 
@@ -192,9 +195,6 @@ public class VirtualObservatory extends Observable
 
     /** Export to HTML File action */
     public ExportToHTMLFileAction _exportToHTMLFileAction;
-
-    /** Get Star action */
-    public GetStarAction _getStarAction;
 
     /** Get Cal action */
     public GetCalAction _getCalAction;
@@ -235,64 +235,11 @@ public class VirtualObservatory extends Observable
                 "_exportToHTMLFileAction");
 
         // Query related members
-        _getStarAction               = new GetStarAction(classPath,
-                "_getStarAction");
         _getCalAction                = new GetCalAction(classPath,
                 "_getCalAction");
 
         // WebService related members
         setQueryLaunchedState(false);
-        setCDSQueringState(false);
-    }
-
-    /**
-     * Return whether the virtual observatory is busy or not.
-     *
-     * @return true if the VO is busy querying either CDS or JMMC, false otherwise.
-     */
-    protected synchronized boolean isBusy()
-    {
-        _logger.entering("VirtualObservatory", "isBusy");
-
-        return (isQueryLaunched() || isCDSQueried());
-    }
-
-    /**
-     * Return whether the CDS is accessed or not or not.
-     *
-     * @return true if the CDS is accessed, false otherwise.
-     */
-    protected synchronized boolean isCDSQueried()
-    {
-        _logger.entering("VirtualObservatory", "isCDSQueried");
-
-        return _CDSIsQueried;
-    }
-
-    /**
-     * Set whether the CDS is accessed or not.
-     *
-     * @param flag true to enable all menus, false otherwise.
-     */
-    protected synchronized void setCDSQueringState(boolean flag)
-    {
-        _logger.entering("VirtualObservatory", "setCDSQueringState");
-
-        _CDSIsQueried = flag;
-
-        if (_CDSIsQueried == true)
-        {
-            // Change button title to 'Cancel'
-            _getStarAction.putValue(Action.NAME, "Cancel");
-        }
-        else
-        {
-            // Change button title to 'Get Calibrators'
-            _getStarAction.putValue(Action.NAME, "Get Star");
-        }
-
-        setChanged();
-        notifyObservers();
     }
 
     /**
@@ -863,214 +810,6 @@ public class VirtualObservatory extends Observable
             else
             {
                 StatusBar.show("exporting as HTML cancelled.");
-            }
-        }
-    }
-
-    /**
-     * Get science object properties from is name through Simbad web service.
-     */
-    protected class GetStarAction extends RegisteredAction
-    {
-        GetStarThread _getStarThread = null;
-
-        public GetStarAction(String classPath, String fieldName)
-        {
-            // @TODO : set button image
-            super(classPath, fieldName, "Get Star");
-
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
-            _logger.entering("GetStarAction", "actionPerformed");
-
-            // Launch a new thread only if no other one has been launched yet
-            if (isCDSQueried() == false)
-            {
-                // Query is stating
-                setCDSQueringState(true);
-
-                StatusBar.show(
-                    "searching science object... (please wait, this may take a while)");
-
-                // Launch the query in the background in order to keed GUI updated
-                _getStarThread = new GetStarThread();
-                _getStarThread.start();
-            }
-            else
-            {
-                StatusBar.show("cancelling science object search...");
-
-                // If the thread has already been launched
-                if (_getStarThread != null)
-                {
-                    // Kill it
-                    _logger.fine("Killing GetStar thread ... ");
-                    _getStarThread.interrupt();
-                    _getStarThread = null;
-                    _logger.fine("GetStar thread killed.");
-                }
-
-                // Query is finished
-                setCDSQueringState(false);
-
-                StatusBar.show("science object search cancelled.");
-            }
-        }
-
-        class GetStarThread extends Thread
-        {
-            String _result;
-
-            GetStarThread()
-            {
-            }
-
-            public void run()
-            {
-                simbadResult();
-            }
-
-            public void simbadResult()
-            {
-                // Re-initializing the result
-                _result = "";
-
-                // Ask CDS Simbad for our science object (if any) properties
-                String id = _queryModel.getScienceObjectName();
-
-                if (id.length() != 0)
-                {
-                    // Simbad URL
-                    String simbadBaseURL = "http://simbad.u-strasbg.fr/simbad/sim-script?script=";
-
-                    // The script to execute
-                    String simbadScript = "output console=off script=off\n"; // Just data
-                    simbadScript += "votable {"; // Desired VOTable format definition start
-                    simbadScript += "ra,"; // RA value
-                    simbadScript += "dec,"; // DEC Value
-                    simbadScript += "flux(V),"; // V magnitude value
-                    simbadScript += "flux(I),"; // I magnitude value
-                    simbadScript += "flux(J),"; // J magnitude value
-                    simbadScript += "flux(H),"; // H magnitude value
-                    simbadScript += "flux(K)"; // K magnitude value
-                    simbadScript += "}\n"; // Desired VOTable format definition end
-                    simbadScript += "votable open\n"; // Set our VOTable as the desired output format
-                    simbadScript += "set frame FK5\n"; // Set the FK5 frame as coord system
-                    simbadScript += ("query id " + id); // Add the object name we are looking for
-
-                    // Getting the result
-                    try
-                    {
-                        // Forging the URL int UTF8 unicode charset
-                        String simbadURL = simbadBaseURL +
-                            URLEncoder.encode(simbadScript, "UTF-8");
-                        URL    url       = new URL(simbadURL);
-
-                        _logger.fine("simbadURL : " + simbadURL);
-
-                        // Launching the query
-                        BufferedReader rdr = new BufferedReader(new InputStreamReader(
-                                    url.openStream()));
-
-                        // Reading the result line by line
-                        String currentLine;
-
-                        while ((currentLine = rdr.readLine()) != null)
-                        {
-                            if (_result.length() > 0)
-                            {
-                                _result += "\n";
-                            }
-
-                            _result += currentLine;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle error when no manual cancel
-                        if (_getStarThread != null)
-                        {
-                            StatusBar.show(
-                                "science object search aborted (connection refused) !");
-                            _logger.log(Level.SEVERE, "CDS Connection failed.",
-                                ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                "Could not connect to CDS Simbad server.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-
-                            setCDSQueringState(false);
-                        }
-                        else
-                        {
-                            _logger.log(Level.FINE,
-                                "Silenced error (cancellation).", ex);
-                        }
-
-                        return;
-                    }
-
-                    _logger.fine("VOTable :\n" + _result);
-
-                    // Parsing the result
-                    try
-                    {
-                        // If the result srting is empty
-                        if (_result.length() < 1)
-                        {
-                            throw new Exception("SIMBAD Empty result");
-                        }
-
-                        // If there was an error during query
-                        if (_result.startsWith("::error"))
-                        {
-                            throw new Exception("SIMBAD Error result");
-                        }
-
-                        // Giving the result to _queryModel for parsing
-                        _queryModel.loadFromSimbadVOTable(_result);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle error when no manual cancel
-                        if (_getStarThread != null)
-                        {
-                            StatusBar.show(
-                                "science object search aborted (parsing error) !");
-                            _logger.log(Level.SEVERE,
-                                "CDS Result parsing failed", ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                "Could not parse to CDS Simbad result.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-
-                            setCDSQueringState(false);
-                        }
-                        else
-                        {
-                            _logger.log(Level.FINE,
-                                "Silenced error (cancellation).", ex);
-                        }
-
-                        return;
-                    }
-                }
-                else
-                {
-                    //@TODO : Assertion - should never receive an empty scence object name
-                    _logger.severe(
-                        "Received an empty scence object name for CDS Sibad search");
-                }
-
-                setCDSQueringState(false);
-            }
-
-            String getResult()
-            {
-                return _result;
             }
         }
     }
