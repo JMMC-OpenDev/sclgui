@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.1.2b3"/>
-    <compilation date="23/10/2009" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.1.2b4"/>
+    <compilation date="27/10/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -55,6 +55,9 @@
             </prerelease>
             <prerelease version="4.1.2b3" tag="SC_V4_1_2_b3">
                <change type="CHANGE">Removed legacy "Query : Get Star" menu item.</change>
+            </prerelease>
+            <prerelease version="4.1.2b4" tag="SC_V4_1_2_b4">
+               <change type="BUGFIX">Change science object star detection distance from 0.01 degrees to 1 arcsecond.</change>
             </prerelease>
         </release>
         <release version="4.1.1">
