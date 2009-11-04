@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.5 2008-09-10 22:21:27 lafrasse Exp $"
+ * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.6 2009-11-04 10:12:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2008/09/10 22:21:27  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.4  2008/05/26 16:01:49  mella
  * Rename VisibilityFilter to VisibilityAccuracyFilter
  * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
@@ -27,7 +30,7 @@ import java.util.logging.*;
 
 
 /**
- * Reject stars that are not calibrators (no visibility or visibility < 0.5, no diameters).
+ * Reject stars that are not calibrators (no visibility).
  */
 public class FacelessNonCalibratorsFilter extends Filter
 {
@@ -37,15 +40,6 @@ public class FacelessNonCalibratorsFilter extends Filter
 
     /** Store the visibility column name */
     private String _visibilityColumnName = "vis2";
-
-    /** Store the BV diameter column name */
-    private String _diamBVColumnName = "diam_bv";
-
-    /** Store the VR diameter column name */
-    private String _diamVRColumnName = "diam_vr";
-
-    /** Store the VK diameter column name */
-    private String _diamVKColumnName = "diam_vk";
 
     /**
      * ...constructor FacelessNonCalibratorsFilter documentation comment...
@@ -102,35 +96,6 @@ public class FacelessNonCalibratorsFilter extends Filter
             }
         }
 
-        // Disabled as there seems to be (according to Gerard ZINS) some meaning
-        // to star with visibility even without displayed diameters.
-        /*
-           // Get the ID of the column contaning 'diam_bv' star property
-           int diamBVId = starList.getColumnIdByName(_diamBVColumnName);
-           // Get the ID of the column contaning 'diam_vr' star property
-           int diamVRId = starList.getColumnIdByName(_diamVRColumnName);
-           // Get the ID of the column contaning 'diam_vk' star property
-           int diamVKId = starList.getColumnIdByName(_diamVKColumnName);
-           // If the desired column names exists
-           if ((diamBVId != -1) && (diamVRId != -1) && (diamVKId != -1))
-           {
-               // Get the cell of the 'diam_bv' column
-               StarProperty diamBVCell = ((StarProperty) row.elementAt(diamBVId));
-               // Get the cell of the 'diam_vr' column
-               StarProperty diamVRCell = ((StarProperty) row.elementAt(diamVRId));
-               // Get the cell of the 'diam_vk' column
-               StarProperty diamVKCell = ((StarProperty) row.elementAt(diamVKId));
-               // If the all diameter are undefined
-               if ((diamBVCell.hasValue() == false) &&
-                       (diamVRCell.hasValue() == false) &&
-                       (diamVKCell.hasValue() == false))
-               {
-                   _logger.fine("No diam_xx defined - Line removed.");
-                   // This row should be removed
-                   return true;
-               }
-           }
-         */
         _logger.fine("Line kept.");
 
         // Otherwise this row should be kept
