@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.37 2009-10-27 15:19:33 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.38 2009-11-04 10:17:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.37  2009/10/27 15:19:33  lafrasse
+ * Change science object star detection distance from 0.01 degrees to 1 arcsecond.
+ *
  * Revision 1.36  2009/07/16 13:49:59  lafrasse
  * Changed 'VarFlag3' column for 'VFlag' column in the detailled bright N column
  * set.
@@ -194,7 +197,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 7;
+        return 8;
     }
 
     /**
@@ -209,17 +212,18 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "updatePreferencesVersion");
 
+        _logger.info("Upgrading preference file from version '" +
+            loadedVersionNumber + "' to version '" + (loadedVersionNumber + 1) +
+            "'.");
+
         switch (loadedVersionNumber)
         {
         // Wrong column identifiers in the the simple and detailled bright N columns order list
         case 1:
-            _logger.info(
-                "Upgrading preference file from version 1 to version 2.");
 
             // Updating simple bright N columns order list
             String simpleBrightNViewColumnOrder = getPreference(
                     "view.columns.simple.bright.N");
-
             // Should replace "e_diam_vk" with "e_dia12 F12"
             _logger.finer(
                 "Replacing 'e_diam_vk' with 'e_dia12 F12' in 'view.columns.simple.bright.N'.");
@@ -263,8 +267,6 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Added SBC9 column to each detailled view
         case 2:
-            _logger.info(
-                "Upgrading preference file from version 2 to version 3.");
 
             String preferenceToUpdate = "";
 
@@ -306,8 +308,6 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Remove CHARM color preference
         case 3:
-            _logger.info(
-                "Upgrading preference file from version 3 to version 4.");
 
             String preferenceToRemove = "catalog.color.J/A+A/386/492/charm";
             removePreference(preferenceToRemove);
@@ -319,8 +319,6 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Re-order detailled view columns
         case 4:
-            _logger.info(
-                "Upgrading preference file from version 4 to version 5.");
             // Updating detailled bright N columns order list if not changed by user
             detailledBrightNViewColumnOrder = getPreference(
                     "view.columns.detailled.bright.N");
@@ -410,8 +408,6 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Replaced VarFlag3 with VFlag in bright N detailled view
         case 5:
-            _logger.info(
-                "Upgrading preference file from version 5 to version 6.");
 
             String completePreferencePath = "view.columns.detailled.bright.N";
             preferenceToUpdate = getPreference(completePreferencePath);
@@ -443,8 +439,6 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Replaced science object detection distance of 0.01 degrees by 1 arcsecond
         case 6:
-            _logger.info(
-                "Upgrading preference file from version 6 to version 7.");
 
             String preferencePath = "query.scienceObjectDetectionDistance";
             String previousValue  = getPreference(preferencePath);
@@ -462,6 +456,36 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 _logger.log(Level.WARNING,
                     "Could not store updated preference in '" + preferencePath +
                     "' : ", ex);
+
+                return false;
+            }
+
+            // Commit change to file
+            return true;
+
+        // Replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailled", "view.result.verbosity.full" preferences to add 'Full View' support.
+        case 7:
+            preferenceToRemove = "view.details.show";
+
+            boolean previousState = getPreferenceAsBoolean(preferenceToRemove);
+
+            // Remove old preference
+            removePreference(preferenceToRemove);
+            _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+
+            // Store the new preferences with respect to previous state
+            try
+            {
+                setPreference("view.result.verbosity.synthetic",
+                    (! previousState));
+                setPreference("view.result.verbosity.detailled", previousState);
+                setPreference("view.result.verbosity.full", "false");
+            }
+            catch (Exception ex)
+            {
+                _logger.log(Level.WARNING,
+                    "Could not store updated preference for 'view.result.verbosity.*' : ",
+                    ex);
 
                 return false;
             }
@@ -508,7 +532,9 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Place view behaviour
         setDefaultPreference("view.legend.show", "false");
-        setDefaultPreference("view.details.show", "false");
+        setDefaultPreference("view.result.verbosity.synthetic", "true");
+        setDefaultPreference("view.result.verbosity.detailled", "false");
+        setDefaultPreference("view.result.verbosity.full", "false");
 
         // Simple 'Bright N' view
         setDefaultPreference("view.columns.simple.bright.N",

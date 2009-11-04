@@ -2,7 +2,7 @@
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 	<program name="SearchCal" version="4.1.2b4"/>
-    <compilation date="27/10/2009" compiler="JDK 1.5.0_16"/>
+    <compilation date="04/11/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -37,7 +37,11 @@
         <menu label="Save Values as Default" classpath="fr.jmmc.scalib.sclgui.QueryView" action="_saveValuesAction"/>
       </menu>
       <menu label="Calibrators">
-        <menu label="Show Details" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showDetailsAction" checkbox="true" checkboxPreferenceName="view.details.show" accelerator="D"/>
+        <menu label="Results Verbosity" radiogroup="true">
+            <menu label="Synthetic" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_syntheticResultsVerbosityAction" checkboxPreferenceName="view.result.verbosity.synthetic" accelerator="1"/>
+            <menu label="Detailled" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_detailledResultsVerbosityAction" checkboxPreferenceName="view.result.verbosity.detailled" accelerator="2"/>
+            <menu label="Full" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_fullResultsVerbosityAction" checkboxPreferenceName="view.result.verbosity.full" accelerator="3"/>
+        </menu>
         <menu label="Show Legend" classpath="fr.jmmc.scalib.sclgui.CalibratorsView" action="_showLegendAction" checkbox="true" checkboxPreferenceName="view.legend.show" accelerator="L"/>
         <menu/>
         <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction" accelerator="R"/>
@@ -59,6 +63,7 @@
             <prerelease version="4.1.2b4" tag="SC_V4_1_2_b4">
                <change type="BUGFIX">Change science object star detection distance from 0.01 degrees to 1 arcsecond.</change>
                <change type="CHANGE">Enhanced numerical precision throughout all computed values (especially errors).</change>
+               <change type="FEATURE">Revamped simple/detailed results view settings to add "full results" support.</change>
             </prerelease>
         </release>
         <release version="4.1.1">
