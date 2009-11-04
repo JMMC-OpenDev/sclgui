@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.56 2009-10-23 15:50:29 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.57 2009-11-04 10:08:13 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.56  2009/10/23 15:50:29  lafrasse
+ * Removed deprecated GetStarAction and related stuff.
+ *
  * Revision 1.55  2009/10/23 12:54:57  lafrasse
  * Replaced custom SIMBAD resolution system with common JMMC one.
  *
@@ -292,9 +295,6 @@ public class QueryView extends JPanel implements Observer,
     JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
 
-    /** Bright/Faint query radio button group */
-    ButtonGroup _brightFaintButtonGroup = new ButtonGroup();
-
     /** Bright query button */
     JRadioButton _brightRadioButton;
 
@@ -524,12 +524,14 @@ public class QueryView extends JPanel implements Observer,
         c.gridx     = 0;
         label       = new JLabel("Scenario : ", JLabel.TRAILING);
         _searchCalPanel.add(label, c);
-        tempPanel              = new JPanel();
-        _brightRadioButton     = new JRadioButton(new BrightQueryAction());
-        _brightFaintButtonGroup.add(_brightRadioButton);
+        tempPanel = new JPanel();
+
+        ButtonGroup brightFaintButtonGroup = new ButtonGroup();
+        _brightRadioButton = new JRadioButton(new BrightQueryAction());
+        brightFaintButtonGroup.add(_brightRadioButton);
         tempPanel.add(_brightRadioButton);
         _faintRadioButton = new JRadioButton(new FaintQueryAction());
-        _brightFaintButtonGroup.add(_faintRadioButton);
+        brightFaintButtonGroup.add(_faintRadioButton);
         c.gridx = 1;
         tempPanel.add(_faintRadioButton);
         label.setLabelFor(tempPanel);
