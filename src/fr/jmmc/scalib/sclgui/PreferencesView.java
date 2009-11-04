@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.31 2008-11-28 13:12:55 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.32 2009-11-04 10:17:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2008/11/28 13:12:55  lafrasse
+ * Removed unused query preference pane.
+ *
  * Revision 1.30  2008/09/18 21:50:53  lafrasse
  * Moved _showLegendAction and _showDetailsAction to RegisteredPreferencedBooleanAction, in order to properly handle menu items et preference view checkboxes.
  *
@@ -592,25 +595,47 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
         tempPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        c.fill                     = GridBagConstraints.HORIZONTAL;
-        c.weightx                  = 1;
-        c.gridy                    = 0;
-        c.gridx                    = 0;
+        c.fill                    = GridBagConstraints.HORIZONTAL;
+        c.weightx                 = 1;
+        c.gridy                   = 0;
+        c.gridx                   = 0;
 
         // Get instance of shared tooltip to adjust behaviour in update code
-        _sharedToolTipManager      = ToolTipManager.sharedInstance();
+        _sharedToolTipManager     = ToolTipManager.sharedInstance();
 
-        // Handle tooltips
-        _enableToolTipCheckBox     = new JCheckBox("Show Tooltips");
-        _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
-        _enableToolTipCheckBox.addChangeListener(this);
-        tempPanel.add(_enableToolTipCheckBox, c);
-        c.gridy++;
+        // Handle "Result Verbosity" radio buttons
+        JPanel radioPanel = new JPanel();
+        radioPanel.setLayout(new GridBagLayout());
 
-        // Handle "Show Details" checkbox
-        JCheckBox showDetailsCheckBox = new JCheckBox(CalibratorsView._showDetailsAction);
-        CalibratorsView._showDetailsAction.addBoundButton(showDetailsCheckBox);
-        tempPanel.add(showDetailsCheckBox, c);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill        = GridBagConstraints.HORIZONTAL;
+        gbc.anchor      = GridBagConstraints.EAST;
+        gbc.weightx     = 1;
+        gbc.gridy       = 0;
+        gbc.gridx       = 0;
+
+        JLabel label    = new JLabel("Results Verbosity : ", JLabel.TRAILING);
+        radioPanel.add(label, gbc);
+        gbc.gridx++;
+
+        ButtonGroup  radioGroup           = new ButtonGroup();
+        JRadioButton syntheticRadioButton = new JRadioButton(CalibratorsView._syntheticResultsVerbosityAction);
+        CalibratorsView._syntheticResultsVerbosityAction.addBoundButton(syntheticRadioButton);
+        radioGroup.add(syntheticRadioButton);
+        radioPanel.add(syntheticRadioButton, gbc);
+        gbc.gridy++;
+
+        JRadioButton detailledRadioButton = new JRadioButton(CalibratorsView._detailledResultsVerbosityAction);
+        CalibratorsView._detailledResultsVerbosityAction.addBoundButton(detailledRadioButton);
+        radioGroup.add(detailledRadioButton);
+        radioPanel.add(detailledRadioButton, gbc);
+        gbc.gridy++;
+
+        JRadioButton fullRadioButton = new JRadioButton(CalibratorsView._fullResultsVerbosityAction);
+        CalibratorsView._fullResultsVerbosityAction.addBoundButton(fullRadioButton);
+        radioGroup.add(fullRadioButton);
+        radioPanel.add(fullRadioButton, gbc);
+        tempPanel.add(radioPanel, c);
         c.gridy++;
 
         // Handle "Show Legend" checkbox
@@ -618,6 +643,12 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
         CalibratorsView._showLegendAction.addBoundButton(showLegendCheckBox);
         tempPanel.add(showLegendCheckBox, c);
         c.gridy++;
+
+        // Handle "Show Tooltips" checkbox
+        _enableToolTipCheckBox = new JCheckBox("Show Tooltips");
+        _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
+        _enableToolTipCheckBox.addChangeListener(this);
+        tempPanel.add(_enableToolTipCheckBox, c);
     }
 
     /**

@@ -239,7 +239,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         _tableCellColors           = new TableCellColors();
         _tableCellColorsEditor     = new TableCellColorsEditor();
 
-        computeSimpleDetailedViewArray();
+        computeColumnsInderectionArray();
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -665,23 +665,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     /**
      * Automatically called whenever the observed model changed
      */
-    public void computeSimpleDetailedViewArray()
+    public void computeColumnsInderectionArray()
     {
-        _logger.entering("TableSorter", "computeSimpleDetailedViewArray");
+        _logger.entering("TableSorter", "computeColumnsInderectionArray");
 
-        String view      = "simple";
-        String scenario  = "bright";
-        String magnitude = "V";
-
-        // Get the detailled/simple view flag state
-        if (_preferences.getPreferenceAsBoolean("view.details.show") == true)
-        {
-            view = "detailled";
-        }
-        else
-        {
-            view = "simple";
-        }
+        String scenario = "bright";
 
         // Get the scenario
         if (_calibratorsModel.getBrightScenarioFlag() == true)
@@ -694,68 +682,103 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         }
 
         // Get the magnitude band
-        magnitude = _calibratorsModel.getMagnitudeBand();
+        String magnitude    = _calibratorsModel.getMagnitudeBand();
+
+        String selectedView = null;
+
+        // Get the detailled/simple view flag state
+        if (_preferences.getPreferenceAsBoolean(
+                    "view.result.verbosity.synthetic") == true)
+        {
+            selectedView = "view.columns.simple." + scenario + "." + magnitude;
+        }
+        else if (_preferences.getPreferenceAsBoolean(
+                    "view.result.verbosity.detailled") == true)
+        {
+            selectedView = "view.columns.detailled." + scenario + "." +
+                magnitude;
+        }
+        else if (_preferences.getPreferenceAsBoolean(
+                    "view.result.verbosity.full") == true)
+        {
+            selectedView = null;
+        }
 
         // Compute the corresponding preference path
-        String selectedView = "view.columns." + view + "." + scenario + "." +
-            magnitude;
-        _logger.fine("Selected view = '" + selectedView + "'.");
+        _logger.fine("Selected view = '" +
+            ((selectedView != null) ? selectedView : "RAW") + "'.");
 
-        // Get the selected ordered column name table
-        String[] columnStrings = _preferences.getPreference(selectedView)
-                                             .split(" ");
-        int      nbOfColumns   = columnStrings.length;
-
-        _viewIndex             = new int[nbOfColumns];
-
-        for (int i = 0;
-                i < Math.min(nbOfColumns, _calibratorsModel.getColumnCount());
-                i++)
+        if (selectedView != null)
         {
-            String columnName = columnStrings[i];
+            // Get the selected ordered column name table
+            String[] columnStrings = _preferences.getPreference(selectedView)
+                                                 .split(" ");
+            int      nbOfColumns   = columnStrings.length;
 
-            if (columnName != null)
+            _viewIndex             = new int[nbOfColumns];
+
+            for (int i = 0;
+                    i < Math.min(nbOfColumns, _calibratorsModel.getColumnCount());
+                    i++)
             {
-                // Get each column name column index
-                int columnId = _calibratorsModel.getColumnIdByName(columnName);
-                _viewIndex[i] = columnId;
+                String columnName = columnStrings[i];
 
-                // If no column Id was found for the given column name
-                if (columnId < 0)
+                if (columnName != null)
                 {
-                    _logger.warning("No column called '" + columnName + "'.");
-                }
-                else
-                {
-                    _logger.fine("_viewIndex[" + i + "] = '" + columnId +
-                        "' -> '" + columnName + "'.");
+                    // Get each column name column index
+                    int columnId = _calibratorsModel.getColumnIdByName(columnName);
+                    _viewIndex[i] = columnId;
+
+                    // If no column Id was found for the given column name
+                    if (columnId < 0)
+                    {
+                        _logger.warning("No column called '" + columnName +
+                            "'.");
+                    }
+                    else
+                    {
+                        _logger.fine("_viewIndex[" + i + "] = '" + columnId +
+                            "' -> '" + columnName + "'.");
+                    }
                 }
             }
-        }
 
-        // Remove any -1 (eg column name not found) !!!
-        int shift = 0;
+            // Remove any -1 (eg column name not found) !!!
+            int shift = 0;
 
-        for (int i = 0; i < (nbOfColumns - shift); i++)
-        {
-            if (_viewIndex[i] < 0)
+            for (int i = 0; i < (nbOfColumns - shift); i++)
             {
-                shift++;
+                if (_viewIndex[i] < 0)
+                {
+                    shift++;
+                }
+
+                _viewIndex[i] = _viewIndex[i + shift];
             }
 
-            _viewIndex[i] = _viewIndex[i + shift];
+            // Create a new array of this with the right size
+            int[] result = new int[nbOfColumns - shift];
+
+            // Copy back all the meaningfull result in the rightly sized array
+            for (int i = 0; i < result.length; i++)
+            {
+                result[i] = _viewIndex[i];
+            }
+
+            _viewIndex = result;
         }
-
-        // Create a new array of this with the right size
-        int[] result = new int[nbOfColumns - shift];
-
-        // Copy back all the meaningfull result in the rightly sized array
-        for (int i = 0; i < result.length; i++)
+        else // Full view, with all columns
         {
-            result[i] = _viewIndex[i];
-        }
+            // Get column count and allocate correspondaing memory for the inderection array
+            int nbOfColumns = _calibratorsModel.getColumnCount();
+            _viewIndex = new int[nbOfColumns];
 
-        _viewIndex = result;
+            // Generate a 'one to one' inderection array to show every single column
+            for (int i = 0; i < nbOfColumns; i++)
+            {
+                _viewIndex[i] = i;
+            }
+        }
     }
 
     /**
@@ -765,7 +788,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     {
         _logger.entering("TableSorter", "update");
 
-        computeSimpleDetailedViewArray();
+        computeColumnsInderectionArray();
 
         _calibratorsModel.update(null, this);
     }
@@ -830,7 +853,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         public void tableChanged(TableModelEvent e)
         {
             ////////////////////////////////////////////////////////////////////////
-            computeSimpleDetailedViewArray();
+            computeColumnsInderectionArray();
 
             // Use the internal cell renderer with origin and confidence
             for (int i = 0; i < tableHeader.getColumnModel().getColumnCount();

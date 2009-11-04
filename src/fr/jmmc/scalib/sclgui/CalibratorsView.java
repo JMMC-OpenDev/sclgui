@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.36 2008-09-18 21:50:53 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.37 2009-11-04 10:17:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.36  2008/09/18 21:50:53  lafrasse
+ * Moved _showLegendAction and _showDetailsAction to RegisteredPreferencedBooleanAction, in order to properly handle menu items et preference view checkboxes.
+ *
  * Revision 1.35  2008/09/10 22:19:40  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Added clickable cell to open web page on star information from HIP and HD
@@ -162,8 +165,14 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     //public static ShowLegendAction _showLegendAction;
     public static RegisteredPreferencedBooleanAction _showLegendAction;
 
-    /** Show Details action */
-    public static RegisteredPreferencedBooleanAction _showDetailsAction;
+    /** Synthetic Results Verbosity action */
+    public static RegisteredPreferencedBooleanAction _syntheticResultsVerbosityAction;
+
+    /** Detailled Results Verbosity action */
+    public static RegisteredPreferencedBooleanAction _detailledResultsVerbosityAction;
+
+    /** Full Results Verbosity action */
+    public static RegisteredPreferencedBooleanAction _fullResultsVerbosityAction;
 
     /** Delete action */
     public DeleteAction _deleteAction;
@@ -204,14 +213,22 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _preferences.addObserver(this);
 
         // Create actions
-        _deleteAction          = new DeleteAction(classPath, "_deleteAction");
-        _undeleteAction        = new UndeleteAction(classPath, "_undeleteAction");
-        _showLegendAction      = new RegisteredPreferencedBooleanAction(classPath,
+        _deleteAction                        = new DeleteAction(classPath,
+                "_deleteAction");
+        _undeleteAction                      = new UndeleteAction(classPath,
+                "_undeleteAction");
+        _showLegendAction                    = new RegisteredPreferencedBooleanAction(classPath,
                 "_showLegendAction", "Show Legend", _preferences,
                 "view.legend.show");
-        _showDetailsAction     = new RegisteredPreferencedBooleanAction(classPath,
-                "_showDetailsAction", "Show Details", _preferences,
-                "view.details.show");
+        _syntheticResultsVerbosityAction     = new RegisteredPreferencedBooleanAction(classPath,
+                "_syntheticResultsVerbosityAction", "Synthetic", _preferences,
+                "view.result.verbosity.synthetic");
+        _detailledResultsVerbosityAction     = new RegisteredPreferencedBooleanAction(classPath,
+                "_detailledResultsVerbosityAction", "Detailled", _preferences,
+                "view.result.verbosity.detailled");
+        _fullResultsVerbosityAction          = new RegisteredPreferencedBooleanAction(classPath,
+                "_fullResultsVerbosityAction", "Full", _preferences,
+                "view.result.verbosity.full");
 
         // Gray border of the view.
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
