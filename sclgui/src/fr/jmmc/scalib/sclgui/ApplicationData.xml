@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.1.2b4"/>
-    <compilation date="04/11/2009" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.1.2b5"/>
+    <compilation date="05/11/2009" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -64,6 +64,9 @@
                <change type="BUGFIX">Change science object star detection distance from 0.01 degrees to 1 arcsecond.</change>
                <change type="CHANGE">Enhanced numerical precision throughout all computed values (especially errors).</change>
                <change type="FEATURE">Revamped simple/detailed results view settings to add "full results" support.</change>
+            </prerelease>
+            <prerelease version="4.1.2b5" tag="SC_V4_1_2_b5">
+               <change type="CHANGE">Enhanced HTML exports.</change>
             </prerelease>
         </release>
         <release version="4.1.1">

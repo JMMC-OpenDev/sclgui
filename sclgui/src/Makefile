@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.35 2009-05-05 13:35:41 lafrasse Exp $"
+# "@(#) $Id: Makefile,v 1.36 2009-11-05 14:16:28 mella Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.35  2009/05/05 13:35:41  lafrasse
+# Moved user documentation generation out of man pages generation.
+#
 # Revision 1.34  2008/11/21 15:18:12  mella
 # remove CPP programs generation
 #
@@ -187,7 +190,7 @@ llllll_OBJECTS   =  			   		\
 #
 # Scripts (public and local)
 # --------------------------
-SCRIPTS         =
+SCRIPTS         = sclguiVOTableToHTML
 SCRIPTS_L       =
 
 #
@@ -233,8 +236,7 @@ simbad_DIRS     = cds
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr 
 sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
-                  fr/jmmc/scalib/sclgui/voTableToCSV.xsl \
-                  fr/jmmc/scalib/sclgui/voTableToHTML.xsl \
+                  fr/jmmc/scalib/sclgui/*.xsl \
                   fr/jmmc/scalib/sclgui/ApplicationData.xml \
 
 #
@@ -291,6 +293,8 @@ include $(MAKEDIR)/mkfMakefile
 # TARGETS
 # -------
 all:	do_soap do_all
+	@echo " . . . Copying xsl sources :"
+	cp -vp fr/jmmc/scalib/sclgui/*.xsl ../config
 	@echo " . . . 'all' done" 
 
 clean : clean_soap clean_all 
