@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.25 2008-12-15 13:32:37 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.26 2009-11-05 14:16:28 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.25  2008/12/15 13:32:37  lafrasse
+ * Corrected CSV and HTML export exception.
+ *
  * Revision 1.24  2008/09/10 22:19:08  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Added clickable cell to open web page on star information from HIP and HD
@@ -785,7 +788,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         _logger.entering("CalibratorsModel", "exportCurrentVOTableToCSV");
 
-        applyXSLTranformationOnCurrentVOTable(out, "voTableToCSV.xsl");
+        applyXSLTranformationOnCurrentVOTable(out, "sclguiVOTableToCSV.xsl");
     }
 
     /**
@@ -797,7 +800,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         _logger.entering("CalibratorsModel", "exportCurrentVOTableToHTML");
 
-        applyXSLTranformationOnCurrentVOTable(out, "voTableToHTML.xsl");
+        applyXSLTranformationOnCurrentVOTable(out, "sclguiVOTableToHTML.xsl");
     }
 
     /**
