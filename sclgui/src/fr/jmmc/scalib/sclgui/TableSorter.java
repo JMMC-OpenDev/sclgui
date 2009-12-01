@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.astro.Catalog;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
@@ -1119,7 +1120,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 hasFocus, row, column);
 
             // Generated tooltip
-            String tooltip = "";
+            String tooltip = null;
 
             _calModel     = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
             _distId       = _calModel.getColumnIdByName("dist");
@@ -1186,8 +1187,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 {
                     setText("<html><a href='#empty'>" + cellValue +
                         "</a></html>");
-                    tooltip += ("Click to open '" + catalogName + " " +
-                    cellValue + "' star SIMBAD webpage - ");
+                    tooltip = "Click to see star '" + catalogName + " " +
+                        cellValue + "' in SIMBAD - ";
                 }
             }
 
@@ -1207,7 +1208,28 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     {
                         // Get origin and set it as tooltip
                         String origin = starProperty.getOrigin();
-                        tooltip += ("Catalog origin: " + origin);
+
+                        // If the cel as an origin ("-" is the used blanking value for empty cell origins)
+                        if (! origin.equals("-"))
+                        {
+                            String originDescription = "Catalog origin: " +
+                                Catalog.catalogFromReference(origin);
+
+                            // If tooltip already contains an explanation about clickable cells
+                            if (tooltip != null)
+                            {
+                                // Add catalog origin to it
+                                tooltip += originDescription;
+                            }
+                            else
+                            {
+                                // Only use catalog origin as tooltip
+                                tooltip = originDescription;
+                            }
+                        }
+
+                        System.out.println("origin = '" + origin +
+                            "' : tooltip = '" + tooltip + "'.");
 
                         // Get origin color and set it as cell backgroung color
                         backgroundColor = (Color) _colorForOrigin.get(origin);
@@ -1216,10 +1238,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     {
                         // Get confidence and set it as tooltip
                         String confidence = starProperty.getConfidence();
-                        tooltip += ("Confidence index: " + confidence);
+                        tooltip             = "Confidence index: " +
+                            confidence;
 
                         // Get confidence color and set it as cell backgroung color
-                        backgroundColor = (Color) _colorForConfidence.get(confidence);
+                        backgroundColor     = (Color) _colorForConfidence.get(confidence);
                     }
                     else
                     {
@@ -1234,8 +1257,15 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 }
             }
 
-            // Set tooltip
-            setToolTipText(tooltip);
+            // Set tooltip (if any)
+            if (tooltip != null)
+            {
+                setToolTipText(tooltip);
+            }
+            else
+            {
+                setToolTipText("");
+            }
 
             // Return the component
             return this;
