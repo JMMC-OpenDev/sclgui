@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.11 2008-09-10 22:51:29 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.12 2009-12-01 11:29:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2008/09/10 22:51:29  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Added clickable cell to open catalog web pages.
+ *
  * Revision 1.10  2007/06/26 08:39:27  lafrasse
  * Removed most TODOs by adding error handling through exceptions.
  *
@@ -41,6 +45,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.astro.Catalog;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.util.*;
 
@@ -83,11 +88,11 @@ public class LegendView extends JPanel
     Preferences _preferences;
 
     /**
-     * LegendFrame  -  Constructor
+     * Constructor.
      *
-     * @param editable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
+     * @param isEditable if true the catalog colors will be editable, otherwise the link to the catalog will be opened instead of editing.
      */
-    public LegendView(boolean editable)
+    public LegendView(boolean isEditable)
     {
         // Store the application preferences and register against it
         _preferences = Preferences.getInstance();
@@ -95,13 +100,13 @@ public class LegendView extends JPanel
 
         // Append preference colors chooser component of catalogs
         ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
-                "catalog.color.", "Catalogs origin", editable);
+                "catalog", "Catalogs Origin", isEditable);
 
         // Append preference colors chooser component of catalogs
         ColorPreferencesView confidenceView = new ColorPreferencesView(_preferences,
-                "confidence.color.", "Confidence index", true);
+                "confidence", "Confidence Index", true);
 
-        //Create the scrollpanes and add the tables.
+        // Create the scrollpanes and add the tables.
         JScrollPane scrollPane = new JScrollPane(colorView);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -123,17 +128,22 @@ public class LegendView extends JPanel
      */
     class ColorPreferencesView extends JPanel implements Observer
     {
+        private final static int COLOR       = 0;
+        private final static int REFERENCE   = 1;
+        private final static int TITLE       = 2;
+        private final static int DESCRIPTION = 3;
+
         /** Application preferences */
         protected Preferences _preferences;
 
-        /** Preference prefix */
-        protected String _preferencePrefix;
+        /** Preference prefix for Color values */
+        protected String _colorPreferencePrefix;
 
         /** data of Table model */
-        private Object[][] data;
+        private Object[][] _data;
 
         /** Displayed table */
-        JTable table;
+        JTable _table;
 
         /**
          * Creates a new ColorPreferencesView object.
@@ -141,34 +151,36 @@ public class LegendView extends JPanel
          * @param preferences application preferences
          * @param prefix properties prefix
          * @param header table caolumn header value
-         * @param editable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
+         * @param isEditable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
          */
         public ColorPreferencesView(Preferences preferences, String prefix,
-            String header, boolean editable)
+            String header, boolean isEditable)
         {
-            _preferencePrefix     = prefix;
-            _preferences          = preferences;
+            // Register to catalog preferences
+            _colorPreferencePrefix     = prefix + ".color.";
+            _preferences               = preferences;
             _preferences.addObserver(this);
 
             // Make data filled
             update(null, null);
 
-            TableModel tableModel = new MyTableModel();
+            TableModel tableModel = new ColorPreferencesViewTableModel();
 
-            table = new JTable(tableModel);
-            table.getColumnModel().getColumn(0).setHeaderValue(header);
-            //Set up renderer and editor for the Favorite Color column.
-            table.setDefaultRenderer(Color.class,
-                new ColorRenderer(false, editable));
-            table.setDefaultEditor(Color.class, new ColorEditor(editable));
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            _table = new JTable(tableModel);
+            _table.getColumnModel().getColumn(0).setHeaderValue(header);
+
+            // Set up renderer and editor for the Favorite Color column.
+            _table.setDefaultRenderer(Color.class,
+                new ColorRenderer(false, isEditable));
+            _table.setDefaultEditor(Color.class, new ColorEditor(isEditable));
+            _table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
             setLayout(new BorderLayout());
 
-            //Add the header and the table 
-            JTableHeader tableHeader = table.getTableHeader();
+            // Add the header and the table 
+            JTableHeader tableHeader = _table.getTableHeader();
             add(tableHeader, BorderLayout.NORTH);
-            add(table, BorderLayout.CENTER);
+            add(_table, BorderLayout.CENTER);
 
             // Make table resized
             update(null, null);
@@ -185,17 +197,43 @@ public class LegendView extends JPanel
             _logger.entering("ColorPreferencesView", "update");
 
             // Fill with preferences entries
-            Enumeration e      = _preferences.getPreferences(_preferencePrefix);
-            Vector      names  = new Vector();
-            Vector      colors = new Vector();
+            Enumeration e            = _preferences.getPreferences(_colorPreferencePrefix);
+            Vector      colors       = new Vector();
+            Vector      references   = new Vector();
+            Vector      names        = new Vector();
+            Vector      descriptions = new Vector();
 
             while (e.hasMoreElements())
             {
-                String entry          = (String) e.nextElement();
+                String entry = (String) e.nextElement();
 
-                String preferenceName = entry.substring(_preferencePrefix.length());
-                names.add(preferenceName);
+                // Use dedicated pref. name if available, pref. reference otherwise
+                String preferenceReference = entry.substring(_colorPreferencePrefix.length());
+                references.add(preferenceReference);
 
+                String title = Catalog.titleFromReference(preferenceReference);
+
+                if (title != null)
+                {
+                    names.add(title);
+                }
+                else
+                {
+                    names.add(preferenceReference);
+                }
+
+                String description = Catalog.descriptionFromReference(preferenceReference);
+
+                if (description != null)
+                {
+                    descriptions.add(description);
+                }
+                else
+                {
+                    descriptions.add(preferenceReference);
+                }
+
+                // Get color from preferences, white otherwise
                 Color c;
 
                 try
@@ -210,26 +248,30 @@ public class LegendView extends JPanel
                 colors.add(c);
             }
 
-            data = new Object[names.size()][2];
+            // Synthetise tadle data model
+            int rowCount = names.size();
+            _data = new Object[rowCount][4];
 
-            for (int i = 0; i < names.size(); i++)
+            for (int row = 0; row < rowCount; row++)
             {
-                data[i][0]     = colors.elementAt(i);
-                data[i][1]     = names.elementAt(i);
+                _data[row][COLOR]           = colors.elementAt(row);
+                _data[row][REFERENCE]       = references.elementAt(row);
+                _data[row][TITLE]           = names.elementAt(row);
+                _data[row][DESCRIPTION]     = descriptions.elementAt(row);
             }
 
-            // repaint table 
-            if (table != null)
+            // Repaint table 
+            if (_table != null)
             {
-                table.repaint();
+                _table.repaint();
                 /* set size according bigest component
-                   TableColumn tableColumn = table.getColumnModel().getColumn(0);
-                   TableCellRenderer renderer = table.getTableCellRenderer();
+                   TableColumn tableColumn = _table.getColumnModel().getColumn(0);
+                   TableCellRenderer renderer = _table.getTableCellRenderer();
                    int max=0;
-                   for (int i=0; i<  table.getRowCount()){
+                   for (int i=0; i < _table.getRowCount()){
                    }
                  */
-                initColumnSizes(table);
+                initColumnSizes(_table);
                 revalidate();
             }
         }
@@ -241,17 +283,18 @@ public class LegendView extends JPanel
         {
             _logger.entering("ColorPreferencesView", "initColumnSizes");
 
-            MyTableModel model     = (MyTableModel) table.getModel();
-            TableColumn  column    = null;
-            Component    comp      = null;
-            int          cellWidth = 0;
-            column                 = table.getColumnModel().getColumn(0);
+            ColorPreferencesViewTableModel model     = (ColorPreferencesViewTableModel) table.getModel();
+            TableColumn                    column    = null;
+            Component                      comp      = null;
+            int                            cellWidth = 0;
+            column                                   = table.getColumnModel()
+                                                            .getColumn(0);
 
-            for (int i = 0; i < table.getRowCount(); i++)
+            for (int row = 0; row < table.getRowCount(); row++)
             {
                 comp = table.getDefaultRenderer(model.getColumnClass(0))
-                            .getTableCellRendererComponent(table, data[i][0],
-                        false, false, i, 0);
+                            .getTableCellRendererComponent(table,
+                        _data[row][COLOR], false, false, row, 0);
 
                 if (cellWidth < comp.getPreferredSize().width)
                 {
@@ -262,36 +305,38 @@ public class LegendView extends JPanel
             column.setPreferredWidth(cellWidth + 4);
         }
 
-        class MyTableModel extends AbstractTableModel
+        class ColorPreferencesViewTableModel extends AbstractTableModel
         {
             private String[] columnNames = { "Favorite Color" };
 
             public int getColumnCount()
             {
-                _logger.entering("MyTableModel", "getColumnCount");
+                _logger.entering("ColorPreferencesViewTableModel",
+                    "getColumnCount");
 
                 return columnNames.length;
             }
 
             public int getRowCount()
             {
-                _logger.entering("MyTableModel", "getRowCount");
+                _logger.entering("ColorPreferencesViewTableModel", "getRowCount");
 
-                return data.length;
+                return _data.length;
             }
 
             public String getColumnName(int col)
             {
-                _logger.entering("MyTableModel", "getColumnName");
+                _logger.entering("ColorPreferencesViewTableModel",
+                    "getColumnName");
 
                 return columnNames[col];
             }
 
             public Object getValueAt(int row, int col)
             {
-                _logger.entering("MyTableModel", "getValueAt");
+                _logger.entering("ColorPreferencesViewTableModel", "getValueAt");
 
-                return data[row][col];
+                return _data[row][col];
             }
 
             /*
@@ -302,29 +347,31 @@ public class LegendView extends JPanel
              */
             public Class getColumnClass(int c)
             {
-                _logger.entering("MyTableModel", "getColumnClass");
+                _logger.entering("ColorPreferencesViewTableModel",
+                    "getColumnClass");
 
                 return getValueAt(0, c).getClass();
             }
 
             public boolean isCellEditable(int row, int col)
             {
-                _logger.entering("MyTableModel", "isCellEditable");
+                _logger.entering("ColorPreferencesViewTableModel",
+                    "isCellEditable");
 
-                //Note that the data/cell address is constant,
-                //no matter where the cell appears onscreen.
+                // Note that the data/cell address is constant, no matter where the cell appears onscreen.
                 return true;
             }
 
             public void setValueAt(Object value, int row, int col)
             {
-                _logger.entering("MyTableModel", "setValueAt");
+                _logger.entering("ColorPreferencesViewTableModel", "setValueAt");
 
-                data[row][col] = value;
+                _data[row][col] = value;
                 fireTableCellUpdated(row, col);
 
-                String preferenceName = _preferencePrefix + data[row][1];
-                Color  newColor       = (Color) data[row][0];
+                String preferenceName = _colorPreferencePrefix +
+                    _data[row][REFERENCE];
+                Color  newColor       = (Color) _data[row][COLOR];
 
                 try
                 {
@@ -343,13 +390,13 @@ public class LegendView extends JPanel
             Border  unselectedBorder = null;
             Border  selectedBorder   = null;
             boolean isBordered       = true;
-            boolean _editable        = true;
+            boolean _isEditable      = true;
 
-            public ColorRenderer(boolean isBordered, boolean editable)
+            public ColorRenderer(boolean isBordered, boolean isEditable)
             {
                 this.isBordered     = isBordered;
-                _editable           = editable;
-                setOpaque(true); //MUST do this for background to show up.
+                _isEditable         = isEditable;
+                setOpaque(true); // MUST do this for background to show up.
             }
 
             public Component getTableCellRendererComponent(JTable table,
@@ -359,21 +406,26 @@ public class LegendView extends JPanel
                 _logger.entering("ColorRenderer",
                     "getTableCellRendererComponent");
 
-                String cellName = (String) data[row][1];
+                String cellReference      = (String) _data[row][REFERENCE];
+                String cellName           = (String) _data[row][TITLE];
+                String cellTitle          = (String) _data[row][DESCRIPTION];
+                String catalogDescription = "'" + cellTitle + "' (" +
+                    cellReference + ")";
 
-                Color  newColor = (Color) color;
+                Color  newColor           = (Color) color;
                 setBackground(newColor);
 
-                if (_editable == false)
+                if (_isEditable == false)
                 {
                     setText("<html>&nbsp;<a href='#empty'>" + cellName +
                         "</a></html>");
-                    setToolTipText("Click to open corresponding web page");
+                    setToolTipText("Click to open CDS page for catalog " +
+                        catalogDescription);
                 }
                 else
                 {
-                    setText(" " + cellName);
-                    setToolTipText("Click to edit corresponding color");
+                    setText(cellName);
+                    setToolTipText("Click to edit the color");
                 }
 
                 if (isBordered)
@@ -411,38 +463,36 @@ public class LegendView extends JPanel
         class ColorEditor extends AbstractCellEditor implements TableCellEditor,
             ActionListener
         {
-            protected static final String EDIT         = "edit";
-            Color                         currentColor;
-            JButton                       button;
-            JColorChooser                 colorChooser;
-            JDialog                       dialog;
-            boolean                       _editable    = true;
-            String                        name;
+            protected static final String EDIT              = "edit";
+            Color                         _currentColor;
+            JButton                       _button;
+            JColorChooser                 _colorChooser;
+            JDialog                       _dialog;
+            boolean                       _isEditable       = true;
+            String                        _catalogReference;
 
             /**
              * Creates a new ColorEditor object.
              *
-             * @param editable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
+             * @param isEditable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
              */
-            public ColorEditor(boolean editable)
+            public ColorEditor(boolean isEditable)
             {
-                _editable                              = editable;
+                _isEditable                                 = isEditable;
 
-                //Set up the editor (from the table's point of view),
-                //which is a button.
-                //This button brings up the color chooser dialog,
-                //which is the editor from the user's point of view.
-                button                                 = new JButton();
-                button.setActionCommand(EDIT);
-                button.addActionListener(this);
-                button.setBorderPainted(false);
+                // Set up the editor (from the table's point of view), which is a button.
+                // This button brings up the color chooser dialog, which is the editor from the user's point of view.
+                _button                                     = new JButton();
+                _button.setActionCommand(EDIT);
+                _button.addActionListener(this);
+                _button.setBorderPainted(false);
 
                 //Set up the dialog that the button brings up.
-                colorChooser     = new JColorChooser();
-                dialog           = JColorChooser.createDialog(button,
-                        "Pick a Color", true, //modal
-                        colorChooser, this, //OK button handler
-                        null); //no CANCEL button handler
+                _colorChooser     = new JColorChooser();
+                _dialog           = JColorChooser.createDialog(_button,
+                        "Pick a Color", true, // Modal Window
+                        _colorChooser, this, // OK button handler
+                        null); // No CANCEL button handler
             }
 
             /**
@@ -455,58 +505,59 @@ public class LegendView extends JPanel
 
                 if (EDIT.equals(e.getActionCommand()))
                 {
-                    if (_editable == true)
+                    if (_isEditable == true)
                     {
                         // The user has clicked the cell, so bring up the dialog.
-                        button.setBackground(currentColor);
-                        colorChooser.setColor(currentColor);
-                        dialog.setVisible(true);
+                        _button.setBackground(_currentColor);
+                        _colorChooser.setColor(_currentColor);
+                        _dialog.setVisible(true);
                     }
                     else
                     {
                         String url = Resources.getResource("catalog.url." +
-                                name);
+                                _catalogReference);
 
                         if (url == null)
                         {
                             url = Resources.getResource("catalog.url.header") +
-                                name;
+                                _catalogReference;
                         }
 
-                        _logger.fine("User clicked on catalog '" + name +
+                        _logger.fine("User clicked on catalog '" +
+                            _catalogReference +
                             "' in the LegendView, will open '" + url +
                             "' in default browser.");
                         BrowserLauncher.openURL(url);
                     }
 
-                    //Make the renderer reappear.
+                    // Make the renderer reappear.
                     fireEditingStopped();
                 }
                 else
                 {
-                    //User pressed dialog's "OK" button.
-                    currentColor = colorChooser.getColor();
+                    // User pressed dialog's "OK" button.
+                    _currentColor = _colorChooser.getColor();
                 }
             }
 
-            //Implement the one CellEditor method that AbstractCellEditor doesn't.
+            // Implement the one CellEditor method that AbstractCellEditor doesn't.
             public Object getCellEditorValue()
             {
                 _logger.entering("ColorEditor", "getCellEditorValue");
 
-                return currentColor;
+                return _currentColor;
             }
 
-            //Implement the one method defined by TableCellEditor.
+            // Implement the one method defined by TableCellEditor.
             public Component getTableCellEditorComponent(JTable table,
                 Object value, boolean isSelected, int row, int column)
             {
                 _logger.entering("ColorEditor", "getTableCellEditorComponent");
 
-                currentColor     = (Color) value;
-                name             = (String) data[row][1];
+                _currentColor         = (Color) value;
+                _catalogReference     = (String) _data[row][REFERENCE];
 
-                return button;
+                return _button;
             }
         }
     }
