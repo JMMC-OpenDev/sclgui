@@ -1228,9 +1228,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                             }
                         }
 
-                        System.out.println("origin = '" + origin +
-                            "' : tooltip = '" + tooltip + "'.");
-
                         // Get origin color and set it as cell backgroung color
                         backgroundColor = (Color) _colorForOrigin.get(origin);
                     }
