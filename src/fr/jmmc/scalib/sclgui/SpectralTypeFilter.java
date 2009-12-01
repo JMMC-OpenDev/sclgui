@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.15 2008-09-10 22:38:06 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.16 2009-12-01 14:24:20 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2008/09/10 22:38:06  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.14  2007/08/09 12:23:31  lafrasse
  * Enhanced to remove undefined spectral types.
  *
@@ -116,44 +119,6 @@ public class SpectralTypeFilter extends Filter
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("SpectralTypeFilter", "shouldRemoveRow");
-
-        /*
-           // DO NOT REMOVE !!! - Validity test code
-           String[] rawSpectralTypes =
-               {
-                   "-", "A0", "A0Ia", "A0Ib", "A0IV", "A0V", "A1III/IV", "A1V",
-                   "A2", "A2m", "A3", "A3IV", "A5", "A5V", "A7IV", "A7IV-V",
-                   "A8/A9V", "A8Vn", "A9V", "A9V...", "Am...", "Ap...", "B0IV...",
-                   "B1.5V", "B2", "B2III", "B2:IIIpshev", "B3IIIe", "B5", "B5III",
-                   "B5V", "B6III", "B7/B8V", "B8III", "B8V", "B8Vn", "B9",
-                   "B9.5IV:", "B9IIIMNp...", "B9IV", "F0", "F0IV...", "F2II/III",
-                   "F3Ia", "F5", "F5V", "F8", "G0", "G0Ib", "G0III...", "G0V",
-                   "G3Ib", "G3V", "G4Ibp...", "G5", "G5II...", "G5III", "G5IV",
-                   "G6/G8III", "G7III", "G8III", "G8IV/V", "K", "K0", "K0III",
-                   "K0IV", "K1Iabv", "K1III", "K1III/IV", "K1IIIvar", "K1/K2III",
-                   "K2", "K2III", "K2IIIvar", "K2IV", "K2/K3III", "K3Ib", "K3III",
-                   "K3IIvar", "K4III", "K4/K5III", "K5", "K5II", "K5III",
-                   "K5/M0III", "K7", "M0", "M0III", "M0I-M4Ia", "M1", "M1III",
-                   "M1IIIb", "M2Iabpe", "M3", "M3III", "M3/M4III", "M4.5IIIa",
-                   "M4III", "M4III:", "M5III", "M5/M6IV", "M6", "M6e-M7", "M6III",
-                   "M7III", "M8III:e", "Ma", "Mb", "Mc", "Md", "O", "O...", "O7"
-               };
-           for (int x = 0; x < rawSpectralTypes.length; x++)
-           {
-               String rawSpectralType    = rawSpectralTypes[x];
-               Vector foundSpectralTypes = spectralTypes(rawSpectralType);
-               System.out.println("spectralTypes[" + x + "] = '" +
-                   rawSpectralType + "' ->");
-               int foundSpectralTypesSize = foundSpectralTypes.size();
-               for (int y = 0; y < foundSpectralTypesSize; y++)
-               {
-                   System.out.println("\tfoundSpectralTypes[" + (y + 1) + "/" +
-                       foundSpectralTypesSize + "] = '" +
-                       (String) foundSpectralTypes.elementAt(y) + "'");
-               }
-               System.out.println();
-           }
-         */
 
         // Get the ID of the column contaning 'SpType' star property
         int rawSpectralTypeID = starList.getColumnIdByName(_spTypeColumnName);
