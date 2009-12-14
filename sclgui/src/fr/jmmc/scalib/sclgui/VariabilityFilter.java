@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.12 2009-07-16 13:51:50 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.13 2009-12-14 17:03:13 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2009/07/16 13:51:50  lafrasse
+ * Added 'VFlag' column filtering (for MIDI in detailled bright N).
+ * Factorized empty cells keeping.
+ *
  * Revision 1.11  2008/09/10 22:40:30  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -127,7 +131,7 @@ public class VariabilityFilter extends Filter
                 // Get the cell of the desired column
                 cell = (StarProperty) row.elementAt(varFlagID);
 
-                // If "variability1" flag was found in the current line
+                // If a variability flag was found
                 if (cell.hasValue() == true)
                 {
                     // This row should be removed
