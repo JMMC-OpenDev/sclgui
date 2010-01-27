@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.39 2010-01-27 09:57:02 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.40 2010-01-27 10:01:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.39  2010/01/27 09:57:02  lafrasse
+ * Moved updating code to seperate private methods to clean thing up a little beat.
+ *
  * Revision 1.38  2009/11/04 10:17:21  lafrasse
  * Revamped simple/detailed results view settings to add "full results" support.
  *
@@ -152,6 +155,30 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
     /** Singleton instance */
     private static Preferences _instance = null;
+
+    /** Detailled bright N columns order list, as of default in preference version 3 */
+    private static String _detailledBrightN_v3 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff";
+
+    /** Detailled bright N columns order list, as of default in preference version 4 */
+    private static String _detailledBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
+
+    /** Detailled bright V columns order list, as of default in preference version 3 */
+    private static String _detailledBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled bright V columns order list, as of default in preference version 4 */
+    private static String _detailledBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled bright K columns order list, as of default in preference version 3 */
+    private static String _detailledBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled bright K columns order list, as of default in preference version 4 */
+    private static String _detailledBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+
+    /** Detailled faint K columns order list, as of default in preference version 3 */
+    private static String _detailledFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+
+    /** Detailled faint K columns order list, as of default in preference version 4 */
+    private static String _detailledFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
 
     /** Hidden constructor */
     protected Preferences()
@@ -336,7 +363,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
-     * Correct : wrong column identifiers in the the simple and detailled bright N columns order list.
+     * Correction : wrong column identifiers in the the simple and detailled bright N columns order list.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -379,8 +406,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         }
         catch (Exception ex)
         {
-            _logger.log(Level.WARNING,
-                "Could not store updated preference:", ex);
+            _logger.log(Level.WARNING, "Could not store updated preference:", ex);
 
             return false;
         }
@@ -390,7 +416,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
-     * Correct : added SBC9 column to each detailled view.
+     * Correction : added SBC9 column to each detailled view.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -438,7 +464,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
-     * Correct : remove CHARM color preference.
+     * Correction : remove CHARM color preference.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -455,32 +481,8 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         return true;
     }
 
-    /** Detailled bright N columns order list, as of default in preference version 3 */
-    private static String _detailledBrightN_v3 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff";
-
-    /** Detailled bright N columns order list, as of default in preference version 4 */
-    private static String _detailledBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
-
-    /** Detailled bright V columns order list, as of default in preference version 3 */
-    private static String _detailledBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-
-    /** Detailled bright V columns order list, as of default in preference version 4 */
-    private static String _detailledBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-
-    /** Detailled bright K columns order list, as of default in preference version 3 */
-    private static String _detailledBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-
-    /** Detailled bright K columns order list, as of default in preference version 4 */
-    private static String _detailledBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-
-    /** Detailled faint K columns order list, as of default in preference version 3 */
-    private static String _detailledFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
-
-    /** Detailled faint K columns order list, as of default in preference version 4 */
-    private static String _detailledFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
-
     /**
-     * Correct : re-order detailled view columns.
+     * Correction : re-order detailled view columns.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -495,8 +497,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         if (detailledBrightNViewColumnOrder.equals(_detailledBrightN_v3) == true)
         {
             detailledBrightNViewColumnOrder = _detailledBrightN_v4;
-            _logger.finer(
-                "Re-ordered detailled bright N columns order list.");
+            _logger.finer("Re-ordered detailled bright N columns order list.");
         }
         else
         {
@@ -511,8 +512,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         if (detailledBrightVViewColumnOrder.equals(_detailledBrightV_v3) == true)
         {
             detailledBrightVViewColumnOrder = _detailledBrightV_v4;
-            _logger.finer(
-                "Re-ordered detailled bright V columns order list.");
+            _logger.finer("Re-ordered detailled bright V columns order list.");
         }
         else
         {
@@ -527,8 +527,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         if (detailledBrightKViewColumnOrder.equals(_detailledBrightK_v3) == true)
         {
             detailledBrightKViewColumnOrder = _detailledBrightK_v4;
-            _logger.finer(
-                "Re-ordered detailled bright K columns order list.");
+            _logger.finer("Re-ordered detailled bright K columns order list.");
         }
         else
         {
@@ -543,8 +542,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         if (detailledFaintKViewColumnOrder.equals(_detailledFaintK_v3) == true)
         {
             detailledFaintKViewColumnOrder = _detailledFaintK_v4;
-            _logger.finer(
-                "Re-ordered detailled faint K columns order list.");
+            _logger.finer("Re-ordered detailled faint K columns order list.");
         }
         else
         {
@@ -566,8 +564,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         }
         catch (Exception ex)
         {
-            _logger.log(Level.WARNING,
-                "Could not store updated preference:", ex);
+            _logger.log(Level.WARNING, "Could not store updated preference:", ex);
 
             return false;
         }
@@ -577,7 +574,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
-     * Correct : replaced VarFlag3 with VFlag in bright N detailled view.
+     * Correction : replaced VarFlag3 with VFlag in bright N detailled view.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -586,12 +583,12 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         _logger.entering("Preferences", "updateFromVersion5ToVersion6");
 
         String completePreferencePath = "view.columns.detailled.bright.N";
-        String preferenceToUpdate = getPreference(completePreferencePath);
+        String preferenceToUpdate     = getPreference(completePreferencePath);
 
         // Replace 'VarFlag3' with 'VFlag' in the current columns order list
         String searchedToken  = "VarFlag3";
         String replacingToken = "VFlag";
-        preferenceToUpdate = preferenceToUpdate.replaceAll(searchedToken,
+        preferenceToUpdate    = preferenceToUpdate.replaceAll(searchedToken,
                 replacingToken);
         _logger.finer("Replaced '" + searchedToken + "' with '" +
             replacingToken + "' in '" + completePreferencePath + "'.");
@@ -615,7 +612,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
-     * Correct : replaced science object detection distance of 0.01 degrees by 1 arcsecond.
+     * Correction : replaced science object detection distance of 0.01 degrees by 1 arcsecond.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -648,7 +645,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     }
 
     /**
-     * Correct : replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailled", "view.result.verbosity.full" preferences to add 'Full View' support.
+     * Correction : replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailled", "view.result.verbosity.full" preferences to add 'Full View' support.
      *
      * @return true if fine and shuold write to file, false otherwise.
      */
@@ -656,9 +653,9 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "updateFromVersion7ToVersion8");
 
-        String preferenceToRemove = "view.details.show";
+        String  preferenceToRemove = "view.details.show";
 
-        boolean previousState = getPreferenceAsBoolean(preferenceToRemove);
+        boolean previousState      = getPreferenceAsBoolean(preferenceToRemove);
 
         // Remove old preference
         removePreference(preferenceToRemove);
@@ -667,8 +664,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         // Store the new preferences with respect to previous state
         try
         {
-            setPreference("view.result.verbosity.synthetic",
-                (! previousState));
+            setPreference("view.result.verbosity.synthetic", (! previousState));
             setPreference("view.result.verbosity.detailled", previousState);
             setPreference("view.result.verbosity.full", "false");
         }
@@ -684,5 +680,4 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         // Commit change to file
         return true;
     }
-
 }
