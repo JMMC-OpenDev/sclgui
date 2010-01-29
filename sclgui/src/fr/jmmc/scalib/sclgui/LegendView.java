@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.12 2009-12-01 11:29:32 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.13 2010-01-29 13:12:25 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2009/12/01 11:29:32  lafrasse
+ * Added easily readable catalog names in cell tooltips, legend view and legend
+ * preference pane.
+ *
  * Revision 1.11  2008/09/10 22:51:29  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Added clickable cell to open catalog web pages.
@@ -212,26 +216,10 @@ public class LegendView extends JPanel
                 references.add(preferenceReference);
 
                 String title = Catalog.titleFromReference(preferenceReference);
-
-                if (title != null)
-                {
-                    names.add(title);
-                }
-                else
-                {
-                    names.add(preferenceReference);
-                }
+                names.add(title);
 
                 String description = Catalog.descriptionFromReference(preferenceReference);
-
-                if (description != null)
-                {
-                    descriptions.add(description);
-                }
-                else
-                {
-                    descriptions.add(preferenceReference);
-                }
+                descriptions.add(description);
 
                 // Get color from preferences, white otherwise
                 Color c;
