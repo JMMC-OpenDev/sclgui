@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.32 2009-10-23 15:55:53 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.33 2010-01-29 13:09:34 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2009/10/23 15:55:53  lafrasse
+ * Jalopization.
+ *
  * Revision 1.31  2009/10/23 15:50:30  lafrasse
  * Removed deprecated GetStarAction and related stuff.
  *
@@ -123,6 +126,7 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
+import fr.jmmc.mcs.astro.Catalog;
 
 import fr.jmmc.sclws_wsdl.*;
 
@@ -975,7 +979,8 @@ public class VirtualObservatory extends Observable
                             if (splittedStatus.length == 4)
                             {
                                 // Get the catalog name
-                                currentCatalogName      = splittedStatus[i++];
+                                String catalogReference = splittedStatus[i++];
+                                currentCatalogName      = Catalog.titleFromReference(catalogReference);
 
                                 // Get the catalog index
                                 catalogIndex            = Integer.parseInt(splittedStatus[i++]);
