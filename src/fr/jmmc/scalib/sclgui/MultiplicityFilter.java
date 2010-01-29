@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.12 2009-04-22 15:17:06 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.13 2010-01-29 09:22:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2009/04/22 15:17:06  lafrasse
+ * Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).
+ *
  * Revision 1.11  2008/09/10 22:29:48  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -55,11 +58,8 @@ public class MultiplicityFilter extends Filter
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.MultiplicityFilter");
 
-    /** Store the multiplicity flag column name */
-    private String _multFlagColumnName = "MultFlag";
-
-    /** Store the variability flag 1 column name */
-    private String _sbc9ColumnName = "SBC9";
+    /** Store identifiers of each column to consider */
+    private String[] _multiplicityIDs = { "MultFlag", "SBC9", "WDS" };
 
     /**
      * Default constructor.
@@ -97,37 +97,23 @@ public class MultiplicityFilter extends Filter
 
         StarProperty cell = null;
 
-        // Get the id of the column contaning 'multiplicity' star property
-        int multiplicityId = starList.getColumnIdByName(_multFlagColumnName);
-
-        // If the desired column name exists
-        if (multiplicityId != -1)
+        for (String columnName : _multiplicityIDs)
         {
-            // Get the cell of the desired column
-            cell = ((StarProperty) row.elementAt(multiplicityId));
+            // Get the id of the current column name
+            int columnId = starList.getColumnIdByName(columnName);
 
-            // if the multiplicity flag exist
-            if (cell.hasValue() == true)
+            // If the desired column name exists
+            if (columnId != -1)
             {
-                // This row should be removed
-                return true;
-            }
-        }
+                // Get the cell of the desired column
+                cell = ((StarProperty) row.elementAt(columnId));
 
-        // Get the id of the column contaning 'SBC9' star property
-        int sbc9Id = starList.getColumnIdByName(_sbc9ColumnName);
-
-        // If the desired column name exists
-        if (sbc9Id != -1)
-        {
-            // Get the cell of the desired column
-            cell = ((StarProperty) row.elementAt(sbc9Id));
-
-            // if the multiplicity flag exist
-            if (cell.hasValue() == true)
-            {
-                // This row should be removed
-                return true;
+                // if the multiplicity flag exist
+                if (cell.hasValue() == true)
+                {
+                    // This row should be removed
+                    return true;
+                }
             }
         }
 
