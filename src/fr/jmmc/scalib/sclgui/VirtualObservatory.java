@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.33 2010-01-29 13:09:34 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.34 2010-01-29 13:17:19 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2010/01/29 13:09:34  lafrasse
+ * Updated to show the humaan-readable catalog name (when available) in the propgress bar while
+ * querying.
+ *
  * Revision 1.32  2009/10/23 15:55:53  lafrasse
  * Jalopization.
  *
@@ -118,6 +122,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.astro.Catalog;
 
 /*
    // Not in use (do not work from here)
@@ -126,7 +131,6 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
-import fr.jmmc.mcs.astro.Catalog;
 
 import fr.jmmc.sclws_wsdl.*;
 
