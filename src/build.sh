@@ -60,7 +60,7 @@ fi
 
 # define classpath
 CP=.
-for j in ../lib/*.jar ../../../../../INTROOT/lib/*.jar
+for j in ../lib/*.jar ../../../../../INTROOT/lib/*.jar $INTROOT/lib/*.jar
 do
   CP=$CP:$j
 done
