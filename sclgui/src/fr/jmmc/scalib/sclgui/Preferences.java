@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.42 2010-07-26 15:46:16 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.43 2010-07-26 16:09:49 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.42  2010/07/26 15:46:16  lafrasse
+ * Re-enabled updated legend colors.
+ *
  * Revision 1.41  2010/07/26 15:30:53  lafrasse
  * Added replaceTokenInPreference() to strip large amount of repetitive code.
  * Moved to version 9 (reflects revision 2.8 of JMMC-MAN-2600-0001):
@@ -186,7 +189,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     private static String _detailledBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
 
     /** Detailled bright V columns order list, as of default in current preference version */
-    private static String _detailledBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    private static String _detailledBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
 
     /** Detailled bright K columns order list, as of default in preference version 3 */
     private static String _detailledBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
@@ -195,7 +198,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     private static String _detailledBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
 
     /** Detailled bright K columns order list, as of default in current preference version */
-    private static String _detailledBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    private static String _detailledBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
 
     /** Detailled faint K columns order list, as of default in preference version 3 */
     private static String _detailledFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
@@ -204,7 +207,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     private static String _detailledFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
 
     /** Detailled faint K columns order list, as of default in current preference version */
-    private static String _detailledFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+    private static String _detailledFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
 
     /** Hidden constructor */
     protected Preferences()
@@ -280,7 +283,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         /*
          * Add UD_x diameter columns in all bright views but N;
-         * Add WDS, sep1 and sep2 columns in all detailled views but the Bright N;
+         * Add WDS column in all detailled views but the Bright N;
          * Reorder pmRa & pmDec in all detailled views but the Bright N;
          * Fix variability flag from VarFlag3 to VFlag in detailled bright N view
          */
@@ -714,7 +717,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     /**
      * Corrections :
      *  - add UD_x diameter columns in all bright views but N;
-     *  - add WDS, sep1 and sep2 columns in all detailled views but the Bright N;
+     *  - add WDS column in all detailled views but the Bright N;
      *  - reorder pmRa & pmDec in all detailled views but the Bright N;
      *  - fix variability flag from VarFlag3 to VFlag in detailled bright N view.
      *
@@ -747,7 +750,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
                 udColumnsPreferencePathes.get(completePreferencePath));
         }
 
-        // Insert WDS, sep1 and sep2 columns in every detailled views column list but the Bright N (that doesn't have SBC9 anyway)
+        // Insert WDS column in every detailled views column list but the Bright N (that doesn't have SBC9 anyway)
         // Replace "pmDec pmRa" by "pmRa pmDec" in the each detailled columns order list but bright N
         String[] viewList = { "bright.V", "bright.K", "faint.K" };
 
@@ -757,7 +760,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             String completePreferencePath = "view.columns.detailled." +
                 viewName;
             status &= replaceTokenInPreference(completePreferencePath, "SBC9",
-                "SBC9 WDS sep1 sep2");
+                "SBC9 WDS");
             status &= replaceTokenInPreference(completePreferencePath,
                 "pmDec pmRa", "pmRa pmDec");
         }
@@ -767,7 +770,18 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
             "VarFlag3", "VFlag");
 
         // Update legend colors and order
-        setLegendColorsAndOrders(false);
+        try
+        {
+            setLegendColorsAndOrders(false);
+            _logger.finest("Updated legend colors and order.");
+        }
+        catch (Exception ex)
+        {
+            _logger.log(Level.WARNING,
+                "Could updated legend colors and order:", ex);
+
+            return false;
+        }
 
         // Commit change to file if everything went fine
         return status;
