@@ -1,11 +1,19 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.41 2010-07-26 15:30:53 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.42 2010-07-26 15:46:16 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.41  2010/07/26 15:30:53  lafrasse
+ * Added replaceTokenInPreference() to strip large amount of repetitive code.
+ * Moved to version 9 (reflects revision 2.8 of JMMC-MAN-2600-0001):
+ *   - add UD_x diameter columns in all bright views but N;
+ *   - add WDS, sep1 and sep2 columns in all detailled views but the Bright N;
+ *   - reorder pmRa & pmDec in all detailled views but the Bright N;
+ *   - fix variability flag from VarFlag3 to VFlag in detailled bright N view.
+ *
  * Revision 1.40  2010/01/27 10:01:35  lafrasse
  * Jalopization.
  *
@@ -757,6 +765,9 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         // Fix variability flag in detailled bright N view
         status &= replaceTokenInPreference("view.columns.detailled.bright.N",
             "VarFlag3", "VFlag");
+
+        // Update legend colors and order
+        setLegendColorsAndOrders(false);
 
         // Commit change to file if everything went fine
         return status;
