@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.2b2"/>
-    <compilation date="29/01/2010" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.2b3"/>
+    <compilation date="26/07/2010" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -49,6 +49,11 @@
     </menubar>
     <releasenotes>
         <release version="4.2">
+            <prerelease version="4.2b3" tag="SC_V4_2_b3">
+               <change type="FEATURE">Added UD computed diameters.</change>
+               <change type="CHANGE">Harmonized catalogs legend colors and order.</change>
+               <change type="CHANGE">Changed output format for values read from catalog to maximum precision.</change>
+            </prerelease>
             <prerelease version="4.2b2" tag="SC_V4_2_b2">
                <change type="FEATURE">Added WDS double star filtering on separation.</change>
                <change type="FEATURE">Added human-readable catalog name in progress bar, when available.</change>
