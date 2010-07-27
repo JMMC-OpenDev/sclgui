@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.13 2010-01-29 09:22:22 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.14 2010-07-27 12:02:10 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2010/01/29 09:22:22  lafrasse
+ * Added WDS filtering.
+ * Code factorization.
+ *
  * Revision 1.12  2009/04/22 15:17:06  lafrasse
  * Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).
  *
@@ -58,8 +62,14 @@ public class MultiplicityFilter extends Filter
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.MultiplicityFilter");
 
-    /** Store identifiers of each column to consider */
-    private String[] _multiplicityIDs = { "MultFlag", "SBC9", "WDS" };
+    /** Store identifiers of each multiplicity IDs column to consider */
+    private static final String[] _multiplicityIDs = { "MultFlag", "SBC9" };
+
+    /** Store identifiers of each orbit separation column to consider */
+    private static final String[] _orbitSeparationIDs = { "sep1", "sep2" };
+
+    /** In arcseconds. Any orbit separation below should reject */
+    private static final double _orbitSeparationLimit = 2.0;
 
     /**
      * Default constructor.
@@ -113,6 +123,30 @@ public class MultiplicityFilter extends Filter
                 {
                     // This row should be removed
                     return true;
+                }
+            }
+        }
+
+        for (String columnName : _orbitSeparationIDs)
+        {
+            // Get the id of the current column name
+            int columnId = starList.getColumnIdByName(columnName);
+
+            // If the desired column name exists
+            if (columnId != -1)
+            {
+                // Get the cell of the desired column
+                cell = ((StarProperty) row.elementAt(columnId));
+
+                // if the orbit separation exist
+                if (cell.hasValue() == true)
+                {
+                    // If orbit separation is below limit
+                    if (cell.getDoubleValue() < _orbitSeparationLimit)
+                    {
+                        // This row should be removed
+                        return true;
+                    }
                 }
             }
         }
