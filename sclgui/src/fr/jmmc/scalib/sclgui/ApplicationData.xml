@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.2b4"/>
-    <compilation date="27/07/2010" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.2b5"/>
+    <compilation date="28/07/2010" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -49,6 +49,10 @@
     </menubar>
     <releasenotes>
         <release version="4.2">
+            <prerelease version="4.2b5" tag="SC_V4_2_b5">
+               <change type="CHANGE">Renamed VFlag column to BinFlag in bright N detailled view.</change>
+               <change type="CHANGE">Updated Multiplicity filter to check BinFlag state instead of the Variability filter.</change>
+            </prerelease>
             <prerelease version="4.2b4" tag="SC_V4_2_b4">
                <change type="FEATURE">Added orbit separations sep1 and sep2 from WDS in detailled views.</change>
                <change type="CHANGE">Updated WDS filtering to use sep1 and sep2 (reject when either sewparation below 2 arcseconds).</change>
