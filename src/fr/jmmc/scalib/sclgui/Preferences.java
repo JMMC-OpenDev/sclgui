@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.44 2010-07-27 12:00:59 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.45 2010-07-28 14:08:44 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.44  2010/07/27 12:00:59  lafrasse
+ * Added sep1 and sep2 columns after WDS identifier for all detailled views but bright N.
+ *
  * Revision 1.43  2010/07/26 16:09:49  lafrasse
  * Removed sep1 and sep2 columns support until the server provide them.i
  * Removed compilation error.
@@ -184,7 +187,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     private static String _detailledBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
 
     /** Detailled bright N columns order list, as of default in current preference version */
-    private static String _detailledBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VFlag V H A_V Chi2 SpTyp_Teff";
+    private static String _detailledBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
 
     /** Detailled bright V columns order list, as of default in preference version 3 */
     private static String _detailledBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
@@ -236,7 +239,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
     {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 10;
+        return 11;
     }
 
     /**
@@ -297,6 +300,10 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         // Insert sep1 and sep2 after WDS for all detailled views but bright N
         case 9:
             return updateFromVersion9ToVersion10();
+
+        // Rename VFlag to BinFlag in detailled bright N
+        case 10:
+            return updateFromVersion10ToVersion11();
 
         // By default, triggers default values load.
         default:
@@ -820,5 +827,18 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Commit change to file if everything went fine
         return status;
+    }
+
+    /**
+     * Correction : rename VFlag to BinFlag in detailled bright N.
+     *
+     * @return true if fine and should write to file, false otherwise.
+     */
+    private boolean updateFromVersion10ToVersion11()
+    {
+        _logger.entering("Preferences", "updateFromVersion10ToVersion11");
+
+        return replaceTokenInPreference("view.columns.detailled.bright.N",
+            "VFlag", "BinFlag");
     }
 }

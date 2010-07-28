@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.13 2009-12-14 17:03:13 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.14 2010-07-28 14:08:45 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2009/12/14 17:03:13  lafrasse
+ * Documentation refinment.
+ *
  * Revision 1.12  2009/07/16 13:51:50  lafrasse
  * Added 'VFlag' column filtering (for MIDI in detailled bright N).
  * Factorized empty cells keeping.
@@ -67,9 +70,6 @@ public class VariabilityFilter extends Filter
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VariabilityFilter");
 
-    /** Store the variability flag column name (MIDI catalog N-band queries) */
-    private String _varFlagColumnName = "VFlag";
-
     /** Store the variability flag 1 column name */
     private String _varFlag1ColumnName = "VarFlag1";
 
@@ -116,7 +116,6 @@ public class VariabilityFilter extends Filter
         StarProperty   cell      = null;
 
         // Set columns name whose rows should be removed if cell is not empty
-        columns.add(_varFlagColumnName);
         columns.add(_varFlag1ColumnName);
         columns.add(_varFlag2ColumnName);
 
