@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.10 2008-09-10 22:39:35 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.11 2010-07-29 15:10:08 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2008/09/10 22:39:35  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.9  2007/08/02 12:45:19  lafrasse
  * Added a method to return whether the star property has a value or not.
  *
@@ -41,6 +44,8 @@ import fr.jmmc.mcs.log.*;
 
 import java.lang.Float;
 
+import java.net.URLEncoder;
+
 import java.util.logging.*;
 
 
@@ -64,14 +69,19 @@ public class StarProperty implements Comparable
     /** Confidence */
     private String _confidence;
 
+    /** URL */
+    private String _url;
+
     /**
      * Fully parametred constructor.
      */
-    public StarProperty(Object value, String origin, String confidence)
+    public StarProperty(Object value, String origin, String confidence,
+        String url)
     {
         setValue(value);
         setConfidence(confidence);
         setOrigin(origin);
+        setURL(url);
     }
 
     /**
@@ -229,6 +239,69 @@ public class StarProperty implements Comparable
         }
 
         return false;
+    }
+
+    /**
+     * Set the URL of the star property.
+     *
+     * @param url the new star property URL.
+     */
+    public void setURL(String url)
+    {
+        // _logger.entering("StarProperty", "setURL");
+        _url = url;
+    }
+
+    /**
+     * Get the URL of the star property as a String object.
+     *
+     * @return a String object representing the star property URL, null otherwise.
+     */
+    public String getURL()
+    {
+        // _logger.entering("StarProperty", "getURL");
+        if (hasURL() == false)
+        {
+            return null;
+        }
+
+        if (hasValue() == false)
+        {
+            return null;
+        }
+
+        // Convert the current value to HTML compatible encoding
+        String encodedValue = URLEncoder.encode(getStringValue());
+
+        // Forge the URL by replacing any '${...}' token with the current value
+        String url = _url.replaceAll("[${].+[}]", encodedValue);
+
+        return url;
+    }
+
+    /**
+     * Return whether the star property has an URL.
+     *
+     * @return true if a URL is set, false otherwise.
+     */
+    public boolean hasURL()
+    {
+        // _logger.entering("StarProperty", "hasURL");
+        if (_url.length() <= 0)
+        {
+            return false;
+        }
+
+        // If more than, or less than 1 '${...}' token in the URL
+        String[] array = _url.split("[$]");
+
+        if (array.length != 2)
+        {
+            // Discard this URL
+            return false;
+        }
+
+        return true;
     }
 
     /**
