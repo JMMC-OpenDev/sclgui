@@ -1044,9 +1044,18 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 JLabel l = (JLabel) c;
                 l.setHorizontalTextPosition(JLabel.LEFT);
 
+                ////////////////////////////////////////////////////////////////////////////
                 int modelColumn = table.convertColumnIndexToModel(column);
+                ////////////////////////////////////////////////////////////////////////////
                 l.setIcon(getHeaderRendererIcon(modelColumn,
                         l.getFont().getSize()));
+
+                ////////////////////////////////////////////////////////////////////////////
+                // Set the column header tooltip
+                l.setToolTipText(_calibratorsModel.getHeaderTooltipForColumn(
+                        modelColumn));
+
+                ////////////////////////////////////////////////////////////////////////////
             }
 
             return c;
@@ -1079,8 +1088,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         Preferences      _preferences;
         CalibratorsModel _calModel;
         int              _distId;
-        int              _hiptId;
-        int              _hdtId;
 
         // Get the prefered distance to detect the science object
         Double _prefDistance = 0.0;
@@ -1124,8 +1131,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
             _calModel     = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
             _distId       = _calModel.getColumnIdByName("dist");
-            _hiptId       = _calModel.getColumnIdByName("HIP");
-            _hdtId        = _calModel.getColumnIdByName("HD");
 
             // Get StarProperty selected using modelIndex Method
             int          modelRow     = modelIndex(row);
@@ -1167,28 +1172,16 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     "') < (prefDistance = '" + _prefDistance + "').");
             }
 
-            // Get ID column catalog name
-            String catalogName = null;
-
-            if (modelColumn == _hiptId)
-            {
-                catalogName = "HIP";
-            }
-
-            if (modelColumn == _hdtId)
-            {
-                catalogName = "HD";
-            }
-
             // Compose catalog URL
-            if (catalogName != null)
+            if (starProperty.hasURL() == true)
             {
                 if (cellValue.length() != 0)
                 {
                     setText("<html><a href='#empty'>" + cellValue +
                         "</a></html>");
-                    tooltip = "Click to see star '" + catalogName + " " +
-                        cellValue + "' in SIMBAD - ";
+                    tooltip = "Click to see star '" +
+                        _calModel.getColumnNameById(modelColumn) +
+                        "' entry at CDS - ";
                 }
             }
 
@@ -1209,7 +1202,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         // Get origin and set it as tooltip
                         String origin = starProperty.getOrigin();
 
-                        // If the cel as an origin ("-" is the used blanking value for empty cell origins)
+                        // If the cell as an origin ("-" is the used blanking value for empty cell origins)
                         if (! origin.equals("-"))
                         {
                             String originDescription = "Catalog origin: " +
@@ -1361,41 +1354,18 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 ") = '" + value + "' <==> Model[" + modelRow + "," +
                 modelColumn + "] = '" + cellValue + "'.");
 
-            // Get clicked ID column catalog name
-            String catalogName = null;
-            int    hiptId      = calModel.getColumnIdByName("HIP");
-            int    hdtId       = calModel.getColumnIdByName("HD");
-
-            // Is it the 'HIP' column ?
-            if (modelColumn == hiptId)
+            if (_starProperty.hasURL() == true)
             {
-                catalogName = "HIP";
+                String url = _starProperty.getURL();
+
+                _logger.finer("User clicked on column '" +
+                    calModel.getColumnNameById(modelColumn) +
+                    "' in the CalibratorView, will open '" + url +
+                    "' in default browser.");
+
+                // Open web browser with the computed URL
+                BrowserLauncher.openURL(url);
             }
-
-            // Is it the 'HD' column ?
-            if (modelColumn == hdtId)
-            {
-                catalogName = "HD";
-            }
-
-            // If the clicked cell is not one of catalog column
-            if (catalogName == null)
-            {
-                return null; // Exit
-            }
-
-            _logger.fine("Edited value is in '" + catalogName + "' column.");
-
-            // Compose catalog URL
-            String url = "http://simbad.u-strasbg.fr/simbad/sim-id?Ident=";
-            url += (catalogName + "+" + cellValue);
-
-            _logger.finer("User clicked on column '" + catalogName +
-                "' in the CalibratorView, will open '" + url +
-                "' in default browser.");
-
-            // Open web browser with the computed URL
-            BrowserLauncher.openURL(url);
 
             // Return null to "cancel" editing
             return null;
