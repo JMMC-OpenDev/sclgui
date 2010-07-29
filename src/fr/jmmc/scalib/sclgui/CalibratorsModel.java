@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.26 2009-11-05 14:16:28 mella Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.27 2010-07-29 15:12:07 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.26  2009/11/05 14:16:28  mella
+ * Add new script sclguiVOTableToHTML.sh which uses the xsls of SearchCal
+ *
  * Revision 1.25  2008/12/15 13:32:37  lafrasse
  * Corrected CSV and HTML export exception.
  *
@@ -147,6 +150,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** JTable column names */
     private Vector _columnNames;
 
+    /** JTable column URLs */
+    private Vector _columnURLs;
+
+    /** JTable column tooltips */
+    private Vector _columnDescriptions;
+
     /** Filters */
     private FiltersModel _filtersModel;
 
@@ -175,20 +184,22 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      */
     public CalibratorsModel(FiltersModel filtersModel)
     {
-        _filtersModel         = filtersModel;
+        _filtersModel           = filtersModel;
 
-        _originalStarList     = new StarList();
-        _currentStarList      = (StarList) _originalStarList.clone();
-        _filteredStarList     = (StarList) _originalStarList.clone();
+        _originalStarList       = new StarList();
+        _currentStarList        = (StarList) _originalStarList.clone();
+        _filteredStarList       = (StarList) _originalStarList.clone();
 
-        _columnNames          = new Vector();
+        _columnNames            = new Vector();
+        _columnURLs             = new Vector();
+        _columnDescriptions     = new Vector();
 
-        _paramSet             = null;
-        _dataHaveChanged      = false;
+        _paramSet               = null;
+        _dataHaveChanged        = false;
 
-        _rowHeadersModel      = new RowHeadersModel();
+        _rowHeadersModel        = new RowHeadersModel();
 
-        _columnClasses        = null;
+        _columnClasses          = null;
     }
 
     /**
@@ -300,6 +311,18 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * Called when a column header tooltip is needed by the attached view.
+     *
+     * @param column
+     *
+     * @return the specified column header tooltip.
+     */
+    public String getHeaderTooltipForColumn(int column)
+    {
+        return (String) _columnDescriptions.elementAt(column);
+    }
+
+    /**
      * Parse a VOTablegetting its content from an BufferReader and update any attached JTable to show
      * its content.
      *
@@ -400,7 +423,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         // WARNING : this is not compatible with other VOTable than JMMC ones
         Hashtable groupNameToGroupId = new Hashtable();
-        _columnClasses = new Vector();
+        _columnClasses          = new Vector();
+        _columnURLs             = new Vector();
+        _columnDescriptions     = new Vector();
 
         for (int groupId = 0; groupId < groupSet.getItemCount(); groupId++)
         {
@@ -415,6 +440,22 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             // Get back the field type
             SavotField field     = (SavotField) fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
             String     fieldType = field.getDataType();
+
+            // Get back the field link
+            LinkSet linkSet = field.getLinks();
+            String  url     = "";
+
+            if (linkSet.getItemCount() > 0)
+            {
+                SavotLink savotLink = (SavotLink) linkSet.getItemAt(0);
+                url = savotLink.getHref();
+            }
+
+            _columnURLs.add(url);
+
+            // Get back the field description
+            String description = field.getDescription();
+            _columnDescriptions.add(description);
 
             if (fieldType != null)
             {
@@ -511,7 +552,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
                  * origin and confidence.
                  */
                 StarProperty starProperty = new StarProperty(value, origin,
-                        confidence);
+                        confidence, (String) _columnURLs.elementAt(groupId));
 
                 // Add the newly created star property to the star property list
                 starProperties.add(starProperty);
@@ -607,6 +648,20 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * Give back the column name from its ID.
+     *
+     * @param groupID the column ID.
+     *
+     * @return name of the column's ID.
+     */
+    public String getColumnNameById(int groupId)
+    {
+        _logger.entering("CalibratorsModel", "getColumnNameById");
+
+        return (String) _columnNames.elementAt(groupId);
+    }
+
+    /**
      * Return a SavotVOTable object of the given StarList object.
      *
      * @param starList the list of stars to be converted.
@@ -682,8 +737,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         try
         {
             // Get a BufferedReader from file
-            String         fileName   = file.getAbsolutePath();
-            FileReader     fileReader = new FileReader(fileName);
+            FileReader     fileReader = new FileReader(file);
             BufferedReader in         = new BufferedReader(fileReader);
 
             // Build CalibratorModel and parse votable
