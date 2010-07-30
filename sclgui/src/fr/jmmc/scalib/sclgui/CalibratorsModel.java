@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.27 2010-07-29 15:12:07 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.28 2010-07-30 13:00:11 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2010/07/29 15:12:07  lafrasse
+ * Added support for generic cell URL and column header tooltips.
+ * Corrected a bug that prevented proper file opening.
+ *
  * Revision 1.26  2009/11/05 14:16:28  mella
  * Add new script sclguiVOTableToHTML.sh which uses the xsls of SearchCal
  *
@@ -156,6 +160,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     /** JTable column tooltips */
     private Vector _columnDescriptions;
 
+    /** JTable column units */
+    private Vector _columnUnits;
+
     /** Filters */
     private FiltersModel _filtersModel;
 
@@ -193,6 +200,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _columnNames            = new Vector();
         _columnURLs             = new Vector();
         _columnDescriptions     = new Vector();
+        _columnUnits            = new Vector();
 
         _paramSet               = null;
         _dataHaveChanged        = false;
@@ -323,6 +331,18 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     }
 
     /**
+     * Called when a column header unit is needed by the attached view.
+     *
+     * @param column
+     *
+     * @return the specified column header tooltip.
+     */
+    public String getHeaderUnitForColumn(int column)
+    {
+        return (String) _columnUnits.elementAt(column);
+    }
+
+    /**
      * Parse a VOTablegetting its content from an BufferReader and update any attached JTable to show
      * its content.
      *
@@ -426,6 +446,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _columnClasses          = new Vector();
         _columnURLs             = new Vector();
         _columnDescriptions     = new Vector();
+        _columnUnits            = new Vector();
 
         for (int groupId = 0; groupId < groupSet.getItemCount(); groupId++)
         {
@@ -456,6 +477,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             // Get back the field description
             String description = field.getDescription();
             _columnDescriptions.add(description);
+
+            // Get back the field description
+            String unit = field.getUnit();
+            _columnUnits.add(unit);
 
             if (fieldType != null)
             {
