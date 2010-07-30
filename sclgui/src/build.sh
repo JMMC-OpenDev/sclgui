@@ -9,7 +9,7 @@ ARGS="-v0"
 #ARGS="-v4"
 #ARGS="-v5"
 #ARGS="--loggui"
-#ARGS="--open '/Users/lafrasse/test.scvot'"
+#ARGS="--open /Users/lafrasse/test.scvot"
 #ARGS="-version"
 #ARGS="-h"
 
