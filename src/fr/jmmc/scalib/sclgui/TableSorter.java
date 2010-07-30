@@ -1046,14 +1046,34 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
                 ////////////////////////////////////////////////////////////////////////////
                 int modelColumn = table.convertColumnIndexToModel(column);
+
                 ////////////////////////////////////////////////////////////////////////////
                 l.setIcon(getHeaderRendererIcon(modelColumn,
                         l.getFont().getSize()));
 
                 ////////////////////////////////////////////////////////////////////////////
-                // Set the column header tooltip
-                l.setToolTipText(_calibratorsModel.getHeaderTooltipForColumn(
-                        modelColumn));
+
+                // Set the column header tooltip (with unit if any)
+                int    viewColumn = _viewIndex[modelColumn];
+
+                String tooltip    = _calibratorsModel.getHeaderTooltipForColumn(viewColumn);
+                String unit       = _calibratorsModel.getHeaderUnitForColumn(viewColumn);
+
+                // If a unit was found
+                if (unit.length() > 0)
+                {
+                    // If a description was found
+                    if (tooltip.length() > 0)
+                    {
+                        // Add a spce separator betwenn description and unit
+                        tooltip += " ";
+                    }
+
+                    // Append the unit
+                    tooltip += ("(" + unit + ")");
+                }
+
+                l.setToolTipText(tooltip);
 
                 ////////////////////////////////////////////////////////////////////////////
             }
