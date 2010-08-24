@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.45 2010-07-28 14:08:44 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.46 2010-08-24 13:00:21 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.45  2010/07/28 14:08:44  lafrasse
+ * Renamed VFlag columns to BinFlag for detailled bright N.
+ *
  * Revision 1.44  2010/07/27 12:00:59  lafrasse
  * Added sep1 and sep2 columns after WDS identifier for all detailled views but bright N.
  *
@@ -322,15 +325,10 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         // Place catalog origin colors
         String catalogColorPrefPrefix = "catalog.color.";
         int    i                      = 0;
-        int    total                  = Catalog.values().length;
-        float  saturation             = 0.5f;
-        float  brightness             = 1.0f;
-
+        
         for (Catalog catalog : Catalog.values())
         {
-            float computedHue  = ((float) (i + 1) / (total + 1));
-            Color catalogColor = Color.getHSBColor(computedHue, saturation,
-                    brightness);
+            Color catalogColor = Catalog.getDefaultColor(catalog);
 
             if (defaultFlag == true)
             {
