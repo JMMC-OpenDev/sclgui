@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.44 2009-10-23 12:55:15 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.45 2010-09-10 14:11:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.44  2009/10/23 12:55:15  lafrasse
+ * Replaced custom SIMBAD resolution system with common JMMC one.
+ * Added white spaces as a valid separator for science object coordinates input.
+ *
  * Revision 1.43  2009/04/30 09:20:32  lafrasse
  * Jalopization.
  *
@@ -988,18 +992,6 @@ public class QueryModel extends Star implements Observer
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
         setPropertyAsDouble(Property.fromString("FLUX_" + currentBand),
             magnitude);
-
-        // Modify _queryMinMagnitude automatically if needed
-        if (_queryMinMagnitudeAutoUpdate == true)
-        {
-            _queryMinMagnitude = magnitude + getQueryMinMagnitudeDelta();
-        }
-
-        // Modify _queryMaxMagnitude automatically if needed
-        if (_queryMaxMagnitudeAutoUpdate == true)
-        {
-            _queryMaxMagnitude = magnitude + getQueryMaxMagnitudeDelta();
-        }
     }
 
     /**
@@ -1068,6 +1060,18 @@ public class QueryModel extends Star implements Observer
     public Double getQueryMinMagnitude()
     {
         _logger.entering("QueryModel", "getQueryMinMagnitude");
+
+        if (_queryMinMagnitudeAutoUpdate == true)
+        {
+            Double scienceObjectMagnitude = getScienceObjectMagnitude();
+            if (scienceObjectMagnitude != null)
+            {
+                if (Double.isNaN(scienceObjectMagnitude) == false)
+                {
+                    return scienceObjectMagnitude + getQueryMinMagnitudeDelta();
+                }
+            }
+        }
 
         return new Double(_queryMinMagnitude);
     }
@@ -1154,6 +1158,18 @@ public class QueryModel extends Star implements Observer
     public Double getQueryMaxMagnitude()
     {
         _logger.entering("QueryModel", "getQueryMaxMagnitude");
+
+        if (_queryMaxMagnitudeAutoUpdate == true)
+        {
+            Double scienceObjectMagnitude = getScienceObjectMagnitude();
+            if (scienceObjectMagnitude != null)
+            {
+                if (Double.isNaN(scienceObjectMagnitude) == false)
+                {
+                    return scienceObjectMagnitude + getQueryMaxMagnitudeDelta();
+                }
+            }
+        }
 
         return new Double(_queryMaxMagnitude);
     }
