@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.45 2010-09-10 14:11:42 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.46 2010-09-10 14:12:20 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.45  2010/09/10 14:11:42  lafrasse
+ * Fixed Min. and Max. Magnitude textfields to automatically follow Science Object
+ * Magnitude changes.
+ *
  * Revision 1.44  2009/10/23 12:55:15  lafrasse
  * Replaced custom SIMBAD resolution system with common JMMC one.
  * Added white spaces as a valid separator for science object coordinates input.
@@ -1064,11 +1068,13 @@ public class QueryModel extends Star implements Observer
         if (_queryMinMagnitudeAutoUpdate == true)
         {
             Double scienceObjectMagnitude = getScienceObjectMagnitude();
+
             if (scienceObjectMagnitude != null)
             {
                 if (Double.isNaN(scienceObjectMagnitude) == false)
                 {
-                    return scienceObjectMagnitude + getQueryMinMagnitudeDelta();
+                    return scienceObjectMagnitude +
+                    getQueryMinMagnitudeDelta();
                 }
             }
         }
@@ -1162,11 +1168,13 @@ public class QueryModel extends Star implements Observer
         if (_queryMaxMagnitudeAutoUpdate == true)
         {
             Double scienceObjectMagnitude = getScienceObjectMagnitude();
+
             if (scienceObjectMagnitude != null)
             {
                 if (Double.isNaN(scienceObjectMagnitude) == false)
                 {
-                    return scienceObjectMagnitude + getQueryMaxMagnitudeDelta();
+                    return scienceObjectMagnitude +
+                    getQueryMaxMagnitudeDelta();
                 }
             }
         }

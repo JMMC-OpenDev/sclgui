@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.46 2010-08-24 13:00:21 mella Exp $"
+ * "@(#) $Id: Preferences.java,v 1.47 2010-09-10 14:12:20 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.46  2010/08/24 13:00:21  mella
+ * Define default color association using Catalog.getDefaultColor()
+ *
  * Revision 1.45  2010/07/28 14:08:44  lafrasse
  * Renamed VFlag columns to BinFlag for detailled bright N.
  *
@@ -325,7 +328,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
         // Place catalog origin colors
         String catalogColorPrefPrefix = "catalog.color.";
         int    i                      = 0;
-        
+
         for (Catalog catalog : Catalog.values())
         {
             Color catalogColor = Catalog.getDefaultColor(catalog);
