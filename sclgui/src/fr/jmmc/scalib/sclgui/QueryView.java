@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.57 2009-11-04 10:08:13 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.58 2010-09-10 14:11:42 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.57  2009/11/04 10:08:13  lafrasse
+ * Moved _brightFaintButtonGroup as a local constructor variable.
+ *
  * Revision 1.56  2009/10/23 15:50:29  lafrasse
  * Removed deprecated GetStarAction and related stuff.
  *
@@ -647,7 +650,9 @@ public class QueryView extends JPanel implements Observer,
 
         // Refresh the GUI with the model values
         update(null, null);
-        update(null, null);
+
+        // To overcome silent call on setQueryMxxMagnitude() by storeValues() after update(null, null)
+        _queryModel.restoreMinMaxMagnitudeFieldsAutoUpdating();
     }
 
     /**
@@ -852,9 +857,13 @@ public class QueryView extends JPanel implements Observer,
         // Try to inject user values into the model
         _queryModel.setInstrumentalMagnitudeBands((DefaultComboBoxModel) _instrumentalMagnitudeBandCombo.getModel());
         _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
-        _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
         _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
         _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
+
+        if (source == _scienceObjectNameTextfield)
+        {
+            _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
+        }
 
         // Update science object magnitude only if the textfield was used
         // (done through the model when using _instrumentalMagnitudeBandCombo)
