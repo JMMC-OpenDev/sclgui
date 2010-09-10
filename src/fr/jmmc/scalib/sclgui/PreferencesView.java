@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.32 2009-11-04 10:17:22 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.33 2010-09-10 13:52:01 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2009/11/04 10:17:22  lafrasse
+ * Revamped simple/detailed results view settings to add "full results" support.
+ *
  * Revision 1.31  2008/11/28 13:12:55  lafrasse
  * Removed unused query preference pane.
  *
@@ -122,6 +125,7 @@ import javax.swing.text.*;
 
 
 // @TODO handle close button correctly
+// @TODO add deleteObserver(this) to dispose() to dereference each subview properly
 
 /**
  * This is a preference dedicated to the java SearchCal Client.
