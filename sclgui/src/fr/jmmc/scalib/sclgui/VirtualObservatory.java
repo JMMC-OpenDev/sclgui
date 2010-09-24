@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.34 2010-01-29 13:17:19 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.35 2010-09-24 12:08:33 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2010/01/29 13:17:19  lafrasse
+ * Jalopization.
+ *
  * Revision 1.33  2010/01/29 13:09:34  lafrasse
  * Updated to show the humaan-readable catalog name (when available) in the propgress bar while
  * querying.
@@ -122,6 +125,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.mcs.astro.ALX;
 import fr.jmmc.mcs.astro.Catalog;
 
 /*
@@ -129,24 +133,27 @@ import fr.jmmc.mcs.astro.Catalog;
    import cds.simbad.uif.*;
  */
 import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.log.*;
+import fr.jmmc.mcs.interop.SampCapability;
+import fr.jmmc.mcs.interop.SampManager;
+import fr.jmmc.mcs.interop.SampMessageHandler;
 import fr.jmmc.mcs.util.*;
 
 import fr.jmmc.sclws_wsdl.*;
 
-import java.awt.*;
-import java.awt.event.*;
 
 import java.io.*;
+import java.net.URI;
 
-import java.net.*;
 
 import java.util.*;
 import java.util.logging.*;
 
 import javax.swing.*;
+import org.astrogrid.samp.Message;
+import org.astrogrid.samp.SampUtils;
+import org.astrogrid.samp.client.HubConnection;
+import org.astrogrid.samp.client.SampException;
 
-import javax.xml.rpc.holders.*;
 
 
 /**
@@ -179,14 +186,10 @@ public class VirtualObservatory extends Observable
     /** SearchCal-specific VOTable format */
     String _scvotMimeType = "application/x-searchcal+votable+xml";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** MIME type for CSV exports */
     String _csvMimeType = "text/csv";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** MIME type for HTML exports */
     String _htmlMimeType = "text/html";
 
     /** Open file... action */
@@ -206,6 +209,9 @@ public class VirtualObservatory extends Observable
 
     /** Export to HTML File action */
     public ExportToHTMLFileAction _exportToHTMLFileAction;
+
+    /** Export to SAMP action */
+    public ShareAllThroughSAMPAction _shareAllThroughSAMPAction;
 
     /** Get Cal action */
     public GetCalAction _getCalAction;
@@ -244,10 +250,74 @@ public class VirtualObservatory extends Observable
                 "_exportToCSVFileAction");
         _exportToHTMLFileAction      = new ExportToHTMLFileAction(classPath,
                 "_exportToHTMLFileAction");
+        _shareAllThroughSAMPAction   = new ShareAllThroughSAMPAction(classPath,
+                "_shareAllThroughSAMPAction");
 
         // Query related members
         _getCalAction                = new GetCalAction(classPath,
                 "_getCalAction");
+
+        // Add handler to load qery params and launch calibrator search
+        try {
+            SampMessageHandler handler = new SampMessageHandler("jmmc.searchcal.query") {
+
+                public Map processCall(HubConnection c, String senderId, Message msg) {
+                    System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
+                    String query = (String) msg.getParam("query");
+                    if (query != null)
+                    {
+                        executeQuery(query);
+                    }
+
+                    return null;
+                }
+            };
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        // Add handler to load science object coordinates
+        try {
+            SampMessageHandler handler = new SampMessageHandler(SampCapability.POINT_COORDINATES) {
+
+                public Map processCall(HubConnection c, String senderId, Message msg) {
+                    System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
+
+                    Double ra = SampUtils.decodeFloat((String) msg.getParam("ra"));
+                    if (ra == null)
+                    {
+                        _logger.warning("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
+                        return null;
+                    }
+                    String raHMS = ALX.toHMS(ra);
+                    if (raHMS == null)
+                    {
+                        _logger.warning("Could not convert RA degree value '" + ra + "' to HMS.");
+                        return null;
+                    }
+
+                    Double dec = SampUtils.decodeFloat((String) msg.getParam("dec"));
+                    if (dec == null)
+                    {
+                        _logger.warning("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
+                        return null;
+                    }
+                    String decDMS = ALX.toDMS(dec);
+                    if (decDMS == null)
+                    {
+                        _logger.warning("Could not convert DEC degree value '" + dec + "' to DMS.");
+                        return null;
+                    }
+                    _queryModel.setScienceObjectRA(raHMS);
+                    _queryModel.setScienceObjectDEC(decDMS);
+                    _queryModel.update(null, null);
+
+                    return null;
+                }
+            };
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         // WebService related members
         setQueryLaunchedState(false);
@@ -311,6 +381,8 @@ public class VirtualObservatory extends Observable
         _saveFileAsAction.setEnabled(true);
         _exportToCSVFileAction.setEnabled(true);
         _exportToHTMLFileAction.setEnabled(true);
+        _shareAllThroughSAMPAction.setEnabled(true);
+
     }
 
     /**
@@ -822,6 +894,57 @@ public class VirtualObservatory extends Observable
             {
                 StatusBar.show("exporting as HTML cancelled.");
             }
+        }
+    }
+
+    /**
+     * Called to export current data to a HTML formatted file.
+     */
+    protected class ShareAllThroughSAMPAction extends RegisteredAction
+    {
+        public ShareAllThroughSAMPAction(String classPath, String fieldName)
+        {
+            super(classPath, fieldName);
+
+            setEnabled(false);
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent e)
+        {
+            _logger.entering("ShareAllThroughSAMPAction", "actionPerformed");
+
+            StatusBar.show("Sending Calibrators through SAMP ...");
+
+            File file = null;
+            try
+            {
+                file = File.createTempFile(SearchCalibrators.getSharedApplicationDataModel().getProgramName(), "scvot");
+            }
+            catch (IOException ex)
+            {
+                _logger.warning("Could not save calibrator list to temp file '" + file + "'.");
+                return;
+            }
+
+            file.deleteOnExit();
+            URI uri = file.toURI();
+
+            _calibratorsModel.saveVOTableFile(file);
+
+            HashMap parameters = new HashMap();
+            parameters.put("url", uri.toString());
+            try
+            {
+                SampManager.broadcastMessage(SampCapability.LOAD_VO_TABLE, parameters);
+            }
+            catch (SampException ex)
+            {
+                StatusBar.show("Sending Calibrators through SAMP ... failed.");
+                ex.printStackTrace();
+                return;
+            }
+
+            StatusBar.show("Sending Calibrators through SAMP ... done.");
         }
     }
 
