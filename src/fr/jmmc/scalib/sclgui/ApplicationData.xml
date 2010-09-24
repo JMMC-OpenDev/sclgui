@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.2"/>
+	<program name="SearchCal" version="4.3b1"/>
     <compilation date="23/09/2010" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
@@ -46,8 +46,16 @@
         <menu/>
         <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction" accelerator="R"/>
       </menu>
+      <menu label="Interop">
+        <menu label="Send Calibrators to..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_shareAllThroughSAMPAction"/>
+      </menu>
     </menubar>
     <releasenotes>
+        <release version="4.3">
+            <prerelease version="4.3b1" tag="SC_V4_3_b1">
+               <change type="FEATURE">Added support for SAMP calibrator export and query launch.</change>
+            </prerelease>
+        </release>
         <release version="4.2">
             <prerelease version="4.2b7" tag="SC_V4_2_b7">
                <change type="BUGFIX" id="1283847571">Fixed Min. and Max. Magnitude textfields to automatically follow Science Object Magnitude changes.</change>
