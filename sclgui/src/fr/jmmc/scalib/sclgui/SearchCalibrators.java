@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.27 2009-04-30 12:56:51 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.28 2010-10-04 15:59:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.27  2009/04/30 12:56:51  lafrasse
+ * Minor documentation update.
+ *
  * Revision 1.26  2009/02/17 15:44:31  lafrasse
  * Updated comments.
  *
@@ -255,13 +258,15 @@ public class SearchCalibrators extends App
             // Build the main window
             MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
                     preferencesView, filtersView, statusBar);
+            App.setFrame(window);
 
             // Triggers all preferences observers notification to finnish GUI setup.
             preferences.triggerObserversNotification();
         }
         catch (Exception ex)
         {
-            _logger.log(Level.FINE, "Initialization error", ex);
+            _logger.log(Level.SEVERE, "Initialization error", ex);
+            System.exit(1);
         }
     }
 
