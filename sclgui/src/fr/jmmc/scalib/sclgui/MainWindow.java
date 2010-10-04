@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.29 2008-09-10 22:29:05 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.30 2010-10-04 15:58:14 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2008/09/10 22:29:05  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Moved to new JMCS APIs.
+ *
  * Revision 1.28  2008/05/19 15:39:29  lafrasse
  * Updated to add preliminary support for the new JMCS application framework.
  *
@@ -239,10 +243,6 @@ public class MainWindow extends JFrame
             _calibratorsView.setVisible(true);
             _filtersView.setVisible(true);
             _statusBar.setVisible(true);
-
-            // Menu must be created after Actions init.
-            _menuBar = new MainMenuBar(this);
-            setJMenuBar(_menuBar);
 
             // Set the GUI up
             pack();
