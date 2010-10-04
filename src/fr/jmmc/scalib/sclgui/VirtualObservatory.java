@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.35 2010-09-24 12:08:33 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.36 2010-10-04 23:44:39 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2010/09/24 12:08:33  lafrasse
+ * Added preliminary support for SAMP message sending and receiving.
+ *
  * Revision 1.34  2010/01/29 13:17:19  lafrasse
  * Jalopization.
  *
@@ -133,7 +136,9 @@ import fr.jmmc.mcs.astro.Catalog;
    import cds.simbad.uif.*;
  */
 import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.interop.JmmcCapability;
 import fr.jmmc.mcs.interop.SampCapability;
+import fr.jmmc.mcs.interop.SampCapabilityAction;
 import fr.jmmc.mcs.interop.SampManager;
 import fr.jmmc.mcs.interop.SampMessageHandler;
 import fr.jmmc.mcs.util.*;
@@ -211,7 +216,7 @@ public class VirtualObservatory extends Observable
     public ExportToHTMLFileAction _exportToHTMLFileAction;
 
     /** Export to SAMP action */
-    public ShareAllThroughSAMPAction _shareAllThroughSAMPAction;
+    public ShareAllCalibratorsThroughSAMPAction _shareAllCalibratorsThroughSAMPAction;
 
     /** Get Cal action */
     public GetCalAction _getCalAction;
@@ -250,8 +255,8 @@ public class VirtualObservatory extends Observable
                 "_exportToCSVFileAction");
         _exportToHTMLFileAction      = new ExportToHTMLFileAction(classPath,
                 "_exportToHTMLFileAction");
-        _shareAllThroughSAMPAction   = new ShareAllThroughSAMPAction(classPath,
-                "_shareAllThroughSAMPAction");
+        _shareAllCalibratorsThroughSAMPAction   = new ShareAllCalibratorsThroughSAMPAction(classPath,
+                "_shareAllThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
 
         // Query related members
         _getCalAction                = new GetCalAction(classPath,
@@ -259,7 +264,8 @@ public class VirtualObservatory extends Observable
 
         // Add handler to load qery params and launch calibrator search
         try {
-            SampMessageHandler handler = new SampMessageHandler("jmmc.searchcal.query") {
+            // @TODO : Put JMMC pivate capabilities in fr.jmmc.mcs.interop.JmmcCapability
+            SampMessageHandler handler = new SampMessageHandler(JmmcCapability.START_SEARCHCAL_QUERY.mType()) {
 
                 public Map processCall(HubConnection c, String senderId, Message msg) {
                     System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
@@ -267,6 +273,10 @@ public class VirtualObservatory extends Observable
                     if (query != null)
                     {
                         executeQuery(query);
+                    }
+                    else
+                    {
+                        StatusBar.show("Could not start query from SAMP.");
                     }
 
                     return null;
@@ -277,6 +287,7 @@ public class VirtualObservatory extends Observable
         }
 
         // Add handler to load science object coordinates
+/* @TBD
         try {
             SampMessageHandler handler = new SampMessageHandler(SampCapability.POINT_COORDINATES) {
 
@@ -318,7 +329,7 @@ public class VirtualObservatory extends Observable
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+*/
         // WebService related members
         setQueryLaunchedState(false);
     }
@@ -381,7 +392,7 @@ public class VirtualObservatory extends Observable
         _saveFileAsAction.setEnabled(true);
         _exportToCSVFileAction.setEnabled(true);
         _exportToHTMLFileAction.setEnabled(true);
-        _shareAllThroughSAMPAction.setEnabled(true);
+        _shareAllCalibratorsThroughSAMPAction.setEnabled(true);
 
     }
 
@@ -900,21 +911,15 @@ public class VirtualObservatory extends Observable
     /**
      * Called to export current data to a HTML formatted file.
      */
-    protected class ShareAllThroughSAMPAction extends RegisteredAction
+    protected class ShareAllCalibratorsThroughSAMPAction extends SampCapabilityAction
     {
-        public ShareAllThroughSAMPAction(String classPath, String fieldName)
+        public ShareAllCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability)
         {
-            super(classPath, fieldName);
-
-            setEnabled(false);
+            super(classPath, fieldName, capability);
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
+        public HashMap composeMessage()
         {
-            _logger.entering("ShareAllThroughSAMPAction", "actionPerformed");
-
-            StatusBar.show("Sending Calibrators through SAMP ...");
-
             File file = null;
             try
             {
@@ -922,8 +927,9 @@ public class VirtualObservatory extends Observable
             }
             catch (IOException ex)
             {
+                StatusBar.show("Could not share calibrators through SAMP.");
                 _logger.warning("Could not save calibrator list to temp file '" + file + "'.");
-                return;
+                return null;
             }
 
             file.deleteOnExit();
@@ -933,18 +939,7 @@ public class VirtualObservatory extends Observable
 
             HashMap parameters = new HashMap();
             parameters.put("url", uri.toString());
-            try
-            {
-                SampManager.broadcastMessage(SampCapability.LOAD_VO_TABLE, parameters);
-            }
-            catch (SampException ex)
-            {
-                StatusBar.show("Sending Calibrators through SAMP ... failed.");
-                ex.printStackTrace();
-                return;
-            }
-
-            StatusBar.show("Sending Calibrators through SAMP ... done.");
+            return parameters;
         }
     }
 
