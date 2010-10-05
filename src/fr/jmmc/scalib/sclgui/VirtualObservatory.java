@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.37 2010-10-05 08:45:11 mella Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.38 2010-10-05 14:58:37 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.37  2010/10/05 08:45:11  mella
+ * Use SampCapability.SEARCHCAL_START_QUERY
+ *
  * Revision 1.36  2010/10/04 23:44:39  lafrasse
  * Code refactoring and logging.
  *
@@ -909,12 +912,16 @@ public class VirtualObservatory extends Observable
      */
     protected class ShareAllCalibratorsThroughSAMPAction extends SampCapabilityAction
     {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public ShareAllCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability)
         {
             super(classPath, fieldName, capability);
         }
 
-        public HashMap composeMessage()
+        public Map<?,?> composeMessage()
         {
             File file = null;
             try
@@ -933,7 +940,7 @@ public class VirtualObservatory extends Observable
 
             _calibratorsModel.saveVOTableFile(file);
 
-            HashMap parameters = new HashMap();
+            final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("url", uri.toString());
             return parameters;
         }
