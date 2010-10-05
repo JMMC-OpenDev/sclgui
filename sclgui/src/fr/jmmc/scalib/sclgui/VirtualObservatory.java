@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.36 2010-10-04 23:44:39 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.37 2010-10-05 08:45:11 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.36  2010/10/04 23:44:39  lafrasse
+ * Code refactoring and logging.
+ *
  * Revision 1.35  2010/09/24 12:08:33  lafrasse
  * Added preliminary support for SAMP message sending and receiving.
  *
@@ -128,7 +131,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.ALX;
 import fr.jmmc.mcs.astro.Catalog;
 
 /*
@@ -136,10 +138,8 @@ import fr.jmmc.mcs.astro.Catalog;
    import cds.simbad.uif.*;
  */
 import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.interop.JmmcCapability;
 import fr.jmmc.mcs.interop.SampCapability;
 import fr.jmmc.mcs.interop.SampCapabilityAction;
-import fr.jmmc.mcs.interop.SampManager;
 import fr.jmmc.mcs.interop.SampMessageHandler;
 import fr.jmmc.mcs.util.*;
 
@@ -155,11 +155,7 @@ import java.util.logging.*;
 
 import javax.swing.*;
 import org.astrogrid.samp.Message;
-import org.astrogrid.samp.SampUtils;
 import org.astrogrid.samp.client.HubConnection;
-import org.astrogrid.samp.client.SampException;
-
-
 
 /**
  * Handle JMMC WebServices interactions and file input/ouput.
@@ -262,10 +258,9 @@ public class VirtualObservatory extends Observable
         _getCalAction                = new GetCalAction(classPath,
                 "_getCalAction");
 
-        // Add handler to load qery params and launch calibrator search
+        // Add handler to load query params and launch calibrator search
         try {
-            // @TODO : Put JMMC pivate capabilities in fr.jmmc.mcs.interop.JmmcCapability
-            SampMessageHandler handler = new SampMessageHandler(JmmcCapability.START_SEARCHCAL_QUERY.mType()) {
+            SampMessageHandler handler = new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
 
                 public Map processCall(HubConnection c, String senderId, Message msg) {
                     System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
@@ -283,6 +278,7 @@ public class VirtualObservatory extends Observable
                 }
             };
         } catch (Exception ex) {
+            _logger.warning("Can't process call for samp capability : " + SampCapability.SEARCHCAL_START_QUERY.mType());
             ex.printStackTrace();
         }
 
