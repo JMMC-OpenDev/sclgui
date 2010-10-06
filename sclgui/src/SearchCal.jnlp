@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<jnlp spec="1.0+" codebase="http://jmmc.fr/~lafrasse/SearchCal" href="SearchCal.jnlp">
+    <information>
+        <title>SearchCal</title>
+        <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
+        <homepage href="http://www.jmmc.fr/searchcal"/>
+        <description kind="tooltip">SearchCal</description>
+        <description kind="short">Search Calibrators tool</description>
+        <icon href="AppIcon.png"/>
+        <offline-allowed/> 
+        <association mime-type="application/x-searchcal+votable+xml" extensions="scvot">
+            <icon href="FileIcon.png"/>
+            <description>SearchCal reads and writes SCVOT files</description>
+        </association>
+        <shortcut>
+            <desktop/>
+        </shortcut>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.5+"/>
+        <jar href="jar/sclgui.jar" />
+        <jar href="jar/sclgui-doc.jar" />
+        <jar href="jar/Jmcs.jar" />
+        <jar href="jar/axis.jar" /> 
+        <jar href="jar/axis-ant.jar" /> 
+        <jar href="jar/commons-discovery-0.2.jar" /> 
+        <jar href="jar/jaxrpc.jar" /> 
+        <jar href="jar/log4j-1.2.8.jar" /> 
+        <jar href="jar/saaj.jar" /> 
+        <jar href="jar/wsdl4j-1.5.1.jar" /> 
+        <jar href="jar/cds.savot.common.jar" />
+        <jar href="jar/cds.savot.model.jar" />
+        <jar href="jar/cds.savot.pull.jar" />
+        <jar href="jar/cds.savot.sax.jar" />
+        <jar href="jar/cds.savot.writer.jar" />
+        <jar href="jar/kxml2-min.jar" />
+        <extension href="SearchCalContrib.jnlp" />
+        <extension href="JSamp.jnlp" />
+        <property name="apple.laf.useScreenMenuBar" value="true"/>
+    </resources>
+    <application-desc main-class="fr.jmmc.scalib.sclgui.SearchCalibrators"/>
+</jnlp>
