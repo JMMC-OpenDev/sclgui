@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.30 2010-10-04 15:58:14 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.31 2010-10-06 16:08:53 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2010/10/04 15:58:14  lafrasse
+ * Removed redundant menu bar.
+ *
  * Revision 1.29  2008/09/10 22:29:05  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  * Moved to new JMCS APIs.
@@ -256,8 +259,14 @@ public class MainWindow extends JFrame
             e.printStackTrace();
         }
 
-        // Specify that the main should quit the application when closed
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Properly quit the application when main window close button is clicked
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                // callback on exit :
+                App.quitAction().actionPerformed(null);
+            }
+        });
     }
 
     /**
