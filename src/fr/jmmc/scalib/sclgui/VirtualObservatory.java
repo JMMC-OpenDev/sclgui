@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.38 2010-10-05 14:58:37 bourgesl Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.39 2010-10-07 14:59:29 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.38  2010/10/05 14:58:37  bourgesl
+ * fixed composeMessage signature
+ *
  * Revision 1.37  2010/10/05 08:45:11  mella
  * Use SampCapability.SEARCHCAL_START_QUERY
  *
@@ -262,28 +265,26 @@ public class VirtualObservatory extends Observable
                 "_getCalAction");
 
         // Add handler to load query params and launch calibrator search
-        try {
-            SampMessageHandler handler = new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
+        SampMessageHandler handler = new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
 
-                public Map processCall(HubConnection c, String senderId, Message msg) {
-                    System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
-                    String query = (String) msg.getParam("query");
-                    if (query != null)
-                    {
-                        executeQuery(query);
-                    }
-                    else
-                    {
-                        StatusBar.show("Could not start query from SAMP.");
-                    }
-
-                    return null;
+            public Map processCall(final HubConnection c, final String senderId, final Message msg) {
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
                 }
-            };
-        } catch (Exception ex) {
-            _logger.warning("Can't process call for samp capability : " + SampCapability.SEARCHCAL_START_QUERY.mType());
-            ex.printStackTrace();
-        }
+
+                final String query = (String) msg.getParam("query");
+                if (query != null)
+                {
+                    executeQuery(query);
+                }
+                else
+                {
+                    StatusBar.show("Could not start query from SAMP.");
+                }
+
+                return null;
+            }
+        };
 
         // Add handler to load science object coordinates
 /* @TBD
