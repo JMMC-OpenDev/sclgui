@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.47 2010-09-10 14:12:20 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.48 2010-10-10 22:21:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.47  2010/09/10 14:12:20  lafrasse
+ * Jalopization.
+ *
  * Revision 1.46  2010/08/24 13:00:21  mella
  * Define default color association using Catalog.getDefaultColor()
  *
@@ -169,8 +172,7 @@ import fr.jmmc.mcs.util.*;
 
 import java.awt.Color;
 
-import java.util.Hashtable;
-import java.util.Properties;
+import java.util.HashMap;
 import java.util.logging.*;
 
 
@@ -256,6 +258,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
      * @return should return true if the update went fine and new values should
      * be saved, false otherwise to automatically trigger default values load.
      */
+    @Override
     protected boolean updatePreferencesVersion(int loadedVersionNumber)
     {
         _logger.entering("Preferences", "updatePreferencesVersion");
@@ -747,7 +750,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences
 
         // Add UD_x to simple and detailled views
         final String              UD_COLUMNS                = "UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K";
-        Hashtable<String, String> udColumnsPreferencePathes = new Hashtable<String, String>();
+        HashMap<String, String> udColumnsPreferencePathes = new HashMap<String, String>();
         udColumnsPreferencePathes.put("view.columns.simple.bright.V",
             "UD_B UD_V UD_R UD_I");
         udColumnsPreferencePathes.put("view.columns.detailled.bright.V",

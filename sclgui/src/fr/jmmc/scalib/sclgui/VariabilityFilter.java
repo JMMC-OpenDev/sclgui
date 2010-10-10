@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.14 2010-07-28 14:08:45 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.15 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2010/07/28 14:08:45  lafrasse
+ * Renamed VFlag columns to BinFlag for detailled bright N.
+ *
  * Revision 1.13  2009/12/14 17:03:13  lafrasse
  * Documentation refinment.
  *
@@ -55,8 +58,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.*;
 
@@ -107,11 +110,12 @@ public class VariabilityFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("VariabilityFilter", "shouldRemoveRow");
 
-        Vector<String> columns   = new Vector();
+        List<String> columns   = new ArrayList<String>();
         int            varFlagID = -1;
         StarProperty   cell      = null;
 

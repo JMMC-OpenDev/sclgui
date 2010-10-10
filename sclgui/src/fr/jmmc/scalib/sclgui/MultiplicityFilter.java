@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.15 2010-07-28 14:08:45 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.16 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2010/07/28 14:08:45  lafrasse
+ * Renamed VFlag columns to BinFlag for detailled bright N.
+ *
  * Revision 1.14  2010/07/27 12:02:10  lafrasse
  * Updated WDS filtering to reject sources with either sep1 or sep2 below 2 arcsec.
  *
@@ -107,6 +110,7 @@ public class MultiplicityFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("MultiplicityFilter", "shouldRemoveRow");

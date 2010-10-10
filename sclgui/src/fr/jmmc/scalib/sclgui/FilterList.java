@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterList.java,v 1.4 2008-09-10 22:23:34 lafrasse Exp $"
+ * "@(#) $Id: FilterList.java,v 1.5 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2008/09/10 22:23:34  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.3  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -32,7 +35,7 @@ public class FilterList extends Filter implements Observer
             "fr.jmmc.scalib.sclgui.FilterList");
 
     /** Filter list */
-    private Vector _filters;
+    private Vector _filters = null;
 
     /**
      * Default constructor.
@@ -97,6 +100,7 @@ public class FilterList extends Filter implements Observer
      *
      * @param starList the list of star to filter.
      */
+    @Override
     public void process(StarList starList)
     {
         _logger.entering("FilterList", "process");

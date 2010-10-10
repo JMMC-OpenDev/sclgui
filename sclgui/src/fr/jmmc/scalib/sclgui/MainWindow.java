@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.31 2010-10-06 16:08:53 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.32 2010-10-10 22:21:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2010/10/06 16:08:53  lafrasse
+ * Properly quit application when clicking on the close button of the main window.
+ *
  * Revision 1.30  2010/10/04 15:58:14  lafrasse
  * Removed redundant menu bar.
  *
@@ -114,17 +117,13 @@ import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.print.*;
-
-import java.io.*;
-
-import java.net.*;
 
 import java.util.logging.*;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 
 
 /**
@@ -132,51 +131,54 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
  */
 public class MainWindow extends JFrame
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.MainWindow");
 
     /** Main panel container, displaying the query and result views */
-    Container _mainPane;
+    private Container _mainPane = null;
 
     /** Main window menu */
-    MainMenuBar _menuBar;
+    private MainMenuBar _menuBar = null;
 
     /** Virtual Observatory */
-    public VirtualObservatory _vo;
+    public VirtualObservatory _vo = null;
 
     /** Query view */
-    public QueryView _queryView;
+    public QueryView _queryView = null;
 
     /** Calibrators view */
-    public CalibratorsView _calibratorsView;
+    public CalibratorsView _calibratorsView = null;
 
     /** Filters view */
-    public FiltersView _filtersView;
+    public FiltersView _filtersView = null;
 
     /** Status bar */
-    StatusBar _statusBar;
+    private StatusBar _statusBar = null;
 
     /** Preferences view */
-    PreferencesView _preferencesView;
+    private PreferencesView _preferencesView = null;
 
     /** Help view */
-    HelpView _helpView;
+    private HelpView _helpView = null;
 
     /** Preferences... action */
-    public ShowPreferencesAction _showPreferencesAction;
+    public ShowPreferencesAction _showPreferencesAction = null;
 
     /** Page Setup... action */
-    public PageSetupAction _pageSetupAction;
+    public PageSetupAction _pageSetupAction = null;
 
     /** Print... action */
-    public PrintAction _printAction;
+    public PrintAction _printAction = null;
 
     /** Printer job */
-    PrinterJob _printJob;
+    private PrinterJob _printJob = null;
 
     /** PAge format */
-    PageFormat _landscape;
+    private PageFormat _landscape = null;
 
     /**
      * Constructor.
@@ -274,6 +276,9 @@ public class MainWindow extends JFrame
      */
     protected class ShowPreferencesAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public ShowPreferencesAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -294,6 +299,9 @@ public class MainWindow extends JFrame
      */
     protected class PageSetupAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public PageSetupAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -313,6 +321,9 @@ public class MainWindow extends JFrame
      */
     protected class PrintAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public PrintAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);

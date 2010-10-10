@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.7 2008-09-10 22:22:59 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2008/09/10 22:22:59  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.6  2007/07/09 12:53:37  lafrasse
  * Updated to keep the science object when present.
  *
@@ -42,13 +45,13 @@ public abstract class Filter extends Observable
             "fr.jmmc.scalib.sclgui.Filter");
 
     /** Enabled flag */
-    private Boolean _enabledFlag;
+    private Boolean _enabledFlag = null;
 
     /** 'constraint name-constraint value' table */
-    private Hashtable _constraints = new Hashtable();
+    private HashMap<String, Object> _constraints = null;
 
     /** Ordered table of filter constraint names */
-    private Vector _orderedConstraintNames = new Vector();
+    private Vector _orderedConstraintNames = null;
 
     /**
      * Default constructor.
@@ -56,6 +59,8 @@ public abstract class Filter extends Observable
     public Filter()
     {
         _enabledFlag = new Boolean(false);
+        _constraints = new HashMap<String, Object>();
+        _orderedConstraintNames = new Vector();
     }
 
     /**

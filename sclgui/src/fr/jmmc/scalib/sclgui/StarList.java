@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarList.java,v 1.7 2008-09-10 22:38:44 lafrasse Exp $"
+ * "@(#) $Id: StarList.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2008/09/10 22:38:44  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.6  2007/06/14 08:43:00  lafrasse
  * Enhanced getColumnIdByName() by returning -1 if no index was found for the given group name.
  *
@@ -28,8 +31,6 @@
  *
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
-
-import fr.jmmc.mcs.log.*;
 
 import java.util.*;
 import java.util.logging.*;
@@ -58,9 +59,9 @@ public class StarList extends Vector
     }
 
     /**
-     * Defines the hashtable that links each colum group name to its ID.
+     * Defines the hash table that links each colum group name to its ID.
      *
-     * @param fieldIdToColNumber the new hastable.
+     * @param fieldIdToColNumber the new hash table.
      */
     public void setHashTable(Hashtable fieldIdToColNumber)
     {

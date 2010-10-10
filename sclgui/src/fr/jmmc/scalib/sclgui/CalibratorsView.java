@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.37 2009-11-04 10:17:21 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.38 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.37  2009/11/04 10:17:21  lafrasse
+ * Revamped simple/detailed results view settings to add "full results" support.
+ *
  * Revision 1.36  2008/09/18 21:50:53  lafrasse
  * Moved _showLegendAction and _showDetailsAction to RegisteredPreferencedBooleanAction, in order to properly handle menu items et preference view checkboxes.
  *
@@ -124,14 +127,12 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.*;
 
-import java.io.*;
 
 import java.util.*;
 import java.util.logging.*;
@@ -157,6 +158,9 @@ import javax.swing.table.*;
 public class CalibratorsView extends JPanel implements TableModelListener,
     ListSelectionListener, Observer, Printable
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.CalibratorsView");
@@ -429,6 +433,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
     protected class DeleteAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public DeleteAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -445,6 +452,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
     protected class UndeleteAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public UndeleteAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);

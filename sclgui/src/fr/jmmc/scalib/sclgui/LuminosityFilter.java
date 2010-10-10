@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.13 2008-09-10 22:26:29 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.14 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2008/09/10 22:26:29  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.12  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -75,12 +78,12 @@ public class LuminosityFilter extends Filter
     {
         super();
 
-        setConstraint("I", new Boolean(false));
-        setConstraint("II", new Boolean(false));
-        setConstraint("III", new Boolean(false));
-        setConstraint("IV", new Boolean(false));
-        setConstraint("V", new Boolean(false));
-        setConstraint("VI", new Boolean(false));
+        setConstraint("I", false);
+        setConstraint("II", false);
+        setConstraint("III", false);
+        setConstraint("IV", false);
+        setConstraint("V", false);
+        setConstraint("VI", false);
     }
 
     /**
@@ -103,6 +106,7 @@ public class LuminosityFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("LuminosityFilter", "shouldRemoveRow");
