@@ -3,7 +3,6 @@ package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.Catalog;
 import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.log.*;
 import fr.jmmc.mcs.util.*;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +75,9 @@ import javax.swing.table.*;
 public class TableSorter extends AbstractTableModel implements Observer ////////////////////////////////////////////////////////////////////////////////
                                                                         // public class TableSorter extends AbstractTableModel
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.TableSorter");
@@ -929,6 +931,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
     private class MouseHandler extends MouseAdapter
     {
+        @Override
         public void mouseClicked(MouseEvent e)
         {
             JTableHeader     h           = (JTableHeader) e.getSource();
@@ -1103,14 +1106,17 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     private class TableCellColors extends DefaultTableCellRenderer
         implements Observer
     {
-        Hashtable        _colorForOrigin;
-        Hashtable        _colorForConfidence;
-        Preferences      _preferences;
-        CalibratorsModel _calModel;
-        int              _distId;
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        private HashMap<String, Color>        _colorForOrigin;
+        private HashMap<String, Color>        _colorForConfidence;
+        private Preferences      _preferences;
+        private CalibratorsModel _calModel;
+        private int              _distId;
 
         // Get the prefered distance to detect the science object
-        Double _prefDistance = 0.0;
+        private Double _prefDistance = 0.0;
 
         /**
          * TableCellColors  -  Constructor
@@ -1134,6 +1140,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
          * @param column int
          * @return Component
          */
+        @Override
         public Component getTableCellRendererComponent(JTable table,
             Object value, boolean isSelected, boolean hasFocus, int row,
             int column)
@@ -1242,7 +1249,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         }
 
                         // Get origin color and set it as cell backgroung color
-                        backgroundColor = (Color) _colorForOrigin.get(origin);
+                        backgroundColor = _colorForOrigin.get(origin);
                     }
                     else if (starProperty.hasConfidence() == true)
                     {
@@ -1252,7 +1259,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                             confidence;
 
                         // Get confidence color and set it as cell backgroung color
-                        backgroundColor     = (Color) _colorForConfidence.get(confidence);
+                        backgroundColor     = _colorForConfidence.get(confidence);
                     }
                     else
                     {
@@ -1298,7 +1305,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // Read colors preferences for catalogs
                 String      prefix = "catalog.color.";
                 Enumeration e      = _preferences.getPreferences(prefix);
-                _colorForOrigin    = new Hashtable();
+                _colorForOrigin    = new HashMap<String, Color>();
 
                 while (e.hasMoreElements())
                 {
@@ -1320,7 +1327,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // Read colors preferences for confidences
                 prefix                  = "confidence.color.";
                 e                       = _preferences.getPreferences(prefix);
-                _colorForConfidence     = new Hashtable();
+                _colorForConfidence     = new HashMap<String, Color>();
 
                 while (e.hasMoreElements())
                 {
@@ -1346,7 +1353,10 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     class TableCellColorsEditor extends AbstractCellEditor
         implements TableCellEditor
     {
-        StarProperty _starProperty = null;
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        private StarProperty _starProperty = null;
 
         // This method is called when a cell value is edited by the user.
         public Component getTableCellEditorComponent(JTable table,

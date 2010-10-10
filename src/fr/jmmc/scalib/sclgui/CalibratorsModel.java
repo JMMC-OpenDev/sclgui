@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.28 2010-07-30 13:00:11 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.29 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2010/07/30 13:00:11  lafrasse
+ * Added support for columns units in tooltips.
+ *
  * Revision 1.27  2010/07/29 15:12:07  lafrasse
  * Added support for generic cell URL and column header tooltips.
  * Corrected a bug that prevented proper file opening.
@@ -113,9 +116,7 @@ import java.util.logging.*;
 
 import javax.swing.table.DefaultTableModel;
 
-import javax.xml.parsers.*;
 import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 
 
@@ -130,6 +131,9 @@ import javax.xml.transform.stream.*;
  */
 public class CalibratorsModel extends DefaultTableModel implements Observer
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.CalibratorsModel");
@@ -152,7 +156,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     private StarList _filteredStarList;
 
     /** JTable column names */
-    private Vector _columnNames;
+    private Vector<String> _columnNames;
 
     /** JTable column URLs */
     private Vector _columnURLs;
@@ -170,7 +174,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     private ParamSet _paramSet;
 
     /** Flag indicating whether data have changed or not */
-    boolean _dataHaveChanged;
+    private boolean _dataHaveChanged;
 
     /** Raw headers */
     public RowHeadersModel _rowHeadersModel;
@@ -273,6 +277,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @return false
      */
+    @Override
     public boolean isCellEditable(int row, int column)
     {
         _logger.entering("CalibratorsModel", "isCellEditable");
@@ -289,6 +294,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @return the specified cell value.
      */
+    @Override
     public Object getValueAt(int row, int column)
     {
         _logger.entering("CalibratorsModel", "getValueAt");
@@ -306,6 +312,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
      *
      * @return the specified cell value.
      */
+    @Override
     public Class getColumnClass(int column)
     {
         _logger.entering("CalibratorsModel", "getColumnClass");
@@ -354,7 +361,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
 
         try
         {
-            StringBuffer sb  = new StringBuffer();
+            StringBuilder sb  = new StringBuilder();
             String       str;
 
             while ((str = reader.readLine()) != null)
@@ -594,7 +601,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
         _currentStarList.removeAllDeletedStars();
 
         // Compute selected magnitude band and scenario
-        Hashtable parameters = new Hashtable();
+        HashMap<String, String> parameters = new HashMap<String, String>();
 
         for (int i = 0; i < _paramSet.getItemCount(); i++)
         {
@@ -683,7 +690,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
     {
         _logger.entering("CalibratorsModel", "getColumnNameById");
 
-        return (String) _columnNames.elementAt(groupId);
+        return _columnNames.elementAt(groupId);
     }
 
     /**
@@ -969,6 +976,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer
             addColumn("Index");
         }
 
+        @Override
         public boolean isCellEditable(int row, int column)
         {
             _logger.entering("RowHeadersModel", "isCellEditable");

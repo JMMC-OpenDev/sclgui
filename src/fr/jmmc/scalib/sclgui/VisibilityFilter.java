@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.10 2008-09-10 22:41:09 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.11 2010-10-10 22:21:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2008/09/10 22:41:09  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.9  2008/05/26 16:01:49  mella
  * Rename VisibilityFilter to VisibilityAccuracyFilter
  * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
@@ -36,10 +39,6 @@
  *
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
-
-import fr.jmmc.mcs.log.*;
-
-import java.lang.Math;
 
 import java.util.Vector;
 

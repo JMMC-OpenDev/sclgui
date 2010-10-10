@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MagnitudeFilter.java,v 1.7 2008-09-10 22:27:12 lafrasse Exp $"
+ * "@(#) $Id: MagnitudeFilter.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2008/09/10 22:27:12  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.6  2007/08/02 15:35:51  lafrasse
  * Streamlined GUI and enfored protection against missing data.
  *
@@ -41,7 +44,7 @@ public class MagnitudeFilter extends Filter
             "fr.jmmc.scalib.sclgui.MagnitudeFilter");
 
     /** Store the magnitude constraint name */
-    private String _magnitudeConstraintName = "Magnitude";
+    private final String _magnitudeConstraintName = "Magnitude";
 
     /**
      * Store the current query model in order to allow later retrieves of
@@ -97,6 +100,7 @@ public class MagnitudeFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("MagnitudeFilter", "shouldRemoveRow");

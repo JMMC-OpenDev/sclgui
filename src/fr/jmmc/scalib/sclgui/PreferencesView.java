@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.33 2010-09-10 13:52:01 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.34 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2010/09/10 13:52:01  lafrasse
+ * Added TODO.
+ *
  * Revision 1.32  2009/11/04 10:17:22  lafrasse
  * Revamped simple/detailed results view settings to add "full results" support.
  *
@@ -106,22 +109,15 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
-
-import java.text.*;
 
 import java.util.*;
 import java.util.logging.*;
 
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.colorchooser.*;
 import javax.swing.event.*;
-import javax.swing.table.*;
-import javax.swing.text.*;
 
 
 // @TODO handle close button correctly
@@ -132,18 +128,21 @@ import javax.swing.text.*;
  */
 public class PreferencesView extends JFrame implements ActionListener
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.PreferencesView");
 
     /** Data model */
-    Preferences _preferences;
+    Preferences _preferences = null;
 
     /** "Restore to Default Settings" button */
-    protected JButton _restoreDefaultButton;
+    protected JButton _restoreDefaultButton = null;
 
     /** "Save Modifications" button */
-    protected JButton _saveModificationButton;
+    protected JButton _saveModificationButton = null;
 
     /**
      * Constructor.
@@ -242,39 +241,42 @@ public class PreferencesView extends JFrame implements ActionListener
 class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     ListSelectionListener
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.ColumnsPreferencesView");
 
     /** Data model */
-    private Preferences _preferences;
+    private Preferences _preferences = null;
 
     /** The name of preference that must be managed as ordered columns. */
-    private String _preferencePath;
+    private String _preferencePath = null;
 
     /** The widget that dispaly the list of columns */
-    private JList _columnList;
+    private JList _columnList = null;
 
     /** The model associated to the widget that dispaly the list of columns */
-    private DefaultListModel _listModel;
+    private DefaultListModel _listModel = null;
 
     /** The actual shown list of columns */
     private String _shownColumns = "";
 
     /** All available columns set */
-    JComboBox _columnsSetCombobox;
+    JComboBox _columnsSetCombobox = null;
 
     /** The column sets combobox model */
-    private DefaultComboBoxModel _columsSetModel;
+    private DefaultComboBoxModel _columsSetModel = null;
 
     /** The column sets combobox names to path correspondance table */
-    private Hashtable _columnSetNameToPathHashtable;
+    private HashMap<String, String> _columnSetNameToPathHashtable = null;
 
     /** Move up Button */
-    private JButton _moveUpButton;
+    private JButton _moveUpButton = null;
 
     /** Move down Button */
-    private JButton _moveDownButton;
+    private JButton _moveDownButton = null;
 
     /**
      * Constructor.
@@ -307,7 +309,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
 
         // Fullfil the combobox model with each desired columns set names
         _columsSetModel                   = new DefaultComboBoxModel();
-        _columnSetNameToPathHashtable     = new Hashtable();
+        _columnSetNameToPathHashtable     = new HashMap<String, String>();
 
         Enumeration e                     = _preferences.getPreferences(preferencePrefix);
 
@@ -473,7 +475,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         if (evt.getSource().equals(_columnsSetCombobox))
         {
             // Get the the newly selected column set preference path
-            _preferencePath = (String) _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
+            _preferencePath = _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
 
             // Refresh the GUI to update the list
             update(null, null);
@@ -537,13 +539,13 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         }
 
         // Serialize the new columns name order
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Enumeration  en = _listModel.elements();
 
         while (en.hasMoreElements())
         {
             Object o = en.nextElement();
-            sb.append(" " + o);
+            sb.append(" ").append(o);
         }
 
         // Save the new order in preference
@@ -571,6 +573,9 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
  */
 class HelpPreferencesView extends JPanel implements Observer, ChangeListener
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
             "fr.jmmc.scalib.sclgui.HelpPreferencesView");

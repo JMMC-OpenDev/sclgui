@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.58 2010-09-10 14:11:42 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.59 2010-10-10 22:21:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.58  2010/09/10 14:11:42  lafrasse
+ * Fixed Min. and Max. Magnitude textfields to automatically follow Science Object
+ * Magnitude changes.
+ *
  * Revision 1.57  2009/11/04 10:08:13  lafrasse
  * Moved _brightFaintButtonGroup as a local constructor variable.
  *
@@ -214,8 +218,6 @@ import java.awt.print.*;
 
 import java.beans.*;
 
-import java.net.URL;
-
 import java.text.*;
 
 import java.util.*;
@@ -223,137 +225,139 @@ import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.*;
 import javax.swing.text.*;
 
 
 /**
  * Query view.
  */
-public class QueryView extends JPanel implements Observer,
+public final class QueryView extends JPanel implements Observer,
     PropertyChangeListener, ActionListener, FocusListener, Printable
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.QueryView");
 
     /** MVC associated model */
-    public QueryModel _queryModel;
+    public QueryModel _queryModel = null;
 
-    /** Assocaited virtual observatory */
-    VirtualObservatory _vo;
+    /** Associated virtual observatory */
+    private VirtualObservatory _vo = null;
 
     /** Instrument panel */
-    JPanel _instrumentPanel = new JPanel();
+    private JPanel _instrumentPanel = new JPanel();
 
     /** Instrument magnitude band */
-    JComboBox _instrumentalMagnitudeBandCombo = new JComboBox();
+    private JComboBox _instrumentalMagnitudeBandCombo = new JComboBox();
 
     /** Instrument wavelentgh label */
-    JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
+    private JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
             JLabel.TRAILING);
 
     /** Instrument wavelentgh */
-    JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Instrument maximun baseline */
-    JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(
+    private JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(
                 0));
 
     /** Science object panel */
-    JPanel _scienceObjectPanel;
+    private JPanel _scienceObjectPanel = null;
 
     /** Science object name resolver widget */
-    StarResolverWidget _scienceObjectNameTextfield = null;
+    private StarResolverWidget _scienceObjectNameTextfield = null;
 
     /** Science object right ascension coordinate */
-    JTextField _scienceObjectRATextfield = new JTextField();
+    private JTextField _scienceObjectRATextfield = new JTextField();
 
     /** Science object declinaison coordinate */
-    JTextField _scienceObjectDECTextfield = new JTextField();
+    private JTextField _scienceObjectDECTextfield = new JTextField();
 
     /** Science object magnitude label */
-    JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ",
+    private JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ",
             JLabel.TRAILING);
 
     /** Science object magnitude */
-    JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** SearchCal parameters panel */
-    JPanel _searchCalPanel;
+    private JPanel _searchCalPanel = null;
 
     /** Search minimum magnitude label */
-    JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ", JLabel.TRAILING);
+    private JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ", JLabel.TRAILING);
 
     /** Search minimum magnitude */
-    JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search maximum magnitude label */
-    JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ", JLabel.TRAILING);
+    private JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ", JLabel.TRAILING);
 
     /** Search maximum magnitude */
-    JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Bright query button */
-    JRadioButton _brightRadioButton;
+    private JRadioButton _brightRadioButton = null;
 
     /** Faint query button */
-    JRadioButton _faintRadioButton;
+    private JRadioButton _faintRadioButton = null;
 
     /** Search box RA size label */
-    JLabel _diffRASizeLabel = new JLabel("RA Range [mn] : ", JLabel.TRAILING);
+    private JLabel _diffRASizeLabel = new JLabel("RA Range [mn] : ", JLabel.TRAILING);
 
     /** Search box RA size */
-    JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search box DEC size label */
-    JLabel _diffDECSizeLabel = new JLabel("DEC Range [deg] : ", JLabel.TRAILING);
+    private JLabel _diffDECSizeLabel = new JLabel("DEC Range [deg] : ", JLabel.TRAILING);
 
     /** Search box DEC size */
-    JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Search box radial size label */
-    JLabel _radialSizeLabel = new JLabel("Radius [arcmin] : ", JLabel.TRAILING);
+    private JLabel _radialSizeLabel = new JLabel("Radius [arcmin] : ", JLabel.TRAILING);
 
     /** Auto/Manual radius radio button group */
-    ButtonGroup _radiusButtonGroup = new ButtonGroup();
+    private ButtonGroup _radiusButtonGroup = new ButtonGroup();
 
     /** Auto radius radio button */
-    JRadioButton _autoRadiusRadioButton;
+    private JRadioButton _autoRadiusRadioButton = null;
 
     /** Auto radius radio button label */
-    JLabel _autoRadiusRadioButtonLabel = new JLabel("Auto", JLabel.LEADING);
+    private JLabel _autoRadiusRadioButtonLabel = new JLabel("Auto", JLabel.LEADING);
 
     /** Manual radius radio button */
-    JRadioButton _manualRadiusRadioButton;
+    private JRadioButton _manualRadiusRadioButton = null;
 
     /** Search box radial size */
-    JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
+    private JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
                 0));
 
     /** Query action and progression panel */
-    JPanel _actionPanel = new JPanel();
+    private JPanel _actionPanel = new JPanel();
 
     /** Query launcher/canceler */
-    JButton _searchButton;
+    private JButton _searchButton = null;
 
     /** Query progress bar */
-    JProgressBar _progressBar = new JProgressBar();
+    private JProgressBar _progressBar = new JProgressBar();
 
     /** Reset Values action */
-    public ResetValuesAction _resetValuesAction;
+    public ResetValuesAction _resetValuesAction = null;
 
     /** Reset Values action */
-    public LoadDefaultValuesAction _loadDefaultValuesAction;
+    public LoadDefaultValuesAction _loadDefaultValuesAction = null;
 
     /** Reset Values action */
-    public SaveValuesAction _saveValuesAction;
+    public SaveValuesAction _saveValuesAction = null;
 
     /**
      * Constructor.

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.6 2009-11-04 10:12:49 lafrasse Exp $"
+ * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.7 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2009/11/04 10:12:49  lafrasse
+ * Code and documentation cleanup.
+ *
  * Revision 1.5  2008/09/10 22:21:27  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -73,6 +76,7 @@ public class FacelessNonCalibratorsFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("FacelessNonCalibratorsFilter", "shouldRemoveRow");

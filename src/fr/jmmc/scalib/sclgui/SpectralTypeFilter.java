@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.16 2009-12-01 14:24:20 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.17 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2009/12/01 14:24:20  lafrasse
+ * Removed test code no present in JMCS test script.
+ *
  * Revision 1.15  2008/09/10 22:38:06  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -60,9 +63,6 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.*;
-import fr.jmmc.mcs.log.*;
-
-import java.lang.Character;
 
 import java.util.*;
 import java.util.logging.*;
@@ -87,13 +87,13 @@ public class SpectralTypeFilter extends Filter
     {
         super();
 
-        setConstraint("O", new Boolean(false));
-        setConstraint("B", new Boolean(false));
-        setConstraint("A", new Boolean(false));
-        setConstraint("F", new Boolean(false));
-        setConstraint("G", new Boolean(false));
-        setConstraint("K", new Boolean(false));
-        setConstraint("M", new Boolean(false));
+        setConstraint("O", false);
+        setConstraint("B", false);
+        setConstraint("A", false);
+        setConstraint("F", false);
+        setConstraint("G", false);
+        setConstraint("K", false);
+        setConstraint("M", false);
     }
 
     /**
@@ -116,6 +116,7 @@ public class SpectralTypeFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("SpectralTypeFilter", "shouldRemoveRow");

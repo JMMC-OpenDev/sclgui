@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.11 2010-07-29 15:10:08 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.12 2010-10-10 22:21:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2010/07/29 15:10:08  lafrasse
+ * Added support for generic cell URL.
+ *
  * Revision 1.10  2008/09/10 22:39:35  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -40,10 +43,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.log.*;
-
-import java.lang.Float;
-
 import java.net.URLEncoder;
 
 import java.util.logging.*;
@@ -52,7 +51,7 @@ import java.util.logging.*;
 /**
  * Star property.
  */
-public class StarProperty implements Comparable
+public final class StarProperty implements Comparable
 {
     // Trace has been deactvated because of numerous call
 

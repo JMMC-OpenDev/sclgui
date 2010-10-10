@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.39 2010-10-07 14:59:29 bourgesl Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.40 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.39  2010/10/07 14:59:29  bourgesl
+ * replaced System.out votable by logger.fine
+ * removed unused catch exception when declaring a SampMessageHandler
+ *
  * Revision 1.38  2010/10/05 14:58:37  bourgesl
  * fixed composeMessage signature
  *
@@ -166,7 +170,7 @@ import org.astrogrid.samp.client.HubConnection;
 /**
  * Handle JMMC WebServices interactions and file input/ouput.
  */
-public class VirtualObservatory extends Observable
+public final class VirtualObservatory extends Observable
 {
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
@@ -188,16 +192,16 @@ public class VirtualObservatory extends Observable
     private boolean _queryIsLaunched = false;
 
     /** Proxy to shared FileFilter repository */
-    FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
+    private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
 
     /** SearchCal-specific VOTable format */
-    String _scvotMimeType = "application/x-searchcal+votable+xml";
+    private String _scvotMimeType = "application/x-searchcal+votable+xml";
 
     /** MIME type for CSV exports */
-    String _csvMimeType = "text/csv";
+    private String _csvMimeType = "text/csv";
 
     /** MIME type for HTML exports */
-    String _htmlMimeType = "text/html";
+    private String _htmlMimeType = "text/html";
 
     /** Open file... action */
     public OpenFileAction _openFileAction;
@@ -540,6 +544,9 @@ public class VirtualObservatory extends Observable
      */
     protected class OpenFileAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public OpenFileAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -639,6 +646,9 @@ public class VirtualObservatory extends Observable
      */
     protected class RevertToSavedFileAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public RevertToSavedFileAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -678,6 +688,9 @@ public class VirtualObservatory extends Observable
      */
     protected class SaveFileAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public SaveFileAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -756,8 +769,11 @@ public class VirtualObservatory extends Observable
      */
     protected class SaveFileAsAction extends RegisteredAction
     {
-        FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
-        String               _scvotMimeType        = "application-x/searchcal-votable-file";
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
+        private String               _scvotMimeType        = "application-x/searchcal-votable-file";
 
         public SaveFileAsAction(String classPath, String fieldName)
         {
@@ -809,6 +825,9 @@ public class VirtualObservatory extends Observable
      */
     protected class ExportToCSVFileAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public ExportToCSVFileAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -862,6 +881,9 @@ public class VirtualObservatory extends Observable
      */
     protected class ExportToHTMLFileAction extends RegisteredAction
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         public ExportToHTMLFileAction(String classPath, String fieldName)
         {
             super(classPath, fieldName);
@@ -913,7 +935,6 @@ public class VirtualObservatory extends Observable
      */
     protected class ShareAllCalibratorsThroughSAMPAction extends SampCapabilityAction
     {
-
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
@@ -952,7 +973,10 @@ public class VirtualObservatory extends Observable
      */
     protected class GetCalAction extends RegisteredAction
     {
-        GetCalThread _getCalThread = null;
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        private GetCalThread _getCalThread = null;
 
         public GetCalAction(String classPath, String fieldName)
         {
@@ -1001,16 +1025,17 @@ public class VirtualObservatory extends Observable
 
         class GetCalThread extends Thread
         {
-            QueryResultThread _queryResultThread = null;
-            SclwsLocator      loc                = null;
-            SclwsPortType     sclws              = null;
-            String            id                 = null;
+            private QueryResultThread _queryResultThread = null;
+            private SclwsLocator      loc                = null;
+            private SclwsPortType     sclws              = null;
+            private String            id                 = null;
 
             GetCalThread()
             {
                 _queryResultThread = null;
             }
 
+            @Override
             public void run()
             {
                 _logger.entering("GetCalThread", "run");
@@ -1269,6 +1294,7 @@ public class VirtualObservatory extends Observable
                 setQueryLaunchedState(false);
             }
 
+            @Override
             public void interrupt()
             {
                 _logger.entering("GetCalThread", "interrupt");
@@ -1310,10 +1336,10 @@ public class VirtualObservatory extends Observable
 
             class QueryResultThread extends Thread
             {
-                SclwsPortType _sclws;
-                String        _id;
-                String        _query;
-                String        _result;
+                private SclwsPortType _sclws;
+                private String        _id;
+                private String        _query;
+                private String        _result;
 
                 QueryResultThread(SclwsPortType s, String id, String query)
                 {
@@ -1323,6 +1349,7 @@ public class VirtualObservatory extends Observable
                     _result     = null;
                 }
 
+                @Override
                 public void run()
                 {
                     _logger.entering("QueryResultThread", "run");

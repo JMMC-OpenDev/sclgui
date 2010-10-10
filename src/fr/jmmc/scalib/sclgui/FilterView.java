@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FilterView.java,v 1.16 2008-09-10 22:24:12 lafrasse Exp $"
+ * "@(#) $Id: FilterView.java,v 1.17 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2008/09/10 22:24:12  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.15  2007/08/27 07:38:49  lafrasse
  * TextFileds label enhancement.
  *
@@ -65,8 +68,6 @@ import java.util.logging.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
 import javax.swing.text.*;
 
 
@@ -78,35 +79,43 @@ import javax.swing.text.*;
  *
  * @warning Only Strings, Doubles and Booleans constraints are supported.
  */
-public class FilterView extends JPanel implements Observer
+public final class FilterView extends JPanel implements Observer
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.FilterView");
 
     /** The filter to represent */
-    Filter _filter;
+    private Filter _filter = null;
 
     /** Filter enabling checbox */
-    JCheckBox _enabledCheckbox;
+    JCheckBox _enabledCheckbox = null;
 
     /** Store all the GUI component used to represent the attached filter */
-    Hashtable _widgets = new Hashtable();
+    private HashMap<String, JComponent> _widgets = null;
 
     /** Store all the widget in the constraints order */
-    Vector _orderedWidgets = new Vector();
+    private Vector _orderedWidgets = null;
 
     /** Widgets panel */
-    JPanel _widgetsPanel = new JPanel();
+    private JPanel _widgetsPanel = null;
 
     /** JFormattedTextField formatter for Double constraints */
-    DefaultFormatterFactory _doubleFormaterFactory;
+    private DefaultFormatterFactory _doubleFormaterFactory = null;
 
     /**
      * Default constructor.
      */
     public FilterView(Filter filter)
     {
+        // Members initialization
+        _widgets = new HashMap<String, JComponent>();
+        _orderedWidgets = new Vector();
+        _widgetsPanel = new JPanel();
+
         // Members initialization
         _filter = filter;
         _filter.addObserver(this);
@@ -237,7 +246,7 @@ public class FilterView extends JPanel implements Observer
     {
         _logger.entering("FilterView", "setParam");
 
-        JComponent widget = (JComponent) _widgets.get(constraintName);
+        JComponent widget = _widgets.get(constraintName);
 
         // If the constraint is a Double object
         if (constraintValue.getClass() == java.lang.Double.class)
@@ -297,13 +306,13 @@ class ParamListener implements ActionListener, FocusListener
             "fr.jmmc.scalib.sclgui.ParamListener");
 
     /** The filter to update */
-    Filter _filter;
+    private Filter _filter = null;
 
     /** the constraint to handle */
-    String _constraintName;
+    private String _constraintName = null;
 
     /** The GUI component to display the constraint */
-    JComponent _widget;
+    private JComponent _widget = null;
 
     /**
      * Constructor.
@@ -363,7 +372,8 @@ class ParamListener implements ActionListener, FocusListener
         if (_constraintName == null)
         {
             // Enable or disable the whole filter
-            _filter.setEnabled(new Boolean(((JCheckBox) _widget).isSelected()));
+            Boolean checkBoxState = ((JCheckBox) _widget).isSelected();
+            _filter.setEnabled(checkBoxState);
         }
         else // If a constraint name was given
         {
@@ -384,22 +394,22 @@ class ParamListener implements ActionListener, FocusListener
                     _logger.severe("Could not handle input");
                 }
 
-                _filter.setConstraint(_constraintName,
-                    (Double) ((JFormattedTextField) _widget).getValue());
+                Double doubleValue = (Double) ((JFormattedTextField) _widget).getValue();
+                _filter.setConstraint(_constraintName, doubleValue);
             }
 
             // Else if the constraint is a String object
             else if (constraintValue.getClass() == java.lang.String.class)
             {
-                _filter.setConstraint(_constraintName,
-                    ((JTextField) _widget).getText());
+                String stringValue = ((JTextField) _widget).getText();
+                _filter.setConstraint(_constraintName, stringValue);
             }
 
             // Else if the constraint is a Boolean object
             else if (constraintValue.getClass() == java.lang.Boolean.class)
             {
-                _filter.setConstraint(_constraintName,
-                    new Boolean(((JCheckBox) _widget).isSelected()));
+                Boolean booleanValue = ((JCheckBox) _widget).isSelected();
+                _filter.setConstraint(_constraintName, booleanValue);
             }
         }
     }

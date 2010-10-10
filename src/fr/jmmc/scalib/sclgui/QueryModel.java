@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.46 2010-09-10 14:12:20 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.47 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.46  2010/09/10 14:12:20  lafrasse
+ * Jalopization.
+ *
  * Revision 1.45  2010/09/10 14:11:42  lafrasse
  * Fixed Min. and Max. Magnitude textfields to automatically follow Science Object
  * Magnitude changes.
@@ -168,8 +171,6 @@ import cds.savot.model.*;
 
 import cds.savot.pull.*;
 
-import cds.savot.writer.*;
-
 import fr.jmmc.mcs.astro.*;
 import fr.jmmc.mcs.astro.star.*;
 
@@ -191,13 +192,13 @@ public class QueryModel extends Star implements Observer
             "fr.jmmc.scalib.sclgui.QueryModel");
 
     /** For default values */
-    private Preferences _preferences;
+    private Preferences _preferences = null;
 
     /** The instrumental magnitude band */
-    private DefaultComboBoxModel _instrumentalMagnitudeBands;
+    private DefaultComboBoxModel _instrumentalMagnitudeBands = null;
 
     /** Magnitude to Preselected Wavelength conversion table */
-    private Hashtable _magnitudeBandToWavelength = new Hashtable();
+    private HashMap<String, Double> _magnitudeBandToWavelength = null;
 
     /**
      * Default magnitude bands.
@@ -405,7 +406,7 @@ public class QueryModel extends Star implements Observer
         _logger.entering("QueryModel", "loadParamSet");
 
         // Convert the ParamSet in an HashTable on parameters name -> value
-        Hashtable parameters = new Hashtable();
+        HashMap<String, String> parameters = new HashMap<String, String>();
 
         for (int i = 0; i < paramSet.getItemCount(); i++)
         {
@@ -418,28 +419,28 @@ public class QueryModel extends Star implements Observer
         }
 
         // Set the query members from the ParamSet values
-        setInstrumentalMagnitudeBand((String) parameters.get("band"));
+        setInstrumentalMagnitudeBand(parameters.get("band"));
         setInstrumentalWavelength(Double.valueOf(
-                (String) parameters.get("wlen")));
+                parameters.get("wlen")));
         setInstrumentalMaxBaseLine(Double.valueOf(
-                (String) parameters.get("baseMax")));
-        setScienceObjectName((String) parameters.get("objectName"));
-        setScienceObjectRA((String) parameters.get("ra"));
-        setScienceObjectDEC((String) parameters.get("dec"));
-        setScienceObjectMagnitude(Double.valueOf((String) parameters.get("mag")));
+                parameters.get("baseMax")));
+        setScienceObjectName(parameters.get("objectName"));
+        setScienceObjectRA(parameters.get("ra"));
+        setScienceObjectDEC(parameters.get("dec"));
+        setScienceObjectMagnitude(Double.valueOf(parameters.get("mag")));
         setQueryMinMagnitude(Double.valueOf(
-                (String) parameters.get("minMagRange")));
+                parameters.get("minMagRange")));
         setQueryMaxMagnitude(Double.valueOf(
-                (String) parameters.get("maxMagRange")));
+                parameters.get("maxMagRange")));
         setQueryBrightScenarioFlag(Boolean.valueOf(
-                (String) parameters.get("bright")));
+                parameters.get("bright")));
         setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(Double.valueOf(
-                    (String) parameters.get("diffRa"))));
+                    parameters.get("diffRa"))));
         setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(Double.valueOf(
-                    (String) parameters.get("diffDec"))));
+                    parameters.get("diffDec"))));
         setQueryAutoRadiusFlag(true);
 
-        String radius      = (String) parameters.get("radius");
+        String radius      = parameters.get("radius");
         Double radiusValue = Double.NaN;
 
         // If radius exists
@@ -504,7 +505,7 @@ public class QueryModel extends Star implements Observer
                 //         VirtualObservatory::GetStarAction::GetStarThread::simbadResult()
                 int    index = 0;
                 String str;
-                str          = (String) row.getContent(index++);
+                str          = row.getContent(index++);
 
                 if (str.length() != 0)
                 {
@@ -513,7 +514,7 @@ public class QueryModel extends Star implements Observer
                     setScienceObjectRA(str);
                 }
 
-                str = (String) row.getContent(index++);
+                str = row.getContent(index++);
 
                 if (str.length() != 0)
                 {
@@ -530,7 +531,7 @@ public class QueryModel extends Star implements Observer
 
                     try
                     {
-                        str = (String) row.getContent(index++);
+                        str = row.getContent(index++);
 
                         if (str.length() != 0)
                         {
@@ -760,14 +761,13 @@ public class QueryModel extends Star implements Observer
     {
         _logger.entering("QueryModel", "resetInstrumentalWavelengthes");
 
-        _magnitudeBandToWavelength = new Hashtable();
+        _magnitudeBandToWavelength = new HashMap<String, Double>();
 
         // For each "magnitude band-predefined wavelength" couple
         for (int i = 0; i < _magnitudeBands.length; i++)
         {
             // Construct the conversion table between both
-            _magnitudeBandToWavelength.put(_magnitudeBands[i],
-                new Double(_defaultWavelengths[i]));
+            _magnitudeBandToWavelength.put(_magnitudeBands[i], _defaultWavelengths[i]);
         }
 
         setChanged();
@@ -784,7 +784,7 @@ public class QueryModel extends Star implements Observer
 
         String currentMagnitudeBand = getInstrumentalMagnitudeBand();
 
-        return (Double) _magnitudeBandToWavelength.get(currentMagnitudeBand);
+        return _magnitudeBandToWavelength.get(currentMagnitudeBand);
     }
 
     /**
@@ -1456,7 +1456,7 @@ public class QueryModel extends Star implements Observer
         }
         else
         {
-            currentStep = 0;
+            _currentStep = 0;
         }
 
         setChanged();

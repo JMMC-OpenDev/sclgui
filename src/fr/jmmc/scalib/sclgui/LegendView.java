@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.13 2010-01-29 13:12:25 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.14 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2010/01/29 13:12:25  lafrasse
+ * Updated to reflect astro.Catalog API changes.
+ *
  * Revision 1.12  2009/12/01 11:29:32  lafrasse
  * Added easily readable catalog names in cell tooltips, legend view and legend
  * preference pane.
@@ -61,18 +64,10 @@ import java.util.*;
 import java.util.logging.*;
 
 import javax.swing.*;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.*;
-import javax.swing.colorchooser.*;
-import javax.swing.event.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.table.*;
 import javax.swing.table.TableCellRenderer;
 
@@ -82,6 +77,9 @@ import javax.swing.table.TableCellRenderer;
  */
 public class LegendView extends JPanel
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.LegendView");
@@ -89,7 +87,7 @@ public class LegendView extends JPanel
     /**
      * Application preferences
      */
-    Preferences _preferences;
+    private Preferences _preferences = null;
 
     /**
      * Constructor.
@@ -132,22 +130,25 @@ public class LegendView extends JPanel
      */
     class ColorPreferencesView extends JPanel implements Observer
     {
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
         private final static int COLOR       = 0;
         private final static int REFERENCE   = 1;
         private final static int TITLE       = 2;
         private final static int DESCRIPTION = 3;
 
         /** Application preferences */
-        protected Preferences _preferences;
+        protected Preferences _preferences = null;
 
         /** Preference prefix for Color values */
-        protected String _colorPreferencePrefix;
+        protected String _colorPreferencePrefix = null;
 
         /** data of Table model */
-        private Object[][] _data;
+        private Object[][] _data = null;
 
         /** Displayed table */
-        JTable _table;
+        private JTable _table = null;
 
         /**
          * Creates a new ColorPreferencesView object.
@@ -295,6 +296,9 @@ public class LegendView extends JPanel
 
         class ColorPreferencesViewTableModel extends AbstractTableModel
         {
+            /** default serial UID for Serializable interface */
+            private static final long serialVersionUID = 1;
+
             private String[] columnNames = { "Favorite Color" };
 
             public int getColumnCount()
@@ -312,6 +316,7 @@ public class LegendView extends JPanel
                 return _data.length;
             }
 
+            @Override
             public String getColumnName(int col)
             {
                 _logger.entering("ColorPreferencesViewTableModel",
@@ -333,6 +338,7 @@ public class LegendView extends JPanel
              * then the last column would contain text ("true"/"false"),
              * rather than a check box.
              */
+            @Override
             public Class getColumnClass(int c)
             {
                 _logger.entering("ColorPreferencesViewTableModel",
@@ -341,6 +347,7 @@ public class LegendView extends JPanel
                 return getValueAt(0, c).getClass();
             }
 
+            @Override
             public boolean isCellEditable(int row, int col)
             {
                 _logger.entering("ColorPreferencesViewTableModel",
@@ -350,6 +357,7 @@ public class LegendView extends JPanel
                 return true;
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col)
             {
                 _logger.entering("ColorPreferencesViewTableModel", "setValueAt");
@@ -375,10 +383,13 @@ public class LegendView extends JPanel
 
         class ColorRenderer extends JLabel implements TableCellRenderer
         {
-            Border  unselectedBorder = null;
-            Border  selectedBorder   = null;
-            boolean isBordered       = true;
-            boolean _isEditable      = true;
+            /** default serial UID for Serializable interface */
+            private static final long serialVersionUID = 1;
+
+            private Border  unselectedBorder = null;
+            private Border  selectedBorder   = null;
+            private boolean isBordered       = true;
+            private boolean _isEditable      = true;
 
             public ColorRenderer(boolean isBordered, boolean isEditable)
             {
@@ -451,13 +462,16 @@ public class LegendView extends JPanel
         class ColorEditor extends AbstractCellEditor implements TableCellEditor,
             ActionListener
         {
+            /** default serial UID for Serializable interface */
+            private static final long serialVersionUID = 1;
+
             protected static final String EDIT              = "edit";
-            Color                         _currentColor;
-            JButton                       _button;
-            JColorChooser                 _colorChooser;
-            JDialog                       _dialog;
+            private Color                          _currentColor;
+            private JButton                       _button;
+            private JColorChooser                 _colorChooser;
+            private JDialog                       _dialog;
             boolean                       _isEditable       = true;
-            String                        _catalogReference;
+            private String                        _catalogReference;
 
             /**
              * Creates a new ColorEditor object.

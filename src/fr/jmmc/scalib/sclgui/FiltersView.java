@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersView.java,v 1.7 2008-09-10 22:25:42 lafrasse Exp $"
+ * "@(#) $Id: FiltersView.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2008/09/10 22:25:42  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ * Documentation enhancement.
+ *
  * Revision 1.6  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -28,15 +32,12 @@
 package fr.jmmc.scalib.sclgui;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.print.*;
 
 import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
 
 
 /**
@@ -44,6 +45,9 @@ import javax.swing.table.*;
  */
 public class FiltersView extends JPanel implements Printable
 {
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
     /** Logger */
     private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
             "fr.jmmc.scalib.sclgui.FiltersView");
@@ -62,11 +66,11 @@ public class FiltersView extends JPanel implements Printable
         setBorder(new TitledBorder(lightBorder, "Filters"));
 
         // Add each model filter view to the view panel
-        Vector filterViews = model.getFilterViewVector();
+        Vector<FilterView> filterViews = model.getFilterViewVector();
 
-        for (Enumeration e = filterViews.elements(); e.hasMoreElements();)
+        for (Enumeration<FilterView> e = filterViews.elements(); e.hasMoreElements();)
         {
-            FilterView filterView = (FilterView) e.nextElement();
+            FilterView filterView = e.nextElement();
             int        maxHeight  = (int) filterView.getPreferredSize()
                                                     .getHeight();
             int        maxWidth   = (int) filterView.getMaximumSize().getWidth();

@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: DistanceFilter.java,v 1.11 2009-10-20 13:36:23 lafrasse Exp $"
+ * "@(#) $Id: DistanceFilter.java,v 1.12 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2009/10/20 13:36:23  lafrasse
+ * Fixed unit conversion problem while filtering stars on RA separation (bug
+ * #1255675722).
+ *
  * Revision 1.10  2008/09/10 22:20:44  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -40,8 +44,6 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.*;
-
-import java.lang.Math;
 
 import java.util.*;
 import java.util.logging.*;
@@ -152,6 +154,7 @@ public class DistanceFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
+    @Override
     public boolean shouldRemoveRow(StarList starList, Vector row)
     {
         _logger.entering("DistanceFilter", "shouldRemoveRow");

@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.28 2010-10-04 15:59:21 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.29 2010-10-10 22:21:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.28  2010/10/04 15:59:21  lafrasse
+ * Removed redundant menu bar.
+ * Now exits when a problem occurs during initialization.
+ *
  * Revision 1.27  2009/04/30 12:56:51  lafrasse
  * Minor documentation update.
  *
@@ -98,18 +102,9 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.log.*;
-
-import gnu.getopt.Getopt;
-
-import java.awt.event.ActionEvent;
-
-import java.net.URL;
 
 import java.util.*;
 import java.util.logging.*;
-
-import javax.swing.*;
 
 
 /**
@@ -282,6 +277,7 @@ public class SearchCalibrators extends App
     }
 
     /** Handle operations before closing application */
+    @Override
     protected boolean finish()
     {
         return _vo.canLostModifications();

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.14 2008-09-10 22:24:48 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.15 2010-10-10 22:21:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2008/09/10 22:24:48  lafrasse
+ * Moved away from MCS Logger to standard Java logger API.
+ *
  * Revision 1.13  2008/05/26 16:01:49  mella
  * Rename VisibilityFilter to VisibilityAccuracyFilter
  * Move hard coded vis2 < 0.5 filtering from FacelessNonCalibratorsFilter to VisibilityFilter
@@ -54,8 +57,6 @@ package fr.jmmc.scalib.sclgui;
 import java.util.*;
 import java.util.logging.*;
 
-import javax.swing.table.*;
-
 
 /**
  * Filters model that can be adopted by a JTable.
@@ -67,20 +68,18 @@ public class FiltersModel
             "fr.jmmc.scalib.sclgui.FiltersModel");
 
     /** List of filters to handle */
-    private FilterList _filterList;
+    private FilterList _filterList = null;
 
     /** Store each filter view */
-    private Vector _filterViews;
+    private Vector _filterViews = null;
 
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
      */
-    private QueryModel _queryModel;
+    private QueryModel _queryModel = null;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public FiltersModel(QueryModel queryModel)
     {
         _queryModel     = queryModel;
