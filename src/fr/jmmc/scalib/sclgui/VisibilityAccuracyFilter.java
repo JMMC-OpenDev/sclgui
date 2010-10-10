@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.11 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: VisibilityAccuracyFilter.java,v 1.12 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.10  2008/09/10 22:41:51  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -43,30 +46,25 @@ package fr.jmmc.scalib.sclgui;
 import java.util.Vector;
 import java.util.logging.*;
 
-
 /**
  * Visibiliy accuracy filter.
  */
-public class VisibilityAccuracyFilter extends Filter
-{
+public class VisibilityAccuracyFilter extends Filter {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VisibilityAccuracyFilter");
-
     /** Store the visibility constraint name */
     private String _visibilityColumnName = "vis2";
-
     /** Store the visibility error constraint name */
     private String _visibilityErrorColumnName = "vis2Err";
-
     /** Store the visibility accuracy constraint name */
     private String _visibilityAccuracyConstraintName = "vis2Err/vis2 (%)";
 
     /**
      * Default constructor.
      */
-    public VisibilityAccuracyFilter()
-    {
+    public VisibilityAccuracyFilter() {
         super();
 
         //setConstraint(_visibilityAccuracyConstraintName, new Double(0.0));
@@ -79,8 +77,7 @@ public class VisibilityAccuracyFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("VisibilityAccuracyFilter", "getName");
 
         return "Reject Visibility Accuracy above (or unknown) :";
@@ -91,10 +88,9 @@ public class VisibilityAccuracyFilter extends Filter
      *
      * @return the visibility accuracy allowed by this filter.
      */
-    private double getAllowedVisibiliyAccurancy()
-    {
+    private double getAllowedVisibiliyAccurancy() {
         _logger.entering("VisibilityAccuracyFilter",
-            "getAllowedVisibiliyAccurancy");
+                "getAllowedVisibiliyAccurancy");
 
         Double d = (Double) getConstraintByName(_visibilityAccuracyConstraintName);
 
@@ -109,8 +105,7 @@ public class VisibilityAccuracyFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("VisibilityAccuracyFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'visibility' star property
@@ -120,8 +115,7 @@ public class VisibilityAccuracyFilter extends Filter
         int vis2errId = starList.getColumnIdByName(_visibilityErrorColumnName);
 
         // If the desired column names exists
-        if ((vis2Id != -1) && (vis2errId != -1))
-        {
+        if ((vis2Id != -1) && (vis2errId != -1)) {
             // Get the cell of the desired column
             StarProperty vis2Cell = ((StarProperty) row.elementAt(vis2Id));
 
@@ -129,28 +123,24 @@ public class VisibilityAccuracyFilter extends Filter
             StarProperty vis2ErrCell = ((StarProperty) row.elementAt(vis2errId));
 
             // If the 2 values were found in the current line
-            if ((vis2Cell.hasValue() == true) &&
-                    (vis2ErrCell.hasValue() == true))
-            {
-                double currentVis2        = vis2Cell.getDoubleValue();
-                double currentVis2err     = vis2ErrCell.getDoubleValue();
+            if ((vis2Cell.hasValue() == true)
+                    && (vis2ErrCell.hasValue() == true)) {
+                double currentVis2 = vis2Cell.getDoubleValue();
+                double currentVis2err = vis2ErrCell.getDoubleValue();
                 double visibilityAccuracy = Math.abs(currentVis2err / currentVis2);
 
                 // if the visibility is not a number (eg. 0.0/0.0)
-                if (Double.isNaN(visibilityAccuracy) == true)
-                {
+                if (Double.isNaN(visibilityAccuracy) == true) {
                     // This row should be removed
                     return true;
                 }
 
                 // if the visibility value is greater than the allowed one
-                if (visibilityAccuracy >= getAllowedVisibiliyAccurancy())
-                {
+                if (visibilityAccuracy >= getAllowedVisibiliyAccurancy()) {
                     // This row should be removed
                     return true;
                 }
-            }
-            else // If any value is missing
+            } else // If any value is missing
             {
                 // This row should be removed
                 return true;

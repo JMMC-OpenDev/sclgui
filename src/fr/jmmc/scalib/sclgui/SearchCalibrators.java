@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.29 2010-10-10 22:21:05 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.30 2010-10-10 22:45:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.29  2010/10/10 22:21:05  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.28  2010/10/04 15:59:21  lafrasse
  * Removed redundant menu bar.
  * Now exits when a problem occurs during initialization.
@@ -106,7 +109,6 @@ import fr.jmmc.mcs.gui.*;
 import java.util.*;
 import java.util.logging.*;
 
-
 /**
  * @file
  * brief description of the program, which ends at this dot.
@@ -161,15 +163,13 @@ import java.util.logging.*;
  * @todo Action 1 : action 1 description
  *
  */
-public class SearchCalibrators extends App
-{
+public class SearchCalibrators extends App {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.SearchCalibrators");
-
     /** Main application object used to perform the optionnal query received from ASPRO */
     public static VirtualObservatory _vo = null;
-
     /** Store the optionnal query received from ASPRO by constructor */
     private String _query = null;
 
@@ -181,8 +181,7 @@ public class SearchCalibrators extends App
      *
      * @param args command-line options.
      */
-    public SearchCalibrators(String[] args)
-    {
+    public SearchCalibrators(String[] args) {
         super(args);
     }
 
@@ -192,8 +191,7 @@ public class SearchCalibrators extends App
      * @param args command-line options.
      * @param query an XML formatted string containing an SCLSVR-like query.
      */
-    public SearchCalibrators(String[] args, String query)
-    {
+    public SearchCalibrators(String[] args, String query) {
         /* Launch application initialization with:
          *    - execution delayed for further initilization;
          *    - without splashscreen;
@@ -209,17 +207,15 @@ public class SearchCalibrators extends App
     }
 
     /** Initialize application objects */
-    protected void init(String[] args)
-    {
+    protected void init(String[] args) {
         // Set the default locale to custom locale (for Numerical Fields "." ",")
         Locale.setDefault(new Locale("en", "US"));
 
         // Set default resource
         fr.jmmc.mcs.util.Resources.setResourceName(
-            "fr/jmmc/scalib/sclgui/Resources");
+                "fr/jmmc/scalib/sclgui/Resources");
 
-        try
-        {
+        try {
             // Get preferences
             Preferences preferences = Preferences.getInstance();
 
@@ -228,11 +224,11 @@ public class SearchCalibrators extends App
 
             // Create filters
             FiltersModel filtersModel = new FiltersModel(queryModel);
-            FiltersView  filtersView  = new FiltersView(filtersModel);
+            FiltersView filtersView = new FiltersView(filtersModel);
 
             // Create a calibrators model and attach it to a calibrators view
             CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
-            CalibratorsView  calibratorsView  = new CalibratorsView(calibratorsModel);
+            CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
 
             filtersModel.addObserver(calibratorsModel);
 
@@ -246,7 +242,7 @@ public class SearchCalibrators extends App
             // Retrieve application preferences and attach them to their view
             // (This instance must be instanciated after dependencies)
             PreferencesView preferencesView = new PreferencesView();
-            StatusBar       statusBar       = new StatusBar();
+            StatusBar statusBar = new StatusBar();
             // Show the user the app is been initialized
             StatusBar.show("application initialization...");
 
@@ -257,20 +253,16 @@ public class SearchCalibrators extends App
 
             // Triggers all preferences observers notification to finnish GUI setup.
             preferences.triggerObserversNotification();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             _logger.log(Level.SEVERE, "Initialization error", ex);
             System.exit(1);
         }
     }
 
     /** Execute application body */
-    protected void execute()
-    {
+    protected void execute() {
         // If a query was received (when instanciated by ASPRO)
-        if (_query != null)
-        {
+        if (_query != null) {
             // Launch the request
             _vo.executeQuery(_query);
         }
@@ -278,16 +270,14 @@ public class SearchCalibrators extends App
 
     /** Handle operations before closing application */
     @Override
-    protected boolean finish()
-    {
+    protected boolean finish() {
         return _vo.canLostModifications();
     }
 
     /**
      * Main.
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // Start application
         SearchCalibrators searchCalibrators = new SearchCalibrators(args);
     }

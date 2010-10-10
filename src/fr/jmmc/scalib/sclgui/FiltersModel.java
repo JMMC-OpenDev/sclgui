@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FiltersModel.java,v 1.15 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: FiltersModel.java,v 1.16 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.14  2008/09/10 22:24:48  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -57,22 +60,18 @@ package fr.jmmc.scalib.sclgui;
 import java.util.*;
 import java.util.logging.*;
 
-
 /**
  * Filters model that can be adopted by a JTable.
  */
-public class FiltersModel
-{
+public class FiltersModel {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.FiltersModel");
-
     /** List of filters to handle */
     private FilterList _filterList = null;
-
     /** Store each filter view */
     private Vector _filterViews = null;
-
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
@@ -80,11 +79,10 @@ public class FiltersModel
     private QueryModel _queryModel = null;
 
     /** Default constructor. */
-    public FiltersModel(QueryModel queryModel)
-    {
-        _queryModel     = queryModel;
+    public FiltersModel(QueryModel queryModel) {
+        _queryModel = queryModel;
 
-        _filterList     = new FilterList();
+        _filterList = new FilterList();
         _filterList.setEnabled(Boolean.TRUE);
         _filterViews = new Vector();
 
@@ -154,8 +152,7 @@ public class FiltersModel
      *
      * @return the list of filter views.
      */
-    public Vector getFilterViewVector()
-    {
+    public Vector getFilterViewVector() {
         _logger.entering("FiltersModel", "getFilterViewVector");
 
         return _filterViews;
@@ -166,8 +163,7 @@ public class FiltersModel
      *
      * @param o the observer to register.
      */
-    public void addObserver(Observer o)
-    {
+    public void addObserver(Observer o) {
         _logger.entering("FiltersModel", "addObserver");
 
         _filterList.addObserver(o);
@@ -178,8 +174,7 @@ public class FiltersModel
      *
      * @param starList the list of star to filter.
      */
-    public void process(StarList starList)
-    {
+    public void process(StarList starList) {
         _logger.entering("FiltersModel", "process");
 
         _filterList.process(starList);

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarList.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: StarList.java,v 1.9 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.7  2008/09/10 22:38:44  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -35,24 +38,21 @@ package fr.jmmc.scalib.sclgui;
 import java.util.*;
 import java.util.logging.*;
 
-
 /**
  * Vector of star property vector.
  */
-public class StarList extends Vector
-{
+public class StarList extends Vector {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.StarList");
-
     /** Hashtable linking each colum group name to its ID */
     private Hashtable _fieldIdToColNumber;
 
     /**
      * Default constructor
      */
-    public StarList()
-    {
+    public StarList() {
         super();
 
         _fieldIdToColNumber = new Hashtable();
@@ -63,8 +63,7 @@ public class StarList extends Vector
      *
      * @param fieldIdToColNumber the new hash table.
      */
-    public void setHashTable(Hashtable fieldIdToColNumber)
-    {
+    public void setHashTable(Hashtable fieldIdToColNumber) {
         _logger.entering("StarList", "setHashTable");
 
         _fieldIdToColNumber = fieldIdToColNumber;
@@ -77,18 +76,15 @@ public class StarList extends Vector
      *
      * @return the column ID, or -1 if nothing found.
      */
-    public int getColumnIdByName(String groupName)
-    {
+    public int getColumnIdByName(String groupName) {
         _logger.entering("StarList", "getColumnIdByName");
 
         int columnId = -1;
 
-        if (groupName != null)
-        {
+        if (groupName != null) {
             Integer foundIndex = ((Integer) _fieldIdToColNumber.get(groupName));
 
-            if (foundIndex != null)
-            {
+            if (foundIndex != null) {
                 columnId = foundIndex.intValue();
             }
         }
@@ -101,19 +97,16 @@ public class StarList extends Vector
      *
      * @return true if the list contains some stars flagged, false otherwise.
      */
-    public boolean hasSomeDeletedStars()
-    {
+    public boolean hasSomeDeletedStars() {
         _logger.entering("StarList", "hasSomeDeletedStars");
 
-        for (int i = 0; i < size(); i++)
-        {
-            Vector       star                = (Vector) elementAt(i);
-            int          deletedFlagColumnID = getColumnIdByName("deletedFlag");
-            StarProperty deletedFlag         = (StarProperty) star.elementAt(deletedFlagColumnID);
-            boolean      starShouldBeRemoved = deletedFlag.getBooleanValue();
+        for (int i = 0; i < size(); i++) {
+            Vector star = (Vector) elementAt(i);
+            int deletedFlagColumnID = getColumnIdByName("deletedFlag");
+            StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
+            boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
 
-            if (starShouldBeRemoved == true)
-            {
+            if (starShouldBeRemoved == true) {
                 _logger.fine("hasSomeDeletedStars = 'true'");
 
                 return true;
@@ -128,37 +121,31 @@ public class StarList extends Vector
     /**
      * Mark a star as deleted.
      */
-    public void markAsDeleted(Vector star)
-    {
+    public void markAsDeleted(Vector star) {
         _logger.entering("StarList", "markAsDeleted");
 
-        int          deletedFlagColumnID = getColumnIdByName("deletedFlag");
-        StarProperty deletedFlag         = (StarProperty) star.elementAt(deletedFlagColumnID);
+        int deletedFlagColumnID = getColumnIdByName("deletedFlag");
+        StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
         deletedFlag.setValue(Boolean.TRUE);
     }
 
     /**
      * Remove all "deleted" flagged stars.
      */
-    public void removeAllDeletedStars()
-    {
+    public void removeAllDeletedStars() {
         _logger.entering("StarList", "removeAllDeletedStars");
 
         int i = 0;
 
-        while (i < size())
-        {
-            Vector       star                = (Vector) elementAt(i);
-            int          deletedFlagColumnID = getColumnIdByName("deletedFlag");
-            StarProperty deletedFlag         = (StarProperty) star.elementAt(deletedFlagColumnID);
-            boolean      starShouldBeRemoved = deletedFlag.getBooleanValue();
+        while (i < size()) {
+            Vector star = (Vector) elementAt(i);
+            int deletedFlagColumnID = getColumnIdByName("deletedFlag");
+            StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
+            boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
 
-            if (starShouldBeRemoved == true)
-            {
+            if (starShouldBeRemoved == true) {
                 removeElement(star);
-            }
-            else
-            {
+            } else {
                 // Jump to the next only if the current one as not been removed.
                 i++;
             }
@@ -168,15 +155,13 @@ public class StarList extends Vector
     /**
      * Mark all stars as NOT deleted.
      */
-    public void undeleteAll()
-    {
+    public void undeleteAll() {
         _logger.entering("StarList", "undeleteAll");
 
-        for (int i = 0; i < size(); i++)
-        {
-            int          deletedFlagColumnID = getColumnIdByName("deletedFlag");
-            Vector       star                = (Vector) elementAt(i);
-            StarProperty deletedFlag         = (StarProperty) star.elementAt(deletedFlagColumnID);
+        for (int i = 0; i < size(); i++) {
+            int deletedFlagColumnID = getColumnIdByName("deletedFlag");
+            Vector star = (Vector) elementAt(i);
+            StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
             deletedFlag.setValue(Boolean.FALSE);
         }
     }

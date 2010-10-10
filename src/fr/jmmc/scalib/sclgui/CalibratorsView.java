@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.38 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.39 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.38  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.37  2009/11/04 10:17:21  lafrasse
  * Revamped simple/detailed results view settings to add "full results" support.
  *
@@ -142,7 +145,6 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-
 /**
  * Calibrators view.
  *
@@ -156,56 +158,43 @@ import javax.swing.table.*;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-    ListSelectionListener, Observer, Printable
-{
+        ListSelectionListener, Observer, Printable {
+
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
-
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.CalibratorsView");
-
     /** Show Legend action */
     //public static ShowLegendAction _showLegendAction;
-    public static RegisteredPreferencedBooleanAction _showLegendAction;
-
+    public static RegisteredPreferencedBooleanAction _showLegendAction = null;
     /** Synthetic Results Verbosity action */
-    public static RegisteredPreferencedBooleanAction _syntheticResultsVerbosityAction;
-
+    public static RegisteredPreferencedBooleanAction _syntheticResultsVerbosityAction = null;
     /** Detailled Results Verbosity action */
-    public static RegisteredPreferencedBooleanAction _detailledResultsVerbosityAction;
-
+    public static RegisteredPreferencedBooleanAction _detailledResultsVerbosityAction = null;
     /** Full Results Verbosity action */
-    public static RegisteredPreferencedBooleanAction _fullResultsVerbosityAction;
-
+    public static RegisteredPreferencedBooleanAction _fullResultsVerbosityAction = null;
     /** Delete action */
-    public DeleteAction _deleteAction;
-
+    public DeleteAction _deleteAction = null;
     /** Undelete action */
-    public UndeleteAction _undeleteAction;
-
+    public UndeleteAction _undeleteAction = null;
     /** The monitored data source displayed by the embedded JTable */
-    private CalibratorsModel _calibratorsModel;
-
+    private CalibratorsModel _calibratorsModel = null;
     /** The monitored application preferences */
-    private Preferences _preferences;
-
+    private Preferences _preferences = null;
     /** The left-most static one column table containing star ID */
-    private JTable _calibratorsIdTable;
-
+    private JTable _calibratorsIdTable = null;
     /** The calibrators table */
-    private JTable _calibratorsTable;
-
+    private JTable _calibratorsTable = null;
     /** Calibrators table and Legend container */
-    private JSplitPane _tableAndLegendPane;
+    private JSplitPane _tableAndLegendPane = null;
 
     /**
      * Constructor.
      *
      * @param calibratorsModel the data to be displayed.
      */
-    public CalibratorsView(CalibratorsModel calibratorsModel)
-    {
+    public CalibratorsView(CalibratorsModel calibratorsModel) {
         String classPath = getClass().getName();
 
         // Store the model and register against it
@@ -217,20 +206,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _preferences.addObserver(this);
 
         // Create actions
-        _deleteAction                        = new DeleteAction(classPath,
+        _deleteAction = new DeleteAction(classPath,
                 "_deleteAction");
-        _undeleteAction                      = new UndeleteAction(classPath,
+        _undeleteAction = new UndeleteAction(classPath,
                 "_undeleteAction");
-        _showLegendAction                    = new RegisteredPreferencedBooleanAction(classPath,
+        _showLegendAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_showLegendAction", "Show Legend", _preferences,
                 "view.legend.show");
-        _syntheticResultsVerbosityAction     = new RegisteredPreferencedBooleanAction(classPath,
+        _syntheticResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_syntheticResultsVerbosityAction", "Synthetic", _preferences,
                 "view.result.verbosity.synthetic");
-        _detailledResultsVerbosityAction     = new RegisteredPreferencedBooleanAction(classPath,
+        _detailledResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_detailledResultsVerbosityAction", "Detailled", _preferences,
                 "view.result.verbosity.detailled");
-        _fullResultsVerbosityAction          = new RegisteredPreferencedBooleanAction(classPath,
+        _fullResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_fullResultsVerbosityAction", "Full", _preferences,
                 "view.result.verbosity.full");
 
@@ -283,7 +272,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Set Minimum Width of legend component
         JPanel legendPanel = new LegendView(false);
-        int    legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
+        int legendWidth = Math.min(legendPanel.getPreferredSize().width, 200);
         legendPanel.setMinimumSize(new Dimension(legendWidth, 0));
         legendPanel.setSize(new Dimension(0, 0));
 
@@ -296,18 +285,16 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         add(_tableAndLegendPane);
 
         // Handle window resize
-        addHierarchyBoundsListener(new HierarchyBoundsListener()
-            {
-                public void ancestorMoved(HierarchyEvent e)
-                {
-                }
+        addHierarchyBoundsListener(new HierarchyBoundsListener() {
 
-                public void ancestorResized(HierarchyEvent e)
-                {
-                    // Properly display (or not) legend view
-                    showLegend();
-                }
-            });
+            public void ancestorMoved(HierarchyEvent e) {
+            }
+
+            public void ancestorResized(HierarchyEvent e) {
+                // Properly display (or not) legend view
+                showLegend();
+            }
+        });
     }
 
     /**
@@ -315,18 +302,14 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      *
      * @sa javax.swing.event.ListSelectionListener
      */
-    public void valueChanged(ListSelectionEvent e)
-    {
+    public void valueChanged(ListSelectionEvent e) {
         _logger.entering("CalibratorsView", "valueChanged");
 
         // If there is any row selected in the table
-        if (_calibratorsTable.getSelectedRowCount() > 0)
-        {
+        if (_calibratorsTable.getSelectedRowCount() > 0) {
             // Enable the delte menu item
             _deleteAction.setEnabled(true);
-        }
-        else
-        {
+        } else {
             // Disable the delte menu item
             _deleteAction.setEnabled(false);
         }
@@ -335,25 +318,22 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * Called on _calibratorsModel changes.
      */
-    public void tableChanged(TableModelEvent e)
-    {
+    public void tableChanged(TableModelEvent e) {
         _logger.entering("CalibratorsView", "tableChanged");
 
         // Enable/disable the Undelete menu item
         _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
 
         // Update identification table if bae table has a minimum of one column
-        if (_calibratorsTable.getColumnModel().getColumnCount() > 0)
-        {
+        if (_calibratorsTable.getColumnModel().getColumnCount() > 0) {
             /*
              * If _calibratorsIdTable has not exactly one column
              * remove every other column and append correct one
              * @todo manage selection of one named column instead of first one
              */
-            if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1)
-            {
+            if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1) {
                 _logger.fine(
-                    "Setting first column of table to Identification table");
+                        "Setting first column of table to Identification table");
 
                 // @todo try to make next line run without eating all cpu resource
                 // _calibratorsIdTable.getColumnModel().addColumn(_calibratorsTable.getColumnModel().getColumn(0));
@@ -366,8 +346,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * Automatically called whenever the observed model changed
      */
-    public void update(Observable o, Object arg)
-    {
+    public void update(Observable o, Object arg) {
         _logger.entering("CalibratorsView", "update");
 
         // If preference colors have changed, repaint tables
@@ -382,22 +361,21 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      * @sa java.awt.print
      */
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
-        throws PrinterException
-    {
+            throws PrinterException {
         _logger.entering("CalibratorsView", "print");
 
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
-        int fontHeight  = g2d.getFontMetrics().getHeight();
+        int fontHeight = g2d.getFontMetrics().getHeight();
         int fontDescent = g2d.getFontMetrics().getDescent();
 
         // laisser de l'espace pour le numero de page
         double pageHeight = pageFormat.getImageableHeight() - fontHeight;
-        double pageWidth  = pageFormat.getImageableWidth();
+        double pageWidth = pageFormat.getImageableWidth();
 
         g2d.drawString("Page: " + (pageIndex + 1), ((int) pageWidth / 2) - 35,
-            (int) ((pageHeight + fontHeight) - fontDescent));
+                (int) ((pageHeight + fontHeight) - fontDescent));
 
         g2d.scale(0.7, 0.7);
         paint(g2d);
@@ -408,61 +386,54 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /**
      * Tell GUI to show or hide legend panel
      */
-    public void showLegend()
-    {
+    public void showLegend() {
         _logger.entering("CalibratorsView", "showLegend");
 
         boolean preferencedLegendShouldBeVisible = _preferences.getPreferenceAsBoolean(
                 "view.legend.show");
 
-        int     totalWidth                       = (int) _tableAndLegendPane.getBounds()
-                                                                            .getWidth();
-        int     dividerWidth                     = _tableAndLegendPane.getDividerSize();
-        int     tableAndLegendWidth              = totalWidth - dividerWidth;
-        int     legendWidth                      = tableAndLegendWidth;
+        int totalWidth = (int) _tableAndLegendPane.getBounds().getWidth();
+        int dividerWidth = _tableAndLegendPane.getDividerSize();
+        int tableAndLegendWidth = totalWidth - dividerWidth;
+        int legendWidth = tableAndLegendWidth;
 
-        if (preferencedLegendShouldBeVisible == true)
-        {
-            Component legend         = _tableAndLegendPane.getRightComponent();
-            int       legendMinWidth = (int) legend.getMinimumSize().getWidth();
-            legendWidth              = tableAndLegendWidth - legendMinWidth;
+        if (preferencedLegendShouldBeVisible == true) {
+            Component legend = _tableAndLegendPane.getRightComponent();
+            int legendMinWidth = (int) legend.getMinimumSize().getWidth();
+            legendWidth = tableAndLegendWidth - legendMinWidth;
         }
 
         _tableAndLegendPane.setDividerLocation(legendWidth);
     }
 
-    protected class DeleteAction extends RegisteredAction
-    {
+    protected class DeleteAction extends RegisteredAction {
+
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        public DeleteAction(String classPath, String fieldName)
-        {
+        public DeleteAction(String classPath, String fieldName) {
             super(classPath, fieldName);
             setEnabled(false);
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("DeleteAction", "actionPerformed");
 
             _calibratorsModel.deleteStars(_calibratorsTable.getSelectedRows());
         }
     }
 
-    protected class UndeleteAction extends RegisteredAction
-    {
+    protected class UndeleteAction extends RegisteredAction {
+
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        public UndeleteAction(String classPath, String fieldName)
-        {
+        public UndeleteAction(String classPath, String fieldName) {
             super(classPath, fieldName);
             setEnabled(false);
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("UndeleteAction", "actionPerformed");
 
             _calibratorsModel.undeleteStars();

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: NoteFrame.java,v 1.4 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: NoteFrame.java,v 1.5 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.3  2007/02/13 13:58:44  lafrasse
  * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
  *
@@ -22,23 +25,20 @@ import java.awt.*;
 
 import javax.swing.*;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class NoteFrame extends JFrame
-{
+public class NoteFrame extends JFrame {
+
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
-
     /**
      * DOCUMENT ME!
      */
     private JTextPane textpanenote = new JTextPane();
-
     /**
      * DOCUMENT ME!
      */
@@ -47,8 +47,7 @@ public class NoteFrame extends JFrame
     /**
      * NoteFrame  -  Constructor
      */
-    public NoteFrame()
-    {
+    public NoteFrame() {
         super("Note");
         textpanenote.setText("Add your comment...");
         textpanenote.setPreferredSize(new Dimension(600, 300));

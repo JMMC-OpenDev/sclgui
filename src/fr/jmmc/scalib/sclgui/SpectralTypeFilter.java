@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.17 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.18 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.17  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.16  2009/12/01 14:24:20  lafrasse
  * Removed test code no present in JMCS test script.
  *
@@ -67,24 +70,21 @@ import fr.jmmc.mcs.astro.*;
 import java.util.*;
 import java.util.logging.*;
 
-
 /**
  *  SpectralTypeFilter filter.
  */
-public class SpectralTypeFilter extends Filter
-{
+public class SpectralTypeFilter extends Filter {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.SpectralTypeFilter");
-
     /** Store the spectral type column name */
     private String _spTypeColumnName = "SpType";
 
     /**
      * Default constructor.
      */
-    public SpectralTypeFilter()
-    {
+    public SpectralTypeFilter() {
         super();
 
         setConstraint("O", false);
@@ -101,8 +101,7 @@ public class SpectralTypeFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("SpectralTypeFilter", "getName");
 
         return "Reject Spectral Types (and unknowns) :";
@@ -117,45 +116,40 @@ public class SpectralTypeFilter extends Filter
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("SpectralTypeFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'SpType' star property
         int rawSpectralTypeID = starList.getColumnIdByName(_spTypeColumnName);
 
         // If the desired column name exists
-        if (rawSpectralTypeID != -1)
-        {
+        if (rawSpectralTypeID != -1) {
             // Get the spectral type from the row
             StarProperty cell = (StarProperty) row.elementAt(rawSpectralTypeID);
 
             // If spectral type was found in the current line
-            if (cell.hasValue() == true)
-            {
+            if (cell.hasValue() == true) {
                 String rawSpectralType = (String) cell.getValue();
                 _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
 
                 // Get back the spectral types found in the given spectral type
                 Vector foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
-                _logger.fine("foundSpectralTypes = '" + foundSpectralTypes +
-                    "'.");
+                _logger.fine("foundSpectralTypes = '" + foundSpectralTypes
+                        + "'.");
 
                 // For each spectral type found
-                for (int i = 0; i < foundSpectralTypes.size(); i++)
-                {
+                for (int i = 0; i < foundSpectralTypes.size(); i++) {
                     // Get the spectral type check box boolean state
-                    String  spectralTypeName          = (String) foundSpectralTypes.elementAt(i);
+                    String spectralTypeName = (String) foundSpectralTypes.elementAt(i);
                     Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
-                    _logger.fine("spectralTypeName = '" + spectralTypeName +
-                        "'.");
-                    _logger.fine("spectralTypeCheckBoxState = '" +
-                        spectralTypeCheckBoxState + "'.");
+                    _logger.fine("spectralTypeName = '" + spectralTypeName
+                            + "'.");
+                    _logger.fine("spectralTypeCheckBoxState = '"
+                            + spectralTypeCheckBoxState + "'.");
 
                     // If the current spectral type is not handled (eg R, N ,S, ...)
-                    if (spectralTypeCheckBoxState == null)
-                    {
+                    if (spectralTypeCheckBoxState == null) {
                         _logger.fine("spType not handled -> skipped.");
 
                         // Skip it
@@ -163,28 +157,24 @@ public class SpectralTypeFilter extends Filter
                     }
 
                     // If the current spectral type checkbox is checked
-                    if (spectralTypeCheckBoxState == true)
-                    {
+                    if (spectralTypeCheckBoxState == true) {
                         _logger.fine("Line removed.\n");
 
                         // This line must be removed
                         return true;
                     }
                 }
-            }
-            else // If the spectral type is undefined
+            } else // If the spectral type is undefined
             {
                 _logger.fine("Undefined Spectral Type.\n");
 
                 // This line must be removed
                 return true;
             }
-        }
-        else
-        {
+        } else {
             // @TODO : ASSERTION FAILED
-            _logger.warning("Unknown Spectral Type Column Name = '" +
-                _spTypeColumnName + "'.");
+            _logger.warning("Unknown Spectral Type Column Name = '"
+                    + _spTypeColumnName + "'.");
         }
 
         _logger.fine("Line kept.\n");
