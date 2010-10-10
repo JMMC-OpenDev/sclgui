@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VariabilityFilter.java,v 1.15 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: VariabilityFilter.java,v 1.16 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.14  2010/07/28 14:08:45  lafrasse
  * Renamed VFlag columns to BinFlag for detailled bright N.
  *
@@ -63,30 +66,25 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.*;
 
-
 /**
  * Variability filter.
  */
-public class VariabilityFilter extends Filter
-{
+public class VariabilityFilter extends Filter {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VariabilityFilter");
-
     /** Store the variability flag 1 column name */
     private String _varFlag1ColumnName = "VarFlag1";
-
     /** Store the variability flag 2 column name */
     private String _varFlag2ColumnName = "VarFlag2";
-
     /** Store the variability flag 3 column name */
     private String _varFlag3ColumnName = "VarFlag3";
 
     /**
      * Default constructor.
      */
-    public VariabilityFilter()
-    {
+    public VariabilityFilter() {
         super();
     }
 
@@ -95,8 +93,7 @@ public class VariabilityFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("VariabilityFilter", "getName");
 
         return "Reject Variability";
@@ -111,32 +108,28 @@ public class VariabilityFilter extends Filter
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("VariabilityFilter", "shouldRemoveRow");
 
-        List<String> columns   = new ArrayList<String>();
-        int            varFlagID = -1;
-        StarProperty   cell      = null;
+        List<String> columns = new ArrayList<String>();
+        int varFlagID = -1;
+        StarProperty cell = null;
 
         // Set columns name whose rows should be removed if cell is not empty
         columns.add(_varFlag1ColumnName);
         columns.add(_varFlag2ColumnName);
 
-        for (String columnName : columns)
-        {
+        for (String columnName : columns) {
             // Get the ID of the column contaning 'varFlag1' star property
             varFlagID = starList.getColumnIdByName(columnName);
 
             // If the desired column name exists
-            if (varFlagID != -1)
-            {
+            if (varFlagID != -1) {
                 // Get the cell of the desired column
                 cell = (StarProperty) row.elementAt(varFlagID);
 
                 // If a variability flag was found
-                if (cell.hasValue() == true)
-                {
+                if (cell.hasValue() == true) {
                     // This row should be removed
                     return true;
                 }
@@ -147,20 +140,17 @@ public class VariabilityFilter extends Filter
         varFlagID = starList.getColumnIdByName(_varFlag3ColumnName);
 
         // If the desired column name exists
-        if (varFlagID != -1)
-        {
+        if (varFlagID != -1) {
             // Get the cell of the desired column
             cell = (StarProperty) row.elementAt(varFlagID);
 
             // If "variability3" flag was found in the current line
-            if (cell.hasValue() == true)
-            {
+            if (cell.hasValue() == true) {
                 // If "variability3" value is not "C"
                 String varFlag3Flag = cell.getStringValue();
                 varFlag3Flag = varFlag3Flag.trim();
 
-                if (varFlag3Flag.equalsIgnoreCase("C") == false)
-                {
+                if (varFlag3Flag.equalsIgnoreCase("C") == false) {
                     // This row should be removed
                     return true;
                 }

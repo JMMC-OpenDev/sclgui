@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Filter.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: Filter.java,v 1.9 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.7  2008/09/10 22:22:59  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -34,30 +37,25 @@ package fr.jmmc.scalib.sclgui;
 import java.util.*;
 import java.util.logging.*;
 
-
 /**
  * Generic filter.
  */
-public abstract class Filter extends Observable
-{
+public abstract class Filter extends Observable {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.Filter");
-
     /** Enabled flag */
     private Boolean _enabledFlag = null;
-
     /** 'constraint name-constraint value' table */
     private HashMap<String, Object> _constraints = null;
-
     /** Ordered table of filter constraint names */
     private Vector _orderedConstraintNames = null;
 
     /**
      * Default constructor.
      */
-    public Filter()
-    {
+    public Filter() {
         _enabledFlag = new Boolean(false);
         _constraints = new HashMap<String, Object>();
         _orderedConstraintNames = new Vector();
@@ -75,8 +73,7 @@ public abstract class Filter extends Observable
      *
      * @return true if the filter is enabled, false otherwise.
      */
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         _logger.entering("Filter", "isEnabled");
 
         return _enabledFlag.booleanValue();
@@ -88,8 +85,7 @@ public abstract class Filter extends Observable
      * @return a Boolean object at TRUE if the filter is enabled, FALSE
      * otherwise.
      */
-    public Boolean getEnabled()
-    {
+    public Boolean getEnabled() {
         _logger.entering("Filter", "getEnabled");
 
         return _enabledFlag;
@@ -100,8 +96,7 @@ public abstract class Filter extends Observable
      *
      * @param enabledFlag if true enable the filter, disable it otherwise.
      */
-    public void setEnabled(Boolean enabledFlag)
-    {
+    public void setEnabled(Boolean enabledFlag) {
         _logger.entering("Filter", "setEnabled");
 
         _enabledFlag = enabledFlag;
@@ -115,8 +110,7 @@ public abstract class Filter extends Observable
      *
      * @return the number of filter constraint(s).
      */
-    public int getNbOfConstraints()
-    {
+    public int getNbOfConstraints() {
         _logger.entering("Filter", "getNbOfConstraints");
 
         return _orderedConstraintNames.size();
@@ -127,8 +121,7 @@ public abstract class Filter extends Observable
      *
      * @return the filter constraint name.
      */
-    public String getConstraintNameByOrder(int index)
-    {
+    public String getConstraintNameByOrder(int index) {
         _logger.entering("Filter", "getConstraintNameByOrder");
 
         return (String) _orderedConstraintNames.elementAt(index);
@@ -139,8 +132,7 @@ public abstract class Filter extends Observable
      *
      * @return the filter constraint value.
      */
-    public Object getConstraintByName(String constraintName)
-    {
+    public Object getConstraintByName(String constraintName) {
         _logger.entering("Filter", "getConstraintByName");
 
         return _constraints.get(constraintName);
@@ -152,8 +144,7 @@ public abstract class Filter extends Observable
      * @param constraintName the name of the constraint to be created/updated.
      * @param constraintValue the value of the constraint to be created/updated.
      */
-    public void setConstraint(String constraintName, Object constraintValue)
-    {
+    public void setConstraint(String constraintName, Object constraintValue) {
         _logger.entering("Filter", "setConstraint");
 
         _constraints.put(constraintName, constraintValue);
@@ -171,8 +162,7 @@ public abstract class Filter extends Observable
      *
      * @return true if the given row should be rejected, false otherwise.
      */
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("Filter", "shouldRemoveRow");
 
         return true;
@@ -186,8 +176,7 @@ public abstract class Filter extends Observable
      *
      * @return true if the given row is the science object, false otherwise.
      */
-    public boolean isScienceObject(StarList starList, Vector row)
-    {
+    public boolean isScienceObject(StarList starList, Vector row) {
         _logger.entering("Filter", "isScienceObject");
 
         boolean isScienceObject = false;
@@ -197,16 +186,15 @@ public abstract class Filter extends Observable
 
         // Get the row's distance star property
         StarProperty distanceProperty = (StarProperty) row.elementAt(distId);
-        Double       rowDistance      = distanceProperty.getDoubleValue();
+        Double rowDistance = distanceProperty.getDoubleValue();
 
         // Get the prefered distance to detect the science object
-        Preferences preferences  = Preferences.getInstance();
-        Double      prefDistance = preferences.getPreferenceAsDouble(
+        Preferences preferences = Preferences.getInstance();
+        Double prefDistance = preferences.getPreferenceAsDouble(
                 "query.scienceObjectDetectionDistance");
 
         // If the current row distance is close enough to be detected as a science object
-        if (rowDistance < prefDistance)
-        {
+        if (rowDistance < prefDistance) {
             isScienceObject = true;
         }
 
@@ -218,29 +206,23 @@ public abstract class Filter extends Observable
      *
      * @param starList the list of star to filter.
      */
-    public void process(StarList starList)
-    {
+    public void process(StarList starList) {
         _logger.entering("Filter", "process");
 
         // If the filter is enabled
-        if ((isEnabled() == true))
-        {
+        if ((isEnabled() == true)) {
             // For each row of the star list
             int rowId = 0;
 
-            while (rowId < starList.size())
-            {
+            while (rowId < starList.size()) {
                 Vector row = ((Vector) starList.elementAt(rowId));
 
                 // If the luminosity class was found in the current line
-                if ((shouldRemoveRow(starList, row) == true) &&
-                        (isScienceObject(starList, row) == false))
-                {
+                if ((shouldRemoveRow(starList, row) == true)
+                        && (isScienceObject(starList, row) == false)) {
                     // Remove the current star row from the star list
                     starList.remove(rowId);
-                }
-                else
-                {
+                } else {
                     // Otherwise process the next row
                     rowId++;
                 }
@@ -253,8 +235,7 @@ public abstract class Filter extends Observable
      *
      * @return a String representing the filter internal state.
      */
-    public String toString()
-    {
+    public String toString() {
         _logger.entering("Filter", "toString");
 
         String filter = "Filter '" + getName() + "' ";

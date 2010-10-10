@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.7 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: FacelessNonCalibratorsFilter.java,v 1.8 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.6  2009/11/04 10:12:49  lafrasse
  * Code and documentation cleanup.
  *
@@ -31,24 +34,21 @@ package fr.jmmc.scalib.sclgui;
 import java.util.Vector;
 import java.util.logging.*;
 
-
 /**
  * Reject stars that are not calibrators (no visibility).
  */
-public class FacelessNonCalibratorsFilter extends Filter
-{
+public class FacelessNonCalibratorsFilter extends Filter {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.FacelessNonCalibratorsFilter");
-
     /** Store the visibility column name */
     private String _visibilityColumnName = "vis2";
 
     /**
      * ...constructor FacelessNonCalibratorsFilter documentation comment...
      */
-    public FacelessNonCalibratorsFilter()
-    {
+    public FacelessNonCalibratorsFilter() {
         super();
 
         // This faceless filter should always be activated
@@ -61,8 +61,7 @@ public class FacelessNonCalibratorsFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("FacelessNonCalibratorsFilter", "getName");
 
         return "Faceless Non-Calibrators Filter";
@@ -77,22 +76,19 @@ public class FacelessNonCalibratorsFilter extends Filter
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("FacelessNonCalibratorsFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
 
         // If the desired column names exists
-        if (vis2Id != -1)
-        {
+        if (vis2Id != -1) {
             // Get the cell of the desired column
             StarProperty vis2Cell = ((StarProperty) row.elementAt(vis2Id));
 
             // If the visibility is undefined
-            if (vis2Cell.hasValue() == false)
-            {
+            if (vis2Cell.hasValue() == false) {
                 _logger.fine("No vis2 - Line removed.");
 
                 // This row should be removed

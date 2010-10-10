@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MultiplicityFilter.java,v 1.16 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: MultiplicityFilter.java,v 1.17 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.15  2010/07/28 14:08:45  lafrasse
  * Renamed VFlag columns to BinFlag for detailled bright N.
  *
@@ -58,33 +61,27 @@ package fr.jmmc.scalib.sclgui;
 import java.util.Vector;
 import java.util.logging.*;
 
-
 /**
  * Multiplicity filter.
  */
-public class MultiplicityFilter extends Filter
-{
+public class MultiplicityFilter extends Filter {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.MultiplicityFilter");
-
     /** Store identifiers of each multiplicity IDs column to consider */
-    private static final String[] _multiplicityIDs = 
-        {
-            "MultFlag", "BinFlag", "SBC9"
-        };
-
+    private static final String[] _multiplicityIDs = {
+        "MultFlag", "BinFlag", "SBC9"
+    };
     /** Store identifiers of each orbit separation column to consider */
-    private static final String[] _orbitSeparationIDs = { "sep1", "sep2" };
-
+    private static final String[] _orbitSeparationIDs = {"sep1", "sep2"};
     /** In arcseconds. Any orbit separation below should reject */
     private static final double _orbitSeparationLimit = 2.0;
 
     /**
      * Default constructor.
      */
-    public MultiplicityFilter()
-    {
+    public MultiplicityFilter() {
         super();
     }
 
@@ -93,8 +90,7 @@ public class MultiplicityFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("MultiplicityFilter", "getName");
 
         setEnabled(true);
@@ -111,49 +107,41 @@ public class MultiplicityFilter extends Filter
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("MultiplicityFilter", "shouldRemoveRow");
 
         StarProperty cell = null;
 
-        for (String columnName : _multiplicityIDs)
-        {
+        for (String columnName : _multiplicityIDs) {
             // Get the id of the current column name
             int columnId = starList.getColumnIdByName(columnName);
 
             // If the desired column name exists
-            if (columnId != -1)
-            {
+            if (columnId != -1) {
                 // Get the cell of the desired column
                 cell = ((StarProperty) row.elementAt(columnId));
 
                 // if the multiplicity flag exist
-                if (cell.hasValue() == true)
-                {
+                if (cell.hasValue() == true) {
                     // This row should be removed
                     return true;
                 }
             }
         }
 
-        for (String columnName : _orbitSeparationIDs)
-        {
+        for (String columnName : _orbitSeparationIDs) {
             // Get the id of the current column name
             int columnId = starList.getColumnIdByName(columnName);
 
             // If the desired column name exists
-            if (columnId != -1)
-            {
+            if (columnId != -1) {
                 // Get the cell of the desired column
                 cell = ((StarProperty) row.elementAt(columnId));
 
                 // if the orbit separation exist
-                if (cell.hasValue() == true)
-                {
+                if (cell.hasValue() == true) {
                     // If orbit separation is below limit
-                    if (cell.getDoubleValue() < _orbitSeparationLimit)
-                    {
+                    if (cell.getDoubleValue() < _orbitSeparationLimit) {
                         // This row should be removed
                         return true;
                     }

@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.32 2010-10-10 22:21:05 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.33 2010-10-10 22:45:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2010/10/10 22:21:05  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.31  2010/10/06 16:08:53  lafrasse
  * Properly quit application when clicking on the close button of the main window.
  *
@@ -125,58 +128,42 @@ import java.util.logging.*;
 
 import javax.swing.*;
 
-
 /**
  * Main window. This class is at one central point and play the mediator role.
  */
-public class MainWindow extends JFrame
-{
+public class MainWindow extends JFrame {
+
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
-
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.MainWindow");
-
     /** Main panel container, displaying the query and result views */
     private Container _mainPane = null;
-
     /** Main window menu */
     private MainMenuBar _menuBar = null;
-
     /** Virtual Observatory */
     public VirtualObservatory _vo = null;
-
     /** Query view */
     public QueryView _queryView = null;
-
     /** Calibrators view */
     public CalibratorsView _calibratorsView = null;
-
     /** Filters view */
     public FiltersView _filtersView = null;
-
     /** Status bar */
     private StatusBar _statusBar = null;
-
     /** Preferences view */
     private PreferencesView _preferencesView = null;
-
     /** Help view */
     private HelpView _helpView = null;
-
     /** Preferences... action */
     public ShowPreferencesAction _showPreferencesAction = null;
-
     /** Page Setup... action */
     public PageSetupAction _pageSetupAction = null;
-
     /** Print... action */
     public PrintAction _printAction = null;
-
     /** Printer job */
     private PrinterJob _printJob = null;
-
     /** PAge format */
     private PageFormat _landscape = null;
 
@@ -184,35 +171,33 @@ public class MainWindow extends JFrame
      * Constructor.
      */
     public MainWindow(VirtualObservatory vo, QueryView queryView,
-        CalibratorsView calibratorsView, PreferencesView preferencesView,
-        FiltersView filtersView, StatusBar statusBar)
-    {
+            CalibratorsView calibratorsView, PreferencesView preferencesView,
+            FiltersView filtersView, StatusBar statusBar) {
         super("SearchCal");
 
         String classPath = getClass().getName();
 
-        _vo                        = vo;
-        _queryView                 = queryView;
-        _calibratorsView           = calibratorsView;
-        _filtersView               = filtersView;
-        _statusBar                 = statusBar;
+        _vo = vo;
+        _queryView = queryView;
+        _calibratorsView = calibratorsView;
+        _filtersView = filtersView;
+        _statusBar = statusBar;
 
-        _helpView                  = new HelpView();
+        _helpView = new HelpView();
 
         // Preferences
-        _preferencesView           = preferencesView;
-        _showPreferencesAction     = new ShowPreferencesAction(classPath,
+        _preferencesView = preferencesView;
+        _showPreferencesAction = new ShowPreferencesAction(classPath,
                 "_showPreferencesAction");
 
         // Printing
-        _printJob                  = PrinterJob.getPrinterJob();
-        _landscape                 = _printJob.defaultPage();
+        _printJob = PrinterJob.getPrinterJob();
+        _landscape = _printJob.defaultPage();
         _landscape.setOrientation(PageFormat.LANDSCAPE);
-        _pageSetupAction     = new PageSetupAction(classPath, "_pageSetupAction");
-        _printAction         = new PrintAction(classPath, "_printAction");
+        _pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
+        _printAction = new PrintAction(classPath, "_printAction");
 
-        try
-        {
+        try {
             setTitle("SearchCal");
 
             _mainPane = getContentPane();
@@ -255,14 +240,13 @@ public class MainWindow extends JFrame
 
             // Show the user the app is ready to be used
             StatusBar.show("application ready.");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Properly quit the application when main window close button is clicked
         addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(final WindowEvent e) {
                 // callback on exit :
@@ -274,19 +258,17 @@ public class MainWindow extends JFrame
     /**
      * Called to show the preferences window.
      */
-    protected class ShowPreferencesAction extends RegisteredAction
-    {
+    protected class ShowPreferencesAction extends RegisteredAction {
+
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        public ShowPreferencesAction(String classPath, String fieldName)
-        {
+        public ShowPreferencesAction(String classPath, String fieldName) {
             super(classPath, fieldName);
             flagAsPreferenceAction();
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("ShowPreferencesAction", "actionPerformed");
 
             // Show the Preferences window
@@ -297,18 +279,16 @@ public class MainWindow extends JFrame
     /**
      * Called to setup printed page layout.
      */
-    protected class PageSetupAction extends RegisteredAction
-    {
+    protected class PageSetupAction extends RegisteredAction {
+
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        public PageSetupAction(String classPath, String fieldName)
-        {
+        public PageSetupAction(String classPath, String fieldName) {
             super(classPath, fieldName);
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("PageSetupAction", "actionPerformed");
 
             // Show Page Setup GUI
@@ -319,18 +299,16 @@ public class MainWindow extends JFrame
     /**
      * Called to print data.
      */
-    protected class PrintAction extends RegisteredAction
-    {
+    protected class PrintAction extends RegisteredAction {
+
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        public PrintAction(String classPath, String fieldName)
-        {
+        public PrintAction(String classPath, String fieldName) {
             super(classPath, fieldName);
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e)
-        {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("PrintAction", "actionPerformed");
 
             Book book = new Book();
@@ -341,14 +319,10 @@ public class MainWindow extends JFrame
             _printJob.setPageable(book);
 
             // Print dialog
-            if (_printJob.printDialog())
-            {
-                try
-                {
+            if (_printJob.printDialog()) {
+                try {
                     _printJob.print();
-                }
-                catch (PrinterException ex)
-                {
+                } catch (PrinterException ex) {
                     ex.printStackTrace();
                 }
             }

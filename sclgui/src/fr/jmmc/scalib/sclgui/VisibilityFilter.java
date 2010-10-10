@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.11 2010-10-10 22:21:05 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.12 2010-10-10 22:45:04 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2010/10/10 22:21:05  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.10  2008/09/10 22:41:09  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -42,27 +45,23 @@ package fr.jmmc.scalib.sclgui;
 
 import java.util.Vector;
 
-
 /**
  * Visibiliy filter.
  */
-public class VisibilityFilter extends Filter
-{
+public class VisibilityFilter extends Filter {
+
     /** Logger */
     private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VisibilityFilter");
-
     /** Store the visibility constraint name */
     private String _visibilityColumnName = "vis2";
-
     /** Store the visibility constraint name */
     private String _visibilityConstraintName = "vis2";
 
     /**
      * Default constructor.
      */
-    public VisibilityFilter()
-    {
+    public VisibilityFilter() {
         super();
 
         setConstraint(_visibilityConstraintName, new Double(0.5));
@@ -74,8 +73,7 @@ public class VisibilityFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("VisibilityFilter", "getName");
 
         return "Reject Visiblity below :";
@@ -86,8 +84,7 @@ public class VisibilityFilter extends Filter
      *
      * @return the visibility accuracy allowed by this filter.
      */
-    private double getAllowedVisibiliy()
-    {
+    private double getAllowedVisibiliy() {
         _logger.entering("VisibilityFilter", "getAllowedVisibiliy");
 
         Double d = (Double) getConstraintByName(_visibilityConstraintName);
@@ -103,22 +100,19 @@ public class VisibilityFilter extends Filter
      *
      * @return true if the given row should be rejected, false otherwise.
      */
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("VisibilityFilter", "shouldRemoveRow");
 
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
 
         // If the desired column names exists
-        if (vis2Id != -1)
-        {
+        if (vis2Id != -1) {
             // Get the cell of the desired column
             StarProperty vis2Cell = ((StarProperty) row.elementAt(vis2Id));
 
             // If the visibility is undefined
-            if (vis2Cell.hasValue() == false)
-            {
+            if (vis2Cell.hasValue() == false) {
                 _logger.fine("No vis2 - Line removed.");
 
                 // This row should be removed
@@ -126,10 +120,9 @@ public class VisibilityFilter extends Filter
             }
 
             // If the visibility is less than 0.5
-            if (vis2Cell.getDoubleValue() < getAllowedVisibiliy())
-            {
-                _logger.fine("vis2 < " + getAllowedVisibiliy() +
-                    " - Line removed.");
+            if (vis2Cell.getDoubleValue() < getAllowedVisibiliy()) {
+                _logger.fine("vis2 < " + getAllowedVisibiliy()
+                        + " - Line removed.");
 
                 // This row should be removed
                 return true;

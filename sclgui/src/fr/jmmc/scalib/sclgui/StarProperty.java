@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.12 2010-10-10 22:21:03 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.13 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2010/10/10 22:21:03  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.11  2010/07/29 15:10:08  lafrasse
  * Added support for generic cell URL.
  *
@@ -47,27 +50,21 @@ import java.net.URLEncoder;
 
 import java.util.logging.*;
 
-
 /**
  * Star property.
  */
-public final class StarProperty implements Comparable
-{
+public final class StarProperty implements Comparable {
     // Trace has been deactvated because of numerous call
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.StarProperty");
-
     /** Value */
     private Object _value;
-
     /** Origin */
     private String _origin;
-
     /** Confidence */
     private String _confidence;
-
     /** URL */
     private String _url;
 
@@ -75,8 +72,7 @@ public final class StarProperty implements Comparable
      * Fully parametred constructor.
      */
     public StarProperty(Object value, String origin, String confidence,
-        String url)
-    {
+            String url) {
         setValue(value);
         setConfidence(confidence);
         setOrigin(origin);
@@ -88,8 +84,7 @@ public final class StarProperty implements Comparable
      *
      * @param value the new star property value.
      */
-    public void setValue(Object value)
-    {
+    public void setValue(Object value) {
         // _logger.entering("StarProperty", "setValue");
         _value = value;
     }
@@ -99,8 +94,7 @@ public final class StarProperty implements Comparable
      *
      * @return an Object representing the star property value.
      */
-    public Object getValue()
-    {
+    public Object getValue() {
         // _logger.entering("StarProperty", "getValue");
         return _value;
     }
@@ -110,11 +104,9 @@ public final class StarProperty implements Comparable
      *
      * @return a String object representing the star property value.
      */
-    public String getStringValue()
-    {
+    public String getStringValue() {
         // _logger.entering("StarProperty", "getStringValue");
-        if (_value == null)
-        {
+        if (_value == null) {
             return "";
         }
 
@@ -126,8 +118,7 @@ public final class StarProperty implements Comparable
      *
      * @return a Double object representing the star property value.
      */
-    public double getDoubleValue()
-    {
+    public double getDoubleValue() {
         // _logger.entering("StarProperty", "getDoubleValue");
         return Double.parseDouble(_value.toString());
     }
@@ -137,8 +128,7 @@ public final class StarProperty implements Comparable
      *
      * @return a Boolean object representing the star property value.
      */
-    public boolean getBooleanValue()
-    {
+    public boolean getBooleanValue() {
         // _logger.entering("StarProperty", "getBooleanValue");
         return Boolean.parseBoolean(_value.toString());
     }
@@ -148,11 +138,9 @@ public final class StarProperty implements Comparable
      *
      * @return true if a value is set, false otherwise.
      */
-    public boolean hasValue()
-    {
+    public boolean hasValue() {
         // _logger.entering("StarProperty", "hasValue");
-        if (getStringValue().length() > 0)
-        {
+        if (getStringValue().length() > 0) {
             return true;
         }
 
@@ -164,8 +152,7 @@ public final class StarProperty implements Comparable
      *
      * @param origin the new star property origin.
      */
-    public void setOrigin(String origin)
-    {
+    public void setOrigin(String origin) {
         // _logger.entering("StarProperty", "setOrigin");
         _origin = origin;
     }
@@ -175,8 +162,7 @@ public final class StarProperty implements Comparable
      *
      * @return a String object representing the star property origin.
      */
-    public String getOrigin()
-    {
+    public String getOrigin() {
         // _logger.entering("StarProperty", "getOrigin");
         return _origin;
     }
@@ -186,16 +172,13 @@ public final class StarProperty implements Comparable
      *
      * @return true if a confidence index is set, false otherwise.
      */
-    public boolean hasOrigin()
-    {
+    public boolean hasOrigin() {
         // _logger.entering("StarProperty", "hasOrigin");
-        if (_confidence.length() > 0)
-        {
+        if (_confidence.length() > 0) {
             return false;
         }
 
-        if (_origin.length() > 0)
-        {
+        if (_origin.length() > 0) {
             return true;
         }
 
@@ -207,8 +190,7 @@ public final class StarProperty implements Comparable
      *
      * @param confidence the new star property confidence index.
      */
-    public void setConfidence(String confidence)
-    {
+    public void setConfidence(String confidence) {
         // _logger.entering("StarProperty", "setConfidence");
         _confidence = confidence;
     }
@@ -218,8 +200,7 @@ public final class StarProperty implements Comparable
      *
      * @return a String object representing the star property confidence index.
      */
-    public String getConfidence()
-    {
+    public String getConfidence() {
         // _logger.entering("StarProperty", "getConfidence");
         return _confidence;
     }
@@ -229,11 +210,9 @@ public final class StarProperty implements Comparable
      *
      * @return true if a confidence index is set, false otherwise.
      */
-    public boolean hasConfidence()
-    {
+    public boolean hasConfidence() {
         // _logger.entering("StarProperty", "hasConfidence");
-        if (_confidence.length() > 0)
-        {
+        if (_confidence.length() > 0) {
             return true;
         }
 
@@ -245,8 +224,7 @@ public final class StarProperty implements Comparable
      *
      * @param url the new star property URL.
      */
-    public void setURL(String url)
-    {
+    public void setURL(String url) {
         // _logger.entering("StarProperty", "setURL");
         _url = url;
     }
@@ -256,16 +234,13 @@ public final class StarProperty implements Comparable
      *
      * @return a String object representing the star property URL, null otherwise.
      */
-    public String getURL()
-    {
+    public String getURL() {
         // _logger.entering("StarProperty", "getURL");
-        if (hasURL() == false)
-        {
+        if (hasURL() == false) {
             return null;
         }
 
-        if (hasValue() == false)
-        {
+        if (hasValue() == false) {
             return null;
         }
 
@@ -283,19 +258,16 @@ public final class StarProperty implements Comparable
      *
      * @return true if a URL is set, false otherwise.
      */
-    public boolean hasURL()
-    {
+    public boolean hasURL() {
         // _logger.entering("StarProperty", "hasURL");
-        if (_url.length() <= 0)
-        {
+        if (_url.length() <= 0) {
             return false;
         }
 
         // If more than, or less than 1 '${...}' token in the URL
         String[] array = _url.split("[$]");
 
-        if (array.length != 2)
-        {
+        if (array.length != 2) {
             // Discard this URL
             return false;
         }
@@ -311,24 +283,23 @@ public final class StarProperty implements Comparable
      * @return a negative integer, zero, or a positive integer as this object
      * is less than, equal to, or greater than the specified object.
      */
-    public int compareTo(Object o)
-    {
+    public int compareTo(Object o) {
         //_logger.entering("StarProperty", "compareTo");
         return ((Comparable) _value).compareTo((Comparable) o);
 
         /*
-           // If the _value member instance class implements 'Comparable' interface
-           Class[] interfaces = _value.getClass().getInterfaces();
-           for (int i = 0; i < interfaces.length; i++)
-           {
-               // Compare it against the given object
-               if (interfaces[i] == java.lang.Comparable.class)
-               {
-                   return ((Comparable)_value).compareTo((Comparable)o);
-               }
-           }
-           // Otherwise only return whether the given object is the same or not
-           return (_value.equals(o) == true ? 0 : 1);
+        // If the _value member instance class implements 'Comparable' interface
+        Class[] interfaces = _value.getClass().getInterfaces();
+        for (int i = 0; i < interfaces.length; i++)
+        {
+        // Compare it against the given object
+        if (interfaces[i] == java.lang.Comparable.class)
+        {
+        return ((Comparable)_value).compareTo((Comparable)o);
+        }
+        }
+        // Otherwise only return whether the given object is the same or not
+        return (_value.equals(o) == true ? 0 : 1);
          */
     }
 }

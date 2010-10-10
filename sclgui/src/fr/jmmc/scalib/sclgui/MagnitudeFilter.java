@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MagnitudeFilter.java,v 1.8 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: MagnitudeFilter.java,v 1.9 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.7  2008/09/10 22:27:12  lafrasse
  * Moved away from MCS Logger to standard Java logger API.
  *
@@ -33,19 +36,16 @@ package fr.jmmc.scalib.sclgui;
 import java.util.Vector;
 import java.util.logging.*;
 
-
 /**
  * Magnitude filter.
  */
-public class MagnitudeFilter extends Filter
-{
+public class MagnitudeFilter extends Filter {
+
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.MagnitudeFilter");
-
     /** Store the magnitude constraint name */
     private final String _magnitudeConstraintName = "Magnitude";
-
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
@@ -57,8 +57,7 @@ public class MagnitudeFilter extends Filter
      *
      * @param queryModel the query parameters (for magnitude band)
      */
-    public MagnitudeFilter(QueryModel queryModel)
-    {
+    public MagnitudeFilter(QueryModel queryModel) {
         super();
 
         _queryModel = queryModel;
@@ -73,8 +72,7 @@ public class MagnitudeFilter extends Filter
      *
      * @return the name of the filter.
      */
-    public String getName()
-    {
+    public String getName() {
         _logger.entering("MagnitudeFilter", "getName");
 
         return "Reject stars with magnitude above :";
@@ -83,8 +81,7 @@ public class MagnitudeFilter extends Filter
     /**
      * Get the user defined maximum magnitude.
      */
-    private double getAllowedMagnitude()
-    {
+    private double getAllowedMagnitude() {
         _logger.entering("MagnitudeFilter", "getAllowedMagnitude");
 
         Double magnitude = (Double) getConstraintByName(_magnitudeConstraintName);
@@ -101,8 +98,7 @@ public class MagnitudeFilter extends Filter
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row)
-    {
+    public boolean shouldRemoveRow(StarList starList, Vector row) {
         _logger.entering("MagnitudeFilter", "shouldRemoveRow");
 
         // Get the query magnitude band
@@ -112,19 +108,16 @@ public class MagnitudeFilter extends Filter
         int magnitudeId = starList.getColumnIdByName(magnitudeBand);
 
         // If the desired column name exists
-        if (magnitudeId != -1)
-        {
+        if (magnitudeId != -1) {
             // Get the cell of the desired column
             StarProperty cell = ((StarProperty) row.elementAt(magnitudeId));
 
             // Only test and eventualy remove if the cell has a value
-            if (cell.hasValue() == true)
-            {
+            if (cell.hasValue() == true) {
                 double currentMagnitude = cell.getDoubleValue();
 
                 // if the magnitude is greater than the allowed one
-                if (currentMagnitude > getAllowedMagnitude())
-                {
+                if (currentMagnitude > getAllowedMagnitude()) {
                     // This row should be removed
                     return true;
                 }

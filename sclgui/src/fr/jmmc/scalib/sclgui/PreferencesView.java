@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.34 2010-10-10 22:21:04 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.35 2010-10-10 22:45:03 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2010/10/10 22:21:04  lafrasse
+ * Fixed first round of NetBeans-detected warnings.
+ *
  * Revision 1.33  2010/09/10 13:52:01  lafrasse
  * Added TODO.
  *
@@ -109,7 +112,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -119,36 +121,29 @@ import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-
 // @TODO handle close button correctly
 // @TODO add deleteObserver(this) to dispose() to dereference each subview properly
-
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
-public class PreferencesView extends JFrame implements ActionListener
-{
+public class PreferencesView extends JFrame implements ActionListener {
+
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
-
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.PreferencesView");
-
     /** Data model */
     Preferences _preferences = null;
-
     /** "Restore to Default Settings" button */
     protected JButton _restoreDefaultButton = null;
-
     /** "Save Modifications" button */
     protected JButton _saveModificationButton = null;
 
     /**
      * Constructor.
      */
-    public PreferencesView()
-    {
+    public PreferencesView() {
         super("Preferences");
 
         // Window size
@@ -157,16 +152,16 @@ public class PreferencesView extends JFrame implements ActionListener
 
         // Window screen position (centered)
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize  = getSize();
+        Dimension frameSize = getSize();
         setLocation((screenSize.width - frameSize.width) / 2,
-            (screenSize.height - frameSize.height) / 2);
+                (screenSize.height - frameSize.height) / 2);
 
         // Get and listen to data model modifications
         _preferences = Preferences.getInstance();
 
         // Build the tabbed pane
-        JTabbedPane tabbedPane  = new JTabbedPane();
-        Container   contentPane = getContentPane();
+        JTabbedPane tabbedPane = new JTabbedPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(tabbedPane);
 
@@ -201,80 +196,59 @@ public class PreferencesView extends JFrame implements ActionListener
      *
      * @param evt ActionEvent
      */
-    public void actionPerformed(ActionEvent evt)
-    {
+    public void actionPerformed(ActionEvent evt) {
         _logger.entering("PreferencesView", "actionPerformed");
 
         // If the "Restore to default settings" button has been pressed
-        if (evt.getSource().equals(_restoreDefaultButton))
-        {
-            try
-            {
+        if (evt.getSource().equals(_restoreDefaultButton)) {
+            try {
                 _preferences.resetToDefaultPreferences();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 _logger.log(Level.WARNING,
-                    "Could not reset preferences to default.", ex);
+                        "Could not reset preferences to default.", ex);
             }
         }
 
         // If the "Save modifications" button has been pressed
-        if (evt.getSource().equals(_saveModificationButton))
-        {
-            try
-            {
+        if (evt.getSource().equals(_saveModificationButton)) {
+            try {
                 _preferences.saveToFile();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 _logger.log(Level.WARNING, "Could not save preferences.", ex);
             }
         }
     }
 }
 
-
 /**
  * This Panel is dedicated to manage one ordered list of columns.
  */
 class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
-    ListSelectionListener
-{
+        ListSelectionListener {
+
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
-
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.ColumnsPreferencesView");
-
     /** Data model */
     private Preferences _preferences = null;
-
     /** The name of preference that must be managed as ordered columns. */
     private String _preferencePath = null;
-
     /** The widget that dispaly the list of columns */
     private JList _columnList = null;
-
     /** The model associated to the widget that dispaly the list of columns */
     private DefaultListModel _listModel = null;
-
     /** The actual shown list of columns */
     private String _shownColumns = "";
-
     /** All available columns set */
     JComboBox _columnsSetCombobox = null;
-
     /** The column sets combobox model */
     private DefaultComboBoxModel _columsSetModel = null;
-
     /** The column sets combobox names to path correspondance table */
     private HashMap<String, String> _columnSetNameToPathHashtable = null;
-
     /** Move up Button */
     private JButton _moveUpButton = null;
-
     /** Move down Button */
     private JButton _moveDownButton = null;
 
@@ -284,8 +258,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      * @param preferenceName the preference name root that is the prefix to all
      * the lists of words separated by spaces composing columns sets.
      */
-    public ColumnsPreferencesView(String preferencePrefix)
-    {
+    public ColumnsPreferencesView(String preferencePrefix) {
         // Register against shared application preferences
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
@@ -308,18 +281,17 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         add(headPanel);
 
         // Fullfil the combobox model with each desired columns set names
-        _columsSetModel                   = new DefaultComboBoxModel();
-        _columnSetNameToPathHashtable     = new HashMap<String, String>();
+        _columsSetModel = new DefaultComboBoxModel();
+        _columnSetNameToPathHashtable = new HashMap<String, String>();
 
-        Enumeration e                     = _preferences.getPreferences(preferencePrefix);
+        Enumeration e = _preferences.getPreferences(preferencePrefix);
 
-        while (e.hasMoreElements())
-        {
+        while (e.hasMoreElements()) {
             String preferencePath = (String) e.nextElement();
 
             // Compute the column set name
-            String columnSetName = preferencePath.substring(preferencePrefix.length() +
-                    1);
+            String columnSetName = preferencePath.substring(preferencePrefix.length()
+                    + 1);
             columnSetName = columnSetName.replace('.', ' ');
 
             // Fullfil the Combobox model and 'name to path' table
@@ -328,11 +300,11 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         }
 
         _columnsSetCombobox.setModel(_columsSetModel);
-        _preferencePath     = (String) _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
+        _preferencePath = (String) _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
 
         // Instanciate the list widget and its associated model
-        _listModel          = new DefaultListModel();
-        _columnList         = new JList(_listModel);
+        _listModel = new DefaultListModel();
+        _columnList = new JList(_listModel);
 
         // Only one item can be selected at ance.
         _columnList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
@@ -350,8 +322,8 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         add(scrollingList);
 
         // Add 'Up' & 'Down' buttons
-        panel             = new JPanel();
-        _moveUpButton     = new JButton("Up");
+        panel = new JPanel();
+        _moveUpButton = new JButton("Up");
         _moveUpButton.addActionListener(this);
         _moveUpButton.setEnabled(false);
         panel.add(_moveUpButton);
@@ -368,23 +340,20 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      * @param o preferences
      * @param arg not used
      */
-    public void update(Observable o, Object arg)
-    {
+    public void update(Observable o, Object arg) {
         _logger.entering("ColumnsPreferencesView", "update");
 
         // Fill list with ordered columns if _actualWord is not equal
         String columns = _preferences.getPreference(_preferencePath);
 
-        if (columns == null)
-        {
+        if (columns == null) {
             _logger.fine(_preferencePath + " not found into preferences");
 
             return;
         }
 
         // If the preference is different than the current list
-        if (columns.equals(_shownColumns) == false)
-        {
+        if (columns.equals(_shownColumns) == false) {
             _shownColumns = columns;
 
             // Clear the list
@@ -393,8 +362,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             // Serialize the new list to update the GUI
             StringTokenizer st = new StringTokenizer(_shownColumns);
 
-            while (st.hasMoreTokens())
-            {
+            while (st.hasMoreTokens()) {
                 String columnName = st.nextToken();
                 _listModel.addElement(columnName);
             }
@@ -406,21 +374,18 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      *
      * @param evt ListSelectionEvent
      */
-    public void valueChanged(ListSelectionEvent evt)
-    {
+    public void valueChanged(ListSelectionEvent evt) {
         _logger.entering("ColumnsPreferencesView", "valueChanged");
 
         // When the user release the mouse button and completes the selection,
         // getValueIsAdjusting() becomes false
-        if (evt.getValueIsAdjusting() == false)
-        {
-            JList list  = (JList) evt.getSource();
-            int   index = list.getSelectedIndex();
-            int   size  = _listModel.size();
+        if (evt.getValueIsAdjusting() == false) {
+            JList list = (JList) evt.getSource();
+            int index = list.getSelectedIndex();
+            int size = _listModel.size();
 
             // If no item is selected
-            if (index == -1)
-            {
+            if (index == -1) {
                 _logger.fine("Buttons DISABLED (no selection).");
                 _moveUpButton.setEnabled(false);
                 _moveDownButton.setEnabled(false);
@@ -429,34 +394,28 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             }
 
             // If the first item is selected
-            if (index == 0)
-            {
+            if (index == 0) {
                 // Disable the 'Up' button.
                 _logger.fine(
-                    "'Up' Button DISABLED (the first item IS selected).");
+                        "'Up' Button DISABLED (the first item IS selected).");
                 _moveUpButton.setEnabled(false);
-            }
-            else
-            {
+            } else {
                 // Enable the 'Up' button.
                 _logger.fine(
-                    "'Up' Button ENABLED (the first item is NOT selected).");
+                        "'Up' Button ENABLED (the first item is NOT selected).");
                 _moveUpButton.setEnabled(true);
             }
 
             // If the last item is selected
-            if (index == (size - 1))
-            {
+            if (index == (size - 1)) {
                 // Disable the 'Down' button.
                 _logger.fine(
-                    "'Down' Button DISABLED (the last item IS selected).");
+                        "'Down' Button DISABLED (the last item IS selected).");
                 _moveDownButton.setEnabled(false);
-            }
-            else
-            {
+            } else {
                 // Enable the 'Down' button.
                 _logger.fine(
-                    "'Down' Button ENABLED (the last item is NOT selected).");
+                        "'Down' Button ENABLED (the last item is NOT selected).");
                 _moveDownButton.setEnabled(true);
             }
         }
@@ -467,13 +426,11 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      *
      * @param evt ActionEvent
      */
-    public void actionPerformed(ActionEvent evt)
-    {
+    public void actionPerformed(ActionEvent evt) {
         _logger.entering("ColumnsPreferencesView", "actionPerformed");
 
         // If the ComboBox was used
-        if (evt.getSource().equals(_columnsSetCombobox))
-        {
+        if (evt.getSource().equals(_columnsSetCombobox)) {
             // Get the the newly selected column set preference path
             _preferencePath = _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
 
@@ -490,15 +447,13 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         int futureSelection = 0;
 
         // If the 'Down' button was pressed
-        if (evt.getSource().equals(_moveDownButton))
-        {
+        if (evt.getSource().equals(_moveDownButton)) {
             // Compute the future index of the selected item
             futureSelection = currentSelection + 1;
 
             // If current and future selection indexes are out of range
-            if ((currentSelection == -1) ||
-                    (futureSelection >= _listModel.size()))
-            {
+            if ((currentSelection == -1)
+                    || (futureSelection >= _listModel.size())) {
                 _logger.fine("Assertion failed : selection out of range.");
 
                 return;
@@ -508,25 +463,20 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
             Object column = _listModel.getElementAt(currentSelection);
             _listModel.removeElementAt(currentSelection); // Remove original
 
-            if (futureSelection == _listModel.size())
-            {
+            if (futureSelection == _listModel.size()) {
                 _listModel.addElement(column); // Add at list tail
-            }
-            else
-            {
+            } else {
                 _listModel.add(futureSelection, column); // Insert at position
             }
         }
 
         // If the 'Up' button was pressed
-        if (evt.getSource().equals(_moveUpButton))
-        {
+        if (evt.getSource().equals(_moveUpButton)) {
             // Compute the future index of the selected item
             futureSelection = currentSelection - 1;
 
             // If current and future selection indexes are out of range
-            if ((currentSelection == -1) || (futureSelection < 0))
-            {
+            if ((currentSelection == -1) || (futureSelection < 0)) {
                 _logger.fine("Assertion failed : selection out of range.");
 
                 return;
@@ -540,23 +490,19 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
 
         // Serialize the new columns name order
         StringBuilder sb = new StringBuilder();
-        Enumeration  en = _listModel.elements();
+        Enumeration en = _listModel.elements();
 
-        while (en.hasMoreElements())
-        {
+        while (en.hasMoreElements()) {
             Object o = en.nextElement();
             sb.append(" ").append(o);
         }
 
         // Save the new order in preference
-        try
-        {
+        try {
             _preferences.setPreference(_preferencePath, sb.toString());
-        }
-        catch (Exception ex)
-        {
-            _logger.warning("Could not set '" + _preferencePath +
-                "' preference : " + ex);
+        } catch (Exception ex) {
+            _logger.warning("Could not set '" + _preferencePath
+                    + "' preference : " + ex);
         }
 
         /*
@@ -567,25 +513,20 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     }
 }
 
-
 /**
  * This Panel is dedicated to manage help behaviour configuration.
  */
-class HelpPreferencesView extends JPanel implements Observer, ChangeListener
-{
+class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
+
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
-
     /** Logger */
     private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(
             "fr.jmmc.scalib.sclgui.HelpPreferencesView");
-
     /** Data model */
     private Preferences _preferences;
-
     /** Tooltip enabling checkbox */
     private JCheckBox _enableToolTipCheckBox;
-
     /** Tooltip manager */
     private ToolTipManager _sharedToolTipManager;
 
@@ -593,8 +534,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
      * Constructor.
      * @param preferences the application preferences
      */
-    public HelpPreferencesView()
-    {
+    public HelpPreferencesView() {
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
@@ -604,30 +544,30 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
         tempPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        c.fill                    = GridBagConstraints.HORIZONTAL;
-        c.weightx                 = 1;
-        c.gridy                   = 0;
-        c.gridx                   = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        c.gridy = 0;
+        c.gridx = 0;
 
         // Get instance of shared tooltip to adjust behaviour in update code
-        _sharedToolTipManager     = ToolTipManager.sharedInstance();
+        _sharedToolTipManager = ToolTipManager.sharedInstance();
 
         // Handle "Result Verbosity" radio buttons
         JPanel radioPanel = new JPanel();
         radioPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill        = GridBagConstraints.HORIZONTAL;
-        gbc.anchor      = GridBagConstraints.EAST;
-        gbc.weightx     = 1;
-        gbc.gridy       = 0;
-        gbc.gridx       = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.weightx = 1;
+        gbc.gridy = 0;
+        gbc.gridx = 0;
 
-        JLabel label    = new JLabel("Results Verbosity : ", JLabel.TRAILING);
+        JLabel label = new JLabel("Results Verbosity : ", JLabel.TRAILING);
         radioPanel.add(label, gbc);
         gbc.gridx++;
 
-        ButtonGroup  radioGroup           = new ButtonGroup();
+        ButtonGroup radioGroup = new ButtonGroup();
         JRadioButton syntheticRadioButton = new JRadioButton(CalibratorsView._syntheticResultsVerbosityAction);
         CalibratorsView._syntheticResultsVerbosityAction.addBoundButton(syntheticRadioButton);
         radioGroup.add(syntheticRadioButton);
@@ -666,8 +606,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
      * @param o preferences
      * @param arg not used
      */
-    public void update(Observable o, Object arg)
-    {
+    public void update(Observable o, Object arg) {
         _logger.entering("HelpPreferencesView", "update");
 
         // Adjust view and behaviour according preferences entries
@@ -679,22 +618,17 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener
     /**
      * Update preferences according buttons change
      */
-    public void stateChanged(ChangeEvent ev)
-    {
+    public void stateChanged(ChangeEvent ev) {
         _logger.entering("HelpPreferencesView", "stateChanged");
 
         Object source = ev.getSource();
 
-        try
-        {
-            if (source.equals(_enableToolTipCheckBox))
-            {
+        try {
+            if (source.equals(_enableToolTipCheckBox)) {
                 _preferences.setPreference("help.tooltips.show",
-                    _enableToolTipCheckBox.isSelected());
+                        _enableToolTipCheckBox.isSelected());
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             _logger.warning("Could not set preference : " + ex);
         }
     }
