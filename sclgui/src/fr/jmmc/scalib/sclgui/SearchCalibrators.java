@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.30 2010-10-10 22:45:04 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.31 2010-10-11 09:03:22 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2010/10/10 22:45:04  lafrasse
+ * Code reformating.
+ *
  * Revision 1.29  2010/10/10 22:21:05  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -105,6 +108,7 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.util.MCSExceptionHandler;
 
 import java.util.*;
 import java.util.logging.*;
@@ -278,6 +282,9 @@ public class SearchCalibrators extends App {
      * Main.
      */
     public static void main(String[] args) {
+
+        MCSExceptionHandler.installSwingHandler();
+
         // Start application
         SearchCalibrators searchCalibrators = new SearchCalibrators(args);
     }
