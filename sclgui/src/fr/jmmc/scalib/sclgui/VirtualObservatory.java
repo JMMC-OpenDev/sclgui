@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.41 2010-10-10 22:45:04 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.42 2010-10-11 14:04:21 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.41  2010/10/10 22:45:04  lafrasse
+ * Code reformating.
+ *
  * Revision 1.40  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -145,28 +148,32 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.Catalog;
+import fr.jmmc.mcs.gui.MessagePane;
 
 /*
 // Not in use (do not work from here)
 import cds.simbad.uif.*;
- */
-import fr.jmmc.mcs.gui.*;
+ */import fr.jmmc.mcs.gui.StatusBar;
+
 import fr.jmmc.mcs.interop.SampCapability;
 import fr.jmmc.mcs.interop.SampCapabilityAction;
 import fr.jmmc.mcs.interop.SampMessageHandler;
-import fr.jmmc.mcs.util.*;
-
-import fr.jmmc.sclws_wsdl.*;
-
-
-import java.io.*;
+import fr.jmmc.mcs.util.ActionRegistrar;
+import fr.jmmc.mcs.util.FileFilterRepository;
+import fr.jmmc.mcs.util.RegisteredAction;
+import fr.jmmc.sclws_wsdl.SclwsLocator;
+import fr.jmmc.sclws_wsdl.SclwsPortType;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
-
-
-import java.util.*;
-import java.util.logging.*;
-
-import javax.swing.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Action;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.astrogrid.samp.Message;
 import org.astrogrid.samp.client.HubConnection;
 
@@ -215,6 +222,9 @@ public final class VirtualObservatory extends Observable {
 
     /**
      * Contructor.
+     * @param queryModel
+     * @param calibratorsModel
+     * @param filtersModel
      */
     public VirtualObservatory(QueryModel queryModel,
             CalibratorsModel calibratorsModel, FiltersModel filtersModel) {
@@ -489,13 +499,8 @@ public final class VirtualObservatory extends Observable {
             _calibratorsModel.parseVOTable(query);
             _queryModel.loadParamSet(_calibratorsModel.getParamSet());
         } catch (Exception ex) {
-            StatusBar.show(
-                    "calibrator search aborted (could not parse query) !");
-            _logger.log(Level.SEVERE, "Could not parse query.", ex);
-
-            JOptionPane.showMessageDialog(null, "Could not parse query.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-
+            StatusBar.show("calibrator search aborted (could not parse query) !");
+            MessagePane.showErrorMessage("Could not parse query.", ex);
             return;
         }
 
@@ -554,13 +559,7 @@ public final class VirtualObservatory extends Observable {
                     } catch (Exception ex) {
                         StatusBar.show(
                                 "loading aborted (calibrators parsing error) !");
-                        _logger.log(Level.SEVERE,
-                                "Could not open file (calibrators parsing error) : ",
-                                ex);
-
-                        JOptionPane.showMessageDialog(null,
-                                "Could not open file (calibrators parsing error).",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                        MessagePane.showErrorMessage("Could not open file (calibrators parsing error).", ex);
                     }
 
                     // Loading the file in the query model
@@ -572,12 +571,7 @@ public final class VirtualObservatory extends Observable {
                     } catch (Exception ex) {
                         StatusBar.show(
                                 "loading aborted (query parsing error) !");
-                        _logger.log(Level.SEVERE,
-                                "Could not open file (query parsing error).", ex);
-
-                        JOptionPane.showMessageDialog(null,
-                                "Could not open file (query parsing error).",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                        MessagePane.showErrorMessage("Could not open file (query parsing error).", ex);
                     }
 
                     StatusBar.show("file succesfully loaded.");
@@ -618,11 +612,7 @@ public final class VirtualObservatory extends Observable {
                     StatusBar.show("file succesfully re-loaded.");
                 } catch (Exception ex) {
                     StatusBar.show("re-loading aborted (file error) !");
-                    _logger.log(Level.SEVERE, "Could not re-open file.", ex);
-
-                    JOptionPane.showMessageDialog(null,
-                            "Could not re-open file.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                    MessagePane.showErrorMessage("Could not re-open file.", ex);
                 }
             }
         }
@@ -973,11 +963,7 @@ public final class VirtualObservatory extends Observable {
                         if (_getCalThread != null) {
                             StatusBar.show(
                                     "calibrator search aborted (connection refused) !");
-                            _logger.log(Level.SEVERE, "Connection failed.", ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                    "Could not connect to JMMC server.", "Error",
-                                    JOptionPane.ERROR_MESSAGE);
+                            MessagePane.showErrorMessage("Could not connect to JMMC server.", ex);
 
                             interrupt();
                             setQueryLaunchedState(false);
@@ -1050,12 +1036,7 @@ public final class VirtualObservatory extends Observable {
                             if (_getCalThread != null) {
                                 StatusBar.show(
                                         "calibrator search aborted (catalog error) !");
-                                _logger.log(Level.SEVERE,
-                                        "JMMC Status retrieving error.", ex);
-
-                                JOptionPane.showMessageDialog(null,
-                                        "Communication with the JMMC server failed.",
-                                        "Error", JOptionPane.ERROR_MESSAGE);
+                                MessagePane.showErrorMessage("Communication with the JMMC server failed.", ex);
 
                                 interrupt();
                                 setQueryLaunchedState(false);
@@ -1080,12 +1061,7 @@ public final class VirtualObservatory extends Observable {
                         if (_getCalThread != null) {
                             StatusBar.show(
                                     "calibrator search aborted (could not get result) !");
-                            _logger.log(Level.SEVERE,
-                                    "Could not get JMMC result.", ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                    "Could not get result from JMMC server.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            MessagePane.showErrorMessage("Could not get result from JMMC server.", ex);
 
                             interrupt();
                             setQueryLaunchedState(false);
@@ -1099,7 +1075,7 @@ public final class VirtualObservatory extends Observable {
 
                     String result = _queryResultThread.getResult();
 
-                    if (result.length() > 0) {
+                    if ((result != null) && (result.length() > 0)) {
                         StatusBar.show(
                                 "parsing calibrators... (please wait, this may take a while)");
 
@@ -1111,12 +1087,7 @@ public final class VirtualObservatory extends Observable {
                             // Handle error when no manual cancel
                             if (_getCalThread != null) {
                                 StatusBar.show("calibrator parsing aborted !");
-                                _logger.log(Level.SEVERE,
-                                        "Could not parse received JMMC VOTable.", ex);
-
-                                JOptionPane.showMessageDialog(null,
-                                        "Calibrator search failed (invalid VOTable received).",
-                                        "Error", JOptionPane.ERROR_MESSAGE);
+                                MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", ex);
 
                                 interrupt();
                                 setQueryLaunchedState(false);
@@ -1144,12 +1115,7 @@ public final class VirtualObservatory extends Observable {
                     if (_getCalThread != null) {
                         StatusBar.show(
                                 "calibrator search aborted (communication error) !");
-                        _logger.log(Level.SEVERE,
-                                "Could not communicate with JMMC server.", ex);
-
-                        JOptionPane.showMessageDialog(null,
-                                "Communication failed.", "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        MessagePane.showErrorMessage("Communication failed.", ex);
                     } else {
                         _logger.log(Level.FINE,
                                 "Silenced error (cancellation).", ex);
@@ -1172,11 +1138,7 @@ public final class VirtualObservatory extends Observable {
                 } catch (Exception ex) {
                     StatusBar.show(
                             "could not cancel calibrator search (communication error) !");
-                    _logger.severe("Could not cancel JMMC request : " + ex);
-
-                    JOptionPane.showMessageDialog(null,
-                            "JMMC request cancellation failed.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                    MessagePane.showErrorMessage("JMMC request cancellation failed.", ex);
 
                     setQueryLaunchedState(false);
 
@@ -1233,12 +1195,7 @@ public final class VirtualObservatory extends Observable {
                         if (_queryResultThread != null) {
                             StatusBar.show(
                                     "calibrator search aborted (could not send query) !");
-                            _logger.log(Level.SEVERE,
-                                    "Could not send JMMC query.", ex);
-
-                            JOptionPane.showMessageDialog(null,
-                                    "Could not send query to JMMC server.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            MessagePane.showErrorMessage("Could not send query to JMMC server.", ex);
 
                             interrupt();
                             setQueryLaunchedState(false);
