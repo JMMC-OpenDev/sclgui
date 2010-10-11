@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.42 2010-10-11 14:04:21 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.43 2010-10-11 14:15:29 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.42  2010/10/11 14:04:21  lafrasse
+ * Replaced direct call to SWING for error messages with JMCS MessagePane (EDT safe).
+ * Cleaned imports.
+ *
  * Revision 1.41  2010/10/10 22:45:04  lafrasse
  * Code reformating.
  *
@@ -175,7 +179,6 @@ import javax.swing.Action;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.astrogrid.samp.Message;
-import org.astrogrid.samp.client.HubConnection;
 
 /**
  * Handle JMMC WebServices interactions and file input/ouput.
@@ -264,21 +267,28 @@ public final class VirtualObservatory extends Observable {
                 "_getCalAction");
 
         // Add handler to load query params and launch calibrator search
+
+
         SampMessageHandler handler = new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
 
-            public Map processCall(final HubConnection c, final String senderId, final Message msg) {
+            /**
+             * Implements message processing
+             *
+             * @param senderId public ID of sender client
+             * @param message message with MType this handler is subscribed to
+             * @throws SampException if any error occured while message processing
+             */
+            protected void processMessage(final String senderId, final Message message) {
                 if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
+                  _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
                 }
 
-                final String query = (String) msg.getParam("query");
+                final String query = (String) message.getParam("query");
                 if (query != null) {
                     executeQuery(query);
                 } else {
                     StatusBar.show("Could not start query from SAMP.");
                 }
-
-                return null;
             }
         };
 
