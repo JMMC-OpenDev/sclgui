@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.48 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.49 2010-10-11 13:53:01 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.48  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.47  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -170,17 +173,28 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import cds.savot.model.*;
+import cds.savot.model.FieldSet;
+import cds.savot.model.ParamSet;
+import cds.savot.model.ResourceSet;
+import cds.savot.model.SavotParam;
+import cds.savot.model.SavotResource;
+import cds.savot.model.SavotTable;
+import cds.savot.model.SavotVOTable;
+import cds.savot.model.TDSet;
+import cds.savot.model.TRSet;
+import cds.savot.pull.SavotPullEngine;
+import cds.savot.pull.SavotPullParser;
 
-import cds.savot.pull.*;
+import fr.jmmc.mcs.astro.ALX;
+import fr.jmmc.mcs.astro.star.Star;
+import fr.jmmc.mcs.util.PreferencesException;
 
-import fr.jmmc.mcs.astro.*;
-import fr.jmmc.mcs.astro.star.*;
+import java.io.StringBufferInputStream;
 
-import java.io.*;
-
-import java.util.*;
-import java.util.logging.*;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 
@@ -251,7 +265,7 @@ public class QueryModel extends Star implements Observer {
     /**
      * Default constructor.
      */
-    public QueryModel() throws Exception {
+    public QueryModel() throws IllegalStateException, IllegalArgumentException {
         _preferences = Preferences.getInstance();
         _preferences.addObserver(this);
 
@@ -262,9 +276,11 @@ public class QueryModel extends Star implements Observer {
 
         // Initialize values from user defined preferences
         try {
+            // can throw IllegalArgumentException if parsing RA / DEC failed
             loadDefaultValues();
-        } catch (Exception e) {
-            throw e;
+        } catch (PreferencesException pe) {
+            // TODO : how to handle that : reset preferences ... ??
+            throw new IllegalStateException("Incompatible Preferences found", pe);
         }
     }
 
@@ -319,47 +335,43 @@ public class QueryModel extends Star implements Observer {
     /**
      * Reset all properties to their default values.
      */
-    public void loadDefaultValues() throws Exception {
+    public void loadDefaultValues() throws PreferencesException, IllegalArgumentException {
         _logger.entering("QueryModel", "loadDefaultValues");
 
-        try {
-            setInstrumentalMagnitudeBand(_preferences.getPreference(
-                    "query.magnitudeBand"));
+        setInstrumentalMagnitudeBand(_preferences.getPreference(
+                "query.magnitudeBand"));
 
-            setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
-                    "query.instrumentalMaxBaseLine"));
+        setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
+                "query.instrumentalMaxBaseLine"));
 
-            setScienceObjectName(_preferences.getPreference(
-                    "query.scienceObjectName"));
-            setScienceObjectRA(_preferences.getPreference(
-                    "query.scienceObjectRA"));
-            setScienceObjectDEC(_preferences.getPreference(
-                    "query.scienceObjectDEC"));
-            setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
-                    "query.scienceObjectMagnitude"));
+        setScienceObjectName(_preferences.getPreference(
+                "query.scienceObjectName"));
+        setScienceObjectRA(_preferences.getPreference(
+                "query.scienceObjectRA"));
+        setScienceObjectDEC(_preferences.getPreference(
+                "query.scienceObjectDEC"));
+        setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
+                "query.scienceObjectMagnitude"));
 
-            setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
-                    "query.queryMinMagnitude"));
-            setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                    "query.queryMinMagnitudeDelta"));
-            setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
-                    "query.queryMaxMagnitude"));
-            setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                    "query.queryMaxMagnitudeDelta"));
+        setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
+                "query.queryMinMagnitude"));
+        setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
+                "query.queryMinMagnitudeDelta"));
+        setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
+                "query.queryMaxMagnitude"));
+        setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
+                "query.queryMaxMagnitudeDelta"));
 
-            setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
-                    "query.queryBrightScenarioFlag"));
-            setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(
-                    _preferences.getPreferenceAsDouble("query.queryDiffRASize")));
-            setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(
-                    _preferences.getPreferenceAsDouble("query.queryDiffDECSize")));
-            setQueryRadialSize(_preferences.getPreferenceAsDouble(
-                    "query.queryRadialSize"));
-            setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(
-                    "query.queryAutoRadius"));
-        } catch (Exception e) {
-            throw e;
-        }
+        setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
+                "query.queryBrightScenarioFlag"));
+        setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(
+                _preferences.getPreferenceAsDouble("query.queryDiffRASize")));
+        setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(
+                _preferences.getPreferenceAsDouble("query.queryDiffDECSize")));
+        setQueryRadialSize(_preferences.getPreferenceAsDouble(
+                "query.queryRadialSize"));
+        setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(
+                "query.queryAutoRadius"));
 
         // Enable the edition as the values where not loaded from file
         setEditableState(true);
@@ -1017,15 +1029,11 @@ public class QueryModel extends Star implements Observer {
      * @param delta the new delta as a double value.
      */
     public void setQueryMinMagnitudeDelta(double delta)
-            throws Exception {
+            throws PreferencesException {
         _logger.entering("QueryModel", "setQueryMinMagnitudeDelta");
 
-        try {
-            _preferences.setPreference("query.queryMinMagnitudeDelta",
-                    new Double(delta));
-        } catch (Exception e) {
-            throw e;
-        }
+        _preferences.setPreference("query.queryMinMagnitudeDelta",
+                new Double(delta));
 
         setChanged();
     }
@@ -1105,15 +1113,11 @@ public class QueryModel extends Star implements Observer {
      * @param delta the new delta as a double value.
      */
     public void setQueryMaxMagnitudeDelta(double delta)
-            throws Exception {
+            throws PreferencesException {
         _logger.entering("QueryModel", "setQueryMaxMagnitudeDelta");
 
-        try {
-            _preferences.setPreference("query.queryMaxMagnitudeDelta",
-                    new Double(delta));
-        } catch (Exception e) {
-            throw e;
-        }
+        _preferences.setPreference("query.queryMaxMagnitudeDelta",
+                new Double(delta));
 
         setChanged();
     }
