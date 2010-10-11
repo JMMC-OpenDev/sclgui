@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.31 2010-10-11 09:03:22 lafrasse Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.32 2010-10-11 14:02:37 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2010/10/11 09:03:22  lafrasse
+ * Added JMCS exception handler.
+ *
  * Revision 1.30  2010/10/10 22:45:04  lafrasse
  * Code reformating.
  *
@@ -107,11 +110,14 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.gui.*;
+import fr.jmmc.mcs.gui.App;
+import fr.jmmc.mcs.gui.StatusBar;
 import fr.jmmc.mcs.util.MCSExceptionHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Locale;
+import java.util.logging.Logger;
 
-import java.util.*;
-import java.util.logging.*;
+import javax.swing.SwingUtilities;
 
 /**
  * @file
@@ -172,9 +178,9 @@ public class SearchCalibrators extends App {
     /** Logger */
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.SearchCalibrators");
-    /** Main application object used to perform the optionnal query received from ASPRO */
+    /** Main application object used to perform the optional query received from ASPRO */
     public static VirtualObservatory _vo = null;
-    /** Store the optionnal query received from ASPRO by constructor */
+    /** Store the optional query received from ASPRO by constructor */
     private String _query = null;
 
     /**
@@ -220,47 +226,61 @@ public class SearchCalibrators extends App {
                 "fr/jmmc/scalib/sclgui/Resources");
 
         try {
-            // Get preferences
-            Preferences preferences = Preferences.getInstance();
+            // Using invokeAndWait to be in sync with the main thread :
+            SwingUtilities.invokeAndWait(new Runnable() {
 
-            // Create a query model
-            QueryModel queryModel = new QueryModel();
+                /**
+                 * Initializes the swing components with their actions in EDT
+                 */
+                public void run() {
 
-            // Create filters
-            FiltersModel filtersModel = new FiltersModel(queryModel);
-            FiltersView filtersView = new FiltersView(filtersModel);
+                    // Get preferences
+                    Preferences preferences = Preferences.getInstance();
 
-            // Create a calibrators model and attach it to a calibrators view
-            CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
-            CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
+                    // Create a query model
+                    QueryModel queryModel = new QueryModel();
 
-            filtersModel.addObserver(calibratorsModel);
+                    // Create filters
+                    FiltersModel filtersModel = new FiltersModel(queryModel);
+                    FiltersView filtersView = new FiltersView(filtersModel);
 
-            // Link everything up
-            _vo = new VirtualObservatory(queryModel, calibratorsModel,
-                    filtersModel);
+                    // Create a calibrators model and attach it to a calibrators view
+                    CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
+                    CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
 
-            // Attach the query model to its query view
-            QueryView queryView = new QueryView(queryModel, _vo);
+                    filtersModel.addObserver(calibratorsModel);
 
-            // Retrieve application preferences and attach them to their view
-            // (This instance must be instanciated after dependencies)
-            PreferencesView preferencesView = new PreferencesView();
-            StatusBar statusBar = new StatusBar();
-            // Show the user the app is been initialized
-            StatusBar.show("application initialization...");
+                    // Link everything up
+                    _vo = new VirtualObservatory(queryModel, calibratorsModel,
+                            filtersModel);
 
-            // Build the main window
-            MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
-                    preferencesView, filtersView, statusBar);
-            App.setFrame(window);
+                    // Attach the query model to its query view
+                    QueryView queryView = new QueryView(queryModel, _vo);
 
-            // Triggers all preferences observers notification to finnish GUI setup.
-            preferences.triggerObserversNotification();
-        } catch (Exception ex) {
-            _logger.log(Level.SEVERE, "Initialization error", ex);
-            System.exit(1);
+                    // Retrieve application preferences and attach them to their view
+                    // (This instance must be instanciated after dependencies)
+                    PreferencesView preferencesView = new PreferencesView();
+                    StatusBar statusBar = new StatusBar();
+                    // Show the user the app is been initialized
+                    StatusBar.show("application initialization...");
+
+                    // Build the main window
+                    MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
+                            preferencesView, filtersView, statusBar);
+                    App.setFrame(window);
+
+                    // Triggers all preferences observers notification to finnish GUI setup.
+                    preferences.triggerObserversNotification();
+                }
+            });
+        } catch (InterruptedException ie) {
+            // propagate the exception :
+            throw new IllegalStateException("SearchCalibrators.init : interrupted", ie);
+        } catch (InvocationTargetException ite) {
+            // propagate the internal exception :
+            throw new IllegalStateException("SearchCalibrators.init : exception", ite.getCause());
         }
+
     }
 
     /** Execute application body */
@@ -279,14 +299,16 @@ public class SearchCalibrators extends App {
     }
 
     /**
-     * Main.
+     * Main entry point
+     *
+     * @param args command line arguments (open file ...)
      */
-    public static void main(String[] args) {
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    public static void main(final String[] args) {
 
         MCSExceptionHandler.installSwingHandler();
 
-        // Start application
-        SearchCalibrators searchCalibrators = new SearchCalibrators(args);
+        new SearchCalibrators(args);
     }
 }
 /*___oOo___*/
