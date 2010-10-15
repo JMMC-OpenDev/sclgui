@@ -20,7 +20,8 @@
         <all-permissions/>
     </security>
     <resources>
-        <j2se version="1.5+"/>
+        <j2se version="1.5+" initial-heap-size="256m" max-heap-size="512m"/>
+        <property name="apple.laf.useScreenMenuBar" value="true"/>
         <jar href="jar/sclgui.jar" />
         <jar href="jar/sclgui-doc.jar" />
         <jar href="jar/Jmcs.jar" />
@@ -38,8 +39,6 @@
         <jar href="jar/cds.savot.writer.jar" />
         <jar href="jar/kxml2-min.jar" />
         <extension href="SearchCalContrib.jnlp" />
-        <extension href="JSamp.jnlp" />
-        <property name="apple.laf.useScreenMenuBar" value="true"/>
     </resources>
     <application-desc main-class="fr.jmmc.scalib.sclgui.SearchCalibrators"/>
 </jnlp>
