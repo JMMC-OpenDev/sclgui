@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.3b2"/>
-    <compilation date="6/10/2010" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.3b3"/>
+        <compilation date="15/10/2010" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -52,6 +52,10 @@
     </menubar>
     <releasenotes>
         <release version="4.3">
+            <prerelease version="4.3b3" tag="SC_V4_3_b3">
+               <change type="CHANGE">Increased default VM allocated memory to overcome some crashes on huge requests.</change>
+               <change type="FEATURE">Added details on communication error messages.</change>
+            </prerelease>
             <prerelease version="4.3b2" tag="SC_V4_3_b2">
                <change type="BUGFIX">Properly quit application when clicking on the close button of the main window.</change>
             </prerelease>
