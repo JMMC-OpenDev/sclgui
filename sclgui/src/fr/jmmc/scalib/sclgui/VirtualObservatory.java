@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.43 2010-10-11 14:15:29 bourgesl Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.44 2010-10-15 09:03:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.43  2010/10/11 14:15:29  bourgesl
+ * SampMessageHandler refactoring
+ *
  * Revision 1.42  2010/10/11 14:04:21  lafrasse
  * Replaced direct call to SWING for error messages with JMCS MessagePane (EDT safe).
  * Cleaned imports.
@@ -189,13 +192,13 @@ public final class VirtualObservatory extends Observable {
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VirtualObservatory");
     /** Query model */
-    private QueryModel _queryModel;
+    private QueryModel _queryModel = null;
     /** Data model to which the result should be passed */
-    private CalibratorsModel _calibratorsModel;
+    private CalibratorsModel _calibratorsModel = null;
     /** Filters model */
-    private FiltersModel _filtersModel;
+    private FiltersModel _filtersModel = null;
     /** Path to an open or saved file */
-    private File _file;
+    private File _file = null;
     /** Store wether the Query has be launched or not */
     private boolean _queryIsLaunched = false;
     /** Proxy to shared FileFilter repository */
@@ -207,24 +210,24 @@ public final class VirtualObservatory extends Observable {
     /** MIME type for HTML exports */
     private String _htmlMimeType = "text/html";
     /** Open file... action */
-    public OpenFileAction _openFileAction;
+    public OpenFileAction _openFileAction = null;
     /** Save file... action */
-    public SaveFileAction _saveFileAction;
+    public SaveFileAction _saveFileAction = null;
     /** Save file as... action */
-    public SaveFileAsAction _saveFileAsAction;
+    public SaveFileAsAction _saveFileAsAction = null;
     /** Revet to Saved File action */
-    public RevertToSavedFileAction _revertToSavedFileAction;
+    public RevertToSavedFileAction _revertToSavedFileAction = null;
     /** Export to CSV File action */
-    public ExportToCSVFileAction _exportToCSVFileAction;
+    public ExportToCSVFileAction _exportToCSVFileAction = null;
     /** Export to HTML File action */
-    public ExportToHTMLFileAction _exportToHTMLFileAction;
+    public ExportToHTMLFileAction _exportToHTMLFileAction = null;
     /** Export to SAMP action */
-    public ShareAllCalibratorsThroughSAMPAction _shareAllCalibratorsThroughSAMPAction;
+    public ShareAllCalibratorsThroughSAMPAction _shareAllCalibratorsThroughSAMPAction = null;
     /** Get Cal action */
-    public GetCalAction _getCalAction;
+    public GetCalAction _getCalAction = null;
 
     /**
-     * Contructor.
+     * Constructor.
      * @param queryModel
      * @param calibratorsModel
      * @param filtersModel
@@ -280,7 +283,7 @@ public final class VirtualObservatory extends Observable {
              */
             protected void processMessage(final String senderId, final Message message) {
                 if (_logger.isLoggable(Level.FINE)) {
-                  _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
+                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
                 }
 
                 final String query = (String) message.getParam("query");
@@ -461,40 +464,12 @@ public final class VirtualObservatory extends Observable {
             return true;
         }
 
-        boolean canOverwriteFile = false;
-
         // Ask the user if he wants to save modifications
-        Object[] options = {"Cancel", "Replace"};
-        int result = JOptionPane.showOptionDialog(null,
-                "'" + file.getName()
-                + "' alreadey exists. Do you want to replace it ?\nA file or folder with the same name already exists in the current folder.\nReplacing it will overwrite its current contents.\n\n",
-                null, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                null, options, options[0]);
-
-        // Handle user choice
-        switch (result) {
-            // If the user clicked the "Don't Save" button
-            case 1: // options[1] = "Replace" button
-                // Exit
-                canOverwriteFile = true;
-
-                break;
-
-            // If the user clicked the "Cancel" button or pressed 'esc' key
-            case 0: // options[0] = "Cancel" button
-            case JOptionPane.CLOSED_OPTION: // 'esc' key
-            default: // Any other case
-                // Cancel the exit
-                canOverwriteFile = false;
-
-                break;
-        }
-
-        return canOverwriteFile;
+        return MessagePane.showConfirmFileOverwrite(file.getName());
     }
 
     /**
-     * Launch the webservice querying with the given query (for ASPRO launch).
+     * Launch 'sclws' web service querying with the given query (for ASPRO instanciation).
      *
      * @param query the query parameters as an empty SearchCal VOTable.
      */
@@ -928,6 +903,9 @@ public final class VirtualObservatory extends Observable {
             }
         }
 
+        /**
+         * Wait for each CDS interrogation progress while another thread wait for the final answer.
+         */
         class GetCalThread extends Thread {
 
             private QueryResultThread _queryResultThread = null;
@@ -1167,12 +1145,15 @@ public final class VirtualObservatory extends Observable {
                 super.interrupt();
             }
 
+            /**
+             * Wait for the final reply from the server while another thread monitor CDS interrogation progress.
+             */
             class QueryResultThread extends Thread {
 
-                private SclwsPortType _sclws;
-                private String _id;
-                private String _query;
-                private String _result;
+                private SclwsPortType _sclws = null;
+                private String _id = null;
+                private String _query = null;
+                private String _result = null;
 
                 QueryResultThread(SclwsPortType s, String id, String query) {
                     _sclws = s;
