@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.44 2010-10-15 09:03:35 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.45 2010-10-22 10:15:55 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.44  2010/10/15 09:03:35  lafrasse
+ * Back-ported the "File Overwriting ?" dialog box from canOverwriteFile() to JMCS::showConfirmFileOverwrite().
+ * Refined class members definition and constructor javadoc.
+ *
  * Revision 1.43  2010/10/11 14:15:29  bourgesl
  * SampMessageHandler refactoring
  *
@@ -155,6 +159,7 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.astro.Catalog;
+import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.gui.MessagePane;
 
 /*
@@ -181,6 +186,7 @@ import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import org.astrogrid.samp.Message;
 
 /**
@@ -271,8 +277,7 @@ public final class VirtualObservatory extends Observable {
 
         // Add handler to load query params and launch calibrator search
 
-
-        SampMessageHandler handler = new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
+        new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
 
             /**
              * Implements message processing
@@ -288,7 +293,20 @@ public final class VirtualObservatory extends Observable {
 
                 final String query = (String) message.getParam("query");
                 if (query != null) {
-                    executeQuery(query);
+                  
+                    SwingUtilities.invokeLater(new Runnable() {
+
+                        /**
+                         * Synchronized by EDT
+                         */
+                        public void run() {
+                            executeQuery(query);
+
+                            // change focus :
+                            App.getFrame().toFront();
+                        }
+                    });
+
                 } else {
                     StatusBar.show("Could not start query from SAMP.");
                 }
