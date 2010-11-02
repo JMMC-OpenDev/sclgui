@@ -629,7 +629,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
         if (selectedView != null) {
             // Get the selected ordered column name table
-            String[] columnStrings = _preferences.getPreference(selectedView).split(" ");
+            String[] columnStrings = _preferences.getPreference(selectedView).trim().split(" ");
             int nbOfColumns = columnStrings.length;
 
             _viewIndex = new int[nbOfColumns];
