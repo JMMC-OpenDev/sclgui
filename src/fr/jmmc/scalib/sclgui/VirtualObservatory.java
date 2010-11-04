@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.45 2010-10-22 10:15:55 bourgesl Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.46 2010-11-04 16:48:06 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.45  2010/10/22 10:15:55  bourgesl
+ * SAMP Message handler (Start query) modified : use EDT and give focus to searchCal frame
+ *
  * Revision 1.44  2010/10/15 09:03:35  lafrasse
  * Back-ported the "File Overwriting ?" dialog box from canOverwriteFile() to JMCS::showConfirmFileOverwrite().
  * Refined class members definition and constructor javadoc.
@@ -293,7 +296,7 @@ public final class VirtualObservatory extends Observable {
 
                 final String query = (String) message.getParam("query");
                 if (query != null) {
-                  
+
                     SwingUtilities.invokeLater(new Runnable() {
 
                         /**
@@ -950,6 +953,20 @@ public final class VirtualObservatory extends Observable {
                     try {
                         // Start the webservice connection
                         loc = new SclwsLocator();
+
+                        // Decipher which proxy script to use according to app version status (release, beta or alpha)
+                        String userName = "sclws"; // official release homedir
+                        if (App.isBetaVersion()) {
+                            userName = "betaswmgr"; // beta release homedir
+                        } else if (App.isAlphaVersion()) {
+                            userName = "lafrasse"; // alpha release homedir
+                        }
+                        String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclws-proxy.php";
+
+                        // Re-route network traffic at specified address on standard 80 port
+                        // (e.g to overcome tightly filtered TCP outputs on public WiFi)
+                        loc.setEndpointAddress(loc.getsclwsWSDDServiceName(), proxyScriptURL);
+
                         sclws = loc.getsclws();
                         _logger.fine("Connected to '" + loc.getsclwsAddress()
                                 + "'.");
