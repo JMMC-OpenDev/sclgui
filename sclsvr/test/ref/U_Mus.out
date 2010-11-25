@@ -12,16 +12,16 @@ sclsvrServer - alx - Sky research area size = 0.04 (deg)
 sclsvrServer - alx - Sky research radius = 6.37 (arcmin)
 sclsvrServer - sclsvr - Sky research radius = 6.37(arcmin)
 sclsvrServer - vobs - Consulting II/246/out ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=6&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=6&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
 sclsvrServer - vobs - ...number of stars return = 6
-sclsvrServer - vobs - Elapsed time in execution of 'II_246_out_1' 00:00:00.128
+sclsvrServer - vobs - Elapsed time in execution of 'II_246_out_1' 00:00:00.219
 sclsvrServer - vobs - after COPY, star list size = 6
 sclsvrServer - vobs - 6 star(s) found.
 sclsvrServer - sclsvr - New Sky research radius = 9.00(arcmin)
 sclsvrServer - vobs - Consulting II/246/out ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=9&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=9&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
 sclsvrServer - vobs - ...number of stars return = 13
-sclsvrServer - vobs - Elapsed time in execution of 'II_246_out_1' 00:00:00.174
+sclsvrServer - vobs - Elapsed time in execution of 'II_246_out_1' 00:00:00.242
 sclsvrServer - vobs - after COPY, star list size = 13
 sclsvrServer - vobs - after COPY, star list size = 13
 sclsvrServer - vobs - star 2MASS 13245473-6439257 has been removed by the filter 'Opt = T filter'
@@ -41,36 +41,31 @@ sclsvrServer - vobs - star 2MASS 13250812-6438276 has been removed by the filter
 sclsvrServer - vobs - star 2MASS 13260374-6444200 has been removed by the filter 'Opt = U filter'
 sclsvrServer - vobs - after FILTER, star list size = 11
 sclsvrServer - vobs - Consulting I/280 ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.123-64+38+27.62&+13+26+03.748-64+44+20.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.123-64+38+27.62&+13+26+03.748-64+44+20.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 2
-sclsvrServer - vobs - Elapsed time in execution of 'I_280_2' 00:00:00.236
+sclsvrServer - vobs - Elapsed time in execution of 'I_280_2' 00:00:00.362
 sclsvrServer - vobs - after COPY, star list size = 2
 sclsvrServer - vobs - Consulting I/284 ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+24+54.739-64+39+25.80&+13+24+57.118-64+38+50.91&+13+24+35.686-64+39+31.62&+13+25+27.820-64+41+43.73&+13+25+11.542-64+44+28.22&+13+24+35.032-64+45+19.28&+13+24+42.231-64+45+52.87&+13+24+17.770-64+44+45.14&+13+25+20.107-64+46+56.43&+13+26+08.874-64+41+23.13&+13+25+37.368-64+47+14.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+24+54.739-64+39+25.80&+13+24+57.118-64+38+50.91&+13+24+35.686-64+39+31.62&+13+25+27.820-64+41+43.73&+13+25+11.542-64+44+28.22&+13+24+35.032-64+45+19.28&+13+24+42.231-64+45+52.87&+13+24+17.770-64+44+45.14&+13+25+20.107-64+46+56.43&+13+26+08.874-64+41+23.13&+13+25+37.368-64+47+14.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 17
-sclsvrServer - vobs - Elapsed time in execution of 'I_284_2' 00:00:00.228
+sclsvrServer - vobs - Elapsed time in execution of 'I_284_2' 00:00:00.366
 sclsvrServer - vobs - after COPY, star list size = 11
 sclsvrServer - vobs - after MERGE, star list size = 13
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Consulting B/denis ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 12
-sclsvrServer - vobs - Elapsed time in execution of 'B_denis_2' 00:00:00.211
-sclsvrServer - vobs - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Consulting J/A+A/431/773/charm2 ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/431/773/charm2&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=LD&-out=e_LD&-out=UD&-out=e_UD&-out=Method&-out=Lambda&-out=Kmag&-out=Vmag&-out=*PHOT_JHN_B&Method=,LBI,LO,SPE&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - ...number of stars return = 13
-sclsvrServer - vobs - Elapsed time in execution of 'J_A+A_431_773_charm2_2' 00:00:00.157
+sclsvrServer - vobs - Elapsed time in execution of 'B_denis_2' 00:00:00.376
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Consulting B/sb9/main ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 13
-sclsvrServer - vobs - Elapsed time in execution of 'B_sb9_main_2' 00:00:00.153
+sclsvrServer - vobs - Elapsed time in execution of 'B_sb9_main_2' 00:00:00.227
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Consulting B/wds/wds ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 13
-sclsvrServer - vobs - Elapsed time in execution of 'B_wds_wds_2' 00:00:00.145
+sclsvrServer - vobs - Elapsed time in execution of 'B_wds_wds_2' 00:00:00.277
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - 13 star(s) found.
 sclsvrServer - vobs - Number of stars found : 13
@@ -187,7 +182,7 @@ sclsvrServer - alx - UD_U = 0.176574
 sclsvrServer - alx - UD_V = 0.177177
 sclsvrServer - alx - Teff = 7000.000000
 sclsvrServer - alx - LogG = 3.178000
-alxUNIFORM_DIAMETERS struct at 0x7fffd97767e0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fff2652d5a0 contains:
 	ud.Teff = 7000.000000
 	ud.LogG = 3.178000
 	ud.b    = 0.174833
@@ -638,12 +633,12 @@ VOTable:
  <DESCRIPTION>
   SearchCal software: http://www.jmmc.fr/searchcal (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)
   Request parameters: -minMagRange 5 -mag 1.7 -objectName U_Mus -wlen 2.2 -band K -bright false -baseMax 102.45 -ra 13:24:59.40 -file U_Mus.vot -dec -64:39:51.00 -maxMagRange 8  
-  Generated on (UTC): 2010-11-24T15:49:28
+  Generated on (UTC): 2010-11-25T15:32:43
  </DESCRIPTION>
 
  <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
 
- <RESOURCE name="SearchCal v3.7.1">
+ <RESOURCE name="SearchCal v3.7.2">
   <TABLE
  name="U_Mus.vot">
 
@@ -2589,4 +2584,4 @@ VOTable:
   </TABLE>
  </RESOURCE>
 </VOTABLE>
-sclsvrServer - sclsvr - Elapsed time in execution of 'GETCAL' 00:00:04.386
+sclsvrServer - sclsvr - Elapsed time in execution of 'GETCAL' 00:00:04.996

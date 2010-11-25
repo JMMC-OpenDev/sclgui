@@ -12,9 +12,9 @@ sclsvrServer - alx - Sky research area size = 0.98 (deg)
 sclsvrServer - alx - Sky research radius = 33.54 (arcmin)
 sclsvrServer - sclsvr - Sky research radius = 33.54(arcmin)
 sclsvrServer - vobs - Consulting II/246/out ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=05:45:22.60&-c.dec=+09:04:12.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=34&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=05:45:22.60&-c.dec=+09:04:12.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=34&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
 sclsvrServer - vobs - ...number of stars return = 29
-sclsvrServer - vobs - Elapsed time in execution of 'II_246_out_1' 00:00:00.242
+sclsvrServer - vobs - Elapsed time in execution of 'II_246_out_1' 00:00:00.381
 sclsvrServer - vobs - after COPY, star list size = 29
 sclsvrServer - vobs - 29 star(s) found.
 sclsvrServer - vobs - after COPY, star list size = 29
@@ -51,36 +51,31 @@ sclsvrServer - vobs - star 2MASS 05433235+0845304 has been removed by the filter
 sclsvrServer - vobs - star 2MASS 05473169+0855210 has been removed by the filter 'Opt = U filter'
 sclsvrServer - vobs - after FILTER, star list size = 11
 sclsvrServer - vobs - Consulting I/280 ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.357%2b09+04+12.40&+05+44+43.196%2b08+56+05.43&+05+44+37.215%2b08+57+27.91&+05+45+47.054%2b09+20+36.33&+05+46+34.482%2b08+55+07.98&+05+45+55.733%2b08+43+43.81&+05+44+59.964%2b08+38+40.58&+05+43+33.505%2b09+06+29.16&+05+44+04.142%2b08+45+03.04&+05+45+34.931%2b08+37+03.66&+05+44+31.109%2b08+40+00.08&+05+46+46.058%2b08+45+27.09&+05+44+30.842%2b08+38+13.98&+05+45+33.684%2b08+34+55.03&+05+43+34.145%2b09+17+17.42&+05+43+24.304%2b09+15+48.32&+05+43+32.353%2b08+45+30.46&+05+47+31.693%2b08+55+21.08&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.357%2b09+04+12.40&+05+44+43.196%2b08+56+05.43&+05+44+37.215%2b08+57+27.91&+05+45+47.054%2b09+20+36.33&+05+46+34.482%2b08+55+07.98&+05+45+55.733%2b08+43+43.81&+05+44+59.964%2b08+38+40.58&+05+43+33.505%2b09+06+29.16&+05+44+04.142%2b08+45+03.04&+05+45+34.931%2b08+37+03.66&+05+44+31.109%2b08+40+00.08&+05+46+46.058%2b08+45+27.09&+05+44+30.842%2b08+38+13.98&+05+45+33.684%2b08+34+55.03&+05+43+34.145%2b09+17+17.42&+05+43+24.304%2b09+15+48.32&+05+43+32.353%2b08+45+30.46&+05+47+31.693%2b08+55+21.08&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 18
-sclsvrServer - vobs - Elapsed time in execution of 'I_280_2' 00:00:00.645
+sclsvrServer - vobs - Elapsed time in execution of 'I_280_2' 00:00:00.905
 sclsvrServer - vobs - after COPY, star list size = 18
 sclsvrServer - vobs - Consulting I/284 ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+28.860%2b09+01+45.22&+05+46+11.847%2b09+03+54.87&+05+44+58.277%2b09+15+25.64&+05+45+40.273%2b09+21+29.51&+05+44+06.789%2b09+14+27.50&+05+46+20.755%2b08+47+14.60&+05+46+53.943%2b09+01+32.07&+05+46+40.634%2b09+23+19.65&+05+47+12.664%2b09+00+41.26&+05+44+18.388%2b09+26+35.04&+05+43+25.314%2b09+11+55.46&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+28.860%2b09+01+45.22&+05+46+11.847%2b09+03+54.87&+05+44+58.277%2b09+15+25.64&+05+45+40.273%2b09+21+29.51&+05+44+06.789%2b09+14+27.50&+05+46+20.755%2b08+47+14.60&+05+46+53.943%2b09+01+32.07&+05+46+40.634%2b09+23+19.65&+05+47+12.664%2b09+00+41.26&+05+44+18.388%2b09+26+35.04&+05+43+25.314%2b09+11+55.46&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 11
-sclsvrServer - vobs - Elapsed time in execution of 'I_284_2' 00:00:00.216
+sclsvrServer - vobs - Elapsed time in execution of 'I_284_2' 00:00:00.406
 sclsvrServer - vobs - after COPY, star list size = 11
 sclsvrServer - vobs - after MERGE, star list size = 29
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 29
 sclsvrServer - vobs - Consulting B/denis ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 29
-sclsvrServer - vobs - Elapsed time in execution of 'B_denis_2' 00:00:00.231
-sclsvrServer - vobs - after UPDATE_ONLY, star list size = 29
-sclsvrServer - vobs - Consulting J/A+A/431/773/charm2 ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/431/773/charm2&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=LD&-out=e_LD&-out=UD&-out=e_UD&-out=Method&-out=Lambda&-out=Kmag&-out=Vmag&-out=*PHOT_JHN_B&Method=,LBI,LO,SPE&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - ...number of stars return = 2
-sclsvrServer - vobs - Elapsed time in execution of 'J_A+A_431_773_charm2_2' 00:00:00.255
+sclsvrServer - vobs - Elapsed time in execution of 'B_denis_2' 00:00:00.543
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 29
 sclsvrServer - vobs - Consulting B/sb9/main ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 29
-sclsvrServer - vobs - Elapsed time in execution of 'B_sb9_main_2' 00:00:00.292
+sclsvrServer - vobs - Elapsed time in execution of 'B_sb9_main_2' 00:00:00.531
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 29
 sclsvrServer - vobs - Consulting B/wds/wds ...
-sclsvrServer - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer - vobs - Get XML document from 'http://viz-beta.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=10000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - ...number of stars return = 1
-sclsvrServer - vobs - Elapsed time in execution of 'B_wds_wds_2' 00:00:00.350
+sclsvrServer - vobs - Elapsed time in execution of 'B_wds_wds_2' 00:00:00.384
 sclsvrServer - vobs - after UPDATE_ONLY, star list size = 29
 sclsvrServer - vobs - 29 star(s) found.
 sclsvrServer - vobs - Number of stars found : 29
@@ -289,7 +284,7 @@ sclsvrServer - alx - UD_U = 0.118139
 sclsvrServer - alx - UD_V = 0.117029
 sclsvrServer - alx - Teff = 3990.000000
 sclsvrServer - alx - LogG = 0.278000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 3990.000000
 	ud.LogG = 0.278000
 	ud.b    = 0.116643
@@ -407,7 +402,7 @@ sclsvrServer - alx - UD_U = 0.172709
 sclsvrServer - alx - UD_V = 0.171086
 sclsvrServer - alx - Teff = 3990.000000
 sclsvrServer - alx - LogG = 0.278000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 3990.000000
 	ud.LogG = 0.278000
 	ud.b    = 0.170521
@@ -718,7 +713,7 @@ sclsvrServer - alx - UD_U = 0.265147
 sclsvrServer - alx - UD_V = 0.262655
 sclsvrServer - alx - Teff = 3990.000000
 sclsvrServer - alx - LogG = 0.278000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 3990.000000
 	ud.LogG = 0.278000
 	ud.b    = 0.261787
@@ -924,7 +919,7 @@ sclsvrServer - alx - UD_U = 0.141776
 sclsvrServer - alx - UD_V = 0.140444
 sclsvrServer - alx - Teff = 3990.000000
 sclsvrServer - alx - LogG = 0.278000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 3990.000000
 	ud.LogG = 0.278000
 	ud.b    = 0.139980
@@ -1042,7 +1037,7 @@ sclsvrServer - alx - UD_U = 0.130458
 sclsvrServer - alx - UD_V = 0.133455
 sclsvrServer - alx - Teff = 5370.000000
 sclsvrServer - alx - LogG = 1.278000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 5370.000000
 	ud.LogG = 1.278000
 	ud.b    = 0.131239
@@ -1160,7 +1155,7 @@ sclsvrServer - alx - UD_U = 0.135298
 sclsvrServer - alx - UD_V = 0.135400
 sclsvrServer - alx - Teff = 7460.000000
 sclsvrServer - alx - LogG = 1.678000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 7460.000000
 	ud.LogG = 1.678000
 	ud.b    = 0.133090
@@ -1278,7 +1273,7 @@ sclsvrServer - alx - UD_U = 0.174309
 sclsvrServer - alx - UD_V = 0.178708
 sclsvrServer - alx - Teff = 4550.000000
 sclsvrServer - alx - LogG = 0.878000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 4550.000000
 	ud.LogG = 0.878000
 	ud.b    = 0.176047
@@ -1405,7 +1400,7 @@ sclsvrServer - alx - UD_U = 0.181357
 sclsvrServer - alx - UD_V = 0.179653
 sclsvrServer - alx - Teff = 3990.000000
 sclsvrServer - alx - LogG = 0.278000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 3990.000000
 	ud.LogG = 0.278000
 	ud.b    = 0.179059
@@ -1483,7 +1478,7 @@ sclsvrServer - alx - UD_U = 0.121869
 sclsvrServer - alx - UD_V = 0.121960
 sclsvrServer - alx - Teff = 7460.000000
 sclsvrServer - alx - LogG = 1.678000
-alxUNIFORM_DIAMETERS struct at 0x7fff62a52aa0 contains:
+alxUNIFORM_DIAMETERS struct at 0x7fffd2d5fdb0 contains:
 	ud.Teff = 7460.000000
 	ud.LogG = 1.678000
 	ud.b    = 0.119880
@@ -1998,12 +1993,12 @@ VOTable:
  <DESCRIPTION>
   SearchCal software: http://www.jmmc.fr/searchcal (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)
   Request parameters: -diffDec 600 -minMagRange 5 -mag 4.65 -objectName FU_Ori -diffRa 1800 -wlen 2.2 -band K -bright false -baseMax 102.45 -maxMagRange 8 -file FU_Ori.vot -dec +09:04:12.00 -ra 05:45:22.60  
-  Generated on (UTC): 2010-11-24T15:48:36
+  Generated on (UTC): 2010-11-25T15:31:37
  </DESCRIPTION>
 
  <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
 
- <RESOURCE name="SearchCal v3.7.1">
+ <RESOURCE name="SearchCal v3.7.2">
   <TABLE
  name="FU_Ori.vot">
 
@@ -3906,7 +3901,7 @@ VOTable:
    <DATA>
     <TABLEDATA>
      <TR>
-      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>715</TD><TD>I/280</TD><TD></TD><TD>159</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>05452235+0904123</TD><TD>II/246/out</TD><TD></TD><TD>05 45 22.370</TD><TD>I/280</TD><TD></TD><TD>+09 04 12.63</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.89</TD><TD>I/280</TD><TD></TD><TD>36.11</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>F8</TD><TD>I/280</TD><TD></TD><TD>G</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>05454+0904</TD><TD>B/wds/wds</TD><TD></TD><TD>0.5</TD><TD>B/wds/wds</TD><TD></TD><TD>0.5</TD><TD>B/wds/wds</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-10.251</TD><TD>II/246/out</TD><TD></TD><TD>197.109</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.55</TD><TD>J/A+A/431/773/charm2</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>LBI</TD><TD>J/A+A/431/773/charm2</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>K</TD><TD>J/A+A/431/773/charm2</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.772</TD><TD>I/280</TD><TD></TD><TD>10.74</TD><TD>II/246/out</TD><TD></TD><TD>9.446</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.45</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.823</TD><TD>computed</TD><TD>HIGH</TD><TD>6.519</TD><TD>II/246/out</TD><TD></TD><TD>5.699</TD><TD>II/246/out</TD><TD></TD><TD>5.159</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.483</TD><TD>computed</TD><TD>HIGH</TD><TD>5.681</TD><TD>computed</TD><TD>HIGH</TD><TD>5.183</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.549</TD><TD>computed</TD><TD>LOW</TD><TD>0.038</TD><TD>computed</TD><TD>LOW</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.759</TD><TD>computed</TD><TD>LOW</TD><TD>0.074</TD><TD>computed</TD><TD>LOW</TD><TD>0.961</TD><TD>computed</TD><TD>LOW</TD><TD>0.166</TD><TD>computed</TD><TD>LOW</TD><TD>0.093</TD><TD>computed</TD><TD>LOW</TD><TD>0.012</TD><TD>computed</TD><TD>LOW</TD><TD>0.590</TD><TD>computed</TD><TD>LOW</TD><TD>0.118</TD><TD>computed</TD><TD>LOW</TD><TD>NOK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.183</TD><TD>computed</TD><TD>HIGH</TD><TD>5.681</TD><TD>computed</TD><TD>HIGH</TD><TD>6.483</TD><TD>computed</TD><TD>HIGH</TD><TD>9.823</TD><TD>computed</TD><TD>HIGH</TD><TD>9.450</TD><TD>computed</TD><TD>HIGH</TD><TD>9.446</TD><TD>computed</TD><TD>HIGH</TD><TD>10.740</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.001</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>715</TD><TD>I/280</TD><TD></TD><TD>159</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>05452235+0904123</TD><TD>II/246/out</TD><TD></TD><TD>05 45 22.370</TD><TD>I/280</TD><TD></TD><TD>+09 04 12.63</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.89</TD><TD>I/280</TD><TD></TD><TD>36.11</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>F8</TD><TD>I/280</TD><TD></TD><TD>G</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>05454+0904</TD><TD>B/wds/wds</TD><TD></TD><TD>0.5</TD><TD>B/wds/wds</TD><TD></TD><TD>0.5</TD><TD>B/wds/wds</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-10.251</TD><TD>II/246/out</TD><TD></TD><TD>197.109</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.772</TD><TD>I/280</TD><TD></TD><TD>10.74</TD><TD>II/246/out</TD><TD></TD><TD>9.446</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.45</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.823</TD><TD>computed</TD><TD>HIGH</TD><TD>6.519</TD><TD>II/246/out</TD><TD></TD><TD>5.699</TD><TD>II/246/out</TD><TD></TD><TD>5.159</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.483</TD><TD>computed</TD><TD>HIGH</TD><TD>5.681</TD><TD>computed</TD><TD>HIGH</TD><TD>5.183</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.549</TD><TD>computed</TD><TD>LOW</TD><TD>0.038</TD><TD>computed</TD><TD>LOW</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.759</TD><TD>computed</TD><TD>LOW</TD><TD>0.074</TD><TD>computed</TD><TD>LOW</TD><TD>0.961</TD><TD>computed</TD><TD>LOW</TD><TD>0.166</TD><TD>computed</TD><TD>LOW</TD><TD>0.093</TD><TD>computed</TD><TD>LOW</TD><TD>0.012</TD><TD>computed</TD><TD>LOW</TD><TD>0.590</TD><TD>computed</TD><TD>LOW</TD><TD>0.118</TD><TD>computed</TD><TD>LOW</TD><TD>NOK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.183</TD><TD>computed</TD><TD>HIGH</TD><TD>5.681</TD><TD>computed</TD><TD>HIGH</TD><TD>6.483</TD><TD>computed</TD><TD>HIGH</TD><TD>9.823</TD><TD>computed</TD><TD>HIGH</TD><TD>9.450</TD><TD>computed</TD><TD>HIGH</TD><TD>9.446</TD><TD>computed</TD><TD>HIGH</TD><TD>10.740</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.001</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>05452885+0901452</TD><TD>II/246/out</TD><TD></TD><TD>05 45 28.865</TD><TD>I/284</TD><TD></TD><TD>+09 01 45.14</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-2</TD><TD>I/284</TD><TD></TD><TD>6</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-10.248</TD><TD>II/246/out</TD><TD></TD><TD>197.159</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.85</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.58</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.59</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.366</TD><TD>II/246/out</TD><TD></TD><TD>6.305</TD><TD>II/246/out</TD><TD></TD><TD>5.865</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.322</TD><TD>computed</TD><TD>HIGH</TD><TD>6.290</TD><TD>computed</TD><TD>HIGH</TD><TD>5.889</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.889</TD><TD>computed</TD><TD>HIGH</TD><TD>6.290</TD><TD>computed</TD><TD>HIGH</TD><TD>7.322</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>11.580</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>14.850</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.048</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
@@ -3997,4 +3992,4 @@ VOTable:
   </TABLE>
  </RESOURCE>
 </VOTABLE>
-sclsvrServer - sclsvr - Elapsed time in execution of 'GETCAL' 00:00:14.242
+sclsvrServer - sclsvr - Elapsed time in execution of 'GETCAL' 00:00:15.370
