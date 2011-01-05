@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.39 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.40 2011-01-05 15:14:45 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.39  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.38  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -224,10 +227,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 "view.result.verbosity.full");
 
         // Gray border of the view.
-        Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
-
-        // Colored border of the view.
-        setBorder(new TitledBorder(grayBorder, "Found Calibrators"));
+        updateBorderTitle();
 
         // Size management
         setMinimumSize(new Dimension(895, 320));
@@ -297,6 +297,20 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         });
     }
 
+    private void updateBorderTitle() {
+        // Colored border of the view.
+        Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
+        String title = "Found Calibrators";
+        int total = _calibratorsModel.getTotalNumberOfStar();
+        title += " (" + total + " sources";
+        if (total > 0) {
+            int hidden = _calibratorsModel.getHiddenNumberOfStar();
+            title += ", " + hidden + " filtered";
+        }
+        title += ")";
+        setBorder(new TitledBorder(grayBorder, title));
+    }
+
     /**
      * Called on the JTable row selection changes.
      *
@@ -320,6 +334,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     public void tableChanged(TableModelEvent e) {
         _logger.entering("CalibratorsView", "tableChanged");
+
+        updateBorderTitle();
 
         // Enable/disable the Undelete menu item
         _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());

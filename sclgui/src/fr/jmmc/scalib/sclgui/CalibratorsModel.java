@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.30 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.31 2011-01-05 15:14:45 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.30  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.29  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -196,6 +199,14 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         _rowHeadersModel = new RowHeadersModel();
 
         _columnClasses = null;
+    }
+
+    public int getTotalNumberOfStar() {
+        return _originalStarList.size();
+    }
+
+    public int getHiddenNumberOfStar() {
+        return (getTotalNumberOfStar() - _filteredStarList.size());
     }
 
     /**
