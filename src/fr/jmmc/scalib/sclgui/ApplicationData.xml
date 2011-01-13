@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.3b3"/>
-        <compilation date="15/10/2010" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.3b4"/>
+        <compilation date="13/01/2011" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -52,6 +51,13 @@
     </menubar>
     <releasenotes>
         <release version="4.3">
+            <prerelease version="4.3b4" tag="SC_V4_3_b4">
+               <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/15">Fixed wrong available magnitude bands for faint scenario.</change>
+               <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/13">Added found and filtered calibrator counts.</change>
+               <change type="CHANGE" url="http://trac.jmmc.fr/jmmc-sw/ticket/16">Changed communication channel (now through HTTP standard port 80) to better support networks tightly filtered on output.</change>
+               <change type="CHANGE">Removed deprecated "B-V&lt;1" filter on bright K requests.</change>
+               <change type="BUGFIX">Fixed a rare table sorting bug causing a "-1" exception when encountering untrimed white spaces in column order preferences.</change>
+            </prerelease>
             <prerelease version="4.3b3" tag="SC_V4_3_b3">
                <change type="CHANGE">Increased default VM allocated memory to overcome some crashes on huge requests.</change>
                <change type="FEATURE">Added details on communication error messages.</change>
