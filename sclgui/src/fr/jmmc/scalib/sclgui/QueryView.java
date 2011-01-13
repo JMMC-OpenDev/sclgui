@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.60 2010-10-10 22:45:04 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.61 2011-01-13 14:13:47 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.60  2010/10/10 22:45:04  lafrasse
+ * Code reformating.
+ *
  * Revision 1.59  2010/10/10 22:21:05  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -800,7 +803,9 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         // Try to inject user values into the model
-        _queryModel.setInstrumentalMagnitudeBands((DefaultComboBoxModel) _instrumentalMagnitudeBandCombo.getModel());
+        ComboBoxModel dcbm = _instrumentalMagnitudeBandCombo.getModel();
+        String selectedMagnitudeBand = (String) dcbm.getSelectedItem();
+        _queryModel.setInstrumentalMagnitudeBand(selectedMagnitudeBand);
         _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
         _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
         _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
@@ -810,7 +815,6 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         // Update science object magnitude only if the textfield was used
-        // (done through the model when using _instrumentalMagnitudeBandCombo)
         if (source == _scienceObjectMagnitudeTextfield) {
             _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
         }

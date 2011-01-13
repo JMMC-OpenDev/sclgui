@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.49 2010-10-11 13:53:01 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.50 2011-01-13 14:13:47 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.49  2010/10/11 13:53:01  lafrasse
+ * Streamlined exception handling.
+ * Cleaned imports.
+ *
  * Revision 1.48  2010/10/10 22:45:03  lafrasse
  * Code reformating.
  *
@@ -208,29 +212,36 @@ public class QueryModel extends Star implements Observer {
             "fr.jmmc.scalib.sclgui.QueryModel");
     /** For default values */
     private Preferences _preferences = null;
-    /** The instrumental magnitude band */
-    private DefaultComboBoxModel _instrumentalMagnitudeBands = null;
     /** Magnitude to Preselected Wavelength conversion table */
     private HashMap<String, Double> _magnitudeBandToWavelength = null;
     /**
-     * Default magnitude bands.
+     * All handled magnitude bands.
      *
-     * @warning Do not change the order, as it is used to parse Simbad VOTables.
+     * @warning Do not change the order, as it is used to parse SIMBAD VOTables.
      */
-    private String[] _magnitudeBands = {"V", "I", "J", "H", "K", "N"};
+    private static final String[] ALL_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
     /**
      * Default magnitude band wavelengthes in micrometer.
      *
-     * @warning Do not change the order,as it is linked to _magnitudeBands.
-     * @sa _magnitudeBands
+     * @warning Do not change the order,as it is linked to ALL_MAGNITUDE_BANDS.
+     * @sa ALL_MAGNITUDE_BANDS
      */
     private double[] _defaultWavelengths = {0.55, 0.9, 1.25, 1.65, 2.2, 10};
+    /** The instrumental magnitude band */
+    private DefaultComboBoxModel _instrumentalMagnitudeBands = null;
+    /** Available magnitude band for BRIGHT scenario */
+    private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
+    /** Available magnitude band for FAINT scenario */
+    private static final String[] FAINT_MAGNITUDE_BANDS = {"I", "J", "H", "K"};
+
     /** The instrumental maximum base line */
     private double _instrumentalMaxBaseLine;
+
     /** The science object name */
     private String _scienceObjectName;
     /** The science object detection distance */
     private boolean _scienceObjectDetectionDistance;
+
     /** The query minimum magnitude */
     private double _queryMinMagnitude;
     /** The query minimum magnitude auto-update flag */
@@ -239,16 +250,22 @@ public class QueryModel extends Star implements Observer {
     private double _queryMaxMagnitude;
     /** The query maximum magnitude auto-update flag */
     private boolean _queryMaxMagnitudeAutoUpdate = true;
-    /** The query bright scenario flag */
+
+    /** The query bright scenario flag
+     * Contains true if BRIGHT scenario is selected, false if FAINT.
+     */
     private boolean _queryBrightScenarioFlag;
+
     /** The query diff. RA */
     private double _queryDiffRASize;
     /** The query diff. DEC */
     private double _queryDiffDECSize;
+
     /** The query radius */
     private double _queryRadialSize;
     /** The query radius automatic computation flag */
     private boolean _queryAutoRadiusFlag;
+
     /** The current step of the querying progress.
      * 0 < _currentStep < _totalStep
      */
@@ -259,6 +276,7 @@ public class QueryModel extends Star implements Observer {
     private int _totalStep;
     /** The current catalog name of the querying progress step. */
     private String _catalogName;
+
     /** Remind whether the query can be edited or not (when loaded from file for example) */
     private boolean _isEditable;
 
@@ -271,8 +289,6 @@ public class QueryModel extends Star implements Observer {
 
         resetInstrumentalWavelengthes();
         resetScienceObjectMagnitudes();
-
-        _instrumentalMagnitudeBands = new DefaultComboBoxModel(_magnitudeBands);
 
         // Initialize values from user defined preferences
         try {
@@ -305,6 +321,9 @@ public class QueryModel extends Star implements Observer {
     public void reset() {
         _logger.entering("QueryModel", "reset");
 
+        // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
+        setQueryBrightScenarioFlag(true);
+
         setInstrumentalMagnitudeBand("K");
         setInstrumentalMaxBaseLine(0.0);
         resetInstrumentalWavelengthes();
@@ -314,7 +333,6 @@ public class QueryModel extends Star implements Observer {
         setScienceObjectDEC("+00:00:00.00");
         resetScienceObjectMagnitudes();
 
-        setQueryBrightScenarioFlag(true);
         setQueryDiffRASizeInMinutes(0.0);
         setQueryDiffDECSizeInDegrees(0.0);
         setQueryAutoRadiusFlag(true);
@@ -337,6 +355,10 @@ public class QueryModel extends Star implements Observer {
      */
     public void loadDefaultValues() throws PreferencesException, IllegalArgumentException {
         _logger.entering("QueryModel", "loadDefaultValues");
+
+        // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
+        setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
+                "query.queryBrightScenarioFlag"));
 
         setInstrumentalMagnitudeBand(_preferences.getPreference(
                 "query.magnitudeBand"));
@@ -362,8 +384,6 @@ public class QueryModel extends Star implements Observer {
         setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
                 "query.queryMaxMagnitudeDelta"));
 
-        setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
-                "query.queryBrightScenarioFlag"));
         setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(
                 _preferences.getPreferenceAsDouble("query.queryDiffRASize")));
         setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(
@@ -400,6 +420,8 @@ public class QueryModel extends Star implements Observer {
         }
 
         // Set the query members from the ParamSet values
+        // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
+        setQueryBrightScenarioFlag(Boolean.valueOf(parameters.get("bright")));
         setInstrumentalMagnitudeBand(parameters.get("band"));
         setInstrumentalWavelength(Double.valueOf(parameters.get("wlen")));
         setInstrumentalMaxBaseLine(Double.valueOf(parameters.get("baseMax")));
@@ -409,7 +431,6 @@ public class QueryModel extends Star implements Observer {
         setScienceObjectMagnitude(Double.valueOf(parameters.get("mag")));
         setQueryMinMagnitude(Double.valueOf(parameters.get("minMagRange")));
         setQueryMaxMagnitude(Double.valueOf(parameters.get("maxMagRange")));
-        setQueryBrightScenarioFlag(Boolean.valueOf(parameters.get("bright")));
         setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(Double.valueOf(parameters.get("diffRa"))));
         setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(Double.valueOf(parameters.get("diffDec"))));
         setQueryAutoRadiusFlag(true);
@@ -490,8 +511,8 @@ public class QueryModel extends Star implements Observer {
                 }
 
                 // For each "magnitude-band" couple
-                for (int i = 0; i < _magnitudeBands.length; i++) {
-                    String currentMagnitudeBand = _magnitudeBands[i];
+                for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
+                    String currentMagnitudeBand = ALL_MAGNITUDE_BANDS[i];
                     Double loadedValue = Double.NaN;
 
                     try {
@@ -637,24 +658,6 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Change all the instrumental magnitude bands for the actual query.
-     * Update the instrumental wavelength if needed.
-     *
-     * @param scienceObjectName the new instrumental magnitude band.
-     */
-    public void setInstrumentalMagnitudeBands(
-            DefaultComboBoxModel magnitudeBands) {
-        _logger.entering("QueryModel", "setInstrumentalMagnitudeBands");
-
-        _instrumentalMagnitudeBands = magnitudeBands;
-
-        String magnitudeBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
-        setInstrumentalMagnitudeBand(magnitudeBand);
-
-        setChanged();
-    }
-
-    /**
      * Return the instrumental magnitude band for the actual query.
      *
      * @return the instrumental magnitude band as a String object.
@@ -690,9 +693,9 @@ public class QueryModel extends Star implements Observer {
         _magnitudeBandToWavelength = new HashMap<String, Double>();
 
         // For each "magnitude band-predefined wavelength" couple
-        for (int i = 0; i < _magnitudeBands.length; i++) {
+        for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
             // Construct the conversion table between both
-            _magnitudeBandToWavelength.put(_magnitudeBands[i], _defaultWavelengths[i]);
+            _magnitudeBandToWavelength.put(ALL_MAGNITUDE_BANDS[i], _defaultWavelengths[i]);
         }
 
         setChanged();
@@ -870,10 +873,10 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "resetScienceObjectMagnitudes");
 
         // For each "magnitude-band" couple
-        for (int i = 0; i < _magnitudeBands.length; i++) {
+        for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
             // Construct the conversion table between both
             setPropertyAsDouble(Property.fromString("FLUX_"
-                    + _magnitudeBands[i]), Double.NaN);
+                    + ALL_MAGNITUDE_BANDS[i]), Double.NaN);
         }
     }
 
@@ -1085,8 +1088,8 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Change the maximun calibrator magnitude parameter.
-     * Calling this method once disable the maximun calibrator magnitude
+     * Change the maximum calibrator magnitude parameter.
+     * Calling this method once disable the maximum calibrator magnitude
      * auto-update.
      *
      * @param maxMagnitude the new maximum magnitude as a Double value.
@@ -1123,9 +1126,9 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Indicates wether the query is using the bright scenario or the faint one.
+     * Indicates whether the query is using the bright scenario or the faint one.
      *
-     * @return true wether the query is of the bright type, otherwise false for
+     * @return true whether the query is of the bright type, otherwise false for
      * the faint ones.
      */
     public Boolean getQueryBrightScenarioFlag() {
@@ -1135,7 +1138,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Set wether the query should use the bright scenario or the faint one.
+     * Set whether the query should use the bright scenario or the faint one.
      *
      * @param flag true for bright queries, false for faint ones.
      */
@@ -1143,6 +1146,13 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "setQueryBrightScenarioFlag");
 
         _queryBrightScenarioFlag = flag;
+
+        // Use the right magnitude band set for the selected scenario
+        if (_queryBrightScenarioFlag == true) {
+            _instrumentalMagnitudeBands = new DefaultComboBoxModel(BRIGHT_MAGNITUDE_BANDS);
+        } else {
+            _instrumentalMagnitudeBands = new DefaultComboBoxModel(FAINT_MAGNITUDE_BANDS);
+        }
 
         setChanged();
     }
@@ -1257,9 +1267,9 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Indicates wether the query should use automatic radius computation or not.
+     * Indicates whether the query should use automatic radius computation or not.
      *
-     * @return true wether the radius will be automatically computed, false otherwise.
+     * @return true whether the radius will be automatically computed, false otherwise.
      */
     public Boolean getQueryAutoRadiusFlag() {
         _logger.entering("QueryModel", "getQueryAutoRadiusFlag");
@@ -1268,7 +1278,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Set wether the query should use automatic radius computation or not.
+     * Set whether the query should use automatic radius computation or not.
      *
      * @param flag true for the radius to be automatically computed, false otherwise.
      */
