@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.31 2011-01-05 15:14:45 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.32 2011-01-20 14:59:12 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.31  2011/01/05 15:14:45  lafrasse
+ * Added found and filtered calibrator counts.
+ *
  * Revision 1.30  2010/10/10 22:45:03  lafrasse
  * Code reformating.
  *
@@ -153,6 +156,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     private StarList _currentStarList = null;
     /** Displayed star list (filtered and removed-star free) */
     private StarList _filteredStarList = null;
+    /** Store the selected stars displayed and updated by calibratorView */
+    private int[] _selectedStarIndices = null;
     /** JTable column names */
     private Vector<String> _columnNames = null;
     /** JTable column URLs */
@@ -610,7 +615,26 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         if (starsProperties.get(column) instanceof StarProperty) {
             return (StarProperty) starsProperties.get(column);
         }
+        // TODO put error log or use Vector<Vector> for starlists
+        return null;
+    }
 
+    /**
+     * Return the star at the given row.
+     *
+     * @param row the indice of one star which in the filtered list of the model.
+     *
+     * @return the Star corresponding to the given index.
+     */
+    public Vector getStar(int row) {
+        _logger.entering("CalibratorsModel", "getStar");
+
+        Object s = _filteredStarList.get(row);
+
+        if (s instanceof Vector) {
+            return (Vector) s;
+        }
+        // TODO put error log or use Vector<Vector> for starlists
         return null;
     }
 
@@ -721,17 +745,57 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         }
     }
 
+    /** Save the selected list to file or all stars if none selected.
+     *
+     * @param file output file
+     */
+    public void saveSelectionAsVOTableFile(File file) {
+        saveVOTableFile(file, getSelectedStars());
+    }
+
     /**
      * Save the original star list into the given file.
      *
      * @param file the file to be written.
      */
     public void saveVOTableFile(File file) {
+        saveVOTableFile(file, _originalStarList);
+    }
+
+    /**
+     * Save the stars associated to given indexes into the given file
+     * or all stars if indices array is null/empty.
+     * Stars are extracted from filtered list.
+     * @param file the file to be written.
+     */
+    public void saveVOTableFile(File file, int selectedRows[]) {
+        StarList s;
+        if (selectedRows != null && selectedRows.length > 0) {
+            s = new StarList();
+            for (int i = 0; i < selectedRows.length; i++) {
+                int j = selectedRows[i];
+                // use filtered star list because selection works on filtered list
+                s.add(_filteredStarList.get(j));
+            }
+        } else {
+            s = _filteredStarList;
+        }
+        saveVOTableFile(file, s);
+    }
+
+    /**
+     * Save the given star list into the given file.
+     *
+     * @param file the file to be written.
+     * @param listToSave starList to save.
+     */
+    public void saveVOTableFile(File file, StarList listToSave) {
         _logger.entering("CalibratorsModel", "saveVOTableFile");
 
         String filename = file.getAbsolutePath();
+        _logger.fine("Saving one starlist as votable into file " + filename);
 
-        SavotVOTable voTable = getSavotVOTable(_originalStarList);
+        SavotVOTable voTable = getSavotVOTable(listToSave);
         SavotWriter wd = new SavotWriter();
         wd.generateDocument(voTable, filename);
     }
@@ -797,6 +861,23 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         _currentStarList = (StarList) _originalStarList.clone();
 
         update(null, null);
+    }
+
+    /**
+     * Store the selected indices of the calibrator view.
+     * This method should only be called by calibratorView.
+     * @param selectedStarIndices selected indices of the calibrator view table.
+     */
+    public void setSelectedStars(int[] selectedStarIndices) {
+        _selectedStarIndices = selectedStarIndices;
+    }
+
+    /**
+     * Return the selected indices of the calibratorView table.
+     * @return the selected indices of the calibratorView table
+     */
+    public int[] getSelectedStars() {
+        return _selectedStarIndices;
     }
 
     /**
