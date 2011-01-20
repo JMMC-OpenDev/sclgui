@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.46 2010-11-04 16:48:06 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.47 2011-01-20 10:05:37 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.46  2010/11/04 16:48:06  lafrasse
+ * Changed communication channel (now through HTTP standard port 80) to better support tightly filtered public networks (WiFi, etc).
+ *
  * Revision 1.45  2010/10/22 10:15:55  bourgesl
  * SAMP Message handler (Start query) modified : use EDT and give focus to searchCal frame
  *
@@ -844,7 +847,7 @@ public final class VirtualObservatory extends Observable {
     }
 
     /**
-     * Called to export current data to a HTML formatted file.
+     * Called to export current data as local votable to another samp application.
      */
     protected class ShareAllCalibratorsThroughSAMPAction extends SampCapabilityAction {
 
