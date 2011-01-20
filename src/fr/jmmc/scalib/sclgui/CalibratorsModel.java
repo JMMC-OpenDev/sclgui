@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.32 2011-01-20 14:59:12 mella Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.33 2011-01-20 16:56:47 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.32  2011/01/20 14:59:12  mella
+ * Store calibrator list selected and updated by calibratorView
+ * Add various methods to export starlists into votable
+ *
  * Revision 1.31  2011/01/05 15:14:45  lafrasse
  * Added found and filtered calibrator counts.
  *
@@ -178,7 +182,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     public Vector _columnClasses = null;
     /** Selected magnitude band */
     private String _magnitudeBand = "V";
-    /** Selected scenarion */
+    /** Selected scenario */
     private Boolean _brightScenarioFlag = true;
 
     /**
@@ -745,12 +749,33 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         }
     }
 
-    /** Save the selected list to file or all stars if none selected.
+    /**
+     * Save the stars associated to given indexes into the given file
+     * or all stars if indices array is null/empty.
+     * Stars are extracted from filtered list.
      *
      * @param file output file
      */
     public void saveSelectionAsVOTableFile(File file) {
-        saveVOTableFile(file, getSelectedStars());
+        StarList selectedStarsList;
+
+        // If some calibrators are currently selected
+        if (_selectedStarIndices != null && _selectedStarIndices.length > 0) {
+            // Compute a dedicated star list
+            selectedStarsList = new StarList();
+            for (int index = 0; index < _selectedStarIndices.length; index++) {
+                int selectedIndex = _selectedStarIndices[index];
+                // Use filtered star list because selection works on filtered list
+                Object selectedStar = _filteredStarList.get(selectedIndex);
+                selectedStarsList.add(selectedStar);
+            }
+        } else {
+            // Use all visible calibrators if none explicitly slected
+            selectedStarsList = _filteredStarList;
+        }
+
+        // Save either selected or all calibrators to file
+        saveVOTableFile(file, selectedStarsList);
     }
 
     /**
@@ -760,27 +785,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      */
     public void saveVOTableFile(File file) {
         saveVOTableFile(file, _originalStarList);
-    }
-
-    /**
-     * Save the stars associated to given indexes into the given file
-     * or all stars if indices array is null/empty.
-     * Stars are extracted from filtered list.
-     * @param file the file to be written.
-     */
-    public void saveVOTableFile(File file, int selectedRows[]) {
-        StarList s;
-        if (selectedRows != null && selectedRows.length > 0) {
-            s = new StarList();
-            for (int i = 0; i < selectedRows.length; i++) {
-                int j = selectedRows[i];
-                // use filtered star list because selection works on filtered list
-                s.add(_filteredStarList.get(j));
-            }
-        } else {
-            s = _filteredStarList;
-        }
-        saveVOTableFile(file, s);
     }
 
     /**
@@ -870,14 +874,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      */
     public void setSelectedStars(int[] selectedStarIndices) {
         _selectedStarIndices = selectedStarIndices;
-    }
-
-    /**
-     * Return the selected indices of the calibratorView table.
-     * @return the selected indices of the calibratorView table
-     */
-    public int[] getSelectedStars() {
-        return _selectedStarIndices;
     }
 
     /**
