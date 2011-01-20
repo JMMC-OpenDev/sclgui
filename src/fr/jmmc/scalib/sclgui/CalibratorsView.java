@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.40 2011-01-05 15:14:45 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.41 2011-01-20 14:27:12 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.40  2011/01/05 15:14:45  lafrasse
+ * Added found and filtered calibrator counts.
+ *
  * Revision 1.39  2010/10/10 22:45:03  lafrasse
  * Code reformating.
  *
@@ -189,6 +192,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     private JTable _calibratorsIdTable = null;
     /** The calibrators table */
     private JTable _calibratorsTable = null;
+    /** The calibrator table sorter */
+    private TableSorter _tableSorter = null;
     /** Calibrators table and Legend container */
     private JSplitPane _tableAndLegendPane = null;
 
@@ -225,7 +230,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _fullResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_fullResultsVerbosityAction", "Full", _preferences,
                 "view.result.verbosity.full");
-
+        
         // Gray border of the view.
         updateBorderTitle();
 
@@ -240,13 +245,16 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _calibratorsTable.getSelectionModel().addListSelectionListener(this);
 
         // Configure table sorting
-        TableSorter tableSorter = new TableSorter(_calibratorsModel,
+        _tableSorter = new TableSorter(_calibratorsModel,
                 _calibratorsTable.getTableHeader());
-        _calibratorsTable.setModel(tableSorter);
-        _calibratorsIdTable = new JTable(tableSorter,
+        _calibratorsTable.setModel(_tableSorter);
+        _calibratorsIdTable = new JTable(_tableSorter,
                 new DefaultTableColumnModel(), null);
         _calibratorsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _calibratorsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // Become listselectionListener to forward selected list to model
+        _calibratorsTable.getSelectionModel().addListSelectionListener(this);
 
         // Place tables into scrollPane
         JScrollPane scrollPane = new JScrollPane(_calibratorsTable);
@@ -294,9 +302,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 // Properly display (or not) legend view
                 showLegend();
             }
-        });
-    }
-
+        });               
+ }
+  
     private void updateBorderTitle() {
         // Colored border of the view.
         Border grayBorder = BorderFactory.createLineBorder(Color.gray, 1);
@@ -327,6 +335,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             // Disable the delte menu item
             _deleteAction.setEnabled(false);
         }
+
+        // update model with current selection
+        _calibratorsModel.setSelectedStars(getSelectedStarIndices());
     }
 
     /**
@@ -454,6 +465,19 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
             _calibratorsModel.undeleteStars();
         }
+    }
+    
+    /** Returns the indices list of stars selected in the calibrator table .
+     * 
+     * @return the indices list
+     */
+    public int[] getSelectedStarIndices() {
+        int[] selectedRows = _calibratorsTable.getSelectedRows();
+        int[] convertedSelectedRows = new int[selectedRows.length];
+        for (int i = 0; i < selectedRows.length; i++) {
+            convertedSelectedRows[i] = _tableSorter.modelIndex(selectedRows[i]);
+        }
+        return selectedRows;
     }
 }
 /*___oOo___*/
