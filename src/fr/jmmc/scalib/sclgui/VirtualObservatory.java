@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.48 2011-01-20 15:03:19 mella Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.49 2011-01-20 16:55:35 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.48  2011/01/20 15:03:19  mella
+ * Change sampExport action to return the selected list in the table or the whole list if none is selected.
+ *
  * Revision 1.47  2011/01/20 10:05:37  mella
  * Fix javadoc opy/paste
  *
@@ -278,7 +281,7 @@ public final class VirtualObservatory extends Observable {
         _exportToHTMLFileAction = new ExportToHTMLFileAction(classPath,
                 "_exportToHTMLFileAction");
         _shareCalibratorsThroughSAMPAction = new ShareCalibratorsThroughSAMPAction(classPath,
-                "_shareAllThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
+                "_shareCalibratorsThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
 
         // Query related members
         _getCalAction = new GetCalAction(classPath,
@@ -293,7 +296,7 @@ public final class VirtualObservatory extends Observable {
              *
              * @param senderId public ID of sender client
              * @param message message with MType this handler is subscribed to
-             * @throws SampException if any error occured while message processing
+             * @throws SampException if any error occurred while message processing
              */
             protected void processMessage(final String senderId, final Message message) {
                 if (_logger.isLoggable(Level.FINE)) {
@@ -418,12 +421,11 @@ public final class VirtualObservatory extends Observable {
     public void enableSaveMenus(boolean flag) {
         _logger.entering("VirtualObservatory", "enableSaveMenus");
 
-        _saveFileAction.setEnabled(true);
-        _saveFileAsAction.setEnabled(true);
-        _exportToCSVFileAction.setEnabled(true);
-        _exportToHTMLFileAction.setEnabled(true);
-        _shareCalibratorsThroughSAMPAction.setEnabled(true);
-
+        _saveFileAction.setEnabled(flag);
+        _saveFileAsAction.setEnabled(flag);
+        _exportToCSVFileAction.setEnabled(flag);
+        _exportToHTMLFileAction.setEnabled(flag);
+        _shareCalibratorsThroughSAMPAction.setEnabled(flag);
     }
 
     /**
@@ -850,13 +852,13 @@ public final class VirtualObservatory extends Observable {
     }
 
     /**
-     * Called to export current data as local votable to another samp application.
+     * Called to export current data as local VOTable to another SAMP application.
      */
     protected class ShareCalibratorsThroughSAMPAction extends SampCapabilityAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
-        
+
         public ShareCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability) {
             super(classPath, fieldName, capability);
         }
@@ -874,7 +876,7 @@ public final class VirtualObservatory extends Observable {
             file.deleteOnExit();
             URI uri = file.toURI();
 
-            // ask the model to save the selected or while list if no selection is done
+            // Save the current calibrator selection (or all visible ones if none selected) to file
             _calibratorsModel.saveSelectionAsVOTableFile(file);
 
             final Map<String, String> parameters = new HashMap<String, String>();
