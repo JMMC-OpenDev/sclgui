@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.3b4"/>
-        <compilation date="13/01/2011" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.3b5"/>
+        <compilation date="20/01/2011" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -46,11 +46,14 @@
         <menu label="Get Calibrators" classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_getCalAction" accelerator="R"/>
       </menu>
       <menu label="Interop">
-        <menu label="Send Calibrators to..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_shareAllThroughSAMPAction"/>
+        <menu label="Send Calibrators to..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_shareCalibratorsThroughSAMPAction"/>
       </menu>
     </menubar>
     <releasenotes>
         <release version="4.3">
+            <prerelease version="4.3b5" tag="SC_V4_3_b5">
+               <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/14">Enhanced SAMP support to either export only selected calibrators or all visible ones if none specifically selected.</change>
+            </prerelease>
             <prerelease version="4.3b4" tag="SC_V4_3_b4">
                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/15">Fixed wrong available magnitude bands for faint scenario.</change>
                <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/13">Added found and filtered calibrator counts.</change>
