@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsView.java,v 1.41 2011-01-20 14:27:12 mella Exp $"
+ * "@(#) $Id: CalibratorsView.java,v 1.42 2011-01-24 11:24:30 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.41  2011/01/20 14:27:12  mella
+ * Update the calibratorModel with the current selection of calibrator table on each selection event
+ *
  * Revision 1.40  2011/01/05 15:14:45  lafrasse
  * Added found and filtered calibrator counts.
  *
@@ -155,7 +158,7 @@ import javax.swing.table.*;
  * Calibrators view.
  *
  * Manage a JTable.
- * This file also embedds the appropriate MVC controller in the form of several
+ * This class also embeds the appropriate MVC controller in the form of several
  * ActionListener.
  * It extend JPanel in order to be displayable.
  * It implements TableModelListener in order to automatically update any time
@@ -176,7 +179,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public static RegisteredPreferencedBooleanAction _showLegendAction = null;
     /** Synthetic Results Verbosity action */
     public static RegisteredPreferencedBooleanAction _syntheticResultsVerbosityAction = null;
-    /** Detailled Results Verbosity action */
+    /** Detailed Results Verbosity action */
     public static RegisteredPreferencedBooleanAction _detailledResultsVerbosityAction = null;
     /** Full Results Verbosity action */
     public static RegisteredPreferencedBooleanAction _fullResultsVerbosityAction = null;
@@ -336,7 +339,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             _deleteAction.setEnabled(false);
         }
 
-        // update model with current selection
+        // Update model with current selection
         _calibratorsModel.setSelectedStars(getSelectedStarIndices());
     }
 
@@ -351,7 +354,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // Enable/disable the Undelete menu item
         _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
 
-        // Update identification table if bae table has a minimum of one column
+        // Update identification table if the table has a minimum of one column
         if (_calibratorsTable.getColumnModel().getColumnCount() > 0) {
             /*
              * If _calibratorsIdTable has not exactly one column
@@ -474,10 +477,13 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public int[] getSelectedStarIndices() {
         int[] selectedRows = _calibratorsTable.getSelectedRows();
         int[] convertedSelectedRows = new int[selectedRows.length];
+
+        // Convert JTable order to data model order thanks to the TableSorter
         for (int i = 0; i < selectedRows.length; i++) {
             convertedSelectedRows[i] = _tableSorter.modelIndex(selectedRows[i]);
         }
-        return selectedRows;
+
+        return convertedSelectedRows;
     }
 }
 /*___oOo___*/
