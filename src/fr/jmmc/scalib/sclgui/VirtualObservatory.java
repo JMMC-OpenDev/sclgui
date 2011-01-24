@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.49 2011-01-20 16:55:35 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.50 2011-01-24 11:22:41 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.49  2011/01/20 16:55:35  lafrasse
+ * Fixed typos and minor issues.
+ *
  * Revision 1.48  2011/01/20 15:03:19  mella
  * Change sampExport action to return the selected list in the table or the whole list if none is selected.
  *
@@ -202,7 +205,7 @@ import javax.swing.SwingUtilities;
 import org.astrogrid.samp.Message;
 
 /**
- * Handle JMMC WebServices interactions and file input/ouput.
+ * Handle JMMC WebServices interactions and file input/output.
  */
 public final class VirtualObservatory extends Observable {
 
@@ -217,7 +220,7 @@ public final class VirtualObservatory extends Observable {
     private FiltersModel _filtersModel = null;
     /** Path to an open or saved file */
     private File _file = null;
-    /** Store wether the Query has be launched or not */
+    /** Store whether the Query has be launched or not */
     private boolean _queryIsLaunched = false;
     /** Proxy to shared FileFilter repository */
     private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
@@ -414,18 +417,17 @@ public final class VirtualObservatory extends Observable {
     }
 
     /**
-     * Enable/disable 'Save' related menus.
+     * Enable or disable save/export/share menus.
      *
      * @param flag true to enable all menus, false otherwise.
      */
-    public void enableSaveMenus(boolean flag) {
+    public void enableDataRelatedMenus(boolean flag) {
         _logger.entering("VirtualObservatory", "enableSaveMenus");
 
         _saveFileAction.setEnabled(flag);
         _saveFileAsAction.setEnabled(flag);
         _exportToCSVFileAction.setEnabled(flag);
         _exportToHTMLFileAction.setEnabled(flag);
-        _shareCalibratorsThroughSAMPAction.setEnabled(flag);
     }
 
     /**
@@ -591,7 +593,7 @@ public final class VirtualObservatory extends Observable {
                     StatusBar.show("file succesfully loaded.");
 
                     // Enabling the 'Save' menus
-                    enableSaveMenus(true);
+                    enableDataRelatedMenus(true);
                 }
 
                 // Now that a file has been loaded
@@ -1141,7 +1143,7 @@ public final class VirtualObservatory extends Observable {
                     }
 
                     // As data are now loaded
-                    enableSaveMenus(true);
+                    enableDataRelatedMenus(true);
                 } catch (Exception ex) {
                     // Handle error when no manual cancel
                     if (_getCalThread != null) {
