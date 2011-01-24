@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.33 2011-01-20 16:56:47 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.34 2011-01-24 11:26:34 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2011/01/20 16:56:47  lafrasse
+ * Fixed typos and factorized code.
+ *
  * Revision 1.32  2011/01/20 14:59:12  mella
  * Store calibrator list selected and updated by calibratorView
  * Add various methods to export starlists into votable
@@ -119,6 +122,7 @@ import cds.savot.model.*;
 import cds.savot.pull.*;
 
 import cds.savot.writer.*;
+import java.awt.Desktop.Action;
 
 import java.io.*;
 
@@ -136,7 +140,7 @@ import javax.xml.transform.stream.*;
  * Calibrators model.
  *
  * This class play the role of the mediator between any registered JTable views
- * and a VOTable originally given as a simple string. This is why its extends
+ * and a VOTable originally given as a simple string. This is why it extends
  * DefaultTableModel (JTable data source).
  * It also implements Observer in order to be automatically notified any time
  * one of the filters managed by a registered instance of FiltersModel changes.
@@ -254,6 +258,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
         // Remember that data have changed
         _dataHaveChanged = true;
+
+        // Ask for SAMP export menu enabling if needed
+        boolean shouldBeEnabled = (_currentStarList.size() > 0);
+        SearchCalibrators._vo._shareCalibratorsThroughSAMPAction.couldBeEnabled(shouldBeEnabled);
     }
 
     /**
@@ -673,13 +681,26 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @param starList the list of stars to be converted.
      *
-     * @return a Savot VOTable object.
+     * @return a Savot VOTable object, or null.
      */
     private SavotVOTable getSavotVOTable(StarList starList) {
         _logger.entering("CalibratorsModel", "getSavotVOTable");
 
-        // This method must be optimized (if no change occured do not generate
-        // again...)
+        // @TODO : if no change occured do not generate again
+
+        // If null received
+        if (starList.size() <= 0) {
+            _logger.warning("Could not process 'null' StarList");
+            // Abort
+            return null;
+        }
+
+        // If no Votable already loaded to be used as a template for columns descriptions
+        if (_voTable.length() <= 0) {
+            _logger.warning("Could not generate metadata template");
+            // Abort
+            return null;
+        }
 
         // Put the whole original VOTable file into memory
         SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
@@ -692,7 +713,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         ResourceSet resourceSet = parsedVOTable.getResources();
 
         // Get the first table of the first resource
-        // WARNING : this is not compatible with other VOTable than JMMC ones
+        // WARNING : this is not compatible with other VOTable than SearchCal ones
         SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
 
         // Remove every row
@@ -800,6 +821,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         _logger.fine("Saving one starlist as votable into file " + filename);
 
         SavotVOTable voTable = getSavotVOTable(listToSave);
+        if (voTable == null) {
+            _logger.warning("Could not get SAVOT VOTable from given StarList");
+            return;
+        }
+
         SavotWriter wd = new SavotWriter();
         wd.generateDocument(voTable, filename);
     }
@@ -807,17 +833,20 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     /**
      * Return a string containing the current star list as a VOTable.
      *
-     * @return the VOTable corresponding to the SearchCal initial result.
+     * @return the VOTable corresponding to the SearchCal initial result, or null.
      */
     public String getVOTable() {
         _logger.entering("CalibratorsModel", "getVOTable");
 
         SavotVOTable voTable = getSavotVOTable(_currentStarList);
+        if (voTable == null) {
+            _logger.warning("Could not get SAVOT VOTable from current StarList");
+            return null;
+        }
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         SavotWriter wd = new SavotWriter();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         wd.generateDocument(voTable, outputStream);
-
         // The original data
         return outputStream.toString();
     }
@@ -874,6 +903,17 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      */
     public void setSelectedStars(int[] selectedStarIndices) {
         _selectedStarIndices = selectedStarIndices;
+
+        // Set SAMP action text according to current selection
+        String actionMenuText = "Send All Calibrators to...";
+
+        if ((_selectedStarIndices != null) && (_selectedStarIndices.length > 0)) {
+            // When some calibrators selected
+            actionMenuText = "Send Selected Calibrators to...";
+        }
+
+        // Update Menu label
+        SearchCalibrators._vo._shareCalibratorsThroughSAMPAction.setText(actionMenuText);
     }
 
     /**
