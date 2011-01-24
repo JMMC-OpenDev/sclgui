@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.50 2011-01-24 11:22:41 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.51 2011-01-24 16:18:29 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.50  2011/01/24 11:22:41  lafrasse
+ * Refactoring.
+ *
  * Revision 1.49  2011/01/20 16:55:35  lafrasse
  * Fixed typos and minor issues.
  *
@@ -863,6 +866,7 @@ public final class VirtualObservatory extends Observable {
 
         public ShareCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability) {
             super(classPath, fieldName, capability);
+            couldBeEnabled(false);
         }
 
         public Map<?, ?> composeMessage() {
