@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.33 2010-10-22 10:56:43 bourgesl Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.34 2011-02-01 10:27:38 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2010/10/22 10:56:43  bourgesl
+ * fixed class javadoc
+ * use EDT to executeQuery in execute method
+ *
  * Revision 1.32  2010/10/11 14:02:37  lafrasse
  * Ensures that GUI construction is done in EDT.
  * Added general exception trapping with MCSExceptionHandler.
@@ -158,10 +162,9 @@ public class SearchCalibrators extends App {
     public SearchCalibrators(String[] args, String query) {
         /* Launch application initialization with:
          *    - execution delayed for further initilization;
-         *    - without splashscreen;
          *    - without protection against current process killing by its father.
          */
-        super(args, false, false, false);
+        super(args, false, false);
 
         // Store received query for later execution
         _query = query;
