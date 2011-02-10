@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.61 2011-01-13 14:13:47 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.62 2011-02-10 14:20:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.61  2011/01/13 14:13:47  lafrasse
+ * Restricted faint scenario magnitude bands to I, J, H and K.
+ * Fixed documentation typos.
+ *
  * Revision 1.60  2010/10/10 22:45:04  lafrasse
  * Code reformating.
  *
@@ -703,8 +707,8 @@ public final class QueryView extends JPanel implements Observer,
             _vo._getCalAction.setEnabled(false);
         }
 
-        // If the magnitude band is 'V'
-        if (_queryModel.getInstrumentalMagnitudeBand().matches("V") == true) {
+        // If the magnitude band is either 'V', 'I', 'J', or 'H'
+        if (instrumentalMagnitudeBand.matches("[V,I,J,H]") == true) {
             // Enable min & max magnitude textfields
             _minMagnitudeTextfield.setEnabled(true);
             _maxMagnitudeTextfield.setEnabled(true);
@@ -716,7 +720,7 @@ public final class QueryView extends JPanel implements Observer,
             // Select bright scenario
             _brightRadioButton.setSelected(true);
             _queryModel.setQueryBrightScenarioFlag(true);
-        } else if (_queryModel.getInstrumentalMagnitudeBand().matches("N") == true) {
+        } else if (instrumentalMagnitudeBand.matches("N") == true) {
             // Disable min & max magnitude textfields
             _minMagnitudeTextfield.setEnabled(false);
             _maxMagnitudeTextfield.setEnabled(false);

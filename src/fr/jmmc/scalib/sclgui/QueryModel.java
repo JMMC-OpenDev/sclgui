@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.50 2011-01-13 14:13:47 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.51 2011-02-10 14:20:00 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.50  2011/01/13 14:13:47  lafrasse
+ * Restricted faint scenario magnitude bands to I, J, H and K.
+ * Fixed documentation typos.
+ *
  * Revision 1.49  2010/10/11 13:53:01  lafrasse
  * Streamlined exception handling.
  * Cleaned imports.
@@ -232,16 +236,13 @@ public class QueryModel extends Star implements Observer {
     /** Available magnitude band for BRIGHT scenario */
     private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
     /** Available magnitude band for FAINT scenario */
-    private static final String[] FAINT_MAGNITUDE_BANDS = {"I", "J", "H", "K"};
-
+    private static final String[] FAINT_MAGNITUDE_BANDS = {"K"};
     /** The instrumental maximum base line */
     private double _instrumentalMaxBaseLine;
-
     /** The science object name */
     private String _scienceObjectName;
     /** The science object detection distance */
     private boolean _scienceObjectDetectionDistance;
-
     /** The query minimum magnitude */
     private double _queryMinMagnitude;
     /** The query minimum magnitude auto-update flag */
@@ -250,22 +251,18 @@ public class QueryModel extends Star implements Observer {
     private double _queryMaxMagnitude;
     /** The query maximum magnitude auto-update flag */
     private boolean _queryMaxMagnitudeAutoUpdate = true;
-
     /** The query bright scenario flag
      * Contains true if BRIGHT scenario is selected, false if FAINT.
      */
     private boolean _queryBrightScenarioFlag;
-
     /** The query diff. RA */
     private double _queryDiffRASize;
     /** The query diff. DEC */
     private double _queryDiffDECSize;
-
     /** The query radius */
     private double _queryRadialSize;
     /** The query radius automatic computation flag */
     private boolean _queryAutoRadiusFlag;
-
     /** The current step of the querying progress.
      * 0 < _currentStep < _totalStep
      */
@@ -276,7 +273,6 @@ public class QueryModel extends Star implements Observer {
     private int _totalStep;
     /** The current catalog name of the querying progress step. */
     private String _catalogName;
-
     /** Remind whether the query can be edited or not (when loaded from file for example) */
     private boolean _isEditable;
 
