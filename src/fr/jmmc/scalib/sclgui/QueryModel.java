@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.51 2011-02-10 14:20:00 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.52 2011-02-11 16:02:02 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.51  2011/02/10 14:20:00  lafrasse
+ * Restricted faint scenario magnitude bands to K.
+ *
  * Revision 1.50  2011/01/13 14:13:47  lafrasse
  * Restricted faint scenario magnitude bands to I, J, H and K.
  * Fixed documentation typos.
@@ -232,7 +235,7 @@ public class QueryModel extends Star implements Observer {
      */
     private double[] _defaultWavelengths = {0.55, 0.9, 1.25, 1.65, 2.2, 10};
     /** The instrumental magnitude band */
-    private DefaultComboBoxModel _instrumentalMagnitudeBands = null;
+    private DefaultComboBoxModel _instrumentalMagnitudeBands = new DefaultComboBoxModel();
     /** Available magnitude band for BRIGHT scenario */
     private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
     /** Available magnitude band for FAINT scenario */
@@ -1144,11 +1147,13 @@ public class QueryModel extends Star implements Observer {
         _queryBrightScenarioFlag = flag;
 
         // Use the right magnitude band set for the selected scenario
+        Object selectedItem = _instrumentalMagnitudeBands.getSelectedItem();
         if (_queryBrightScenarioFlag == true) {
             _instrumentalMagnitudeBands = new DefaultComboBoxModel(BRIGHT_MAGNITUDE_BANDS);
         } else {
             _instrumentalMagnitudeBands = new DefaultComboBoxModel(FAINT_MAGNITUDE_BANDS);
         }
+        _instrumentalMagnitudeBands.setSelectedItem(selectedItem);
 
         setChanged();
     }
