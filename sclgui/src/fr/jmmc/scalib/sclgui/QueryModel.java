@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.52 2011-02-11 16:02:02 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.53 2011-02-15 15:36:32 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.52  2011/02/11 16:02:02  lafrasse
+ * Fucking NullPointerException...
+ *
  * Revision 1.51  2011/02/10 14:20:00  lafrasse
  * Restricted faint scenario magnitude bands to K.
  *
@@ -889,7 +892,11 @@ public class QueryModel extends Star implements Observer {
 
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
 
-        return getPropertyAsDouble(Property.fromString("FLUX_" + currentBand));
+        Double value = getPropertyAsDouble(Property.fromString("FLUX_" + currentBand));
+        if (value == null) {
+            value = Double.NaN;
+        }
+        return value;
     }
 
     /**
@@ -967,20 +974,21 @@ public class QueryModel extends Star implements Observer {
         if (_queryMinMagnitudeAutoUpdate == true) {
             Double scienceObjectMagnitude = getScienceObjectMagnitude();
 
-            if (scienceObjectMagnitude != null) {
-                if (Double.isNaN(scienceObjectMagnitude) == false) {
-                    return scienceObjectMagnitude
-                            + getQueryMinMagnitudeDelta();
-                }
+            // If science object magnitude is known
+            if (Double.isNaN(scienceObjectMagnitude) == false) {
+                // Compute min. magnitude accordinaly
+                return scienceObjectMagnitude
+                        + getQueryMinMagnitudeDelta();
             }
         }
 
+        // Otherwise use default value in preference
         return new Double(_queryMinMagnitude);
     }
 
     /**
-     * Change the minimun calibrator magnitude parameter.
-     * Calling this method once disable the minimun calibrator magnitude
+     * Change the minimum calibrator magnitude parameter.
+     * Calling this method once disable the minimum calibrator magnitude
      * auto-update.
      *
      * @param minMagnitude the new minimum magnitude as a double value.
@@ -1003,8 +1011,8 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Change the minimun calibrator magnitude parameter.
-     * Calling this method once disable the minimun calibrator magnitude
+     * Change the minimum calibrator magnitude parameter.
+     * Calling this method once disable the minimum calibrator magnitude
      * auto-update.
      *
      * @param minMagnitude the new minimum magnitude as a Double value.
@@ -1026,7 +1034,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Change the auto-update delta for the minimun calibrator magnitude.
+     * Change the auto-update delta for the minimum calibrator magnitude.
      *
      * @param delta the new delta as a double value.
      */
@@ -1041,7 +1049,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Return the maximun calibrator magnitude for the actual query.
+     * Return the maximum calibrator magnitude for the actual query.
      *
      * @return the maximum magnitude as a Double value.
      */
@@ -1051,20 +1059,21 @@ public class QueryModel extends Star implements Observer {
         if (_queryMaxMagnitudeAutoUpdate == true) {
             Double scienceObjectMagnitude = getScienceObjectMagnitude();
 
-            if (scienceObjectMagnitude != null) {
-                if (Double.isNaN(scienceObjectMagnitude) == false) {
-                    return scienceObjectMagnitude
-                            + getQueryMaxMagnitudeDelta();
-                }
+            // If science object magnitude is known
+            if (Double.isNaN(scienceObjectMagnitude) == false) {
+                // Compute max. magnitude accordinaly
+                return scienceObjectMagnitude
+                        + getQueryMaxMagnitudeDelta();
             }
         }
 
+        // Otherwise use default value in preference
         return new Double(_queryMaxMagnitude);
     }
 
     /**
-     * Change the maximun calibrator magnitude parameter.
-     * Calling this method once disable the maximun calibrator magnitude
+     * Change the maximum calibrator magnitude parameter.
+     * Calling this method once disable the maximum calibrator magnitude
      * auto-update.
      *
      * @param maxMagnitude the new maximum magnitude as a double value.

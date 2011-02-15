@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 	<program name="SearchCal" version="4.3b5"/>
-        <compilation date="20/01/2011" compiler="JDK 1.5.0_16"/>
+        <compilation date="15/02/2011" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -52,6 +52,7 @@
     <releasenotes>
         <release version="4.3">
             <prerelease version="4.3b5" tag="SC_V4_3_b5">
+               <change type="BUGFIX">Fixed a querying crash when science object magnitude is missing.</change>
                <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/14">Enhanced SAMP support to either export only selected calibrators or all visible ones if none specifically selected.</change>
                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/15">Fixed wrong available magnitude bands for faint scenario.</change>
             </prerelease>
