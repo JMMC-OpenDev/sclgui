@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.34 2011-01-24 11:26:34 lafrasse Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.35 2011-02-23 14:03:34 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2011/01/24 11:26:34  lafrasse
+ * Fixed crash while SAMP exporting an empty list.
+ * Added SAMP export enabling and renaming.
+ *
  * Revision 1.33  2011/01/20 16:56:47  lafrasse
  * Fixed typos and factorized code.
  *
@@ -122,7 +126,6 @@ import cds.savot.model.*;
 import cds.savot.pull.*;
 
 import cds.savot.writer.*;
-import java.awt.Desktop.Action;
 
 import java.io.*;
 
