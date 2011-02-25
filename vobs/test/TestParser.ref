@@ -1,0 +1,201 @@
+1 - vobsTestParser - vobs - Starting ...
+1 - vobsTestParser - vobs - Try to retreive the xml file at the URL: http://vizier.u-strasbg.fr/viz-bin/asu-xml?
+1 - vobsTestParser - vobs - vobsPARSER::MainParser()
+1 - vobsTestParser - vobs - vobsCDATA::SetCatalogName()
+1 - vobsTestParser - vobs - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:57:39.05&-c.dec=-29:37:20.1&Vmag=0.00..4.00&-c.eq=J2000&-out.max=100&-c.geom=b&-c.bm=3391/1200&-c.u=arcmin&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-sort=_r&SpType=%5bOBAFGKM%5d*'
+1 - vobsTestParser - vobs - URI = http://vizier.u-strasbg.fr/viz-bin/asu-xml?
+1 - vobsTestParser - misco - miscoDYN_BUF::GetInternalMiscDYN_BUF()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetBuffer()
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DEFINITIONS...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node COOSYS...
+1 - vobsTestParser - vobs - Parsing node INFO...
+1 - vobsTestParser - vobs - Parsing node INFO...
+1 - vobsTestParser - vobs - Parsing node INFO...
+1 - vobsTestParser - vobs - Parsing node RESOURCE...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node COOSYS...
+1 - vobsTestParser - vobs - Parsing node TABLE...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(_RAJ2000)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(POS_EQ_RA_MAIN)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(_DEJ2000)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(POS_EQ_DEC_MAIN)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(pmDE)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(POS_EQ_PMDEC)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(pmRA)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(POS_EQ_PMRA)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(Plx)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(POS_PARLX_TRIG)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(e_Plx)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(ERROR)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(SpType)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(SPECT_TYPE_MK)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(Bmag)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(PHOT_JHN_B)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(Vmag)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(PHOT_JHN_V)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(v1)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(CODE_VARIAB)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(v2)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(CODE_VARIAB)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(v3)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(VAR_CLASS)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(d5)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(CODE_MULT_FLAG)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(HIP)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(ID_ALTERNATIVE)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(HD)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(ID_ALTERNATIVE)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(DM)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(ID_ALTERNATIVE)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node FIELD...
+1 - vobsTestParser - vobs - vobsCDATA::AddParamName(TYC1)
+1 - vobsTestParser - vobs - vobsCDATA::AddUcdName(ID_ALTERNATIVE)
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node DESCRIPTION...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node VALUES...
+1 - vobsTestParser - vobs - Parsing node DATA...
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - Parsing node CSV...
+1 - vobsTestParser - vobs - vobsCDATA::SetNbLinesToSkip()
+1 - vobsTestParser - vobs - vobsPARSER:ParseXmlSubTree()
+1 - vobsTestParser - vobs - vobsCDATA::GetNbLinesToSkip()
+1 - vobsTestParser - vobs - vobsCDATA::AppendLines()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - vobs - Buffer to process : 
+1 - _RAJ2000	_DEJ2000	pmDE	pmRA	Plx	e_Plx	SpType	Bmag	Vmag	v1	v2	v3	d5	HIP	HD	DM	TY
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Skip line : 
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Skip line : _RAJ2000	_DEJ2000	pmDE	pmRA	Plx	e_Plx	SpType	Bmag	Vmag	v1	v2	v3	d5	HIP	HD	DM	TYC1
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Skip line : "h:m:s"	"d:m:s"	mas/yr	mas/yr	mas	mas		mag	mag								
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Skip line : ------------	------------	--------	--------	-------	------	--------------------	------	------	-	-	-	-	------	------	--------	----
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Add line : 22 57 39.049	-29 37 20.05	 -164.19	  332.39	 129.49	  0.92	A3V                 	 1.383	 1.212	N	V	 	G	113368	216956	-3019370	6977
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Add line : 23 09 26.797	-21 10 20.67	   31.61	   55.91	  13.47	  0.93	K1III               	 4.919	 3.678	 	W	 	 	114341	218594	-2106368	6401
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Add line : 23 22 58.227	-20 06 02.08	  -96.00	 -120.31	  20.21	  0.72	K0III               	 5.051	 3.954	 	 	 	 	115438	220321	-2006587	6402
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Add line : 21 53 55.728	-37 21 53.50	  -15.80	  100.48	  16.37	  0.75	B8III               	 2.921	 3.003	 	 	 	G	108085	207971	-3714536	7494
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Add line : 21 26 40.027	-22 24 40.80	   18.80	   -0.51	   8.36	  0.88	G4Ibp...            	 4.745	 3.742	 	W	C	 	105881	204075	-2300442	6372
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Add line : 00 43 35.372	-17 59 11.78	   32.75	  233.55	  34.11	  0.81	K0III               	 3.069	 2.036	N	W	U	 	  3419	  4128	-1800115	5847
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::AppendString()
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Skip line : 
+1 - vobsTestParser - misco - miscoDYN_BUF::GetNextLine()
+1 - vobsTestParser - vobs - 	-> Skip line : 
+1 - vobsTestParser - misco - miscoDYN_BUF::SaveInFile()
+1 - vobsTestParser - err - errAddInStack(misc, 21)
+1 - vobsTestParser - err - errAddInLocalStack_v()
+1 - vobsTestParser - err - errResetLocalStack()
+1 - vobsTestParser - err - Used error definition file '/home/users/lafrasse/dev/INTROOT/errors/miscErrors.xml'
+1 - vobsTestParser - err - Used error definition file '/home/users/lafrasse/dev/INTROOT/errors/miscErrors.xml'
+1 - vobsTestParser - err - Used error definition file '/home/users/lafrasse/dev/INTROOT/errors/miscErrors.xml'
+1 - vobsTestParser - err - errPutInStack()
+1 - vobsTestParser - err - 2011-02-25T15:56:03.213627 - misc vobsTestParser miscDynBuf.c:1296 21 S Could not save '/home/MCS/data/tmp/I_280.xml' file : 'Permission denied'.
+1 - 
+1 - vobsTestParser - err - errDisplayStack()
+1 - vobsTestParser - err - errDisplayLocalStack()
+1 - vobsTestParser - err - errCloseStack()
+1 - vobsTestParser - err - errCloseLocalStack()
+1 - vobsTestParser - err - errDisplayStack()
+1 - vobsTestParser - err - errDisplayLocalStack()
+1 - vobsTestParser - err - errResetLocalStack()
+1 - vobsTestParser - msg - msgSOCKET::~msgSOCKET(-1)
+1 - vobsTestParser - msg - msgSOCKET::IsConnected()
