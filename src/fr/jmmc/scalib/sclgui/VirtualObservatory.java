@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.51 2011-01-24 16:18:29 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.52 2011-02-28 13:11:36 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.51  2011/01/24 16:18:29  lafrasse
+ * Set default behavior as disabled.
+ *
  * Revision 1.50  2011/01/24 11:22:41  lafrasse
  * Refactoring.
  *
@@ -196,6 +199,7 @@ import fr.jmmc.sclws_wsdl.SclwsPortType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -996,18 +1000,19 @@ public final class VirtualObservatory extends Observable {
                         _logger.fine("JMMC Connection ID = '" + id + "'.");
                         StatusBar.show(
                                 "searching calibrators... (connection established)");
-                    } catch (Exception ex) {
+                    } catch (RemoteException re) {
+
                         // Handle error when no manual cancel
                         if (_getCalThread != null) {
                             StatusBar.show(
                                     "calibrator search aborted (connection refused) !");
-                            MessagePane.showErrorMessage("Could not connect to JMMC server.", ex);
+                            MessagePane.showErrorMessage("Could not connect to JMMC server.", re);
 
                             interrupt();
                             setQueryLaunchedState(false);
                         } else {
                             _logger.log(Level.FINE,
-                                    "Silenced error (cancellation).", ex);
+                                    "Silenced error (cancellation).", re);
                         }
 
                         return;
@@ -1174,9 +1179,7 @@ public final class VirtualObservatory extends Observable {
                     // Ask for query cancellation
                     isOk = sclws.getCalCancelSession(id);
                 } catch (Exception ex) {
-                    StatusBar.show(
-                            "could not cancel calibrator search (communication error) !");
-                    MessagePane.showErrorMessage("JMMC request cancellation failed.", ex);
+                    _logger.log(Level.WARNING, "JMMC request cancellation failed : ", ex);
 
                     setQueryLaunchedState(false);
 
