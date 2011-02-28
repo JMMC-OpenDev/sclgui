@@ -1026,7 +1026,20 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
             // Get StarProperty selected using modelIndex Method
             int modelRow = modelIndex(row);
-            int modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
+            int modelColumn;
+
+            try {
+                modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                // This code is reached when model / _viewIndex array / or table size mismatch
+                // exact reason is not yet defined
+                // @todo track source of mismatch
+                _logger.log(Level.WARNING, "Error searching in the table model while trying to render cell at column "
+                        + column + " table.getColumnCount()=" + table.getColumnCount()
+                        + " _viewIndex.length=" + _viewIndex.length, ex);
+                return this;
+            }
+
             String cellValue = "";
             StarProperty starProperty = _calModel.getStarProperty(modelRow,
                     modelColumn);
