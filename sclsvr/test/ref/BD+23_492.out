@@ -497,7 +497,6 @@ sclsvrServer - sclsvr - star TYC1 1799 - error on diameter too high; computed di
 sclsvrServer - sclsvr - star TYC1 1799 - Computing diameter with absorption...
 sclsvrServer - sclsvr - star TYC1 1799 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Computing UDs for LD='0.128300' and SP='-'...
-sclsvrServer - err - errAddInStack(misc, 33)
 sclsvrServer - sclsvr - Aborting (error while computing).
 sclsvrServer - sclsvr - star HD 23246 - parallax 16.38(8.60) is not valid...
 sclsvrServer - alx - ra = 0.979255 radians
@@ -829,7 +828,6 @@ sclsvrServer - sclsvr - vis2Err = 0.000615
 sclsvrServer - sclsvr - visibilityErr = 0.001279
 sclsvrServer - sclsvr - star TYC1 1799 - visibility error (0.001279) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Computing UDs for LD='0.158461' and SP='-'...
-sclsvrServer - err - errAddInStack(misc, 33)
 sclsvrServer - sclsvr - Aborting (error while computing).
 sclsvrServer - sclsvr - star HD 23325 - parallax 19.20(13.80) is not valid...
 sclsvrServer - alx - ra = 0.982223 radians
@@ -950,31 +948,31 @@ sclsvrServer - sclsvr - star DM 2300491 - error on diameter too high; computed d
 sclsvrServer - sclsvr - star DM 2300491 - Computing diameter with absorption...
 sclsvrServer - sclsvr - star DM 2300491 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Computing UDs for LD='0.250886' and SP='G5'...
-sclsvrServer - alx - UD_B = 0.228707
-sclsvrServer - alx - UD_I = 0.238422
-sclsvrServer - alx - UD_J = 0.241941
-sclsvrServer - alx - UD_H = 0.243769
-sclsvrServer - alx - UD_K = 0.244929
-sclsvrServer - alx - UD_L = 0.247451
-sclsvrServer - alx - UD_N = 0.249240
-sclsvrServer - alx - UD_R = 0.235750
-sclsvrServer - alx - UD_U = 0.226640
-sclsvrServer - alx - UD_V = 0.232324
-sclsvrServer - alx - Teff = 4930.000000
-sclsvrServer - alx - LogG = 1.078000
+sclsvrServer - alx - UD_B = 0.231449
+sclsvrServer - alx - UD_I = 0.240058
+sclsvrServer - alx - UD_J = 0.243044
+sclsvrServer - alx - UD_H = 0.244671
+sclsvrServer - alx - UD_K = 0.245583
+sclsvrServer - alx - UD_L = 0.247758
+sclsvrServer - alx - UD_N = 0.249490
+sclsvrServer - alx - UD_R = 0.237790
+sclsvrServer - alx - UD_U = 0.229332
+sclsvrServer - alx - UD_V = 0.234753
+sclsvrServer - alx - Teff = 5560.000000
+sclsvrServer - alx - LogG = 4.428000
 alxUNIFORM_DIAMETERS structure contains:
-	ud.Teff = 4930.000000
-	ud.LogG = 1.078000
-	ud.b    = 0.228707
-	ud.i    = 0.238422
-	ud.j    = 0.241941
-	ud.h    = 0.243769
-	ud.k    = 0.244929
-	ud.l    = 0.247451
-	ud.n    = 0.249240
-	ud.r    = 0.235750
-	ud.u    = 0.226640
-	ud.v    = 0.232324
+	ud.Teff = 5560.000000
+	ud.LogG = 4.428000
+	ud.b    = 0.231449
+	ud.i    = 0.240058
+	ud.j    = 0.243044
+	ud.h    = 0.244671
+	ud.k    = 0.245583
+	ud.l    = 0.247758
+	ud.n    = 0.249490
+	ud.r    = 0.237790
+	ud.u    = 0.229332
+	ud.v    = 0.234753
 sclsvrServer - sclsvr - star DM 2300494 - parallax 36.20(24.70) is not valid...
 sclsvrServer - alx - ra = 0.974040 radians
 sclsvrServer - alx - dec = 0.414053 radians
@@ -3340,7 +3338,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property logg_SpType</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_B" ID="col291" ucd="UD_B" datatype="float" unit="mas">
-    <DESCRIPTION>B-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>B-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_B.origin" ID="col292" ucd="UD_B.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_B</DESCRIPTION>
@@ -3349,7 +3347,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_B</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_I" ID="col294" ucd="UD_I" datatype="float" unit="mas">
-    <DESCRIPTION>I-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>I-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_I.origin" ID="col295" ucd="UD_I.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_I</DESCRIPTION>
@@ -3358,7 +3356,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_I</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_J" ID="col297" ucd="UD_J" datatype="float" unit="mas">
-    <DESCRIPTION>J-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>J-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_J.origin" ID="col298" ucd="UD_J.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_J</DESCRIPTION>
@@ -3367,7 +3365,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_J</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_H" ID="col300" ucd="UD_H" datatype="float" unit="mas">
-    <DESCRIPTION>H-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>H-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_H.origin" ID="col301" ucd="UD_H.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_H</DESCRIPTION>
@@ -3376,7 +3374,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_H</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_K" ID="col303" ucd="UD_K" datatype="float" unit="mas">
-    <DESCRIPTION>K-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>K-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_K.origin" ID="col304" ucd="UD_K.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_K</DESCRIPTION>
@@ -3385,7 +3383,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_K</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_L" ID="col306" ucd="UD_L" datatype="float" unit="mas">
-    <DESCRIPTION>L-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>L-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_L.origin" ID="col307" ucd="UD_L.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_L</DESCRIPTION>
@@ -3394,7 +3392,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_L</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_N" ID="col309" ucd="UD_N" datatype="float" unit="mas">
-    <DESCRIPTION>N-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>N-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_N.origin" ID="col310" ucd="UD_N.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_N</DESCRIPTION>
@@ -3403,7 +3401,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_N</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_R" ID="col312" ucd="UD_R" datatype="float" unit="mas">
-    <DESCRIPTION>R-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>R-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_R.origin" ID="col313" ucd="UD_R.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_R</DESCRIPTION>
@@ -3412,7 +3410,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_R</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_U" ID="col315" ucd="UD_U" datatype="float" unit="mas">
-    <DESCRIPTION>U-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>U-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_U.origin" ID="col316" ucd="UD_U.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_U</DESCRIPTION>
@@ -3421,7 +3419,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_U</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_V" ID="col318" ucd="UD_V" datatype="float" unit="mas">
-    <DESCRIPTION>V-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>V-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_V.origin" ID="col319" ucd="UD_V.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_V</DESCRIPTION>
@@ -4391,7 +4389,7 @@ VOTable:
       <TD>23325</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2300508</TD><TD>I/280</TD><TD></TD><TD>1799</TD><TD>I/280</TD><TD></TD><TD>306</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>03450653+2415486</TD><TD>II/246/out</TD><TD></TD><TD>03 45 06.538</TD><TD>I/280</TD><TD></TD><TD>+24 15 48.65</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>18.62</TD><TD>I/280</TD><TD></TD><TD>-43.77</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AM?</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-23.701</TD><TD>II/246/out</TD><TD></TD><TD>166.114</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.925</TD><TD>I/280</TD><TD></TD><TD>8.86</TD><TD>II/246/out</TD><TD></TD><TD>8.545</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.52</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.892</TD><TD>II/246/out</TD><TD></TD><TD>7.767</TD><TD>II/246/out</TD><TD></TD><TD>7.738</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.920</TD><TD>computed</TD><TD>HIGH</TD><TD>7.762</TD><TD>computed</TD><TD>HIGH</TD><TD>7.762</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.762</TD><TD>computed</TD><TD>HIGH</TD><TD>7.762</TD><TD>computed</TD><TD>HIGH</TD><TD>7.920</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>8.520</TD><TD>computed</TD><TD>HIGH</TD><TD>8.545</TD><TD>computed</TD><TD>HIGH</TD><TD>8.860</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.534</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2300491</TD><TD>I/280</TD><TD></TD><TD>1799</TD><TD>I/280</TD><TD></TD><TD>1312</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>03413051+2348050</TD><TD>II/246/out</TD><TD></TD><TD>03 41 30.521</TD><TD>I/280</TD><TD></TD><TD>+23 48 05.22</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>45.75</TD><TD>I/280</TD><TD></TD><TD>-30.3</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>G5</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-24.593</TD><TD>II/246/out</TD><TD></TD><TD>165.778</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.536</TD><TD>I/280</TD><TD></TD><TD>10.52</TD><TD>II/246/out</TD><TD></TD><TD>9.472</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.51</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.706</TD><TD>computed</TD><TD>HIGH</TD><TD>7.226</TD><TD>II/246/out</TD><TD></TD><TD>6.67</TD><TD>II/246/out</TD><TD></TD><TD>6.546</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.226</TD><TD>computed</TD><TD>HIGH</TD><TD>6.663</TD><TD>computed</TD><TD>HIGH</TD><TD>6.570</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.251</TD><TD>computed</TD><TD>HIGH</TD><TD>0.017</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.273</TD><TD>computed</TD><TD>HIGH</TD><TD>0.026</TD><TD>computed</TD><TD>HIGH</TD><TD>0.319</TD><TD>computed</TD><TD>HIGH</TD><TD>0.055</TD><TD>computed</TD><TD>HIGH</TD><TD>0.252</TD><TD>computed</TD><TD>HIGH</TD><TD>0.031</TD><TD>computed</TD><TD>HIGH</TD><TD>0.274</TD><TD>computed</TD><TD>HIGH</TD><TD>0.055</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>4930.000</TD><TD>computed</TD><TD>HIGH</TD><TD>1.078</TD><TD>computed</TD><TD>HIGH</TD><TD>0.229</TD><TD>computed</TD><TD>HIGH</TD><TD>0.238</TD><TD>computed</TD><TD>HIGH</TD><TD>0.242</TD><TD>computed</TD><TD>HIGH</TD><TD>0.244</TD><TD>computed</TD><TD>HIGH</TD><TD>0.245</TD><TD>computed</TD><TD>HIGH</TD><TD>0.247</TD><TD>computed</TD><TD>HIGH</TD><TD>0.249</TD><TD>computed</TD><TD>HIGH</TD><TD>0.236</TD><TD>computed</TD><TD>HIGH</TD><TD>0.227</TD><TD>computed</TD><TD>HIGH</TD><TD>0.232</TD><TD>computed</TD><TD>HIGH</TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.570</TD><TD>computed</TD><TD>HIGH</TD><TD>6.663</TD><TD>computed</TD><TD>HIGH</TD><TD>7.226</TD><TD>computed</TD><TD>HIGH</TD><TD>7.706</TD><TD>computed</TD><TD>HIGH</TD><TD>9.510</TD><TD>computed</TD><TD>HIGH</TD><TD>9.472</TD><TD>computed</TD><TD>HIGH</TD><TD>10.520</TD><TD>computed</TD><TD>HIGH</TD><TD>0.991</TD><TD>computed</TD><TD>HIGH</TD><TD>0.002</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.551</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2300491</TD><TD>I/280</TD><TD></TD><TD>1799</TD><TD>I/280</TD><TD></TD><TD>1312</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>03413051+2348050</TD><TD>II/246/out</TD><TD></TD><TD>03 41 30.521</TD><TD>I/280</TD><TD></TD><TD>+23 48 05.22</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>45.75</TD><TD>I/280</TD><TD></TD><TD>-30.3</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>G5</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-24.593</TD><TD>II/246/out</TD><TD></TD><TD>165.778</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.536</TD><TD>I/280</TD><TD></TD><TD>10.52</TD><TD>II/246/out</TD><TD></TD><TD>9.472</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.51</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.706</TD><TD>computed</TD><TD>HIGH</TD><TD>7.226</TD><TD>II/246/out</TD><TD></TD><TD>6.67</TD><TD>II/246/out</TD><TD></TD><TD>6.546</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.226</TD><TD>computed</TD><TD>HIGH</TD><TD>6.663</TD><TD>computed</TD><TD>HIGH</TD><TD>6.570</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.251</TD><TD>computed</TD><TD>HIGH</TD><TD>0.017</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.273</TD><TD>computed</TD><TD>HIGH</TD><TD>0.026</TD><TD>computed</TD><TD>HIGH</TD><TD>0.319</TD><TD>computed</TD><TD>HIGH</TD><TD>0.055</TD><TD>computed</TD><TD>HIGH</TD><TD>0.252</TD><TD>computed</TD><TD>HIGH</TD><TD>0.031</TD><TD>computed</TD><TD>HIGH</TD><TD>0.274</TD><TD>computed</TD><TD>HIGH</TD><TD>0.055</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>5560.000</TD><TD>computed</TD><TD>HIGH</TD><TD>4.428</TD><TD>computed</TD><TD>HIGH</TD><TD>0.231</TD><TD>computed</TD><TD>HIGH</TD><TD>0.240</TD><TD>computed</TD><TD>HIGH</TD><TD>0.243</TD><TD>computed</TD><TD>HIGH</TD><TD>0.245</TD><TD>computed</TD><TD>HIGH</TD><TD>0.246</TD><TD>computed</TD><TD>HIGH</TD><TD>0.248</TD><TD>computed</TD><TD>HIGH</TD><TD>0.249</TD><TD>computed</TD><TD>HIGH</TD><TD>0.238</TD><TD>computed</TD><TD>HIGH</TD><TD>0.229</TD><TD>computed</TD><TD>HIGH</TD><TD>0.235</TD><TD>computed</TD><TD>HIGH</TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.570</TD><TD>computed</TD><TD>HIGH</TD><TD>6.663</TD><TD>computed</TD><TD>HIGH</TD><TD>7.226</TD><TD>computed</TD><TD>HIGH</TD><TD>7.706</TD><TD>computed</TD><TD>HIGH</TD><TD>9.510</TD><TD>computed</TD><TD>HIGH</TD><TD>9.472</TD><TD>computed</TD><TD>HIGH</TD><TD>10.520</TD><TD>computed</TD><TD>HIGH</TD><TD>0.991</TD><TD>computed</TD><TD>HIGH</TD><TD>0.002</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.551</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2300494</TD><TD>I/280</TD><TD></TD><TD>1799</TD><TD>I/280</TD><TD></TD><TD>654</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>03431400+2343245</TD><TD>II/246/out</TD><TD></TD><TD>03 43 14.015</TD><TD>I/280</TD><TD></TD><TD>+23 43 24.54</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-0.33</TD><TD>I/280</TD><TD></TD><TD>-6.84</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>K5</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-24.389</TD><TD>II/246/out</TD><TD></TD><TD>166.159</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.279</TD><TD>I/280</TD><TD></TD><TD>11.36</TD><TD>II/246/out</TD><TD></TD><TD>9.526</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.54</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.633</TD><TD>computed</TD><TD>HIGH</TD><TD>6.253</TD><TD>II/246/out</TD><TD></TD><TD>5.424</TD><TD>II/246/out</TD><TD></TD><TD>5.181</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.232</TD><TD>computed</TD><TD>HIGH</TD><TD>5.414</TD><TD>computed</TD><TD>HIGH</TD><TD>5.205</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.547</TD><TD>computed</TD><TD>LOW</TD><TD>0.038</TD><TD>computed</TD><TD>LOW</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.646</TD><TD>computed</TD><TD>LOW</TD><TD>0.063</TD><TD>computed</TD><TD>LOW</TD><TD>1.139</TD><TD>computed</TD><TD>LOW</TD><TD>0.197</TD><TD>computed</TD><TD>LOW</TD><TD>0.572</TD><TD>computed</TD><TD>LOW</TD><TD>0.072</TD><TD>computed</TD><TD>LOW</TD><TD>0.726</TD><TD>computed</TD><TD>LOW</TD><TD>0.145</TD><TD>computed</TD><TD>LOW</TD><TD>NOK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.205</TD><TD>computed</TD><TD>HIGH</TD><TD>5.414</TD><TD>computed</TD><TD>HIGH</TD><TD>6.232</TD><TD>computed</TD><TD>HIGH</TD><TD>7.633</TD><TD>computed</TD><TD>HIGH</TD><TD>9.540</TD><TD>computed</TD><TD>HIGH</TD><TD>9.526</TD><TD>computed</TD><TD>HIGH</TD><TD>11.360</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.558</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>

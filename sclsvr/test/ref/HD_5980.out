@@ -270,7 +270,6 @@ sclsvrServer - sclsvr - star TYC1 9138 - error on diameter too high; computed di
 sclsvrServer - sclsvr - star TYC1 9138 - Computing diameter with absorption...
 sclsvrServer - sclsvr - star TYC1 9138 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Computing UDs for LD='0.045029' and SP='-'...
-sclsvrServer - err - errAddInStack(misc, 33)
 sclsvrServer - sclsvr - Aborting (error while computing).
 sclsvrServer - sclsvr - star TYC1 9138 - parallax is unknown
 sclsvrServer - alx - ra = 0.256766 radians
@@ -350,7 +349,6 @@ sclsvrServer - sclsvr - star TYC1 9138 - error on diameter too high; computed di
 sclsvrServer - sclsvr - star TYC1 9138 - Computing diameter with absorption...
 sclsvrServer - sclsvr - star TYC1 9138 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Computing UDs for LD='0.033460' and SP='-'...
-sclsvrServer - err - errAddInStack(misc, 33)
 sclsvrServer - sclsvr - Aborting (error while computing).
 sclsvrServer - sclsvr - star TYC1 9138 - parallax is unknown
 sclsvrServer - alx - ra = 0.268160 radians
@@ -430,7 +428,6 @@ sclsvrServer - sclsvr - star TYC1 9138 - error on diameter too high; computed di
 sclsvrServer - sclsvr - star TYC1 9138 - Computing diameter with absorption...
 sclsvrServer - sclsvr - star TYC1 9138 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Computing UDs for LD='0.016339' and SP='-'...
-sclsvrServer - err - errAddInStack(misc, 33)
 sclsvrServer - sclsvr - Aborting (error while computing).
 sclsvrServer - sclsvr - star TYC1 9138 - parallax is unknown
 sclsvrServer - alx - ra = 0.253238 radians
@@ -510,7 +507,6 @@ sclsvrServer - sclsvr - star TYC1 9138 - error on diameter too high; computed di
 sclsvrServer - sclsvr - star TYC1 9138 - Computing diameter with absorption...
 sclsvrServer - sclsvr - star TYC1 9138 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Computing UDs for LD='0.033329' and SP='-'...
-sclsvrServer - err - errAddInStack(misc, 33)
 sclsvrServer - sclsvr - Aborting (error while computing).
 sclsvrServer - sclsvr - star HIP 4768 - parallax -6.63(3.78) is not valid...
 sclsvrServer - alx - ra = 0.267398 radians
@@ -6222,7 +6218,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property logg_SpType</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_B" ID="col291" ucd="UD_B" datatype="float" unit="mas">
-    <DESCRIPTION>B-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>B-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_B.origin" ID="col292" ucd="UD_B.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_B</DESCRIPTION>
@@ -6231,7 +6227,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_B</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_I" ID="col294" ucd="UD_I" datatype="float" unit="mas">
-    <DESCRIPTION>I-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>I-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_I.origin" ID="col295" ucd="UD_I.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_I</DESCRIPTION>
@@ -6240,7 +6236,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_I</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_J" ID="col297" ucd="UD_J" datatype="float" unit="mas">
-    <DESCRIPTION>J-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>J-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_J.origin" ID="col298" ucd="UD_J.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_J</DESCRIPTION>
@@ -6249,7 +6245,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_J</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_H" ID="col300" ucd="UD_H" datatype="float" unit="mas">
-    <DESCRIPTION>H-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>H-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_H.origin" ID="col301" ucd="UD_H.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_H</DESCRIPTION>
@@ -6258,7 +6254,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_H</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_K" ID="col303" ucd="UD_K" datatype="float" unit="mas">
-    <DESCRIPTION>K-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>K-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_K.origin" ID="col304" ucd="UD_K.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_K</DESCRIPTION>
@@ -6267,7 +6263,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_K</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_L" ID="col306" ucd="UD_L" datatype="float" unit="mas">
-    <DESCRIPTION>L-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>L-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_L.origin" ID="col307" ucd="UD_L.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_L</DESCRIPTION>
@@ -6276,7 +6272,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_L</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_N" ID="col309" ucd="UD_N" datatype="float" unit="mas">
-    <DESCRIPTION>N-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>N-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_N.origin" ID="col310" ucd="UD_N.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_N</DESCRIPTION>
@@ -6285,7 +6281,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_N</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_R" ID="col312" ucd="UD_R" datatype="float" unit="mas">
-    <DESCRIPTION>R-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>R-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_R.origin" ID="col313" ucd="UD_R.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_R</DESCRIPTION>
@@ -6294,7 +6290,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_R</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_U" ID="col315" ucd="UD_U" datatype="float" unit="mas">
-    <DESCRIPTION>U-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>U-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_U.origin" ID="col316" ucd="UD_U.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_U</DESCRIPTION>
@@ -6303,7 +6299,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property UD_U</DESCRIPTION>
    </FIELD>
    <FIELD name="UD_V" ID="col318" ucd="UD_V" datatype="float" unit="mas">
-    <DESCRIPTION>V-band Uniform-Disk Diamter</DESCRIPTION>
+    <DESCRIPTION>V-band Uniform-Disk Diameter</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="UD_V.origin" ID="col319" ucd="UD_V.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property UD_V</DESCRIPTION>
