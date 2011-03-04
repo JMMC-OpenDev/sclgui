@@ -1,0 +1,1216 @@
+1 - vobsTestStarList - vobs - Is star list empty? : YES
+1 - 
+1 - vobsTestStarList - vobs - Size of the list = 0
+1 - 
+1 - vobsTestStarList - vobs - Add 5 stars in the list.
+1 - 
+1 - vobsTestStarList - vobs - Is star list empty? : NO
+1 - 
+1 - vobsTestStarList - vobs - Size of the list = 5
+1 - 
+1 - vobsTestStarList - vobs - Save the list into starList.txt.
+1 - 
+1 - vobsTestStarList - vobs - Save the list as VOTable into starList.xml.
+1 - 
+1 - VOTable:
+1 - <?xml version="1.0"?>
+1 - 
+1 - <VOTABLE version="1.1"
+1 -          xmlns="http://www.ivoa.net/xml/VOTable/v1.1"
+1 -          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+1 -          xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.1 http://www.ivoa.net/xml/VOTable/VOTable-1.1.xsd">
+1 - 
+1 -  <DESCRIPTION>
+1 -   JMMC_team@Grenoble.france
+1 -   Request parameters: No request for this one...
+1 -   Generated on (UTC): SearchCal Regression Test Mode
+1 -  </DESCRIPTION>
+1 - 
+1 -  <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
+1 - 
+1 -  <RESOURCE name="SearchCal Regression Test Mode">
+1 -   <TABLE
+1 -  name="starList.xml">
+1 - No XML request either.
+1 -    <FIELD name="HD" ID="col0" ucd="ID_HD" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>HD identifier, click to call Simbad on this object</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://simbad.u-strasbg.fr/simbad/sim-id?protocol=html&amp;Ident=HD${HD}"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="HD.origin" ID="col1" ucd="ID_HD.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property HD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="HD.confidence" ID="col2" ucd="ID_HD.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property HD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="HIP" ID="col3" ucd="ID_HIP" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>HIP identifier, click to call Simbad on this object</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://simbad.u-strasbg.fr/simbad/sim-id?protocol=html&amp;Ident=HIP${HIP}"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="HIP.origin" ID="col4" ucd="ID_HIP.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property HIP</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="HIP.confidence" ID="col5" ucd="ID_HIP.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property HIP</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="DM" ID="col6" ucd="ID_DM" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="DM.origin" ID="col7" ucd="ID_DM.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property DM</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="DM.confidence" ID="col8" ucd="ID_DM.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property DM</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="TYC1" ID="col9" ucd="ID_TYC1" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="TYC1.origin" ID="col10" ucd="ID_TYC1.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property TYC1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="TYC1.confidence" ID="col11" ucd="ID_TYC1.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property TYC1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="TYC2" ID="col12" ucd="ID_TYC2" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="TYC2.origin" ID="col13" ucd="ID_TYC2.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property TYC2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="TYC2.confidence" ID="col14" ucd="ID_TYC2.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property TYC2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="TYC3" ID="col15" ucd="ID_TYC3" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="TYC3.origin" ID="col16" ucd="ID_TYC3.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property TYC3</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="TYC3.confidence" ID="col17" ucd="ID_TYC3.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property TYC3</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="opt" ID="col18" ucd="ID_CATALOG" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="opt.origin" ID="col19" ucd="ID_CATALOG.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property opt</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="opt.confidence" ID="col20" ucd="ID_CATALOG.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property opt</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="2MASS" ID="col21" ucd="ID_2MASS" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>2MASS identifier, click to call VizieR on this object</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=II/246/out&amp;-out=2MASS&amp;2MASS=${2MASS}"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="2MASS.origin" ID="col22" ucd="ID_2MASS.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property 2MASS</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="2MASS.confidence" ID="col23" ucd="ID_2MASS.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property 2MASS</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="RAJ2000" ID="col24" ucd="POS_EQ_RA_MAIN" ref="J2000" datatype="char" arraysize="*" unit="h:m:s">
+1 -     <DESCRIPTION>Right Ascencion - J2000</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://simbad.u-strasbg.fr/simbad/sim-coo?CooDefinedFrames=none&amp;Coord=${RAJ2000}%20${DEJ2000}&amp;CooEpoch=2000&amp;CooFrame=FK5&amp;CooEqui=2000&amp;Radius.unit=arcsec&amp;Radius=1"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="RAJ2000.origin" ID="col25" ucd="POS_EQ_RA_MAIN.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property RAJ2000</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="RAJ2000.confidence" ID="col26" ucd="POS_EQ_RA_MAIN.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property RAJ2000</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="DEJ2000" ID="col27" ucd="POS_EQ_DEC_MAIN" ref="J2000" datatype="char" arraysize="*" unit="d:m:s">
+1 -     <DESCRIPTION>Declination - J2000</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://simbad.u-strasbg.fr/simbad/sim-coo?CooDefinedFrames=none&amp;Coord=${RAJ2000}%20${DEJ2000}&amp;CooEpoch=2000&amp;CooFrame=FK5&amp;CooEqui=2000&amp;Radius.unit=arcsec&amp;Radius=1"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="DEJ2000.origin" ID="col28" ucd="POS_EQ_DEC_MAIN.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property DEJ2000</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="DEJ2000.confidence" ID="col29" ucd="POS_EQ_DEC_MAIN.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property DEJ2000</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="DENIS" ID="col30" ucd="ID_DENIS" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>DENIS identifier</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="DENIS.origin" ID="col31" ucd="ID_DENIS.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property DENIS</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="DENIS.confidence" ID="col32" ucd="ID_DENIS.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property DENIS</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="A2RAdeg" ID="col33" ucd="POS_EQ_RA_OTHER" datatype="char" arraysize="*" unit="h:m:s">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="A2RAdeg.origin" ID="col34" ucd="POS_EQ_RA_OTHER.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property A2RAdeg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="A2RAdeg.confidence" ID="col35" ucd="POS_EQ_RA_OTHER.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property A2RAdeg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="A2DEdeg" ID="col36" ucd="POS_EQ_DEC_OTHER" datatype="char" arraysize="*" unit="d:m:s">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="A2DEdeg.origin" ID="col37" ucd="POS_EQ_DEC_OTHER.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property A2DEdeg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="A2DEdeg.confidence" ID="col38" ucd="POS_EQ_DEC_OTHER.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property A2DEdeg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="pmRa" ID="col39" ucd="POS_EQ_PMRA" datatype="float" unit="mas/yr">
+1 -     <DESCRIPTION>Proper Motion in Right Ascension</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="pmRa.origin" ID="col40" ucd="POS_EQ_PMRA.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property pmRa</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="pmRa.confidence" ID="col41" ucd="POS_EQ_PMRA.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property pmRa</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="pmDec" ID="col42" ucd="POS_EQ_PMDEC" datatype="float" unit="mas/yr">
+1 -     <DESCRIPTION>Proper Motion in Declination</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="pmDec.origin" ID="col43" ucd="POS_EQ_PMDEC.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property pmDec</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="pmDec.confidence" ID="col44" ucd="POS_EQ_PMDEC.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property pmDec</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="plx" ID="col45" ucd="POS_PARLX_TRIG" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Trigonometric Parallaxe</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="plx.origin" ID="col46" ucd="POS_PARLX_TRIG.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property plx</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="plx.confidence" ID="col47" ucd="POS_PARLX_TRIG.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property plx</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_Plx" ID="col48" ucd="POS_PARLX_TRIG_ERROR" datatype="float">
+1 -     <DESCRIPTION>Error on Parallaxe</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_Plx.origin" ID="col49" ucd="POS_PARLX_TRIG_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_Plx</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_Plx.confidence" ID="col50" ucd="POS_PARLX_TRIG_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_Plx</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="SpType" ID="col51" ucd="SPECT_TYPE_MK" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>MK Spectral Type</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="SpType.origin" ID="col52" ucd="SPECT_TYPE_MK.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property SpType</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="SpType.confidence" ID="col53" ucd="SPECT_TYPE_MK.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property SpType</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="VarFlag1" ID="col54" ucd="CODE_VARIAB_V1" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Variability from GCVS/NSV</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="VarFlag1.origin" ID="col55" ucd="CODE_VARIAB_V1.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property VarFlag1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="VarFlag1.confidence" ID="col56" ucd="CODE_VARIAB_V1.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property VarFlag1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="VarFlag2" ID="col57" ucd="CODE_VARIAB_V2" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Variability in Tycho-1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="VarFlag2.origin" ID="col58" ucd="CODE_VARIAB_V2.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property VarFlag2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="VarFlag2.confidence" ID="col59" ucd="CODE_VARIAB_V2.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property VarFlag2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="VarFlag3" ID="col60" ucd="VAR_CLASS" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Variability type among C,D,M,P,R and U</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="VarFlag3.origin" ID="col61" ucd="VAR_CLASS.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property VarFlag3</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="VarFlag3.confidence" ID="col62" ucd="VAR_CLASS.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property VarFlag3</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="MultFlag" ID="col63" ucd="CODE_MULT_FLAG" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Multiplicity type among C,G,O,V and X</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="MultFlag.origin" ID="col64" ucd="CODE_MULT_FLAG.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property MultFlag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="MultFlag.confidence" ID="col65" ucd="CODE_MULT_FLAG.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property MultFlag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="BinFlag" ID="col66" ucd="CODE_BIN_FLAG" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Multiplicity type among SB or eclipsing B</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="BinFlag.origin" ID="col67" ucd="CODE_BIN_FLAG.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property BinFlag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="BinFlag.confidence" ID="col68" ucd="CODE_BIN_FLAG.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property BinFlag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="SBC9" ID="col69" ucd="ID_SB9" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>SBC9 identifier, click to call VizieR on this object</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=B/sb9&amp;-out.form=%2bH&amp;-corr=FK=Seq&amp;-out.all=1&amp;-out.max=9999&amp;Seq===%20${SBC9}"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="SBC9.origin" ID="col70" ucd="ID_SB9.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property SBC9</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="SBC9.confidence" ID="col71" ucd="ID_SB9.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property SBC9</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="WDS" ID="col72" ucd="ID_WDS" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>WDS identifier, click to call VizieR on this object</DESCRIPTION>
+1 -     <VALUES/>
+1 -     <LINK href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=B/wds/wds&amp;-out.form=%2bH&amp;-out.all=1&amp;-out.max=9999&amp;WDS===${WDS}"/>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="WDS.origin" ID="col73" ucd="ID_WDS.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property WDS</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="WDS.confidence" ID="col74" ucd="ID_WDS.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property WDS</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="sep1" ID="col75" ucd="ORBIT_SEPARATION_SEP1" datatype="float" unit="arcsec">
+1 -     <DESCRIPTION>Angular Separation of the binary on first observation</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="sep1.origin" ID="col76" ucd="ORBIT_SEPARATION_SEP1.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property sep1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="sep1.confidence" ID="col77" ucd="ORBIT_SEPARATION_SEP1.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property sep1</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="sep2" ID="col78" ucd="ORBIT_SEPARATION_SEP2" datatype="float" unit="arcsec">
+1 -     <DESCRIPTION>Angular Separation of the binary on last observation</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="sep2.origin" ID="col79" ucd="ORBIT_SEPARATION_SEP2.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property sep2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="sep2.confidence" ID="col80" ucd="ORBIT_SEPARATION_SEP2.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property sep2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Iflag" ID="col81" ucd="CODE_MISC_I" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Iflag.origin" ID="col82" ucd="CODE_MISC_I.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Iflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Iflag.confidence" ID="col83" ucd="CODE_MISC_I.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Iflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Jflag" ID="col84" ucd="CODE_MISC_J" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Jflag.origin" ID="col85" ucd="CODE_MISC_J.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Jflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Jflag.confidence" ID="col86" ucd="CODE_MISC_J.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Jflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Kflag" ID="col87" ucd="CODE_MISC_K" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Kflag.origin" ID="col88" ucd="CODE_MISC_K.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Kflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Kflag.confidence" ID="col89" ucd="CODE_MISC_K.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Kflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Qflag" ID="col90" ucd="CODE_QUALITY" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Qflag.origin" ID="col91" ucd="CODE_QUALITY.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Qflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Qflag.confidence" ID="col92" ucd="CODE_QUALITY.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Qflag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="GLAT" ID="col93" ucd="POS_GAL_LAT" datatype="float" unit="deg">
+1 -     <DESCRIPTION>Galactic Latitude</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="GLAT.origin" ID="col94" ucd="POS_GAL_LAT.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property GLAT</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="GLAT.confidence" ID="col95" ucd="POS_GAL_LAT.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property GLAT</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="GLON" ID="col96" ucd="POS_GAL_LON" datatype="float" unit="deg">
+1 -     <DESCRIPTION>Galactic Longitude</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="GLON.origin" ID="col97" ucd="POS_GAL_LON.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property GLON</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="GLON.confidence" ID="col98" ucd="POS_GAL_LON.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property GLON</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="RadVel" ID="col99" ucd="VELOC_HC" datatype="char" arraysize="*" unit="km/s">
+1 -     <DESCRIPTION>Radial Velocity</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="RadVel.origin" ID="col100" ucd="VELOC_HC.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property RadVel</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="RadVel.confidence" ID="col101" ucd="VELOC_HC.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property RadVel</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="RotVel" ID="col102" ucd="VELOC_ROTAT" datatype="char" arraysize="*" unit="km/s">
+1 -     <DESCRIPTION>Rotation Velocity (v sini)</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="RotVel.origin" ID="col103" ucd="VELOC_ROTAT.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property RotVel</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="RotVel.confidence" ID="col104" ucd="VELOC_ROTAT.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property RotVel</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="LD" ID="col105" ucd="LD_DIAM" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Limb-Darkened Diameter</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="LD.origin" ID="col106" ucd="LD_DIAM.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property LD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="LD.confidence" ID="col107" ucd="LD_DIAM.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property LD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_LD" ID="col108" ucd="LD_DIAM_ERROR" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Error on Limb-Darkened Diameter</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_LD.origin" ID="col109" ucd="LD_DIAM_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_LD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_LD.confidence" ID="col110" ucd="LD_DIAM_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_LD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="UD" ID="col111" ucd="UD_DIAM" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Uniform-Disc Diameter</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="UD.origin" ID="col112" ucd="UD_DIAM.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property UD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="UD.confidence" ID="col113" ucd="UD_DIAM.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property UD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_UD" ID="col114" ucd="UD_DIAM_ERROR" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Error on Uniform-Disc Diameter</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_UD.origin" ID="col115" ucd="UD_DIAM_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_UD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_UD.confidence" ID="col116" ucd="UD_DIAM_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_UD</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="UDDK" ID="col117" ucd="UDDK_DIAM" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Uniform-Disc Diameter in K-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="UDDK.origin" ID="col118" ucd="UDDK_DIAM.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property UDDK</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="UDDK.confidence" ID="col119" ucd="UDDK_DIAM.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property UDDK</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_UDDK" ID="col120" ucd="UDDK_DIAM_ERROR" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Error on Uniform-Disc Diameter in K-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_UDDK.origin" ID="col121" ucd="UDDK_DIAM_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_UDDK</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_UDDK.confidence" ID="col122" ucd="UDDK_DIAM_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_UDDK</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Dia12" ID="col123" ucd="DIAM12" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Angular Diameter at 12 microns</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Dia12.origin" ID="col124" ucd="DIAM12.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Dia12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Dia12.confidence" ID="col125" ucd="DIAM12.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Dia12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_dia12" ID="col126" ucd="DIAM12_ERROR" datatype="float" unit="mas">
+1 -     <DESCRIPTION>Error on Angular Diameter at 12 microns</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_dia12.origin" ID="col127" ucd="DIAM12_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_dia12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_dia12.confidence" ID="col128" ucd="DIAM12_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_dia12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Meth" ID="col129" ucd="REDUCT_METHOD" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Method of Measurement</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Meth.origin" ID="col130" ucd="REDUCT_METHOD.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Meth</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Meth.confidence" ID="col131" ucd="REDUCT_METHOD.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Meth</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="lambda" ID="col132" ucd="INST_WAVELENGTH_VALUE" datatype="float">
+1 -     <DESCRIPTION>Wavelength</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="lambda.origin" ID="col133" ucd="INST_WAVELENGTH_VALUE.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property lambda</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="lambda.confidence" ID="col134" ucd="INST_WAVELENGTH_VALUE.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property lambda</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="lambda" ID="col135" ucd="INST_FILTER_CODE" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Wavelength</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="lambda.origin" ID="col136" ucd="INST_FILTER_CODE.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property lambda</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="lambda.confidence" ID="col137" ucd="INST_FILTER_CODE.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property lambda</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="photflux" ID="col138" ucd="PHOT_FLUX_IR_MISC" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="photflux.origin" ID="col139" ucd="PHOT_FLUX_IR_MISC.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property photflux</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="photflux.confidence" ID="col140" ucd="PHOT_FLUX_IR_MISC.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property photflux</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="units" ID="col141" ucd="UNITS" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="units.origin" ID="col142" ucd="UNITS.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property units</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="units.confidence" ID="col143" ucd="UNITS.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property units</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="B" ID="col144" ucd="PHOT_JHN_B" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in B-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="B.origin" ID="col145" ucd="PHOT_JHN_B.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property B</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="B.confidence" ID="col146" ucd="PHOT_JHN_B.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property B</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Bphg" ID="col147" ucd="PHOT_PHG_B" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Photometric Magnitude in B-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Bphg.origin" ID="col148" ucd="PHOT_PHG_B.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Bphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Bphg.confidence" ID="col149" ucd="PHOT_PHG_B.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Bphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="V" ID="col150" ucd="PHOT_JHN_V" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in V-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="V.origin" ID="col151" ucd="PHOT_JHN_V.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property V</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="V.confidence" ID="col152" ucd="PHOT_JHN_V.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property V</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Vphg" ID="col153" ucd="PHOT_PHG_V" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Photometric Magnitude in V-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Vphg.origin" ID="col154" ucd="PHOT_PHG_V.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Vphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Vphg.confidence" ID="col155" ucd="PHOT_PHG_V.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Vphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="R" ID="col156" ucd="PHOT_JHN_R" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in R-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="R.origin" ID="col157" ucd="PHOT_JHN_R.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property R</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="R.confidence" ID="col158" ucd="PHOT_JHN_R.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property R</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Rphg" ID="col159" ucd="PHOT_PHG_R" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Photometric Magnitude in R-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Rphg.origin" ID="col160" ucd="PHOT_PHG_R.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Rphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Rphg.confidence" ID="col161" ucd="PHOT_PHG_R.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Rphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="I" ID="col162" ucd="PHOT_JHN_I" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in I-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="I.origin" ID="col163" ucd="PHOT_JHN_I.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property I</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="I.confidence" ID="col164" ucd="PHOT_JHN_I.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property I</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Iphg" ID="col165" ucd="PHOT_PHG_I" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Photometric Magnitude in I-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Iphg.origin" ID="col166" ucd="PHOT_PHG_I.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Iphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Iphg.confidence" ID="col167" ucd="PHOT_PHG_I.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Iphg</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Icous" ID="col168" ucd="PHOT_COUS_I" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Cousin's Magnitude in I-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Icous.origin" ID="col169" ucd="PHOT_COUS_I.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Icous</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Icous.confidence" ID="col170" ucd="PHOT_COUS_I.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Icous</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="J" ID="col171" ucd="PHOT_JHN_J" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in J-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="J.origin" ID="col172" ucd="PHOT_JHN_J.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property J</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="J.confidence" ID="col173" ucd="PHOT_JHN_J.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property J</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="H" ID="col174" ucd="PHOT_JHN_H" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in H-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="H.origin" ID="col175" ucd="PHOT_JHN_H.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property H</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="H.confidence" ID="col176" ucd="PHOT_JHN_H.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property H</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="K" ID="col177" ucd="PHOT_JHN_K" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in K-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="K.origin" ID="col178" ucd="PHOT_JHN_K.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property K</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="K.confidence" ID="col179" ucd="PHOT_JHN_K.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property K</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="L" ID="col180" ucd="PHOT_JHN_L" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in L-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="L.origin" ID="col181" ucd="PHOT_JHN_L.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property L</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="L.confidence" ID="col182" ucd="PHOT_JHN_L.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property L</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="M" ID="col183" ucd="PHOT_JHN_M" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in M-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="M.origin" ID="col184" ucd="PHOT_JHN_M.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property M</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="M.confidence" ID="col185" ucd="PHOT_JHN_M.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property M</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="N" ID="col186" ucd="PHOT_JHN_N" datatype="float" unit="mag">
+1 -     <DESCRIPTION>Johnson's Magnitude in N-band</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="N.origin" ID="col187" ucd="PHOT_JHN_N.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property N</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="N.confidence" ID="col188" ucd="PHOT_JHN_N.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property N</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="color" ID="col189" ucd="PHOT_COLOR_EXCESS" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="color.origin" ID="col190" ucd="PHOT_COLOR_EXCESS.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property color</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="color.confidence" ID="col191" ucd="PHOT_COLOR_EXCESS.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property color</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="orig" ID="col192" ucd="IR_FLUX_ORIGIN" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Source of the IR Flux among IRAS or MSX</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="orig.origin" ID="col193" ucd="IR_FLUX_ORIGIN.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property orig</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="orig.confidence" ID="col194" ucd="IR_FLUX_ORIGIN.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property orig</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="F12" ID="col195" ucd="PHOT_FLUX_IR_12" datatype="float" unit="Jy">
+1 -     <DESCRIPTION>Mid-Infrared Flux at 12 microns</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="F12.origin" ID="col196" ucd="PHOT_FLUX_IR_12.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property F12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="F12.confidence" ID="col197" ucd="PHOT_FLUX_IR_12.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property F12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_F12" ID="col198" ucd="PHOT_FLUX_IR_12_ERROR" datatype="float">
+1 -     <DESCRIPTION>Relative Error on Mid-Infrared Flux at 12 microns</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_F12.origin" ID="col199" ucd="PHOT_FLUX_IR_12_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_F12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_F12.confidence" ID="col200" ucd="PHOT_FLUX_IR_12_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_F12</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Calib" ID="col201" ucd="REF_STAR" datatype="char" arraysize="*">
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Calib.origin" ID="col202" ucd="REF_STAR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Calib</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Calib.confidence" ID="col203" ucd="REF_STAR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Calib</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Teff" ID="col204" ucd="PHYS_TEMP_EFFEC" datatype="float">
+1 -     <DESCRIPTION>Effective Temperature</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Teff.origin" ID="col205" ucd="PHYS_TEMP_EFFEC.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Teff</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Teff.confidence" ID="col206" ucd="PHYS_TEMP_EFFEC.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Teff</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="e_Teff" ID="col207" ucd="PHYS_TEMP_EFFEC_ERROR" datatype="float">
+1 -     <DESCRIPTION>Error on Effective Temperature</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_Teff.origin" ID="col208" ucd="PHYS_TEMP_EFFEC_ERROR.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property e_Teff</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="e_Teff.confidence" ID="col209" ucd="PHYS_TEMP_EFFEC_ERROR.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property e_Teff</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="A_V" ID="col210" ucd="PHOT_EXTINCTION_TOTAL" datatype="float">
+1 -     <DESCRIPTION>Visible Interstellar Absorption</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="A_V.origin" ID="col211" ucd="PHOT_EXTINCTION_TOTAL.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property A_V</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="A_V.confidence" ID="col212" ucd="PHOT_EXTINCTION_TOTAL.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property A_V</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="Chi2" ID="col213" ucd="CHI2_QUALITY" datatype="float">
+1 -     <DESCRIPTION>Chi2 of Spectro-Photmometric Data Model Fitting</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Chi2.origin" ID="col214" ucd="CHI2_QUALITY.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property Chi2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="Chi2.confidence" ID="col215" ucd="CHI2_QUALITY.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property Chi2</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD name="SpTyp_Teff" ID="col216" ucd="SP_TYP_PHYS_TEMP_EFFEC" datatype="float">
+1 -     <DESCRIPTION>Spectral Type from adopted Modelling Effective Temperature</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="SpTyp_Teff.origin" ID="col217" ucd="SP_TYP_PHYS_TEMP_EFFEC.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property SpTyp_Teff</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="SpTyp_Teff.confidence" ID="col218" ucd="SP_TYP_PHYS_TEMP_EFFEC.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property SpTyp_Teff</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="deletedFlag" ID="col219" ucd="DELETED_FLAG" datatype="boolean">
+1 -     <DESCRIPTION>Used by SearchCal to flag deleted stars</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="deletedFlag.origin" ID="col220" ucd="DELETED_FLAG.origin" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Origin of property deletedFlag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <FIELD type="hidden" name="deletedFlag.confidence" ID="col221" ucd="DELETED_FLAG.confidence" datatype="char" arraysize="*">
+1 -     <DESCRIPTION>Confidence index of property deletedFlag</DESCRIPTION>
+1 -    </FIELD>
+1 -    <GROUP name="HD" ucd="ID_HD">
+1 -     <DESCRIPTION>HD with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col0" />
+1 -     <FIELDref ref="col1" />
+1 -     <FIELDref ref="col2" />
+1 -    </GROUP>
+1 -    <GROUP name="HIP" ucd="ID_HIP">
+1 -     <DESCRIPTION>HIP with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col3" />
+1 -     <FIELDref ref="col4" />
+1 -     <FIELDref ref="col5" />
+1 -    </GROUP>
+1 -    <GROUP name="DM" ucd="ID_DM">
+1 -     <DESCRIPTION>DM with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col6" />
+1 -     <FIELDref ref="col7" />
+1 -     <FIELDref ref="col8" />
+1 -    </GROUP>
+1 -    <GROUP name="TYC1" ucd="ID_TYC1">
+1 -     <DESCRIPTION>TYC1 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col9" />
+1 -     <FIELDref ref="col10" />
+1 -     <FIELDref ref="col11" />
+1 -    </GROUP>
+1 -    <GROUP name="TYC2" ucd="ID_TYC2">
+1 -     <DESCRIPTION>TYC2 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col12" />
+1 -     <FIELDref ref="col13" />
+1 -     <FIELDref ref="col14" />
+1 -    </GROUP>
+1 -    <GROUP name="TYC3" ucd="ID_TYC3">
+1 -     <DESCRIPTION>TYC3 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col15" />
+1 -     <FIELDref ref="col16" />
+1 -     <FIELDref ref="col17" />
+1 -    </GROUP>
+1 -    <GROUP name="opt" ucd="ID_CATALOG">
+1 -     <DESCRIPTION>opt with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col18" />
+1 -     <FIELDref ref="col19" />
+1 -     <FIELDref ref="col20" />
+1 -    </GROUP>
+1 -    <GROUP name="2MASS" ucd="ID_2MASS">
+1 -     <DESCRIPTION>2MASS with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col21" />
+1 -     <FIELDref ref="col22" />
+1 -     <FIELDref ref="col23" />
+1 -    </GROUP>
+1 -    <GROUP name="RAJ2000" ucd="POS_EQ_RA_MAIN">
+1 -     <DESCRIPTION>RAJ2000 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col24" />
+1 -     <FIELDref ref="col25" />
+1 -     <FIELDref ref="col26" />
+1 -    </GROUP>
+1 -    <GROUP name="DEJ2000" ucd="POS_EQ_DEC_MAIN">
+1 -     <DESCRIPTION>DEJ2000 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col27" />
+1 -     <FIELDref ref="col28" />
+1 -     <FIELDref ref="col29" />
+1 -    </GROUP>
+1 -    <GROUP name="DENIS" ucd="ID_DENIS">
+1 -     <DESCRIPTION>DENIS with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col30" />
+1 -     <FIELDref ref="col31" />
+1 -     <FIELDref ref="col32" />
+1 -    </GROUP>
+1 -    <GROUP name="A2RAdeg" ucd="POS_EQ_RA_OTHER">
+1 -     <DESCRIPTION>A2RAdeg with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col33" />
+1 -     <FIELDref ref="col34" />
+1 -     <FIELDref ref="col35" />
+1 -    </GROUP>
+1 -    <GROUP name="A2DEdeg" ucd="POS_EQ_DEC_OTHER">
+1 -     <DESCRIPTION>A2DEdeg with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col36" />
+1 -     <FIELDref ref="col37" />
+1 -     <FIELDref ref="col38" />
+1 -    </GROUP>
+1 -    <GROUP name="pmRa" ucd="POS_EQ_PMRA">
+1 -     <DESCRIPTION>pmRa with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col39" />
+1 -     <FIELDref ref="col40" />
+1 -     <FIELDref ref="col41" />
+1 -    </GROUP>
+1 -    <GROUP name="pmDec" ucd="POS_EQ_PMDEC">
+1 -     <DESCRIPTION>pmDec with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col42" />
+1 -     <FIELDref ref="col43" />
+1 -     <FIELDref ref="col44" />
+1 -    </GROUP>
+1 -    <GROUP name="plx" ucd="POS_PARLX_TRIG">
+1 -     <DESCRIPTION>plx with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col45" />
+1 -     <FIELDref ref="col46" />
+1 -     <FIELDref ref="col47" />
+1 -    </GROUP>
+1 -    <GROUP name="e_Plx" ucd="POS_PARLX_TRIG_ERROR">
+1 -     <DESCRIPTION>e_Plx with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col48" />
+1 -     <FIELDref ref="col49" />
+1 -     <FIELDref ref="col50" />
+1 -    </GROUP>
+1 -    <GROUP name="SpType" ucd="SPECT_TYPE_MK">
+1 -     <DESCRIPTION>SpType with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col51" />
+1 -     <FIELDref ref="col52" />
+1 -     <FIELDref ref="col53" />
+1 -    </GROUP>
+1 -    <GROUP name="VarFlag1" ucd="CODE_VARIAB_V1">
+1 -     <DESCRIPTION>VarFlag1 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col54" />
+1 -     <FIELDref ref="col55" />
+1 -     <FIELDref ref="col56" />
+1 -    </GROUP>
+1 -    <GROUP name="VarFlag2" ucd="CODE_VARIAB_V2">
+1 -     <DESCRIPTION>VarFlag2 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col57" />
+1 -     <FIELDref ref="col58" />
+1 -     <FIELDref ref="col59" />
+1 -    </GROUP>
+1 -    <GROUP name="VarFlag3" ucd="VAR_CLASS">
+1 -     <DESCRIPTION>VarFlag3 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col60" />
+1 -     <FIELDref ref="col61" />
+1 -     <FIELDref ref="col62" />
+1 -    </GROUP>
+1 -    <GROUP name="MultFlag" ucd="CODE_MULT_FLAG">
+1 -     <DESCRIPTION>MultFlag with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col63" />
+1 -     <FIELDref ref="col64" />
+1 -     <FIELDref ref="col65" />
+1 -    </GROUP>
+1 -    <GROUP name="BinFlag" ucd="CODE_BIN_FLAG">
+1 -     <DESCRIPTION>BinFlag with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col66" />
+1 -     <FIELDref ref="col67" />
+1 -     <FIELDref ref="col68" />
+1 -    </GROUP>
+1 -    <GROUP name="SBC9" ucd="ID_SB9">
+1 -     <DESCRIPTION>SBC9 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col69" />
+1 -     <FIELDref ref="col70" />
+1 -     <FIELDref ref="col71" />
+1 -    </GROUP>
+1 -    <GROUP name="WDS" ucd="ID_WDS">
+1 -     <DESCRIPTION>WDS with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col72" />
+1 -     <FIELDref ref="col73" />
+1 -     <FIELDref ref="col74" />
+1 -    </GROUP>
+1 -    <GROUP name="sep1" ucd="ORBIT_SEPARATION_SEP1">
+1 -     <DESCRIPTION>sep1 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col75" />
+1 -     <FIELDref ref="col76" />
+1 -     <FIELDref ref="col77" />
+1 -    </GROUP>
+1 -    <GROUP name="sep2" ucd="ORBIT_SEPARATION_SEP2">
+1 -     <DESCRIPTION>sep2 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col78" />
+1 -     <FIELDref ref="col79" />
+1 -     <FIELDref ref="col80" />
+1 -    </GROUP>
+1 -    <GROUP name="Iflag" ucd="CODE_MISC_I">
+1 -     <DESCRIPTION>Iflag with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col81" />
+1 -     <FIELDref ref="col82" />
+1 -     <FIELDref ref="col83" />
+1 -    </GROUP>
+1 -    <GROUP name="Jflag" ucd="CODE_MISC_J">
+1 -     <DESCRIPTION>Jflag with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col84" />
+1 -     <FIELDref ref="col85" />
+1 -     <FIELDref ref="col86" />
+1 -    </GROUP>
+1 -    <GROUP name="Kflag" ucd="CODE_MISC_K">
+1 -     <DESCRIPTION>Kflag with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col87" />
+1 -     <FIELDref ref="col88" />
+1 -     <FIELDref ref="col89" />
+1 -    </GROUP>
+1 -    <GROUP name="Qflag" ucd="CODE_QUALITY">
+1 -     <DESCRIPTION>Qflag with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col90" />
+1 -     <FIELDref ref="col91" />
+1 -     <FIELDref ref="col92" />
+1 -    </GROUP>
+1 -    <GROUP name="GLAT" ucd="POS_GAL_LAT">
+1 -     <DESCRIPTION>GLAT with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col93" />
+1 -     <FIELDref ref="col94" />
+1 -     <FIELDref ref="col95" />
+1 -    </GROUP>
+1 -    <GROUP name="GLON" ucd="POS_GAL_LON">
+1 -     <DESCRIPTION>GLON with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col96" />
+1 -     <FIELDref ref="col97" />
+1 -     <FIELDref ref="col98" />
+1 -    </GROUP>
+1 -    <GROUP name="RadVel" ucd="VELOC_HC">
+1 -     <DESCRIPTION>RadVel with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col99" />
+1 -     <FIELDref ref="col100" />
+1 -     <FIELDref ref="col101" />
+1 -    </GROUP>
+1 -    <GROUP name="RotVel" ucd="VELOC_ROTAT">
+1 -     <DESCRIPTION>RotVel with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col102" />
+1 -     <FIELDref ref="col103" />
+1 -     <FIELDref ref="col104" />
+1 -    </GROUP>
+1 -    <GROUP name="LD" ucd="LD_DIAM">
+1 -     <DESCRIPTION>LD with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col105" />
+1 -     <FIELDref ref="col106" />
+1 -     <FIELDref ref="col107" />
+1 -    </GROUP>
+1 -    <GROUP name="e_LD" ucd="LD_DIAM_ERROR">
+1 -     <DESCRIPTION>e_LD with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col108" />
+1 -     <FIELDref ref="col109" />
+1 -     <FIELDref ref="col110" />
+1 -    </GROUP>
+1 -    <GROUP name="UD" ucd="UD_DIAM">
+1 -     <DESCRIPTION>UD with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col111" />
+1 -     <FIELDref ref="col112" />
+1 -     <FIELDref ref="col113" />
+1 -    </GROUP>
+1 -    <GROUP name="e_UD" ucd="UD_DIAM_ERROR">
+1 -     <DESCRIPTION>e_UD with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col114" />
+1 -     <FIELDref ref="col115" />
+1 -     <FIELDref ref="col116" />
+1 -    </GROUP>
+1 -    <GROUP name="UDDK" ucd="UDDK_DIAM">
+1 -     <DESCRIPTION>UDDK with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col117" />
+1 -     <FIELDref ref="col118" />
+1 -     <FIELDref ref="col119" />
+1 -    </GROUP>
+1 -    <GROUP name="e_UDDK" ucd="UDDK_DIAM_ERROR">
+1 -     <DESCRIPTION>e_UDDK with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col120" />
+1 -     <FIELDref ref="col121" />
+1 -     <FIELDref ref="col122" />
+1 -    </GROUP>
+1 -    <GROUP name="Dia12" ucd="DIAM12">
+1 -     <DESCRIPTION>Dia12 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col123" />
+1 -     <FIELDref ref="col124" />
+1 -     <FIELDref ref="col125" />
+1 -    </GROUP>
+1 -    <GROUP name="e_dia12" ucd="DIAM12_ERROR">
+1 -     <DESCRIPTION>e_dia12 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col126" />
+1 -     <FIELDref ref="col127" />
+1 -     <FIELDref ref="col128" />
+1 -    </GROUP>
+1 -    <GROUP name="Meth" ucd="REDUCT_METHOD">
+1 -     <DESCRIPTION>Meth with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col129" />
+1 -     <FIELDref ref="col130" />
+1 -     <FIELDref ref="col131" />
+1 -    </GROUP>
+1 -    <GROUP name="lambda" ucd="INST_WAVELENGTH_VALUE">
+1 -     <DESCRIPTION>lambda with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col132" />
+1 -     <FIELDref ref="col133" />
+1 -     <FIELDref ref="col134" />
+1 -    </GROUP>
+1 -    <GROUP name="lambda" ucd="INST_FILTER_CODE">
+1 -     <DESCRIPTION>lambda with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col135" />
+1 -     <FIELDref ref="col136" />
+1 -     <FIELDref ref="col137" />
+1 -    </GROUP>
+1 -    <GROUP name="photflux" ucd="PHOT_FLUX_IR_MISC">
+1 -     <DESCRIPTION>photflux with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col138" />
+1 -     <FIELDref ref="col139" />
+1 -     <FIELDref ref="col140" />
+1 -    </GROUP>
+1 -    <GROUP name="units" ucd="UNITS">
+1 -     <DESCRIPTION>units with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col141" />
+1 -     <FIELDref ref="col142" />
+1 -     <FIELDref ref="col143" />
+1 -    </GROUP>
+1 -    <GROUP name="B" ucd="PHOT_JHN_B">
+1 -     <DESCRIPTION>B with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col144" />
+1 -     <FIELDref ref="col145" />
+1 -     <FIELDref ref="col146" />
+1 -    </GROUP>
+1 -    <GROUP name="Bphg" ucd="PHOT_PHG_B">
+1 -     <DESCRIPTION>Bphg with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col147" />
+1 -     <FIELDref ref="col148" />
+1 -     <FIELDref ref="col149" />
+1 -    </GROUP>
+1 -    <GROUP name="V" ucd="PHOT_JHN_V">
+1 -     <DESCRIPTION>V with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col150" />
+1 -     <FIELDref ref="col151" />
+1 -     <FIELDref ref="col152" />
+1 -    </GROUP>
+1 -    <GROUP name="Vphg" ucd="PHOT_PHG_V">
+1 -     <DESCRIPTION>Vphg with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col153" />
+1 -     <FIELDref ref="col154" />
+1 -     <FIELDref ref="col155" />
+1 -    </GROUP>
+1 -    <GROUP name="R" ucd="PHOT_JHN_R">
+1 -     <DESCRIPTION>R with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col156" />
+1 -     <FIELDref ref="col157" />
+1 -     <FIELDref ref="col158" />
+1 -    </GROUP>
+1 -    <GROUP name="Rphg" ucd="PHOT_PHG_R">
+1 -     <DESCRIPTION>Rphg with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col159" />
+1 -     <FIELDref ref="col160" />
+1 -     <FIELDref ref="col161" />
+1 -    </GROUP>
+1 -    <GROUP name="I" ucd="PHOT_JHN_I">
+1 -     <DESCRIPTION>I with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col162" />
+1 -     <FIELDref ref="col163" />
+1 -     <FIELDref ref="col164" />
+1 -    </GROUP>
+1 -    <GROUP name="Iphg" ucd="PHOT_PHG_I">
+1 -     <DESCRIPTION>Iphg with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col165" />
+1 -     <FIELDref ref="col166" />
+1 -     <FIELDref ref="col167" />
+1 -    </GROUP>
+1 -    <GROUP name="Icous" ucd="PHOT_COUS_I">
+1 -     <DESCRIPTION>Icous with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col168" />
+1 -     <FIELDref ref="col169" />
+1 -     <FIELDref ref="col170" />
+1 -    </GROUP>
+1 -    <GROUP name="J" ucd="PHOT_JHN_J">
+1 -     <DESCRIPTION>J with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col171" />
+1 -     <FIELDref ref="col172" />
+1 -     <FIELDref ref="col173" />
+1 -    </GROUP>
+1 -    <GROUP name="H" ucd="PHOT_JHN_H">
+1 -     <DESCRIPTION>H with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col174" />
+1 -     <FIELDref ref="col175" />
+1 -     <FIELDref ref="col176" />
+1 -    </GROUP>
+1 -    <GROUP name="K" ucd="PHOT_JHN_K">
+1 -     <DESCRIPTION>K with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col177" />
+1 -     <FIELDref ref="col178" />
+1 -     <FIELDref ref="col179" />
+1 -    </GROUP>
+1 -    <GROUP name="L" ucd="PHOT_JHN_L">
+1 -     <DESCRIPTION>L with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col180" />
+1 -     <FIELDref ref="col181" />
+1 -     <FIELDref ref="col182" />
+1 -    </GROUP>
+1 -    <GROUP name="M" ucd="PHOT_JHN_M">
+1 -     <DESCRIPTION>M with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col183" />
+1 -     <FIELDref ref="col184" />
+1 -     <FIELDref ref="col185" />
+1 -    </GROUP>
+1 -    <GROUP name="N" ucd="PHOT_JHN_N">
+1 -     <DESCRIPTION>N with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col186" />
+1 -     <FIELDref ref="col187" />
+1 -     <FIELDref ref="col188" />
+1 -    </GROUP>
+1 -    <GROUP name="color" ucd="PHOT_COLOR_EXCESS">
+1 -     <DESCRIPTION>color with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col189" />
+1 -     <FIELDref ref="col190" />
+1 -     <FIELDref ref="col191" />
+1 -    </GROUP>
+1 -    <GROUP name="orig" ucd="IR_FLUX_ORIGIN">
+1 -     <DESCRIPTION>orig with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col192" />
+1 -     <FIELDref ref="col193" />
+1 -     <FIELDref ref="col194" />
+1 -    </GROUP>
+1 -    <GROUP name="F12" ucd="PHOT_FLUX_IR_12">
+1 -     <DESCRIPTION>F12 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col195" />
+1 -     <FIELDref ref="col196" />
+1 -     <FIELDref ref="col197" />
+1 -    </GROUP>
+1 -    <GROUP name="e_F12" ucd="PHOT_FLUX_IR_12_ERROR">
+1 -     <DESCRIPTION>e_F12 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col198" />
+1 -     <FIELDref ref="col199" />
+1 -     <FIELDref ref="col200" />
+1 -    </GROUP>
+1 -    <GROUP name="Calib" ucd="REF_STAR">
+1 -     <DESCRIPTION>Calib with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col201" />
+1 -     <FIELDref ref="col202" />
+1 -     <FIELDref ref="col203" />
+1 -    </GROUP>
+1 -    <GROUP name="Teff" ucd="PHYS_TEMP_EFFEC">
+1 -     <DESCRIPTION>Teff with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col204" />
+1 -     <FIELDref ref="col205" />
+1 -     <FIELDref ref="col206" />
+1 -    </GROUP>
+1 -    <GROUP name="e_Teff" ucd="PHYS_TEMP_EFFEC_ERROR">
+1 -     <DESCRIPTION>e_Teff with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col207" />
+1 -     <FIELDref ref="col208" />
+1 -     <FIELDref ref="col209" />
+1 -    </GROUP>
+1 -    <GROUP name="A_V" ucd="PHOT_EXTINCTION_TOTAL">
+1 -     <DESCRIPTION>A_V with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col210" />
+1 -     <FIELDref ref="col211" />
+1 -     <FIELDref ref="col212" />
+1 -    </GROUP>
+1 -    <GROUP name="Chi2" ucd="CHI2_QUALITY">
+1 -     <DESCRIPTION>Chi2 with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col213" />
+1 -     <FIELDref ref="col214" />
+1 -     <FIELDref ref="col215" />
+1 -    </GROUP>
+1 -    <GROUP name="SpTyp_Teff" ucd="SP_TYP_PHYS_TEMP_EFFEC">
+1 -     <DESCRIPTION>SpTyp_Teff with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col216" />
+1 -     <FIELDref ref="col217" />
+1 -     <FIELDref ref="col218" />
+1 -    </GROUP>
+1 -    <GROUP name="deletedFlag" ucd="DELETED_FLAG">
+1 -     <DESCRIPTION>DELETED_FLAG with its origin and confidence index</DESCRIPTION>
+1 -     <FIELDref ref="col219" />
+1 -     <FIELDref ref="col220" />
+1 -     <FIELDref ref="col221" />
+1 -    </GROUP>
+1 -    <DATA>
+1 -     <TABLEDATA>
+1 -      <TR>
+1 -       <TD>1</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12 30 3.3</TD><TD>unknown</TD><TD></TD><TD>04 30 3.3</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>false</TD><TD></TD><TD></TD>
+1 -      </TR>
+1 -      <TR>
+1 -       <TD>2</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12 30 6.3</TD><TD>unknown</TD><TD></TD><TD>04 30 6.3</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>false</TD><TD></TD><TD></TD>
+1 -      </TR>
+1 -      <TR>
+1 -       <TD>3</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12 30 9.3</TD><TD>unknown</TD><TD></TD><TD>04 30 9.3</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>false</TD><TD></TD><TD></TD>
+1 -      </TR>
+1 -      <TR>
+1 -       <TD>4</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12 30 12.3</TD><TD>unknown</TD><TD></TD><TD>04 30 12.3</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>false</TD><TD></TD><TD></TD>
+1 -      </TR>
+1 -      <TR>
+1 -       <TD>5</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12 30 15.3</TD><TD>unknown</TD><TD></TD><TD>04 30 15.3</TD><TD>unknown</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>false</TD><TD></TD><TD></TD>
+1 -      </TR>
+1 -     </TABLEDATA>
+1 -    </DATA>
+1 -   </TABLE>
+1 -  </RESOURCE>
+1 - </VOTABLE>
+1 - vobsTestStarList - vobs - Clear the list.
+1 - 
+1 - vobsTestStarList - vobs - Size of the list = 0
+1 - 
+1 - vobsTestStarList - vobs - Re-load the list from starList.txt.
+1 - 
+1 - vobsTestStarList - vobs - Size of the list = 5
+1 - 
+1 - vobsTestStarList - vobs - Display the list.
+1 - 
+1 - HD 1(-172.486250,4.500917):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           1           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 3.3           -           -           -   12 30 3.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 2(-172.473750,4.501750):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           2           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 6.3           -           -           -   12 30 6.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 3(-172.461250,4.502583):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 9.3           -           -           -   12 30 9.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 4(-172.448750,4.503417):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           4           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 12.3           -           -           -  12 30 12.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 5(-172.436250,4.504250):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           5           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 15.3           -           -           -  12 30 15.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - 
+1 - vobsTestStarList - vobs - Sort list by DEC
+1 - 
+1 - vobsTestStarList - vobs - Display the list.
+1 - 
+1 - HD 1(-172.486250,4.500917):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           1           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 3.3           -           -           -   12 30 3.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 2(-172.473750,4.501750):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           2           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 6.3           -           -           -   12 30 6.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 3(-172.461250,4.502583):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 9.3           -           -           -   12 30 9.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 4(-172.448750,4.503417):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           4           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 12.3           -           -           -  12 30 12.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 5(-172.436250,4.504250):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           5           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 15.3           -           -           -  12 30 15.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - 
+1 - vobsTestStarList - vobs - Display all elements, one by one, of the list
+1 - 
+1 - vobsTestStarList - vobs - and delete first element of the list.
+1 - 
+1 - HD 1(-172.486250,4.500917):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           1           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 3.3           -           -           -   12 30 3.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 2(-172.473750,4.501750):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           2           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 6.3           -           -           -   12 30 6.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 3(-172.461250,4.502583):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 9.3           -           -           -   12 30 9.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 4(-172.448750,4.503417):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           4           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 12.3           -           -           -  12 30 12.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - vobsTestStarList - vobs - Display first element of the list.
+1 - 
+1 - HD 2(-172.473750,4.501750):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           2           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 6.3           -           -           -   12 30 6.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - vobsTestStarList - vobs - Merge list.
+1 - 
+1 - vobsTestStarList - vobs - Remove star 2.
+1 - 
+1 - vobsTestStarList - vobs - Display the list.
+1 - 
+1 - HD 3(-172.461250,4.502583):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -   04 30 9.3           -           -           -   12 30 9.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 4(-172.448750,4.503417):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           4           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 12.3           -           -           -  12 30 12.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - HD 5(-172.436250,4.504250):            -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           5           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -  04 30 15.3           -           -           -  12 30 15.3           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -           -
+1 - 
+1 - vobsTestStarList - vobs - Clear the list.
+1 - 
+1 - vobsTestStarList - vobs - Is star list empty? : YES
+1 - 
