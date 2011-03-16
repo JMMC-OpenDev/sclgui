@@ -1064,6 +1064,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             Double rowDistance = distanceProperty.getDoubleValue();
 
             // If the current row distance is close enough to be detected as a science object
+            // @note SCIENCE_DISTANCE_CHECK : The same is used in ASPRO for science object star detection and removal.
             if (rowDistance < _prefDistance) {
                 // Put the corresponding row font in bold
                 Font f = getFont();
