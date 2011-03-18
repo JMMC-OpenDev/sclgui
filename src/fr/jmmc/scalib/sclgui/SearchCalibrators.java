@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.34 2011-02-01 10:27:38 mella Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.35 2011-03-18 16:21:22 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2011/02/01 10:27:38  mella
+ * Fix Apps constructor, which use common preference to display or not the splashscreen
+ *
  * Revision 1.33  2010/10/22 10:56:43  bourgesl
  * fixed class javadoc
  * use EDT to executeQuery in execute method
@@ -208,8 +211,7 @@ public class SearchCalibrators extends App {
                     filtersModel.addObserver(calibratorsModel);
 
                     // Link everything up
-                    _vo = new VirtualObservatory(queryModel, calibratorsModel,
-                            filtersModel);
+                    _vo = new VirtualObservatory(queryModel, calibratorsModel);
 
                     // Attach the query model to its query view
                     QueryView queryView = new QueryView(queryModel, _vo);

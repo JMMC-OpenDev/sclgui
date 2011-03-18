@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.52 2011-02-28 13:11:36 mella Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.53 2011-03-18 16:21:22 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.52  2011/02/28 13:11:36  mella
+ * Handle proxy error without duplicating error messages (cancel), close ticket #38
+ *
  * Revision 1.51  2011/01/24 16:18:29  lafrasse
  * Set default behavior as disabled.
  *
@@ -216,1049 +219,1093 @@ import org.astrogrid.samp.Message;
  */
 public final class VirtualObservatory extends Observable {
 
-    /** Logger */
-    private static final Logger _logger = Logger.getLogger(
-            "fr.jmmc.scalib.sclgui.VirtualObservatory");
-    /** Query model */
-    private QueryModel _queryModel = null;
-    /** Data model to which the result should be passed */
-    private CalibratorsModel _calibratorsModel = null;
-    /** Filters model */
-    private FiltersModel _filtersModel = null;
-    /** Path to an open or saved file */
-    private File _file = null;
-    /** Store whether the Query has be launched or not */
-    private boolean _queryIsLaunched = false;
-    /** Proxy to shared FileFilter repository */
-    private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
-    /** SearchCal-specific VOTable format */
-    private String _scvotMimeType = "application/x-searchcal+votable+xml";
-    /** MIME type for CSV exports */
-    private String _csvMimeType = "text/csv";
-    /** MIME type for HTML exports */
-    private String _htmlMimeType = "text/html";
-    /** Open file... action */
-    public OpenFileAction _openFileAction = null;
-    /** Save file... action */
-    public SaveFileAction _saveFileAction = null;
-    /** Save file as... action */
-    public SaveFileAsAction _saveFileAsAction = null;
-    /** Revet to Saved File action */
-    public RevertToSavedFileAction _revertToSavedFileAction = null;
-    /** Export to CSV File action */
-    public ExportToCSVFileAction _exportToCSVFileAction = null;
-    /** Export to HTML File action */
-    public ExportToHTMLFileAction _exportToHTMLFileAction = null;
-    /** Export to SAMP action */
-    public ShareCalibratorsThroughSAMPAction _shareCalibratorsThroughSAMPAction = null;
-    /** Get Cal action */
-    public GetCalAction _getCalAction = null;
+  /** Logger */
+  private static final Logger _logger = Logger.getLogger(
+          "fr.jmmc.scalib.sclgui.VirtualObservatory");
+  /** Query model */
+  private QueryModel _queryModel = null;
+  /** Data model to which the result should be passed */
+  private CalibratorsModel _calibratorsModel = null;
+  /** Path to an open or saved file */
+  private File _file = null;
+  /** Store whether the Query has be launched or not */
+  private boolean _queryIsLaunched = false;
+  /** Proxy to shared FileFilter repository */
+  private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
+  /** SearchCal-specific VOTable format */
+  private String _scvotMimeType = "application/x-searchcal+votable+xml";
+  /** MIME type for CSV exports */
+  private String _csvMimeType = "text/csv";
+  /** MIME type for HTML exports */
+  private String _htmlMimeType = "text/html";
+  /** Open file... action */
+  public OpenFileAction _openFileAction = null;
+  /** Save file... action */
+  public SaveFileAction _saveFileAction = null;
+  /** Save file as... action */
+  public SaveFileAsAction _saveFileAsAction = null;
+  /** Revet to Saved File action */
+  public RevertToSavedFileAction _revertToSavedFileAction = null;
+  /** Export to CSV File action */
+  public ExportToCSVFileAction _exportToCSVFileAction = null;
+  /** Export to HTML File action */
+  public ExportToHTMLFileAction _exportToHTMLFileAction = null;
+  /** Export to SAMP action */
+  public ShareCalibratorsThroughSAMPAction _shareCalibratorsThroughSAMPAction = null;
+  /** Get Cal action */
+  public GetCalAction _getCalAction = null;
 
-    /**
-     * Constructor.
-     * @param queryModel
-     * @param calibratorsModel
-     * @param filtersModel
-     */
-    public VirtualObservatory(QueryModel queryModel,
-            CalibratorsModel calibratorsModel, FiltersModel filtersModel) {
-        String classPath = getClass().getName();
+  /**
+   * Constructor.
+   * @param queryModel
+   * @param calibratorsModel
+   */
+  public VirtualObservatory(QueryModel queryModel, CalibratorsModel calibratorsModel) {
+    String classPath = getClass().getName();
 
-        _queryModel = queryModel;
-        _calibratorsModel = calibratorsModel;
-        _filtersModel = filtersModel;
+    _queryModel = queryModel;
+    _calibratorsModel = calibratorsModel;
 
-        // FileFilter initialiation
-        _fileFilterRepository.put(_scvotMimeType, "scvot",
-                "SearchCal VOTables (SCVOT)");
-        _fileFilterRepository.put(_csvMimeType, "csv",
-                "Comma Separated Values (CSV)");
-        _fileFilterRepository.put(_htmlMimeType, "html",
-                "HyperText Markup Language (HTML)");
+    // FileFilter initialiation
+    _fileFilterRepository.put(_scvotMimeType, "scvot",
+            "SearchCal VOTables (SCVOT)");
+    _fileFilterRepository.put(_csvMimeType, "csv",
+            "Comma Separated Values (CSV)");
+    _fileFilterRepository.put(_htmlMimeType, "html",
+            "HyperText Markup Language (HTML)");
 
-        // File related members
-        _file = null;
-        _openFileAction = new OpenFileAction(classPath,
-                "_openFileAction");
-        _saveFileAction = new SaveFileAction(classPath,
-                "_saveFileAction");
-        _saveFileAsAction = new SaveFileAsAction(classPath,
-                "_saveFileAsAction");
-        _revertToSavedFileAction = new RevertToSavedFileAction(classPath,
-                "_revertToSavedFileAction");
-        _exportToCSVFileAction = new ExportToCSVFileAction(classPath,
-                "_exportToCSVFileAction");
-        _exportToHTMLFileAction = new ExportToHTMLFileAction(classPath,
-                "_exportToHTMLFileAction");
-        _shareCalibratorsThroughSAMPAction = new ShareCalibratorsThroughSAMPAction(classPath,
-                "_shareCalibratorsThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
+    // File related members
+    _file = null;
+    _openFileAction = new OpenFileAction(classPath,
+            "_openFileAction");
+    _saveFileAction = new SaveFileAction(classPath,
+            "_saveFileAction");
+    _saveFileAsAction = new SaveFileAsAction(classPath,
+            "_saveFileAsAction");
+    _revertToSavedFileAction = new RevertToSavedFileAction(classPath,
+            "_revertToSavedFileAction");
+    _exportToCSVFileAction = new ExportToCSVFileAction(classPath,
+            "_exportToCSVFileAction");
+    _exportToHTMLFileAction = new ExportToHTMLFileAction(classPath,
+            "_exportToHTMLFileAction");
+    _shareCalibratorsThroughSAMPAction = new ShareCalibratorsThroughSAMPAction(classPath,
+            "_shareCalibratorsThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
 
-        // Query related members
-        _getCalAction = new GetCalAction(classPath,
-                "_getCalAction");
+    // Query related members
+    _getCalAction = new GetCalAction(classPath,
+            "_getCalAction");
 
-        // Add handler to load query params and launch calibrator search
+    // Add handler to load query params and launch calibrator search
 
-        new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
+    new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
+
+      /**
+       * Implements message processing
+       *
+       * @param senderId public ID of sender client
+       * @param message message with MType this handler is subscribed to
+       * @throws SampException if any error occurred while message processing
+       */
+      protected void processMessage(final String senderId, final Message message) {
+        if (_logger.isLoggable(Level.FINE)) {
+          _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
+        }
+
+        final String query = (String) message.getParam("query");
+        if (query != null) {
+
+          SwingUtilities.invokeLater(new Runnable() {
 
             /**
-             * Implements message processing
-             *
-             * @param senderId public ID of sender client
-             * @param message message with MType this handler is subscribed to
-             * @throws SampException if any error occurred while message processing
+             * Synchronized by EDT
              */
-            protected void processMessage(final String senderId, final Message message) {
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
-                }
+            public void run() {
+              executeQuery(query);
 
-                final String query = (String) message.getParam("query");
-                if (query != null) {
-
-                    SwingUtilities.invokeLater(new Runnable() {
-
-                        /**
-                         * Synchronized by EDT
-                         */
-                        public void run() {
-                            executeQuery(query);
-
-                            // change focus :
-                            App.getFrame().toFront();
-                        }
-                    });
-
-                } else {
-                    StatusBar.show("Could not start query from SAMP.");
-                }
+              // change focus :
+              App.getFrame().toFront();
             }
-        };
+          });
 
-        // Add handler to load science object coordinates
+        } else {
+          StatusBar.show("Could not start query from SAMP.");
+        }
+      }
+    };
+
+    // Add handler to load science object coordinates
 /* @TBD
-        try {
-        SampMessageHandler handler = new SampMessageHandler(SampCapability.POINT_COORDINATES) {
+    try {
+    SampMessageHandler handler = new SampMessageHandler(SampCapability.POINT_COORDINATES) {
 
-        public Map processCall(HubConnection c, String senderId, Message msg) {
-        System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
+    public Map processCall(HubConnection c, String senderId, Message msg) {
+    System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
 
-        Double ra = SampUtils.decodeFloat((String) msg.getParam("ra"));
-        if (ra == null)
-        {
-        _logger.warning("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
-        return null;
-        }
-        String raHMS = ALX.toHMS(ra);
-        if (raHMS == null)
-        {
-        _logger.warning("Could not convert RA degree value '" + ra + "' to HMS.");
-        return null;
-        }
-
-        Double dec = SampUtils.decodeFloat((String) msg.getParam("dec"));
-        if (dec == null)
-        {
-        _logger.warning("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
-        return null;
-        }
-        String decDMS = ALX.toDMS(dec);
-        if (decDMS == null)
-        {
-        _logger.warning("Could not convert DEC degree value '" + dec + "' to DMS.");
-        return null;
-        }
-        _queryModel.setScienceObjectRA(raHMS);
-        _queryModel.setScienceObjectDEC(decDMS);
-        _queryModel.update(null, null);
-
-        return null;
-        }
-        };
-        } catch (Exception ex) {
-        ex.printStackTrace();
-        }
-         */
-        // WebService related members
-        setQueryLaunchedState(false);
+    Double ra = SampUtils.decodeFloat((String) msg.getParam("ra"));
+    if (ra == null)
+    {
+    _logger.warning("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
+    return null;
+    }
+    String raHMS = ALX.toHMS(ra);
+    if (raHMS == null)
+    {
+    _logger.warning("Could not convert RA degree value '" + ra + "' to HMS.");
+    return null;
     }
 
-    /**
-     * Return whether the query has been launched or not.
-     *
-     * It is 'synchronized' as only one thread should use this method at once.
-     *
-     * @return true if the query is already launched, false otherwise.
-     */
-    protected synchronized boolean isQueryLaunched() {
-        _logger.entering("VirtualObservatory", "isQueryLaunched");
-
-        return _queryIsLaunched;
+    Double dec = SampUtils.decodeFloat((String) msg.getParam("dec"));
+    if (dec == null)
+    {
+    _logger.warning("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
+    return null;
     }
+    String decDMS = ALX.toDMS(dec);
+    if (decDMS == null)
+    {
+    _logger.warning("Could not convert DEC degree value '" + dec + "' to DMS.");
+    return null;
+    }
+    _queryModel.setScienceObjectRA(raHMS);
+    _queryModel.setScienceObjectDEC(decDMS);
+    _queryModel.update(null, null);
 
-    /**
-     * Set whether the query has been launched or not.
-     *
-     * It is 'synchronized' as only one thread should use this method at once.
-     *
-     * @param flag true to enable all menus, false otherwise.
+    return null;
+    }
+    };
+    } catch (Exception ex) {
+    ex.printStackTrace();
+    }
      */
-    protected synchronized void setQueryLaunchedState(boolean flag) {
-        _logger.entering("VirtualObservatory", "setQueryLaunchedState");
+    // WebService related members
+    setQueryLaunchedState(false);
+  }
+
+  /**
+   * Return whether the query has been launched or not.
+   *
+   * @return true if the query is already launched, false otherwise.
+   */
+  protected boolean isQueryLaunched() {
+    _logger.entering("VirtualObservatory", "isQueryLaunched");
+
+    return _queryIsLaunched;
+  }
+
+  /**
+   * Set whether the query has been launched or not using Swing EDT.
+   *
+   * @param flag true to enable all menus, false otherwise.
+   */
+  protected void setQueryLaunchedState(final boolean flag) {
+    _logger.entering("VirtualObservatory", "setQueryLaunchedState");
+
+    final Runnable task = new Runnable() {
+
+      public void run() {
 
         _queryIsLaunched = flag;
 
-        if (_queryIsLaunched == true) {
-            // Change button title to 'Cancel'
-            _getCalAction.putValue(Action.NAME, "Cancel");
+        final String actionName;
+        if (flag) {
+          // Change button title to 'Cancel'
+          actionName = "Cancel";
+
         } else {
-            // Change button title to 'Get Calibrators'
-            _getCalAction.putValue(Action.NAME, "Get Calibrators");
-            _queryModel.setCurrentStep(0);
-            _queryModel.setTotalStep(0);
-            _queryModel.setCatalogName("");
+          // Change button title to 'Get Calibrators'
+          actionName = "Get Calibrators";
+          _queryModel.setCurrentStep(0);
+          _queryModel.setTotalStep(0);
+          _queryModel.setCatalogName("");
         }
+        _getCalAction.putValue(Action.NAME, actionName);
 
         setChanged();
         notifyObservers();
+      }
+    };
+
+    if (SwingUtilities.isEventDispatchThread()) {
+      task.run();
+    } else {
+      // Use invokeLater to avoid concurrency and ensure that
+      // data model is modified and fire events using Swing EDT :
+      SwingUtilities.invokeLater(task);
     }
+  }
 
-    /**
-     * Enable or disable save/export/share menus.
-     *
-     * @param flag true to enable all menus, false otherwise.
-     */
-    public void enableDataRelatedMenus(boolean flag) {
-        _logger.entering("VirtualObservatory", "enableSaveMenus");
+  /**
+   * Enable or disable save/export/share menus.
+   *
+   * @param flag true to enable all menus, false otherwise.
+   */
+  public void enableDataRelatedMenus(final boolean flag) {
+    _logger.entering("VirtualObservatory", "enableSaveMenus");
 
+    final Runnable task = new Runnable() {
+
+      public void run() {
         _saveFileAction.setEnabled(flag);
         _saveFileAsAction.setEnabled(flag);
         _exportToCSVFileAction.setEnabled(flag);
         _exportToHTMLFileAction.setEnabled(flag);
+      }
+    };
+
+    if (SwingUtilities.isEventDispatchThread()) {
+      task.run();
+    } else {
+      // Use invokeLater to avoid concurrency and ensure that
+      // data model is modified and fire events using Swing EDT :
+      SwingUtilities.invokeLater(task);
+    }
+  }
+
+  /**
+   * If any modification were applied, ask the user if we discard them.
+   *
+   * @return true if the modifications can be ignored, false otherwise.
+   */
+  public boolean canLostModifications() {
+    _logger.entering("VirtualObservatory", "canLostModifications");
+
+    boolean canLostModifications = false;
+
+    // If there is no data to save
+    if (!_calibratorsModel.dataHaveChanged()) {
+      canLostModifications = true;
+    } else // If the data are NOT saved, handle it before loosing any results !!!
+    {
+      // Ask the user if he wants to save modifications
+      Object[] options = {"Save", "Cancel", "Don't Save"};
+      int result = JOptionPane.showOptionDialog(null,
+              "Do you want to save changes to this document before closing ?\nIf you don't save, your changes will be definitively lost.\n\n",
+              null, JOptionPane.DEFAULT_OPTION,
+              JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+      // Handle user choice
+      switch (result) {
+        // If the user clicked the "Save" button
+        case 0: // options[0] = "Save" button
+          // Save the current data if no cancel occured
+          canLostModifications = _saveFileAction.save();
+
+          break;
+
+        // If the user clicked the "Don't Save" button
+        case 2: // options[2] = "Don't Save" button
+          // Exit
+          canLostModifications = true;
+
+          break;
+
+        // If the user clicked the "Cancel" button or pressed 'esc' key
+        case 1: // options[1] = "Cancel" button
+        case JOptionPane.CLOSED_OPTION: // 'esc' key
+        default: // Any other case
+          // Cancel the exit
+          canLostModifications = false;
+
+          break;
+      }
     }
 
-    /**
-     * If any modification were applied, ask the user if we discard them.
-     *
-     * @return true if the modifications can be ignored, false otherwise.
-     */
-    public boolean canLostModifications() {
-        _logger.entering("VirtualObservatory", "canLostModifications");
+    return canLostModifications;
+  }
 
-        boolean canLostModifications = false;
+  /**
+   * If the given file exists, ask user whether to overwrite it or not.
+   *
+   * @return true if the file can be overwritten, false otherwise.
+   */
+  public boolean canOverwriteFile(File file) {
+    _logger.entering("VirtualObservatory", "canOverwriteFile");
 
-        // If there is no data to save
-        if (_calibratorsModel.dataHaveChanged() == false) {
-            canLostModifications = true;
-        } else // If the data are NOT saved, handle it before loosing any results !!!
-        {
-            // Ask the user if he wants to save modifications
-            Object[] options = {"Save", "Cancel", "Don't Save"};
-            int result = JOptionPane.showOptionDialog(null,
-                    "Do you want to save changes to this document before closing ?\nIf you don't save, your changes will be definitively lost.\n\n",
-                    null, JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+    // If the given file does not already exists
+    if (!file.exists()) {
+      return true;
+    }
 
-            // Handle user choice
-            switch (result) {
-                // If the user clicked the "Save" button
-                case 0: // options[0] = "Save" button
-                    // Save the current data if no cancel occured
-                    canLostModifications = _saveFileAction.save();
+    // Ask the user if he wants to save modifications
+    return MessagePane.showConfirmFileOverwrite(file.getName());
+  }
 
-                    break;
+  /**
+   * Launch 'sclws' web service querying with the given query (for ASPRO instanciation).
+   *
+   * @param query the query parameters as an empty SearchCal VOTable.
+   */
+  public void executeQuery(String query) {
+    _logger.entering("VirtualObservatory", "executeQuery");
 
-                // If the user clicked the "Don't Save" button
-                case 2: // options[2] = "Don't Save" button
-                    // Exit
-                    canLostModifications = true;
+    if (_logger.isLoggable(Level.FINE)) {
+      _logger.fine("Received query = " + query);
+    }
 
-                    break;
+    // Parse the query
+    try {
+      StatusBar.show("parsing query...");
+      _calibratorsModel.parseVOTable(query);
+      _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+    } catch (Exception ex) {
+      StatusBar.show("calibrator search aborted (could not parse query) !");
+      MessagePane.showErrorMessage("Could not parse query.", ex);
+      return;
+    }
 
-                // If the user clicked the "Cancel" button or pressed 'esc' key
-                case 1: // options[1] = "Cancel" button
-                case JOptionPane.CLOSED_OPTION: // 'esc' key
-                default: // Any other case
-                    // Cancel the exit
-                    canLostModifications = false;
+    // Launch the request
+    StatusBar.show("Lauching search...");
+    _getCalAction.actionPerformed(null);
+  }
 
-                    break;
-            }
+  /**
+   * Called to open files.
+   */
+  protected class OpenFileAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
+    public OpenFileAction(String classPath, String fieldName) {
+      super(classPath, fieldName);
+
+      flagAsOpenAction();
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("OpenFileAction", "actionPerformed");
+
+      // If we can lost current modifications
+      if (canLostModifications()) {
+        // If the action was automatically triggered from App launch
+        if (e.getSource() == ActionRegistrar.getInstance()) {
+          _file = new File(e.getActionCommand());
+        } else {
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setDialogTitle(
+                  "Open a calibrator list from file...");
+
+          fileChooser.setFileFilter(_fileFilterRepository.get(
+                  _scvotMimeType));
+
+          int returnVal = fileChooser.showOpenDialog(null);
+
+          if (returnVal == JFileChooser.APPROVE_OPTION) {
+            _file = fileChooser.getSelectedFile();
+          }
         }
 
-        return canLostModifications;
-    }
+        // If a file was defined (No cancel in the dialog)
+        if (_file != null) {
+          StatusBar.show("loading file...");
 
-    /**
-     * If the given file exists, ask user whether to overwrite it or not.
-     *
-     * @return true if the file can be overwritten, false otherwise.
-     */
-    public boolean canOverwriteFile(File file) {
-        _logger.entering("VirtualObservatory", "canOverwriteFile");
+          // Loading the file in the calibrators model
+          try {
+            StatusBar.show("loading file (parsing calibrators)...");
 
-        // If the given file does not already exists
-        if (file.exists() == false) {
-            return true;
-        }
+            _calibratorsModel.openFile(_file);
 
-        // Ask the user if he wants to save modifications
-        return MessagePane.showConfirmFileOverwrite(file.getName());
-    }
+            StatusBar.show("loading file (calibrators successfully parsed)...");
+          } catch (Exception ex) {
+            StatusBar.show("loading aborted (calibrators parsing error) !");
+            MessagePane.showErrorMessage("Could not open file (calibrators parsing error).", ex);
+          }
 
-    /**
-     * Launch 'sclws' web service querying with the given query (for ASPRO instanciation).
-     *
-     * @param query the query parameters as an empty SearchCal VOTable.
-     */
-    public void executeQuery(String query) {
-        _logger.entering("VirtualObservatory", "executeQuery");
+          // Loading the file in the query model
+          try {
+            StatusBar.show("loading file (parsing query)...");
 
-        _logger.fine("Received query = " + query);
-
-        // Parse the query
-        try {
-            StatusBar.show("parsing query...");
-            _calibratorsModel.parseVOTable(query);
             _queryModel.loadParamSet(_calibratorsModel.getParamSet());
+
+            StatusBar.show("loading file (query successfully parsed)...");
+
+          } catch (Exception ex) {
+            StatusBar.show("loading aborted (query parsing error) !");
+            MessagePane.showErrorMessage("Could not open file (query parsing error).", ex);
+          }
+
+          StatusBar.show("file succesfully loaded.");
+
+          // Enabling the 'Save' menus
+          enableDataRelatedMenus(true);
+        }
+
+        // Now that a file has been loaded
+        _revertToSavedFileAction.setEnabled(true);
+      }
+    }
+  }
+
+  /**
+   * Called to revert the current state to the last saved state.
+   */
+  protected class RevertToSavedFileAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
+    public RevertToSavedFileAction(String classPath, String fieldName) {
+      super(classPath, fieldName);
+
+      setEnabled(false);
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("RevertToSavedFileAction", "actionPerformed");
+
+      // If we can lost current modifications
+      if (canLostModifications()) {
+        // Loading a new file
+        try {
+          StatusBar.show("re-loading file...");
+          _calibratorsModel.openFile(_file);
+          StatusBar.show("file succesfully re-loaded.");
         } catch (Exception ex) {
-            StatusBar.show("calibrator search aborted (could not parse query) !");
-            MessagePane.showErrorMessage("Could not parse query.", ex);
+          StatusBar.show("re-loading aborted (file error) !");
+          MessagePane.showErrorMessage("Could not re-open file.", ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * Called to save in a file (in a new one if needed).
+   */
+  protected class SaveFileAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
+    public SaveFileAction(String classPath, String fieldName) {
+      super(classPath, fieldName);
+
+      setEnabled(false);
+    }
+
+    /**
+     * Save data to file.
+     *
+     * @return true if save was done, false if save was cancelled.
+     */
+    public boolean save() {
+      StatusBar.show("saving file...");
+
+      File file = null;
+
+      // If the current data were never saved yet
+      if (_file == null) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(
+                "Save current calibrator list to file...");
+
+        fileChooser.setFileFilter(_fileFilterRepository.get(
+                _scvotMimeType));
+
+        int returnVal = fileChooser.showSaveDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+          file = fileChooser.getSelectedFile();
+        } else {
+          // Save was cancelled
+          StatusBar.show("saving cancelled.");
+
+          return false;
+        }
+      }
+
+      // If a file was defined (No cancel in the dialog)
+      if (file != null) {
+        if (!canOverwriteFile(file)) {
+          StatusBar.show("overwritting cancelled.");
+
+          return false;
+        }
+
+        _calibratorsModel.saveVOTableFile(file);
+        _file = file;
+
+        // Now that a file has been saved
+        _revertToSavedFileAction.setEnabled(true);
+
+        StatusBar.show("file saved.");
+      }
+
+      return true;
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("SaveFileAction", "actionPerformed");
+
+      save();
+    }
+  }
+
+  /**
+   * Called to save in a new files.
+   */
+  protected class SaveFileAsAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+    private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
+    private String _scvotMimeType = "application-x/searchcal-votable-file";
+
+    public SaveFileAsAction(String classPath, String fieldName) {
+      super(classPath, fieldName);
+
+      setEnabled(false);
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("SaveFileAsAction", "actionPerformed");
+
+      StatusBar.show("saving file as...");
+
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Save current calibrator list to file...");
+
+      fileChooser.setFileFilter(_fileFilterRepository.get(_scvotMimeType));
+
+      int returnVal = fileChooser.showSaveDialog(null);
+
+      File file = null;
+
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        file = fileChooser.getSelectedFile();
+
+        if (!canOverwriteFile(file)) {
+          StatusBar.show("overwritting file as cancelled.");
+
+          return;
+        }
+
+        _calibratorsModel.saveVOTableFile(file);
+        _file = file;
+
+        // Now that a file has been saved
+        _revertToSavedFileAction.setEnabled(true);
+
+        StatusBar.show("file saved as.");
+      }
+    }
+  }
+
+  /**
+   * Called to export current data to a CSV formatted file.
+   */
+  protected class ExportToCSVFileAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
+    public ExportToCSVFileAction(String classPath, String fieldName) {
+      super(classPath, fieldName);
+
+      setEnabled(false);
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("ExportToCSVFileAction", "actionPerformed");
+
+      StatusBar.show("exporting as CSV...");
+
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle(
+              "Export current calibrator list to CSV file...");
+
+      fileChooser.setFileFilter(_fileFilterRepository.get(_csvMimeType));
+
+      int returnVal = fileChooser.showSaveDialog(null);
+
+      File file = null;
+
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        file = fileChooser.getSelectedFile();
+      }
+
+      // If a file was defined (No cancel in the dialog)
+      if (file != null) {
+        if (!canOverwriteFile(file)) {
+          StatusBar.show("overwritting exported CSV cancelled...");
+
+          return;
+        }
+        _calibratorsModel.exportCurrentVOTableToCSV(file);
+
+        StatusBar.show("calibrator list exported to CSV file.");
+      } else {
+        StatusBar.show("exporting as CSV cancelled.");
+      }
+    }
+  }
+
+  /**
+   * Called to export current data to a HTML formatted file.
+   */
+  protected class ExportToHTMLFileAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
+    public ExportToHTMLFileAction(String classPath, String fieldName) {
+      super(classPath, fieldName);
+
+      setEnabled(false);
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("ExportToHTMLFileAction", "actionPerformed");
+
+      StatusBar.show("exporting as HTML...");
+
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle(
+              "Export current calibrator list to HTML file...");
+
+      fileChooser.setFileFilter(_fileFilterRepository.get(_htmlMimeType));
+
+      int returnVal = fileChooser.showSaveDialog(null);
+
+      File file = null;
+
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        file = fileChooser.getSelectedFile();
+      }
+
+      // If a file was defined (No cancel in the dialog)
+      if (file != null) {
+        if (!canOverwriteFile(file)) {
+          return;
+        }
+
+        _calibratorsModel.exportCurrentVOTableToHTML(file);
+        StatusBar.show("calibrator list exported to HTML file.");
+      } else {
+        StatusBar.show("exporting as HTML cancelled.");
+      }
+    }
+  }
+
+  /**
+   * Called to export current data as local VOTable to another SAMP application.
+   */
+  protected class ShareCalibratorsThroughSAMPAction extends SampCapabilityAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+
+    public ShareCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability) {
+      super(classPath, fieldName, capability);
+      couldBeEnabled(false);
+    }
+
+    public Map<?, ?> composeMessage() {
+      File file = null;
+      try {
+        file = File.createTempFile(SearchCalibrators.getSharedApplicationDataModel().getProgramName(), "scvot");
+      } catch (IOException ex) {
+        StatusBar.show("Could not share calibrators through SAMP.");
+
+        if (_logger.isLoggable(Level.WARNING)) {
+          _logger.warning("Could not save calibrator list to temp file '" + file + "'.");
+        }
+        return null;
+      }
+
+      file.deleteOnExit();
+      URI uri = file.toURI();
+
+      // Save the current calibrator selection (or all visible ones if none selected) to file
+      _calibratorsModel.saveSelectionAsVOTableFile(file);
+
+      final Map<String, String> parameters = new HashMap<String, String>();
+      parameters.put("url", uri.toString());
+      return parameters;
+    }
+  }
+
+  /**
+   * Get calibrator list as a raw VOTable from JMMC web service.
+   */
+  protected class GetCalAction extends RegisteredAction {
+
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+    private GetCalThread _getCalThread = null;
+
+    public GetCalAction(String classPath, String fieldName) {
+      super(classPath, fieldName, "Get Calibrators");
+
+      setEnabled(false);
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+      _logger.entering("GetCalAction", "actionPerformed");
+
+      // Launch a new thread only if no other one has been launched yet
+      if (!isQueryLaunched()) {
+        // Query is stating
+        setQueryLaunchedState(true);
+
+        StatusBar.show("searching calibrators... (please wait, this may take a while)");
+
+        // Launch the query in the background in order to keed GUI updated
+        _getCalThread = new GetCalThread();
+        _getCalThread.start();
+      } else {
+        StatusBar.show("cancelling current callibrator search...");
+
+        // If the GetCal thread has already been launched
+        if (_getCalThread != null) {
+          // Kill it
+          _logger.fine("Killing GetCal thread ... ");
+          _getCalThread.interrupt();
+          _getCalThread = null;
+          _logger.fine("GetCal thread killed.");
+        }
+
+        // Query is finished
+        setQueryLaunchedState(false);
+
+        StatusBar.show("callibrator search cancelled.");
+      }
+    }
+
+    /**
+     * Wait for each CDS interrogation progress while another thread wait for the final answer.
+     */
+    class GetCalThread extends Thread {
+
+      private QueryResultThread _queryResultThread = null;
+      private SclwsLocator loc = null;
+      private SclwsPortType sclws = null;
+      private String id = null;
+
+      GetCalThread() {
+        _queryResultThread = null;
+      }
+
+      @Override
+      public void run() {
+        _logger.entering("GetCalThread", "run");
+
+        getCal();
+      }
+
+      public void getCal() {
+        _logger.entering("GetCalThread", "getCal");
+
+        // TODO : simplify try catchs (all does mostly the same operations ...)
+
+        try {
+          // Get the connection ID
+          try {
+            // Start the webservice connection
+            loc = new SclwsLocator();
+
+            // Decipher which proxy script to use according to app version status (release, beta or alpha)
+            final String userName;
+            if (App.isBetaVersion()) {
+              userName = "betaswmgr"; // beta release homedir
+            } else if (App.isAlphaVersion()) {
+              userName = "lafrasse"; // alpha release homedir
+            } else {
+              userName = "sclws"; // official release homedir
+            }
+            final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclws-proxy.php";
+
+            // Re-route network traffic at specified address on standard 80 port
+            // (e.g to overcome tightly filtered TCP outputs on public WiFi)
+            loc.setEndpointAddress(loc.getsclwsWSDDServiceName(), proxyScriptURL);
+
+            sclws = loc.getsclws();
+
+            if (_logger.isLoggable(Level.FINE)) {
+              _logger.fine("Connected to '" + loc.getsclwsAddress() + "'.");
+            }
+
+            // Define the webservice timeout (default = 10min)
+            //org.apache.axis.client.Stub stub = (SclwsStub) s;
+            //stub.setTimeout(20000); // 20 second, in miliseconds
+
+            // Get the connection ID
+            id = sclws.getCalOpenSession();
+
+            if (_logger.isLoggable(Level.FINE)) {
+              _logger.fine("JMMC Connection ID = '" + id + "'.");
+            }
+
+            StatusBar.show("searching calibrators... (connection established)");
+
+          } catch (RemoteException re) {
+
+            // Handle error when no manual cancel
+            if (_getCalThread != null) {
+              StatusBar.show("calibrator search aborted (connection refused) !");
+              MessagePane.showErrorMessage("Could not connect to JMMC server.", re);
+
+              interrupt();
+              setQueryLaunchedState(false);
+            } else {
+              _logger.log(Level.FINE, "Silenced error (cancellation).", re);
+            }
+
             return;
-        }
+          }
 
-        // Launch the request
-        StatusBar.show("Lauching search...");
-        _getCalAction.actionPerformed(null);
-    }
+          // Get the query from the GUI
+          String query = _queryModel.getQueryAsMCSString();
 
-    /**
-     * Called to open files.
-     */
-    protected class OpenFileAction extends RegisteredAction {
+          if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("Query = '" + query + "'.");
+          }
 
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
+          // Launch the querying thread
+          _queryResultThread = new QueryResultThread(sclws, id, query);
+          _queryResultThread.start();
 
-        public OpenFileAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
+          StatusBar.show("searching calibrators... (querying catalogs)");
 
-            flagAsOpenAction();
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("OpenFileAction", "actionPerformed");
-
-            // If we can lost current modifications
-            if (canLostModifications() == true) {
-                // If the action was automatically triggered from App launch
-                if (e.getSource() == ActionRegistrar.getInstance()) {
-                    _file = new File(e.getActionCommand());
-                } else {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle(
-                            "Open a calibrator list from file...");
-
-                    fileChooser.setFileFilter(_fileFilterRepository.get(
-                            _scvotMimeType));
-
-                    int returnVal = fileChooser.showOpenDialog(null);
-
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        _file = fileChooser.getSelectedFile();
-                    }
-                }
-
-                // If a file was defined (No cancel in the dialog)
-                if (_file != null) {
-                    StatusBar.show("loading file...");
-
-                    // Loading the file in the calibrators model
-                    try {
-                        StatusBar.show("loading file (parsing calibrators)...");
-                        _calibratorsModel.openFile(_file);
-                        StatusBar.show(
-                                "loading file (calibrators successfully parsed)...");
-                    } catch (Exception ex) {
-                        StatusBar.show(
-                                "loading aborted (calibrators parsing error) !");
-                        MessagePane.showErrorMessage("Could not open file (calibrators parsing error).", ex);
-                    }
-
-                    // Loading the file in the query model
-                    try {
-                        StatusBar.show("loading file (parsing query)...");
-                        _queryModel.loadParamSet(_calibratorsModel.getParamSet());
-                        StatusBar.show(
-                                "loading file (query successfully parsed)...");
-                    } catch (Exception ex) {
-                        StatusBar.show(
-                                "loading aborted (query parsing error) !");
-                        MessagePane.showErrorMessage("Could not open file (query parsing error).", ex);
-                    }
-
-                    StatusBar.show("file succesfully loaded.");
-
-                    // Enabling the 'Save' menus
-                    enableDataRelatedMenus(true);
-                }
-
-                // Now that a file has been loaded
-                _revertToSavedFileAction.setEnabled(true);
-            }
-        }
-    }
-
-    /**
-     * Called to revert the current state to the last saved state.
-     */
-    protected class RevertToSavedFileAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        public RevertToSavedFileAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
-
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("RevertToSavedFileAction", "actionPerformed");
-
-            // If we can lost current modifications
-            if (canLostModifications() == true) {
-                // Loading a new file
-                try {
-                    StatusBar.show("re-loading file...");
-                    _calibratorsModel.openFile(_file);
-                    StatusBar.show("file succesfully re-loaded.");
-                } catch (Exception ex) {
-                    StatusBar.show("re-loading aborted (file error) !");
-                    MessagePane.showErrorMessage("Could not re-open file.", ex);
-                }
-            }
-        }
-    }
-
-    /**
-     * Called to save in a file (in a new one if needed).
-     */
-    protected class SaveFileAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        public SaveFileAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
-
-            setEnabled(false);
-        }
-
-        /**
-         * Save data to file.
-         *
-         * @return true if save was done, false if save was cancelled.
-         */
-        public boolean save() {
-            StatusBar.show("saving file...");
-
-            File file = null;
-
-            // If the current data were never saved yet
-            if (_file == null) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle(
-                        "Save current calibrator list to file...");
-
-                fileChooser.setFileFilter(_fileFilterRepository.get(
-                        _scvotMimeType));
-
-                int returnVal = fileChooser.showSaveDialog(null);
-
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    file = fileChooser.getSelectedFile();
-                } else {
-                    // Save was cancelled
-                    StatusBar.show("saving cancelled.");
-
-                    return false;
-                }
-            }
-
-            // If a file was defined (No cancel in the dialog)
-            if (file != null) {
-                if (canOverwriteFile(file) == false) {
-                    StatusBar.show("overwritting cancelled.");
-
-                    return false;
-                }
-
-                _calibratorsModel.saveVOTableFile(file);
-                _file = file;
-
-                // Now that a file has been saved
-                _revertToSavedFileAction.setEnabled(true);
-
-                StatusBar.show("file saved.");
-            }
-
-            return true;
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("SaveFileAction", "actionPerformed");
-
-            save();
-        }
-    }
-
-    /**
-     * Called to save in a new files.
-     */
-    protected class SaveFileAsAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-        private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
-        private String _scvotMimeType = "application-x/searchcal-votable-file";
-
-        public SaveFileAsAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
-
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("SaveFileAsAction", "actionPerformed");
-
-            StatusBar.show("saving file as...");
-
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle(
-                    "Save current calibrator list to file...");
-
-            fileChooser.setFileFilter(_fileFilterRepository.get(_scvotMimeType));
-
-            int returnVal = fileChooser.showSaveDialog(null);
-
-            File file = null;
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                file = fileChooser.getSelectedFile();
-
-                if (canOverwriteFile(file) == false) {
-                    StatusBar.show("overwritting file as cancelled.");
-
-                    return;
-                }
-
-                _calibratorsModel.saveVOTableFile(file);
-                _file = file;
-
-                // Now that a file has been saved
-                _revertToSavedFileAction.setEnabled(true);
-
-                StatusBar.show("file saved as.");
-            }
-        }
-    }
-
-    /**
-     * Called to export current data to a CSV formatted file.
-     */
-    protected class ExportToCSVFileAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        public ExportToCSVFileAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
-
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("ExportToCSVFileAction", "actionPerformed");
-
-            StatusBar.show("exporting as CSV...");
-
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle(
-                    "Export current calibrator list to CSV file...");
-
-            fileChooser.setFileFilter(_fileFilterRepository.get(_csvMimeType));
-
-            int returnVal = fileChooser.showSaveDialog(null);
-
-            File file = null;
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                file = fileChooser.getSelectedFile();
-            }
-
-            // If a file was defined (No cancel in the dialog)
-            if (file != null) {
-                if (canOverwriteFile(file) == false) {
-                    StatusBar.show("overwritting exported CSV cancelled...");
-
-                    return;
-                }
-
-                _calibratorsModel.exportCurrentVOTableToCSV(file);
-                StatusBar.show("calibrator list exported to CSV file.");
-            } else {
-                StatusBar.show("exporting as CSV cancelled.");
-            }
-        }
-    }
-
-    /**
-     * Called to export current data to a HTML formatted file.
-     */
-    protected class ExportToHTMLFileAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        public ExportToHTMLFileAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
-
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("ExportToHTMLFileAction", "actionPerformed");
-
-            StatusBar.show("exporting as HTML...");
-
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle(
-                    "Export current calibrator list to HTML file...");
-
-            fileChooser.setFileFilter(_fileFilterRepository.get(_htmlMimeType));
-
-            int returnVal = fileChooser.showSaveDialog(null);
-
-            File file = null;
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                file = fileChooser.getSelectedFile();
-            }
-
-            // If a file was defined (No cancel in the dialog)
-            if (file != null) {
-                if (canOverwriteFile(file) == false) {
-                    return;
-                }
-
-                _calibratorsModel.exportCurrentVOTableToHTML(file);
-                StatusBar.show("calibrator list exported to HTML file.");
-            } else {
-                StatusBar.show("exporting as HTML cancelled.");
-            }
-        }
-    }
-
-    /**
-     * Called to export current data as local VOTable to another SAMP application.
-     */
-    protected class ShareCalibratorsThroughSAMPAction extends SampCapabilityAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        public ShareCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability) {
-            super(classPath, fieldName, capability);
-            couldBeEnabled(false);
-        }
-
-        public Map<?, ?> composeMessage() {
-            File file = null;
+          // GetCal status polling to update ProgressBar
+          Integer requestStatus;
+          do {
             try {
-                file = File.createTempFile(SearchCalibrators.getSharedApplicationDataModel().getProgramName(), "scvot");
-            } catch (IOException ex) {
-                StatusBar.show("Could not share calibrators through SAMP.");
-                _logger.warning("Could not save calibrator list to temp file '" + file + "'.");
-                return null;
+              // Get query progression status
+              final String currentStatus = sclws.getCalQueryStatus(id);
+
+              // Deserialize the new status to update the GUI
+              final String[] splittedStatus = currentStatus.split("\t");
+
+              // Parse the received status
+              int i = 0;
+              requestStatus = Integer.valueOf(splittedStatus[i++]);
+
+              final String currentCatalogName;
+              final Integer catalogIndex;
+              final Integer nbOfCatalogs;
+
+              if (splittedStatus.length == 4) {
+                // Get the catalog name
+                currentCatalogName = Catalog.titleFromReference(splittedStatus[i++]);
+
+                // Get the catalog index
+                catalogIndex = Integer.valueOf(splittedStatus[i++]);
+
+                // Get the total number of catalogs
+                nbOfCatalogs = Integer.valueOf(splittedStatus[i++]);
+
+                // Compose the dispalyed query status
+                final String composedQueryStatus = currentCatalogName
+                        + " - (" + catalogIndex + "/" + nbOfCatalogs
+                        + ")";
+
+                // Use invokeLater to avoid concurrency and ensure that
+                // data model is modified and fire events using Swing EDT :
+                SwingUtilities.invokeLater(new Runnable() {
+
+                  public void run() {
+                    // Update the query model accordingly
+                    _queryModel.setCatalogName(composedQueryStatus);
+                    _queryModel.setCurrentStep(catalogIndex.intValue());
+                    _queryModel.setTotalStep(nbOfCatalogs.intValue());
+                  }
+                });
+              } else {
+                currentCatalogName = "";
+                catalogIndex = Integer.valueOf(0);
+                nbOfCatalogs = Integer.valueOf(0);
+              }
+
+              if (_logger.isLoggable(Level.FINE)) {
+                _logger.fine("Status = '" + currentCatalogName
+                        + "' - " + catalogIndex + "/" + nbOfCatalogs
+                        + " (status = '" + requestStatus + "').");
+              }
+
+            } catch (Exception ex) {
+              // Handle error when no manual cancel
+              if (_getCalThread != null) {
+                StatusBar.show("calibrator search aborted (catalog error) !");
+                MessagePane.showErrorMessage("Communication with the JMMC server failed.", ex);
+
+                interrupt();
+                setQueryLaunchedState(false);
+              } else {
+                _logger.log(Level.FINE, "Silenced error (cancellation).", ex);
+              }
+
+              return;
             }
+          } while (requestStatus == 1);
 
-            file.deleteOnExit();
-            URI uri = file.toURI();
+          StatusBar.show("searching calibrators... (waiting for result)");
 
-            // Save the current calibrator selection (or all visible ones if none selected) to file
-            _calibratorsModel.saveSelectionAsVOTableFile(file);
+          // Wait for the query thread
+          try {
+            // Wait for the thread to end
+            _queryResultThread.join();
+          } catch (Exception ex) {
+            // Handle error when no manual cancel
+            if (_getCalThread != null) {
+              StatusBar.show("calibrator search aborted (could not get result) !");
+              MessagePane.showErrorMessage("Could not get result from JMMC server.", ex);
 
-            final Map<String, String> parameters = new HashMap<String, String>();
-            parameters.put("url", uri.toString());
-            return parameters;
-        }
-    }
-
-    /**
-     * Get calibrator list as a raw VOTable from JMMC web service.
-     */
-    protected class GetCalAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-        private GetCalThread _getCalThread = null;
-
-        public GetCalAction(String classPath, String fieldName) {
-            super(classPath, fieldName, "Get Calibrators");
-
-            setEnabled(false);
-        }
-
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("GetCalAction", "actionPerformed");
-
-            // Launch a new thread only if no other one has been launched yet
-            if (isQueryLaunched() == false) {
-                // Query is stating
-                setQueryLaunchedState(true);
-
-                StatusBar.show(
-                        "searching calibrators... (please wait, this may take a while)");
-
-                // Launch the query in the background in order to keed GUI updated
-                _getCalThread = new GetCalThread();
-                _getCalThread.start();
+              interrupt();
+              setQueryLaunchedState(false);
             } else {
-                StatusBar.show("cancelling current callibrator search...");
-
-                // If the GetCal thread has already been launched
-                if (_getCalThread != null) {
-                    // Kill it
-                    _logger.fine("Killing GetCal thread ... ");
-                    _getCalThread.interrupt();
-                    _getCalThread = null;
-                    _logger.fine("GetCal thread killed.");
-                }
-
-                // Query is finished
-                setQueryLaunchedState(false);
-
-                StatusBar.show("callibrator search cancelled.");
-            }
-        }
-
-        /**
-         * Wait for each CDS interrogation progress while another thread wait for the final answer.
-         */
-        class GetCalThread extends Thread {
-
-            private QueryResultThread _queryResultThread = null;
-            private SclwsLocator loc = null;
-            private SclwsPortType sclws = null;
-            private String id = null;
-
-            GetCalThread() {
-                _queryResultThread = null;
+              _logger.log(Level.FINE, "Silenced error (cancellation).", ex);
             }
 
-            @Override
+            return;
+          }
+
+          // Use invokeLater to avoid concurrency and ensure that
+          // data model is modified and fire events using Swing EDT :
+          SwingUtilities.invokeLater(new Runnable() {
+
             public void run() {
-                _logger.entering("GetCalThread", "run");
 
-                getCal();
-            }
+              // get results :
+              final String result = _queryResultThread.getResult();
 
-            public void getCal() {
-                _logger.entering("GetCalThread", "getCal");
-
+              if ((result != null) && (result.length() > 0)) {
                 try {
-                    // Get the connection ID
-                    try {
-                        // Start the webservice connection
-                        loc = new SclwsLocator();
+                  StatusBar.show("parsing calibrators... (please wait, this may take a while)");
 
-                        // Decipher which proxy script to use according to app version status (release, beta or alpha)
-                        String userName = "sclws"; // official release homedir
-                        if (App.isBetaVersion()) {
-                            userName = "betaswmgr"; // beta release homedir
-                        } else if (App.isAlphaVersion()) {
-                            userName = "lafrasse"; // alpha release homedir
-                        }
-                        String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclws-proxy.php";
+                  // Parse the received VOTable
+                  _calibratorsModel.parseVOTable(result);
 
-                        // Re-route network traffic at specified address on standard 80 port
-                        // (e.g to overcome tightly filtered TCP outputs on public WiFi)
-                        loc.setEndpointAddress(loc.getsclwsWSDDServiceName(), proxyScriptURL);
+                  StatusBar.show("searching calibrators... done.");
 
-                        sclws = loc.getsclws();
-                        _logger.fine("Connected to '" + loc.getsclwsAddress()
-                                + "'.");
+                  // As data are now loaded
+                  enableDataRelatedMenus(true);
 
-                        // Define the webservice timeout (default = 10min)
-                        //org.apache.axis.client.Stub stub = (SclwsStub) s;
-                        //stub.setTimeout(20000); // 20 second, in miliseconds
-
-                        // Get the connection ID
-                        id = sclws.getCalOpenSession();
-
-                        _logger.fine("JMMC Connection ID = '" + id + "'.");
-                        StatusBar.show(
-                                "searching calibrators... (connection established)");
-                    } catch (RemoteException re) {
-
-                        // Handle error when no manual cancel
-                        if (_getCalThread != null) {
-                            StatusBar.show(
-                                    "calibrator search aborted (connection refused) !");
-                            MessagePane.showErrorMessage("Could not connect to JMMC server.", re);
-
-                            interrupt();
-                            setQueryLaunchedState(false);
-                        } else {
-                            _logger.log(Level.FINE,
-                                    "Silenced error (cancellation).", re);
-                        }
-
-                        return;
-                    }
-
-                    // Get the query from the GUI
-                    String query = _queryModel.getQueryAsMCSString();
-                    _logger.fine("Query = '" + query + "'.");
-
-                    // Launch the querying thread
-                    _queryResultThread = new QueryResultThread(sclws, id, query);
-                    _queryResultThread.start();
-
-                    StatusBar.show(
-                            "searching calibrators... (querying catalogs)");
-
-                    // GetCal status polling to update ProgressBar
-                    String currentStatus = "";
-                    String currentCatalogName = "";
-                    String composedQueryStatus = "";
-                    Integer catalogIndex = 0;
-                    Integer nbOfCatalogs = 0;
-                    Integer requestStatus = 0;
-
-                    do {
-                        try {
-                            // Get query progression status
-                            currentStatus = sclws.getCalQueryStatus(id);
-
-                            // Deserialize the new status to update the GUI
-                            String[] splittedStatus = currentStatus.split("\t");
-
-                            // Parse the received status
-                            int i = 0;
-                            requestStatus = Integer.parseInt(splittedStatus[i++]);
-
-                            if (splittedStatus.length == 4) {
-                                // Get the catalog name
-                                String catalogReference = splittedStatus[i++];
-                                currentCatalogName = Catalog.titleFromReference(catalogReference);
-
-                                // Get the catalog index
-                                catalogIndex = Integer.parseInt(splittedStatus[i++]);
-
-                                // Get the total number of catalogs
-                                nbOfCatalogs = Integer.parseInt(splittedStatus[i++]);
-
-                                // Compose the dispalyed query status
-                                composedQueryStatus = currentCatalogName
-                                        + " - (" + catalogIndex + "/" + nbOfCatalogs
-                                        + ")";
-
-                                // Update the query model accordinaly
-                                _queryModel.setCatalogName(composedQueryStatus);
-                                _queryModel.setCurrentStep(catalogIndex.intValue());
-                                _queryModel.setTotalStep(nbOfCatalogs.intValue());
-                            }
-
-                            _logger.fine("Status = '" + currentCatalogName
-                                    + "' - " + catalogIndex + "/" + nbOfCatalogs
-                                    + " (status = '" + requestStatus + "').");
-                        } catch (Exception ex) {
-                            // Handle error when no manual cancel
-                            if (_getCalThread != null) {
-                                StatusBar.show(
-                                        "calibrator search aborted (catalog error) !");
-                                MessagePane.showErrorMessage("Communication with the JMMC server failed.", ex);
-
-                                interrupt();
-                                setQueryLaunchedState(false);
-                            } else {
-                                _logger.log(Level.FINE,
-                                        "Silenced error (cancellation).", ex);
-                            }
-
-                            return;
-                        }
-                    } while (requestStatus == 1);
-
-                    StatusBar.show(
-                            "searching calibrators... (waiting for result)");
-
-                    // Wait for the query thread
-                    try {
-                        // Wait for the thread to end
-                        _queryResultThread.join();
-                    } catch (Exception ex) {
-                        // Handle error when no manual cancel
-                        if (_getCalThread != null) {
-                            StatusBar.show(
-                                    "calibrator search aborted (could not get result) !");
-                            MessagePane.showErrorMessage("Could not get result from JMMC server.", ex);
-
-                            interrupt();
-                            setQueryLaunchedState(false);
-                        } else {
-                            _logger.log(Level.FINE,
-                                    "Silenced error (cancellation).", ex);
-                        }
-
-                        return;
-                    }
-
-                    String result = _queryResultThread.getResult();
-
-                    if ((result != null) && (result.length() > 0)) {
-                        StatusBar.show(
-                                "parsing calibrators... (please wait, this may take a while)");
-
-                        try {
-                            // Parse the received VOTable
-                            _calibratorsModel.parseVOTable(result);
-                            StatusBar.show("searching calibrators... done.");
-                        } catch (IOException ex) {
-                            // Handle error when no manual cancel
-                            if (_getCalThread != null) {
-                                StatusBar.show("calibrator parsing aborted !");
-                                MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", ex);
-
-                                interrupt();
-                                setQueryLaunchedState(false);
-                            } else {
-                                _logger.log(Level.FINE,
-                                        "Silenced error (cancellation).", ex);
-                            }
-
-                            return;
-                        }
-                    } else {
-                        _logger.fine("No calibrators found.");
-
-                        StatusBar.show("no calibrators found.");
-
-                        setQueryLaunchedState(false);
-
-                        return;
-                    }
-
-                    // As data are now loaded
-                    enableDataRelatedMenus(true);
                 } catch (Exception ex) {
-                    // Handle error when no manual cancel
-                    if (_getCalThread != null) {
-                        StatusBar.show(
-                                "calibrator search aborted (communication error) !");
-                        MessagePane.showErrorMessage("Communication failed.", ex);
-                    } else {
-                        _logger.log(Level.FINE,
-                                "Silenced error (cancellation).", ex);
-                    }
-                }
+                  // LAURENT : TODO : check that case
+                  // Handle error when no manual cancel
+//                if (_getCalThread != null) {
+                  StatusBar.show("calibrator parsing aborted !");
+                  MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", ex);
 
-                // Query is finished
+                  /* LAURENT : main thread calls setQueryLaunchedState :
+                  interrupt();
+                  setQueryLaunchedState(false);
+                  } else {
+                  _logger.log(Level.FINE, "Silenced error (cancellation).", ex);
+                  }
+                   */
+//                  return;
+                }
+              } else {
+                _logger.fine("No calibrators found.");
+                StatusBar.show("no calibrators found.");
+
+                /* LAURENT : main thread calls setQueryLaunchedState :
                 setQueryLaunchedState(false);
+                 */
+//                return;
+              }
             }
+          }); // EDT Task
 
-            @Override
-            public void interrupt() {
-                _logger.entering("GetCalThread", "interrupt");
-
-                Boolean isOk = false;
-
-                try {
-                    // Ask for query cancellation
-                    isOk = sclws.getCalCancelSession(id);
-                } catch (Exception ex) {
-                    _logger.log(Level.WARNING, "JMMC request cancellation failed : ", ex);
-
-                    setQueryLaunchedState(false);
-
-                    return;
-                }
-
-                // If the QueryResult thread has already been launched
-                if (_queryResultThread != null) {
-                    // Kill it
-                    _logger.fine("Killing QueryResult thread ... ");
-                    _queryResultThread.interrupt();
-                    _queryResultThread = null;
-                    _logger.fine("QueryResult thread killed.");
-                }
-
-                super.interrupt();
-            }
-
-            /**
-             * Wait for the final reply from the server while another thread monitor CDS interrogation progress.
-             */
-            class QueryResultThread extends Thread {
-
-                private SclwsPortType _sclws = null;
-                private String _id = null;
-                private String _query = null;
-                private String _result = null;
-
-                QueryResultThread(SclwsPortType s, String id, String query) {
-                    _sclws = s;
-                    _query = query;
-                    _id = id;
-                    _result = null;
-                }
-
-                @Override
-                public void run() {
-                    _logger.entering("QueryResultThread", "run");
-
-                    queryResult();
-                }
-
-                public void queryResult() {
-                    _logger.entering("QueryResultThread", "queryResult");
-
-                    try {
-                        StatusBar.show(
-                                "searching calibrators... (sending query)");
-
-                        // Launch the query
-                        _result = _sclws.getCalSearchCal(_id, _query);
-
-                        StatusBar.show(
-                                "searching calibrators... (result received)");
-                    } catch (Exception ex) {
-                        // Handle error when no manual cancel
-                        if (_queryResultThread != null) {
-                            StatusBar.show(
-                                    "calibrator search aborted (could not send query) !");
-                            MessagePane.showErrorMessage("Could not send query to JMMC server.", ex);
-
-                            interrupt();
-                            setQueryLaunchedState(false);
-                        } else {
-                            _logger.log(Level.FINE,
-                                    "Silenced error (cancellation).", ex);
-                        }
-
-                        return;
-                    }
-                }
-
-                String getResult() {
-                    _logger.entering("QueryResultThread", "getResult");
-
-                    return _result;
-                }
-            }
+        } catch (Exception ex) {
+          // Handle error when no manual cancel
+          if (_getCalThread != null) {
+            StatusBar.show("calibrator search aborted (communication error) !");
+            MessagePane.showErrorMessage("Communication failed.", ex);
+          } else {
+            _logger.log(Level.FINE, "Silenced error (cancellation).", ex);
+          }
         }
+
+        // Query is finished
+        setQueryLaunchedState(false);
+      }
+
+      @Override
+      public void interrupt() {
+        _logger.entering("GetCalThread", "interrupt");
+
+        Boolean isOk = false;
+
+        try {
+          // Ask for query cancellation
+          isOk = sclws.getCalCancelSession(id);
+        } catch (Exception ex) {
+          _logger.log(Level.WARNING, "JMMC request cancellation failed : ", ex);
+
+          setQueryLaunchedState(false);
+
+          return;
+        }
+
+        // If the QueryResult thread has already been launched
+        if (_queryResultThread != null) {
+          // Kill it
+          _logger.fine("Killing QueryResult thread ... ");
+          _queryResultThread.interrupt();
+          _queryResultThread = null;
+          _logger.fine("QueryResult thread killed.");
+        }
+
+        super.interrupt();
+      }
+
+      /**
+       * Wait for the final reply from the server while another thread monitor CDS interrogation progress.
+       */
+      class QueryResultThread extends Thread {
+
+        private final SclwsPortType _sclws;
+        private final String _id;
+        private final String _query;
+        private String _result = null;
+
+        QueryResultThread(final SclwsPortType s, final String id, final String query) {
+          _sclws = s;
+          _query = query;
+          _id = id;
+          _result = null;
+        }
+
+        @Override
+        public void run() {
+          _logger.entering("QueryResultThread", "run");
+
+          queryResult();
+        }
+
+        public void queryResult() {
+          _logger.entering("QueryResultThread", "queryResult");
+
+          try {
+            StatusBar.show("searching calibrators... (sending query)");
+
+            // Launch the query
+            _result = _sclws.getCalSearchCal(_id, _query);
+
+            StatusBar.show("searching calibrators... (result received)");
+          } catch (Exception ex) {
+            // Handle error when no manual cancel
+            if (_queryResultThread != null) {
+              StatusBar.show("calibrator search aborted (could not send query) !");
+              MessagePane.showErrorMessage("Could not send query to JMMC server.", ex);
+
+              interrupt();
+              setQueryLaunchedState(false);
+            } else {
+              _logger.log(Level.FINE, "Silenced error (cancellation).", ex);
+            }
+          }
+        }
+
+        String getResult() {
+          _logger.entering("QueryResultThread", "getResult");
+
+          return _result;
+        }
+      }
     }
+  }
 }
 /*___oOo___*/
