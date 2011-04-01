@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.33 2010-10-10 22:45:04 lafrasse Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.34 2011-04-01 14:16:09 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.33  2010/10/10 22:45:04  lafrasse
+ * Code reformating.
+ *
  * Revision 1.32  2010/10/10 22:21:05  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -190,10 +193,6 @@ public class MainWindow extends JFrame {
         _showPreferencesAction = new ShowPreferencesAction(classPath,
                 "_showPreferencesAction");
 
-        // Printing
-        _printJob = PrinterJob.getPrinterJob();
-        _landscape = _printJob.defaultPage();
-        _landscape.setOrientation(PageFormat.LANDSCAPE);
         _pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
         _printAction = new PrintAction(classPath, "_printAction");
 
@@ -256,6 +255,22 @@ public class MainWindow extends JFrame {
     }
 
     /**
+     * Called during action execution to check that global variables are properly inited.
+     * Do no perform this printing init during programm init because
+     * one broken printing system can throw long timeout and freeze the application.
+     */
+    private void initPrinting() {
+        if (_printJob == null) {
+            _printJob = PrinterJob.getPrinterJob();
+        }
+
+        if (_landscape == null) {
+            _landscape = _printJob.defaultPage();
+            _landscape.setOrientation(PageFormat.LANDSCAPE);
+        }
+    }
+
+    /**
      * Called to show the preferences window.
      */
     protected class ShowPreferencesAction extends RegisteredAction {
@@ -291,6 +306,9 @@ public class MainWindow extends JFrame {
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("PageSetupAction", "actionPerformed");
 
+            // Check Printing if not yet done
+            initPrinting();
+            
             // Show Page Setup GUI
             _landscape = _printJob.pageDialog(_landscape);
         }
@@ -310,6 +328,9 @@ public class MainWindow extends JFrame {
 
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("PrintAction", "actionPerformed");
+
+            // Check Printing and landscape initialisation
+            initPrinting();
 
             Book book = new Book();
             book.append((Printable) _queryView, _landscape);
