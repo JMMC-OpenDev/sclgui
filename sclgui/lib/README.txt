@@ -20,9 +20,13 @@ Runtime Libraries (JNLP) are described in the following files :
 Required JMCS libraries:
 -rw-r--r--. 1 bourgesl laogsite  124332  8 mars  09:37 activation.jar
 -rw-r--r--. 1 bourgesl laogsite    4189 13 juin   2008 AppleJavaExtensions.jar
+-rw-r--r--. 1 bourgesl laogsite  102603 16 avril  2008 BrowserLauncher2-1_3.jar
+-rw-r--r--. 1 bourgesl laogsite 1599469 21 mars   2009 castor.jar
+-rw-r--r--. 1 bourgesl laogsite   46725 22 avril  2008 commons-codec-1.3.jar
 -rw-r--r--. 1 bourgesl laogsite  305001 22 avril  2008 commons-httpclient-3.1.jar
 -rw-r--r--. 1 bourgesl laogsite   60841 22 avril  2008 commons-logging-1.1.1.jar
 -rw-r--r--. 1 bourgesl laogsite   56709 20 mai    2008 java-getopt-1.0.13.jar
+-rw-r--r--. 1 bourgesl laogsite  630672 15 févr. 09:57 jsamp-1.2.jar
 
 
 Libraries used by shell scripts (build) are defined in :
