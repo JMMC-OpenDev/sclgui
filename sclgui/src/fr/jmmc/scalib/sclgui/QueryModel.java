@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.53 2011-02-15 15:36:32 lafrasse Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.54 2011-04-01 14:50:07 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.53  2011/02/15 15:36:32  lafrasse
+ * Fixed a querying crash when science object magnitude is missing.
+ *
  * Revision 1.52  2011/02/11 16:02:02  lafrasse
  * Fucking NullPointerException...
  *
@@ -582,70 +585,70 @@ public class QueryModel extends Star implements Observer {
     public String getQueryAsMCSString() {
         _logger.entering("QueryModel", "getQueryAsMCSString");
 
-        String query = "";
+        final StringBuilder query = new StringBuilder(255);
 
         // Object name
-        query += ("-objectName " + getScienceObjectName() + " ");
+        query.append("-objectName ").append(getScienceObjectName()).append(" ");
 
         // Magnitude
-        query += ("-mag " + getScienceObjectMagnitude() + " ");
+        query.append("-mag ").append(getScienceObjectMagnitude()).append(" ");
 
         // Diff RA
-        double ArcminRA = ALX.minutes2arcmin(getQueryDiffRASizeInMinutes());
-        query += ("-diffRa " + ArcminRA + " ");
+        double arcminRA = ALX.minutes2arcmin(getQueryDiffRASizeInMinutes());
+        query.append("-diffRa ").append(arcminRA).append(" ");
 
         // Diff DEC
-        double ArcminDEC = ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees());
-        query += ("-diffDec " + ArcminDEC + " ");
+        double arcminDEC = ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees());
+        query.append("-diffDec ").append(arcminDEC).append(" ");
 
         // Band
-        query += ("-band " + getInstrumentalMagnitudeBand() + " ");
+        query.append("-band ").append(getInstrumentalMagnitudeBand()).append(" ");
 
         // Min Magnitude
-        query += ("-minMagRange " + getQueryMinMagnitude() + " ");
+        query.append("-minMagRange ").append(getQueryMinMagnitude()).append(" ");
 
         // Max Magnitude
-        query += ("-maxMagRange " + getQueryMaxMagnitude() + " ");
+        query.append("-maxMagRange ").append(getQueryMaxMagnitude()).append(" ");
 
         // RA
-        query += ("-ra " + getScienceObjectRA() + " ");
+        query.append("-ra ").append(getScienceObjectRA()).append(" ");
 
         // DEC
-        query += ("-dec " + getScienceObjectDEC() + " ");
+        query.append("-dec ").append(getScienceObjectDEC()).append(" ");
 
         // Max Baseline
-        query += ("-baseMax " + getInstrumentalMaxBaseLine() + " ");
+        query.append("-baseMax ").append(getInstrumentalMaxBaseLine()).append(" ");
 
         // Wavelength
-        query += ("-wlen " + getInstrumentalWavelength() + " ");
+        query.append("-wlen ").append(getInstrumentalWavelength()).append(" ");
 
         // Radius
-        Boolean brightFlag = getQueryBrightScenarioFlag();
+        final Boolean brightFlag = getQueryBrightScenarioFlag();
 
-        if (brightFlag == false) {
+        if (!brightFlag.booleanValue()) {
             Double queryRadialSize = getQueryRadialSize();
             Boolean autoRadiusFlag = getQueryAutoRadiusFlag();
 
-            if (autoRadiusFlag == true) {
-                queryRadialSize = 0.0;
+            if (autoRadiusFlag.booleanValue()) {
+                queryRadialSize = 0.0d;
             }
 
             if (queryRadialSize == Double.NaN) {
-                queryRadialSize = 0.0;
+                queryRadialSize = 0.0d;
             }
 
-            query += ("-radius " + queryRadialSize + " ");
+            query.append("-radius ").append(queryRadialSize).append(" ");
         }
 
         // Bright/Faint flag
-        query += ("-bright " + brightFlag + " ");
+        query.append("-bright ").append(brightFlag).append(" ");
 
         // Get the science star
-        query += ("-noScienceStar false");
+        query.append("-noScienceStar false");
 
         _logger.fine("query = '" + query + "'.");
 
-        return query;
+        return query.toString();
     }
 
     /**
