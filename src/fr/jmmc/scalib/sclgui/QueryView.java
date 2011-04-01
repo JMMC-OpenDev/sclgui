@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.62 2011-02-10 14:20:00 lafrasse Exp $"
+ * "@(#) $Id: QueryView.java,v 1.63 2011-04-01 14:50:42 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.62  2011/02/10 14:20:00  lafrasse
+ * Restricted faint scenario magnitude bands to K.
+ *
  * Revision 1.61  2011/01/13 14:13:47  lafrasse
  * Restricted faint scenario magnitude bands to I, J, H and K.
  * Fixed documentation typos.
@@ -830,7 +833,9 @@ public final class QueryView extends JPanel implements Observer,
         // Refresh the whole view
         _queryModel.notifyObservers();
 
-        _logger.fine("query = " + _queryModel.getQueryAsMCSString());
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("query = " + _queryModel.getQueryAsMCSString());
+        }
     }
 
     /**
