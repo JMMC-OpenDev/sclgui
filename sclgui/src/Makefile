@@ -1,13 +1,16 @@
 #*******************************************************************************
 # JMMC project
 #
-# "@(#) $Id: Makefile,v 1.36 2009-11-05 14:16:28 mella Exp $"
+# "@(#) $Id: Makefile,v 1.37 2011-04-01 15:30:28 bourgesl Exp $"
 #
 # Makefile of sclgui module
 #
 # History
 # -------
 # $Log: not supported by cvs2svn $
+# Revision 1.36  2009/11/05 14:16:28  mella
+# Add new script sclguiVOTableToHTML.sh which uses the xsls of SearchCal
+#
 # Revision 1.35  2009/05/05 13:35:41  lafrasse
 # Moved user documentation generation out of man pages generation.
 #
@@ -234,10 +237,12 @@ simbad_DIRS     = cds
 
 #
 # <brief description of sclgui jar files>
-sclgui_DIRS     = fr 
+sclgui_DIRS     = fr \
+                  org
 sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
                   fr/jmmc/scalib/sclgui/*.xsl \
                   fr/jmmc/scalib/sclgui/ApplicationData.xml \
+                  org/apache/axis/client/*.wsdd
 
 #
 # Java programs
