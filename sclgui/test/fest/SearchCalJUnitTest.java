@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalJUnitTest.java,v 1.1 2011-03-18 16:22:33 bourgesl Exp $"
+ * "@(#) $Id: SearchCalJUnitTest.java,v 1.2 2011-04-01 10:04:13 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2011/03/18 16:22:33  bourgesl
+ * use Fest Swing to test SearchCal (start / submit query and wait / prefs / exit)
+ *
  */
 package fest;
 
@@ -16,12 +19,14 @@ import static org.fest.swing.timing.Pause.*;
 import fest.common.JmcsApplicationSetup;
 
 import fest.common.JmcsFestSwingJUnitTestCase;
+import fr.jmmc.mcs.timer.TimerFactory;
+import fr.jmmc.mcs.timer.TimerFactory.UNIT;
 
 import java.awt.Frame;
-import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JList;
+import org.fest.assertions.Fail;
 
 import org.fest.swing.annotation.GUITest;
 import org.fest.swing.core.GenericTypeMatcher;
@@ -32,7 +37,6 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.fixture.JButtonFixture;
-import org.fest.swing.fixture.JOptionPaneFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.fest.swing.timing.Condition;
 import org.fest.swing.timing.Timeout;
@@ -41,13 +45,19 @@ import org.junit.Test;
 
 /**
  * This simple tests concerns SearchCal GUI
- * 
- * @author bourgesl
+ *
+ * @author bourgesl 
  */
 public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
-  /** 20s timeout */
-  protected static final Timeout LONG_TIMEOUT = Timeout.timeout(30000l);
+  /** 60s timeout */
+  private static final Timeout LONG_TIMEOUT = Timeout.timeout(60 * 1000l);
+  /** queries to perform (500) */
+  private static final int QUERY_ITERATIONS = 500;
+  /** time to wait between queries (ms) */
+  private static final long QUERY_PAUSE = 1 * 1000l;
+  /** flag indicating to test cancel SearchCal queries */
+  private static final boolean TEST_CANCEL = true;
 
   /**
    * Define the application
@@ -68,6 +78,9 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
     // disable tooltips :
     enableTooltips(false);
+
+    // TimerFactory warmup and reset :
+    TimerFactory.resetTimers();
   }
 
   /**
@@ -79,36 +92,188 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     window.requireVisible();
 
     saveScreenshot(window, "SearchCal-start.png");
+  }
 
-    final String buttonText = "Get Calibrators";
+  /**
+   * Test if the application can cancel N queries correctly
+   */
+  @Test
+  @GUITest
+  public void shouldNCancel() {
+    window.requireVisible();
 
-    final JButtonFixture buttonFixture = window.button(withText(buttonText)).click();
+    if (TEST_CANCEL) {
 
-    final JButton button = buttonFixture.component();
+      // initial delay:
+      final long startAt = 2800l;
 
-    pause(new Condition("SearchCalQueryRunning") {
+      // typical query duration = 5s:
+      final long queryDuration = 5000l;
 
-      /**
-       * Checks if the condition has been satisfied.
-       * @return <code>true</code> if the condition has been satisfied, otherwise <code>false</code>.
-       */
-      public boolean test() {
+      // 10 queries to consider that SearchCal server is stable within the wait delay:
+      final int stepIteration = 10;
 
-        return GuiActionRunner.execute(new GuiQuery<Boolean>() {
+      final long stepWait = (queryDuration - startAt) / (QUERY_ITERATIONS / stepIteration);
 
-          protected Boolean executeInEDT() {
-            final String text = button.getText();
-            final boolean done = buttonText.equals(text);
+      final String buttonText = "Get Calibrators";
 
-            if (logger.isLoggable(Level.FINE)) {
-              logger.fine("SearchCalQueryRunning : text = " + text);
+      final JButtonFixture buttonFixture = window.button(withText(buttonText));
+
+      int nStart = 0;
+      int nCancel = 0;
+      long delay = startAt;
+      try {
+
+        for (int i = 0; i < QUERY_ITERATIONS; i++) {
+
+          window.show();
+
+          if (buttonText.equals(buttonFixture.text())) {
+            if (logger.isLoggable(Level.INFO)) {
+              logger.info("START  query:          " + i);
             }
-            return done;
-          }
-        });
 
+            // click to START SearchCal query:
+            buttonFixture.click();
+
+            // Start done:
+            nStart++;
+          }
+
+          if (i % stepIteration == 0) {
+            delay += stepWait;
+          }
+          if (logger.isLoggable(Level.INFO)) {
+            logger.info("pause before cancel (ms) : " + delay);
+          }
+          pause(delay);
+
+          // click to CANCEL SearchCal query:
+          if ("Cancel".equals(buttonFixture.text())) {
+            if (logger.isLoggable(Level.INFO)) {
+              logger.info("CANCEL query:          " + i);
+            }
+
+            buttonFixture.click();
+
+            // Cancel done:
+            nCancel++;
+          }
+
+          pauseShort();
+
+          if (closeMessage()) {
+            Fail.fail("An error occured while cancelling query [" + nStart + "] !");
+          }
+
+          if (logger.isLoggable(Level.INFO)) {
+            logger.info("pause (ms) : " + QUERY_PAUSE);
+          }
+          pause(QUERY_PAUSE);
+        }
+      } catch (RuntimeException re) {
+        logger.log(Level.SEVERE, "runtime failure : ", re);
+        throw re;
+      } catch (Error e) {
+        logger.log(Level.SEVERE, "runtime failure : ", e);
+        throw e;
+      } finally {
+        if (logger.isLoggable(Level.INFO)) {
+          logger.info("Queries started/cancelled: " + nStart + " / " + nCancel);
+        }
       }
-    }, LONG_TIMEOUT);
+    }
+  }
+
+  /**
+   * Test if the application can make N queries correctly
+   *
+   * Timer [SearchCal (ms) - ms] [500] (threshold = 5000.0 ms) {
+   *   Low  : Timer [SearchCal (ms) - ms] [494] {num = 494 : min = 1057.43562, avg = 3775.94762, max = 4905.56433, acc = 1865318.12799, std = 227.17308 [490] std low  = 246.11642 [139] std high = 222.81639 [351] }
+   *   High : Timer [SearchCal (ms) - ms] [6] {num = 6 : min = 5130.75824, avg = 7191.16121, max = 10874.424, acc = 43146.96727, std = 0.0 [2] std low  = 0.0 [2] std high = 0.0 [0] }
+   * }
+   */
+  @Test
+  @GUITest
+  public void shouldNQuery() {
+    window.requireVisible();
+
+    if (!TEST_CANCEL) {
+
+      final String buttonText = "Get Calibrators";
+
+      final JButtonFixture buttonFixture = window.button(withText(buttonText));
+
+      long start;
+      int nStart = 0;
+      try {
+
+        for (int i = 0; i < QUERY_ITERATIONS; i++) {
+
+          if (logger.isLoggable(Level.INFO)) {
+            logger.info("start query : " + i);
+          }
+
+          start = System.nanoTime();
+
+          window.show();
+
+          // click to start SearchCal query:
+          buttonFixture.click();
+
+          // Start done:
+          nStart++;
+
+          pauseMedium();
+
+          if (closeMessage()) {
+            Fail.fail("An error occured while running query [" + nStart + "] !");
+          }
+
+          final JButton button = buttonFixture.component();
+
+          pause(new Condition("SearchCalQueryRunning") {
+
+            /**
+             * Checks if the condition has been satisfied.
+             * @return <code>true</code> if the condition has been satisfied, otherwise <code>false</code>.
+             */
+            public boolean test() {
+
+              return GuiActionRunner.execute(new GuiQuery<Boolean>() {
+
+                protected Boolean executeInEDT() {
+                  final String text = button.getText();
+                  final boolean done = buttonText.equals(text);
+
+                  if (logger.isLoggable(Level.FINE)) {
+                    logger.fine("SearchCalQueryRunning : text = " + text);
+                  }
+                  return done;
+                }
+              });
+
+            }
+          }, LONG_TIMEOUT);
+
+          TimerFactory.getTimer("SearchCal (ms)", UNIT.ms, 5000l).addMilliSeconds(start, System.nanoTime());
+
+          if (logger.isLoggable(Level.INFO)) {
+            logger.info("pause (ms) : " + QUERY_PAUSE);
+          }
+
+          pause(QUERY_PAUSE);
+        }
+      } finally {
+        if (logger.isLoggable(Level.INFO)) {
+          logger.info("Queries started: " + nStart);
+        }
+
+        if (!TimerFactory.isEmpty()) {
+          logger.warning("TimerFactory : statistics : " + TimerFactory.dumpTimers());
+        }
+      }
+    }
   }
 
   /**
@@ -185,7 +350,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     dialog.requireVisible();
     dialog.moveToFront();
 
-    final String myEmail = "bourges.laurent@obs.ujf-grenoble.fr";
+    final String myEmail = "laurent.bourges@obs.ujf-grenoble.fr";
 
     final JTextComponentFixture emailField = dialog.textBox(JTextComponentMatcher.withText(myEmail));
 
@@ -214,77 +379,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     confirmDialogDontSave();
   }
 
-  /* 
+  /*
   --- Utility methods  ---------------------------------------------------------
    */
-  /**
-   * Close File overwrite confirm dialog clicking on "Replace" button
-   */
-  private void confirmDialogFileOverwrite() {
-    try {
-      // if file already exists, a confirm message appears :
-      final JOptionPaneFixture optionPane = window.optionPane();
-
-      if (optionPane != null) {
-        // confirm file overwrite :
-        optionPane.buttonWithText("Replace").click();
-      }
-
-    } catch (RuntimeException re) {
-      // happens when the confirm message does not occur :
-      if (logger.isLoggable(Level.FINE)) {
-        logger.log(Level.FINE, "lookup failure : ", re);
-      }
-    }
-  }
-
-  /**
-   * Close Save confirm dialog clicking on "Don't Save" button
-   */
-  private void confirmDialogDontSave() {
-    // close confirm dialog :
-    window.optionPane().buttonWithText("Don't Save").click();
-  }
-
-  /**
-   * Close any option pane
-   */
-  private void closeMessage() {
-    try {
-      // if a message appears :
-      final JOptionPaneFixture optionPane = window.optionPane();
-
-      if (optionPane != null) {
-        // click OK :
-        optionPane.okButton().click();
-      }
-
-    } catch (RuntimeException re) {
-      // happens when the confirm message does not occur :
-      if (logger.isLoggable(Level.FINE)) {
-        logger.log(Level.FINE, "lookup failure : ", re);
-      }
-    }
-  }
-
-  /**
-   * Capture a screenshot of the application window, crop it and save it using the given file name
-   * @param fileName the file name (including the png extension)
-   * @param x the X coordinate of the upper-left corner of the
-   *          specified rectangular region
-   * @param y the Y coordinate of the upper-left corner of the
-   *          specified rectangular region
-   * @param w the width of the specified rectangular region (<=0 indicates to use the width of screenshot image)
-   * @param h the height of the specified rectangular region (<=0 indicates to use the height of screenshot image)
-   */
-  private void saveCroppedScreenshotOf(final String fileName, final int x, final int y, final int w, final int h) {
-    final BufferedImage image = takeScreenshotOf(window);
-
-    final int width = (w <= 0) ? image.getWidth() : w;
-    final int height = (h <= 0) ? image.getHeight() : h;
-
-    final BufferedImage croppedImage = image.getSubimage(x, y, width, height);
-
-    saveImage(croppedImage, fileName);
-  }
 }
