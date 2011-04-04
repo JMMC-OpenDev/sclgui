@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.49 2010-10-10 22:45:02 lafrasse Exp $"
+ * "@(#) $Id: Preferences.java,v 1.50 2011-04-04 14:00:24 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.49  2010/10/10 22:45:02  lafrasse
+ * Code reformating.
+ *
  * Revision 1.48  2010/10/10 22:21:03  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -387,9 +390,9 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
         // Query default values preferences (ETA_TAU, bright V)
         setDefaultPreference("query.magnitudeBand", "V");
         setDefaultPreference("query.instrumentalWavelength",
-                "" + (1.0 * ALX.MICRON));
+                Double.toString(1.0d * ALX.MICRON));
         setDefaultPreference("query.instrumentalMaxBaseLine",
-                "" + (102.45 * ALX.METER));
+                Double.toString(102.45d * ALX.METER));
         setDefaultPreference("query.scienceObjectName", "ETA_TAU");
         setDefaultPreference("query.scienceObjectRA", "03:47:29.0765");
         setDefaultPreference("query.scienceObjectDEC", "24:06:18.494");
@@ -397,14 +400,14 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
         setDefaultPreference("query.queryMinMagnitude", "2.0");
         setDefaultPreference("query.queryMaxMagnitude", "4.0");
         setDefaultPreference("query.queryBrightScenarioFlag", "true");
-        setDefaultPreference("query.queryDiffRASize", "" + (3600 * ALX.ARCSEC));
+        setDefaultPreference("query.queryDiffRASize", Double.toString(3600d * ALX.ARCSEC));
         setDefaultPreference("query.queryDiffDECSize", ""
                 + (1200 * ALX.ARCSEC));
-        setDefaultPreference("query.queryRadialSize", "" + (5.0 * ALX.ARCMIN));
+        setDefaultPreference("query.queryRadialSize", Double.toString(5.0d * ALX.ARCMIN));
         setDefaultPreference("query.queryAutoRadius", "true");
 
         setDefaultPreference("query.scienceObjectDetectionDistance",
-                "" + (1 * ALX.ARCSEC_IN_DEGREES));
+                Double.toString(1d * ALX.ARCSEC_IN_DEGREES));
         setDefaultPreference("query.queryMinMagnitudeDelta", "-2.0");
         setDefaultPreference("query.queryMaxMagnitudeDelta", "2.0");
     }
@@ -621,7 +624,7 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
 
         String preferencePath = "query.scienceObjectDetectionDistance";
         String previousValue = getPreference(preferencePath);
-        String newValue = "" + (1 * ALX.ARCSEC_IN_DEGREES);
+        String newValue = Double.toString(1d * ALX.ARCSEC_IN_DEGREES);
         _logger.finer("Replaced '" + previousValue + "' with '" + newValue
                 + "' in '" + preferencePath + "'.");
 
