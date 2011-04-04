@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: MainWindow.java,v 1.34 2011-04-01 14:16:09 mella Exp $"
+ * "@(#) $Id: MainWindow.java,v 1.35 2011-04-04 14:00:08 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.34  2011/04/01 14:16:09  mella
+ * Fix ticket #106 related to delay sometimes occuring on os with broken printing system
+ *
  * Revision 1.33  2010/10/10 22:45:04  lafrasse
  * Code reformating.
  *
@@ -119,17 +122,27 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.util.*;
+import fr.jmmc.mcs.gui.App;
+import fr.jmmc.mcs.gui.HelpView;
+import fr.jmmc.mcs.gui.StatusBar;
+import fr.jmmc.mcs.util.RegisteredAction;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.print.*;
 
-import java.util.logging.*;
+import java.awt.print.Book;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
-import javax.swing.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.JSplitPane;
 
 /**
  * Main window. This class is at one central point and play the mediator role.
@@ -143,28 +156,24 @@ public class MainWindow extends JFrame {
             "fr.jmmc.scalib.sclgui.MainWindow");
     /** Main panel container, displaying the query and result views */
     private Container _mainPane = null;
-    /** Main window menu */
-    private MainMenuBar _menuBar = null;
     /** Virtual Observatory */
-    public VirtualObservatory _vo = null;
+    private final VirtualObservatory _vo;
     /** Query view */
-    public QueryView _queryView = null;
+    private final QueryView _queryView;
     /** Calibrators view */
-    public CalibratorsView _calibratorsView = null;
+    public final CalibratorsView _calibratorsView;
     /** Filters view */
-    public FiltersView _filtersView = null;
+    public final FiltersView _filtersView;
     /** Status bar */
-    private StatusBar _statusBar = null;
+    private final StatusBar _statusBar;
     /** Preferences view */
-    private PreferencesView _preferencesView = null;
-    /** Help view */
-    private HelpView _helpView = null;
+    private final PreferencesView _preferencesView;
     /** Preferences... action */
-    public ShowPreferencesAction _showPreferencesAction = null;
+    public final ShowPreferencesAction _showPreferencesAction;
     /** Page Setup... action */
-    public PageSetupAction _pageSetupAction = null;
+    public final PageSetupAction _pageSetupAction;
     /** Print... action */
-    public PrintAction _printAction = null;
+    public final PrintAction _printAction;
     /** Printer job */
     private PrinterJob _printJob = null;
     /** PAge format */
@@ -173,12 +182,12 @@ public class MainWindow extends JFrame {
     /**
      * Constructor.
      */
-    public MainWindow(VirtualObservatory vo, QueryView queryView,
-            CalibratorsView calibratorsView, PreferencesView preferencesView,
-            FiltersView filtersView, StatusBar statusBar) {
+    public MainWindow(final VirtualObservatory vo, final QueryView queryView,
+            final CalibratorsView calibratorsView, final PreferencesView preferencesView,
+            final FiltersView filtersView, final StatusBar statusBar) {
         super("SearchCal");
 
-        String classPath = getClass().getName();
+        final String classPath = getClass().getName();
 
         _vo = vo;
         _queryView = queryView;
@@ -186,7 +195,7 @@ public class MainWindow extends JFrame {
         _filtersView = filtersView;
         _statusBar = statusBar;
 
-        _helpView = new HelpView();
+        new HelpView();
 
         // Preferences
         _preferencesView = preferencesView;
@@ -240,7 +249,7 @@ public class MainWindow extends JFrame {
             // Show the user the app is ready to be used
             StatusBar.show("application ready.");
         } catch (Exception e) {
-            e.printStackTrace();
+            _logger.log(Level.SEVERE, "Main window failure : ", e);
         }
 
         // Properly quit the application when main window close button is clicked
@@ -343,8 +352,8 @@ public class MainWindow extends JFrame {
             if (_printJob.printDialog()) {
                 try {
                     _printJob.print();
-                } catch (PrinterException ex) {
-                    ex.printStackTrace();
+                } catch (PrinterException pe) {
+                    _logger.log(Level.SEVERE, "print failure : ", pe);
                 }
             }
         }
