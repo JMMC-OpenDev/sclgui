@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.35 2011-02-23 14:03:34 mella Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.36 2011-04-04 13:59:47 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2011/02/23 14:03:34  mella
+ * Remove unused import
+ *
  * Revision 1.34  2011/01/24 11:26:34  lafrasse
  * Fixed crash while SAMP exporting an empty list.
  * Added SAMP export enabling and renaming.
@@ -126,6 +129,7 @@ import cds.savot.model.*;
 import cds.savot.pull.*;
 
 import cds.savot.writer.*;
+import fr.jmmc.mcs.util.FileUtils;
 
 import java.io.*;
 
@@ -360,21 +364,24 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @param reader BufferedReader used to read the voTable.
      */
-    public void parseVOTable(BufferedReader reader) throws Exception {
+    public void parseVOTable(final BufferedReader reader) throws Exception {
         _logger.entering("CalibratorsModel", "parseVOTable");
 
         try {
-            StringBuilder sb = new StringBuilder();
+            // 32K buffer at least:
+            final StringBuilder sb = new StringBuilder(32 * 1024);
             String str;
 
             while ((str = reader.readLine()) != null) {
                 sb.append(str);
             }
 
-            reader.close();
             parseVOTable(sb.toString());
+
         } catch (Exception e) {
             throw e;
+        } finally {
+            FileUtils.closeFile(reader);
         }
     }
 
@@ -758,16 +765,16 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @param file the file to be read.
      */
-    public void openFile(File file) throws Exception {
+    public void openFile(final File file) throws Exception {
         _logger.entering("CalibratorsModel", "openFile");
 
         try {
             // Get a BufferedReader from file
-            FileReader fileReader = new FileReader(file);
-            BufferedReader in = new BufferedReader(fileReader);
+            final BufferedReader fileReader = new BufferedReader(new FileReader(file));
 
             // Build CalibratorModel and parse votable
-            parseVOTable(in);
+            parseVOTable(fileReader);
+            
         } catch (Exception e) {
             throw e;
         }
