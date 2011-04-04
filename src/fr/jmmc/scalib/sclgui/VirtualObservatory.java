@@ -1,11 +1,18 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.54 2011-04-01 14:53:10 bourgesl Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.55 2011-04-04 14:00:38 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.54  2011/04/01 14:53:10  bourgesl
+ * main refactoring:
+ * - abort requests when user clicks 'Cancel' or an exception occurs
+ * - disable request cancelSession(id) because it crashes the scl server
+ * - exception handling in query threads (only first exception is reported to the user)
+ * - use SearchCalServerClient to configure properly Axis (timeouts ...)
+ *
  * Revision 1.53  2011/03/18 16:21:22  bourgesl
  * fixed Swing EDT violations in thread handling
  *
@@ -383,7 +390,7 @@ public final class VirtualObservatory extends Observable {
     }
     };
     } catch (Exception ex) {
-    ex.printStackTrace();
+        _logger.log(Level.SEVERE, "failure : ", e);
     }
      */
     // WebService related members
