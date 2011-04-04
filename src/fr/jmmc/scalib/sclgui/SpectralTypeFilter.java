@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.18 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.19 2011-04-04 16:14:43 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.18  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.17  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -133,14 +136,14 @@ public class SpectralTypeFilter extends Filter {
                 _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
 
                 // Get back the spectral types found in the given spectral type
-                Vector foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
+                List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
                 _logger.fine("foundSpectralTypes = '" + foundSpectralTypes
                         + "'.");
 
                 // For each spectral type found
                 for (int i = 0; i < foundSpectralTypes.size(); i++) {
                     // Get the spectral type check box boolean state
-                    String spectralTypeName = (String) foundSpectralTypes.elementAt(i);
+                    String spectralTypeName = foundSpectralTypes.get(i);
                     Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
                     _logger.fine("spectralTypeName = '" + spectralTypeName
