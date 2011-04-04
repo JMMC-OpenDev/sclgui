@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LuminosityFilter.java,v 1.15 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: LuminosityFilter.java,v 1.16 2011-04-04 16:14:43 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.14  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -158,12 +161,12 @@ public class LuminosityFilter extends Filter {
                 String rawSpectralType = cell.getStringValue();
 
                 // Get back the luminosity classes found in the given spectral type
-                Vector luminosityClasses = ALX.luminosityClasses(rawSpectralType);
+                final List<String> luminosityClasses = ALX.luminosityClasses(rawSpectralType);
 
                 // For each found luminosity class
                 for (int i = 0; i < luminosityClasses.size(); i++) {
                     // Get the luminosity class check box boolean state
-                    String luminosityClassName = (String) luminosityClasses.elementAt(i);
+                    String luminosityClassName = luminosityClasses.get(i);
                     Boolean luminosityClassState = (Boolean) getConstraintByName(luminosityClassName);
 
                     // If the current luminosity class must be kept
