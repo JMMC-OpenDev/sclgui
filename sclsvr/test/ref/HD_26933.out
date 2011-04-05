@@ -135,6 +135,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.254
 sclsvrServer - alx - Corrected magnitude[4] = 11.378
 sclsvrServer - alx - Corrected magnitude[5] = 11.343
 sclsvrServer - alx - Corrected magnitude[6] = 11.325
+sclsvrServer - alx - Original spectral type = 'Oe'.
 sclsvrServer - err - errAddInStack(alx, 7)
 sclsvrServer - sclsvr - star HD 269333 - spectral type 'Oe' is unknown; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 11.190
@@ -174,6 +175,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 9.735
 sclsvrServer - alx - Corrected magnitude[4] = 10.545
 sclsvrServer - alx - Corrected magnitude[5] = 10.830
 sclsvrServer - alx - Corrected magnitude[6] = 10.977
+sclsvrServer - alx - Original spectral type = 'Oe'.
 sclsvrServer - err - errAddInStack(alx, 7)
 sclsvrServer - sclsvr - star HD 269333 - spectral type 'Oe' is unknown; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 11.182
@@ -233,7 +235,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.659
 sclsvrServer - alx - Corrected magnitude[4] = 11.632
 sclsvrServer - alx - Corrected magnitude[5] = 11.551
 sclsvrServer - alx - Corrected magnitude[6] = 11.598
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 16
 sclsvrServer - alx - Superior line = 17
 sclsvrServer - alx - 0.020000 < J-K (0.033781) < 0.060000
@@ -276,7 +278,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.140
 sclsvrServer - alx - Corrected magnitude[4] = 10.800
 sclsvrServer - alx - Corrected magnitude[5] = 11.039
 sclsvrServer - alx - Corrected magnitude[6] = 11.250
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 20)
 sclsvrServer - sclsvr - star TYC1 9162 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 11.752
@@ -312,7 +314,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.955
 sclsvrServer - alx - Corrected magnitude[4] = 12.000
 sclsvrServer - alx - Corrected magnitude[5] = 11.946
 sclsvrServer - alx - Corrected magnitude[6] = 11.936
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 17
 sclsvrServer - alx - Superior line = 18
 sclsvrServer - alx - 0.060000 < J-K (0.064085) < 0.080000
@@ -355,7 +357,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.436
 sclsvrServer - alx - Corrected magnitude[4] = 11.168
 sclsvrServer - alx - Corrected magnitude[5] = 11.433
 sclsvrServer - alx - Corrected magnitude[6] = 11.588
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 20)
 sclsvrServer - sclsvr - star TYC1 9162 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 12.022
@@ -391,7 +393,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.369
 sclsvrServer - alx - Corrected magnitude[4] = 11.024
 sclsvrServer - alx - Corrected magnitude[5] = 10.723
 sclsvrServer - alx - Corrected magnitude[6] = 10.710
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 24
 sclsvrServer - alx - Superior line = 25
 sclsvrServer - alx - 0.310000 < J-K (0.314093) < 0.320000
@@ -434,7 +436,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 9.850
 sclsvrServer - alx - Corrected magnitude[4] = 10.192
 sclsvrServer - alx - Corrected magnitude[5] = 10.210
 sclsvrServer - alx - Corrected magnitude[6] = 10.362
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 20)
 sclsvrServer - sclsvr - star TYC1 9162 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 12.462
@@ -470,11 +472,17 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.999
 sclsvrServer - alx - Corrected magnitude[4] = 10.638
 sclsvrServer - alx - Corrected magnitude[5] = 10.326
 sclsvrServer - alx - Corrected magnitude[6] = 10.314
-sclsvrServer - alx - Type spectral = G5
-sclsvrServer - alx - 	Code              = G
-sclsvrServer - alx - 	Sub-type Quantity = 5.000000
-sclsvrServer - alx - 	Light class       = 
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Original spectral type = 'G5'.
+sclsvrServer - alx - Final spectral type = 'G5'.
+sclsvrServer - alx -  - Code                = 'G'.
+sclsvrServer - alx -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer - alx -  - Luminosity Class    = ''.
+sclsvrServer - alx -  - Is Double           = 'NO'.
+sclsvrServer - alx -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx -  - Has Cyanogen        = 'NO'.
+sclsvrServer - alx -  - Has Barium          = 'NO'.
+sclsvrServer - alx -  - Is Variable         = 'NO'.
+sclsvrServer - alx - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - alx - Inferior line = 28
 sclsvrServer - alx - Superior line = 29
 sclsvrServer - alx - 0.360000 < J-K (0.323563) < 0.380000
@@ -517,11 +525,17 @@ sclsvrServer - alx - Corrected magnitude[3] = 9.480
 sclsvrServer - alx - Corrected magnitude[4] = 9.805
 sclsvrServer - alx - Corrected magnitude[5] = 9.813
 sclsvrServer - alx - Corrected magnitude[6] = 9.966
-sclsvrServer - alx - Type spectral = G5
-sclsvrServer - alx - 	Code              = G
-sclsvrServer - alx - 	Sub-type Quantity = 5.000000
-sclsvrServer - alx - 	Light class       = 
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Original spectral type = 'G5'.
+sclsvrServer - alx - Final spectral type = 'G5'.
+sclsvrServer - alx -  - Code                = 'G'.
+sclsvrServer - alx -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer - alx -  - Luminosity Class    = ''.
+sclsvrServer - alx -  - Is Double           = 'NO'.
+sclsvrServer - alx -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx -  - Has Cyanogen        = 'NO'.
+sclsvrServer - alx -  - Has Barium          = 'NO'.
+sclsvrServer - alx -  - Is Variable         = 'NO'.
+sclsvrServer - alx - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - alx - Inferior line = 28
 sclsvrServer - alx - Superior line = 29
 sclsvrServer - alx - 0.360000 < J-K (-0.160308) < 0.380000
@@ -591,7 +605,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.741
 sclsvrServer - alx - Corrected magnitude[4] = 12.381
 sclsvrServer - alx - Corrected magnitude[5] = 11.486
 sclsvrServer - alx - Corrected magnitude[6] = 11.221
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05181715-6915475 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.810
@@ -624,7 +638,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.691
 sclsvrServer - alx - Corrected magnitude[4] = 12.198
 sclsvrServer - alx - Corrected magnitude[5] = 11.309
 sclsvrServer - alx - Corrected magnitude[6] = 11.038
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05190849-6913154 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 25.370
@@ -657,7 +671,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.805
 sclsvrServer - alx - Corrected magnitude[4] = 11.711
 sclsvrServer - alx - Corrected magnitude[5] = 10.926
 sclsvrServer - alx - Corrected magnitude[6] = 10.743
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (0.967523) < 1.140000
@@ -701,7 +715,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.491
 sclsvrServer - alx - Corrected magnitude[4] = 12.128
 sclsvrServer - alx - Corrected magnitude[5] = 11.808
 sclsvrServer - alx - Corrected magnitude[6] = 11.778
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 27
 sclsvrServer - alx - Superior line = 28
 sclsvrServer - alx - 0.340000 < J-K (0.350079) < 0.360000
@@ -742,7 +756,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.972
 sclsvrServer - alx - Corrected magnitude[4] = 11.296
 sclsvrServer - alx - Corrected magnitude[5] = 11.295
 sclsvrServer - alx - Corrected magnitude[6] = 11.430
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 20)
 sclsvrServer - sclsvr - star 2MASS 05172696-6913585 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.142
@@ -775,7 +789,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.484
 sclsvrServer - alx - Corrected magnitude[4] = 12.048
 sclsvrServer - alx - Corrected magnitude[5] = 11.705
 sclsvrServer - alx - Corrected magnitude[6] = 11.711
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 26
 sclsvrServer - alx - Superior line = 27
 sclsvrServer - alx - 0.330000 < J-K (0.336821) < 0.340000
@@ -816,7 +830,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.965
 sclsvrServer - alx - Corrected magnitude[4] = 11.216
 sclsvrServer - alx - Corrected magnitude[5] = 11.193
 sclsvrServer - alx - Corrected magnitude[6] = 11.363
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 20)
 sclsvrServer - sclsvr - star 2MASS 05172048-6910184 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 16.082
@@ -869,7 +883,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.667
 sclsvrServer - alx - Corrected magnitude[4] = 12.221
 sclsvrServer - alx - Corrected magnitude[5] = 11.413
 sclsvrServer - alx - Corrected magnitude[6] = 11.119
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.101997) < 1.140000
@@ -913,7 +927,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.144
 sclsvrServer - alx - Corrected magnitude[4] = 12.606
 sclsvrServer - alx - Corrected magnitude[5] = 11.665
 sclsvrServer - alx - Corrected magnitude[6] = 11.359
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05182056-6917531 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 19.090
@@ -946,7 +960,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.217
 sclsvrServer - alx - Corrected magnitude[4] = 13.030
 sclsvrServer - alx - Corrected magnitude[5] = 12.130
 sclsvrServer - alx - Corrected magnitude[6] = 11.941
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.088739) < 1.140000
@@ -990,7 +1004,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.348
 sclsvrServer - alx - Corrected magnitude[4] = 12.347
 sclsvrServer - alx - Corrected magnitude[5] = 11.614
 sclsvrServer - alx - Corrected magnitude[6] = 11.519
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 38
 sclsvrServer - alx - Superior line = 39
 sclsvrServer - alx - 0.720000 < J-K (0.828314) < 0.850000
@@ -1034,7 +1048,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.787
 sclsvrServer - alx - Corrected magnitude[4] = 11.325
 sclsvrServer - alx - Corrected magnitude[5] = 10.994
 sclsvrServer - alx - Corrected magnitude[6] = 10.921
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 30
 sclsvrServer - alx - Superior line = 31
 sclsvrServer - alx - 0.400000 < J-K (0.404058) < 0.450000
@@ -1075,7 +1089,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.268
 sclsvrServer - alx - Corrected magnitude[4] = 10.493
 sclsvrServer - alx - Corrected magnitude[5] = 10.481
 sclsvrServer - alx - Corrected magnitude[6] = 10.573
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 6
 sclsvrServer - alx - Superior line = 7
 sclsvrServer - alx - -0.080000 < J-K (-0.079813) < -0.070000
@@ -1128,7 +1142,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.945
 sclsvrServer - alx - Corrected magnitude[4] = 12.458
 sclsvrServer - alx - Corrected magnitude[5] = 11.538
 sclsvrServer - alx - Corrected magnitude[6] = 11.330
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.127566) < 1.140000
@@ -1172,7 +1186,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.689
 sclsvrServer - alx - Corrected magnitude[4] = 12.227
 sclsvrServer - alx - Corrected magnitude[5] = 11.282
 sclsvrServer - alx - Corrected magnitude[6] = 11.052
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05190990-6916464 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.120
@@ -1205,7 +1219,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.530
 sclsvrServer - alx - Corrected magnitude[4] = 11.407
 sclsvrServer - alx - Corrected magnitude[5] = 10.592
 sclsvrServer - alx - Corrected magnitude[6] = 10.405
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.001615) < 1.140000
@@ -1249,7 +1263,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.174
 sclsvrServer - alx - Corrected magnitude[4] = 12.906
 sclsvrServer - alx - Corrected magnitude[5] = 12.026
 sclsvrServer - alx - Corrected magnitude[6] = 11.817
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.088739) < 1.140000
@@ -1293,7 +1307,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.258
 sclsvrServer - alx - Corrected magnitude[4] = 12.964
 sclsvrServer - alx - Corrected magnitude[5] = 12.052
 sclsvrServer - alx - Corrected magnitude[6] = 11.856
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.107679) < 1.140000
@@ -1337,7 +1351,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.118
 sclsvrServer - alx - Corrected magnitude[4] = 12.094
 sclsvrServer - alx - Corrected magnitude[5] = 11.440
 sclsvrServer - alx - Corrected magnitude[6] = 11.303
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 38
 sclsvrServer - alx - Superior line = 39
 sclsvrServer - alx - 0.720000 < J-K (0.791381) < 0.850000
@@ -1381,7 +1395,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.873
 sclsvrServer - alx - Corrected magnitude[4] = 12.391
 sclsvrServer - alx - Corrected magnitude[5] = 11.475
 sclsvrServer - alx - Corrected magnitude[6] = 11.207
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05175728-6919097 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.630
@@ -1414,7 +1428,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.454
 sclsvrServer - alx - Corrected magnitude[4] = 13.095
 sclsvrServer - alx - Corrected magnitude[5] = 12.202
 sclsvrServer - alx - Corrected magnitude[6] = 11.977
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.118096) < 1.140000
@@ -1458,7 +1472,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 15.304
 sclsvrServer - alx - Corrected magnitude[4] = 12.383
 sclsvrServer - alx - Corrected magnitude[5] = 11.426
 sclsvrServer - alx - Corrected magnitude[6] = 11.174
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05181648-6919375 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.570
@@ -1491,7 +1505,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.199
 sclsvrServer - alx - Corrected magnitude[4] = 12.129
 sclsvrServer - alx - Corrected magnitude[5] = 11.227
 sclsvrServer - alx - Corrected magnitude[6] = 10.918
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05171274-6917056 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.310
@@ -1524,7 +1538,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.181
 sclsvrServer - alx - Corrected magnitude[4] = 12.945
 sclsvrServer - alx - Corrected magnitude[5] = 12.077
 sclsvrServer - alx - Corrected magnitude[6] = 11.910
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.034760) < 1.140000
@@ -1568,7 +1582,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.712
 sclsvrServer - alx - Corrected magnitude[4] = 12.658
 sclsvrServer - alx - Corrected magnitude[5] = 11.933
 sclsvrServer - alx - Corrected magnitude[6] = 11.776
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 44
 sclsvrServer - alx - Superior line = 45
 sclsvrServer - alx - 0.880000 < J-K (0.882293) < 0.890000
@@ -1612,7 +1626,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.465
 sclsvrServer - alx - Corrected magnitude[4] = 12.284
 sclsvrServer - alx - Corrected magnitude[5] = 11.419
 sclsvrServer - alx - Corrected magnitude[6] = 11.228
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.055594) < 1.140000
@@ -1656,7 +1670,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.059
 sclsvrServer - alx - Corrected magnitude[4] = 12.330
 sclsvrServer - alx - Corrected magnitude[5] = 11.067
 sclsvrServer - alx - Corrected magnitude[6] = 10.373
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05165031-6913484 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 15.800
@@ -1689,7 +1703,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.098
 sclsvrServer - alx - Corrected magnitude[4] = 12.477
 sclsvrServer - alx - Corrected magnitude[5] = 11.498
 sclsvrServer - alx - Corrected magnitude[6] = 11.130
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05175013-6919293 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.360
@@ -1722,7 +1736,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.375
 sclsvrServer - alx - Corrected magnitude[4] = 12.932
 sclsvrServer - alx - Corrected magnitude[5] = 12.035
 sclsvrServer - alx - Corrected magnitude[6] = 11.743
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05164747-6910143 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 17.590
@@ -1755,7 +1769,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.302
 sclsvrServer - alx - Corrected magnitude[4] = 12.787
 sclsvrServer - alx - Corrected magnitude[5] = 11.848
 sclsvrServer - alx - Corrected magnitude[6] = 11.577
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05165098-6914542 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 27.000
@@ -1788,7 +1802,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.704
 sclsvrServer - alx - Corrected magnitude[4] = 13.095
 sclsvrServer - alx - Corrected magnitude[5] = 12.112
 sclsvrServer - alx - Corrected magnitude[6] = 11.820
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05170242-6916478 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 26.770
@@ -1821,7 +1835,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.022
 sclsvrServer - alx - Corrected magnitude[4] = 12.447
 sclsvrServer - alx - Corrected magnitude[5] = 11.474
 sclsvrServer - alx - Corrected magnitude[6] = 11.076
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05195056-6914374 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.080
@@ -1854,7 +1868,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.045
 sclsvrServer - alx - Corrected magnitude[4] = 11.734
 sclsvrServer - alx - Corrected magnitude[5] = 10.895
 sclsvrServer - alx - Corrected magnitude[6] = 10.696
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.037601) < 1.140000
@@ -1917,7 +1931,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 15.633
 sclsvrServer - alx - Corrected magnitude[4] = 12.970
 sclsvrServer - alx - Corrected magnitude[5] = 11.438
 sclsvrServer - alx - Corrected magnitude[6] = 10.193
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05174795-6920010 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.280
@@ -1950,7 +1964,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.682
 sclsvrServer - alx - Corrected magnitude[4] = 11.347
 sclsvrServer - alx - Corrected magnitude[5] = 10.702
 sclsvrServer - alx - Corrected magnitude[6] = 10.532
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 38
 sclsvrServer - alx - Superior line = 39
 sclsvrServer - alx - 0.720000 < J-K (0.815056) < 0.850000
@@ -1991,7 +2005,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.163
 sclsvrServer - alx - Corrected magnitude[4] = 10.515
 sclsvrServer - alx - Corrected magnitude[5] = 10.189
 sclsvrServer - alx - Corrected magnitude[6] = 10.184
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 26
 sclsvrServer - alx - Superior line = 27
 sclsvrServer - alx - 0.330000 < J-K (0.331185) < 0.340000
@@ -2044,7 +2058,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.989
 sclsvrServer - alx - Corrected magnitude[4] = 12.431
 sclsvrServer - alx - Corrected magnitude[5] = 11.556
 sclsvrServer - alx - Corrected magnitude[6] = 11.284
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05195949-6912353 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 25.260
@@ -2077,7 +2091,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.235
 sclsvrServer - alx - Corrected magnitude[4] = 12.382
 sclsvrServer - alx - Corrected magnitude[5] = 11.474
 sclsvrServer - alx - Corrected magnitude[6] = 11.170
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05172166-6919076 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 17.880
@@ -2110,7 +2124,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.979
 sclsvrServer - alx - Corrected magnitude[4] = 11.666
 sclsvrServer - alx - Corrected magnitude[5] = 10.770
 sclsvrServer - alx - Corrected magnitude[6] = 10.542
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.123778) < 1.140000
@@ -2154,7 +2168,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.628
 sclsvrServer - alx - Corrected magnitude[4] = 11.893
 sclsvrServer - alx - Corrected magnitude[5] = 10.898
 sclsvrServer - alx - Corrected magnitude[6] = 10.484
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05193913-6917357 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 19.600
@@ -2187,7 +2201,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.283
 sclsvrServer - alx - Corrected magnitude[4] = 12.951
 sclsvrServer - alx - Corrected magnitude[5] = 11.940
 sclsvrServer - alx - Corrected magnitude[6] = 11.511
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05170454-6918245 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 19.190
@@ -2220,7 +2234,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.231
 sclsvrServer - alx - Corrected magnitude[4] = 11.626
 sclsvrServer - alx - Corrected magnitude[5] = 10.741
 sclsvrServer - alx - Corrected magnitude[6] = 10.501
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.124725) < 1.140000
@@ -2264,7 +2278,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.267
 sclsvrServer - alx - Corrected magnitude[4] = 13.019
 sclsvrServer - alx - Corrected magnitude[5] = 12.199
 sclsvrServer - alx - Corrected magnitude[6] = 12.017
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.001615) < 1.140000
@@ -2308,7 +2322,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.241
 sclsvrServer - alx - Corrected magnitude[4] = 12.796
 sclsvrServer - alx - Corrected magnitude[5] = 11.890
 sclsvrServer - alx - Corrected magnitude[6] = 11.666
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.130407) < 1.140000
@@ -2352,7 +2366,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.803
 sclsvrServer - alx - Corrected magnitude[4] = 12.202
 sclsvrServer - alx - Corrected magnitude[5] = 11.127
 sclsvrServer - alx - Corrected magnitude[6] = 10.628
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05163439-6908577 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 15.730
@@ -2385,7 +2399,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.110
 sclsvrServer - alx - Corrected magnitude[4] = 12.701
 sclsvrServer - alx - Corrected magnitude[5] = 11.724
 sclsvrServer - alx - Corrected magnitude[6] = 11.528
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05194085-6918172 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 16.500
@@ -2418,7 +2432,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 16.431
 sclsvrServer - alx - Corrected magnitude[4] = 12.393
 sclsvrServer - alx - Corrected magnitude[5] = 11.228
 sclsvrServer - alx - Corrected magnitude[6] = 10.567
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05183147-6921269 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.390
@@ -2472,7 +2486,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.638
 sclsvrServer - alx - Corrected magnitude[4] = 11.791
 sclsvrServer - alx - Corrected magnitude[5] = 11.214
 sclsvrServer - alx - Corrected magnitude[6] = 11.129
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 37
 sclsvrServer - alx - Superior line = 38
 sclsvrServer - alx - 0.660000 < J-K (0.661642) < 0.720000
@@ -2516,7 +2530,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.713
 sclsvrServer - alx - Corrected magnitude[4] = 12.007
 sclsvrServer - alx - Corrected magnitude[5] = 10.993
 sclsvrServer - alx - Corrected magnitude[6] = 10.574
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05200621-6915012 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 29.080
@@ -2549,7 +2563,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 15.385
 sclsvrServer - alx - Corrected magnitude[4] = 12.353
 sclsvrServer - alx - Corrected magnitude[5] = 11.442
 sclsvrServer - alx - Corrected magnitude[6] = 11.184
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05184789-6921303 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 19.050
@@ -2582,7 +2596,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.150
 sclsvrServer - alx - Corrected magnitude[4] = 12.656
 sclsvrServer - alx - Corrected magnitude[5] = 11.756
 sclsvrServer - alx - Corrected magnitude[6] = 11.482
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05173272-6921005 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.610
@@ -2615,7 +2629,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.788
 sclsvrServer - alx - Corrected magnitude[4] = 11.972
 sclsvrServer - alx - Corrected magnitude[5] = 11.071
 sclsvrServer - alx - Corrected magnitude[6] = 10.772
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05162443-6912052 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 17.380
@@ -2648,7 +2662,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.580
 sclsvrServer - alx - Corrected magnitude[4] = 12.510
 sclsvrServer - alx - Corrected magnitude[5] = 11.764
 sclsvrServer - alx - Corrected magnitude[6] = 11.627
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 44
 sclsvrServer - alx - Superior line = 45
 sclsvrServer - alx - 0.880000 < J-K (0.883240) < 0.890000
@@ -2692,7 +2706,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.300
 sclsvrServer - alx - Corrected magnitude[4] = 11.535
 sclsvrServer - alx - Corrected magnitude[5] = 11.030
 sclsvrServer - alx - Corrected magnitude[6] = 10.931
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 35
 sclsvrServer - alx - Superior line = 36
 sclsvrServer - alx - 0.580000 < J-K (0.603875) < 0.620000
@@ -2733,7 +2747,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.781
 sclsvrServer - alx - Corrected magnitude[4] = 10.703
 sclsvrServer - alx - Corrected magnitude[5] = 10.517
 sclsvrServer - alx - Corrected magnitude[6] = 10.583
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 20
 sclsvrServer - alx - Superior line = 21
 sclsvrServer - alx - 0.120000 < J-K (0.120004) < 0.150000
@@ -2786,7 +2800,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.128
 sclsvrServer - alx - Corrected magnitude[4] = 11.824
 sclsvrServer - alx - Corrected magnitude[5] = 10.897
 sclsvrServer - alx - Corrected magnitude[6] = 10.642
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05193287-6919483 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 19.040
@@ -2818,7 +2832,7 @@ sclsvrServer - alx - Corrected magnitude[2] = 14.790
 sclsvrServer - alx - Corrected magnitude[4] = 14.846
 sclsvrServer - alx - Corrected magnitude[5] = 12.614
 sclsvrServer - alx - Corrected magnitude[6] = 10.844
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05170066-6919304 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.450
@@ -2845,7 +2859,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.295
 sclsvrServer - alx - Corrected magnitude[4] = 11.733
 sclsvrServer - alx - Corrected magnitude[5] = 10.868
 sclsvrServer - alx - Corrected magnitude[6] = 10.590
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05181758-6922168 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 17.910
@@ -2878,7 +2892,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.733
 sclsvrServer - alx - Corrected magnitude[4] = 12.071
 sclsvrServer - alx - Corrected magnitude[5] = 11.159
 sclsvrServer - alx - Corrected magnitude[6] = 10.847
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05175247-6922076 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.740
@@ -2911,7 +2925,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.921
 sclsvrServer - alx - Corrected magnitude[4] = 12.344
 sclsvrServer - alx - Corrected magnitude[5] = 11.358
 sclsvrServer - alx - Corrected magnitude[6] = 10.984
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05201964-6912582 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 25.770
@@ -2944,7 +2958,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.133
 sclsvrServer - alx - Corrected magnitude[4] = 12.777
 sclsvrServer - alx - Corrected magnitude[5] = 11.894
 sclsvrServer - alx - Corrected magnitude[6] = 11.620
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05162736-6907332 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 16.570
@@ -2997,7 +3011,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.286
 sclsvrServer - alx - Corrected magnitude[4] = 12.860
 sclsvrServer - alx - Corrected magnitude[5] = 12.004
 sclsvrServer - alx - Corrected magnitude[6] = 11.745
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.115255) < 1.140000
@@ -3040,7 +3054,7 @@ sclsvrServer - alx - Corrected magnitude[2] = 11.920
 sclsvrServer - alx - Corrected magnitude[4] = 12.230
 sclsvrServer - alx - Corrected magnitude[5] = 11.313
 sclsvrServer - alx - Corrected magnitude[6] = 11.007
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05171481-6921039 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 20.700
@@ -3088,7 +3102,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.735
 sclsvrServer - alx - Corrected magnitude[4] = 12.131
 sclsvrServer - alx - Corrected magnitude[5] = 11.233
 sclsvrServer - alx - Corrected magnitude[6] = 10.956
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05202311-6910462 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 16.300
@@ -3121,7 +3135,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.239
 sclsvrServer - alx - Corrected magnitude[4] = 12.700
 sclsvrServer - alx - Corrected magnitude[5] = 11.820
 sclsvrServer - alx - Corrected magnitude[6] = 11.566
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.134195) < 1.140000
@@ -3165,7 +3179,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.934
 sclsvrServer - alx - Corrected magnitude[4] = 12.434
 sclsvrServer - alx - Corrected magnitude[5] = 11.500
 sclsvrServer - alx - Corrected magnitude[6] = 11.284
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05200032-6918379 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 26.010
@@ -3198,7 +3212,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.756
 sclsvrServer - alx - Corrected magnitude[4] = 12.202
 sclsvrServer - alx - Corrected magnitude[5] = 11.148
 sclsvrServer - alx - Corrected magnitude[6] = 10.688
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05202037-6915200 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 25.590
@@ -3231,7 +3245,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.154
 sclsvrServer - alx - Corrected magnitude[4] = 12.675
 sclsvrServer - alx - Corrected magnitude[5] = 11.787
 sclsvrServer - alx - Corrected magnitude[6] = 11.513
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05202632-6913121 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 29.600
@@ -3264,7 +3278,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 11.632
 sclsvrServer - alx - Corrected magnitude[4] = 11.201
 sclsvrServer - alx - Corrected magnitude[5] = 10.766
 sclsvrServer - alx - Corrected magnitude[6] = 10.741
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 31
 sclsvrServer - alx - Superior line = 32
 sclsvrServer - alx - 0.450000 < J-K (0.459931) < 0.490000
@@ -3305,7 +3319,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.113
 sclsvrServer - alx - Corrected magnitude[4] = 10.369
 sclsvrServer - alx - Corrected magnitude[5] = 10.253
 sclsvrServer - alx - Corrected magnitude[6] = 10.393
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 11
 sclsvrServer - alx - Superior line = 12
 sclsvrServer - alx - -0.040000 < J-K (-0.023940) < -0.020000
@@ -3349,7 +3363,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.357
 sclsvrServer - alx - Corrected magnitude[4] = 12.732
 sclsvrServer - alx - Corrected magnitude[5] = 11.808
 sclsvrServer - alx - Corrected magnitude[6] = 11.504
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05182343-6923187 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.300
@@ -3382,7 +3396,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.873
 sclsvrServer - alx - Corrected magnitude[4] = 12.171
 sclsvrServer - alx - Corrected magnitude[5] = 11.154
 sclsvrServer - alx - Corrected magnitude[6] = 10.772
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05202774-6914100 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 26.520
@@ -3415,7 +3429,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.771
 sclsvrServer - alx - Corrected magnitude[4] = 13.839
 sclsvrServer - alx - Corrected magnitude[5] = 12.436
 sclsvrServer - alx - Corrected magnitude[6] = 11.296
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05164521-6919521 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 29.580
@@ -3448,7 +3462,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.766
 sclsvrServer - alx - Corrected magnitude[4] = 12.294
 sclsvrServer - alx - Corrected magnitude[5] = 11.395
 sclsvrServer - alx - Corrected magnitude[6] = 11.149
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05182492-6859585 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 18.800
@@ -3501,7 +3515,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.155
 sclsvrServer - alx - Corrected magnitude[4] = 11.701
 sclsvrServer - alx - Corrected magnitude[5] = 10.602
 sclsvrServer - alx - Corrected magnitude[6] = 10.056
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05160749-6910348 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 17.160
@@ -3534,7 +3548,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 12.511
 sclsvrServer - alx - Corrected magnitude[4] = 12.041
 sclsvrServer - alx - Corrected magnitude[5] = 11.723
 sclsvrServer - alx - Corrected magnitude[6] = 11.712
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 25
 sclsvrServer - alx - Superior line = 26
 sclsvrServer - alx - 0.320000 < J-K (0.329245) < 0.330000
@@ -3575,7 +3589,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 10.992
 sclsvrServer - alx - Corrected magnitude[4] = 11.209
 sclsvrServer - alx - Corrected magnitude[5] = 11.210
 sclsvrServer - alx - Corrected magnitude[6] = 11.364
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 20)
 sclsvrServer - sclsvr - star 2MASS 05203061-6913167 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 11.972
@@ -3608,7 +3622,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.297
 sclsvrServer - alx - Corrected magnitude[4] = 12.861
 sclsvrServer - alx - Corrected magnitude[5] = 11.963
 sclsvrServer - alx - Corrected magnitude[6] = 11.720
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05202472-6915308 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 27.220
@@ -3641,7 +3655,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 14.368
 sclsvrServer - alx - Corrected magnitude[4] = 13.025
 sclsvrServer - alx - Corrected magnitude[5] = 12.138
 sclsvrServer - alx - Corrected magnitude[6] = 11.930
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.095368) < 1.140000
@@ -3685,7 +3699,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.417
 sclsvrServer - alx - Corrected magnitude[4] = 11.915
 sclsvrServer - alx - Corrected magnitude[5] = 10.973
 sclsvrServer - alx - Corrected magnitude[6] = 10.726
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - err - errAddInStack(alx, 18)
 sclsvrServer - sclsvr - star 2MASS 05201511-6917382 - J-K differential magnitude not found in color table; could not compute missing magnitudes
 sclsvrServer - alx - Corrected magnitude[B] = 16.920
@@ -3718,7 +3732,7 @@ sclsvrServer - alx - Corrected magnitude[3] = 13.857
 sclsvrServer - alx - Corrected magnitude[4] = 12.587
 sclsvrServer - alx - Corrected magnitude[5] = 11.682
 sclsvrServer - alx - Corrected magnitude[6] = 11.463
-sclsvrServer - alx - Type of star = DWARF
+sclsvrServer - alx - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer - alx - Inferior line = 46
 sclsvrServer - alx - Superior line = 47
 sclsvrServer - alx - 0.960000 < J-K (1.123778) < 1.140000
