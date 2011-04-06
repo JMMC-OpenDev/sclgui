@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: StarProperty.java,v 1.13 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: StarProperty.java,v 1.14 2011-04-06 15:33:28 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.12  2010/10/10 22:21:03  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -46,7 +49,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import java.net.URLEncoder;
+import fr.jmmc.mcs.util.Urls;
 
 import java.util.logging.*;
 
@@ -245,7 +248,7 @@ public final class StarProperty implements Comparable {
         }
 
         // Convert the current value to HTML compatible encoding
-        String encodedValue = URLEncoder.encode(getStringValue());
+        String encodedValue = Urls.encode(getStringValue());
 
         // Forge the URL by replacing any '${...}' token with the current value
         String url = _url.replaceAll("[${].+[}]", encodedValue);
