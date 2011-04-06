@@ -1,17 +1,21 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalServerClient.java,v 1.1 2011-04-01 14:49:46 bourgesl Exp $"
+ * "@(#) $Id: SearchCalServerClient.java,v 1.2 2011-04-06 15:34:15 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2011/04/01 14:49:46  bourgesl
+ * Axis client code (locator, stub) and its configuration in this class
+ *
  */
 package fr.jmmc.scalib.sclgui.ws;
 
 import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.util.NetworkSettings;
 import fr.jmmc.mcs.util.Preferences;
+import fr.jmmc.mcs.util.Urls;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;
@@ -168,11 +172,7 @@ public final class SearchCalServerClient {
     final SclwsLocator locator = getSclwsLocator();
 
     if (_sclwsURL == null) {
-      try {
-        _sclwsURL = new URL(locator.getsclwsAddress());
-      } catch (MalformedURLException mue) {
-        throw new IllegalStateException("invalid SearchCal service address : ", mue);
-      }
+      _sclwsURL = Urls.parseURL(locator.getsclwsAddress());
     }
 
     try {
