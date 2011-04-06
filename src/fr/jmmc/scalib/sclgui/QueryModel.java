@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.54 2011-04-01 14:50:07 bourgesl Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.55 2011-04-06 15:33:10 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.54  2011/04/01 14:50:07  bourgesl
+ * use StringBuilder to form the query
+ *
  * Revision 1.53  2011/02/15 15:36:32  lafrasse
  * Fixed a querying crash when science object magnitude is missing.
  *
@@ -250,8 +253,6 @@ public class QueryModel extends Star implements Observer {
     private double _instrumentalMaxBaseLine;
     /** The science object name */
     private String _scienceObjectName;
-    /** The science object detection distance */
-    private boolean _scienceObjectDetectionDistance;
     /** The query minimum magnitude */
     private double _queryMinMagnitude;
     /** The query minimum magnitude auto-update flag */
@@ -815,7 +816,8 @@ public class QueryModel extends Star implements Observer {
     /**
      * Change the right ascension parameter for the actual query.
      *
-     * @param ra the right ascension.
+     * @param rightAscension the right ascension.
+     * @throws IllegalArgumentException if RA text field is invalid
      */
     public void setScienceObjectRA(String rightAscension)
             throws IllegalArgumentException {
@@ -849,7 +851,8 @@ public class QueryModel extends Star implements Observer {
     /**
      * Change the declinaison parameter for the actual query.
      *
-     * @param dec the declinaison.
+     * @param declinaison the declinaison.
+     * @throws IllegalArgumentException if RA text field is invalid
      */
     public void setScienceObjectDEC(String declinaison)
             throws IllegalArgumentException {
