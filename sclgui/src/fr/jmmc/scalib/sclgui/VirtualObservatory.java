@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.55 2011-04-04 14:00:38 bourgesl Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.56 2011-04-07 14:59:15 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.55  2011/04/04 14:00:38  bourgesl
+ * avoid print stack trace
+ *
  * Revision 1.54  2011/04/01 14:53:10  bourgesl
  * main refactoring:
  * - abort requests when user clicks 'Cancel' or an exception occurs
@@ -975,8 +978,8 @@ public final class VirtualObservatory extends Observable {
         // Get the query from the GUI
         final String query = _queryModel.getQueryAsMCSString();
 
-        if (_logger.isLoggable(Level.FINE)) {
-          _logger.fine("Query = '" + query + "'.");
+        if (_logger.isLoggable(Level.INFO)) {
+          _logger.info("Query = '" + query + "'.");
         }
 
         // Launch the query in the background in order to keed GUI updated
