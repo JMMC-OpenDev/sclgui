@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: Preferences.java,v 1.50 2011-04-04 14:00:24 bourgesl Exp $"
+ * "@(#) $Id: Preferences.java,v 1.51 2011-04-07 13:48:41 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.50  2011/04/04 14:00:24  bourgesl
+ * avoid string concat
+ *
  * Revision 1.49  2010/10/10 22:45:02  lafrasse
  * Code reformating.
  *
@@ -439,12 +442,17 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
 
         // Get the preference current value
         String originalPreferenceValue = getPreference(preferencePath);
-        _logger.finest("Preference '" + preferencePath + "' contains : '"
+        
+        if (_logger.isLoggable(Level.FINEST)) {
+            _logger.finest("Preference '" + preferencePath + "' contains : '"
                 + originalPreferenceValue + "'.");
+        }
 
         // Search for the token and replace it
-        _logger.finer("Replacing '" + searchedToken + "' with '"
+        if (_logger.isLoggable(Level.FINER)) {
+            _logger.finer("Replacing '" + searchedToken + "' with '"
                 + replacingToken + "' in '" + preferencePath + "'.");
+        }
 
         String newPreferenceValue = originalPreferenceValue.replaceAll(searchedToken,
                 replacingToken);
@@ -452,8 +460,11 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
         // Store updated preference value
         try {
             setPreference(preferencePath, newPreferenceValue);
-            _logger.finest("Preference '" + preferencePath + "' contains : '"
+
+            if (_logger.isLoggable(Level.FINEST)) {
+                _logger.finest("Preference '" + preferencePath + "' contains : '"
                     + getPreference(preferencePath) + "'.");
+            }
         } catch (Exception ex) {
             _logger.log(Level.WARNING,
                     "Could not store '" + preferencePath + "' preference:", ex);
@@ -625,8 +636,11 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
         String preferencePath = "query.scienceObjectDetectionDistance";
         String previousValue = getPreference(preferencePath);
         String newValue = Double.toString(1d * ALX.ARCSEC_IN_DEGREES);
-        _logger.finer("Replaced '" + previousValue + "' with '" + newValue
+        
+        if (_logger.isLoggable(Level.FINER)) {
+            _logger.finer("Replaced '" + previousValue + "' with '" + newValue
                 + "' in '" + preferencePath + "'.");
+        }
 
         // Store the updated column order
         try {
@@ -657,7 +671,10 @@ public class Preferences extends fr.jmmc.mcs.util.Preferences {
 
         // Remove old preference
         removePreference(preferenceToRemove);
-        _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+
+        if (_logger.isLoggable(Level.FINER)) {
+            _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+        }
 
         // Store the new preferences with respect to previous state
         try {

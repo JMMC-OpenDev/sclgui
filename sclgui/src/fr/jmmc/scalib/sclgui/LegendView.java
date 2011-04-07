@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: LegendView.java,v 1.15 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: LegendView.java,v 1.16 2011-04-07 13:48:20 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.14  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -409,9 +412,11 @@ public class LegendView extends JPanel {
                     }
                 }
 
-                _logger.fine("RGB color for cell '" + cellName + "' = [R"
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("RGB color for cell '" + cellName + "' = [R"
                         + newColor.getRed() + ", G" + newColor.getGreen() + ", B"
                         + newColor.getBlue() + "].");
+                }
 
                 return this;
             }
@@ -475,10 +480,12 @@ public class LegendView extends JPanel {
                                     + _catalogReference;
                         }
 
-                        _logger.fine("User clicked on catalog '"
+                        if (_logger.isLoggable(Level.FINE)) {
+                            _logger.fine("User clicked on catalog '"
                                 + _catalogReference
                                 + "' in the LegendView, will open '" + url
                                 + "' in default browser.");
+                        }
                         BrowserLauncher.openURL(url);
                     }
 
