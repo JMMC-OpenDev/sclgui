@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SpectralTypeFilter.java,v 1.19 2011-04-04 16:14:43 bourgesl Exp $"
+ * "@(#) $Id: SpectralTypeFilter.java,v 1.20 2011-04-07 13:53:55 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.19  2011/04/04 16:14:43  bourgesl
+ * use List instead of Vector
+ *
  * Revision 1.18  2010/10/10 22:45:03  lafrasse
  * Code reformating.
  *
@@ -133,12 +136,16 @@ public class SpectralTypeFilter extends Filter {
             // If spectral type was found in the current line
             if (cell.hasValue() == true) {
                 String rawSpectralType = (String) cell.getValue();
-                _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
+                }
 
                 // Get back the spectral types found in the given spectral type
                 List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
-                _logger.fine("foundSpectralTypes = '" + foundSpectralTypes
-                        + "'.");
+
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("foundSpectralTypes = '" + foundSpectralTypes + "'.");
+                }
 
                 // For each spectral type found
                 for (int i = 0; i < foundSpectralTypes.size(); i++) {
@@ -146,10 +153,10 @@ public class SpectralTypeFilter extends Filter {
                     String spectralTypeName = foundSpectralTypes.get(i);
                     Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
-                    _logger.fine("spectralTypeName = '" + spectralTypeName
-                            + "'.");
-                    _logger.fine("spectralTypeCheckBoxState = '"
-                            + spectralTypeCheckBoxState + "'.");
+                    if (_logger.isLoggable(Level.FINE)) {
+                        _logger.fine("spectralTypeName = '" + spectralTypeName + "'.");
+                        _logger.fine("spectralTypeCheckBoxState = '" + spectralTypeCheckBoxState + "'.");
+                    }
 
                     // If the current spectral type is not handled (eg R, N ,S, ...)
                     if (spectralTypeCheckBoxState == null) {

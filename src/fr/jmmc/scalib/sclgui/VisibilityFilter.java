@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VisibilityFilter.java,v 1.12 2010-10-10 22:45:04 lafrasse Exp $"
+ * "@(#) $Id: VisibilityFilter.java,v 1.13 2011-04-07 13:53:55 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2010/10/10 22:45:04  lafrasse
+ * Code reformating.
+ *
  * Revision 1.11  2010/10/10 22:21:05  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -44,6 +47,7 @@
 package fr.jmmc.scalib.sclgui;
 
 import java.util.Vector;
+import java.util.logging.Level;
 
 /**
  * Visibiliy filter.
@@ -84,8 +88,8 @@ public class VisibilityFilter extends Filter {
      *
      * @return the visibility accuracy allowed by this filter.
      */
-    private double getAllowedVisibiliy() {
-        _logger.entering("VisibilityFilter", "getAllowedVisibiliy");
+    private double getAllowedVisibility() {
+        _logger.entering("VisibilityFilter", "getAllowedVisibility");
 
         Double d = (Double) getConstraintByName(_visibilityConstraintName);
 
@@ -120,9 +124,11 @@ public class VisibilityFilter extends Filter {
             }
 
             // If the visibility is less than 0.5
-            if (vis2Cell.getDoubleValue() < getAllowedVisibiliy()) {
-                _logger.fine("vis2 < " + getAllowedVisibiliy()
+            if (vis2Cell.getDoubleValue() < getAllowedVisibility()) {
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("vis2 < " + getAllowedVisibility()
                         + " - Line removed.");
+                }
 
                 // This row should be removed
                 return true;

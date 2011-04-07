@@ -624,8 +624,10 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         }
 
         // Compute the corresponding preference path
-        _logger.fine("Selected view = '"
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("Selected view = '"
                 + ((selectedView != null) ? selectedView : "RAW") + "'.");
+        }
 
         if (selectedView != null) {
             // Get the selected ordered column name table
@@ -649,8 +651,10 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         _logger.warning("No column called '" + columnName
                                 + "'.");
                     } else {
-                        _logger.fine("_viewIndex[" + i + "] = '" + columnId
+                        if (_logger.isLoggable(Level.FINE)) {
+                            _logger.fine("_viewIndex[" + i + "] = '" + columnId
                                 + "' -> '" + columnName + "'.");
+                        }
                     }
                 }
             }
@@ -1069,9 +1073,12 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // Put the corresponding row font in bold
                 Font f = getFont();
                 setFont(f.deriveFont(f.getStyle() | Font.BOLD));
-                _logger.fine("Put row['" + row
+                
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("Put row['" + row
                         + "'] in BOLD : (rowDistance = '" + rowDistance
                         + "') < (prefDistance = '" + _prefDistance + "').");
+                }
             }
 
             // Compose catalog URL
@@ -1226,17 +1233,21 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 return null; // Exit
             }
 
-            _logger.finest("getTableCellEditorComponent(" + row + "," + column
+            if (_logger.isLoggable(Level.FINEST)) {
+                _logger.finest("getTableCellEditorComponent(" + row + "," + column
                     + ") = '" + value + "' <==> Model[" + modelRow + ","
                     + modelColumn + "] = '" + cellValue + "'.");
+            }
 
             if (_starProperty.hasURL() == true) {
                 String url = _starProperty.getURL();
 
-                _logger.finer("User clicked on column '"
+                if (_logger.isLoggable(Level.FINER)) {
+                    _logger.finer("User clicked on column '"
                         + calModel.getColumnNameById(modelColumn)
                         + "' in the CalibratorView, will open '" + url
                         + "' in default browser.");
+                }
 
                 // Open web browser with the computed URL
                 BrowserLauncher.openURL(url);
