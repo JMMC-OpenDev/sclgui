@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: CalibratorsModel.java,v 1.36 2011-04-04 13:59:47 bourgesl Exp $"
+ * "@(#) $Id: CalibratorsModel.java,v 1.37 2011-04-07 13:48:09 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.36  2011/04/04 13:59:47  bourgesl
+ * use FileUtils.closeFile(reader)
+ *
  * Revision 1.35  2011/02/23 14:03:34  mella
  * Remove unused import
  *
@@ -589,7 +592,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             String paramName = param.getName();
             String paramValue = param.getValue();
 
-            _logger.fine(paramName + " = '" + paramValue + "'");
+            if (_logger.isLoggable(Level.FINE)) {
+                _logger.fine(paramName + " = '" + paramValue + "'");
+            }
             parameters.put(paramName, paramValue);
         }
 
@@ -601,8 +606,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         }
 
         _brightScenarioFlag = Boolean.valueOf((String) parameters.get("bright"));
-        _logger.fine("magnitude band = '" + _magnitudeBand
+        
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("magnitude band = '" + _magnitudeBand
                 + "'; bright scenario = '" + _brightScenarioFlag + "'.");
+        }
 
         // Update any attached observer
         update(null, null);
@@ -1000,8 +1008,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             SourceLocator locator = ex.getLocator();
             int col = locator.getColumnNumber();
             int line = locator.getLineNumber();
-            String publicId = locator.getPublicId();
-            String systemId = locator.getSystemId();
+
             _logger.log(Level.SEVERE,
                     "One error occured while applying XSL file '" + xslFile
                     + "', on line '" + line + "' and column '" + col + "'", ex);

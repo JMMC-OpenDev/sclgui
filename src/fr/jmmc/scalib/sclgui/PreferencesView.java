@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: PreferencesView.java,v 1.35 2010-10-10 22:45:03 lafrasse Exp $"
+ * "@(#) $Id: PreferencesView.java,v 1.36 2011-04-07 13:48:51 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2010/10/10 22:45:03  lafrasse
+ * Code reformating.
+ *
  * Revision 1.34  2010/10/10 22:21:04  lafrasse
  * Fixed first round of NetBeans-detected warnings.
  *
@@ -347,7 +350,9 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         String columns = _preferences.getPreference(_preferencePath);
 
         if (columns == null) {
-            _logger.fine(_preferencePath + " not found into preferences");
+            if (_logger.isLoggable(Level.FINE)) {
+                _logger.fine(_preferencePath + " not found into preferences");
+            }
 
             return;
         }
