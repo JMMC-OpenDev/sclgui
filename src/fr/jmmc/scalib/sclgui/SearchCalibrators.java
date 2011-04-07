@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.35 2011-03-18 16:21:22 bourgesl Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.36 2011-04-07 14:12:51 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.35  2011/03/18 16:21:22  bourgesl
+ * fixed Swing EDT violations in thread handling
+ *
  * Revision 1.34  2011/02/01 10:27:38  mella
  * Fix Apps constructor, which use common preference to display or not the splashscreen
  *
@@ -123,6 +126,7 @@ package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.gui.StatusBar;
+import fr.jmmc.mcs.gui.SwingSettings;
 import fr.jmmc.mcs.util.MCSExceptionHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
@@ -177,10 +181,7 @@ public class SearchCalibrators extends App {
     }
 
     /** Initialize application objects */
-    protected void init(String[] args) {
-        // Set the default locale to custom locale (for Numerical Fields "." ",")
-        Locale.setDefault(new Locale("en", "US"));
-
+    protected void init(String[] args) {      
         // Set default resource
         fr.jmmc.mcs.util.Resources.setResourceName(
                 "fr/jmmc/scalib/sclgui/Resources");
@@ -273,8 +274,8 @@ public class SearchCalibrators extends App {
      */
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public static void main(final String[] args) {
-
-        MCSExceptionHandler.installSwingHandler();
+        // init swing application for science
+        SwingSettings.setup();        
 
         new SearchCalibrators(args);
     }
