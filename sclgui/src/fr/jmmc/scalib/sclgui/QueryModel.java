@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.55 2011-04-06 15:33:10 bourgesl Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.56 2011-04-07 13:52:38 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.55  2011/04/06 15:33:10  bourgesl
+ * javadoc
+ *
  * Revision 1.54  2011/04/01 14:50:07  bourgesl
  * use StringBuilder to form the query
  *
@@ -193,12 +196,10 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import cds.savot.model.FieldSet;
 import cds.savot.model.ParamSet;
 import cds.savot.model.ResourceSet;
 import cds.savot.model.SavotParam;
 import cds.savot.model.SavotResource;
-import cds.savot.model.SavotTable;
 import cds.savot.model.SavotVOTable;
 import cds.savot.model.TDSet;
 import cds.savot.model.TRSet;
@@ -214,6 +215,7 @@ import java.io.StringBufferInputStream;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
@@ -421,7 +423,9 @@ public class QueryModel extends Star implements Observer {
             String paramName = param.getName();
             String paramValue = param.getValue();
 
-            _logger.fine(paramName + " = '" + paramValue + "'");
+            if (_logger.isLoggable(Level.FINE)) {
+                _logger.fine(paramName + " = '" + paramValue + "'");
+            }
             parameters.put(paramName, paramValue);
         }
 
@@ -484,8 +488,6 @@ public class QueryModel extends Star implements Observer {
             // WARNING : this is not compatible with other VOTable than JMMC ones
             // (0 should not be used, but the name of the Resource instead)
             SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
-            SavotTable table = (SavotTable) resource.getTables().getItemAt(0);
-            FieldSet fieldSet = table.getFields();
 
             // For first data row (if any)
             TRSet rows = resource.getTRSet(0);
@@ -504,7 +506,10 @@ public class QueryModel extends Star implements Observer {
 
                 if (str.length() != 0) {
                     str = str.replace(' ', ':');
-                    _logger.fine("loaded RA = '" + str + "'.");
+
+                    if (_logger.isLoggable(Level.FINE)) {
+                        _logger.fine("loaded RA = '" + str + "'.");
+                    }
                     setScienceObjectRA(str);
                 }
 
@@ -512,7 +517,10 @@ public class QueryModel extends Star implements Observer {
 
                 if (str.length() != 0) {
                     str = str.replace(' ', ':');
-                    _logger.fine("loaded DEC = '" + str + "'.");
+                    
+                    if (_logger.isLoggable(Level.FINE)) {
+                        _logger.fine("loaded DEC = '" + str + "'.");
+                    }
                     setScienceObjectDEC(str);
                 }
 
@@ -525,13 +533,19 @@ public class QueryModel extends Star implements Observer {
                         str = row.getContent(index++);
 
                         if (str.length() != 0) {
-                            _logger.fine("loaded '" + currentMagnitudeBand + "' Mag = '" + str + "'.");
+                            if (_logger.isLoggable(Level.FINE)) {
+                                _logger.fine("loaded '" + currentMagnitudeBand + "' Mag = '" + str + "'.");
+                            }
                             loadedValue = new Double(str);
                         } else {
-                            _logger.fine("loaded '" + currentMagnitudeBand + "' Mag = 'NaN'.");
+                            if (_logger.isLoggable(Level.FINE)) {
+                                _logger.fine("loaded '" + currentMagnitudeBand + "' Mag = 'NaN'.");
+                            }
                         }
                     } catch (Exception exc) {
-                        _logger.fine("blanked '" + currentMagnitudeBand + "' Mag = 'NaN'.");
+                        if (_logger.isLoggable(Level.FINE)) {
+                            _logger.fine("blanked '" + currentMagnitudeBand + "' Mag = 'NaN'.");
+                        }
                     }
 
                     setPropertyAsDouble(Property.fromString("FLUX_" + currentMagnitudeBand), loadedValue);
@@ -647,7 +661,9 @@ public class QueryModel extends Star implements Observer {
         // Get the science star
         query.append("-noScienceStar false");
 
-        _logger.fine("query = '" + query + "'.");
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("query = '" + query + "'.");
+        }
 
         return query.toString();
     }
@@ -819,22 +835,24 @@ public class QueryModel extends Star implements Observer {
      * @param rightAscension the right ascension.
      * @throws IllegalArgumentException if RA text field is invalid
      */
-    public void setScienceObjectRA(String rightAscension)
+    public void setScienceObjectRA(final String rightAscension)
             throws IllegalArgumentException {
         _logger.entering("QueryModel", "setScienceObjectRA");
 
+        final String ra = rightAscension.trim();
+
         // Check if the given parameter is not empty
-        if (rightAscension.length() < 1) {
+        if (ra.length() < 1) {
             throw new IllegalArgumentException("given RA is empty");
         }
 
         // Validate the format of the given value
-        if (rightAscension.matches("[+|-]?[0-9]+[: ][0-9]+[: ][0-9]+.?[0-9]*") == false) {
+        if (!ra.matches("[+|-]?[0-9]+[: ][0-9]+[: ][0-9]+.?[0-9]*")) {
             throw new IllegalArgumentException("wrong RA format: '"
-                    + rightAscension + "' must be of form +30:00:00.00");
+                    + ra + "' must be of form +30:00:00.00");
         }
 
-        setPropertyAsString(Property.RA, rightAscension);
+        setPropertyAsString(Property.RA, ra);
     }
 
     /**
@@ -854,22 +872,24 @@ public class QueryModel extends Star implements Observer {
      * @param declinaison the declinaison.
      * @throws IllegalArgumentException if RA text field is invalid
      */
-    public void setScienceObjectDEC(String declinaison)
+    public void setScienceObjectDEC(final String declinaison)
             throws IllegalArgumentException {
         _logger.entering("QueryModel", "setScienceObjectDEC");
 
+        final String dec = declinaison.trim();
+
         // Check if given parameter is not empty
-        if (declinaison.length() < 1) {
+        if (dec.length() < 1) {
             throw new IllegalArgumentException("given DEC is empty");
         }
 
         // Validate the format of the given value
-        if (declinaison.matches("[+|-]?[0-9]+[: ][0-9]+[: ][0-9]+.?[0-9]*") == false) {
+        if (!dec.matches("[+|-]?[0-9]+[: ][0-9]+[: ][0-9]+.?[0-9]*")) {
             throw new IllegalArgumentException("wrong DEC format: '"
-                    + declinaison + "' must be of form +30:00:00.00");
+                    + dec + "' must be of form +30:00:00.00");
         }
 
-        setPropertyAsString(Property.DEC, declinaison);
+        setPropertyAsString(Property.DEC, dec);
     }
 
     /**
