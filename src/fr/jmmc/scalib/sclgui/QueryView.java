@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryView.java,v 1.63 2011-04-01 14:50:42 bourgesl Exp $"
+ * "@(#) $Id: QueryView.java,v 1.64 2011-04-07 15:00:48 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.63  2011/04/01 14:50:42  bourgesl
+ * wrap log.fine using isLoggable
+ *
  * Revision 1.62  2011/02/10 14:20:00  lafrasse
  * Restricted faint scenario magnitude bands to K.
  *
@@ -221,24 +224,53 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.star.*;
-import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.util.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.print.*;
-
-import java.beans.*;
-
-import java.text.*;
-
-import java.util.*;
-import java.util.logging.*;
-
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.*;
+import fr.jmmc.mcs.astro.star.Star;
+import fr.jmmc.mcs.astro.star.StarResolverWidget;
+import fr.jmmc.mcs.gui.MessagePane;
+import fr.jmmc.mcs.gui.StatusBar;
+import fr.jmmc.mcs.util.MCSAction;
+import fr.jmmc.mcs.util.RegisteredAction;
+import java.awt.AWTEvent;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultFormatter;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 /**
  * Query view.
@@ -337,7 +369,7 @@ public final class QueryView extends JPanel implements Observer,
     /**
      * Constructor.
      *
-     * @param model the object used to store all the query attributes.
+     * @param queryModel the object used to store all the query attributes.
      * @param vo the object used to query the JMMC GETCAL webservice.
      */
     public QueryView(QueryModel queryModel, VirtualObservatory vo) {
@@ -636,8 +668,22 @@ public final class QueryView extends JPanel implements Observer,
     /**
      * Automatically called on attached QueryModel changes.
      */
-    public void update(Observable o, Object arg) {
+    public void update(final Observable o, final Object arg) {
         _logger.entering("QueryView", "update");
+
+        // handle Star resolver errors:
+
+        if (arg instanceof Star.Notification) {
+            final Star.Notification notification = (Star.Notification) arg;
+
+            if (notification == Star.Notification.QUERY_ERROR) {
+                // focus on object name:
+                _scienceObjectNameTextfield.requestFocus();
+
+                // do nothing, simply return to stop updating model:
+                return;
+            }
+        }
 
         String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
 
@@ -757,32 +803,37 @@ public final class QueryView extends JPanel implements Observer,
      * Called when the focus leaves a widget.
      *
      * Used to validate and store TextFields data when tabbing between them.
+     *
+     * @param fe focus event
      */
-    public void focusLost(FocusEvent e) {
+    public void focusLost(FocusEvent fe) {
         _logger.entering("QueryView", "focusLost");
 
         // Store new data
-        storeValues(e);
+        storeValues(fe);
     }
 
     /**
      * Called when a widget triggered an action.
+     * @param ae action event
      */
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent ae) {
         _logger.entering("QueryView", "actionPerformed");
 
         // Store new data
-        storeValues(e);
+        storeValues(ae);
     }
 
     /**
      * Store form values in the model.
+     *
+     * @param ae awt event
      */
-    public void storeValues(AWTEvent e) {
+    public void storeValues(AWTEvent ae) {
         _logger.entering("QueryView", "storeValues");
 
         // Get back the widget
-        Object source = e.getSource();
+        Object source = ae.getSource();
 
         // If the widget is a JFormattedTextField
         if (source.getClass() == javax.swing.JFormattedTextField.class) {
@@ -814,8 +865,29 @@ public final class QueryView extends JPanel implements Observer,
         String selectedMagnitudeBand = (String) dcbm.getSelectedItem();
         _queryModel.setInstrumentalMagnitudeBand(selectedMagnitudeBand);
         _queryModel.setInstrumentalMaxBaseLine(((Double) _instrumentalMaxBaselineTextField.getValue()));
-        _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
-        _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
+
+        // validation exception handling:
+        String validationMessages = "";
+        try {
+            _queryModel.setScienceObjectRA(_scienceObjectRATextfield.getText());
+        } catch (IllegalArgumentException iae) {
+            validationMessages += iae.getMessage() + "\n";
+        }
+        try {
+            _queryModel.setScienceObjectDEC(_scienceObjectDECTextfield.getText());
+        } catch (IllegalArgumentException iae) {
+            validationMessages += iae.getMessage() + "\n";
+        }
+        if (validationMessages.length() > 0) {
+            final String userMessage = validationMessages;
+            // report messages to the user:
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run() {
+                    MessagePane.showErrorMessage(userMessage);
+                }
+            });
+        }
 
         if (source == _scienceObjectNameTextfield) {
             _queryModel.setScienceObjectName(_scienceObjectNameTextfield.getText());
@@ -869,8 +941,8 @@ public final class QueryView extends JPanel implements Observer,
      * Recursively enable/disable sub-components of a given container, or the
      * component itself if it does not contain any sub-component.
      *
-     * @param compo JComponent
-     * @param bool boolean
+     * @param component JComponent
+     * @param flag boolean
      *
      * @TODO place it under common mcs area
      */
