@@ -1,11 +1,15 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: QueryModel.java,v 1.56 2011-04-07 13:52:38 bourgesl Exp $"
+ * "@(#) $Id: QueryModel.java,v 1.57 2011-04-07 15:01:10 bourgesl Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.56  2011/04/07 13:52:38  bourgesl
+ * trim ra / dec before validation
+ * wrapped log statements
+ *
  * Revision 1.55  2011/04/06 15:33:10  bourgesl
  * javadoc
  *
@@ -253,8 +257,6 @@ public class QueryModel extends Star implements Observer {
     private static final String[] FAINT_MAGNITUDE_BANDS = {"K"};
     /** The instrumental maximum base line */
     private double _instrumentalMaxBaseLine;
-    /** The science object name */
-    private String _scienceObjectName;
     /** The query minimum magnitude */
     private double _queryMinMagnitude;
     /** The query minimum magnitude auto-update flag */
@@ -802,7 +804,7 @@ public class QueryModel extends Star implements Observer {
     public String getScienceObjectName() {
         _logger.entering("QueryModel", "getScienceObjectName");
 
-        return _scienceObjectName;
+        return getPropertyAsString(Property.NAME);
     }
 
     /**
@@ -813,9 +815,7 @@ public class QueryModel extends Star implements Observer {
     public void setScienceObjectName(String scienceObjectName) {
         _logger.entering("QueryModel", "setScienceObjectName");
 
-        _scienceObjectName = scienceObjectName;
-
-        setChanged();
+        setPropertyAsString(Property.NAME, scienceObjectName);
     }
 
     /**
