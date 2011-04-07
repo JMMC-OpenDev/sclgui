@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalibrators.java,v 1.36 2011-04-07 14:12:51 mella Exp $"
+ * "@(#) $Id: SearchCalibrators.java,v 1.37 2011-04-07 14:13:27 mella Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.36  2011/04/07 14:12:51  mella
+ * Use an replace some init code using SwingSettings.setup()
+ *
  * Revision 1.35  2011/03/18 16:21:22  bourgesl
  * fixed Swing EDT violations in thread handling
  *
@@ -127,9 +130,7 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.gui.StatusBar;
 import fr.jmmc.mcs.gui.SwingSettings;
-import fr.jmmc.mcs.util.MCSExceptionHandler;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
