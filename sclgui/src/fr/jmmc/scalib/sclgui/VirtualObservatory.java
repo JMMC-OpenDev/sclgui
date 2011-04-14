@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: VirtualObservatory.java,v 1.57 2011-04-14 08:13:50 lafrasse Exp $"
+ * "@(#) $Id: VirtualObservatory.java,v 1.58 2011-04-14 09:49:38 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.57  2011/04/14 08:13:50  lafrasse
+ * Typo and cleanup.
+ *
  * Revision 1.56  2011/04/07 14:59:15  bourgesl
  * log query (info)
  *
@@ -240,13 +243,13 @@ public final class VirtualObservatory extends Observable {
     private static final Logger _logger = Logger.getLogger(
             "fr.jmmc.scalib.sclgui.VirtualObservatory");
     /** Query model */
-    private QueryModel _queryModel = null;
+    private final QueryModel _queryModel;
     /** Data model to which the result should be passed */
-    private CalibratorsModel _calibratorsModel = null;
+    private final CalibratorsModel _calibratorsModel;
     /** Path to an open or saved file */
-    private File _file = null;
+    private File _file;
     /** Store whether the Query has be launched or not */
-    private boolean _queryIsLaunched = false;
+    private final AtomicBoolean _queryIsLaunched;
     /** Proxy to shared FileFilter repository */
     private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
     /** QuerySearchCal-specific VOTable format */
@@ -256,21 +259,21 @@ public final class VirtualObservatory extends Observable {
     /** MIME type for HTML exports */
     private String _htmlMimeType = "text/html";
     /** Open file... action */
-    public OpenFileAction _openFileAction = null;
+    public final OpenFileAction _openFileAction;
     /** Save file... action */
-    public SaveFileAction _saveFileAction = null;
+    public final SaveFileAction _saveFileAction;
     /** Save file as... action */
-    public SaveFileAsAction _saveFileAsAction = null;
+    public final SaveFileAsAction _saveFileAsAction;
     /** Revet to Saved File action */
-    public RevertToSavedFileAction _revertToSavedFileAction = null;
+    public final RevertToSavedFileAction _revertToSavedFileAction;
     /** Export to CSV File action */
-    public ExportToCSVFileAction _exportToCSVFileAction = null;
+    public final ExportToCSVFileAction _exportToCSVFileAction;
     /** Export to HTML File action */
-    public ExportToHTMLFileAction _exportToHTMLFileAction = null;
+    public final ExportToHTMLFileAction _exportToHTMLFileAction;
     /** Export to SAMP action */
-    public ShareCalibratorsThroughSAMPAction _shareCalibratorsThroughSAMPAction = null;
+    public final ShareCalibratorsThroughSAMPAction _shareCalibratorsThroughSAMPAction;
     /** Get Cal action */
-    public GetCalAction _getCalAction = null;
+    public final GetCalAction _getCalAction;
 
     /**
      * Define QuerySearchCal Web Service steps
@@ -295,6 +298,8 @@ public final class VirtualObservatory extends Observable {
     public VirtualObservatory(QueryModel queryModel, CalibratorsModel calibratorsModel) {
         String classPath = getClass().getName();
 
+        _queryIsLaunched = new AtomicBoolean(false);
+
         _queryModel = queryModel;
         _calibratorsModel = calibratorsModel;
 
@@ -318,7 +323,6 @@ public final class VirtualObservatory extends Observable {
         _getCalAction = new GetCalAction(classPath, "_getCalAction");
 
         // Add handler to load query params and launch calibrator search
-
         new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
 
             /**
@@ -411,36 +415,34 @@ public final class VirtualObservatory extends Observable {
     protected boolean isQueryLaunched() {
         _logger.entering("VirtualObservatory", "isQueryLaunched");
 
-        return _queryIsLaunched;
+        return _queryIsLaunched.get();
     }
 
     /**
      * Set whether the query has been launched or not using Swing EDT.
      *
-     * @param flag true to enable all menus, false otherwise.
+     * @param running true to enable all menus, false otherwise.
      */
-    protected void setQueryLaunchedState(final boolean flag) {
+    protected void setQueryLaunchedState(final boolean running) {
         _logger.entering("VirtualObservatory", "setQueryLaunchedState");
 
         final Runnable task = new Runnable() {
 
             public void run() {
+                _queryIsLaunched.set(running);
 
-                _queryIsLaunched = flag;
+                String newActionName = "Cancel";
 
-                final String actionName;
-                if (flag) {
-                    // Change button title to 'Cancel'
-                    actionName = "Cancel";
-
-                } else {
+                if (!running) {
                     // Change button title to 'Get Calibrators'
-                    actionName = "Get Calibrators";
+                    newActionName = "Get Calibrators";
                     _queryModel.setCurrentStep(0);
                     _queryModel.setTotalStep(0);
                     _queryModel.setCatalogName("");
                 }
-                _getCalAction.putValue(Action.NAME, actionName);
+
+                // Set new action name
+                _getCalAction.putValue(Action.NAME, newActionName);
 
                 setChanged();
                 notifyObservers();
@@ -1132,7 +1134,6 @@ public final class VirtualObservatory extends Observable {
                             // Use invokeLater to avoid concurrency and ensure that
                             // data model is modified and fire events using Swing EDT :
                             SwingUtilities.invokeLater(new Runnable() {
-
                                 public void run() {
                                     // Update the query model accordingly
                                     _queryModel.setCatalogName(composedQueryStatus);
