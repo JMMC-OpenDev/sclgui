@@ -1,11 +1,14 @@
 /*******************************************************************************
  * JMMC project
  *
- * "@(#) $Id: SearchCalServerClient.java,v 1.2 2011-04-06 15:34:15 bourgesl Exp $"
+ * "@(#) $Id: SearchCalServerClient.java,v 1.3 2011-04-14 08:14:05 lafrasse Exp $"
  *
  * History
  * -------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2011/04/06 15:34:15  bourgesl
+ * use Urls.parseURL to handle properly malformed URL exception
+ *
  * Revision 1.1  2011/04/01 14:49:46  bourgesl
  * Axis client code (locator, stub) and its configuration in this class
  *
@@ -19,7 +22,6 @@ import fr.jmmc.mcs.util.Urls;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
 import java.util.logging.Level;
@@ -96,6 +98,7 @@ public final class SearchCalServerClient {
     // Timeout "waiting for data" (read timeout) in milliseconds:
     AxisProperties.setProperty(DefaultCommonsHTTPClientProperties.CONNECTION_DEFAULT_SO_TIMEOUT_KEY,
             // 30 minutes to get SearchCal response from our server:
+            // Note: UJF proxy server automatically closes the connection after 5 minutes !!!
             Integer.toString(30 * 60 * 1000));
 
     // Get proxy settings defined by NetworkSettings:
@@ -119,7 +122,7 @@ public final class SearchCalServerClient {
       _logger.info("Axis properties:\n" + Preferences.dumpProperties(AxisProperties.getProperties()));
     }
 
-    // Default retryhandler = 3 retry.
+    // Note: default retryhandler = 3 retry.
   }
 
   /**
