@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-	<program name="SearchCal" version="4.4b1"/>
-        <compilation date="01/04/2011" compiler="JDK 1.5.0_16"/>
+	<program name="SearchCal" version="4.3.1b1"/>
+        <compilation date="17/05/2011" compiler="JDK 1.5.0_16"/>
 	<text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
 	<dependences>
         <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
@@ -49,12 +49,15 @@
       </menu>
     </menubar>
     <releasenotes>
-        <release version="4.4">
-            <prerelease version="4.4b1">
-                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/95">Handle properly Simbad errors (no feedback report) and RA / DEC validation.</change>
-                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/106">Fix long delay required to get the main frame onto machines with frozen printing system.</change>
-                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/87">Fix exception handling and timeouts with Axis (Cancel query).</change>
-                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/71">Fix concurrency issues with Swing EDT.</change>
+        <release version="4.3.1">
+            <prerelease version="4.3.1b1">
+                <change type="BUGFIX">Fixed missing Interop menu.</change>
+                <change type="CHANGE">Enhanced spectral type decoding.</change>
+                <change type="CHANGE">Enhanced all numerical precisions on scientific computations.</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/95">Handled Simbad errors (no feedback report) and RA / DEC validation.</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/106">Fixed long delay required to get the main window on machines with frozen printing system.</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/87">Fixed exception handling and timeouts on query canceling.</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/71">Fixed concurrency issues with Swing EDT.</change>
             </prerelease>
         </release>
         <release version="4.3">
