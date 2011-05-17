@@ -628,10 +628,21 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             _logger.fine("Selected view = '"
                 + ((selectedView != null) ? selectedView : "RAW") + "'.");
         }
+        
+          
+        final String prefColumns = _preferences.getPreference(selectedView);
 
-        if (selectedView != null) {
+        if (prefColumns == null) {
+          _logger.severe("No preference found for ["+ selectedView + "]");
+        }
+
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("Columns (preferences) = " + prefColumns);
+        }
+
+        if (prefColumns != null) {
             // Get the selected ordered column name table
-            String[] columnStrings = _preferences.getPreference(selectedView).trim().split(" ");
+            String[] columnStrings = prefColumns.trim().split(" ");
             int nbOfColumns = columnStrings.length;
 
             _viewIndex = new int[nbOfColumns];
