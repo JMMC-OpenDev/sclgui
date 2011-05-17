@@ -346,10 +346,10 @@ public final class VirtualObservatory extends Observable {
                          * Synchronized by EDT
                          */
                         public void run() {
-                            executeQuery(query);
+                            // bring this application to front :
+                            App.showFrameToFront();
 
-                            // change focus :
-                            App.getFrame().toFront();
+                            executeQuery(query);
                         }
                     });
 
