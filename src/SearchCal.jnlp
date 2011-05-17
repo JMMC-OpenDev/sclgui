@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<jnlp spec="1.0+" codebase="http://jmmc.fr/~lafrasse/SearchCal" href="SearchCal.jnlp">
+<jnlp spec="1.0+" codebase="@GENERATED@" href="@GENERATED@">
     <information>
         <title>SearchCal</title>
         <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
@@ -23,26 +23,29 @@
         <j2se version="1.5+" initial-heap-size="256m" max-heap-size="512m"/>        
 
         <!-- JMMC modules -->
+        <jar href="jar/jmcs.jar" />
         <jar href="jar/sclgui.jar" />
         <jar href="jar/sclgui-doc.jar" />
-        <jar href="jar/Jmcs.jar" />
+
+        <!-- JMCS libs -->
+        <extension href="../JmcsLibs/JmcsLibs.jnlp"/>
         
         <!-- Axis 1.4 (SOAP) -->
-        <jar href="jar/axis.jar" /> 
-        <jar href="jar/jaxrpc.jar" /> 
-        <jar href="jar/saaj.jar" />
+        <jar href="@SHARED@/axis.jar" />
+        <jar href="@SHARED@/jaxrpc.jar" />
+        <jar href="@SHARED@/saaj.jar" />
         <!-- saaj requires activation.jar (provided by JMCS) -->
-        <jar href="jar/wsdl4j-1.5.1.jar" /> 
-        <jar href="jar/commons-discovery-0.2.jar" />
+        <jar href="@SHARED@/wsdl4j-1.5.1.jar" />
+        <jar href="@SHARED@/commons-discovery-0.2.jar" />
         <!-- commons-logging (provided by JMCS) -->
 
         <!-- CDS SAVOT -->
-        <jar href="jar/cds.savot.common.jar" />
-        <jar href="jar/cds.savot.model.jar" />
-        <jar href="jar/cds.savot.pull.jar" />
-        <jar href="jar/cds.savot.sax.jar" />
-        <jar href="jar/cds.savot.writer.jar" />
-        <jar href="jar/kxml2-min.jar" />
+        <jar href="@SHARED@/cds.savot.common.jar" />
+        <jar href="@SHARED@/cds.savot.model.jar" />
+        <jar href="@SHARED@/cds.savot.pull.jar" />
+        <jar href="@SHARED@/cds.savot.sax.jar" />
+        <jar href="@SHARED@/cds.savot.writer.jar" />
+        <jar href="@SHARED@/kxml2-min.jar" />
 
     </resources>
     <application-desc main-class="fr.jmmc.scalib.sclgui.SearchCalibrators"/>
