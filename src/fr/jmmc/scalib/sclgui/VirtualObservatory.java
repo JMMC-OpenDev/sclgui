@@ -204,6 +204,7 @@ package fr.jmmc.scalib.sclgui;
 import fr.jmmc.mcs.astro.Catalog;
 import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.gui.MessagePane;
+import fr.jmmc.mcs.gui.MessagePane.ConfirmSaveChanges;
 
 import fr.jmmc.mcs.gui.StatusBar;
 
@@ -486,37 +487,30 @@ public final class VirtualObservatory extends Observable {
         if (!_calibratorsModel.dataHaveChanged()) {
             canLostModifications = true;
         } else {
-            // If the data are NOT saved, handle it before loosing any results !!!
-            // Ask the user if he wants to save modifications
-            Object[] options = {"Save", "Cancel", "Don't Save"};
-            int result = JOptionPane.showOptionDialog(null,
-                    "Do you want to save changes to this document before closing ?\nIf you don't save, your changes will be definitively lost.\n\n",
-                    null, JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+          
+          // If the data are NOT saved, handle it before loosing any results !!!
+          // Ask the user if he wants to save modifications
+          final ConfirmSaveChanges result = MessagePane.showConfirmSaveChangesBeforeClosing();
 
             // Handle user choice
             switch (result) {
                 // If the user clicked the "Save" button
-                case 0: // options[0] = "Save" button
+                case Save:
                     // Save the current data if no cancel occured
                     canLostModifications = _saveFileAction.save();
-
                     break;
 
                 // If the user clicked the "Don't Save" button
-                case 2: // options[2] = "Don't Save" button
+                case Ignore:
                     // Exit
                     canLostModifications = true;
-
                     break;
 
                 // If the user clicked the "Cancel" button or pressed 'esc' key
-                case 1: // options[1] = "Cancel" button
-                case JOptionPane.CLOSED_OPTION: // 'esc' key
+                case Cancel:
                 default: // Any other case
                     // Cancel the exit
                     canLostModifications = false;
-
                     break;
             }
         }
@@ -546,7 +540,7 @@ public final class VirtualObservatory extends Observable {
      *
      * @param query the query parameters as an empty QuerySearchCal VOTable.
      */
-    public void executeQuery(String query) {
+    public void executeQuery(final String query) {
         _logger.entering("VirtualObservatory", "executeQuery");
 
         if (_logger.isLoggable(Level.FINE)) {
@@ -558,6 +552,10 @@ public final class VirtualObservatory extends Observable {
             StatusBar.show("parsing query...");
 
             _calibratorsModel.parseVOTable(query);
+            
+            // load default values to reset completely the query model:
+            _queryModel.loadDefaultValues();
+            // load given parameters (some may be missing)
             _queryModel.loadParamSet(_calibratorsModel.getParamSet());
 
         } catch (Exception e) {
