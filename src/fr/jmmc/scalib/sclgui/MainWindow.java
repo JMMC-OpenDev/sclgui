@@ -252,6 +252,9 @@ public class MainWindow extends JFrame {
             _logger.log(Level.SEVERE, "Main window failure : ", e);
         }
 
+        // previous adapter manages the windowClosing(event) :
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
         // Properly quit the application when main window close button is clicked
         addWindowListener(new WindowAdapter() {
 
