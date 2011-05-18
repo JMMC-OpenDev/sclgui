@@ -56,11 +56,13 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   /** 60s timeout */
   private static final Timeout LONG_TIMEOUT = Timeout.timeout(60 * 1000l);
   /** queries to perform (500) */
-  private static final int QUERY_ITERATIONS = 500;
+  private static final int QUERY_ITERATIONS = 1000;
   /** time to wait between queries (ms) */
   private static final long QUERY_PAUSE = 1 * 1000l;
-  /** flag indicating to test cancel SearchCal queries */
-  private static final boolean TEST_CANCEL = true;
+  /** flag indicating to test cancel n queries */
+  private static final boolean TEST_CANCEL = false;
+  /** flag to perform queries on N band */
+  private static final boolean TEST_BAND_N = false;
 
   /**
    * Define the application
@@ -71,7 +73,9 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
     JmcsApplicationSetup.define(
             fr.jmmc.scalib.sclgui.SearchCalibrators.class,
-            "-open", "/home/bourgesl/dev/sclgui/test/SearchCal-ETA_TAU_fast.scvot");
+            "-open",
+            (TEST_BAND_N) ? "/home/bourgesl/dev/sclgui/test/SearchCal-BAND_N.scvot"
+            : "/home/bourgesl/dev/sclgui/test/SearchCal-ETA_TAU_fast.scvot");
 
     // define robot delays :
     defineRobotDelayBetweenEvents(SHORT_DELAY);
