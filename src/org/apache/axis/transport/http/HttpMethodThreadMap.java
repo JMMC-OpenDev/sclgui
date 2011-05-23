@@ -24,7 +24,17 @@ import org.apache.commons.logging.Log;
 public final class HttpMethodThreadMap {
 
   /** Field log */
-  protected static Log log = LogFactory.getLog(HttpMethodThreadMap.class.getName());
+  private static Log log = LogFactory.getLog(HttpMethodThreadMap.class.getName());
+  /** thread / method mapping singleton */
+  private static HttpMethodThreadMap methodThreadMap = new HttpMethodThreadMap();
+
+  /**
+   * Return the singleton instance
+   * @return singleton instance
+   */
+  public static HttpMethodThreadMap get() {
+    return methodThreadMap;
+  }
 
   /* members */
   /** mapping thread <name => HTTPMethod (thread-safe) */
@@ -67,7 +77,7 @@ public final class HttpMethodThreadMap {
    * @param threadName thread name
    * @return HttpMethodBase removed HttpMethodBase instance or null if not found
    */
-  public final HttpMethodBase remove(final String threadName) {
+  public HttpMethodBase remove(final String threadName) {
     if (log.isDebugEnabled()) {
       log.debug("HttpMethodThreadMap.remove : " + threadName);
     }
