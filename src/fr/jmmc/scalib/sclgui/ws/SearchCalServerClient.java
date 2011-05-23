@@ -12,7 +12,7 @@
  * Revision 1.1  2011/04/01 14:49:46  bourgesl
  * Axis client code (locator, stub) and its configuration in this class
  *
- */
+ ******************************************************************************/
 package fr.jmmc.scalib.sclgui.ws;
 
 import fr.jmmc.mcs.gui.App;
@@ -135,19 +135,13 @@ public final class SearchCalServerClient {
       final SclwsLocator locator = new SclwsLocator();
 
       // Decipher which proxy script to use according to app version status (release, beta or alpha)
-      final String userName;
-      if (App.isBetaVersion()) {
-        userName = "betaswmgr"; // beta release homedir
-//        userName = "sclws"; // official release homedir
-
-      } else if (App.isAlphaVersion()) {
-        userName = "lafrasse"; // alpha release homedir
-      } else {
-        userName = "sclws"; // official release homedir
+      String userName = "sclws"; // official release homedir      
+      if (App.isBetaVersion() || App.isAlphaVersion()) {
+        userName = "lafrasse"; // dev release homedir
       }
 
       // TODO : externalize SearchCal server URL:
-      final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclws-proxy.php";
+      final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclwsProxy.php";
 
       if (_logger.isLoggable(Level.INFO)) {
         _logger.info("SearchCal server URL: " + proxyScriptURL);
