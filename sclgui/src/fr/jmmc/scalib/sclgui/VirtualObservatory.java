@@ -230,9 +230,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.axis.transport.http.AbortableCommonsHTTPSender;
+import org.apache.axis.transport.http.HttpMethodThreadMap;
 import org.astrogrid.samp.Message;
 
 /**
@@ -1219,6 +1219,9 @@ public final class VirtualObservatory extends Observable {
                     if (_logger.isLoggable(Level.INFO)) {
                         _logger.log(Level.INFO, getName() + " thread.run done.");
                     }
+                    // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
+                    // in AbortableCommonsHTTPSender#relaseConnection() :
+                    HttpMethodThreadMap.get().remove(getName());
                 }
 
                 // Query is finished
@@ -1297,15 +1300,15 @@ public final class VirtualObservatory extends Observable {
 /*
 
                     if (_id != null) {
-                    // Launch the cancel query thread to free resources on the server side:
-                    final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
+                        // Launch the cancel query thread to free resources on the server side:
+                        final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
 
-                    // define UncaughtExceptionHandler :
-                    MCSExceptionHandler.installThreadHandler(cancelThread);
+                        // define UncaughtExceptionHandler :
+                        MCSExceptionHandler.installThreadHandler(cancelThread);
 
-                    cancelThread.start();
+                        cancelThread.start();
                     }
-                     */
+ */
 
                     // If the QueryResult thread has already been launched
                     if (_queryResultThread != null) {
@@ -1424,6 +1427,9 @@ public final class VirtualObservatory extends Observable {
                         if (_logger.isLoggable(Level.INFO)) {
                             _logger.log(Level.INFO, getName() + " thread.run done.");
                         }
+                        // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
+                        // in AbortableCommonsHTTPSender#relaseConnection() :
+                        HttpMethodThreadMap.get().remove(getName());
                     }
                 }
 
@@ -1493,6 +1499,9 @@ public final class VirtualObservatory extends Observable {
                         if (_logger.isLoggable(Level.INFO)) {
                             _logger.log(Level.INFO, getName() + " thread.run done.");
                         }
+                        // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
+                        // in AbortableCommonsHTTPSender#relaseConnection() :
+                        HttpMethodThreadMap.get().remove(getName());
                     }
                 }
             }
