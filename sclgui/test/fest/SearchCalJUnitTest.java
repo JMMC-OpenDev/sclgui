@@ -43,6 +43,7 @@ import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.fest.swing.timing.Condition;
 import org.fest.swing.timing.Timeout;
+import org.junit.Ignore;
 
 import org.junit.Test;
 
@@ -62,7 +63,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   /** flag indicating to test cancel n queries */
   private static final boolean TEST_CANCEL = false;
   /** flag to perform queries on N band */
-  private static final boolean TEST_BAND_N = false;
+  private static final boolean TEST_BAND_N = true;
 
   /**
    * Define the application
@@ -89,7 +90,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     // TimerFactory warmup and reset :
     TimerFactory.resetTimers();
   }
-
+  
   /**
    * Test if the application started correctly
    */
@@ -286,6 +287,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   /**
    * Test Preferences
    */
+  @Ignore
   @Test
   @GUITest
   public void shouldOpenPreferences() {
@@ -309,6 +311,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   /**
    * Test Interop menu : Start Aspro2 / topcat ... manually before this test
    */
+  @Ignore
   @Test
   @GUITest
   public void showInteropMenu() {
@@ -343,6 +346,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   /**
    * Test Feedback report
    */
+  @Ignore
   @Test
   @GUITest
   public void shouldOpenFeedbackReport() {
@@ -376,6 +380,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   /**
    * Test the application exit sequence : ALWAYS THE LAST TEST
    */
+  @Ignore
   @Test
   @GUITest
   public void shouldExit() {
