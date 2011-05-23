@@ -104,15 +104,13 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
   protected CommonsHTTPClientProperties clientProperties;
   /** Use HTTP chunking or not */
   protected boolean httpChunkStream = true;
-  /** thread / method mapping (LAURENT) */
-  private static HttpMethodThreadMap methodThreadMap = new HttpMethodThreadMap();
 
   /**
    * Public constructor
    */
   public AbortableCommonsHTTPSender() {
     initialize();
-
+    
     log.debug("AbortableCommonsHTTPSender created.");
   }
 
@@ -221,7 +219,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
       }
 
       // LAURENT : memorize HTTPMethodBase associated to the current thread:
-      methodThreadMap.set(Thread.currentThread().getName(), method);
+      HttpMethodThreadMap.get().set(Thread.currentThread().getName(), method);
 
       int returnCode = httpClient.executeMethod(hostConfiguration, method, null);
 
@@ -368,13 +366,13 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
 //    } else {
 //      log.error("relaseConnection: " + method);
 //    }
-
+     
     if (log.isDebugEnabled()) {
       log.debug("relaseConnection : " + threadName + " = " + method);
     }
 
     // LAURENT : clear HttpMethodBase and release connection once:
-    methodThreadMap.remove(threadName);
+    HttpMethodThreadMap.get().remove(threadName);
 
     // release connection back to pool:
     if (method != null) {
@@ -393,7 +391,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
 
 //    log.error("abort: " + threadName);
 
-    final HttpMethodBase method = methodThreadMap.get(threadName);
+    final HttpMethodBase method = HttpMethodThreadMap.get().get(threadName);
 
     if (log.isDebugEnabled()) {
       log.debug("abort : " + threadName + " = " + method);
@@ -911,6 +909,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
   private InputStream createConnectionReleasingInputStream(final HttpMethodBase method) throws IOException {
     return new FilterInputStream(method.getResponseBodyAsStream()) {
 
+      @Override
       public final void close() throws IOException {
         try {
           super.close();
