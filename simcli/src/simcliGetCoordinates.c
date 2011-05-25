@@ -1,19 +1,5 @@
 /*******************************************************************************
- * JMMC project
- * 
- * "@(#) $Id: simcliGetCoordinates.c,v 1.7 2006-05-11 13:04:57 mella Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.6  2005/06/01 14:13:09  scetre
- * changed logExtDbg to logTrace
- *
- * Revision 1.5  2005/02/15 14:50:51  gzins
- * Added CVS log as file modification history
- *
- * scetre    17-Nov-2004  Created
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

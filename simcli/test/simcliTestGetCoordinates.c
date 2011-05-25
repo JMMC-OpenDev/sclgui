@@ -1,22 +1,10 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: simcliTestGetCoordinates.c,v 1.5 2006-05-11 13:04:57 mella Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.4  2005/02/15 14:50:51  gzins
- * Added CVS log as file modification history
- *
- * scetre    17-Nov-2004  Created
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**
  * \file
  * brief description of the program, which ends at this dot.
- * 
  */
 
 static char *rcsId __attribute__ ((unused)) ="@(#) $Id: simcliTestGetCoordinates.c,v 1.5 2006-05-11 13:04:57 mella Exp $";

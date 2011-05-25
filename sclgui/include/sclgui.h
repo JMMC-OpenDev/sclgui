@@ -1,13 +1,7 @@
 #ifndef sclgui_H
 #define sclgui_H
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclgui.h,v 1.5 2005-10-11 15:24:15 scetre Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

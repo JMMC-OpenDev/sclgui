@@ -1,22 +1,7 @@
 #ifndef sclguiCALIBRATOR_LIST_VIEW_H
 #define sclguiCALIBRATOR_LIST_VIEW_H
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_VIEW.h,v 1.4 2006-08-23 12:12:25 gzins Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.3  2005/11/23 08:42:27  scetre
- * Added possibility to build label for faint K
- *
- * Revision 1.2  2005/10/18 12:52:48  lafrasse
- * First code revue
- *
- * Revision 1.1  2005/10/11 15:24:15  scetre
- * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

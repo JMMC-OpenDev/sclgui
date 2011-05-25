@@ -1,36 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: Filter.java,v 1.9 2010-10-10 22:45:03 lafrasse Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.8  2010/10/10 22:21:04  lafrasse
- * Fixed first round of NetBeans-detected warnings.
- *
- * Revision 1.7  2008/09/10 22:22:59  lafrasse
- * Moved away from MCS Logger to standard Java logger API.
- *
- * Revision 1.6  2007/07/09 12:53:37  lafrasse
- * Updated to keep the science object when present.
- *
- * Revision 1.5  2007/02/13 13:58:44  lafrasse
- * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
- *
- * Revision 1.4  2006/11/08 22:25:00  lafrasse
- * Implemented filtering algorithm.
- *
- * Revision 1.3  2006/08/08 16:13:21  lafrasse
- * Updated to properly handle widget order
- *
- * Revision 1.2  2006/07/19 16:26:21  lafrasse
- * Generalized setConstraint code
- * Updated documentation
- *
- * Revision 1.1  2006/03/27 11:59:58  lafrasse
- * Added new experimental Java GUI
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 

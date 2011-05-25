@@ -1,21 +1,5 @@
 #*******************************************************************************
-# JMMC project
-#
-# "@(#) $Id: Makefile,v 1.7 2005-11-18 15:24:55 swmgr Exp $"
-#
-# Makefile of ........
-#
-# History
-# -------
-# $Log: not supported by cvs2svn $
-# Revision 1.6  2005/02/15 14:51:27  gzins
-# Removed unused target
-#
-# Revision 1.5  2005/02/15 14:50:51  gzins
-# Added CVS log as file modification history
-#
-# sccmgr    16-Nov-2004  Created
-#
+# JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
 #*******************************************************************************
 # REMARKS
 #    Makefile based on the VLT/ALMA Makefile

@@ -1,48 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: DistanceFilter.java,v 1.13 2010-10-10 22:45:03 lafrasse Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.12  2010/10/10 22:21:04  lafrasse
- * Fixed first round of NetBeans-detected warnings.
- *
- * Revision 1.11  2009/10/20 13:36:23  lafrasse
- * Fixed unit conversion problem while filtering stars on RA separation (bug
- * #1255675722).
- *
- * Revision 1.10  2008/09/10 22:20:44  lafrasse
- * Moved away from MCS Logger to standard Java logger API.
- *
- * Revision 1.9  2008/05/30 12:39:54  lafrasse
- * Updated according to jmcs ALX API changes.
- *
- * Revision 1.8  2007/08/02 15:35:51  lafrasse
- * Streamlined GUI and enfored protection against missing data.
- *
- * Revision 1.7  2007/06/26 08:39:27  lafrasse
- * Removed most TODOs by adding error handling through exceptions.
- *
- * Revision 1.6  2007/02/13 13:58:44  lafrasse
- * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
- *
- * Revision 1.5  2006/11/14 14:44:56  lafrasse
- * Moved all astronomical-related computations in the new jmmc.mcs.astro package.
- *
- * Revision 1.4  2006/11/08 22:25:00  lafrasse
- * Implemented filtering algorithm.
- *
- * Revision 1.3  2006/08/08 16:13:21  lafrasse
- * Updated to properly handle widget order
- *
- * Revision 1.2  2006/07/19 16:22:31  lafrasse
- * Changed name and behavior according to preliminary review scientists feedback
- *
- * Revision 1.1  2006/03/27 11:59:58  lafrasse
- * Added new experimental Java GUI
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 

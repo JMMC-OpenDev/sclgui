@@ -1,17 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: SearchCalServerClient.java,v 1.3 2011-04-14 08:14:05 lafrasse Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.2  2011/04/06 15:34:15  bourgesl
- * use Urls.parseURL to handle properly malformed URL exception
- *
- * Revision 1.1  2011/04/01 14:49:46  bourgesl
- * Axis client code (locator, stub) and its configuration in this class
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui.ws;
 

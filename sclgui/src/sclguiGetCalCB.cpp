@@ -1,18 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclguiGetCalCB.cpp,v 1.31 2006-04-05 15:09:50 gzins Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.30  2006/03/03 15:28:17  scetre
- * Changed rcsId to rcsId __attribute__ ((unused))
- *
- * Revision 1.29  2006/02/22 13:28:02  gzins
- * Put command callbacks in separated source files
- *
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

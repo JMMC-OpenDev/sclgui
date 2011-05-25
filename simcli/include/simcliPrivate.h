@@ -1,15 +1,7 @@
 #ifndef simcliPrivate_H
 #define simcliPrivate_H
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: simcliPrivate.h,v 1.3 2005-02-15 14:50:51 gzins Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * sccmgr    16-Nov-2004  Created
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

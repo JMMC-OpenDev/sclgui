@@ -1,15 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclguiExitCB.cpp,v 1.2 2006-03-03 15:28:17 scetre Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.1  2006/02/22 13:28:02  gzins
- * Put command callbacks in separated source files
- *
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

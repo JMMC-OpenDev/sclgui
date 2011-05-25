@@ -1,16 +1,7 @@
 #ifndef sclguiREQUEST_MODEL_H
 #define sclguiREQUEST_MODEL_H
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclguiREQUEST_MODEL.h,v 1.2 2005-11-05 15:42:57 gzins Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.1  2005/10/11 15:24:15  scetre
- * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**
