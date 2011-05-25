@@ -1,32 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclguiCALIBRATOR_LIST_MODEL.cpp,v 1.8 2006-04-05 15:08:28 gzins Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.7  2006/03/03 15:28:17  scetre
- * Changed rcsId to rcsId __attribute__ ((unused))
- *
- * Revision 1.6  2005/12/22 13:03:22  scetre
- * Updated doxygen doumentation
- *
- * Revision 1.5  2005/12/14 09:04:50  scetre
- * Used new filter constructor
- *
- * Revision 1.4  2005/11/30 10:35:58  scetre
- * Updated with new filter
- *
- * Revision 1.3  2005/11/05 15:55:51  gzins
- * Change Enabled and Disabled to Enable and Disable
- *
- * Revision 1.2  2005/10/18 12:52:48  lafrasse
- * First code revue
- *
- * Revision 1.1  2005/10/11 15:24:15  scetre
- * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

@@ -1,18 +1,6 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: SearchCalJUnitTest.java,v 1.3 2011-04-04 14:26:22 bourgesl Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.2  2011/04/01 10:04:13  bourgesl
- * added SearchCal tests (n queries and n cancels)
- *
- * Revision 1.1  2011/03/18 16:22:33  bourgesl
- * use Fest Swing to test SearchCal (start / submit query and wait / prefs / exit)
- *
- */
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
+ ******************************************************************************/
 package fest;
 
 import static org.fest.swing.core.matcher.JButtonMatcher.*;

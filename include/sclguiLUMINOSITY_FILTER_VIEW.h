@@ -1,16 +1,7 @@
 #ifndef sclguiLUMINOSITY_FILTER_VIEW_H
 #define sclguiLUMINOSITY_FILTER_VIEW_H
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: sclguiLUMINOSITY_FILTER_VIEW.h,v 1.3 2005-10-18 12:52:48 lafrasse Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.2  2005/10/11 15:24:15  scetre
- * New class of MVC second generation added. Removed Obsolete class. Changed Class present in the two versions.
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 
 /**

@@ -1,4 +1,7 @@
 #!/bin/bash
+#*******************************************************************************
+# JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
+#*******************************************************************************
 
 # You should only have to define properly two next lines
 MAINCLASS=fr/jmmc/scalib/sclgui/SearchCalibrators

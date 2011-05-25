@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 #*******************************************************************************
-# JMMC project
-#
-# "@(#) $Id: sclguiTestCSVColumns.sh,v 1.2 2008-02-13 14:03:09 lafrasse Exp $"
-#
-# History
-# -------
-# $Log: not supported by cvs2svn $
-# Revision 1.1  2008/01/28 14:06:29  lafrasse
-# Creation
-#
+# JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
 #*******************************************************************************
 
 #/**

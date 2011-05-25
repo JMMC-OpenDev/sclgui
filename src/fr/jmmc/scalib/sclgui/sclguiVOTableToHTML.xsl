@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
+<!--
+********************************************************************************
+* JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
+********************************************************************************
+DESCRIPTION
+- transform VOTable into HTML files
+-->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:exslt="http://exslt.org/common"
     xmlns:math="http://exslt.org/math"

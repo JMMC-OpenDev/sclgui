@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
 ********************************************************************************
-JMMC project
-
-"@(#) $Id: sclguiVOTableToCSV.xsl,v 1.5 2008-12-15 13:32:37 lafrasse Exp $"
-
-History
-~~~~~~~
-$Log: not supported by cvs2svn $
-Revision 1.4  2008/02/06 14:55:01  mella
-Fix rcsId auto update
-
-Revision 1.3  2008/02/06 14:54:03  mella
-Output non hidden field only with comma as default field separator
-
-Revision 1.2  2007/06/26 15:06:39  lafrasse
-Corrected by Guillaume MELLA (different namespace handling).
-
-Revision 1.1  2006/06/19 11:28:01  mella
-Xsl material to export VOTable content
-
+* JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
 ********************************************************************************
-NAME
-voTableToCSV.xsl
-- transform one VOTable into a csv file 
+DESCRIPTION
+- transform VOTable into CSV files
 - accept external parameter to specify field separator (fieldSeparator)
-
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:VOT="http://www.ivoa.net/xml/VOTable/v1.1"
     xmlns:exslt="http://exslt.org/common"

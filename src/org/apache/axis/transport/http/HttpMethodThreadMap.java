@@ -1,13 +1,6 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: HttpMethodThreadMap.java,v 1.1 2011-04-01 10:02:25 bourgesl Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- *
- */
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
+ ******************************************************************************/
 package org.apache.axis.transport.http;
 
 import java.util.Map;

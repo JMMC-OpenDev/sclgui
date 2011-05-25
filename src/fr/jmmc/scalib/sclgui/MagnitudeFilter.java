@@ -1,35 +1,5 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: MagnitudeFilter.java,v 1.9 2010-10-10 22:45:03 lafrasse Exp $"
- *
- * History
- * -------
- * $Log: not supported by cvs2svn $
- * Revision 1.8  2010/10/10 22:21:04  lafrasse
- * Fixed first round of NetBeans-detected warnings.
- *
- * Revision 1.7  2008/09/10 22:27:12  lafrasse
- * Moved away from MCS Logger to standard Java logger API.
- *
- * Revision 1.6  2007/08/02 15:35:51  lafrasse
- * Streamlined GUI and enfored protection against missing data.
- *
- * Revision 1.5  2007/02/13 13:58:44  lafrasse
- * Moved sources from sclgui/src/jmmc into sclgui/src/fr and renamed packages
- *
- * Revision 1.4  2006/11/08 22:25:00  lafrasse
- * Implemented filtering algorithm.
- *
- * Revision 1.3  2006/08/08 16:13:21  lafrasse
- * Updated to properly handle widget order
- *
- * Revision 1.2  2006/08/03 14:47:29  lafrasse
- * Jalopyzation
- *
- * Revision 1.1  2006/07/19 16:22:55  lafrasse
- * Creation
- *
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 

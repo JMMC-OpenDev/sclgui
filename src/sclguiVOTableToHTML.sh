@@ -1,15 +1,6 @@
 #!/bin/bash
 #*******************************************************************************
-# JMMC project
-#
-# "@(#) $Id: sclguiVOTableToHTML.sh,v 1.1 2009-11-05 14:16:28 mella Exp $"
-#
-# History
-# -------
-# $Log: not supported by cvs2svn $
-# Revision 1.1  2009/10/26 13:54:58  mella
-# Add new utility to transform a searchcal votable to html
-#
+# JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
 #*******************************************************************************
 
 #/**
