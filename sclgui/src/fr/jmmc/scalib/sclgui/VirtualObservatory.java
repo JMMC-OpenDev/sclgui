@@ -3,7 +3,6 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.Catalog;
 import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.gui.MessagePane;
 import fr.jmmc.mcs.gui.MessagePane.ConfirmSaveChanges;
@@ -15,26 +14,19 @@ import fr.jmmc.mcs.interop.SampCapabilityAction;
 import fr.jmmc.mcs.interop.SampMessageHandler;
 import fr.jmmc.mcs.util.ActionRegistrar;
 import fr.jmmc.mcs.util.FileFilterRepository;
-import fr.jmmc.mcs.util.MCSExceptionHandler;
 import fr.jmmc.mcs.util.RegisteredAction;
-import fr.jmmc.scalib.sclgui.ws.SearchCalServerClient;
-import fr.jmmc.sclws_wsdl.SclwsPortType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
-import org.apache.axis.transport.http.AbortableCommonsHTTPSender;
-import org.apache.axis.transport.http.HttpMethodThreadMap;
 import org.astrogrid.samp.Message;
 
 /**
@@ -123,7 +115,7 @@ public final class VirtualObservatory extends Observable {
                 "_shareCalibratorsThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
 
         // Query related members
-        _getCalAction = new GetCalAction(classPath, "_getCalAction");
+        _getCalAction = new GetCalAction(this, classPath, "_getCalAction");
 
         // Add handler to load query params and launch calibrator search
         new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
@@ -736,578 +728,134 @@ public final class VirtualObservatory extends Observable {
     /**
      * Get calibrator list as a raw VOTable from JMMC web service.
      */
-    protected final class GetCalAction extends RegisteredAction {
+    protected final class GetCalAction extends AbstractGetCalAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
-        /** http query thread */
-        private GetCalThread _getCalThread = null;
-        /** query count */
-        private final AtomicInteger _queryCounter = new AtomicInteger(0);
+
+        /* members */
+        /** VirtualObservatory instance */
+        private final VirtualObservatory _vo;
 
         /**
          * Constructor
+         * @param vo VirtualObservatory instance
          * @param classPath the path of the class containing the field pointing to
          * the action, in the form returned by 'getClass().getName();'.
          * @param fieldName the name of the field pointing to the action.
          */
-        public GetCalAction(final String classPath, final String fieldName) {
+        protected GetCalAction(final VirtualObservatory vo, final String classPath, final String fieldName) {
             super(classPath, fieldName, "Get Calibrators");
-
-            setEnabled(false);
+            
+            this._vo = vo;
         }
 
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("GetCalAction", "actionPerformed");
+        /**
+         * Return whether the query has been launched or not.
+         *
+         * @return true if the query is already launched, false otherwise.
+         */
+        protected boolean isQueryLaunched() {
+            return _vo.isQueryLaunched();
+        }
 
-            // Launch a new thread only if no other one has been launched yet
-            if (!isQueryLaunched()) {
-                // Query is starting
-                setQueryLaunchedState(true);
+         /**
+         * Return all current properties as an MCS-like sclsvr-formatted query.
+         *
+         * @return the query as a string.
+         */
+        protected String getQueryAsMCSString() {
+            return _queryModel.getQueryAsMCSString();
+        }
 
-                StatusBar.show("searching calibrators... (please wait, this may take a while)");
+         /**
+         * Set whether the query has been launched or not using Swing EDT.
+         *
+         * @param running true to enable all menus, false otherwise.
+         */
+        protected void setQueryLaunchedState(final boolean running) {
+            _vo.setQueryLaunchedState(running);
+        }
 
-                // Get the query from the GUI
-                final String query = _queryModel.getQueryAsMCSString();
+        /**
+         * Define the query progression
+         * @param catalogName current catalog name
+         * @param catalogIndex current catalog index
+         * @param nbOfCatalogs total number of catalogs
+         */
+        protected void setQueryProgress(final String catalogName, final int catalogIndex, final int nbOfCatalogs) {
+            // Use invokeLater to avoid concurrency and ensure that
+            // data model is modified and fire events using Swing EDT :
+            SwingUtilities.invokeLater(new Runnable() {
 
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("Query = '" + query + "'.");
-                }
+              public void run() {
+                  // Update the query model accordingly
+                  _queryModel.setCatalogName(catalogName);
+                  _queryModel.setCurrentStep(catalogIndex);
+                  _queryModel.setTotalStep(nbOfCatalogs);
+              }
+            });          
+        }
 
-                // Launch the query in the background in order to keed GUI updated
-                _getCalThread = new GetCalThread(_queryCounter.incrementAndGet(), query);
+        /**
+         * Parse the received VOTable
+         * @param votable VOTable
+         */
+        protected void parseResults(final String votable) {
+            if (votable != null && votable.length() > 0) {
 
-                // define UncaughtExceptionHandler :
-                MCSExceptionHandler.installThreadHandler(_getCalThread);
+                // Use invokeLater to avoid concurrency and ensure that
+                // data model is modified and fire events using Swing EDT :
+                SwingUtilities.invokeLater(new Runnable() {
 
-                _getCalThread.start();
+                    /**
+                     * Update the GUI using SearchCal results (VOTable)
+                     */
+                    public void run() {
+                      // Parse the received VOTable
+                      try {
+                        StatusBar.show("parsing calibrators... (please wait, this may take a while)");
 
+                        // Parse the received VOTable
+                        // TODO : refine the possible exceptions in parseVOTable(string):
+                        _calibratorsModel.parseVOTable(votable);
+
+                        StatusBar.show("searching calibrators... done.");
+
+                        // As data are now loaded
+                        _vo.enableDataRelatedMenus(true);
+
+                      } catch (Exception e) {
+                        StatusBar.show("calibrator parsing aborted !");
+                        MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", e);
+                      }
+                    }
+                }); // EDT Task          
+          
             } else {
-                StatusBar.show("cancelling current calibrator search...");
-
-                // If the GetCal thread has already been launched
-                if (_getCalThread != null) {
-                    // Kill it
-                    _logger.fine("Killing GetCal thread ... ");
-
-                    // indicate that the user cancelled the query:
-                    _getCalThread.cancel(true);
-                    _getCalThread = null;
-
-                    _logger.fine("GetCal thread killed.");
-                }
-
-                // Query is finished
-                setQueryLaunchedState(false);
-
-                StatusBar.show("calibrator search cancelled.");
+              _logger.fine("No calibrators found.");
+              StatusBar.show("no calibrators found.");
             }
         }
 
         /**
-         * Return a thread name
-         * @param name name prefix
-         * @param number number to identify uniquely the thread
-         * @return thread name : prefix + '-' + thread number
+         * Display the given message to the user (status bar)
+         * @param message message to show
          */
-        private final String getThreadName(final String name, final int number) {
-            final StringBuilder sb = new StringBuilder(name).append('-');
-            sb.append(number);
-            return sb.toString();
+        protected void showStatus(final String message) {
+          StatusBar.show(message);
         }
 
         /**
-         * Wait for each CDS interrogation progress while another thread waits for the final response.
+         * Show an error with the given message plus the exception message (if any) using EDT if needed
+         * and log the exception
+         * @param message message to display
+         * @param th exception to use
          */
-        private final class GetCalThread extends Thread {
-
-            /** query number */
-            private final int _queryNumber;
-            /** QuerySearchCal WebService client */
-            private final SclwsPortType _sclws;
-            /** QuerySearchCal query */
-            private final String _query;
-            /** QuerySearchCal Session ID */
-            private String _id;
-            /** flag to indicate that cancel is done */
-            /* atomic stop flag used to indicate that cancel is done and coordinate state between threads */
-            private final AtomicBoolean _cancel = new AtomicBoolean();
-            /** flag to indicate an user cancellation */
-            private boolean _userCancel = false;
-            /** QuerySearchCal query thread */
-            private QueryResultThread _queryResultThread = null;
-
-            /**
-             * Create a new QuerySearchCal Session thread (get Id, get statuses and waits for the final response)
-             * @param queryNumber query number
-             * @param query QuerySearchCal query
-             */
-            private GetCalThread(final int queryNumber, final String query) {
-                super(getThreadName("GetCalThread", queryNumber));
-                _queryNumber = queryNumber;
-                _query = query;
-
-                // Get one WS client:
-                _sclws = SearchCalServerClient.getInstance().getSclWsClient();
-            }
-
-            @Override
-            public void run() {
-                _logger.entering("GetCalThread", "run");
-
-                // current state used to report proper message if an exception is caught:
-                QueryState currentState = QueryState.OpenSession;
-                try {
-
-                    // Check if the query was cancelled:
-                    if (isCancelled()) {
-                        return;
-                    }
-
-                    // 1 - Get the connection ID :
-                    // this WS call can block if connection attempt fails :
-                    _id = _sclws.getCalOpenSession();
-
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("JMMC Connection ID = '" + _id + "'.");
-                    }
-
-                    StatusBar.show("searching calibrators... (connection established)");
-
-                    // 2 - Launch the querying thread
-                    _queryResultThread = new QueryResultThread(_queryNumber, _sclws, _id, _query);
-
-                    // define UncaughtExceptionHandler :
-                    MCSExceptionHandler.installThreadHandler(_queryResultThread);
-
-                    // Check if the query was cancelled:
-                    if (isCancelled()) {
-                        return;
-                    }
-
-                    _queryResultThread.start();
-
-                    StatusBar.show("searching calibrators... (querying catalogs)");
-
-                    // change the current state to QueryStatus:
-                    currentState = QueryState.QueryStatus;
-
-                    // 3 - GetCal status polling to update ProgressBar
-                    int requestStatus;
-                    do {
-
-                        // Check if the query was cancelled:
-                        if (isCancelled()) {
-                            return;
-                        }
-
-                        // Get query progression status
-                        // this WS call can block if connection attempt fails :
-                        final String currentStatus = _sclws.getCalQueryStatus(_id);
-
-                        // Deserialize the new status to update the GUI
-                        final String[] splittedStatus = currentStatus.split("\t");
-
-                        // Parse the received status
-                        int i = 0;
-                        requestStatus = Integer.parseInt(splittedStatus[i++]);
-
-                        final String currentCatalogName;
-                        final Integer catalogIndex;
-                        final Integer nbOfCatalogs;
-
-                        if (splittedStatus.length == 4) {
-                            // Get the catalog name
-                            currentCatalogName = Catalog.titleFromReference(splittedStatus[i++]);
-
-                            // Get the catalog index
-                            catalogIndex = Integer.valueOf(splittedStatus[i++]);
-
-                            // Get the total number of catalogs
-                            nbOfCatalogs = Integer.valueOf(splittedStatus[i++]);
-
-                            // Compose the dispalyed query status
-                            final String composedQueryStatus = currentCatalogName
-                                    + " - (" + catalogIndex + "/" + nbOfCatalogs
-                                    + ")";
-
-                            // Use invokeLater to avoid concurrency and ensure that
-                            // data model is modified and fire events using Swing EDT :
-                            SwingUtilities.invokeLater(new Runnable() {
-                                public void run() {
-                                    // Update the query model accordingly
-                                    _queryModel.setCatalogName(composedQueryStatus);
-                                    _queryModel.setCurrentStep(catalogIndex.intValue());
-                                    _queryModel.setTotalStep(nbOfCatalogs.intValue());
-                                }
-                            });
-                        } else {
-                            currentCatalogName = "";
-                            catalogIndex = Integer.valueOf(0);
-                            nbOfCatalogs = Integer.valueOf(0);
-                        }
-
-                        if (_logger.isLoggable(Level.FINE)) {
-                            _logger.fine("Status = '" + currentCatalogName
-                                    + "' - " + catalogIndex + "/" + nbOfCatalogs
-                                    + " (status = '" + requestStatus + "').");
-                        }
-
-                    } while (requestStatus == 1);
-
-                    StatusBar.show("searching calibrators... (waiting for result)");
-
-                    // change the current state to QueryResult:
-                    currentState = QueryState.QueryResult;
-
-                    // Check if the query was cancelled:
-                    if (isCancelled()) {
-                        return;
-                    }
-
-                    // 4 - Wait for the query thread to finish:
-                    _queryResultThread.join();
-
-                    // Check if the query was cancelled:
-                    if (isCancelled()) {
-                        return;
-                    }
-
-                    // 5 - get results and parse them :
-                    final String result = _queryResultThread.getResult();
-
-                    // Use invokeLater to avoid concurrency and ensure that
-                    // data model is modified and fire events using Swing EDT :
-                    SwingUtilities.invokeLater(new Runnable() {
-
-                        /**
-                         * Update the GUI using SearchCal results (VOTable)
-                         */
-                        public void run() {
-                            if (result != null && result.length() > 0) {
-                                try {
-                                    StatusBar.show("parsing calibrators... (please wait, this may take a while)");
-
-                                    // Parse the received VOTable
-                                    // TODO : refine the possible exceptions in parseVOTable(string):
-                                    _calibratorsModel.parseVOTable(result);
-
-                                    StatusBar.show("searching calibrators... done.");
-
-                                    // As data are now loaded
-                                    enableDataRelatedMenus(true);
-
-                                } catch (Exception e) {
-                                    StatusBar.show("calibrator parsing aborted !");
-                                    MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", e);
-                                }
-                            } else {
-                                _logger.fine("No calibrators found.");
-                                StatusBar.show("no calibrators found.");
-                            }
-                        }
-                    }); // EDT Task
-
-                } catch (NumberFormatException nfe) {
-                    // can occur when parsing status query (2)
-                    handleException(nfe, currentState);
-                } catch (InterruptedException ie) {
-                    // can occur when thie thread wait for the query thread to finish (4)
-                    handleException(ie, currentState);
-                } catch (RemoteException re) {
-                    // server or http failure
-                    handleException(re, currentState);
-                } finally {
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.log(Level.INFO, getName() + " thread.run done.");
-                    }
-                    // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
-                    // in AbortableCommonsHTTPSender#relaseConnection() :
-                    HttpMethodThreadMap.get().remove(getName());
-                }
-
-                // Query is finished
-                setQueryLaunchedState(false);
-            }
-
-            /**
-             * Handle exceptions coming from threads communicating with the SearchCal Server
-             * @param e exception
-             * @param state current state used to find user messages
-             */
-            private void handleException(final Exception e, final QueryState state) {
-                // Handle error when no manual cancel
-                if (isUserCancel() || isCancelled()) {
-                    // already handled:
-                    _logger.log(Level.FINE, "Silenced error (cancellation) : ", e);
-
-                    return;
-                }
-
-                // cancel queries now to change cancel barrier:
-                cancel(false);
-
-                final String status;
-                final String message;
-                switch (state) {
-                    default:
-                    case OpenSession:
-                        status = "calibrator search aborted (connection refused) !";
-                        message = "Could not connect to JMMC server.";
-                        break;
-
-                    case QueryStatus:
-                        status = "calibrator search aborted (catalog error) !";
-                        message = "Communication with the JMMC server failed.";
-                        break;
-
-                    case QuerySearchCal:
-                        status = "calibrator search aborted (could not send query) !";
-                        message = "Could not send query to JMMC server.";
-                        break;
-
-                    case QueryResult:
-                        status = "calibrator search aborted (could not get result) !";
-                        message = "Could not get result from JMMC server.";
-                }
-
-                // Use messages corresponding to state:
-                StatusBar.show(status);
-
-                // Exception is logged in MessagePane:
-                MessagePane.showErrorMessage(message, e);
-
-                // change the GUI state:
-                setQueryLaunchedState(false);
-            }
-
-            /**
-             * Cancel current requests
-             * @param userCancel flag to indicate if the user canceled requests
-             */
-            private void cancel(final boolean userCancel) {
-                _logger.entering("GetCalThread", "cancel");
-
-                /* avoid multiple cancel calls and indicate to threads to halt at the next
-                 * opportunity. */
-                if (_cancel.compareAndSet(false, true)) {
-                    _userCancel = userCancel;
-
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("cancel: " + userCancel);
-                    }
-
-                    // First Cancel the request:
-// Disabled cancel query because it crashes the SearchCal Server !
-/*
-
-                    if (_id != null) {
-                        // Launch the cancel query thread to free resources on the server side:
-                        final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
-
-                        // define UncaughtExceptionHandler :
-                        MCSExceptionHandler.installThreadHandler(cancelThread);
-
-                        cancelThread.start();
-                    }
- */
-
-                    // If the QueryResult thread has already been launched
-                    if (_queryResultThread != null) {
-                        // interrupt it:
-
-                        _logger.fine("Killing QueryResult thread ... ");
-
-                        // interrupt the QueryResult thread:
-
-                        /* Interrupt the blocking thread.  This won't break out of a blocking
-                         * I/O request, but will break out of a wait or sleep call.  While in
-                         * this case we know that no such condition is possible, it is always a
-                         * good idea to include an interrupt to avoid assumptions about the
-                         * thread in question. */
-                        _queryResultThread.interrupt();
-
-                        // Close HTTP connection:
-                        AbortableCommonsHTTPSender.abort(_queryResultThread);
-
-                        _logger.fine("QueryResult thread killed.");
-                    }
-
-                    // interrupt this thread:
-
-                    /* Interrupt the blocking thread.  This won't break out of a blocking
-                     * I/O request, but will break out of a wait or sleep call.  While in
-                     * this case we know that no such condition is possible, it is always a
-                     * good idea to include an interrupt to avoid assumptions about the
-                     * thread in question. */
-                    this.interrupt();
-
-                    // Close HTTP connection:
-                    AbortableCommonsHTTPSender.abort(this);
-
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("cancel done.");
-                    }
-                }
-            }
-
-            /**
-             * Return true if the user cancelled the query
-             * @return true if the user cancelled the query
-             */
-            private boolean isUserCancel() {
-                return _userCancel;
-            }
-
-            /**
-             * Return true if the query is cancelled
-             * @return true if the query is cancelled
-             */
-            private boolean isCancelled() {
-                return _cancel.get();
-            }
-
-            /**
-             * Wait for the final reply from the server while another thread monitor CDS interrogation progress.
-             */
-            private final class QueryResultThread extends Thread {
-
-                /** QuerySearchCal WebService client */
-                private final SclwsPortType _sclws;
-                /** QuerySearchCal Session ID */
-                private final String _id;
-                /** QuerySearchCal query */
-                private final String _query;
-                /** QuerySearchCal server response (VOTable) */
-                private String _result = null;
-
-                /**
-                 * Creates a new Thread to send query to the server
-                 * @param queryNumber query number
-                 * @param sclws QuerySearchCal WebService client
-                 * @param id QuerySearchCal Session ID
-                 * @param query QuerySearchCal query
-                 */
-                private QueryResultThread(final int queryNumber, final SclwsPortType sclws, final String id, final String query) {
-                    super(getThreadName("QueryResultThread", queryNumber));
-                    _sclws = sclws;
-                    _query = query;
-                    _id = id;
-                }
-
-                /**
-                 * Runs the query i.e. calls getCalSearchCal(_id, _query)
-                 */
-                @Override
-                public void run() {
-                    _logger.entering("QueryResultThread", "run");
-
-                    try {
-                        StatusBar.show("searching calibrators... (sending query)");
-
-                        // Check if the query was cancelled:
-                        if (isCancelled()) {
-                            return;
-                        }
-
-                        // Launch the query
-                        final long start = System.nanoTime();
-
-                        // this WS call can block if connection attempt fails :
-                        _result = _sclws.getCalSearchCal(_id, _query);
-
-                        if (_logger.isLoggable(Level.INFO)) {
-                            _logger.info(getName() + " duration = " + 1e-9d * (System.nanoTime() - start) + " s.");
-                        }
-
-                        StatusBar.show("searching calibrators... (result received)");
-
-                    } catch (RemoteException re) {
-                        // server or http failure
-                        handleException(re, QueryState.QuerySearchCal);
-                    } finally {
-                        if (_logger.isLoggable(Level.INFO)) {
-                            _logger.log(Level.INFO, getName() + " thread.run done.");
-                        }
-                        // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
-                        // in AbortableCommonsHTTPSender#relaseConnection() :
-                        HttpMethodThreadMap.get().remove(getName());
-                    }
-                }
-
-                /**
-                 * Return the query result
-                 * @return result or null if interrupted or canceled
-                 */
-                private String getResult() {
-                    _logger.entering("QueryResultThread", "getResult");
-
-                    return _result;
-                }
-            }
-
-            /**
-             * Send cancel message to the server asynchronously
-             *
-             * UNUSED until server handles properly getCalCancelSession() i.e. stable (no more crash)
-             */
-            private final class CancelQueryThread extends Thread {
-
-                /** QuerySearchCal WebService client */
-                private final SclwsPortType _sclws;
-                /** QuerySearchCal Session ID */
-                private final String _id;
-
-                /**
-                 * Creates a new Thread to send cancel message to the server asynchronously
-                 * @param queryNumber query number
-                 * @param sclws QuerySearchCal WebService client
-                 * @param id QuerySearchCal Session ID
-                 */
-                private CancelQueryThread(final int queryNumber, final SclwsPortType sclws, final String id) {
-                    super(getThreadName("CancelQueryThread", queryNumber));
-                    _sclws = sclws;
-                    _id = id;
-                }
-
-                /**
-                 * Send the cancel query i.e. calls getCalCancelSession(id)
-                 */
-                @Override
-                public void run() {
-                    _logger.entering("CancelQueryThread", "run");
-
-                    try {
-
-                        // Ask for query cancellation:
-                        // 1- free resources on the server side
-                        // 2- remove id from active identifiers
-                        // note: next calls using this id will fail.
-
-                        if (_logger.isLoggable(Level.INFO)) {
-                            _logger.log(Level.INFO, getName() + " cancel session with id = " + _id);
-                        }
-
-                        // this WS call can block if connection attempt fails :
-                        _sclws.getCalCancelSession(_id);
-
-                    } catch (RemoteException re) {
-                        // do not report this failure to the user, only log the exception:
-                        if (_logger.isLoggable(Level.WARNING)) {
-                            _logger.log(Level.WARNING, "cancel request failed : ", re);
-                        }
-
-                    } finally {
-                        if (_logger.isLoggable(Level.INFO)) {
-                            _logger.log(Level.INFO, getName() + " thread.run done.");
-                        }
-                        // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
-                        // in AbortableCommonsHTTPSender#relaseConnection() :
-                        HttpMethodThreadMap.get().remove(getName());
-                    }
-                }
-            }
+        protected void showErrorMessage(final String message, final Throwable th) {
+          MessagePane.showErrorMessage(message, th);
         }
-    }
+
+    }        
 }
 /*___oOo___*/
