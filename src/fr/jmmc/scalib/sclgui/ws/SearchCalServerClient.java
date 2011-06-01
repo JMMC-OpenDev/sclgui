@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.rpc.ServiceException;
 import org.apache.axis.AxisProperties;
+import org.apache.axis.client.Call;
 import org.apache.axis.components.net.DefaultCommonsHTTPClientProperties;
 import org.apache.axis.configuration.EngineConfigurationFactoryDefault;
 import org.apache.axis.transport.http.HTTPConstants;
@@ -178,7 +179,10 @@ public final class SearchCalServerClient {
         _httpHeaders.put(HTTPConstants.HEADER_TRANSFER_ENCODING_CHUNKED, "false");
       }
       stub._setProperty(HTTPConstants.REQUEST_HEADERS, _httpHeaders);
-
+      
+      // enable streaming for SAX performance issues:
+      stub._setProperty(Call.STREAMING_PROPERTY, Boolean.TRUE);
+      
       return stub;
 
     } catch (ServiceException se) {
