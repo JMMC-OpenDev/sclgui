@@ -50,9 +50,11 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
   private static final long QUERY_PAUSE = 1 * 1000l;
   /** flag indicating to test cancel n queries */
   private static final boolean TEST_CANCEL = false;
+  /** flag to perform big queries on V band */
+  private static final boolean TEST_BIG = true;
   /** flag to perform queries on N band */
-  private static final boolean TEST_BAND_N = true;
-
+  private static final boolean TEST_BAND_N = false;
+  
   /**
    * Define the application
    */
@@ -60,11 +62,21 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     // disable dev LAF menu :
     System.setProperty("jmcs.laf.menu", "false");
 
+    final String path = "/home/bourgesl/dev/sclgui/test/";
+    
+    final String fileName;
+    if (TEST_BIG) {
+      fileName = path + "SearchCal-HD_32617.scvot";
+    } else if (TEST_BAND_N) {
+      fileName = path + "SearchCal-BAND_N.scvot";
+    } else {
+      fileName = path + "SearchCal-ETA_TAU_fast.scvot";
+    }
+
     JmcsApplicationSetup.define(
             fr.jmmc.scalib.sclgui.SearchCalibrators.class,
             "-open",
-            (TEST_BAND_N) ? "/home/bourgesl/dev/sclgui/test/SearchCal-BAND_N.scvot"
-            : "/home/bourgesl/dev/sclgui/test/SearchCal-ETA_TAU_fast.scvot");
+            fileName);
 
     // define robot delays :
     defineRobotDelayBetweenEvents(SHORT_DELAY);
@@ -78,7 +90,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     // TimerFactory warmup and reset :
     TimerFactory.resetTimers();
   }
-  
+
   /**
    * Test if the application started correctly
    */
