@@ -127,7 +127,7 @@ mcsCOMPL_STAT vobsSTAR_COMP_CRITERIA_LIST::Clear(void)
  * Always mcsSUCCESS.
  */
 mcsCOMPL_STAT vobsSTAR_COMP_CRITERIA_LIST::Add(char *propertyId,
-                                               mcsFLOAT range)
+                                               mcsDOUBLE range)
 {
     logTrace("vobsSTAR_COMP_CRITERIA_LIST::Add()");
   
@@ -198,7 +198,7 @@ mcsCOMPL_STAT vobsSTAR_COMP_CRITERIA_LIST::Remove(char *propertyId)
  * \li vobsERR_NO_MORE_CRITERIA
  */
 mcsCOMPL_STAT vobsSTAR_COMP_CRITERIA_LIST::GetNextCriteria(char *propertyId,
-                                                           mcsFLOAT *range,
+                                                           mcsDOUBLE *range,
                                                            mcsLOGICAL init)
 {
     logTrace("vobsSTAR_COMP_CRITERIA_LIST::GetNextCriteria()");
