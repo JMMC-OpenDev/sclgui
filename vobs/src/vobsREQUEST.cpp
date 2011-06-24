@@ -229,7 +229,7 @@ mcsCOMPL_STAT vobsREQUEST::SetObjectRa(const char *objectRa)
         return mcsFAILURE;
     }
 
-    mcsFLOAT ra;
+    mcsDOUBLE ra;
     if (star.GetRa(ra) == mcsFAILURE)
     {
         return mcsFAILURE;
@@ -237,7 +237,7 @@ mcsCOMPL_STAT vobsREQUEST::SetObjectRa(const char *objectRa)
 
     // Reformat string as +/-HH:MM:SS.TT
     mcsSTRING64 raHms;
-    mcsFLOAT    hh, hm, hs;
+    mcsDOUBLE    hh, hm, hs;
     // Be sure RA is positive [0 - 360]
     if (ra < 0)
     {
@@ -295,7 +295,7 @@ mcsCOMPL_STAT vobsREQUEST::SetObjectDec(const char *objectDec)
 
     // Reformat string as +/-DD:MM:SS.TT
     mcsSTRING64 decDms;
-    mcsFLOAT    dd, hm, hs;
+    mcsDOUBLE    dd, hm, hs;
     dd = (int) (_objectDecInDeg);
     hm = (int) ((_objectDecInDeg - dd)*60.0);
     hs = (_objectDecInDeg - dd - hm/60.0)*3600.0;
@@ -329,7 +329,7 @@ const char *vobsREQUEST::GetObjectDec(void) const
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
  */
-mcsCOMPL_STAT vobsREQUEST::SetObjectMag(const mcsFLOAT objectMag)
+mcsCOMPL_STAT vobsREQUEST::SetObjectMag(const mcsDOUBLE objectMag)
 {
     logTrace("vobsREQUEST::SetObjectMag()");
 
@@ -343,7 +343,7 @@ mcsCOMPL_STAT vobsREQUEST::SetObjectMag(const mcsFLOAT objectMag)
  *
  * @return science object magnitude.
  */
-mcsFLOAT vobsREQUEST::GetObjectMag(void) const
+mcsDOUBLE vobsREQUEST::GetObjectMag(void) const
 {
     logTrace("vobsREQUEST::GetObjectMag()");
 
@@ -389,10 +389,10 @@ const char *vobsREQUEST::GetSearchBand(void) const
  *
  * @return Always mcsSUCCESS.
  */
-mcsCOMPL_STAT vobsREQUEST::SetSearchArea(const mcsFLOAT deltaRa,
-                                         const mcsFLOAT deltaDec)
+mcsCOMPL_STAT vobsREQUEST::SetSearchArea(const mcsDOUBLE deltaRa,
+                                         const mcsDOUBLE deltaDec)
 {
-    logTrace("vobsREQUEST::SetSearchArea(mcsFLOAT, mcsFLOAT)");
+    logTrace("vobsREQUEST::SetSearchArea(mcsDOUBLE, mcsDOUBLE)");
 
     _deltaRa  = deltaRa;
     _deltaDec = deltaDec;
@@ -412,10 +412,10 @@ mcsCOMPL_STAT vobsREQUEST::SetSearchArea(const mcsFLOAT deltaRa,
  * @return mcsSUCCESS if the search area geometry is rectangular. Otherwise
  * mcsFAILURE is returned.
  */
-mcsCOMPL_STAT vobsREQUEST::GetSearchArea(mcsFLOAT &deltaRa,
-                                         mcsFLOAT &deltaDec) const
+mcsCOMPL_STAT vobsREQUEST::GetSearchArea(mcsDOUBLE &deltaRa,
+                                         mcsDOUBLE &deltaDec) const
 {
-    logTrace("vobsREQUEST::GetSearchArea(mcsFLOAT&, mcsFLOAT&)");
+    logTrace("vobsREQUEST::GetSearchArea(mcsDOUBLE&, mcsDOUBLE&)");
 
     if (_searchAreaGeometry != vobsBOX)
     {
@@ -428,7 +428,7 @@ mcsCOMPL_STAT vobsREQUEST::GetSearchArea(mcsFLOAT &deltaRa,
     //   - _deltaDec is given in arcmin and must be convert in degree
     //   - declinaison is clipped to +/- 85 deg to avoid to have too small box
     //     when observing star very close to a pole.
-    mcsFLOAT dec;
+    mcsDOUBLE dec;
     dec =fabs(_objectDecInDeg) - _deltaDec/2.0/60.0;
     dec = mcsMIN (dec, 85.0);
 
@@ -454,9 +454,9 @@ mcsCOMPL_STAT vobsREQUEST::GetSearchArea(mcsFLOAT &deltaRa,
  *
  * @return Always mcsSUCCESS.
  */
-mcsCOMPL_STAT vobsREQUEST::SetSearchArea(const mcsFLOAT radius)
+mcsCOMPL_STAT vobsREQUEST::SetSearchArea(const mcsDOUBLE radius)
 {
-    logTrace("vobsREQUEST::SetSearchArea(mcsFLOAT)");
+    logTrace("vobsREQUEST::SetSearchArea(mcsDOUBLE)");
 
     _radius  = radius;
     _searchAreaGeometry = vobsCIRCLE;
@@ -473,9 +473,9 @@ mcsCOMPL_STAT vobsREQUEST::SetSearchArea(const mcsFLOAT radius)
  * @return mcsSUCCESS if the search area geometry is circle. Otherwise
  * mcsFAILURE is returned.
  */
-mcsCOMPL_STAT vobsREQUEST::GetSearchArea(mcsFLOAT &radius) const
+mcsCOMPL_STAT vobsREQUEST::GetSearchArea(mcsDOUBLE &radius) const
 {
-    logTrace("vobsREQUEST::GetSearchArea(mcsFLOAT&)");
+    logTrace("vobsREQUEST::GetSearchArea(mcsDOUBLE&)");
 
     if (_searchAreaGeometry != vobsCIRCLE)
     {
@@ -508,7 +508,7 @@ vobsSEARCH_AREA_GEOM vobsREQUEST::GetSearchAreaGeometry(void) const
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
  */
-mcsCOMPL_STAT vobsREQUEST::SetMinMagRange(const mcsFLOAT minMagRange)
+mcsCOMPL_STAT vobsREQUEST::SetMinMagRange(const mcsDOUBLE minMagRange)
 {
     logTrace("vobsREQUEST::SetMinMagRange()");
 
@@ -524,7 +524,7 @@ mcsCOMPL_STAT vobsREQUEST::SetMinMagRange(const mcsFLOAT minMagRange)
  * @return maximum accepted magnitude difference correcponding to a minimum the
  * expected magnitude for the selected object.
  */
-mcsFLOAT vobsREQUEST::GetMinMagRange(void) const
+mcsDOUBLE vobsREQUEST::GetMinMagRange(void) const
 {
     logTrace("vobsREQUEST::GetMinMagRange()");
 
@@ -541,7 +541,7 @@ mcsFLOAT vobsREQUEST::GetMinMagRange(void) const
  * @return mcsSUCCESS on successful completion. Otherwise mcsFAILURE is
  * returned.
  */
-mcsCOMPL_STAT vobsREQUEST::SetMaxMagRange(const mcsFLOAT maxMagRange)
+mcsCOMPL_STAT vobsREQUEST::SetMaxMagRange(const mcsDOUBLE maxMagRange)
 {
     logTrace("vobsREQUEST::SetMaxMagRange()");
 
@@ -557,7 +557,7 @@ mcsCOMPL_STAT vobsREQUEST::SetMaxMagRange(const mcsFLOAT maxMagRange)
  * @return maximum accepted magnitude difference correcponding to a maximum the
  * expected magnitude for the selected object.
  */
-mcsFLOAT vobsREQUEST::GetMaxMagRange(void) const
+mcsDOUBLE vobsREQUEST::GetMaxMagRange(void) const
 {
     logTrace("vobsREQUEST::GetMaxMagRange()");
 
