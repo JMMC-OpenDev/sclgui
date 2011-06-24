@@ -170,7 +170,7 @@ mcsCOMPL_STAT vobsCATALOG_CIO::WriteQuerySpecificPart(void)
     miscDynBufAppendString(&_query, "&-out=F(IR)");
     miscDynBufAppendString(&_query, "&-out=x_F(IR)");
     //constraints
-    miscDynBufAppendString(&_query, "&&x_F(IR)=M");
+    miscDynBufAppendString(&_query, "&x_F(IR)=M");
     miscDynBufAppendString(&_query,"&lambda=1.25,1.65,2.20,3.5,5.0,10.0");
     
     miscDynBufAppendString(&_query, "&-sort=_r");
@@ -199,8 +199,8 @@ mcsCOMPL_STAT vobsCATALOG_CIO::WriteQuerySpecificPart(vobsREQUEST &request)
     
     // Add the magnitude range constraint
     mcsSTRING32 rangeMag;
-    mcsFLOAT minMagRange;
-    mcsFLOAT maxMagRange;
+    mcsDOUBLE minMagRange;
+    mcsDOUBLE maxMagRange;
     minMagRange = request.GetMinMagRange();
     maxMagRange = request.GetMaxMagRange();
     sprintf(rangeMag, "%.2f..%.2f", minMagRange, maxMagRange);
@@ -228,8 +228,8 @@ mcsCOMPL_STAT vobsCATALOG_CIO::WriteQuerySpecificPart(vobsREQUEST &request)
 
     // Add search box size
     mcsSTRING32 separation;
-    mcsFLOAT deltaRa;
-    mcsFLOAT deltaDec;
+    mcsDOUBLE deltaRa;
+    mcsDOUBLE deltaDec;
     if (request.GetSearchArea(deltaRa, deltaDec) == mcsFAILURE)
     {
         return mcsFAILURE;
