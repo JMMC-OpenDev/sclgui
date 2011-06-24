@@ -530,8 +530,8 @@ mcsCOMPL_STAT vobsSTAR_LIST::Sort(char *propertyId, mcsLOGICAL reverseOrder)
                         (strcmp (propertyId, vobsSTAR_POS_EQ_DEC_MAIN) == 0) ||
                         (propertyType == vobsFLOAT_PROPERTY))
                     {
-                        mcsDOUBLE value1;
-                        mcsDOUBLE value2;
+                        mcsFLOAT value1;
+                        mcsFLOAT value2;
                         if (strcmp (propertyId, vobsSTAR_POS_EQ_RA_MAIN)  == 0)
                         {
                             (*prevIter)->GetRa(value1);
