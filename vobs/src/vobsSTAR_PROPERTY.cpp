@@ -304,8 +304,8 @@ mcsCOMPL_STAT vobsSTAR_PROPERTY::SetValue(const char *value,
         else // Value is a float
         {
             // Use the most precision format to read value
-            mcsFLOAT numerical = FP_NAN;
-            if (sscanf(value, "%f", &numerical) != 1)
+            mcsDOUBLE numerical = FP_NAN;
+            if (sscanf(value, "%lf", &numerical) != 1)
             {
                 errAdd(vobsERR_PROPERTY_TYPE, _id.c_str(), value, "%f");
                 return (mcsFAILURE);
@@ -334,7 +334,7 @@ mcsCOMPL_STAT vobsSTAR_PROPERTY::SetValue(const char *value,
  * The possible error is :
  * \li vobsERR_PROPERTY_TYPE
  */
-mcsCOMPL_STAT vobsSTAR_PROPERTY::SetValue(mcsFLOAT value,
+mcsCOMPL_STAT vobsSTAR_PROPERTY::SetValue(mcsDOUBLE value,
                                           const char *origin,
                                           vobsCONFIDENCE_INDEX confidenceIndex,
                                           mcsLOGICAL overwrite)
@@ -419,7 +419,7 @@ const char *vobsSTAR_PROPERTY::GetValue(void) const
  * returned.
  *
  */
-mcsCOMPL_STAT vobsSTAR_PROPERTY::GetValue(mcsFLOAT *value) const
+mcsCOMPL_STAT vobsSTAR_PROPERTY::GetValue(mcsDOUBLE *value) const
 {
     logTrace("vobsSTAR_PROPERTY::GetValue()");
 

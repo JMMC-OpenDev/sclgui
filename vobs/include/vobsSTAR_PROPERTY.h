@@ -135,7 +135,7 @@ public:
                                    const char *origin,
                                    vobsCONFIDENCE_INDEX confidenceIndex=vobsCONFIDENCE_HIGH,
                                    mcsLOGICAL overwrite=mcsFALSE);
-    virtual mcsCOMPL_STAT SetValue(mcsFLOAT value,
+    virtual mcsCOMPL_STAT SetValue(mcsDOUBLE value,
                                    const char *origin,
                                    vobsCONFIDENCE_INDEX confidenceIndex=vobsCONFIDENCE_HIGH,
                                    mcsLOGICAL overwrite=mcsFALSE);
@@ -143,7 +143,7 @@ public:
     
     // Get value
     virtual const char   *GetValue(void) const;
-    virtual mcsCOMPL_STAT GetValue(mcsFLOAT *value) const;
+    virtual mcsCOMPL_STAT GetValue(mcsDOUBLE *value) const;
 
     // Get property origin 
     virtual const char   *GetOrigin(void);
@@ -174,7 +174,7 @@ public:
     virtual const char *GetLink(void) const;
 
     // Get the object summary as a string, including all its member's values
-    virtual string vobsSTAR_PROPERTY::GetSummaryString(void) const;
+    virtual string GetSummaryString(void) const;
 
 protected:
     
@@ -187,7 +187,7 @@ private:
     string               _link;            // CDS link of the value
     string               _description;     // Description of the value
     mcsSTRING64          _value;           // Value
-    mcsFLOAT             _numerical;       // Value as a true floating point numerical (!)
+    mcsDOUBLE             _numerical;       // Value as a true floating point numerical (!)
     vobsCONFIDENCE_INDEX _confidenceIndex; // Confidence index
     string               _origin;          /* Either the catalog name where the
                                             * value has been found or
