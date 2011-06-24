@@ -283,7 +283,7 @@ public:
 
     virtual mcsCOMPL_STAT SetPropertyValue
                    (const char*           propertyId, 
-                    mcsFLOAT              value,
+                    mcsDOUBLE              value,
                     const char*           origin,
                     vobsCONFIDENCE_INDEX  confidenceIndex = vobsCONFIDENCE_HIGH, 
                     mcsLOGICAL            overwrite       = mcsFALSE);
@@ -294,7 +294,7 @@ public:
     virtual vobsSTAR_PROPERTY* GetNextProperty  (mcsLOGICAL init = mcsFALSE);
     virtual const char*        GetPropertyValue (const char*      id);
     virtual mcsCOMPL_STAT      GetPropertyValue (const char*      id,
-                                                 mcsFLOAT*  value);
+                                                 mcsDOUBLE*  value);
     virtual vobsPROPERTY_TYPE  GetPropertyType  (const char*      id) ;
     virtual vobsCONFIDENCE_INDEX GetPropertyConfIndex(const char* id); 
     // Is a property set?
@@ -304,8 +304,8 @@ public:
     virtual mcsLOGICAL         IsProperty       (const char*      propertyId);
 
     // Return the star RA and DEC coordinates (in arcsecond)
-    virtual mcsCOMPL_STAT GetRa (float &ra);
-    virtual mcsCOMPL_STAT GetDec(float &dec);
+    virtual mcsCOMPL_STAT GetRa (mcsDOUBLE &ra);
+    virtual mcsCOMPL_STAT GetDec(mcsDOUBLE &dec);
 
     // Return the star ID
     virtual mcsCOMPL_STAT GetId (char*     starId,
