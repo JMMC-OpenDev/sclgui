@@ -177,11 +177,11 @@ mcsCOMPL_STAT vobsDISTANCE_FILTER::Apply(vobsSTAR_LIST *list)
     }
 
     // Get reference RA coordinate in degrees
-    mcsDOUBLE referenceStarRA;
+    float referenceStarRA;
     referenceStar.GetRa(referenceStarRA);
 
     // Get reference DEC coordinate in degrees
-    mcsDOUBLE referenceStarDEC;
+    float referenceStarDEC;
     referenceStar.GetDec(referenceStarDEC);
 
     // For each star of the given star list
@@ -199,11 +199,11 @@ mcsCOMPL_STAT vobsDISTANCE_FILTER::Apply(vobsSTAR_LIST *list)
         }
 
         // Get current star RA coordinate in degrees
-        mcsDOUBLE currentStarRA;
+        float currentStarRA;
         currentStar->GetRa(currentStarRA);
 
         // Get current star DEC coordinate in degrees
-        mcsDOUBLE currentStarDEC;
+        float currentStarDEC;
         currentStar->GetDec(currentStarDEC);
 
         // (at last) Compute distance between refence star and the current star

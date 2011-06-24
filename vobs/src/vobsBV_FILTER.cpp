@@ -85,7 +85,7 @@ vobsBV_FILTER::~vobsBV_FILTER()
  *
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT vobsBV_FILTER::SetMagnitudeValue(mcsDOUBLE magValue)
+mcsCOMPL_STAT vobsBV_FILTER::SetMagnitudeValue(mcsFLOAT magValue)
 {
     logTrace("vobsBV_FILTER::SetMagnitudeValue()");
 
@@ -101,7 +101,7 @@ mcsCOMPL_STAT vobsBV_FILTER::SetMagnitudeValue(mcsDOUBLE magValue)
  *
  * @return always mcsSUCCESS
  */
-mcsCOMPL_STAT vobsBV_FILTER::GetMagnitudeValue(mcsDOUBLE *magValue)
+mcsCOMPL_STAT vobsBV_FILTER::GetMagnitudeValue(mcsFLOAT *magValue)
 {
     logTrace("vobsBV_FILTER::GetMagnitudeValue()");
 
@@ -142,14 +142,14 @@ mcsCOMPL_STAT vobsBV_FILTER::Apply(vobsSTAR_LIST *list)
             {
                 // If OK: 
                 // Get magB
-                mcsDOUBLE magB;
+                mcsFLOAT magB;
                 if (star->GetPropertyValue(vobsSTAR_PHOT_JHN_B, &magB) ==
                     mcsFAILURE)
                 {
                     return mcsFAILURE;
                 }
                 // Get magV
-                mcsDOUBLE magV;
+                mcsFLOAT magV;
                 if (star->GetPropertyValue(vobsSTAR_PHOT_JHN_V, &magV) ==
                     mcsFAILURE)
                 {

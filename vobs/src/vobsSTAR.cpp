@@ -389,7 +389,7 @@ mcsCOMPL_STAT vobsSTAR::SetPropertyValue(const char *id,
 }
 
 /**
- * Set the character value of a given property.
+ * Set the charater value of a given property.
  *
  * @param id property id
  * @param value property value
@@ -404,7 +404,7 @@ mcsCOMPL_STAT vobsSTAR::SetPropertyValue(const char *id,
  * @li vobsERR_INVALID_PROPERTY_ID
  */
 mcsCOMPL_STAT vobsSTAR::SetPropertyValue(const char *id,
-                                         mcsDOUBLE value,
+                                         mcsFLOAT value,
                                          const char *origin,
                                          vobsCONFIDENCE_INDEX confidenceIndex,
                                          mcsLOGICAL overwrite)
@@ -579,14 +579,14 @@ const char *vobsSTAR::GetPropertyValue(const char* id)
 }
 
 /**
- * Get a star property mcsDOUBLE value.
+ * Get a star property float value.
  *
  * @param id property id.
  * @param value pointer to store value.
  *
  * @return mcsSUCCESS on successfull completion, mcsFAILURE otherwise.
  */
-mcsCOMPL_STAT vobsSTAR::GetPropertyValue(const char* id, mcsDOUBLE *value)
+mcsCOMPL_STAT vobsSTAR::GetPropertyValue(const char* id, mcsFLOAT *value)
 {
     logTrace("vobsSTAR::GetPropertyValue(float*)");
 
@@ -693,16 +693,16 @@ mcsLOGICAL vobsSTAR::IsProperty(const char* id)
 /**
  * Get right ascension (RA) coordinate in degrees.
  *
- * @param ra pointer on an already allocated mcsDOUBLE value.
+ * @param ra pointer on an already allocated float value.
  *
  * @return mcsSUCCESS on successful completion, mcsFAILURE otherwise.
  */
-mcsCOMPL_STAT vobsSTAR::GetRa(mcsDOUBLE &ra)
+mcsCOMPL_STAT vobsSTAR::GetRa(float &ra)
 {
     logTrace("vobsSTAR::GetRa()");
 
     mcsSTRING64 raHms;
-    mcsDOUBLE    hh, hm, hs;
+    mcsFLOAT    hh, hm, hs;
 
     // Check if the value is set
     if (IsPropertySet(vobsSTAR_POS_EQ_RA_MAIN) == mcsFALSE)
@@ -723,14 +723,14 @@ mcsCOMPL_STAT vobsSTAR::GetRa(mcsDOUBLE &ra)
     {
         return mcsFAILURE;
     }
-    if (sscanf(raHms, "%lf %lf %lf", &hh, &hm, &hs) != 3)
+    if (sscanf(raHms, "%f %f %f", &hh, &hm, &hs) != 3)
     {
         errAdd(vobsERR_INVALID_RA_FORMAT, raHms);
         return mcsFAILURE;
     }
 
     // Get sign of hh which has to be propagated to hm and hs
-    mcsDOUBLE sign;
+    mcsFLOAT sign;
     sign = (raHms[0] == '-') ? -1.0 : 1.0;
 
     // Convert to degrees
@@ -748,16 +748,16 @@ mcsCOMPL_STAT vobsSTAR::GetRa(mcsDOUBLE &ra)
 /**
  * Get declinaison (DEC) coordinate in degrees.
  *
- * @param dec pointer on an already allocated mcsDOUBLE value.
+ * @param dec pointer on an already allocated float value.
  *
  * @return mcsSUCCESS on successful completion, mcsFAILURE otherwise.
  */
-mcsCOMPL_STAT vobsSTAR::GetDec(mcsDOUBLE &dec)
+mcsCOMPL_STAT vobsSTAR::GetDec(float &dec)
 {
     logTrace("vobsSTAR::GetDec()");
 
     mcsSTRING64 decDms;
-    mcsDOUBLE dd,dm,ds;
+    float dd,dm,ds;
 
     // Check if the value is set
     if (IsPropertySet(vobsSTAR_POS_EQ_DEC_MAIN) == mcsFALSE)
@@ -778,14 +778,14 @@ mcsCOMPL_STAT vobsSTAR::GetDec(mcsDOUBLE &dec)
     {
         return mcsFAILURE;
     }
-    if (sscanf(decDms, "%lf %lf %lf", &dd, &dm, &ds) != 3)
+    if (sscanf(decDms, "%f %f %f", &dd, &dm, &ds) != 3)
     {
         errAdd(vobsERR_INVALID_DEC_FORMAT, decDms);
         return mcsFAILURE;
     }
 
     // Get sign of hh which has to be propagated to hm and hs
-    mcsDOUBLE sign;
+    mcsFLOAT sign;
     sign = (decDms[0] == '-') ? -1.0 : 1.0; 
 
     // Convert to degrees
@@ -923,7 +923,7 @@ mcsLOGICAL vobsSTAR::IsSame(vobsSTAR &star,
     // Check if the criteria list is empty
     if (criteriaList == NULL)
     {
-        mcsDOUBLE ra1, ra2, dec1, dec2;
+        mcsFLOAT ra1, ra2, dec1, dec2;
 
         // Get right ascension of the star. If not set return FALSE
         if (IsPropertySet(vobsSTAR_POS_EQ_RA_MAIN) == mcsTRUE)
@@ -994,10 +994,10 @@ mcsLOGICAL vobsSTAR::IsSame(vobsSTAR &star,
     {
         const char *hd;
         mcsSTRING64 propertyId;
-        mcsDOUBLE range;
+        mcsFLOAT range;
         // Get the size of the criteria list
         int listSize=criteriaList->Size();
-        mcsDOUBLE val1, val2;    
+        mcsFLOAT val1, val2;    
         // Get each criteria of the list and check if the comparaison with all
         // this criteria gave a equality
         hd = GetPropertyValue(vobsSTAR_ID_HD);
@@ -1204,8 +1204,8 @@ void vobsSTAR::Display(mcsLOGICAL showPropId)
 
     map<string, vobsSTAR_PROPERTY > ::iterator propertyIter;
     mcsSTRING64 starId;
-    mcsDOUBLE    starRa  = 0.0;
-    mcsDOUBLE    starDec = 0.0;
+    mcsFLOAT    starRa  = 0.0;
+    mcsFLOAT    starDec = 0.0;
 
     GetId(starId, sizeof(starId));
 
@@ -1450,7 +1450,7 @@ mcsCOMPL_STAT vobsSTAR::AddProperties(void)
 
     AddProperty(vobsSTAR_PHOT_FLUX_IR_12, "F12",  vobsFLOAT_PROPERTY, "Jy", NULL, NULL,
                 "Mid-Infrared Flux at 12 microns");
-    AddProperty(vobsSTAR_PHOT_FLUX_IR_12_ERROR, "e_F12", vobsFLOAT_PROPERTY, "Jy", NULL, NULL,
+    AddProperty(vobsSTAR_PHOT_FLUX_IR_12_ERROR, "e_F12", vobsFLOAT_PROPERTY, NULL, NULL, NULL,
                 "Relative Error on Mid-Infrared Flux at 12 microns");
 
     AddProperty(vobsSTAR_REF_STAR, "Calib", vobsSTRING_PROPERTY);

@@ -120,14 +120,14 @@ int main(int argc, char *argv[])
     
     // Star 1
     vobsSTAR star1;
-    mcsDOUBLE raStar1InDeg;
+    mcsFLOAT raStar1InDeg;
     star1.SetPropertyValue(vobsSTAR_POS_EQ_RA_MAIN, argv[1], "");
     if (star1.GetRa(raStar1InDeg) == mcsFAILURE)
     {
         errCloseStack();
         return mcsFAILURE;
     }
-    mcsDOUBLE decStar1InDeg;
+    mcsFLOAT decStar1InDeg;
     star1.SetPropertyValue(vobsSTAR_POS_EQ_DEC_MAIN, argv[2], "");
     if (star1.GetDec(decStar1InDeg) == mcsFAILURE)
     {
@@ -146,14 +146,14 @@ int main(int argc, char *argv[])
 
     // Star 2
     vobsSTAR star2;
-    mcsDOUBLE raStar2InDeg;
+    mcsFLOAT raStar2InDeg;
     star2.SetPropertyValue(vobsSTAR_POS_EQ_RA_MAIN, argv[3], "");
     if (star2.GetRa(raStar2InDeg) == mcsFAILURE)
     {
         errCloseStack();
         return mcsFAILURE;
     }
-    mcsDOUBLE decStar2InDeg;
+    mcsFLOAT decStar2InDeg;
     star2.SetPropertyValue(vobsSTAR_POS_EQ_DEC_MAIN, argv[4], "");
     if (star2.GetDec(decStar2InDeg) == mcsFAILURE)
     {

@@ -64,9 +64,9 @@ public:
     // Class destructor
     virtual ~vobsBV_FILTER();
 
-    virtual mcsCOMPL_STAT SetMagnitudeValue(mcsDOUBLE magValue);
+    virtual mcsCOMPL_STAT SetMagnitudeValue(mcsFLOAT magValue);
 
-    virtual mcsCOMPL_STAT GetMagnitudeValue(mcsDOUBLE *magValue);
+    virtual mcsCOMPL_STAT GetMagnitudeValue(mcsFLOAT *magValue);
 
     virtual mcsCOMPL_STAT Apply(vobsSTAR_LIST *list);
 
@@ -78,7 +78,7 @@ private:
     vobsBV_FILTER(const vobsBV_FILTER&);
     vobsBV_FILTER& operator=(const vobsBV_FILTER&);
 
-    mcsDOUBLE _magValue;
+    mcsFLOAT _magValue;
 };
 
 #endif /*!vobsBV_FILTER_H*/

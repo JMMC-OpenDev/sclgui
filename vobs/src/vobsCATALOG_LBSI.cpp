@@ -163,15 +163,15 @@ mcsCOMPL_STAT vobsCATALOG_LBSI::WriteQuerySpecificPart(vobsREQUEST &request)
     band = request.GetSearchBand();
     // Add the magnitude range constraint
     mcsSTRING32 rangeMag;
-    mcsDOUBLE minMagRange;
-    mcsDOUBLE maxMagRange;
+    mcsFLOAT minMagRange;
+    mcsFLOAT maxMagRange;
     minMagRange = request.GetMinMagRange();
     maxMagRange = request.GetMaxMagRange();
     sprintf(rangeMag, "%.2f..%.2f", minMagRange, maxMagRange);
     // Add search box size
     mcsSTRING32 separation;
-    mcsDOUBLE deltaRa;
-    mcsDOUBLE deltaDec;
+    mcsFLOAT deltaRa;
+    mcsFLOAT deltaDec;
     if (request.GetSearchArea(deltaRa, deltaDec) == mcsFAILURE)
     {
         return mcsFAILURE;

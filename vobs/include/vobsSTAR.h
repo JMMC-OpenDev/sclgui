@@ -116,7 +116,7 @@
 * Changed value parameter type: char* to const char*
 *
 * Revision 1.24  2005/02/07 09:10:04  gzins
-* Fixed wrong type for isComputed parameter; mcsDOUBLE instead of mcsLOGICAL
+* Fixed wrong type for isComputed parameter; mcsFLOAT instead of mcsLOGICAL
 *
 * Revision 1.23  2005/02/04 14:31:30  scetre
 * add getLuminosityClass method
@@ -283,7 +283,7 @@ public:
 
     virtual mcsCOMPL_STAT SetPropertyValue
                    (const char*           propertyId, 
-                    mcsDOUBLE              value,
+                    mcsFLOAT              value,
                     const char*           origin,
                     vobsCONFIDENCE_INDEX  confidenceIndex = vobsCONFIDENCE_HIGH, 
                     mcsLOGICAL            overwrite       = mcsFALSE);
@@ -294,7 +294,7 @@ public:
     virtual vobsSTAR_PROPERTY* GetNextProperty  (mcsLOGICAL init = mcsFALSE);
     virtual const char*        GetPropertyValue (const char*      id);
     virtual mcsCOMPL_STAT      GetPropertyValue (const char*      id,
-                                                 mcsDOUBLE*  value);
+                                                 mcsFLOAT*  value);
     virtual vobsPROPERTY_TYPE  GetPropertyType  (const char*      id) ;
     virtual vobsCONFIDENCE_INDEX GetPropertyConfIndex(const char* id); 
     // Is a property set?
@@ -304,8 +304,8 @@ public:
     virtual mcsLOGICAL         IsProperty       (const char*      propertyId);
 
     // Return the star RA and DEC coordinates (in arcsecond)
-    virtual mcsCOMPL_STAT GetRa (mcsDOUBLE &ra);
-    virtual mcsCOMPL_STAT GetDec(mcsDOUBLE &dec);
+    virtual mcsCOMPL_STAT GetRa (float &ra);
+    virtual mcsCOMPL_STAT GetDec(float &dec);
 
     // Return the star ID
     virtual mcsCOMPL_STAT GetId (char*     starId,
