@@ -116,7 +116,7 @@
 * Changed value parameter type: char* to const char*
 *
 * Revision 1.24  2005/02/07 09:10:04  gzins
-* Fixed wrong type for isComputed parameter; mcsFLOAT instead of mcsLOGICAL
+* Fixed wrong type for isComputed parameter; mcsDOUBLE instead of mcsLOGICAL
 *
 * Revision 1.23  2005/02/04 14:31:30  scetre
 * add getLuminosityClass method

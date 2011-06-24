@@ -113,7 +113,7 @@ public:
     // Class destructor
     virtual ~vobsGENERIC_FILTER();
 
-    virtual mcsCOMPL_STAT AddCondition(vobsOPERATOR op, mcsFLOAT value);
+    virtual mcsCOMPL_STAT AddCondition(vobsOPERATOR op, mcsDOUBLE value);
     virtual mcsCOMPL_STAT AddCondition(vobsOPERATOR op, char *value);
 
     virtual mcsCOMPL_STAT Apply(vobsSTAR_LIST *list);
@@ -126,19 +126,19 @@ private:
     public:
 
         // Class constructor
-        vobsCONDITION(vobsOPERATOR op, mcsFLOAT operand=0.0);
+        vobsCONDITION(vobsOPERATOR op, mcsDOUBLE operand=0.0);
         vobsCONDITION(vobsOPERATOR op, char *operand);
 
         // Class destructor
         virtual ~vobsCONDITION();
 
         // Condition evaluation
-        bool Evaluate(mcsFLOAT value);
+        bool Evaluate(mcsDOUBLE value);
         bool Evaluate(string   value);
 
     protected:
         vobsOPERATOR _operator;
-        mcsFLOAT     _numOperand;
+        mcsDOUBLE     _numOperand;
         string       _strOperand;
 
     private:

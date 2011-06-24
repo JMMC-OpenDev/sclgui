@@ -133,7 +133,7 @@ vobsGENERIC_FILTER::~vobsGENERIC_FILTER()
  * returned.
  */
 mcsCOMPL_STAT vobsGENERIC_FILTER::AddCondition(vobsOPERATOR op,
-                                               mcsFLOAT value)
+                                               mcsDOUBLE value)
 {
     logTrace("vobsGENERIC_FILTER::AddCondition(float)");
 
@@ -284,7 +284,7 @@ mcsCOMPL_STAT vobsGENERIC_FILTER::Apply(vobsSTAR_LIST *list)
             }
             else
             {
-                mcsFLOAT numValue;
+                mcsDOUBLE numValue;
                 string   strValue;
                 if (_propType == vobsFLOAT_PROPERTY)
                 {
@@ -349,7 +349,7 @@ mcsCOMPL_STAT vobsGENERIC_FILTER::Apply(vobsSTAR_LIST *list)
  * Class constructor
  */
 vobsGENERIC_FILTER::vobsCONDITION::vobsCONDITION(vobsOPERATOR op, 
-                                                 mcsFLOAT operand)
+                                                 mcsDOUBLE operand)
 {
     _operator = op;
     _numOperand = operand;
@@ -372,7 +372,7 @@ vobsGENERIC_FILTER::vobsCONDITION::~vobsCONDITION()
 /**
  * Condition evaluators.
  */
-bool vobsGENERIC_FILTER::vobsCONDITION::Evaluate(mcsFLOAT value)
+bool vobsGENERIC_FILTER::vobsCONDITION::Evaluate(mcsDOUBLE value)
 {
     switch (_operator)
     {

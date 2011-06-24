@@ -197,8 +197,8 @@ mcsCOMPL_STAT vobsCATALOG_MASS::WriteQuerySpecificPart(vobsREQUEST &request)
     band = request.GetSearchBand();
     // Add the magnitude range constraint
     mcsSTRING32 rangeMag;
-    mcsFLOAT minMagRange;
-    mcsFLOAT maxMagRange;
+    mcsDOUBLE minMagRange;
+    mcsDOUBLE maxMagRange;
     minMagRange = request.GetMinMagRange();
     maxMagRange = request.GetMaxMagRange();
     sprintf(rangeMag, "%.2f..%.2f", minMagRange, maxMagRange);
@@ -212,8 +212,8 @@ mcsCOMPL_STAT vobsCATALOG_MASS::WriteQuerySpecificPart(vobsREQUEST &request)
     mcsSTRING32 separation;
     if (request.GetSearchAreaGeometry() == vobsBOX)
     {
-        mcsFLOAT deltaRa;
-        mcsFLOAT deltaDec;
+        mcsDOUBLE deltaRa;
+        mcsDOUBLE deltaDec;
         if (request.GetSearchArea(deltaRa, deltaDec) == mcsFAILURE)
         {
             return mcsFAILURE;
@@ -224,7 +224,7 @@ mcsCOMPL_STAT vobsCATALOG_MASS::WriteQuerySpecificPart(vobsREQUEST &request)
     }
     else
     {
-        mcsFLOAT radius;
+        mcsDOUBLE radius;
         if (request.GetSearchArea(radius) == mcsFAILURE)
         {
             return mcsFAILURE;

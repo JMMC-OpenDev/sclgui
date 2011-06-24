@@ -130,15 +130,15 @@ mcsCOMPL_STAT vobsCATALOG_MERAND::WriteQuerySpecificPart(vobsREQUEST &request)
     band = request.GetSearchBand();
     // Add the magnitude range constraint
     mcsSTRING32 rangeMag;
-    mcsFLOAT minMagRange;
-    mcsFLOAT maxMagRange;
+    mcsDOUBLE minMagRange;
+    mcsDOUBLE maxMagRange;
     minMagRange = request.GetMinMagRange();
     maxMagRange = request.GetMaxMagRange();
     sprintf(rangeMag, "%.2f..%.2f", minMagRange, maxMagRange);
     // Add search box size
     mcsSTRING32 separation;
-    mcsFLOAT deltaRa;
-    mcsFLOAT deltaDec;
+    mcsDOUBLE deltaRa;
+    mcsDOUBLE deltaDec;
     if (request.GetSearchArea(deltaRa, deltaDec) == mcsFAILURE)
     {
         return mcsFAILURE;
