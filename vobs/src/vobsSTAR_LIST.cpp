@@ -134,7 +134,7 @@ using namespace std;
  */
 vobsSTAR_LIST::vobsSTAR_LIST()
 {
-    _starIterator = NULL;
+    _starIterator = _starList.end();
 }
 
 
@@ -287,9 +287,9 @@ mcsCOMPL_STAT vobsSTAR_LIST::Remove(vobsSTAR &star)
                 }
                 else
                 {
-                    // Else set current pointer to NULL in order to restart scan
+                    // Else set current pointer to end() in order to restart scan
                     // from beginning of the list.
-                    _starIterator = NULL;
+                    _starIterator = _starList.end();
                 }
             }
             
@@ -334,7 +334,7 @@ vobsSTAR *vobsSTAR_LIST::GetNextStar(mcsLOGICAL init)
 {
     logTrace("vobsSTAR_LIST::GetNextStar()");
 
-    if ((init == mcsTRUE) || _starIterator == NULL)
+    if ((init == mcsTRUE) || _starIterator == _starList.end())
     {
         _starIterator = _starList.begin();
     }
@@ -530,8 +530,8 @@ mcsCOMPL_STAT vobsSTAR_LIST::Sort(char *propertyId, mcsLOGICAL reverseOrder)
                         (strcmp (propertyId, vobsSTAR_POS_EQ_DEC_MAIN) == 0) ||
                         (propertyType == vobsFLOAT_PROPERTY))
                     {
-                        mcsFLOAT value1;
-                        mcsFLOAT value2;
+                        mcsDOUBLE value1;
+                        mcsDOUBLE value2;
                         if (strcmp (propertyId, vobsSTAR_POS_EQ_RA_MAIN)  == 0)
                         {
                             (*prevIter)->GetRa(value1);
@@ -776,7 +776,7 @@ mcsCOMPL_STAT vobsSTAR_LIST::Load(const char *filename,
     }
         
     // Extract list from the CDATA
-    vobsSTAR  star;
+    vobsSTAR star;
     if (cData.Extract(star, *this, extendedFormat) == mcsFAILURE)
     {
         return mcsFAILURE;
