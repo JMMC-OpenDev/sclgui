@@ -198,27 +198,36 @@ int main(int argc, char *argv[])
 
     // SOAP Initialization
     soap_init(&globalSoapContext);
+    
+    // no socket timeout:
+    globalSoapContext.accept_timeout = 0;
+    
+    // reuse server port:
+    globalSoapContext.bind_flags = SO_REUSEADDR;
+    
     soap_set_namespaces(&globalSoapContext, soap_namespaces);
 
     // Main SOAP socket creation
-    if (soap_bind(&globalSoapContext, NULL, portNumber, 100) < 0)
+    SOAP_SOCKET m = soap_bind(&globalSoapContext, NULL, portNumber, 100);
+    if ((m < 0) || (!soap_valid_socket(m)))
     {
         errAdd(sclwsERR_BIND, portNumber);
         errCloseStack();
         sclwsExit(EXIT_FAILURE);
     }
 
-    logTest("Listening on port '%d'.", portNumber);
-
+    logError("Server ready: Listening on port '%d'.", portNumber);
+    
     // Infinite loop to receive requests
     for (uint nbOfConnection = 1; ; nbOfConnection++)
     {
         // Wait (without timeout) a new connection
-        globalSoapContext.accept_timeout = 1;
-        if (soap_accept(&globalSoapContext) < 0)
+        SOAP_SOCKET s = soap_accept(&globalSoapContext);
+        
+        if ((s < 0) || (!soap_valid_socket(s)))
         {
-            continue;
-        }
+           continue; // retry
+        }         
 
         // Fork the SOAP context
         struct soap* forkedSoapContext = soap_copy(&globalSoapContext);

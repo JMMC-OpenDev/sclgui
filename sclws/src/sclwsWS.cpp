@@ -152,7 +152,7 @@ int ns__GetCalOpenSession(struct soap* soapContext, char** jobId)
 
     // Get the string of the newly generated uuid_t structure
     uuid_unparse(uuidID, *jobId);
-    logTest("\tSession '%s': uniq identifier generated.", *jobId);
+    logDebug("\tSession '%s': unique identifier generated.", *jobId);
 
     // Create a new instance of sclsvrSERVER to perform the GETCAL query
     sclsvrSERVER* server = new sclsvrSERVER();
@@ -165,7 +165,7 @@ int ns__GetCalOpenSession(struct soap* soapContext, char** jobId)
     // Associate the new sclsvrSERVER instance with the generated UUID for later
     sclwsServerList[*jobId] = server;
 
-    logDebug("\tSession '%s': server instanciated.", *jobId);
+    logError("\tSession '%s': server instanciated.", *jobId);  
     
     return SOAP_OK;
 }
@@ -221,7 +221,7 @@ int ns__GetCalSearchCal(struct soap* soapContext,
         sclwsReturnSoapError();
     }
 
-    logTest("\tSession '%s': launching query.", jobId);
+    logError("\tSession '%s': launching query :\n'%s'", jobId, query);
 
     // Launch the GETCAL query with the received paramters
     miscoDYN_BUF dynBuf;
@@ -236,8 +236,8 @@ int ns__GetCalSearchCal(struct soap* soapContext,
     dynBuf.GetNbStoredBytes(&resultSize);
     if (resultSize != 0)
     {
+        logDebug("\tSession '%s': resulting VOTable ('%d' bytes)", jobId , resultSize);
         result = dynBuf.GetBuffer();
-        logDebug("\tSession '%s': resulting VOTable ('%d' bytes) =\n%s", jobId , resultSize, result);
     }
     else
     {
@@ -249,7 +249,7 @@ int ns__GetCalSearchCal(struct soap* soapContext,
     *voTable = (char*) soap_malloc(soapContext, resultSize);
     strncpy(*voTable, result, resultSize);
 
-    logTest("\tSession '%s': terminating query.", jobId);
+    logInfo("\tSession '%s': terminating query.", jobId);
 
     // Delete the thread ID
     sclwsThreadList.erase(threadIterator);
@@ -314,7 +314,7 @@ int ns__GetCalQueryStatus(struct soap* soapContext,
         sclwsReturnSoapError();
     }
 
-    logTest("\tSession '%s': query status = '%s'.", jobId, *status);
+    logInfo("\tSession '%s': query status = '%s'.", jobId, *status);
 
     // Delete the thread ID
     sclwsThreadList.erase(threadIterator);
