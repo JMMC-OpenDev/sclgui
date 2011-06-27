@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
         sclwsExit(EXIT_FAILURE);
     }
 
-    logInfo("Listening on port '%d'.", portNumber);
+    logError("Server ready: Listening on port '%d'.", portNumber);
     
     // Infinite loop to receive requests
     for (uint nbOfConnection = 1; ; nbOfConnection++)

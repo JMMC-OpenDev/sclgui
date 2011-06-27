@@ -232,7 +232,7 @@ mcsCOMPL_STAT vobsSCENARIO::Execute(vobsSTAR_LIST &starList)
             }
 
             // Start time counter
-            timlogDebugStart(timLogActionName);
+            timlogInfoStart(timLogActionName);
 
             // Write the current action in the shared database
             mcsSTRING256 message;
