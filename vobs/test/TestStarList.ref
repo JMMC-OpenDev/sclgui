@@ -225,7 +225,7 @@
 1 -     <DESCRIPTION>Confidence index of property VarFlag3</DESCRIPTION>
 1 -    </FIELD>
 1 -    <FIELD name="MultFlag" ID="col63" ucd="CODE_MULT_FLAG" datatype="char" arraysize="*">
-1 -     <DESCRIPTION>Multiplicity type among C,G,O,V and X</DESCRIPTION>
+1 -     <DESCRIPTION>Multiplicity type among C,G,O,V, X or SB (for decoded spectral binaries)</DESCRIPTION>
 1 -    </FIELD>
 1 -    <FIELD type="hidden" name="MultFlag.origin" ID="col64" ucd="CODE_MULT_FLAG.origin" datatype="char" arraysize="*">
 1 -     <DESCRIPTION>Origin of property MultFlag</DESCRIPTION>
@@ -234,7 +234,7 @@
 1 -     <DESCRIPTION>Confidence index of property MultFlag</DESCRIPTION>
 1 -    </FIELD>
 1 -    <FIELD name="BinFlag" ID="col66" ucd="CODE_BIN_FLAG" datatype="char" arraysize="*">
-1 -     <DESCRIPTION>Multiplicity type among SB or eclipsing B</DESCRIPTION>
+1 -     <DESCRIPTION>Multiplicity type among SB, eclipsing B or S (for suspicious binaries in spectral tupe)</DESCRIPTION>
 1 -    </FIELD>
 1 -    <FIELD type="hidden" name="BinFlag.origin" ID="col67" ucd="CODE_BIN_FLAG.origin" datatype="char" arraysize="*">
 1 -     <DESCRIPTION>Origin of property BinFlag</DESCRIPTION>
