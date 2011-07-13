@@ -1,16 +1,13 @@
 sclsvrServer - vobs - Test - vobsVIRTUAL_OBSERVATORY::Search()
 sclsvrServer - vobs - Test - Consulting I/280 ...
 sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
-sclsvrServer - err - Test - errAddInStack(misc, 6)
 sclsvrServer - vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Vmag=0.00..4.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
 sclsvrServer - vobs - Test - ...number of stars return = 10
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'I_280_PRIMARY' 00:00:00.163
 sclsvrServer - vobs - Test - after COPY, star list size = 10
 sclsvrServer - vobs - Test - Consulting II/246/out ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+08+13.986-46+57+39.53&+22+29+16.175-43+29+44.03&+22+42+40.050-46+53+04.48&+22+48+33.298-51+19+00.73&+23+10+21.539-45+14+48.17&+21+53+55.728-37+21+53.50&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+12.202-43+40+47.39&+00+26+17.040-42+18+21.80&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 9
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_246_out_SECONDARY' 00:00:00.323
 sclsvrServer - vobs - Test - after COPY, star list size = 9
 sclsvrServer - vobs - Test - star 2MASS 22424003-4653044 has been removed by the filter 'K mag filter'
 sclsvrServer - vobs - Test - star 2MASS 22483329-5119006 has been removed by the filter 'K mag filter'
@@ -21,94 +18,87 @@ sclsvrServer - vobs - Test - Consulting J/A+A/393/183/catalog ...
 sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Kmag=-2.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK'
 sclsvrServer - vobs - Test - ...number of stars return = 5
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'J_A+A_393_183_catalog_PRIMARY' 00:00:00.148
 sclsvrServer - vobs - Test - after MERGE, star list size = 10
 sclsvrServer - vobs - Test - Consulting J/A+A/433/1155 ...
 sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Ksmag=-2.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam'
 sclsvrServer - vobs - Test - ...number of stars return = 0
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'J_A+A_433_1155_PRIMARY' 00:00:00.159
 sclsvrServer - vobs - Test - after MERGE, star list size = 10
 sclsvrServer - vobs - Test - Consulting II/225/catalog ...
 sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&x_F(IR)=M&F(IR)=-2.00..2.00&lambda=&lambda=2.20&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&-sort=_r'
 sclsvrServer - vobs - Test - ...number of stars return = 65
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_225_catalog_PRIMARY' 00:00:01.039
 sclsvrServer - vobs - Test - after MERGE, star list size = 62
 sclsvrServer - vobs - Test - Consulting II/7A/catalog ...
 sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&K=-2.00..2.00&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcsec&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-sort=_r'
 sclsvrServer - vobs - Test - ...number of stars return = 2
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_7A_catalog_PRIMARY' 00:00:00.171
 sclsvrServer - vobs - Test - after MERGE, star list size = 64
 sclsvrServer - vobs - Test - Consulting I/280 ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.187-43+29+43.88&+23+10+21.526-45+14+48.09&+20+37+34.024-47+17+29.22&+00+09+24.672-45+44+50.62&+00+26+16.995-42+18+21.64&+20+37+34.032-47+17+29.41&+20+49+28.961-46+13+36.57&+22+06+06.885-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.5-43+44+58&+22+29+44.8-43+44+37&+22+26+05.0-48+26+20&+22+26+04.4-48+26+33&+22+29+16.4-43+29+41&+22+11+55.2-40+33+10&+22+43+29.5-41+25+15&+21+48+33.7-46+54+13&+22+43+22.7-40+06+15&+22+06+40.4-39+34+21&+23+10+14.5-40+35+42&+21+52+15.0-37+19+34&+23+22+21.4-48+03+32&+21+29+13.3-41+24+51&+23+24+06.9-45+05+00&+21+20+09.4-45+01+19&+21+19+57.3-45+01+17&+21+39+54.2-38+02+23&+21+39+53.6-37+59+15&+21+23+12.4-42+04+08&+21+23+46.0-40+42+24&+23+07+35.2-36+07+45&+21+08+54.0-44+34+49&+21+10+07.2-38+31+03&+23+56+25.5-49+48+18&+00+01+19.7-50+19+17&+20+42+05.5-50+17+15&+20+37+33.7-47+17+32&+00+09+24.0-45+44+40&+20+41+20.3-42+08+17&+20+20+17.8-50+42+20&+20+39+11.1-37+55+51&+20+20+14.4-50+42+12&+20+20+01.1-50+38+32&+20+38+54.2-37+55+25&+20+29+15.7-40+25+12&+00+26+16.1-42+18+23&+20+15+28.9-44+24+36&+20+15+28.1-44+24+53&+20+15+28.5-44+21+48&+20+21+51.1-40+45+24&+20+26+29.7-37+06+08&+00+28+26.1-39+54+25&+20+17+43.9-39+04+39&+20+00+40.2-49+36+43&+20+10+39.3-41+43+05&+20+07+41.9-42+32+21&+00+50+02.2-48+43+48&+20+23+17.0-35+00+19&+00+15+20.2-32+02+25&+00+15+21.8-32+02+45&+00+15+22.2-32+02+40&+20+37+34.0-47+17+29&+00+09+24.6-45+44+51&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 18
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'I_280_SECONDARY' 00:00:03.432
 sclsvrServer - vobs - Test - after COPY, star list size = 13
 sclsvrServer - vobs - Test - Consulting J/A+A/393/183/catalog ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 5
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'J_A+A_393_183_catalog_SECONDARY' 00:00:00.176
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting J/A+A/433/1155 ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'J_A+A_433_1155_SECONDARY' 00:00:00.201
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting J/A+A/413/1037 ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/413/1037&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Jmag&-out=Ksmag&-out=Var&Var=%3C4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 6
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'J_A+A_413_1037_SECONDARY' 00:00:00.203
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting II/246/out ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_246_out_SECONDARY' 00:00:00.347
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting II/7A/catalog ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_H&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_7A_catalog_SECONDARY' 00:00:00.206
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting II/225/catalog ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-out.max=1000-c.r=1&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 40
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_225_catalog_SECONDARY' 00:00:00.212
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting I/196/main ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*VELOC_HC&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 12
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'I_196_main_SECONDARY' 00:00:00.342
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting V/50/catalog ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 10
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'V_50_catalog_SECONDARY' 00:00:00.212
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting V/36B/bsc4s ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'V_36B_bsc4s_SECONDARY' 00:00:00.191
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting B/sb9/main ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 2
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'B_sb9_main_SECONDARY' 00:00:00.254
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting B/wds/wds ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 4
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'B_wds_wds_SECONDARY' 00:00:00.337
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Consulting II/297/irc ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_297_irc_SECONDARY' 00:00:00.341
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
 sclsvrServer - vobs - Test - Number of stars found : 13
 sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Copy()
 sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Complete() - start
+sclsvrServer - alx - Test - Original spectral type = 'G6/G8III'.
+sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'G7.00III'.
+sclsvrServer - alx - Test - Final spectral type = 'G7.00III'.
+sclsvrServer - alx - Test -  - Code                = 'G'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'G6/G8III'.
 sclsvrServer - alx - Test - Original spectral type = 'G6/G8III'.
 sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'G7.00III'.
 sclsvrServer - alx - Test - Final spectral type = 'G7.00III'.
@@ -201,6 +191,17 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'YES'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III SB'.
+sclsvrServer - sclsvr - Test - Spectral Binarity - 'SB' found in SpType.
+sclsvrServer - alx - Test - Original spectral type = 'K0III SB'.
+sclsvrServer - alx - Test - Un-SB spectral type = 'K0III'.
+sclsvrServer - alx - Test - Final spectral type = 'K0III'.
+sclsvrServer - alx - Test -  - Code                = 'K'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'YES'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = GIANT
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star HD 218670 - parallax 17.29(0.92) is OK...
@@ -264,6 +265,15 @@ sclsvrServer - alx - Test - UD_H = 2.282657
 sclsvrServer - alx - Test - UD_K = 2.293753
 sclsvrServer - alx - Test - UD_L = 2.317254
 sclsvrServer - alx - Test - UD_N = 2.334739
+sclsvrServer - alx - Test - Original spectral type = 'K0III'.
+sclsvrServer - alx - Test - Final spectral type = 'K0III'.
+sclsvrServer - alx - Test -  - Code                = 'K'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III'.
 sclsvrServer - alx - Test - Original spectral type = 'K0III'.
 sclsvrServer - alx - Test - Final spectral type = 'K0III'.
 sclsvrServer - alx - Test -  - Code                = 'K'.
@@ -344,6 +354,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III'.
+sclsvrServer - alx - Test - Original spectral type = 'K0III'.
+sclsvrServer - alx - Test - Final spectral type = 'K0III'.
+sclsvrServer - alx - Test -  - Code                = 'K'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = GIANT
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star HD 496 - parallax 23.29(0.98) is OK...
@@ -406,6 +425,15 @@ sclsvrServer - alx - Test - UD_H = 2.272742
 sclsvrServer - alx - Test - UD_K = 2.283790
 sclsvrServer - alx - Test - UD_L = 2.307189
 sclsvrServer - alx - Test - UD_N = 2.324598
+sclsvrServer - alx - Test - Original spectral type = 'K0III...'.
+sclsvrServer - alx - Test - Final spectral type = 'K0III...'.
+sclsvrServer - alx - Test -  - Code                = 'K'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III...'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III...'.
 sclsvrServer - alx - Test - Original spectral type = 'K0III...'.
 sclsvrServer - alx - Test - Final spectral type = 'K0III...'.
 sclsvrServer - alx - Test -  - Code                = 'K'.
@@ -484,6 +512,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K5III'.
+sclsvrServer - alx - Test - Original spectral type = 'K5III'.
+sclsvrServer - alx - Test - Final spectral type = 'K5III'.
+sclsvrServer - alx - Test -  - Code                = 'K'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = GIANT
 sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 16.350265
 sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 9.689625
@@ -548,6 +585,15 @@ sclsvrServer - alx - Test - UD_H = 2.996330
 sclsvrServer - alx - Test - UD_K = 3.016632
 sclsvrServer - alx - Test - UD_L = 3.054253
 sclsvrServer - alx - Test - UD_N = 3.081315
+sclsvrServer - alx - Test - Original spectral type = 'M0III'.
+sclsvrServer - alx - Test - Final spectral type = 'M0III'.
+sclsvrServer - alx - Test -  - Code                = 'M'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M0III'.
 sclsvrServer - alx - Test - Original spectral type = 'M0III'.
 sclsvrServer - alx - Test - Final spectral type = 'M0III'.
 sclsvrServer - alx - Test -  - Code                = 'M'.
@@ -631,6 +677,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K5III'.
+sclsvrServer - alx - Test - Original spectral type = 'K5III'.
+sclsvrServer - alx - Test - Final spectral type = 'K5III'.
+sclsvrServer - alx - Test -  - Code                = 'K'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = GIANT
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star HD 217902 - parallax 8.27(0.68) is OK...
@@ -693,6 +748,15 @@ sclsvrServer - alx - Test - UD_H = 2.314218
 sclsvrServer - alx - Test - UD_K = 2.329898
 sclsvrServer - alx - Test - UD_L = 2.358954
 sclsvrServer - alx - Test - UD_N = 2.379856
+sclsvrServer - alx - Test - Original spectral type = 'M0III'.
+sclsvrServer - alx - Test - Final spectral type = 'M0III'.
+sclsvrServer - alx - Test -  - Code                = 'M'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M0III'.
 sclsvrServer - alx - Test - Original spectral type = 'M0III'.
 sclsvrServer - alx - Test - Final spectral type = 'M0III'.
 sclsvrServer - alx - Test -  - Code                = 'M'.
@@ -773,6 +837,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIA'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M4.5IIIa'.
+sclsvrServer - alx - Test - Original spectral type = 'M4.5IIIa'.
+sclsvrServer - alx - Test - Final spectral type = 'M4.5IIIA'.
+sclsvrServer - alx - Test -  - Code                = 'M'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '4.500000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIA'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = GIANT
 sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 126.862978
 sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 75.999987
@@ -835,6 +908,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M8III:e'.
+sclsvrServer - alx - Test - Original spectral type = 'M8III:e'.
+sclsvrServer - alx - Test - Final spectral type = 'M8IIIE'.
+sclsvrServer - alx - Test -  - Code                = 'M'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '8.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M8III:e).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star HD 212539 - parallax 1.29(1.49) is not valid; could not compute diameter
@@ -852,6 +934,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M7 III'.
+sclsvrServer - alx - Test - Original spectral type = 'M7 III'.
+sclsvrServer - alx - Test - Final spectral type = 'M7III'.
+sclsvrServer - alx - Test -  - Code                = 'M'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M7 III).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star HD 193026 - parallax 21.88(14.60) is not valid; could not compute diameter
@@ -861,6 +952,16 @@ sclsvrServer - alx - Test - gLat = -34.460 degrees
 sclsvrServer - alx - Test - gLon = 348.260 degrees
 sclsvrServer - sclsvr - Test - star HD 193026 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
+sclsvrServer - alx - Test - Original spectral type = 'M7/M8IIIe'.
+sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'M7.50IIIE'.
+sclsvrServer - alx - Test - Final spectral type = 'M7.50IIIE'.
+sclsvrServer - alx - Test -  - Code                = 'M'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.500000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M7/M8IIIe'.
 sclsvrServer - alx - Test - Original spectral type = 'M7/M8IIIe'.
 sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'M7.50IIIE'.
 sclsvrServer - alx - Test - Final spectral type = 'M7.50IIIE'.
@@ -1125,7 +1226,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property VarFlag3</DESCRIPTION>
    </FIELD>
    <FIELD name="MultFlag" ID="col63" ucd="CODE_MULT_FLAG" datatype="char" arraysize="*">
-    <DESCRIPTION>Multiplicity type among C,G,O,V and X</DESCRIPTION>
+    <DESCRIPTION>Multiplicity type among C,G,O,V, X or SB (for decoded spectral binaries)</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="MultFlag.origin" ID="col64" ucd="CODE_MULT_FLAG.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property MultFlag</DESCRIPTION>
@@ -1134,7 +1235,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property MultFlag</DESCRIPTION>
    </FIELD>
    <FIELD name="BinFlag" ID="col66" ucd="CODE_BIN_FLAG" datatype="char" arraysize="*">
-    <DESCRIPTION>Multiplicity type among SB or eclipsing B</DESCRIPTION>
+    <DESCRIPTION>Multiplicity type among SB, eclipsing B or S (for suspicious binaries in spectral tupe)</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="BinFlag.origin" ID="col67" ucd="CODE_BIN_FLAG.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property BinFlag</DESCRIPTION>
@@ -2916,4 +3017,3 @@ VOTable:
   </TABLE>
  </RESOURCE>
 </VOTABLE>
-sclsvrServer - sclsvr - Warning - Elapsed time in execution of 'GETCAL' 00:00:08.487

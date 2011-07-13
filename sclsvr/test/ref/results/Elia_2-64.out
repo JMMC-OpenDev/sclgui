@@ -12,18 +12,15 @@ sclsvrServer - alx - Test - Sky research area size = 0.35 (deg)
 sclsvrServer - alx - Test - Sky research radius = 19.96 (arcmin)
 sclsvrServer - sclsvr - Info - Sky research radius = 19.96(arcmin)
 sclsvrServer - vobs - Test - Consulting II/246/out ...
-sclsvrServer - err - Test - errAddInStack(misc, 6)
 sclsvrServer - vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:23:14.40&-c.dec=-24:39:24.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=20&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
 sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_246_out_PRIMARY' 00:00:00.263
 sclsvrServer - vobs - Test - after COPY, star list size = 13
 sclsvrServer - sclsvr - Info - New Sky research radius = 28.22(arcmin)
 sclsvrServer - vobs - Test - vobsVIRTUAL_OBSERVATORY::Search()
 sclsvrServer - vobs - Test - Consulting II/246/out ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:23:14.40&-c.dec=-24:39:24.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=28&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
 sclsvrServer - vobs - Test - ...number of stars return = 24
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_246_out_PRIMARY' 00:00:00.179
 sclsvrServer - vobs - Test - after COPY, star list size = 24
 sclsvrServer - vobs - Test - after COPY, star list size = 24
 sclsvrServer - vobs - Info - star 2MASS 16233842-2437312 has been removed by the filter 'Opt = T filter'
@@ -56,38 +53,41 @@ sclsvrServer - vobs - Test - after FILTER, star list size = 18
 sclsvrServer - vobs - Test - Consulting I/280 ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+23+07.689-24+42+34.01&+16+22+36.730-24+22+58.63&+16+21+57.690-24+29+43.34&+16+22+19.897-24+21+48.22&+16+24+21.324-25+01+31.40&+16+21+55.464-24+59+28.45&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 6
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'I_280_SECONDARY' 00:00:00.309
 sclsvrServer - vobs - Test - after COPY, star list size = 5
 sclsvrServer - vobs - Test - Consulting I/284 ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+23+38.420-24+37+31.25&+16+23+49.746-24+41+29.09&+16+23+09.399-24+48+36.03&+16+23+55.002-24+41+23.63&+16+23+55.515-24+44+24.00&+16+22+27.413-24+47+07.31&+16+23+26.933-24+25+29.16&+16+22+11.631-24+41+02.02&+16+22+24.422-24+50+18.82&+16+22+36.211-24+23+31.56&+16+22+02.786-24+52+48.79&+16+22+35.658-24+58+33.43&+16+22+32.492-25+00+32.24&+16+25+01.487-24+28+58.84&+16+23+29.052-24+12+41.12&+16+24+46.803-24+22+21.06&+16+24+37.381-24+19+01.00&+16+21+14.483-24+45+10.01&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 23
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'I_284_SECONDARY' 00:00:00.337
 sclsvrServer - vobs - Test - after COPY, star list size = 18
 sclsvrServer - vobs - Test - after MERGE, star list size = 23
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 23
 sclsvrServer - vobs - Test - Consulting B/denis ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+22+36.729-24+22+58.69&+16+21+57.695-24+29+43.50&+16+22+19.883-24+21+48.23&+16+24+21.320-25+01+31.41&+16+21+55.440-24+59+28.68&+16+23+38.443-24+37+31.05&+16+23+49.768-24+41+28.93&+16+23+09.392-24+48+35.97&+16+23+55.014-24+41+23.40&+16+23+55.518-24+44+23.83&+16+22+27.409-24+47+07.56&+16+23+26.943-24+25+29.03&+16+22+11.642-24+41+01.74&+16+22+24.432-24+50+18.46&+16+22+36.271-24+23+30.53&+16+22+02.782-24+52+48.69&+16+22+35.665-24+58+33.38&+16+22+32.498-25+00+31.96&+16+25+01.505-24+28+58.91&+16+23+29.048-24+12+41.08&+16+24+46.815-24+22+21.47&+16+24+37.368-24+19+00.73&+16+21+14.470-24+45+09.12&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 19
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'B_denis_SECONDARY' 00:00:00.338
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 23
 sclsvrServer - vobs - Test - Consulting B/sb9/main ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+22+36.729-24+22+58.69&+16+21+57.695-24+29+43.50&+16+22+19.883-24+21+48.23&+16+24+21.320-25+01+31.41&+16+21+55.440-24+59+28.68&+16+23+38.443-24+37+31.05&+16+23+49.768-24+41+28.93&+16+23+09.392-24+48+35.97&+16+23+55.014-24+41+23.40&+16+23+55.518-24+44+23.83&+16+22+27.409-24+47+07.56&+16+23+26.943-24+25+29.03&+16+22+11.642-24+41+01.74&+16+22+24.432-24+50+18.46&+16+22+36.271-24+23+30.53&+16+22+02.782-24+52+48.69&+16+22+35.665-24+58+33.38&+16+22+32.498-25+00+31.96&+16+25+01.505-24+28+58.91&+16+23+29.048-24+12+41.08&+16+24+46.815-24+22+21.47&+16+24+37.368-24+19+00.73&+16+21+14.470-24+45+09.12&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 23
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'B_sb9_main_SECONDARY' 00:00:00.202
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 23
 sclsvrServer - vobs - Test - Consulting B/wds/wds ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+22+36.729-24+22+58.69&+16+21+57.695-24+29+43.50&+16+22+19.883-24+21+48.23&+16+24+21.320-25+01+31.41&+16+21+55.440-24+59+28.68&+16+23+38.443-24+37+31.05&+16+23+49.768-24+41+28.93&+16+23+09.392-24+48+35.97&+16+23+55.014-24+41+23.40&+16+23+55.518-24+44+23.83&+16+22+27.409-24+47+07.56&+16+23+26.943-24+25+29.03&+16+22+11.642-24+41+01.74&+16+22+24.432-24+50+18.46&+16+22+36.271-24+23+30.53&+16+22+02.782-24+52+48.69&+16+22+35.665-24+58+33.38&+16+22+32.498-25+00+31.96&+16+25+01.505-24+28+58.91&+16+23+29.048-24+12+41.08&+16+24+46.815-24+22+21.47&+16+24+37.368-24+19+00.73&+16+21+14.470-24+45+09.12&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 3
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'B_wds_wds_SECONDARY' 00:00:00.301
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 23
 sclsvrServer - vobs - Test - Consulting II/297/irc ...
 sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+22+36.729-24+22+58.69&+16+21+57.695-24+29+43.50&+16+22+19.883-24+21+48.23&+16+24+21.320-25+01+31.41&+16+21+55.440-24+59+28.68&+16+23+38.443-24+37+31.05&+16+23+49.768-24+41+28.93&+16+23+09.392-24+48+35.97&+16+23+55.014-24+41+23.40&+16+23+55.518-24+44+23.83&+16+22+27.409-24+47+07.56&+16+23+26.943-24+25+29.03&+16+22+11.642-24+41+01.74&+16+22+24.432-24+50+18.46&+16+22+36.271-24+23+30.53&+16+22+02.782-24+52+48.69&+16+22+35.665-24+58+33.38&+16+22+32.498-25+00+31.96&+16+25+01.505-24+28+58.91&+16+23+29.048-24+12+41.08&+16+24+46.815-24+22+21.47&+16+24+37.368-24+19+00.73&+16+21+14.470-24+45+09.12&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer - vobs - Test - ...number of stars return = 6
-sclsvrServer - vobs - Warning - Elapsed time in execution of 'II_297_irc_SECONDARY' 00:00:00.290
 sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 23
 sclsvrServer - vobs - Test - Number of stars found : 23
 sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Copy()
 sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Complete() - start
+sclsvrServer - alx - Test - Original spectral type = 'A0V'.
+sclsvrServer - alx - Test - Final spectral type = 'A0V'.
+sclsvrServer - alx - Test -  - Code                = 'A'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'V'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'A0V'.
 sclsvrServer - alx - Test - Original spectral type = 'A0V'.
 sclsvrServer - alx - Test - Final spectral type = 'A0V'.
 sclsvrServer - alx - Test -  - Code                = 'A'.
@@ -181,6 +181,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'IV'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'A1 IV'.
+sclsvrServer - alx - Test - Original spectral type = 'A1 IV'.
+sclsvrServer - alx - Test - Final spectral type = 'A1IV'.
+sclsvrServer - alx - Test -  - Code                = 'A'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '1.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'IV'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = DWARF
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star HD 147283 - parallax -24.20(45.00) is not valid...
@@ -235,6 +244,15 @@ sclsvrServer - sclsvr - Test - star HD 147283 - error on diameter too high; comp
 sclsvrServer - sclsvr - Test - star HD 147283 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star HD 147283 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
+sclsvrServer - alx - Test - Original spectral type = 'A1III/IV'.
+sclsvrServer - alx - Test - Final spectral type = 'A1III/IV'.
+sclsvrServer - alx - Test -  - Code                = 'A'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '1.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III/IV'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'A1III/IV'.
 sclsvrServer - alx - Test - Original spectral type = 'A1III/IV'.
 sclsvrServer - alx - Test - Final spectral type = 'A1III/IV'.
 sclsvrServer - alx - Test -  - Code                = 'A'.
@@ -364,6 +382,15 @@ sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
 sclsvrServer - alx - Test -  - Is Double           = 'NO'.
 sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
 sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'B5III'.
+sclsvrServer - alx - Test - Original spectral type = 'B5III'.
+sclsvrServer - alx - Test - Final spectral type = 'B5III'.
+sclsvrServer - alx - Test -  - Code                = 'B'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
 sclsvrServer - alx - Test - Type of star = GIANT
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star HD 147701 - parallax 6.69(1.20) is OK...
@@ -420,6 +447,15 @@ sclsvrServer - alx - Test - Computed diameters are not coherent between them; th
 sclsvrServer - sclsvr - Test - star HD 147701 - error on diameter too high; computed diameters are not coherent
 sclsvrServer - sclsvr - Test - star HD 147701 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
+sclsvrServer - alx - Test - Original spectral type = 'G3V'.
+sclsvrServer - alx - Test - Final spectral type = 'G3V'.
+sclsvrServer - alx - Test -  - Code                = 'G'.
+sclsvrServer - alx - Test -  - Sub-type Quantity   = '3.000000'.
+sclsvrServer - alx - Test -  - Luminosity Class    = 'V'.
+sclsvrServer - alx - Test -  - Is Double           = 'NO'.
+sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
+sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'G3V'.
 sclsvrServer - alx - Test - Original spectral type = 'G3V'.
 sclsvrServer - alx - Test - Final spectral type = 'G3V'.
 sclsvrServer - alx - Test -  - Code                = 'G'.
@@ -497,7 +533,7 @@ sclsvrServer - alx - Test - UD_H = 0.152737
 sclsvrServer - alx - Test - UD_K = 0.153246
 sclsvrServer - alx - Test - UD_L = 0.154541
 sclsvrServer - alx - Test - UD_N = 0.155558
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16233842-2437312 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.991243 radians
@@ -541,7 +577,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16233842-2437312 - error on diameter t
 sclsvrServer - sclsvr - Test - star 2MASS 16233842-2437312 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16233842-2437312 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16234974-2441290 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.990419 radians
@@ -569,7 +605,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16234974-2441290 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16234974-2441290 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16234974-2441290 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star 2MASS 16230939-2448360 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.993356 radians
@@ -597,7 +633,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16230939-2448360 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16230939-2448360 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16230939-2448360 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16235500-2441236 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.990038 radians
@@ -625,7 +661,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16235500-2441236 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16235500-2441236 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16235500-2441236 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16235551-2444240 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.990001 radians
@@ -653,7 +689,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16235551-2444240 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16235551-2444240 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16235551-2444240 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16222741-2447073 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.996409 radians
@@ -681,7 +717,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16222741-2447073 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16222741-2447073 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16222741-2447073 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star 2MASS 16232693-2425291 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.992079 radians
@@ -709,7 +745,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16232693-2425291 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16232693-2425291 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16232693-2425291 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16221163-2441020 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.997555 radians
@@ -737,7 +773,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16221163-2441020 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16221163-2441020 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16221163-2441020 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star 2MASS 16222442-2450188 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.996625 radians
@@ -765,7 +801,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16222442-2450188 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16222442-2450188 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16222442-2450188 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star 2MASS 16223621-2423315 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.995764 radians
@@ -793,7 +829,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16223621-2423315 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16223621-2423315 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16223621-2423315 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16220278-2452487 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.998200 radians
@@ -837,7 +873,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16220278-2452487 - error on diameter t
 sclsvrServer - sclsvr - Test - star 2MASS 16220278-2452487 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16220278-2452487 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16223565-2458334 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.995808 radians
@@ -865,7 +901,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16223565-2458334 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16223565-2458334 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16223565-2458334 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star 2MASS 16223249-2500322 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.996039 radians
@@ -893,7 +929,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16223249-2500322 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16223249-2500322 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16223249-2500322 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16250148-2428588 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.985203 radians
@@ -921,7 +957,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16250148-2428588 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16250148-2428588 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16250148-2428588 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test - star 2MASS 16232905-2412411 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.991926 radians
@@ -949,7 +985,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16232905-2412411 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16232905-2412411 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16232905-2412411 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16244680-2422210 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.986271 radians
@@ -977,7 +1013,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16244680-2422210 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16244680-2422210 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16244680-2422210 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16243738-2419009 - parallax is unknown
 sclsvrServer - alx - Test - ra = -1.986958 radians
@@ -1005,7 +1041,7 @@ sclsvrServer - sclsvr - Test - star 2MASS 16243738-2419009 - unknown IO property
 sclsvrServer - sclsvr - Test - star 2MASS 16243738-2419009 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test - star 2MASS 16243738-2419009 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
 sclsvrServer - sclsvr - Test - star 2MASS 16211448-2445100 - parallax is unknown
 sclsvrServer - alx - Test - ra = -2.001713 radians
@@ -1289,7 +1325,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property VarFlag3</DESCRIPTION>
    </FIELD>
    <FIELD name="MultFlag" ID="col63" ucd="CODE_MULT_FLAG" datatype="char" arraysize="*">
-    <DESCRIPTION>Multiplicity type among C,G,O,V and X</DESCRIPTION>
+    <DESCRIPTION>Multiplicity type among C,G,O,V, X or SB (for decoded spectral binaries)</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="MultFlag.origin" ID="col64" ucd="CODE_MULT_FLAG.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property MultFlag</DESCRIPTION>
@@ -1298,7 +1334,7 @@ VOTable:
     <DESCRIPTION>Confidence index of property MultFlag</DESCRIPTION>
    </FIELD>
    <FIELD name="BinFlag" ID="col66" ucd="CODE_BIN_FLAG" datatype="char" arraysize="*">
-    <DESCRIPTION>Multiplicity type among SB or eclipsing B</DESCRIPTION>
+    <DESCRIPTION>Multiplicity type among SB, eclipsing B or S (for suspicious binaries in spectral tupe)</DESCRIPTION>
    </FIELD>
    <FIELD type="hidden" name="BinFlag.origin" ID="col67" ucd="CODE_BIN_FLAG.origin" datatype="char" arraysize="*">
     <DESCRIPTION>Origin of property BinFlag</DESCRIPTION>
@@ -3110,4 +3146,3 @@ VOTable:
   </TABLE>
  </RESOURCE>
 </VOTABLE>
-sclsvrServer - sclsvr - Warning - Elapsed time in execution of 'GETCAL' 00:00:02.254
