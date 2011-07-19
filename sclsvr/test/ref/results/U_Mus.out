@@ -1,656 +1,743 @@
-sclsvrServer - alx - Test - Sky coordinates (in degrees) : RA = -158.8 - DEC = -64.7
-sclsvrServer - alx - Test - Magnitude range = [5.0..8.0]
-sclsvrServer - alx - Test - ra = -2.770754 radians
-sclsvrServer - alx - Test - dec = -1.128603 radians
-sclsvrServer - alx - Test - gLat = -2.030 degrees
-sclsvrServer - alx - Test - gLon = 306.510 degrees
-sclsvrServer - alx - Info - GLat = -2.030000, GLon = 306.510000
-sclsvrServer - alx - Test - Magnitude [5.0 - 8.0], range used => [5.5 - 8.0]
-sclsvrServer - alx - Test - Number of estimated stars into 1 degree solid angle circle = 1110
-sclsvrServer - alx - Info - Nb of star for this sky area = 1110
-sclsvrServer - alx - Test - Sky research area size = 0.04 (deg)
-sclsvrServer - alx - Test - Sky research radius = 6.37 (arcmin)
-sclsvrServer - sclsvr - Info - Sky research radius = 6.37(arcmin)
-sclsvrServer - vobs - Test - Consulting II/246/out ...
-sclsvrServer - vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=6&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
-sclsvrServer - vobs - Test - ...number of stars return = 6
-sclsvrServer - vobs - Test - after COPY, star list size = 6
-sclsvrServer - sclsvr - Info - New Sky research radius = 9.00(arcmin)
-sclsvrServer - vobs - Test - vobsVIRTUAL_OBSERVATORY::Search()
-sclsvrServer - vobs - Test - Consulting II/246/out ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=9&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after COPY, star list size = 13
-sclsvrServer - vobs - Test - after COPY, star list size = 13
-sclsvrServer - vobs - Info - star 2MASS 13245473-6439257 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13245711-6438509 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13243568-6439316 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13252782-6441437 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13251154-6444282 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13243503-6445192 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13244223-6445528 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13241776-6444451 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13252010-6446564 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13260887-6441231 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Info - star 2MASS 13253736-6447140 has been removed by the filter 'Opt = T filter'
-sclsvrServer - vobs - Test - after FILTER, star list size = 2
-sclsvrServer - vobs - Test - after COPY, star list size = 13
-sclsvrServer - vobs - Info - star 2MASS 13250812-6438276 has been removed by the filter 'Opt = U filter'
-sclsvrServer - vobs - Info - star 2MASS 13260374-6444200 has been removed by the filter 'Opt = U filter'
-sclsvrServer - vobs - Test - after FILTER, star list size = 11
-sclsvrServer - vobs - Test - Consulting I/280 ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.123-64+38+27.62&+13+26+03.748-64+44+20.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 2
-sclsvrServer - vobs - Test - after COPY, star list size = 2
-sclsvrServer - vobs - Test - Consulting I/284 ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+24+54.739-64+39+25.80&+13+24+57.118-64+38+50.91&+13+24+35.686-64+39+31.62&+13+25+27.820-64+41+43.73&+13+25+11.542-64+44+28.22&+13+24+35.032-64+45+19.28&+13+24+42.231-64+45+52.87&+13+24+17.770-64+44+45.14&+13+25+20.107-64+46+56.43&+13+26+08.874-64+41+23.13&+13+25+37.368-64+47+14.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 17
-sclsvrServer - vobs - Test - after COPY, star list size = 11
-sclsvrServer - vobs - Test - after MERGE, star list size = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting B/denis ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 12
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting B/sb9/main ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting B/wds/wds ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting II/297/irc ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 9
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Number of stars found : 13
-sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Copy()
-sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Complete() - start
-sclsvrServer - alx - Test - Original spectral type = 'F0 II'.
-sclsvrServer - alx - Test - Final spectral type = 'F0II'.
-sclsvrServer - alx - Test -  - Code                = 'F'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'II'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'F0 II'.
-sclsvrServer - alx - Test - Original spectral type = 'F0 II'.
-sclsvrServer - alx - Test - Final spectral type = 'F0II'.
-sclsvrServer - alx - Test -  - Code                = 'F'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'II'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 0.132939
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 0.077017
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = 6.757010
-sclsvrServer - sclsvr - Test - star HD 116420 - parallax 9.10(9.80) is not valid...
-sclsvrServer - alx - Test - ra = -2.770120 radians
-sclsvrServer - alx - Test - dec = -1.128199 radians
-sclsvrServer - alx - Test - gLat = -2.010 degrees
-sclsvrServer - alx - Test - gLon = 306.530 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 9.680
-sclsvrServer - alx - Test - Corrected magnitude[1] = 9.097
-sclsvrServer - alx - Test - Corrected magnitude[2] = 9.110
-sclsvrServer - alx - Test - Corrected magnitude[4] = 7.446
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.145
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.029
-sclsvrServer - alx - Test - Original spectral type = 'F0 II'.
-sclsvrServer - alx - Test - Final spectral type = 'F0II'.
-sclsvrServer - alx - Test -  - Code                = 'F'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'II'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - Inferior line = 19
-sclsvrServer - alx - Test - Superior line = 20
-sclsvrServer - alx - Test - 0.190000 < J-K (0.417316) < 0.230000
-sclsvrServer - alx - Test - Ratio = 5.682900
-sclsvrServer - alx - Test - J = 7.446
-sclsvrServer - alx - Test - K = 7.029
-sclsvrServer - alx - Test - R = 9.110 (2)
-sclsvrServer - alx - Test - I = 7.960 (2)
-sclsvrServer - alx - Test - B = 9.680 (2)
-sclsvrServer - alx - Test - H = 7.145 (2)
-sclsvrServer - alx - Test - V = 9.097 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 9.680
-sclsvrServer - alx - Test - Corrected magnitude[V] = 9.097
-sclsvrServer - alx - Test - Corrected magnitude[R] = 9.110
-sclsvrServer - alx - Test - Corrected magnitude[I] = 7.960
-sclsvrServer - alx - Test - Corrected magnitude[J] = 7.446
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.145
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.029
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Info - Diameter JH = 0.165(0.0286)
-sclsvrServer - alx - Info - Diameter JK = 0.184(0.0178)
-sclsvrServer - alx - Info - Diameter VK = 0.188(0.0130)
-sclsvrServer - alx - Info - Diameter HK = 0.216(0.0271)
-sclsvrServer - alx - Info - Mean diameter = 0.189(0.0377)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - sclsvr - Test - star HD 116420 - computing diameter without absorption...
-sclsvrServer - alx - Test - Diam= 0.184(0.018) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.997873
-sclsvrServer - alx - Test - dV  = 0.000412
-sclsvrServer - alx - Test - V2  = 0.995750
-sclsvrServer - alx - Test - dV2 = 0.000823
-sclsvrServer - alx - Test - Corrected magnitude[0] = 5.712
-sclsvrServer - alx - Test - Corrected magnitude[1] = 6.097
-sclsvrServer - alx - Test - Corrected magnitude[2] = 6.865
-sclsvrServer - alx - Test - Corrected magnitude[4] = 6.614
-sclsvrServer - alx - Test - Corrected magnitude[5] = 6.632
-sclsvrServer - alx - Test - Corrected magnitude[6] = 6.681
-sclsvrServer - alx - Test - Original spectral type = 'F0 II'.
-sclsvrServer - alx - Test - Final spectral type = 'F0II'.
-sclsvrServer - alx - Test -  - Code                = 'F'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'II'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - Inferior line = 19
-sclsvrServer - alx - Test - Superior line = 20
-sclsvrServer - alx - Test - 0.190000 < J-K (-0.066555) < 0.230000
-sclsvrServer - alx - Test - Ratio = 6.413874
-sclsvrServer - alx - Test - J = 6.614
-sclsvrServer - alx - Test - K = 6.681
-sclsvrServer - alx - Test - R = 6.865 (2)
-sclsvrServer - alx - Test - I = 7.165 (2)
-sclsvrServer - alx - Test - B = 5.712 (2)
-sclsvrServer - alx - Test - H = 6.632 (2)
-sclsvrServer - alx - Test - V = 6.097 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 9.672
-sclsvrServer - alx - Test - Corrected magnitude[V] = 9.097
-sclsvrServer - alx - Test - Corrected magnitude[R] = 9.109
-sclsvrServer - alx - Test - Corrected magnitude[I] = 8.683
-sclsvrServer - alx - Test - Corrected magnitude[J] = 14.945
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.145
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.029
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Info - Diameter JH = 0.129(0.0224)
-sclsvrServer - alx - Info - Diameter JK = 0.113(0.0110)
-sclsvrServer - alx - Info - Diameter VK = 0.208(0.0144)
-sclsvrServer - alx - Info - Diameter HK = 0.127(0.0159)
-sclsvrServer - alx - Info - Mean diameter = 0.144(0.0289)
-sclsvrServer - alx - Test - Computed diameters are not coherent between them; they are not kept
-sclsvrServer - sclsvr - Test - star HD 116420 - error on diameter too high; computed diameters are not coherent
-sclsvrServer - sclsvr - Test - star HD 116420 - Computing diameter with absorption...
-sclsvrServer - sclsvr - Test - star HD 116420 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Computing UDs for LD='0.188269' and Teff='7000.000000',LogG='3.178000'...
-sclsvrServer - alx - Test - UD_U = 0.176574
-sclsvrServer - alx - Test - UD_B = 0.174834
-sclsvrServer - alx - Test - UD_V = 0.177177
-sclsvrServer - alx - Test - UD_R = 0.179716
-sclsvrServer - alx - Test - UD_I = 0.181647
-sclsvrServer - alx - Test - UD_J = 0.183524
-sclsvrServer - alx - Test - UD_H = 0.184646
-sclsvrServer - alx - Test - UD_K = 0.185206
-sclsvrServer - alx - Test - UD_L = 0.186570
-sclsvrServer - alx - Test - UD_N = 0.187486
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star TYC1 8999 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.766074 radians
-sclsvrServer - alx - Test - dec = -1.129907 radians
-sclsvrServer - alx - Test - gLat = -2.120 degrees
-sclsvrServer - alx - Test - gLon = 306.610 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 12.190
-sclsvrServer - alx - Test - Corrected magnitude[1] = 11.060
-sclsvrServer - alx - Test - Corrected magnitude[2] = 11.070
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.742
-sclsvrServer - alx - Test - Corrected magnitude[5] = 8.161
-sclsvrServer - alx - Test - Corrected magnitude[6] = 8.006
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - alx - Test - Inferior line = 38
-sclsvrServer - alx - Test - Superior line = 39
-sclsvrServer - alx - Test - 0.720000 < J-K (0.735508) < 0.850000
-sclsvrServer - alx - Test - Ratio = 0.119292
-sclsvrServer - alx - Test - J = 8.742
-sclsvrServer - alx - Test - K = 8.006
-sclsvrServer - alx - Test - R = 11.070 (2)
-sclsvrServer - alx - Test - I = 9.650 (2)
-sclsvrServer - alx - Test - B = 12.190 (2)
-sclsvrServer - alx - Test - H = 8.161 (2)
-sclsvrServer - alx - Test - V = 11.060 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 12.190
-sclsvrServer - alx - Test - Corrected magnitude[V] = 11.060
-sclsvrServer - alx - Test - Corrected magnitude[R] = 11.070
-sclsvrServer - alx - Test - Corrected magnitude[I] = 9.650
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.742
-sclsvrServer - alx - Test - Corrected magnitude[H] = 8.161
-sclsvrServer - alx - Test - Corrected magnitude[K] = 8.006
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Info - Diameter JH = 0.167(0.0288)
-sclsvrServer - alx - Info - Diameter JK = 0.149(0.0144)
-sclsvrServer - alx - Info - Diameter VK = 0.130(0.0090)
-sclsvrServer - alx - Info - Diameter HK = 0.149(0.0186)
-sclsvrServer - alx - Info - Mean diameter = 0.149(0.0297)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - sclsvr - Test - star TYC1 8999 - computing diameter without absorption...
-sclsvrServer - alx - Test - Diam= 0.149(0.014) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.998610
-sclsvrServer - alx - Test - dV  = 0.000270
-sclsvrServer - alx - Test - V2  = 0.997222
-sclsvrServer - alx - Test - dV2 = 0.000538
-sclsvrServer - alx - Test - Corrected magnitude[0] = 8.222
-sclsvrServer - alx - Test - Corrected magnitude[1] = 8.060
-sclsvrServer - alx - Test - Corrected magnitude[2] = 8.825
-sclsvrServer - alx - Test - Corrected magnitude[4] = 7.909
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.648
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.658
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - alx - Test - Inferior line = 23
-sclsvrServer - alx - Test - Superior line = 24
-sclsvrServer - alx - Test - 0.250000 < J-K (0.251637) < 0.310000
-sclsvrServer - alx - Test - Ratio = 0.027284
-sclsvrServer - alx - Test - J = 7.909
-sclsvrServer - alx - Test - K = 7.658
-sclsvrServer - alx - Test - R = 8.825 (2)
-sclsvrServer - alx - Test - I = 8.231 (2)
-sclsvrServer - alx - Test - B = 8.222 (2)
-sclsvrServer - alx - Test - H = 7.648 (2)
-sclsvrServer - alx - Test - V = 8.060 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 12.182
-sclsvrServer - alx - Test - Corrected magnitude[V] = 11.060
-sclsvrServer - alx - Test - Corrected magnitude[R] = 11.069
-sclsvrServer - alx - Test - Corrected magnitude[I] = 9.749
-sclsvrServer - alx - Test - Corrected magnitude[J] = 16.240
-sclsvrServer - alx - Test - Corrected magnitude[H] = 8.161
-sclsvrServer - alx - Test - Corrected magnitude[K] = 8.006
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Info - Diameter JH = 0.127(0.0220)
-sclsvrServer - alx - Info - Diameter JK = 0.117(0.0114)
-sclsvrServer - alx - Info - Diameter VK = 0.145(0.0100)
-sclsvrServer - alx - Info - Diameter HK = 0.102(0.0128)
-sclsvrServer - alx - Info - Mean diameter = 0.123(0.0246)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - sclsvr - Test - star TYC1 8999 - Computing diameter with absorption...
-sclsvrServer - alx - Test - Diam= 0.117(0.011) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.999132
-sclsvrServer - alx - Test - dV  = 0.000168
-sclsvrServer - alx - Test - V2  = 0.998266
-sclsvrServer - alx - Test - dV2 = 0.000336
-sclsvrServer - sclsvr - Test - vis2 = 0.997222
-sclsvrServer - sclsvr - Test - vis2A = 0.998266
-sclsvrServer - sclsvr - Test - |vis2A - vis2| = 0.001044
-sclsvrServer - sclsvr - Test - vis2Err = 0.000538
-sclsvrServer - sclsvr - Test - visibilityErr = 0.001044
-sclsvrServer - sclsvr - Test - star TYC1 8999 - visibility error (0.001044) is lower than the expected one (0.500000)
-sclsvrServer - sclsvr - Test - Skipping (Teff unknown).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star 2MASS 13245473-6439257 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.771082 radians
-sclsvrServer - alx - Test - dec = -1.128483 radians
-sclsvrServer - alx - Test - gLat = -2.020 degrees
-sclsvrServer - alx - Test - gLon = 306.500 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 16.270
-sclsvrServer - alx - Test - Corrected magnitude[2] = 13.010
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.483
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.528
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.175
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13245473-6439257 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 16.270
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 13.010
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.483
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.528
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.175
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13245473-6439257 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13245473-6439257 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13245473-6439257 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13245711-6438509 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.770922 radians
-sclsvrServer - alx - Test - dec = -1.128311 radians
-sclsvrServer - alx - Test - gLat = -2.010 degrees
-sclsvrServer - alx - Test - gLon = 306.510 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 15.170
-sclsvrServer - alx - Test - Corrected magnitude[2] = 12.610
-sclsvrServer - alx - Test - Corrected magnitude[4] = 6.692
-sclsvrServer - alx - Test - Corrected magnitude[5] = 5.631
-sclsvrServer - alx - Test - Corrected magnitude[6] = 5.158
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13245711-6438509 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 15.170
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 12.610
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 6.692
-sclsvrServer - alx - Test - Corrected magnitude[H] = 5.631
-sclsvrServer - alx - Test - Corrected magnitude[K] = 5.158
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13245711-6438509 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13245711-6438509 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13245711-6438509 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13243568-6439316 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.772482 radians
-sclsvrServer - alx - Test - dec = -1.128508 radians
-sclsvrServer - alx - Test - gLat = -2.020 degrees
-sclsvrServer - alx - Test - gLon = 306.470 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 19.640
-sclsvrServer - alx - Test - Corrected magnitude[2] = 14.450
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.907
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.868
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.364
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13243568-6439316 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 19.640
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 14.450
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.907
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.868
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.364
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13243568-6439316 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13243568-6439316 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13243568-6439316 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13252782-6441437 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.768679 radians
-sclsvrServer - alx - Test - dec = -1.129147 radians
-sclsvrServer - alx - Test - gLat = -2.070 degrees
-sclsvrServer - alx - Test - gLon = 306.560 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 13.600
-sclsvrServer - alx - Test - Corrected magnitude[2] = 10.680
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.063
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.129
-sclsvrServer - alx - Test - Corrected magnitude[6] = 6.815
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13252782-6441437 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 13.600
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 10.680
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.063
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.129
-sclsvrServer - alx - Test - Corrected magnitude[K] = 6.815
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13252782-6441437 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13252782-6441437 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13252782-6441437 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13251154-6444282 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.769867 radians
-sclsvrServer - alx - Test - dec = -1.129945 radians
-sclsvrServer - alx - Test - gLat = -2.110 degrees
-sclsvrServer - alx - Test - gLon = 306.520 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 14.230
-sclsvrServer - alx - Test - Corrected magnitude[2] = 11.010
-sclsvrServer - alx - Test - Corrected magnitude[4] = 7.748
-sclsvrServer - alx - Test - Corrected magnitude[5] = 6.848
-sclsvrServer - alx - Test - Corrected magnitude[6] = 6.537
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13251154-6444282 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 14.230
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 11.010
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 7.748
-sclsvrServer - alx - Test - Corrected magnitude[H] = 6.848
-sclsvrServer - alx - Test - Corrected magnitude[K] = 6.537
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13251154-6444282 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13251154-6444282 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13251154-6444282 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star 2MASS 13243503-6445192 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.772530 radians
-sclsvrServer - alx - Test - dec = -1.130192 radians
-sclsvrServer - alx - Test - gLat = -2.110 degrees
-sclsvrServer - alx - Test - gLon = 306.460 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 13.470
-sclsvrServer - alx - Test - Corrected magnitude[2] = 10.760
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.865
-sclsvrServer - alx - Test - Corrected magnitude[5] = 8.048
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.808
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - alx - Test - Inferior line = 46
-sclsvrServer - alx - Test - Superior line = 47
-sclsvrServer - alx - Test - 0.960000 < J-K (1.056541) < 1.140000
-sclsvrServer - alx - Test - Ratio = 0.536339
-sclsvrServer - alx - Test - J = 8.865
-sclsvrServer - alx - Test - K = 7.808
-sclsvrServer - alx - Test - R = 10.760 (2)
-sclsvrServer - alx - Test - I = 11.626 (2)
-sclsvrServer - alx - Test - B = 13.470 (2)
-sclsvrServer - alx - Test - H = 8.048 (2)
-sclsvrServer - alx - Test - V = 16.157 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 13.470
-sclsvrServer - alx - Test - Corrected magnitude[V] = 16.157
-sclsvrServer - alx - Test - Corrected magnitude[R] = 10.760
-sclsvrServer - alx - Test - Corrected magnitude[I] = 11.626
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.865
-sclsvrServer - alx - Test - Corrected magnitude[H] = 8.048
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.808
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Info - Diameter JH = 0.337(0.0583)
-sclsvrServer - alx - Info - Diameter JK = 0.198(0.0192)
-sclsvrServer - alx - Info - Diameter HK = 0.174(0.0218)
-sclsvrServer - alx - Info - Mean diameter = 0.236(0.0473)
-sclsvrServer - alx - Test - Computed diameters are not coherent between them; they are not kept
-sclsvrServer - sclsvr - Test - star 2MASS 13243503-6445192 - error on diameter too high; computed diameters are not coherent
-sclsvrServer - sclsvr - Test - star 2MASS 13243503-6445192 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13243503-6445192 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13244223-6445528 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.771993 radians
-sclsvrServer - alx - Test - dec = -1.130360 radians
-sclsvrServer - alx - Test - gLat = -2.120 degrees
-sclsvrServer - alx - Test - gLon = 306.470 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 15.890
-sclsvrServer - alx - Test - Corrected magnitude[2] = 14.210
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.285
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.246
-sclsvrServer - alx - Test - Corrected magnitude[6] = 6.825
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13244223-6445528 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 15.890
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 14.210
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.285
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.246
-sclsvrServer - alx - Test - Corrected magnitude[K] = 6.825
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13244223-6445528 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13244223-6445528 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13244223-6445528 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13241776-6444451 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.773794 radians
-sclsvrServer - alx - Test - dec = -1.130031 radians
-sclsvrServer - alx - Test - gLat = -2.100 degrees
-sclsvrServer - alx - Test - gLon = 306.430 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 14.340
-sclsvrServer - alx - Test - Corrected magnitude[2] = 10.250
-sclsvrServer - alx - Test - Corrected magnitude[4] = 7.954
-sclsvrServer - alx - Test - Corrected magnitude[5] = 7.100
-sclsvrServer - alx - Test - Corrected magnitude[6] = 6.831
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - alx - Test - Inferior line = 46
-sclsvrServer - alx - Test - Superior line = 47
-sclsvrServer - alx - Test - 0.960000 < J-K (1.122831) < 1.140000
-sclsvrServer - alx - Test - Ratio = 0.904617
-sclsvrServer - alx - Test - J = 7.954
-sclsvrServer - alx - Test - K = 6.831
-sclsvrServer - alx - Test - R = 10.250 (2)
-sclsvrServer - alx - Test - I = 10.937 (2)
-sclsvrServer - alx - Test - B = 14.340 (2)
-sclsvrServer - alx - Test - H = 7.100 (2)
-sclsvrServer - alx - Test - V = 15.522 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 14.340
-sclsvrServer - alx - Test - Corrected magnitude[V] = 15.522
-sclsvrServer - alx - Test - Corrected magnitude[R] = 10.250
-sclsvrServer - alx - Test - Corrected magnitude[I] = 10.937
-sclsvrServer - alx - Test - Corrected magnitude[J] = 7.954
-sclsvrServer - alx - Test - Corrected magnitude[H] = 7.100
-sclsvrServer - alx - Test - Corrected magnitude[K] = 6.831
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Info - Diameter JH = 0.578(0.1000)
-sclsvrServer - alx - Info - Diameter JK = 0.323(0.0313)
-sclsvrServer - alx - Info - Diameter HK = 0.270(0.0338)
-sclsvrServer - alx - Info - Mean diameter = 0.390(0.0781)
-sclsvrServer - alx - Test - Computed diameters are not coherent between them; they are not kept
-sclsvrServer - sclsvr - Test - star 2MASS 13241776-6444451 - error on diameter too high; computed diameters are not coherent
-sclsvrServer - sclsvr - Test - star 2MASS 13241776-6444451 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13241776-6444451 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13252010-6446564 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.769251 radians
-sclsvrServer - alx - Test - dec = -1.130665 radians
-sclsvrServer - alx - Test - gLat = -2.150 degrees
-sclsvrServer - alx - Test - gLon = 306.530 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 17.570
-sclsvrServer - alx - Test - Corrected magnitude[2] = 15.000
-sclsvrServer - alx - Test - Corrected magnitude[4] = 9.467
-sclsvrServer - alx - Test - Corrected magnitude[5] = 8.365
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.897
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13252010-6446564 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 17.570
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 15.000
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 9.467
-sclsvrServer - alx - Test - Corrected magnitude[H] = 8.365
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.897
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13252010-6446564 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13252010-6446564 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13252010-6446564 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star 2MASS 13260887-6441231 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.765689 radians
-sclsvrServer - alx - Test - dec = -1.129039 radians
-sclsvrServer - alx - Test - gLat = -2.070 degrees
-sclsvrServer - alx - Test - gLon = 306.630 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 15.930
-sclsvrServer - alx - Test - Corrected magnitude[2] = 13.080
-sclsvrServer - alx - Test - Corrected magnitude[4] = 9.222
-sclsvrServer - alx - Test - Corrected magnitude[5] = 8.145
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.721
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13260887-6441231 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 15.930
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 13.080
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 9.222
-sclsvrServer - alx - Test - Corrected magnitude[H] = 8.145
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.721
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13260887-6441231 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13260887-6441231 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13260887-6441231 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - sclsvr - Test - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star 2MASS 13253736-6447140 - parallax is unknown
-sclsvrServer - alx - Test - ra = -2.767980 radians
-sclsvrServer - alx - Test - dec = -1.130749 radians
-sclsvrServer - alx - Test - gLat = -2.160 degrees
-sclsvrServer - alx - Test - gLon = 306.560 degrees
-sclsvrServer - alx - Test - Corrected magnitude[0] = 14.440
-sclsvrServer - alx - Test - Corrected magnitude[2] = 11.200
-sclsvrServer - alx - Test - Corrected magnitude[4] = 8.934
-sclsvrServer - alx - Test - Corrected magnitude[5] = 8.019
-sclsvrServer - alx - Test - Corrected magnitude[6] = 7.735
-sclsvrServer - alx - Test - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer - err - Test - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Test - star 2MASS 13253736-6447140 - J-K differential magnitude not found in color table; could not compute missing magnitudes
-sclsvrServer - alx - Test - Corrected magnitude[B] = 14.440
-sclsvrServer - alx - Test - Corrected magnitude[V] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[R] = 11.200
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 8.934
-sclsvrServer - alx - Test - Corrected magnitude[H] = 8.019
-sclsvrServer - alx - Test - Corrected magnitude[K] = 7.735
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - sclsvr - Test - star 2MASS 13253736-6447140 - unknown IO property; could not compute diameter
-sclsvrServer - sclsvr - Test - star 2MASS 13253736-6447140 - computing diameter without absorption...
-sclsvrServer - sclsvr - Test - star 2MASS 13253736-6447140 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - vobs - Test - vobsSTAR_LIST::Sort()
-sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Complete() - exit
-sclsvrServer - vobs - Test - Star '2MASS 13245473-6439257' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13245711-6438509' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 116420' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13243568-6439316' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13252782-6441437' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13251154-6444282' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13243503-6445192' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13244223-6445528' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13241776-6444451' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13252010-6446564' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13260887-6441231' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'TYC1 8999' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star '2MASS 13253736-6447140' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -    alx - Test  - Sky coordinates (in degrees) : RA = -158.8 - DEC = -64.7
+sclsvrServer -    alx - Test  - Magnitude range = [5.0..8.0]
+sclsvrServer -    alx - Test  - ra = -2.770754 radians
+sclsvrServer -    alx - Test  - dec = -1.128603 radians
+sclsvrServer -    alx - Test  - gLat = -2.030 degrees
+sclsvrServer -    alx - Test  - gLon = 306.510 degrees
+sclsvrServer -    alx - Info  - GLat = -2.030000, GLon = 306.510000
+sclsvrServer -    alx - Test  - Magnitude [5.0 - 8.0], range used => [5.5 - 8.0]
+sclsvrServer -    alx - Test  - Number of estimated stars into 1 degree solid angle circle = 1110
+sclsvrServer -    alx - Info  - Nb of star for this sky area = 1110
+sclsvrServer -    alx - Test  - Sky research area size = 0.04 (deg)
+sclsvrServer -    alx - Test  - Sky research radius = 6.37 (arcmin)
+sclsvrServer - sclsvr - Info  - Sky research radius = 6.37(arcmin)
+sclsvrServer -   vobs - Test  - Consulting II/246/out ...
+sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=6&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - ...number of stars return = 6
+sclsvrServer -   vobs - Test  - after COPY, star list size = 6
+sclsvrServer - sclsvr - Info  - New Sky research radius = 9.00(arcmin)
+sclsvrServer -   vobs - Test  - vobsVIRTUAL_OBSERVATORY::Search()
+sclsvrServer -   vobs - Test  - Consulting II/246/out ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=13:24:59.40&-c.dec=-64:39:51.0&Kmag=5.00..8.00&-out.max=1000&-c.rm=9&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after COPY, star list size = 13
+sclsvrServer -   vobs - Test  - after COPY, star list size = 13
+sclsvrServer -   vobs - Info  - star 2MASS 13245473-6439257 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13245711-6438509 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13243568-6439316 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13252782-6441437 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13251154-6444282 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13243503-6445192 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13244223-6445528 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13241776-6444451 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13252010-6446564 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13260887-6441231 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13253736-6447140 has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Test  - after FILTER, star list size = 2
+sclsvrServer -   vobs - Test  - after COPY, star list size = 13
+sclsvrServer -   vobs - Info  - star 2MASS 13250812-6438276 has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star 2MASS 13260374-6444200 has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Test  - after FILTER, star list size = 11
+sclsvrServer -   vobs - Test  - Consulting I/280 ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.123-64+38+27.62&+13+26+03.748-64+44+20.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 2
+sclsvrServer -   vobs - Test  - after COPY, star list size = 2
+sclsvrServer -   vobs - Test  - Consulting I/284 ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+24+54.739-64+39+25.80&+13+24+57.118-64+38+50.91&+13+24+35.686-64+39+31.62&+13+25+27.820-64+41+43.73&+13+25+11.542-64+44+28.22&+13+24+35.032-64+45+19.28&+13+24+42.231-64+45+52.87&+13+24+17.770-64+44+45.14&+13+25+20.107-64+46+56.43&+13+26+08.874-64+41+23.13&+13+25+37.368-64+47+14.09&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 17
+sclsvrServer -   vobs - Test  - after COPY, star list size = 11
+sclsvrServer -   vobs - Test  - after MERGE, star list size = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting B/denis ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 12
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting B/sb9/main ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting B/wds/wds ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting II/297/irc ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&13+25+08.121-64+38+27.70&+13+26+03.749-64+44+20.09&+13+24+54.882-64+39+26.36&+13+24+57.081-64+38+50.78&+13+24+35.637-64+39+31.48&+13+25+27.924-64+41+43.26&+13+25+11.596-64+44+27.97&+13+24+34.981-64+45+18.82&+13+24+42.355-64+45+53.49&+13+24+17.589-64+44+45.62&+13+25+20.065-64+46+56.34&+13+26+09.051-64+41+20.96&+13+25+37.547-64+47+13.72&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Number of stars found : 13
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Copy()
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - start
+sclsvrServer -    alx - Test  - Original spectral type = 'F0 II'.
+sclsvrServer -    alx - Test  - Final spectral type = 'F0II'.
+sclsvrServer -    alx - Test  -  - Code                = 'F'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'II'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'F0 II'.
+sclsvrServer -    alx - Test  - Original spectral type = 'F0 II'.
+sclsvrServer -    alx - Test  - Final spectral type = 'F0II'.
+sclsvrServer -    alx - Test  -  - Code                = 'F'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'II'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 0.132939
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 0.077017
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 6.757010
+sclsvrServer - sclsvr - Test  - star HD 116420 - parallax 9.10(9.80) is not valid...
+sclsvrServer -    alx - Test  - ra = -2.770120 radians
+sclsvrServer -    alx - Test  - dec = -1.128199 radians
+sclsvrServer -    alx - Test  - gLat = -2.010 degrees
+sclsvrServer -    alx - Test  - gLon = 306.530 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 9.680
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 9.097
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 9.110
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 7.446
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.145
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.029
+sclsvrServer -    alx - Test  - Original spectral type = 'F0 II'.
+sclsvrServer -    alx - Test  - Final spectral type = 'F0II'.
+sclsvrServer -    alx - Test  -  - Code                = 'F'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'II'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Inferior line = 19
+sclsvrServer -    alx - Test  - Superior line = 20
+sclsvrServer -    alx - Test  - 0.190000 < J-K (0.417316) < 0.230000
+sclsvrServer -    alx - Test  - Ratio = 5.682900
+sclsvrServer -    alx - Test  - J = 7.446
+sclsvrServer -    alx - Test  - K = 7.029
+sclsvrServer -    alx - Test  - R = 9.110 (2)
+sclsvrServer -    alx - Test  - I = 7.960 (2)
+sclsvrServer -    alx - Test  - B = 9.680 (2)
+sclsvrServer -    alx - Test  - H = 7.145 (2)
+sclsvrServer -    alx - Test  - V = 9.097 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 9.680
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 9.097
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 9.110
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 7.960
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 7.446
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.145
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.029
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.168(0.0162)
+sclsvrServer -    alx - Info  - Diameter JK = 0.177(0.0145)
+sclsvrServer -    alx - Info  - Diameter VK = 0.188(0.0130)
+sclsvrServer -    alx - Info  - Diameter HK = 0.209(0.0278)
+sclsvrServer -    alx - Info  - Mean diameter = 0.186(0.0371)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer - sclsvr - Test  - star HD 116420 - computing diameter without absorption...
+sclsvrServer -    alx - Test  - Diam= 0.177(0.015) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.998029
+sclsvrServer -    alx - Test  - dV  = 0.000323
+sclsvrServer -    alx - Test  - V2  = 0.996063
+sclsvrServer -    alx - Test  - dV2 = 0.000645
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 5.712
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 6.097
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 6.865
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 6.614
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 6.632
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 6.681
+sclsvrServer -    alx - Test  - Original spectral type = 'F0 II'.
+sclsvrServer -    alx - Test  - Final spectral type = 'F0II'.
+sclsvrServer -    alx - Test  -  - Code                = 'F'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'II'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Inferior line = 19
+sclsvrServer -    alx - Test  - Superior line = 20
+sclsvrServer -    alx - Test  - 0.190000 < J-K (-0.066555) < 0.230000
+sclsvrServer -    alx - Test  - Ratio = 6.413874
+sclsvrServer -    alx - Test  - J = 6.614
+sclsvrServer -    alx - Test  - K = 6.681
+sclsvrServer -    alx - Test  - R = 6.865 (2)
+sclsvrServer -    alx - Test  - I = 7.165 (2)
+sclsvrServer -    alx - Test  - B = 5.712 (2)
+sclsvrServer -    alx - Test  - H = 6.632 (2)
+sclsvrServer -    alx - Test  - V = 6.097 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 9.672
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 9.097
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 9.109
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 8.683
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 14.945
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.145
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.029
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.141(0.0136)
+sclsvrServer -    alx - Info  - Diameter JK = 0.127(0.0104)
+sclsvrServer -    alx - Info  - Diameter VK = 0.208(0.0144)
+sclsvrServer -    alx - Info  - Diameter HK = 0.116(0.0154)
+sclsvrServer -    alx - Info  - Mean diameter = 0.148(0.0296)
+sclsvrServer -    alx - Test  - Computed diameters are not coherent between them; they are not kept
+sclsvrServer - sclsvr - Test  - star HD 116420 - error on diameter too high; computed diameters are not coherent
+sclsvrServer - sclsvr - Test  - star HD 116420 - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - star HD 116420 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='0.188269' and Teff='7000.000000',LogG='3.178000'...
+sclsvrServer -    alx - Test  - UD_U = 0.176574
+sclsvrServer -    alx - Test  - UD_B = 0.174834
+sclsvrServer -    alx - Test  - UD_V = 0.177177
+sclsvrServer -    alx - Test  - UD_R = 0.179716
+sclsvrServer -    alx - Test  - UD_I = 0.181647
+sclsvrServer -    alx - Test  - UD_J = 0.183524
+sclsvrServer -    alx - Test  - UD_H = 0.184646
+sclsvrServer -    alx - Test  - UD_K = 0.185206
+sclsvrServer -    alx - Test  - UD_L = 0.186570
+sclsvrServer -    alx - Test  - UD_N = 0.187486
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star TYC1 8999 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.766074 radians
+sclsvrServer -    alx - Test  - dec = -1.129907 radians
+sclsvrServer -    alx - Test  - gLat = -2.120 degrees
+sclsvrServer -    alx - Test  - gLon = 306.610 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 12.190
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 11.060
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 11.070
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.742
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 8.161
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 8.006
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - Inferior line = 38
+sclsvrServer -    alx - Test  - Superior line = 39
+sclsvrServer -    alx - Test  - 0.720000 < J-K (0.735508) < 0.850000
+sclsvrServer -    alx - Test  - Ratio = 0.119292
+sclsvrServer -    alx - Test  - J = 8.742
+sclsvrServer -    alx - Test  - K = 8.006
+sclsvrServer -    alx - Test  - R = 11.070 (2)
+sclsvrServer -    alx - Test  - I = 9.650 (2)
+sclsvrServer -    alx - Test  - B = 12.190 (2)
+sclsvrServer -    alx - Test  - H = 8.161 (2)
+sclsvrServer -    alx - Test  - V = 11.060 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 12.190
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 11.060
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 11.070
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 9.650
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.742
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.161
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 8.006
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.129(0.0124)
+sclsvrServer -    alx - Info  - Diameter JK = 0.137(0.0112)
+sclsvrServer -    alx - Info  - Diameter VK = 0.130(0.0090)
+sclsvrServer -    alx - Info  - Diameter HK = 0.145(0.0193)
+sclsvrServer -    alx - Info  - Mean diameter = 0.135(0.0271)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer - sclsvr - Test  - star TYC1 8999 - computing diameter without absorption...
+sclsvrServer -    alx - Test  - Diam= 0.137(0.011) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.998823
+sclsvrServer -    alx - Test  - dV  = 0.000193
+sclsvrServer -    alx - Test  - V2  = 0.997648
+sclsvrServer -    alx - Test  - dV2 = 0.000385
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 8.222
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 8.060
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 8.825
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 7.909
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.648
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.658
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - Inferior line = 23
+sclsvrServer -    alx - Test  - Superior line = 24
+sclsvrServer -    alx - Test  - 0.250000 < J-K (0.251637) < 0.310000
+sclsvrServer -    alx - Test  - Ratio = 0.027284
+sclsvrServer -    alx - Test  - J = 7.909
+sclsvrServer -    alx - Test  - K = 7.658
+sclsvrServer -    alx - Test  - R = 8.825 (2)
+sclsvrServer -    alx - Test  - I = 8.231 (2)
+sclsvrServer -    alx - Test  - B = 8.222 (2)
+sclsvrServer -    alx - Test  - H = 7.648 (2)
+sclsvrServer -    alx - Test  - V = 8.060 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 12.182
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 11.060
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 11.069
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 9.749
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 16.240
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.161
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 8.006
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.131(0.0126)
+sclsvrServer -    alx - Info  - Diameter JK = 0.122(0.0100)
+sclsvrServer -    alx - Info  - Diameter VK = 0.145(0.0100)
+sclsvrServer -    alx - Info  - Diameter HK = 0.095(0.0127)
+sclsvrServer -    alx - Info  - Mean diameter = 0.123(0.0247)
+sclsvrServer -    alx - Test  - Computed diameters are not coherent between them; they are not kept
+sclsvrServer - sclsvr - Test  - star TYC1 8999 - error on diameter too high; computed diameters are not coherent
+sclsvrServer - sclsvr - Test  - star TYC1 8999 - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - star TYC1 8999 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13245473-6439257 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.771082 radians
+sclsvrServer -    alx - Test  - dec = -1.128483 radians
+sclsvrServer -    alx - Test  - gLat = -2.020 degrees
+sclsvrServer -    alx - Test  - gLon = 306.500 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 16.270
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 13.010
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.483
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.528
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.175
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13245473-6439257 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 16.270
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 13.010
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.483
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.528
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.175
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13245473-6439257 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13245473-6439257 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13245473-6439257 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13245711-6438509 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.770922 radians
+sclsvrServer -    alx - Test  - dec = -1.128311 radians
+sclsvrServer -    alx - Test  - gLat = -2.010 degrees
+sclsvrServer -    alx - Test  - gLon = 306.510 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 15.170
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 12.610
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 6.692
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 5.631
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 5.158
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13245711-6438509 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 15.170
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 12.610
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 6.692
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 5.631
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 5.158
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13245711-6438509 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13245711-6438509 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13245711-6438509 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13243568-6439316 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.772482 radians
+sclsvrServer -    alx - Test  - dec = -1.128508 radians
+sclsvrServer -    alx - Test  - gLat = -2.020 degrees
+sclsvrServer -    alx - Test  - gLon = 306.470 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 19.640
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 14.450
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.907
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.868
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.364
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13243568-6439316 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 19.640
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 14.450
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.907
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.868
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.364
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13243568-6439316 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13243568-6439316 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13243568-6439316 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13252782-6441437 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.768679 radians
+sclsvrServer -    alx - Test  - dec = -1.129147 radians
+sclsvrServer -    alx - Test  - gLat = -2.070 degrees
+sclsvrServer -    alx - Test  - gLon = 306.560 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 13.600
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 10.680
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.063
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.129
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 6.815
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13252782-6441437 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 13.600
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 10.680
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.063
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.129
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 6.815
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13252782-6441437 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13252782-6441437 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13252782-6441437 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13251154-6444282 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.769867 radians
+sclsvrServer -    alx - Test  - dec = -1.129945 radians
+sclsvrServer -    alx - Test  - gLat = -2.110 degrees
+sclsvrServer -    alx - Test  - gLon = 306.520 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 14.230
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 11.010
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 7.748
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 6.848
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 6.537
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13251154-6444282 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 14.230
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 11.010
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 7.748
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 6.848
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 6.537
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13251154-6444282 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13251154-6444282 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13251154-6444282 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13243503-6445192 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.772530 radians
+sclsvrServer -    alx - Test  - dec = -1.130192 radians
+sclsvrServer -    alx - Test  - gLat = -2.110 degrees
+sclsvrServer -    alx - Test  - gLon = 306.460 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 13.470
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 10.760
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.865
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 8.048
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.808
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - Inferior line = 46
+sclsvrServer -    alx - Test  - Superior line = 47
+sclsvrServer -    alx - Test  - 0.960000 < J-K (1.056541) < 1.140000
+sclsvrServer -    alx - Test  - Ratio = 0.536339
+sclsvrServer -    alx - Test  - J = 8.865
+sclsvrServer -    alx - Test  - K = 7.808
+sclsvrServer -    alx - Test  - R = 10.760 (2)
+sclsvrServer -    alx - Test  - I = 11.626 (2)
+sclsvrServer -    alx - Test  - B = 13.470 (2)
+sclsvrServer -    alx - Test  - H = 8.048 (2)
+sclsvrServer -    alx - Test  - V = 16.157 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 13.470
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 16.157
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 10.760
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 11.626
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.865
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.048
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.808
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.204(0.0196)
+sclsvrServer -    alx - Info  - Diameter JK = 0.205(0.0168)
+sclsvrServer -    alx - Info  - Diameter HK = 0.173(0.0230)
+sclsvrServer -    alx - Info  - Mean diameter = 0.194(0.0388)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer - sclsvr - Test  - star 2MASS 13243503-6445192 - computing diameter without absorption...
+sclsvrServer -    alx - Test  - Diam= 0.205(0.017) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.997352
+sclsvrServer -    alx - Test  - dV  = 0.000434
+sclsvrServer -    alx - Test  - V2  = 0.994711
+sclsvrServer -    alx - Test  - dV2 = 0.000865
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 9.502
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 8.515
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.032
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.535
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.460
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - Inferior line = 34
+sclsvrServer -    alx - Test  - Superior line = 35
+sclsvrServer -    alx - Test  - 0.550000 < J-K (0.572670) < 0.580000
+sclsvrServer -    alx - Test  - Ratio = 0.755668
+sclsvrServer -    alx - Test  - J = 8.032
+sclsvrServer -    alx - Test  - K = 7.460
+sclsvrServer -    alx - Test  - R = 8.515 (2)
+sclsvrServer -    alx - Test  - I = 8.748 (2)
+sclsvrServer -    alx - Test  - B = 9.502 (2)
+sclsvrServer -    alx - Test  - H = 7.535 (2)
+sclsvrServer -    alx - Test  - V = 9.796 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 13.462
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 12.796
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 10.759
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 10.266
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 16.363
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.048
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.808
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.158(0.0151)
+sclsvrServer -    alx - Info  - Diameter JK = 0.157(0.0129)
+sclsvrServer -    alx - Info  - Diameter HK = 0.152(0.0203)
+sclsvrServer -    alx - Info  - Mean diameter = 0.156(0.0312)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer - sclsvr - Test  - star 2MASS 13243503-6445192 - Computing diameter with absorption...
+sclsvrServer -    alx - Test  - Diam= 0.157(0.013) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.998442
+sclsvrServer -    alx - Test  - dV  = 0.000255
+sclsvrServer -    alx - Test  - V2  = 0.996886
+sclsvrServer -    alx - Test  - dV2 = 0.000510
+sclsvrServer - sclsvr - Test  - vis2 = 0.994711
+sclsvrServer - sclsvr - Test  - vis2A = 0.996886
+sclsvrServer - sclsvr - Test  - |vis2A - vis2| = 0.002175
+sclsvrServer - sclsvr - Test  - vis2Err = 0.000865
+sclsvrServer - sclsvr - Test  - visibilityErr = 0.002175
+sclsvrServer - sclsvr - Test  - star 2MASS 13243503-6445192 - visibility error (0.002175) is lower than the expected one (0.500000)
+sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13244223-6445528 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.771993 radians
+sclsvrServer -    alx - Test  - dec = -1.130360 radians
+sclsvrServer -    alx - Test  - gLat = -2.120 degrees
+sclsvrServer -    alx - Test  - gLon = 306.470 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 15.890
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 14.210
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.285
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.246
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 6.825
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13244223-6445528 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 15.890
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 14.210
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.285
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.246
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 6.825
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13244223-6445528 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13244223-6445528 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13244223-6445528 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13241776-6444451 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.773794 radians
+sclsvrServer -    alx - Test  - dec = -1.130031 radians
+sclsvrServer -    alx - Test  - gLat = -2.100 degrees
+sclsvrServer -    alx - Test  - gLon = 306.430 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 14.340
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 10.250
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 7.954
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 7.100
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 6.831
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - Inferior line = 46
+sclsvrServer -    alx - Test  - Superior line = 47
+sclsvrServer -    alx - Test  - 0.960000 < J-K (1.122831) < 1.140000
+sclsvrServer -    alx - Test  - Ratio = 0.904617
+sclsvrServer -    alx - Test  - J = 7.954
+sclsvrServer -    alx - Test  - K = 6.831
+sclsvrServer -    alx - Test  - R = 10.250 (2)
+sclsvrServer -    alx - Test  - I = 10.937 (2)
+sclsvrServer -    alx - Test  - B = 14.340 (2)
+sclsvrServer -    alx - Test  - H = 7.100 (2)
+sclsvrServer -    alx - Test  - V = 15.522 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 14.340
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 15.522
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 10.250
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 10.937
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 7.954
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.100
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 6.831
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.342(0.0328)
+sclsvrServer -    alx - Info  - Diameter JK = 0.347(0.0285)
+sclsvrServer -    alx - Info  - Diameter HK = 0.271(0.0360)
+sclsvrServer -    alx - Info  - Mean diameter = 0.320(0.0640)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer - sclsvr - Test  - star 2MASS 13241776-6444451 - computing diameter without absorption...
+sclsvrServer -    alx - Test  - Diam= 0.347(0.028) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.992426
+sclsvrServer -    alx - Test  - dV  = 0.001239
+sclsvrServer -    alx - Test  - V2  = 0.984910
+sclsvrServer -    alx - Test  - dV2 = 0.002459
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 10.372
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 8.005
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 7.122
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 6.587
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 6.483
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - Inferior line = 36
+sclsvrServer -    alx - Test  - Superior line = 37
+sclsvrServer -    alx - Test  - 0.620000 < J-K (0.638960) < 0.660000
+sclsvrServer -    alx - Test  - Ratio = 0.474001
+sclsvrServer -    alx - Test  - J = 7.122
+sclsvrServer -    alx - Test  - K = 6.483
+sclsvrServer -    alx - Test  - R = 8.005 (2)
+sclsvrServer -    alx - Test  - I = 7.940 (2)
+sclsvrServer -    alx - Test  - B = 10.372 (2)
+sclsvrServer -    alx - Test  - H = 6.587 (2)
+sclsvrServer -    alx - Test  - V = 9.123 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 14.332
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 12.123
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 10.249
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 9.458
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 15.453
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 7.100
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 6.831
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Info  - Diameter JH = 0.253(0.0243)
+sclsvrServer -    alx - Info  - Diameter JK = 0.257(0.0211)
+sclsvrServer -    alx - Info  - Diameter HK = 0.261(0.0347)
+sclsvrServer -    alx - Info  - Mean diameter = 0.257(0.0514)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer - sclsvr - Test  - star 2MASS 13241776-6444451 - Computing diameter with absorption...
+sclsvrServer -    alx - Test  - Diam= 0.257(0.021) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.995842
+sclsvrServer -    alx - Test  - dV  = 0.000681
+sclsvrServer -    alx - Test  - V2  = 0.991702
+sclsvrServer -    alx - Test  - dV2 = 0.001356
+sclsvrServer - sclsvr - Test  - vis2 = 0.984910
+sclsvrServer - sclsvr - Test  - vis2A = 0.991702
+sclsvrServer - sclsvr - Test  - |vis2A - vis2| = 0.006791
+sclsvrServer - sclsvr - Test  - vis2Err = 0.002459
+sclsvrServer - sclsvr - Test  - visibilityErr = 0.006791
+sclsvrServer - sclsvr - Test  - star 2MASS 13241776-6444451 - visibility error (0.006791) is lower than the expected one (0.500000)
+sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13252010-6446564 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.769251 radians
+sclsvrServer -    alx - Test  - dec = -1.130665 radians
+sclsvrServer -    alx - Test  - gLat = -2.150 degrees
+sclsvrServer -    alx - Test  - gLon = 306.530 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 17.570
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 15.000
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 9.467
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 8.365
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.897
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13252010-6446564 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 17.570
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 15.000
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 9.467
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.365
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.897
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13252010-6446564 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13252010-6446564 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13252010-6446564 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13260887-6441231 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.765689 radians
+sclsvrServer -    alx - Test  - dec = -1.129039 radians
+sclsvrServer -    alx - Test  - gLat = -2.070 degrees
+sclsvrServer -    alx - Test  - gLon = 306.630 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 15.930
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 13.080
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 9.222
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 8.145
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.721
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13260887-6441231 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 15.930
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 13.080
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 9.222
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.145
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.721
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13260887-6441231 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13260887-6441231 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13260887-6441231 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star 2MASS 13253736-6447140 - parallax is unknown
+sclsvrServer -    alx - Test  - ra = -2.767980 radians
+sclsvrServer -    alx - Test  - dec = -1.130749 radians
+sclsvrServer -    alx - Test  - gLat = -2.160 degrees
+sclsvrServer -    alx - Test  - gLon = 306.560 degrees
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 14.440
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 11.200
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 8.934
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 8.019
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 7.735
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    err - Test  - errAddInStack(alx, 18)
+sclsvrServer - sclsvr - Test  - star 2MASS 13253736-6447140 - J-K differential magnitude not found in color table; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 14.440
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 11.200
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 8.934
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 8.019
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 7.735
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer - sclsvr - Test  - star 2MASS 13253736-6447140 - unknown IO property; could not compute diameter
+sclsvrServer - sclsvr - Test  - star 2MASS 13253736-6447140 - computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - star 2MASS 13253736-6447140 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Sort()
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - exit
+sclsvrServer -   vobs - Test  - Star '2MASS 13245473-6439257' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13245711-6438509' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 116420' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13243568-6439316' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13252782-6441437' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13251154-6444282' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13243503-6445192' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13244223-6445528' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13241776-6444451' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13252010-6446564' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13260887-6441231' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'TYC1 8999' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star '2MASS 13253736-6447140' is farther than 0.000278 degrees of the reference star.
 VOTable:
 <?xml version="1.0"?>
 
@@ -2636,7 +2723,7 @@ VOTable:
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13245711-6438509</TD><TD>II/246/out</TD><TD></TD><TD>13 24 57.081</TD><TD>I/284</TD><TD></TD><TD>-64 38 50.78</TD><TD>I/284</TD><TD></TD><TD>J132457.1-643851</TD><TD>B/denis</TD><TD></TD><TD>201.237762</TD><TD>B/denis</TD><TD></TD><TD>-64.647462</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.009</TD><TD>II/246/out</TD><TD></TD><TD>306.511</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>15.17</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12.61</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.12</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.741</TD><TD>II/246/out</TD><TD></TD><TD>5.648</TD><TD>II/246/out</TD><TD></TD><TD>5.134</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.275</TD><TD>II/297/irc</TD><TD></TD><TD>0.0161</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.8056</TD><TD>II/297/irc</TD><TD></TD><TD>0.0182</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.692</TD><TD>computed</TD><TD>HIGH</TD><TD>5.631</TD><TD>computed</TD><TD>HIGH</TD><TD>5.158</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.158</TD><TD>computed</TD><TD>HIGH</TD><TD>5.631</TD><TD>computed</TD><TD>HIGH</TD><TD>6.692</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>12.610</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>15.170</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.017</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD>116420</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-6300844</TD><TD>I/280</TD><TD></TD><TD>8998</TD><TD>I/280</TD><TD></TD><TD>1729</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>13250812-6438276</TD><TD>II/246/out</TD><TD></TD><TD>13 25 08.121</TD><TD>I/280</TD><TD></TD><TD>-64 38 27.70</TD><TD>I/280</TD><TD></TD><TD>J132508.1-643827</TD><TD>B/denis</TD><TD></TD><TD>201.283878</TD><TD>B/denis</TD><TD></TD><TD>-64.641031</TD><TD>B/denis</TD><TD></TD><TD>-6.26</TD><TD>I/280</TD><TD></TD><TD>0.98</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>F0 II</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.005</TD><TD>II/246/out</TD><TD></TD><TD>306.532</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.718</TD><TD>I/280</TD><TD></TD><TD>9.68</TD><TD>II/246/out</TD><TD></TD><TD>9.097</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.11</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.960</TD><TD>computed</TD><TD>HIGH</TD><TD>7.433</TD><TD>II/246/out</TD><TD></TD><TD>7.153</TD><TD>II/246/out</TD><TD></TD><TD>7.005</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.757</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.1574</TD><TD>II/297/irc</TD><TD></TD><TD>0.0409</TD><TD>II/297/irc</TD><TD></TD><TD>0.077</TD><TD>computed</TD><TD>HIGH</TD><TD>0.020</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.446</TD><TD>computed</TD><TD>HIGH</TD><TD>7.145</TD><TD>computed</TD><TD>HIGH</TD><TD>7.029</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.188</TD><TD>computed</TD><TD>HIGH</TD><TD>0.013</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.184</TD><TD>computed</TD><TD>HIGH</TD><TD>0.018</TD><TD>computed</TD><TD>HIGH</TD><TD>0.165</TD><TD>computed</TD><TD>HIGH</TD><TD>0.029</TD><TD>computed</TD><TD>HIGH</TD><TD>0.216</TD><TD>computed</TD><TD>HIGH</TD><TD>0.027</TD><TD>computed</TD><TD>HIGH</TD><TD>0.189</TD><TD>computed</TD><TD>HIGH</TD><TD>0.038</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>7000.000</TD><TD>computed</TD><TD>HIGH</TD><TD>3.178</TD><TD>computed</TD><TD>HIGH</TD><TD>0.175</TD><TD>computed</TD><TD>HIGH</TD><TD>0.182</TD><TD>computed</TD><TD>HIGH</TD><TD>0.184</TD><TD>computed</TD><TD>HIGH</TD><TD>0.185</TD><TD>computed</TD><TD>HIGH</TD><TD>0.185</TD><TD>computed</TD><TD>HIGH</TD><TD>0.187</TD><TD>computed</TD><TD>HIGH</TD><TD>0.187</TD><TD>computed</TD><TD>HIGH</TD><TD>0.180</TD><TD>computed</TD><TD>HIGH</TD><TD>0.177</TD><TD>computed</TD><TD>HIGH</TD><TD>0.177</TD><TD>computed</TD><TD>HIGH</TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.029</TD><TD>computed</TD><TD>HIGH</TD><TD>7.145</TD><TD>computed</TD><TD>HIGH</TD><TD>7.446</TD><TD>computed</TD><TD>HIGH</TD><TD>7.960</TD><TD>computed</TD><TD>HIGH</TD><TD>9.110</TD><TD>computed</TD><TD>HIGH</TD><TD>9.097</TD><TD>computed</TD><TD>HIGH</TD><TD>9.680</TD><TD>computed</TD><TD>HIGH</TD><TD>0.996</TD><TD>computed</TD><TD>HIGH</TD><TD>0.001</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.028</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD>116420</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-6300844</TD><TD>I/280</TD><TD></TD><TD>8998</TD><TD>I/280</TD><TD></TD><TD>1729</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>13250812-6438276</TD><TD>II/246/out</TD><TD></TD><TD>13 25 08.121</TD><TD>I/280</TD><TD></TD><TD>-64 38 27.70</TD><TD>I/280</TD><TD></TD><TD>J132508.1-643827</TD><TD>B/denis</TD><TD></TD><TD>201.283878</TD><TD>B/denis</TD><TD></TD><TD>-64.641031</TD><TD>B/denis</TD><TD></TD><TD>-6.26</TD><TD>I/280</TD><TD></TD><TD>0.98</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>F0 II</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.005</TD><TD>II/246/out</TD><TD></TD><TD>306.532</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.718</TD><TD>I/280</TD><TD></TD><TD>9.68</TD><TD>II/246/out</TD><TD></TD><TD>9.097</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.11</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.960</TD><TD>computed</TD><TD>HIGH</TD><TD>7.433</TD><TD>II/246/out</TD><TD></TD><TD>7.153</TD><TD>II/246/out</TD><TD></TD><TD>7.005</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.757</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.1574</TD><TD>II/297/irc</TD><TD></TD><TD>0.0409</TD><TD>II/297/irc</TD><TD></TD><TD>0.077</TD><TD>computed</TD><TD>HIGH</TD><TD>0.020</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.446</TD><TD>computed</TD><TD>HIGH</TD><TD>7.145</TD><TD>computed</TD><TD>HIGH</TD><TD>7.029</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.188</TD><TD>computed</TD><TD>HIGH</TD><TD>0.013</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.177</TD><TD>computed</TD><TD>HIGH</TD><TD>0.015</TD><TD>computed</TD><TD>HIGH</TD><TD>0.168</TD><TD>computed</TD><TD>HIGH</TD><TD>0.016</TD><TD>computed</TD><TD>HIGH</TD><TD>0.209</TD><TD>computed</TD><TD>HIGH</TD><TD>0.028</TD><TD>computed</TD><TD>HIGH</TD><TD>0.186</TD><TD>computed</TD><TD>HIGH</TD><TD>0.037</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>7000.000</TD><TD>computed</TD><TD>HIGH</TD><TD>3.178</TD><TD>computed</TD><TD>HIGH</TD><TD>0.175</TD><TD>computed</TD><TD>HIGH</TD><TD>0.182</TD><TD>computed</TD><TD>HIGH</TD><TD>0.184</TD><TD>computed</TD><TD>HIGH</TD><TD>0.185</TD><TD>computed</TD><TD>HIGH</TD><TD>0.185</TD><TD>computed</TD><TD>HIGH</TD><TD>0.187</TD><TD>computed</TD><TD>HIGH</TD><TD>0.187</TD><TD>computed</TD><TD>HIGH</TD><TD>0.180</TD><TD>computed</TD><TD>HIGH</TD><TD>0.177</TD><TD>computed</TD><TD>HIGH</TD><TD>0.177</TD><TD>computed</TD><TD>HIGH</TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.029</TD><TD>computed</TD><TD>HIGH</TD><TD>7.145</TD><TD>computed</TD><TD>HIGH</TD><TD>7.446</TD><TD>computed</TD><TD>HIGH</TD><TD>7.960</TD><TD>computed</TD><TD>HIGH</TD><TD>9.110</TD><TD>computed</TD><TD>HIGH</TD><TD>9.097</TD><TD>computed</TD><TD>HIGH</TD><TD>9.680</TD><TD>computed</TD><TD>HIGH</TD><TD>0.996</TD><TD>computed</TD><TD>HIGH</TD><TD>0.001</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.028</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13243568-6439316</TD><TD>II/246/out</TD><TD></TD><TD>13 24 35.637</TD><TD>I/284</TD><TD></TD><TD>-64 39 31.48</TD><TD>I/284</TD><TD></TD><TD>J132435.6-643931</TD><TD>B/denis</TD><TD></TD><TD>201.148484</TD><TD>B/denis</TD><TD></TD><TD>-64.658825</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.015</TD><TD>II/246/out</TD><TD></TD><TD>306.472</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>19.64</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.45</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.31</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.957</TD><TD>II/246/out</TD><TD></TD><TD>7.886</TD><TD>II/246/out</TD><TD></TD><TD>7.34</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.2253</TD><TD>II/297/irc</TD><TD></TD><TD>0.0209</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.907</TD><TD>computed</TD><TD>HIGH</TD><TD>7.868</TD><TD>computed</TD><TD>HIGH</TD><TD>7.364</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.364</TD><TD>computed</TD><TD>HIGH</TD><TD>7.868</TD><TD>computed</TD><TD>HIGH</TD><TD>8.907</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>14.450</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>19.640</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.043</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
@@ -2648,13 +2735,13 @@ VOTable:
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13251154-6444282</TD><TD>II/246/out</TD><TD></TD><TD>13 25 11.596</TD><TD>I/284</TD><TD></TD><TD>-64 44 27.97</TD><TD>I/284</TD><TD></TD><TD>J132511.5-644428</TD><TD>B/denis</TD><TD></TD><TD>201.297721</TD><TD>B/denis</TD><TD></TD><TD>-64.741309</TD><TD>B/denis</TD><TD></TD><TD>38</TD><TD>I/284</TD><TD></TD><TD>32</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.105</TD><TD>II/246/out</TD><TD></TD><TD>306.525</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.23</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.01</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.16</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.779</TD><TD>II/246/out</TD><TD></TD><TD>6.861</TD><TD>II/246/out</TD><TD></TD><TD>6.513</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.1915</TD><TD>II/297/irc</TD><TD></TD><TD>0.0218</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.748</TD><TD>computed</TD><TD>HIGH</TD><TD>6.848</TD><TD>computed</TD><TD>HIGH</TD><TD>6.537</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.537</TD><TD>computed</TD><TD>HIGH</TD><TD>6.848</TD><TD>computed</TD><TD>HIGH</TD><TD>7.748</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>11.010</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>14.230</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.080</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13243503-6445192</TD><TD>II/246/out</TD><TD></TD><TD>13 24 34.981</TD><TD>I/284</TD><TD></TD><TD>-64 45 18.82</TD><TD>I/284</TD><TD></TD><TD>J132435.0-644519</TD><TD>B/denis</TD><TD></TD><TD>201.145679</TD><TD>B/denis</TD><TD></TD><TD>-64.755284</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.111</TD><TD>II/246/out</TD><TD></TD><TD>306.458</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>13.47</TD><TD>I/284</TD><TD></TD><TD>16.157</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.76</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.1</TD><TD>I/284</TD><TD></TD><TD>11.626</TD><TD>computed</TD><TD>HIGH</TD><TD>8.887</TD><TD>II/246/out</TD><TD></TD><TD>8.059</TD><TD>II/246/out</TD><TD></TD><TD>7.784</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.865</TD><TD>computed</TD><TD>HIGH</TD><TD>8.048</TD><TD>computed</TD><TD>HIGH</TD><TD>7.808</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.198</TD><TD>computed</TD><TD>LOW</TD><TD>0.019</TD><TD>computed</TD><TD>LOW</TD><TD>0.337</TD><TD>computed</TD><TD>LOW</TD><TD>0.058</TD><TD>computed</TD><TD>LOW</TD><TD>0.174</TD><TD>computed</TD><TD>LOW</TD><TD>0.022</TD><TD>computed</TD><TD>LOW</TD><TD>0.236</TD><TD>computed</TD><TD>LOW</TD><TD>0.047</TD><TD>computed</TD><TD>LOW</TD><TD>NOK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.808</TD><TD>computed</TD><TD>HIGH</TD><TD>8.048</TD><TD>computed</TD><TD>HIGH</TD><TD>8.865</TD><TD>computed</TD><TD>HIGH</TD><TD>11.626</TD><TD>computed</TD><TD>HIGH</TD><TD>10.760</TD><TD>computed</TD><TD>HIGH</TD><TD>16.157</TD><TD>computed</TD><TD>HIGH</TD><TD>13.470</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.101</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13243503-6445192</TD><TD>II/246/out</TD><TD></TD><TD>13 24 34.981</TD><TD>I/284</TD><TD></TD><TD>-64 45 18.82</TD><TD>I/284</TD><TD></TD><TD>J132435.0-644519</TD><TD>B/denis</TD><TD></TD><TD>201.145679</TD><TD>B/denis</TD><TD></TD><TD>-64.755284</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.111</TD><TD>II/246/out</TD><TD></TD><TD>306.458</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>13.47</TD><TD>I/284</TD><TD></TD><TD>12.796</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.76</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.1</TD><TD>I/284</TD><TD></TD><TD>10.266</TD><TD>computed</TD><TD>HIGH</TD><TD>8.887</TD><TD>II/246/out</TD><TD></TD><TD>8.059</TD><TD>II/246/out</TD><TD></TD><TD>7.784</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.865</TD><TD>computed</TD><TD>HIGH</TD><TD>8.048</TD><TD>computed</TD><TD>HIGH</TD><TD>7.808</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.157</TD><TD>computed</TD><TD>HIGH</TD><TD>0.013</TD><TD>computed</TD><TD>HIGH</TD><TD>0.158</TD><TD>computed</TD><TD>HIGH</TD><TD>0.015</TD><TD>computed</TD><TD>HIGH</TD><TD>0.152</TD><TD>computed</TD><TD>HIGH</TD><TD>0.020</TD><TD>computed</TD><TD>HIGH</TD><TD>0.156</TD><TD>computed</TD><TD>HIGH</TD><TD>0.031</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.460</TD><TD>computed</TD><TD>HIGH</TD><TD>7.535</TD><TD>computed</TD><TD>HIGH</TD><TD>8.032</TD><TD>computed</TD><TD>HIGH</TD><TD>8.748</TD><TD>computed</TD><TD>HIGH</TD><TD>8.515</TD><TD>computed</TD><TD>HIGH</TD><TD>9.796</TD><TD>computed</TD><TD>HIGH</TD><TD>9.502</TD><TD>computed</TD><TD>HIGH</TD><TD>0.997</TD><TD>computed</TD><TD>HIGH</TD><TD>0.001</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.101</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13244223-6445528</TD><TD>II/246/out</TD><TD></TD><TD>13 24 42.355</TD><TD>I/284</TD><TD></TD><TD>-64 45 53.49</TD><TD>I/284</TD><TD></TD><TD>J132442.2-644553</TD><TD>B/denis</TD><TD></TD><TD>201.176479</TD><TD>B/denis</TD><TD></TD><TD>-64.764742</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.122</TD><TD>II/246/out</TD><TD></TD><TD>306.47</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>15.89</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.21</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.02</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.33</TD><TD>II/246/out</TD><TD></TD><TD>7.262</TD><TD>II/246/out</TD><TD></TD><TD>6.801</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.3292</TD><TD>II/297/irc</TD><TD></TD><TD>0.0404</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.1933</TD><TD>II/297/irc</TD><TD></TD><TD>0.0916</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.285</TD><TD>computed</TD><TD>HIGH</TD><TD>7.246</TD><TD>computed</TD><TD>HIGH</TD><TD>6.825</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.825</TD><TD>computed</TD><TD>HIGH</TD><TD>7.246</TD><TD>computed</TD><TD>HIGH</TD><TD>8.285</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>14.210</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>15.890</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.105</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13241776-6444451</TD><TD>II/246/out</TD><TD></TD><TD>13 24 17.589</TD><TD>I/284</TD><TD></TD><TD>-64 44 45.62</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-64</TD><TD>I/284</TD><TD></TD><TD>18</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.097</TD><TD>II/246/out</TD><TD></TD><TD>306.429</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.34</TD><TD>I/284</TD><TD></TD><TD>15.522</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.25</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.47</TD><TD>I/284</TD><TD></TD><TD>10.937</TD><TD>computed</TD><TD>HIGH</TD><TD>7.98</TD><TD>II/246/out</TD><TD></TD><TD>7.112</TD><TD>II/246/out</TD><TD></TD><TD>6.807</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.1258</TD><TD>II/297/irc</TD><TD></TD><TD>0.00617</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.954</TD><TD>computed</TD><TD>HIGH</TD><TD>7.100</TD><TD>computed</TD><TD>HIGH</TD><TD>6.831</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.323</TD><TD>computed</TD><TD>LOW</TD><TD>0.031</TD><TD>computed</TD><TD>LOW</TD><TD>0.578</TD><TD>computed</TD><TD>LOW</TD><TD>0.100</TD><TD>computed</TD><TD>LOW</TD><TD>0.270</TD><TD>computed</TD><TD>LOW</TD><TD>0.034</TD><TD>computed</TD><TD>LOW</TD><TD>0.390</TD><TD>computed</TD><TD>LOW</TD><TD>0.078</TD><TD>computed</TD><TD>LOW</TD><TD>NOK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.831</TD><TD>computed</TD><TD>HIGH</TD><TD>7.100</TD><TD>computed</TD><TD>HIGH</TD><TD>7.954</TD><TD>computed</TD><TD>HIGH</TD><TD>10.937</TD><TD>computed</TD><TD>HIGH</TD><TD>10.250</TD><TD>computed</TD><TD>HIGH</TD><TD>15.522</TD><TD>computed</TD><TD>HIGH</TD><TD>14.340</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.111</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13241776-6444451</TD><TD>II/246/out</TD><TD></TD><TD>13 24 17.589</TD><TD>I/284</TD><TD></TD><TD>-64 44 45.62</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-64</TD><TD>I/284</TD><TD></TD><TD>18</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.097</TD><TD>II/246/out</TD><TD></TD><TD>306.429</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.34</TD><TD>I/284</TD><TD></TD><TD>12.123</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.25</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.47</TD><TD>I/284</TD><TD></TD><TD>9.458</TD><TD>computed</TD><TD>HIGH</TD><TD>7.98</TD><TD>II/246/out</TD><TD></TD><TD>7.112</TD><TD>II/246/out</TD><TD></TD><TD>6.807</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.1258</TD><TD>II/297/irc</TD><TD></TD><TD>0.00617</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.954</TD><TD>computed</TD><TD>HIGH</TD><TD>7.100</TD><TD>computed</TD><TD>HIGH</TD><TD>6.831</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.257</TD><TD>computed</TD><TD>HIGH</TD><TD>0.021</TD><TD>computed</TD><TD>HIGH</TD><TD>0.253</TD><TD>computed</TD><TD>HIGH</TD><TD>0.024</TD><TD>computed</TD><TD>HIGH</TD><TD>0.261</TD><TD>computed</TD><TD>HIGH</TD><TD>0.035</TD><TD>computed</TD><TD>HIGH</TD><TD>0.257</TD><TD>computed</TD><TD>HIGH</TD><TD>0.051</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.483</TD><TD>computed</TD><TD>HIGH</TD><TD>6.587</TD><TD>computed</TD><TD>HIGH</TD><TD>7.122</TD><TD>computed</TD><TD>HIGH</TD><TD>7.940</TD><TD>computed</TD><TD>HIGH</TD><TD>8.005</TD><TD>computed</TD><TD>HIGH</TD><TD>9.123</TD><TD>computed</TD><TD>HIGH</TD><TD>10.372</TD><TD>computed</TD><TD>HIGH</TD><TD>0.992</TD><TD>computed</TD><TD>HIGH</TD><TD>0.001</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.111</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13252010-6446564</TD><TD>II/246/out</TD><TD></TD><TD>13 25 20.065</TD><TD>I/284</TD><TD></TD><TD>-64 46 56.34</TD><TD>I/284</TD><TD></TD><TD>J132520.1-644656</TD><TD>B/denis</TD><TD></TD><TD>201.333445</TD><TD>B/denis</TD><TD></TD><TD>-64.782264</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.148</TD><TD>II/246/out</TD><TD></TD><TD>306.534</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>17.57</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>15</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>13.13</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.518</TD><TD>II/246/out</TD><TD></TD><TD>8.382</TD><TD>II/246/out</TD><TD></TD><TD>7.873</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.09972</TD><TD>II/297/irc</TD><TD></TD><TD>0.0121</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.467</TD><TD>computed</TD><TD>HIGH</TD><TD>8.365</TD><TD>computed</TD><TD>HIGH</TD><TD>7.897</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.897</TD><TD>computed</TD><TD>HIGH</TD><TD>8.365</TD><TD>computed</TD><TD>HIGH</TD><TD>9.467</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>15.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>17.570</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.124</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
@@ -2663,7 +2750,7 @@ VOTable:
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13260887-6441231</TD><TD>II/246/out</TD><TD></TD><TD>13 26 09.051</TD><TD>I/284</TD><TD></TD><TD>-64 41 20.96</TD><TD>I/284</TD><TD></TD><TD>J132608.9-644123</TD><TD>B/denis</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.068</TD><TD>II/246/out</TD><TD></TD><TD>306.633</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>15.93</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>13.08</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.07</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.269</TD><TD>II/246/out</TD><TD></TD><TD>8.161</TD><TD>II/246/out</TD><TD></TD><TD>7.697</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.08824</TD><TD>II/297/irc</TD><TD></TD><TD>0.00122</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.222</TD><TD>computed</TD><TD>HIGH</TD><TD>8.145</TD><TD>computed</TD><TD>HIGH</TD><TD>7.721</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.721</TD><TD>computed</TD><TD>HIGH</TD><TD>8.145</TD><TD>computed</TD><TD>HIGH</TD><TD>9.222</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>13.080</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>15.930</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.127</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8999</TD><TD>I/280</TD><TD></TD><TD>1950</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>13260374-6444200</TD><TD>II/246/out</TD><TD></TD><TD>13 26 03.749</TD><TD>I/280</TD><TD></TD><TD>-64 44 20.09</TD><TD>I/280</TD><TD></TD><TD>J132603.7-644420</TD><TD>B/denis</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-5.44</TD><TD>I/280</TD><TD></TD><TD>-2.73</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.115</TD><TD>II/246/out</TD><TD></TD><TD>306.617</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12.18</TD><TD>I/280</TD><TD></TD><TD>12.19</TD><TD>II/246/out</TD><TD></TD><TD>11.06</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.07</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.749</TD><TD>computed</TD><TD>HIGH</TD><TD>8.746</TD><TD>II/246/out</TD><TD></TD><TD>8.17</TD><TD>II/246/out</TD><TD></TD><TD>7.982</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.742</TD><TD>computed</TD><TD>HIGH</TD><TD>8.161</TD><TD>computed</TD><TD>HIGH</TD><TD>8.006</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.145</TD><TD>computed</TD><TD>HIGH</TD><TD>0.010</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.117</TD><TD>computed</TD><TD>HIGH</TD><TD>0.011</TD><TD>computed</TD><TD>HIGH</TD><TD>0.127</TD><TD>computed</TD><TD>HIGH</TD><TD>0.022</TD><TD>computed</TD><TD>HIGH</TD><TD>0.102</TD><TD>computed</TD><TD>HIGH</TD><TD>0.013</TD><TD>computed</TD><TD>HIGH</TD><TD>0.123</TD><TD>computed</TD><TD>HIGH</TD><TD>0.025</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.658</TD><TD>computed</TD><TD>HIGH</TD><TD>7.648</TD><TD>computed</TD><TD>HIGH</TD><TD>7.909</TD><TD>computed</TD><TD>HIGH</TD><TD>8.231</TD><TD>computed</TD><TD>HIGH</TD><TD>8.825</TD><TD>computed</TD><TD>HIGH</TD><TD>8.060</TD><TD>computed</TD><TD>HIGH</TD><TD>8.222</TD><TD>computed</TD><TD>HIGH</TD><TD>0.998</TD><TD>computed</TD><TD>HIGH</TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.137</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8999</TD><TD>I/280</TD><TD></TD><TD>1950</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>13260374-6444200</TD><TD>II/246/out</TD><TD></TD><TD>13 26 03.749</TD><TD>I/280</TD><TD></TD><TD>-64 44 20.09</TD><TD>I/280</TD><TD></TD><TD>J132603.7-644420</TD><TD>B/denis</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-5.44</TD><TD>I/280</TD><TD></TD><TD>-2.73</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.115</TD><TD>II/246/out</TD><TD></TD><TD>306.617</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>12.18</TD><TD>I/280</TD><TD></TD><TD>12.19</TD><TD>II/246/out</TD><TD></TD><TD>11.06</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.07</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>9.650</TD><TD>computed</TD><TD>HIGH</TD><TD>8.746</TD><TD>II/246/out</TD><TD></TD><TD>8.17</TD><TD>II/246/out</TD><TD></TD><TD>7.982</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.742</TD><TD>computed</TD><TD>HIGH</TD><TD>8.161</TD><TD>computed</TD><TD>HIGH</TD><TD>8.006</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.130</TD><TD>computed</TD><TD>HIGH</TD><TD>0.009</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.137</TD><TD>computed</TD><TD>HIGH</TD><TD>0.011</TD><TD>computed</TD><TD>HIGH</TD><TD>0.129</TD><TD>computed</TD><TD>HIGH</TD><TD>0.012</TD><TD>computed</TD><TD>HIGH</TD><TD>0.145</TD><TD>computed</TD><TD>HIGH</TD><TD>0.019</TD><TD>computed</TD><TD>HIGH</TD><TD>0.135</TD><TD>computed</TD><TD>HIGH</TD><TD>0.027</TD><TD>computed</TD><TD>HIGH</TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.006</TD><TD>computed</TD><TD>HIGH</TD><TD>8.161</TD><TD>computed</TD><TD>HIGH</TD><TD>8.742</TD><TD>computed</TD><TD>HIGH</TD><TD>9.650</TD><TD>computed</TD><TD>HIGH</TD><TD>11.070</TD><TD>computed</TD><TD>HIGH</TD><TD>11.060</TD><TD>computed</TD><TD>HIGH</TD><TD>12.190</TD><TD>computed</TD><TD>HIGH</TD><TD>0.998</TD><TD>computed</TD><TD>HIGH</TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.137</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>II/246/out</TD><TD></TD><TD>13253736-6447140</TD><TD>II/246/out</TD><TD></TD><TD>13 25 37.547</TD><TD>I/284</TD><TD></TD><TD>-64 47 13.72</TD><TD>I/284</TD><TD></TD><TD>J132537.3-644714</TD><TD>B/denis</TD><TD></TD><TD>201.406562</TD><TD>B/denis</TD><TD></TD><TD>-64.787153</TD><TD>B/denis</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD>0</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>AAA</TD><TD>II/246/out</TD><TD></TD><TD>-2.157</TD><TD>II/246/out</TD><TD></TD><TD>306.564</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>14.44</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11.2</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>10.61</TD><TD>I/284</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.964</TD><TD>II/246/out</TD><TD></TD><TD>8.031</TD><TD>II/246/out</TD><TD></TD><TD>7.711</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.934</TD><TD>computed</TD><TD>HIGH</TD><TD>8.019</TD><TD>computed</TD><TD>HIGH</TD><TD>7.735</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.000</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.735</TD><TD>computed</TD><TD>HIGH</TD><TD>8.019</TD><TD>computed</TD><TD>HIGH</TD><TD>8.934</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>11.200</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD>14.440</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.140</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>

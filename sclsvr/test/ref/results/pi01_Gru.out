@@ -1,992 +1,992 @@
-sclsvrServer - vobs - Test - vobsVIRTUAL_OBSERVATORY::Search()
-sclsvrServer - vobs - Test - Consulting I/280 ...
-sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
-sclsvrServer - vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Vmag=0.00..4.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
-sclsvrServer - vobs - Test - ...number of stars return = 10
-sclsvrServer - vobs - Test - after COPY, star list size = 10
-sclsvrServer - vobs - Test - Consulting II/246/out ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+08+13.986-46+57+39.53&+22+29+16.175-43+29+44.03&+22+42+40.050-46+53+04.48&+22+48+33.298-51+19+00.73&+23+10+21.539-45+14+48.17&+21+53+55.728-37+21+53.50&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+12.202-43+40+47.39&+00+26+17.040-42+18+21.80&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 9
-sclsvrServer - vobs - Test - after COPY, star list size = 9
-sclsvrServer - vobs - Test - star 2MASS 22424003-4653044 has been removed by the filter 'K mag filter'
-sclsvrServer - vobs - Test - star 2MASS 22483329-5119006 has been removed by the filter 'K mag filter'
-sclsvrServer - vobs - Test - star 2MASS 21535573-3721535 has been removed by the filter 'K mag filter'
-sclsvrServer - vobs - Test - star 2MASS 00261219-4340475 has been removed by the filter 'K mag filter'
-sclsvrServer - vobs - Test - after FILTER, star list size = 5
-sclsvrServer - vobs - Test - Consulting J/A+A/393/183/catalog ...
-sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Kmag=-2.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK'
-sclsvrServer - vobs - Test - ...number of stars return = 5
-sclsvrServer - vobs - Test - after MERGE, star list size = 10
-sclsvrServer - vobs - Test - Consulting J/A+A/433/1155 ...
-sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Ksmag=-2.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam'
-sclsvrServer - vobs - Test - ...number of stars return = 0
-sclsvrServer - vobs - Test - after MERGE, star list size = 10
-sclsvrServer - vobs - Test - Consulting II/225/catalog ...
-sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&x_F(IR)=M&F(IR)=-2.00..2.00&lambda=&lambda=2.20&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&-sort=_r'
-sclsvrServer - vobs - Test - ...number of stars return = 65
-sclsvrServer - vobs - Test - after MERGE, star list size = 62
-sclsvrServer - vobs - Test - Consulting II/7A/catalog ...
-sclsvrServer - vobs - Test - Search area [2914.382 - 1200.000]
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&K=-2.00..2.00&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcsec&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-sort=_r'
-sclsvrServer - vobs - Test - ...number of stars return = 2
-sclsvrServer - vobs - Test - after MERGE, star list size = 64
-sclsvrServer - vobs - Test - Consulting I/280 ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.187-43+29+43.88&+23+10+21.526-45+14+48.09&+20+37+34.024-47+17+29.22&+00+09+24.672-45+44+50.62&+00+26+16.995-42+18+21.64&+20+37+34.032-47+17+29.41&+20+49+28.961-46+13+36.57&+22+06+06.885-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.5-43+44+58&+22+29+44.8-43+44+37&+22+26+05.0-48+26+20&+22+26+04.4-48+26+33&+22+29+16.4-43+29+41&+22+11+55.2-40+33+10&+22+43+29.5-41+25+15&+21+48+33.7-46+54+13&+22+43+22.7-40+06+15&+22+06+40.4-39+34+21&+23+10+14.5-40+35+42&+21+52+15.0-37+19+34&+23+22+21.4-48+03+32&+21+29+13.3-41+24+51&+23+24+06.9-45+05+00&+21+20+09.4-45+01+19&+21+19+57.3-45+01+17&+21+39+54.2-38+02+23&+21+39+53.6-37+59+15&+21+23+12.4-42+04+08&+21+23+46.0-40+42+24&+23+07+35.2-36+07+45&+21+08+54.0-44+34+49&+21+10+07.2-38+31+03&+23+56+25.5-49+48+18&+00+01+19.7-50+19+17&+20+42+05.5-50+17+15&+20+37+33.7-47+17+32&+00+09+24.0-45+44+40&+20+41+20.3-42+08+17&+20+20+17.8-50+42+20&+20+39+11.1-37+55+51&+20+20+14.4-50+42+12&+20+20+01.1-50+38+32&+20+38+54.2-37+55+25&+20+29+15.7-40+25+12&+00+26+16.1-42+18+23&+20+15+28.9-44+24+36&+20+15+28.1-44+24+53&+20+15+28.5-44+21+48&+20+21+51.1-40+45+24&+20+26+29.7-37+06+08&+00+28+26.1-39+54+25&+20+17+43.9-39+04+39&+20+00+40.2-49+36+43&+20+10+39.3-41+43+05&+20+07+41.9-42+32+21&+00+50+02.2-48+43+48&+20+23+17.0-35+00+19&+00+15+20.2-32+02+25&+00+15+21.8-32+02+45&+00+15+22.2-32+02+40&+20+37+34.0-47+17+29&+00+09+24.6-45+44+51&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 18
-sclsvrServer - vobs - Test - after COPY, star list size = 13
-sclsvrServer - vobs - Test - Consulting J/A+A/393/183/catalog ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 5
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting J/A+A/433/1155 ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting J/A+A/413/1037 ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/413/1037&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Jmag&-out=Ksmag&-out=Var&Var=%3C4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 6
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting II/246/out ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting II/7A/catalog ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_H&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting II/225/catalog ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-out.max=1000-c.r=1&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 40
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting I/196/main ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*VELOC_HC&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 12
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting V/50/catalog ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 10
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting V/36B/bsc4s ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting B/sb9/main ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 2
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting B/wds/wds ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 4
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Consulting II/297/irc ...
-sclsvrServer - vobs - Test - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer - vobs - Test - ...number of stars return = 13
-sclsvrServer - vobs - Test - after UPDATE_ONLY, star list size = 13
-sclsvrServer - vobs - Test - Number of stars found : 13
-sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Copy()
-sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Complete() - start
-sclsvrServer - alx - Test - Original spectral type = 'G6/G8III'.
-sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'G7.00III'.
-sclsvrServer - alx - Test - Final spectral type = 'G7.00III'.
-sclsvrServer - alx - Test -  - Code                = 'G'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'G6/G8III'.
-sclsvrServer - alx - Test - Original spectral type = 'G6/G8III'.
-sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'G7.00III'.
-sclsvrServer - alx - Test - Final spectral type = 'G7.00III'.
-sclsvrServer - alx - Test -  - Code                = 'G'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 10.847371
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 6.367955
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = 1.963475
-sclsvrServer - sclsvr - Test - star HD 213009 - parallax 10.13(0.85) is OK...
-sclsvrServer - alx - Test - ra = -0.395886 radians
-sclsvrServer - alx - Test - dec = -0.759141 radians
-sclsvrServer - alx - Test - gLat = -57.060 degrees
-sclsvrServer - alx - Test - gLon = 353.770 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 353.773
-sclsvrServer - alx - Test - Distance                    = 0.099
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 4.993
-sclsvrServer - alx - Test - Corrected magnitude[1] = 3.959
-sclsvrServer - alx - Test - Corrected magnitude[2] = 3.240
-sclsvrServer - alx - Test - Corrected magnitude[3] = 2.630
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.193
-sclsvrServer - alx - Test - Corrected magnitude[5] = 1.728
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.679
-sclsvrServer - alx - Test - Original spectral type = 'G6/G8III'.
-sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'G7.00III'.
-sclsvrServer - alx - Test - Final spectral type = 'G7.00III'.
-sclsvrServer - alx - Test -  - Code                = 'G'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - Could not compute differential magnitudes; mgB-mgV = 1.034e+00 / B-V 9.100e-01; delta > 0.1
-sclsvrServer - alx - Test - B = 4.993
-sclsvrServer - alx - Test - V = 3.959
-sclsvrServer - alx - Test - R = 3.240 (2)
-sclsvrServer - alx - Test - I = 2.630 (2)
-sclsvrServer - alx - Test - J = 2.193 (2)
-sclsvrServer - alx - Test - H = 1.728 (2)
-sclsvrServer - alx - Test - K = 1.679 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 4.993
-sclsvrServer - alx - Test - Corrected magnitude[V] = 3.959
-sclsvrServer - alx - Test - Corrected magnitude[R] = 3.240
-sclsvrServer - alx - Test - Corrected magnitude[I] = 2.630
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.193
-sclsvrServer - alx - Test - Corrected magnitude[H] = 1.728
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.679
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Test - Diameter BV = 2.465(0.1972), VR = 2.244(0.2177), VK = 2.301(0.1587)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.301(0.159) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.702133
-sclsvrServer - alx - Test - dV  = 0.036549
-sclsvrServer - alx - Test - V2  = 0.492990
-sclsvrServer - alx - Test - dV2 = 0.051324
-sclsvrServer - sclsvr - Test - Computing UDs for LD='2.300655' and Teff='4900.000000',LogG='2.278000'...
-sclsvrServer - alx - Test - UD_U = 2.081916
-sclsvrServer - alx - Test - UD_B = 2.103005
-sclsvrServer - alx - Test - UD_V = 2.137663
-sclsvrServer - alx - Test - UD_R = 2.168593
-sclsvrServer - alx - Test - UD_I = 2.192266
-sclsvrServer - alx - Test - UD_J = 2.222118
-sclsvrServer - alx - Test - UD_H = 2.238654
-sclsvrServer - alx - Test - UD_K = 2.248172
-sclsvrServer - alx - Test - UD_L = 2.270037
-sclsvrServer - alx - Test - UD_N = 2.286380
-sclsvrServer - alx - Test - Original spectral type = 'K0III SB'.
-sclsvrServer - alx - Test - Un-SB spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'YES'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III SB'.
-sclsvrServer - sclsvr - Test - Spectral Binarity - 'SB' found in SpType.
-sclsvrServer - alx - Test - Original spectral type = 'K0III SB'.
-sclsvrServer - alx - Test - Un-SB spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'YES'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star HD 218670 - parallax 17.29(0.92) is OK...
-sclsvrServer - alx - Test - ra = -0.216600 radians
-sclsvrServer - alx - Test - dec = -0.789704 radians
-sclsvrServer - alx - Test - gLat = -62.930 degrees
-sclsvrServer - alx - Test - gLon = 344.270 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 344.266
-sclsvrServer - alx - Test - Distance                    = 0.058
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 4.882
-sclsvrServer - alx - Test - Corrected magnitude[1] = 3.878
-sclsvrServer - alx - Test - Corrected magnitude[2] = 3.150
-sclsvrServer - alx - Test - Corrected magnitude[3] = 2.590
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.196
-sclsvrServer - alx - Test - Corrected magnitude[5] = 1.731
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.627
-sclsvrServer - alx - Test - Original spectral type = 'K0III SB'.
-sclsvrServer - alx - Test - Un-SB spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'YES'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 4.882
-sclsvrServer - alx - Test - V = 3.878
-sclsvrServer - alx - Test - R = 3.150 (2)
-sclsvrServer - alx - Test - I = 2.590 (2)
-sclsvrServer - alx - Test - J = 2.196 (2)
-sclsvrServer - alx - Test - H = 1.731 (2)
-sclsvrServer - alx - Test - K = 1.627 (2)
-sclsvrServer - alx - Test - L = 1.527 (2)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 4.882
-sclsvrServer - alx - Test - Corrected magnitude[V] = 3.878
-sclsvrServer - alx - Test - Corrected magnitude[R] = 3.150
-sclsvrServer - alx - Test - Corrected magnitude[I] = 2.590
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.196
-sclsvrServer - alx - Test - Corrected magnitude[H] = 1.731
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.627
-sclsvrServer - alx - Test - Corrected magnitude[L] = 1.527
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Test - Diameter BV = 2.445(0.1956), VR = 2.370(0.2299), VK = 2.350(0.1622)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.350(0.162) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.690671
-sclsvrServer - alx - Test - dV  = 0.037749
-sclsvrServer - alx - Test - V2  = 0.477026
-sclsvrServer - alx - Test - dV2 = 0.052145
-sclsvrServer - sclsvr - Test - Computing UDs for LD='2.350160' and Teff='4660.000000',LogG='2.078000'...
-sclsvrServer - alx - Test - UD_U = 2.117823
-sclsvrServer - alx - Test - UD_B = 2.139606
-sclsvrServer - alx - Test - UD_V = 2.174098
-sclsvrServer - alx - Test - UD_R = 2.207541
-sclsvrServer - alx - Test - UD_I = 2.233656
-sclsvrServer - alx - Test - UD_J = 2.265245
-sclsvrServer - alx - Test - UD_H = 2.282657
-sclsvrServer - alx - Test - UD_K = 2.293753
-sclsvrServer - alx - Test - UD_L = 2.317254
-sclsvrServer - alx - Test - UD_N = 2.334739
-sclsvrServer - alx - Test - Original spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III'.
-sclsvrServer - alx - Test - Original spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 24.804934
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 14.595349
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = 1.062939
-sclsvrServer - sclsvr - Test - star HD 196171 - parallax 32.06(0.75) is OK...
-sclsvrServer - alx - Test - ra = -0.883280 radians
-sclsvrServer - alx - Test - dec = -0.825392 radians
-sclsvrServer - alx - Test - gLat = -37.210 degrees
-sclsvrServer - alx - Test - gLon = 352.570 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 352.567
-sclsvrServer - alx - Test - Distance                    = 0.031
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.017
-sclsvrServer - alx - Test - Corrected magnitude[0] = 4.086
-sclsvrServer - alx - Test - Corrected magnitude[1] = 3.087
-sclsvrServer - alx - Test - Corrected magnitude[4] = 1.455
-sclsvrServer - alx - Test - Corrected magnitude[5] = 0.947
-sclsvrServer - alx - Test - Corrected magnitude[6] = 0.848
-sclsvrServer - alx - Test - Corrected magnitude[7] = 0.779
-sclsvrServer - alx - Test - Corrected magnitude[8] = 0.869
-sclsvrServer - alx - Test - Original spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 4.086
-sclsvrServer - alx - Test - V = 3.087
-sclsvrServer - alx - Test - R = 2.297 (2)
-sclsvrServer - alx - Test - I = 1.797 (2)
-sclsvrServer - alx - Test - J = 1.455 (2)
-sclsvrServer - alx - Test - H = 0.947 (2)
-sclsvrServer - alx - Test - K = 0.848 (2)
-sclsvrServer - alx - Test - L = 0.779 (2)
-sclsvrServer - alx - Test - M = 0.869 (2)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 4.109
-sclsvrServer - alx - Test - Corrected magnitude[V] = 3.104
-sclsvrServer - alx - Test - Corrected magnitude[R] = 2.310
-sclsvrServer - alx - Test - Corrected magnitude[I] = 1.806
-sclsvrServer - alx - Test - Corrected magnitude[J] = 1.503
-sclsvrServer - alx - Test - Corrected magnitude[H] = 0.950
-sclsvrServer - alx - Test - Corrected magnitude[K] = 0.850
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.780
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.870
-sclsvrServer - alx - Test - Diameter BV = 3.496(0.2797), VR = 3.841(0.3725), VK = 3.362(0.2320)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 3.200(0.034) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.480415
-sclsvrServer - alx - Test - dV  = 0.008677
-sclsvrServer - alx - Test - V2  = 0.230798
-sclsvrServer - alx - Test - dV2 = 0.008338
-sclsvrServer - sclsvr - Test - Computing UDs for LD='3.361596' and Teff='4660.000000',LogG='2.078000'...
-sclsvrServer - alx - Test - UD_U = 3.029267
-sclsvrServer - alx - Test - UD_B = 3.060425
-sclsvrServer - alx - Test - UD_V = 3.109762
-sclsvrServer - alx - Test - UD_R = 3.157596
-sclsvrServer - alx - Test - UD_I = 3.194951
-sclsvrServer - alx - Test - UD_J = 3.240136
-sclsvrServer - alx - Test - UD_H = 3.265040
-sclsvrServer - alx - Test - UD_K = 3.280912
-sclsvrServer - alx - Test - UD_L = 3.314527
-sclsvrServer - alx - Test - UD_N = 3.339537
-sclsvrServer - alx - Test - Original spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III'.
-sclsvrServer - alx - Test - Original spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star HD 496 - parallax 23.29(0.98) is OK...
-sclsvrServer - alx - Test - ra = 0.041062 radians
-sclsvrServer - alx - Test - dec = -0.798443 radians
-sclsvrServer - alx - Test - gLat = -69.600 degrees
-sclsvrServer - alx - Test - gLon = 324.340 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 324.337
-sclsvrServer - alx - Test - Distance                    = 0.043
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 4.899
-sclsvrServer - alx - Test - Corrected magnitude[1] = 3.875
-sclsvrServer - alx - Test - Corrected magnitude[2] = 3.130
-sclsvrServer - alx - Test - Corrected magnitude[3] = 2.610
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.190
-sclsvrServer - alx - Test - Corrected magnitude[5] = 1.756
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.635
-sclsvrServer - alx - Test - Original spectral type = 'K0III'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 4.899
-sclsvrServer - alx - Test - V = 3.875
-sclsvrServer - alx - Test - R = 3.130 (2)
-sclsvrServer - alx - Test - I = 2.610 (2)
-sclsvrServer - alx - Test - J = 2.190 (2)
-sclsvrServer - alx - Test - H = 1.756 (2)
-sclsvrServer - alx - Test - K = 1.635 (2)
-sclsvrServer - alx - Test - L = 1.535 (2)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 4.899
-sclsvrServer - alx - Test - Corrected magnitude[V] = 3.875
-sclsvrServer - alx - Test - Corrected magnitude[R] = 3.130
-sclsvrServer - alx - Test - Corrected magnitude[I] = 2.610
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.190
-sclsvrServer - alx - Test - Corrected magnitude[H] = 1.756
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.635
-sclsvrServer - alx - Test - Corrected magnitude[L] = 1.535
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Test - Diameter BV = 2.523(0.2019), VR = 2.453(0.2379), VK = 2.340(0.1615)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.340(0.161) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.693045
-sclsvrServer - alx - Test - dV  = 0.037502
-sclsvrServer - alx - Test - V2  = 0.480311
-sclsvrServer - alx - Test - dV2 = 0.051981
-sclsvrServer - sclsvr - Test - Computing UDs for LD='2.339952' and Teff='4660.000000',LogG='2.078000'...
-sclsvrServer - alx - Test - UD_U = 2.108624
-sclsvrServer - alx - Test - UD_B = 2.130312
-sclsvrServer - alx - Test - UD_V = 2.164655
-sclsvrServer - alx - Test - UD_R = 2.197952
-sclsvrServer - alx - Test - UD_I = 2.223954
-sclsvrServer - alx - Test - UD_J = 2.255406
-sclsvrServer - alx - Test - UD_H = 2.272742
-sclsvrServer - alx - Test - UD_K = 2.283790
-sclsvrServer - alx - Test - UD_L = 2.307189
-sclsvrServer - alx - Test - UD_N = 2.324598
-sclsvrServer - alx - Test - Original spectral type = 'K0III...'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III...'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III...'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K0III...'.
-sclsvrServer - alx - Test - Original spectral type = 'K0III...'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III...'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III...'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star HD 2261 - parallax 42.22(0.76) is OK...
-sclsvrServer - alx - Test - ra = 0.114686 radians
-sclsvrServer - alx - Test - dec = -0.738380 radians
-sclsvrServer - alx - Test - gLat = -73.980 degrees
-sclsvrServer - alx - Test - gLon = 320.000 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 320.001
-sclsvrServer - alx - Test - Distance                    = 0.024
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 3.486
-sclsvrServer - alx - Test - Corrected magnitude[1] = 2.391
-sclsvrServer - alx - Test - Corrected magnitude[2] = 1.590
-sclsvrServer - alx - Test - Corrected magnitude[3] = 1.000
-sclsvrServer - alx - Test - Corrected magnitude[4] = 0.579
-sclsvrServer - alx - Test - Corrected magnitude[5] = -0.089
-sclsvrServer - alx - Test - Corrected magnitude[6] = -0.162
-sclsvrServer - alx - Test - Original spectral type = 'K0III...'.
-sclsvrServer - alx - Test - Final spectral type = 'K0III...'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III...'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 3.486
-sclsvrServer - alx - Test - V = 2.391
-sclsvrServer - alx - Test - R = 1.590 (2)
-sclsvrServer - alx - Test - I = 1.000 (2)
-sclsvrServer - alx - Test - J = 0.579 (2)
-sclsvrServer - alx - Test - H = -0.089 (2)
-sclsvrServer - alx - Test - K = -0.162 (2)
-sclsvrServer - alx - Test - L = -0.262 (2)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 3.486
-sclsvrServer - alx - Test - Corrected magnitude[V] = 2.391
-sclsvrServer - alx - Test - Corrected magnitude[R] = 1.590
-sclsvrServer - alx - Test - Corrected magnitude[I] = 1.000
-sclsvrServer - alx - Test - Corrected magnitude[J] = 0.579
-sclsvrServer - alx - Test - Corrected magnitude[H] = -0.089
-sclsvrServer - alx - Test - Corrected magnitude[K] = -0.162
-sclsvrServer - alx - Test - Corrected magnitude[L] = -0.262
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Test - Diameter BV = 5.571(0.4456), VR = 5.402(0.5239), VK = 5.502(0.3796)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 5.502(0.380) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.014390
-sclsvrServer - alx - Test - dV  = 0.053458
-sclsvrServer - alx - Test - V2  = 0.000207
-sclsvrServer - alx - Test - dV2 = 0.001539
-sclsvrServer - sclsvr - Test - Computing UDs for LD='5.501866' and Teff='4660.000000',LogG='2.078000'...
-sclsvrServer - alx - Test - UD_U = 4.957950
-sclsvrServer - alx - Test - UD_B = 5.008945
-sclsvrServer - alx - Test - UD_V = 5.089694
-sclsvrServer - alx - Test - UD_R = 5.167984
-sclsvrServer - alx - Test - UD_I = 5.229121
-sclsvrServer - alx - Test - UD_J = 5.303075
-sclsvrServer - alx - Test - UD_H = 5.343836
-sclsvrServer - alx - Test - UD_K = 5.369812
-sclsvrServer - alx - Test - UD_L = 5.424830
-sclsvrServer - alx - Test - UD_N = 5.465763
-sclsvrServer - alx - Test - Original spectral type = 'K5III'.
-sclsvrServer - alx - Test - Final spectral type = 'K5III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K5III'.
-sclsvrServer - alx - Test - Original spectral type = 'K5III'.
-sclsvrServer - alx - Test - Final spectral type = 'K5III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 16.350265
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 9.689625
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = 1.507708
-sclsvrServer - sclsvr - Test - star HD 198048 - parallax 8.17(0.81) is OK...
-sclsvrServer - alx - Test - ra = -0.831289 radians
-sclsvrServer - alx - Test - dec = -0.806810 radians
-sclsvrServer - alx - Test - gLat = -39.240 degrees
-sclsvrServer - alx - Test - gLon = 353.950 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 353.948
-sclsvrServer - alx - Test - Distance                    = 0.122
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.047
-sclsvrServer - alx - Test - Corrected magnitude[0] = 6.394
-sclsvrServer - alx - Test - Corrected magnitude[1] = 4.842
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.267
-sclsvrServer - alx - Test - Corrected magnitude[5] = 1.452
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.285
-sclsvrServer - alx - Test - Corrected magnitude[7] = 1.167
-sclsvrServer - alx - Test - Corrected magnitude[8] = 1.368
-sclsvrServer - alx - Test - Original spectral type = 'K5III'.
-sclsvrServer - alx - Test - Final spectral type = 'K5III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 6.394
-sclsvrServer - alx - Test - V = 4.842
-sclsvrServer - alx - Test - R = 3.702 (2)
-sclsvrServer - alx - Test - I = 2.812 (2)
-sclsvrServer - alx - Test - J = 2.267 (2)
-sclsvrServer - alx - Test - H = 1.452 (2)
-sclsvrServer - alx - Test - K = 1.285 (2)
-sclsvrServer - alx - Test - L = 1.167 (2)
-sclsvrServer - alx - Test - M = 1.368 (2)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 6.456
-sclsvrServer - alx - Test - Corrected magnitude[V] = 4.889
-sclsvrServer - alx - Test - Corrected magnitude[R] = 3.737
-sclsvrServer - alx - Test - Corrected magnitude[I] = 2.836
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.396
-sclsvrServer - alx - Test - Corrected magnitude[H] = 1.460
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.290
-sclsvrServer - alx - Test - Corrected magnitude[L] = 1.170
-sclsvrServer - alx - Test - Corrected magnitude[M] = 1.370
-sclsvrServer - alx - Test - Diameter BV = 3.769(0.3015), VR = 3.142(0.3048), VK = 3.105(0.2143)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.970(0.035) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.538938
-sclsvrServer - alx - Test - dV  = 0.008861
-sclsvrServer - alx - Test - V2  = 0.290454
-sclsvrServer - alx - Test - dV2 = 0.009552
-sclsvrServer - sclsvr - Test - Computing UDs for LD='3.105269' and Teff='4050.000000',LogG='1.678000'...
-sclsvrServer - alx - Test - UD_U = 2.806150
-sclsvrServer - alx - Test - UD_B = 2.803707
-sclsvrServer - alx - Test - UD_V = 2.835325
-sclsvrServer - alx - Test - UD_R = 2.880837
-sclsvrServer - alx - Test - UD_I = 2.926661
-sclsvrServer - alx - Test - UD_J = 2.972197
-sclsvrServer - alx - Test - UD_H = 2.996330
-sclsvrServer - alx - Test - UD_K = 3.016632
-sclsvrServer - alx - Test - UD_L = 3.054253
-sclsvrServer - alx - Test - UD_N = 3.081315
-sclsvrServer - alx - Test - Original spectral type = 'M0III'.
-sclsvrServer - alx - Test - Final spectral type = 'M0III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M0III'.
-sclsvrServer - alx - Test - Original spectral type = 'M0III'.
-sclsvrServer - alx - Test - Final spectral type = 'M0III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 14.170353
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 8.443155
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = 1.657213
-sclsvrServer - sclsvr - Test - star HD 209688 - parallax 13.14(0.76) is OK...
-sclsvrServer - alx - Test - ra = -0.496918 radians
-sclsvrServer - alx - Test - dec = -0.690162 radians
-sclsvrServer - alx - Test - gLat = -53.670 degrees
-sclsvrServer - alx - Test - gLon = 2.220 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 2.215
-sclsvrServer - alx - Test - Distance                    = 0.076
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 5.888
-sclsvrServer - alx - Test - Corrected magnitude[1] = 4.465
-sclsvrServer - alx - Test - Corrected magnitude[2] = 3.460
-sclsvrServer - alx - Test - Corrected magnitude[3] = 2.680
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.270
-sclsvrServer - alx - Test - Corrected magnitude[5] = 1.580
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.440
-sclsvrServer - alx - Test - Corrected magnitude[7] = 1.340
-sclsvrServer - alx - Test - Corrected magnitude[8] = 1.500
-sclsvrServer - alx - Test - Original spectral type = 'M0III'.
-sclsvrServer - alx - Test - Final spectral type = 'M0III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - Could not compute differential magnitudes; mgB-mgV = 1.423e+00 / B-V 1.560e+00; delta > 0.1
-sclsvrServer - alx - Test - B = 5.888
-sclsvrServer - alx - Test - V = 4.465
-sclsvrServer - alx - Test - R = 3.460 (2)
-sclsvrServer - alx - Test - I = 2.680 (2)
-sclsvrServer - alx - Test - J = 2.270 (2)
-sclsvrServer - alx - Test - H = 1.580 (2)
-sclsvrServer - alx - Test - K = 1.440 (2)
-sclsvrServer - alx - Test - L = 1.340 (2)
-sclsvrServer - alx - Test - M = 1.500 (2)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 5.888
-sclsvrServer - alx - Test - Corrected magnitude[V] = 4.465
-sclsvrServer - alx - Test - Corrected magnitude[R] = 3.460
-sclsvrServer - alx - Test - Corrected magnitude[I] = 2.680
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.270
-sclsvrServer - alx - Test - Corrected magnitude[H] = 1.580
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.440
-sclsvrServer - alx - Test - Corrected magnitude[L] = 1.340
-sclsvrServer - alx - Test - Corrected magnitude[M] = 1.500
-sclsvrServer - alx - Test - Diameter BV = 3.626(0.2901), VR = 2.990(0.2900), VK = 2.744(0.1893)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.640(0.030) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.621313
-sclsvrServer - alx - Test - dV  = 0.007351
-sclsvrServer - alx - Test - V2  = 0.386030
-sclsvrServer - alx - Test - dV2 = 0.009134
-sclsvrServer - sclsvr - Test - Computing UDs for LD='2.743936' and Teff='3690.000000',LogG='1.278000'...
-sclsvrServer - alx - Test - UD_U = 2.516476
-sclsvrServer - alx - Test - UD_B = 2.486026
-sclsvrServer - alx - Test - UD_V = 2.503390
-sclsvrServer - alx - Test - UD_R = 2.532468
-sclsvrServer - alx - Test - UD_I = 2.576767
-sclsvrServer - alx - Test - UD_J = 2.626068
-sclsvrServer - alx - Test - UD_H = 2.642681
-sclsvrServer - alx - Test - UD_K = 2.662409
-sclsvrServer - alx - Test - UD_L = 2.697329
-sclsvrServer - alx - Test - UD_N = 2.722570
-sclsvrServer - alx - Test - Original spectral type = 'K5III'.
-sclsvrServer - alx - Test - Final spectral type = 'K5III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'K5III'.
-sclsvrServer - alx - Test - Original spectral type = 'K5III'.
-sclsvrServer - alx - Test - Final spectral type = 'K5III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no 9 mu flux available).
-sclsvrServer - sclsvr - Test - star HD 217902 - parallax 8.27(0.68) is OK...
-sclsvrServer - alx - Test - ra = -0.241464 radians
-sclsvrServer - alx - Test - dec = -0.941865 radians
-sclsvrServer - alx - Test - gLat = -56.770 degrees
-sclsvrServer - alx - Test - gLon = 331.770 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 331.766
-sclsvrServer - alx - Test - Distance                    = 0.121
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 6.879
-sclsvrServer - alx - Test - Corrected magnitude[1] = 5.373
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.810
-sclsvrServer - alx - Test - Corrected magnitude[5] = 2.010
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.840
-sclsvrServer - alx - Test - Corrected magnitude[7] = 1.720
-sclsvrServer - alx - Test - Corrected magnitude[8] = 1.920
-sclsvrServer - alx - Test - Original spectral type = 'K5III'.
-sclsvrServer - alx - Test - Final spectral type = 'K5III'.
-sclsvrServer - alx - Test -  - Code                = 'K'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '5.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 6.879
-sclsvrServer - alx - Test - V = 5.373
-sclsvrServer - alx - Test - R = 4.233 (2)
-sclsvrServer - alx - Test - I = 3.343 (2)
-sclsvrServer - alx - Test - J = 2.810 (2)
-sclsvrServer - alx - Test - H = 2.010 (2)
-sclsvrServer - alx - Test - K = 1.840 (2)
-sclsvrServer - alx - Test - L = 1.720 (2)
-sclsvrServer - alx - Test - M = 1.920 (2)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 6.879
-sclsvrServer - alx - Test - Corrected magnitude[V] = 5.373
-sclsvrServer - alx - Test - Corrected magnitude[R] = 4.233
-sclsvrServer - alx - Test - Corrected magnitude[I] = 3.343
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.810
-sclsvrServer - alx - Test - Corrected magnitude[H] = 2.010
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.840
-sclsvrServer - alx - Test - Corrected magnitude[L] = 1.720
-sclsvrServer - alx - Test - Corrected magnitude[M] = 1.920
-sclsvrServer - alx - Test - Diameter BV = 2.736(0.2189), VR = 2.461(0.2387), VK = 2.398(0.1655)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.300(0.027) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.702283
-sclsvrServer - alx - Test - dV  = 0.006215
-sclsvrServer - alx - Test - V2  = 0.493202
-sclsvrServer - alx - Test - dV2 = 0.008730
-sclsvrServer - sclsvr - Test - Computing UDs for LD='2.398357' and Teff='4050.000000',LogG='1.678000'...
-sclsvrServer - alx - Test - UD_U = 2.167332
-sclsvrServer - alx - Test - UD_B = 2.165445
-sclsvrServer - alx - Test - UD_V = 2.189866
-sclsvrServer - alx - Test - UD_R = 2.225016
-sclsvrServer - alx - Test - UD_I = 2.260409
-sclsvrServer - alx - Test - UD_J = 2.295578
-sclsvrServer - alx - Test - UD_H = 2.314218
-sclsvrServer - alx - Test - UD_K = 2.329898
-sclsvrServer - alx - Test - UD_L = 2.358954
-sclsvrServer - alx - Test - UD_N = 2.379856
-sclsvrServer - alx - Test - Original spectral type = 'M0III'.
-sclsvrServer - alx - Test - Final spectral type = 'M0III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M0III'.
-sclsvrServer - alx - Test - Original spectral type = 'M0III'.
-sclsvrServer - alx - Test - Final spectral type = 'M0III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 9.626925
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 5.736033
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = 2.076946
-sclsvrServer - sclsvr - Test - star HD 220440 - parallax 6.01(0.74) is OK...
-sclsvrServer - alx - Test - ra = -0.156115 radians
-sclsvrServer - alx - Test - dec = -0.905672 radians
-sclsvrServer - alx - Test - gLat = -60.320 degrees
-sclsvrServer - alx - Test - gLon = 330.500 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 330.504
-sclsvrServer - alx - Test - Distance                    = 0.166
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 7.322
-sclsvrServer - alx - Test - Corrected magnitude[1] = 5.742
-sclsvrServer - alx - Test - Corrected magnitude[4] = 2.910
-sclsvrServer - alx - Test - Corrected magnitude[5] = 2.070
-sclsvrServer - alx - Test - Corrected magnitude[6] = 1.880
-sclsvrServer - alx - Test - Corrected magnitude[7] = 1.760
-sclsvrServer - alx - Test - Corrected magnitude[8] = 1.970
-sclsvrServer - alx - Test - Original spectral type = 'M0III'.
-sclsvrServer - alx - Test - Final spectral type = 'M0III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '0.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - B = 7.322
-sclsvrServer - alx - Test - V = 5.742
-sclsvrServer - alx - Test - R = 4.522 (2)
-sclsvrServer - alx - Test - I = 3.542 (2)
-sclsvrServer - alx - Test - J = 2.910 (2)
-sclsvrServer - alx - Test - H = 2.070 (2)
-sclsvrServer - alx - Test - K = 1.880 (2)
-sclsvrServer - alx - Test - L = 1.760 (2)
-sclsvrServer - alx - Test - M = 1.970 (2)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 7.322
-sclsvrServer - alx - Test - Corrected magnitude[V] = 5.742
-sclsvrServer - alx - Test - Corrected magnitude[R] = 4.522
-sclsvrServer - alx - Test - Corrected magnitude[I] = 3.542
-sclsvrServer - alx - Test - Corrected magnitude[J] = 2.910
-sclsvrServer - alx - Test - Corrected magnitude[H] = 2.070
-sclsvrServer - alx - Test - Corrected magnitude[K] = 1.880
-sclsvrServer - alx - Test - Corrected magnitude[L] = 1.760
-sclsvrServer - alx - Test - Corrected magnitude[M] = 1.970
-sclsvrServer - alx - Test - Diameter BV = 2.609(0.2087), VR = 2.358(0.2288), VK = 2.437(0.1681)
-sclsvrServer - alx - Test - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
-sclsvrServer - alx - Test - Diam= 2.310(0.026) - base = 102.5 - wlen= 2.200
-sclsvrServer - alx - Test - V   = 0.699979
-sclsvrServer - alx - Test - dV  = 0.005999
-sclsvrServer - alx - Test - V2  = 0.489970
-sclsvrServer - alx - Test - dV2 = 0.008398
-sclsvrServer - sclsvr - Test - Computing UDs for LD='2.436866' and Teff='3690.000000',LogG='1.278000'...
-sclsvrServer - alx - Test - UD_U = 2.234860
-sclsvrServer - alx - Test - UD_B = 2.207818
-sclsvrServer - alx - Test - UD_V = 2.223239
-sclsvrServer - alx - Test - UD_R = 2.249063
-sclsvrServer - alx - Test - UD_I = 2.288404
-sclsvrServer - alx - Test - UD_J = 2.332189
-sclsvrServer - alx - Test - UD_H = 2.346942
-sclsvrServer - alx - Test - UD_K = 2.364463
-sclsvrServer - alx - Test - UD_L = 2.395474
-sclsvrServer - alx - Test - UD_N = 2.417891
-sclsvrServer - alx - Test - Original spectral type = 'M4.5IIIa'.
-sclsvrServer - alx - Test - Final spectral type = 'M4.5IIIA'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '4.500000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIA'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M4.5IIIa'.
-sclsvrServer - alx - Test - Original spectral type = 'M4.5IIIa'.
-sclsvrServer - alx - Test - Final spectral type = 'M4.5IIIA'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '4.500000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIA'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_9 akari  computed  = 126.862978
-sclsvrServer - sclsvr - Test - IR Fluxes - fnu_12 akari computed = 75.999987
-sclsvrServer - sclsvr - Test - IR Fluxes MagN akari computed = -0.728559
-sclsvrServer - sclsvr - Test - star HD 213080 - parallax 8.77(1.11) is OK...
-sclsvrServer - alx - Test - ra = -0.393758 radians
-sclsvrServer - alx - Test - dec = -0.763568 radians
-sclsvrServer - alx - Test - gLat = -57.060 degrees
-sclsvrServer - alx - Test - gLon = 353.280 degrees
-sclsvrServer - alx - Test - Galactic longitude          = 353.279
-sclsvrServer - alx - Test - Distance                    = 0.114
-sclsvrServer - alx - Test - Extinction coefficient in V = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[0] = 5.725
-sclsvrServer - alx - Test - Corrected magnitude[1] = 4.151
-sclsvrServer - alx - Test - Corrected magnitude[2] = 2.380
-sclsvrServer - alx - Test - Corrected magnitude[3] = 0.790
-sclsvrServer - alx - Test - Corrected magnitude[4] = 0.242
-sclsvrServer - alx - Test - Corrected magnitude[5] = -0.692
-sclsvrServer - alx - Test - Corrected magnitude[6] = -0.916
-sclsvrServer - alx - Test - Original spectral type = 'M4.5IIIa'.
-sclsvrServer - alx - Test - Final spectral type = 'M4.5IIIA'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '4.500000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIA'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - alx - Test - Type of star = GIANT
-sclsvrServer - alx - Test - Inferior line = 43
-sclsvrServer - alx - Test - Superior line = 44
-sclsvrServer - alx - Test - mgB-mgV = 1.574 / B-V [99.990..99.990]; delta > 0.1
-sclsvrServer - alx - Test - B = 5.725
-sclsvrServer - alx - Test - V = 4.151
-sclsvrServer - alx - Test - R = 2.380 (2)
-sclsvrServer - alx - Test - I = 0.790 (2)
-sclsvrServer - alx - Test - J = 0.242 (2)
-sclsvrServer - alx - Test - H = -0.692 (2)
-sclsvrServer - alx - Test - K = -0.916 (2)
-sclsvrServer - alx - Test - L = 0.000 (-1)
-sclsvrServer - alx - Test - M = 0.000 (-1)
-sclsvrServer - alx - Test - Corrected magnitude[B] = 5.725
-sclsvrServer - alx - Test - Corrected magnitude[V] = 4.151
-sclsvrServer - alx - Test - Corrected magnitude[R] = 2.380
-sclsvrServer - alx - Test - Corrected magnitude[I] = 0.790
-sclsvrServer - alx - Test - Corrected magnitude[J] = 0.242
-sclsvrServer - alx - Test - Corrected magnitude[H] = -0.692
-sclsvrServer - alx - Test - Corrected magnitude[K] = -0.916
-sclsvrServer - alx - Test - Corrected magnitude[L] = 0.000
-sclsvrServer - alx - Test - Corrected magnitude[M] = 0.000
-sclsvrServer - alx - Test - Diameter BV = 5.374(0.4300), VR = 11.268(1.0930), VK = 10.037(0.6925)
-sclsvrServer - alx - Test - Computed diameters are not coherent between them; they are not kept
-sclsvrServer - sclsvr - Test - star HD 213080 - error on diameter too high; computed diameters are not coherent
-sclsvrServer - sclsvr - Test - star HD 213080 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - alx - Test - Original spectral type = 'M8III:e'.
-sclsvrServer - alx - Test - Final spectral type = 'M8IIIE'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '8.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M8III:e'.
-sclsvrServer - alx - Test - Original spectral type = 'M8III:e'.
-sclsvrServer - alx - Test - Final spectral type = 'M8IIIE'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '8.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M8III:e).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star HD 212539 - parallax 1.29(1.49) is not valid; could not compute diameter
-sclsvrServer - alx - Test - ra = -0.409754 radians
-sclsvrServer - alx - Test - dec = -0.845412 radians
-sclsvrServer - alx - Test - gLat = -54.770 degrees
-sclsvrServer - alx - Test - gLon = 345.880 degrees
-sclsvrServer - sclsvr - Test - star HD 212539 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - alx - Test - Original spectral type = 'M7 III'.
-sclsvrServer - alx - Test - Final spectral type = 'M7III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M7 III'.
-sclsvrServer - alx - Test - Original spectral type = 'M7 III'.
-sclsvrServer - alx - Test - Final spectral type = 'M7III'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.000000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'III'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M7 III).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star HD 193026 - parallax 21.88(14.60) is not valid; could not compute diameter
-sclsvrServer - alx - Test - ra = -0.958893 radians
-sclsvrServer - alx - Test - dec = -0.884937 radians
-sclsvrServer - alx - Test - gLat = -34.460 degrees
-sclsvrServer - alx - Test - gLon = 348.260 degrees
-sclsvrServer - sclsvr - Test - star HD 193026 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - alx - Test - Original spectral type = 'M7/M8IIIe'.
-sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'M7.50IIIE'.
-sclsvrServer - alx - Test - Final spectral type = 'M7.50IIIE'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.500000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Spectral Type - Parsing SpType 'M7/M8IIIe'.
-sclsvrServer - alx - Test - Original spectral type = 'M7/M8IIIe'.
-sclsvrServer - alx - Test - Un-hesitate(2) spectral type = 'M7.50IIIE'.
-sclsvrServer - alx - Test - Final spectral type = 'M7.50IIIE'.
-sclsvrServer - alx - Test -  - Code                = 'M'.
-sclsvrServer - alx - Test -  - Sub-type Quantity   = '7.500000'.
-sclsvrServer - alx - Test -  - Luminosity Class    = 'IIIE'.
-sclsvrServer - alx - Test -  - Is Double           = 'NO'.
-sclsvrServer - alx - Test -  - Is Spectral Binary  = 'NO'.
-sclsvrServer - alx - Test -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M7/M8IIIe).
-sclsvrServer - sclsvr - Test - IR Fluxes - Skipping (no Teff available).
-sclsvrServer - sclsvr - Test - star HD 1115 - parallax 2.13(2.65) is not valid; could not compute diameter
-sclsvrServer - alx - Test - ra = 0.067069 radians
-sclsvrServer - alx - Test - dec = -0.559296 radians
-sclsvrServer - alx - Test - gLat = -80.750 degrees
-sclsvrServer - alx - Test - gLon = 358.680 degrees
-sclsvrServer - sclsvr - Test - star HD 1115 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test - Skipping (diameters are not OK).
-sclsvrServer - vobs - Test - vobsSTAR_LIST::Sort()
-sclsvrServer - sclsvr - Test - sclsvrCALIBRATOR_LIST::Complete() - exit
-sclsvrServer - vobs - Test - Star 'HD 213080' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 212539' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 213009' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 209688' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 218670' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 217902' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 220440' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 198048' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 196171' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 496' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 193026' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 2261' is farther than 0.000278 degrees of the reference star.
-sclsvrServer - vobs - Test - Star 'HD 1115' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - vobsVIRTUAL_OBSERVATORY::Search()
+sclsvrServer -   vobs - Test  - Consulting I/280 ...
+sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000]
+sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Vmag=0.00..4.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
+sclsvrServer -   vobs - Test  - ...number of stars return = 10
+sclsvrServer -   vobs - Test  - after COPY, star list size = 10
+sclsvrServer -   vobs - Test  - Consulting II/246/out ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+08+13.986-46+57+39.53&+22+29+16.175-43+29+44.03&+22+42+40.050-46+53+04.48&+22+48+33.298-51+19+00.73&+23+10+21.539-45+14+48.17&+21+53+55.728-37+21+53.50&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+12.202-43+40+47.39&+00+26+17.040-42+18+21.80&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - after COPY, star list size = 9
+sclsvrServer -   vobs - Test  - star 2MASS 22424003-4653044 has been removed by the filter 'K mag filter'
+sclsvrServer -   vobs - Test  - star 2MASS 22483329-5119006 has been removed by the filter 'K mag filter'
+sclsvrServer -   vobs - Test  - star 2MASS 21535573-3721535 has been removed by the filter 'K mag filter'
+sclsvrServer -   vobs - Test  - star 2MASS 00261219-4340475 has been removed by the filter 'K mag filter'
+sclsvrServer -   vobs - Test  - after FILTER, star list size = 5
+sclsvrServer -   vobs - Test  - Consulting J/A+A/393/183/catalog ...
+sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000]
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Kmag=-2.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK'
+sclsvrServer -   vobs - Test  - ...number of stars return = 5
+sclsvrServer -   vobs - Test  - after MERGE, star list size = 10
+sclsvrServer -   vobs - Test  - Consulting J/A+A/433/1155 ...
+sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000]
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&Ksmag=-2.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam'
+sclsvrServer -   vobs - Test  - ...number of stars return = 0
+sclsvrServer -   vobs - Test  - after MERGE, star list size = 10
+sclsvrServer -   vobs - Test  - Consulting II/225/catalog ...
+sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000]
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&x_F(IR)=M&F(IR)=-2.00..2.00&lambda=&lambda=2.20&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&-sort=_r'
+sclsvrServer -   vobs - Test  - ...number of stars return = 65
+sclsvrServer -   vobs - Test  - after MERGE, star list size = 62
+sclsvrServer -   vobs - Test  - Consulting II/7A/catalog ...
+sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000]
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=22:22:44.20&-c.dec=-45:56:52.6&K=-2.00..2.00&-out.max=1000&-c.geom=b&-c.bm=2914/1200&-c.u=arcsec&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-sort=_r'
+sclsvrServer -   vobs - Test  - ...number of stars return = 2
+sclsvrServer -   vobs - Test  - after MERGE, star list size = 64
+sclsvrServer -   vobs - Test  - Consulting I/280 ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.187-43+29+43.88&+23+10+21.526-45+14+48.09&+20+37+34.024-47+17+29.22&+00+09+24.672-45+44+50.62&+00+26+16.995-42+18+21.64&+20+37+34.032-47+17+29.41&+20+49+28.961-46+13+36.57&+22+06+06.885-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.5-43+44+58&+22+29+44.8-43+44+37&+22+26+05.0-48+26+20&+22+26+04.4-48+26+33&+22+29+16.4-43+29+41&+22+11+55.2-40+33+10&+22+43+29.5-41+25+15&+21+48+33.7-46+54+13&+22+43+22.7-40+06+15&+22+06+40.4-39+34+21&+23+10+14.5-40+35+42&+21+52+15.0-37+19+34&+23+22+21.4-48+03+32&+21+29+13.3-41+24+51&+23+24+06.9-45+05+00&+21+20+09.4-45+01+19&+21+19+57.3-45+01+17&+21+39+54.2-38+02+23&+21+39+53.6-37+59+15&+21+23+12.4-42+04+08&+21+23+46.0-40+42+24&+23+07+35.2-36+07+45&+21+08+54.0-44+34+49&+21+10+07.2-38+31+03&+23+56+25.5-49+48+18&+00+01+19.7-50+19+17&+20+42+05.5-50+17+15&+20+37+33.7-47+17+32&+00+09+24.0-45+44+40&+20+41+20.3-42+08+17&+20+20+17.8-50+42+20&+20+39+11.1-37+55+51&+20+20+14.4-50+42+12&+20+20+01.1-50+38+32&+20+38+54.2-37+55+25&+20+29+15.7-40+25+12&+00+26+16.1-42+18+23&+20+15+28.9-44+24+36&+20+15+28.1-44+24+53&+20+15+28.5-44+21+48&+20+21+51.1-40+45+24&+20+26+29.7-37+06+08&+00+28+26.1-39+54+25&+20+17+43.9-39+04+39&+20+00+40.2-49+36+43&+20+10+39.3-41+43+05&+20+07+41.9-42+32+21&+00+50+02.2-48+43+48&+20+23+17.0-35+00+19&+00+15+20.2-32+02+25&+00+15+21.8-32+02+45&+00+15+22.2-32+02+40&+20+37+34.0-47+17+29&+00+09+24.6-45+44+51&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 18
+sclsvrServer -   vobs - Test  - after COPY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting J/A+A/393/183/catalog ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 5
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting J/A+A/433/1155 ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting J/A+A/413/1037 ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/413/1037&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Jmag&-out=Ksmag&-out=Var&Var=%3C4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 6
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting II/246/out ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting II/7A/catalog ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_H&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting II/225/catalog ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-out.max=1000-c.r=1&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 40
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting I/196/main ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*VELOC_HC&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 12
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting V/50/catalog ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 10
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting V/36B/bsc4s ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting B/sb9/main ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 2
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting B/wds/wds ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 4
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Consulting II/297/irc ...
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&22+29+16.175-43+29+44.03&+23+10+21.539-45+14+48.17&+20+37+34.034-47+17+29.41&+00+09+24.641-45+44+50.73&+00+26+17.040-42+18+21.80&+20+49+28.962-46+13+36.58&+22+06+06.886-39+32+36.07&+23+04+39.627-53+57+53.66&+23+24+13.261-51+53+28.23&+22+29+45.435-43+44+57.19&+22+26+05.475-48+26+18.76&+20+20+14.281-50+42+11.46&+00+15+22.266-32+02+42.99&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 13
+sclsvrServer -   vobs - Test  - Number of stars found : 13
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Copy()
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - start
+sclsvrServer -    alx - Test  - Original spectral type = 'G6/G8III'.
+sclsvrServer -    alx - Test  - Un-hesitate(2) spectral type = 'G7.00III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'G7.00III'.
+sclsvrServer -    alx - Test  -  - Code                = 'G'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'G6/G8III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'G6/G8III'.
+sclsvrServer -    alx - Test  - Un-hesitate(2) spectral type = 'G7.00III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'G7.00III'.
+sclsvrServer -    alx - Test  -  - Code                = 'G'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 10.847371
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 6.367955
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.963475
+sclsvrServer - sclsvr - Test  - star HD 213009 - parallax 10.13(0.85) is OK...
+sclsvrServer -    alx - Test  - ra = -0.395886 radians
+sclsvrServer -    alx - Test  - dec = -0.759141 radians
+sclsvrServer -    alx - Test  - gLat = -57.060 degrees
+sclsvrServer -    alx - Test  - gLon = 353.770 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 353.773
+sclsvrServer -    alx - Test  - Distance                    = 0.099
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 4.993
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 3.959
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 3.240
+sclsvrServer -    alx - Test  - Corrected magnitude[3] = 2.630
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.193
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 1.728
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.679
+sclsvrServer -    alx - Test  - Original spectral type = 'G6/G8III'.
+sclsvrServer -    alx - Test  - Un-hesitate(2) spectral type = 'G7.00III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'G7.00III'.
+sclsvrServer -    alx - Test  -  - Code                = 'G'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.034e+00 / B-V 9.100e-01; delta > 0.1
+sclsvrServer -    alx - Test  - B = 4.993
+sclsvrServer -    alx - Test  - V = 3.959
+sclsvrServer -    alx - Test  - R = 3.240 (2)
+sclsvrServer -    alx - Test  - I = 2.630 (2)
+sclsvrServer -    alx - Test  - J = 2.193 (2)
+sclsvrServer -    alx - Test  - H = 1.728 (2)
+sclsvrServer -    alx - Test  - K = 1.679 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 4.993
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 3.959
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 3.240
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 2.630
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.193
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 1.728
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.679
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Test  - Diameter BV = 2.465(0.1972), VR = 2.244(0.2177), VK = 2.301(0.1587)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.301(0.159) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.702133
+sclsvrServer -    alx - Test  - dV  = 0.036549
+sclsvrServer -    alx - Test  - V2  = 0.492990
+sclsvrServer -    alx - Test  - dV2 = 0.051324
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='2.300655' and Teff='4900.000000',LogG='2.278000'...
+sclsvrServer -    alx - Test  - UD_U = 2.081916
+sclsvrServer -    alx - Test  - UD_B = 2.103005
+sclsvrServer -    alx - Test  - UD_V = 2.137663
+sclsvrServer -    alx - Test  - UD_R = 2.168593
+sclsvrServer -    alx - Test  - UD_I = 2.192266
+sclsvrServer -    alx - Test  - UD_J = 2.222118
+sclsvrServer -    alx - Test  - UD_H = 2.238654
+sclsvrServer -    alx - Test  - UD_K = 2.248172
+sclsvrServer -    alx - Test  - UD_L = 2.270037
+sclsvrServer -    alx - Test  - UD_N = 2.286380
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III SB'.
+sclsvrServer -    alx - Test  - Un-SB spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'YES'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'K0III SB'.
+sclsvrServer - sclsvr - Test  - Spectral Binarity - 'SB' found in SpType.
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III SB'.
+sclsvrServer -    alx - Test  - Un-SB spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'YES'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star HD 218670 - parallax 17.29(0.92) is OK...
+sclsvrServer -    alx - Test  - ra = -0.216600 radians
+sclsvrServer -    alx - Test  - dec = -0.789704 radians
+sclsvrServer -    alx - Test  - gLat = -62.930 degrees
+sclsvrServer -    alx - Test  - gLon = 344.270 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 344.266
+sclsvrServer -    alx - Test  - Distance                    = 0.058
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 4.882
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 3.878
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 3.150
+sclsvrServer -    alx - Test  - Corrected magnitude[3] = 2.590
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.196
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 1.731
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.627
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III SB'.
+sclsvrServer -    alx - Test  - Un-SB spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'YES'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 4.882
+sclsvrServer -    alx - Test  - V = 3.878
+sclsvrServer -    alx - Test  - R = 3.150 (2)
+sclsvrServer -    alx - Test  - I = 2.590 (2)
+sclsvrServer -    alx - Test  - J = 2.196 (2)
+sclsvrServer -    alx - Test  - H = 1.731 (2)
+sclsvrServer -    alx - Test  - K = 1.627 (2)
+sclsvrServer -    alx - Test  - L = 1.527 (2)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 4.882
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 3.878
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 3.150
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 2.590
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.196
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 1.731
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.627
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 1.527
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Test  - Diameter BV = 2.445(0.1956), VR = 2.370(0.2299), VK = 2.350(0.1622)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.350(0.162) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.690671
+sclsvrServer -    alx - Test  - dV  = 0.037749
+sclsvrServer -    alx - Test  - V2  = 0.477026
+sclsvrServer -    alx - Test  - dV2 = 0.052145
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='2.350160' and Teff='4660.000000',LogG='2.078000'...
+sclsvrServer -    alx - Test  - UD_U = 2.117823
+sclsvrServer -    alx - Test  - UD_B = 2.139606
+sclsvrServer -    alx - Test  - UD_V = 2.174098
+sclsvrServer -    alx - Test  - UD_R = 2.207541
+sclsvrServer -    alx - Test  - UD_I = 2.233656
+sclsvrServer -    alx - Test  - UD_J = 2.265245
+sclsvrServer -    alx - Test  - UD_H = 2.282657
+sclsvrServer -    alx - Test  - UD_K = 2.293753
+sclsvrServer -    alx - Test  - UD_L = 2.317254
+sclsvrServer -    alx - Test  - UD_N = 2.334739
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'K0III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 24.804934
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 14.595349
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.062939
+sclsvrServer - sclsvr - Test  - star HD 196171 - parallax 32.06(0.75) is OK...
+sclsvrServer -    alx - Test  - ra = -0.883280 radians
+sclsvrServer -    alx - Test  - dec = -0.825392 radians
+sclsvrServer -    alx - Test  - gLat = -37.210 degrees
+sclsvrServer -    alx - Test  - gLon = 352.570 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 352.567
+sclsvrServer -    alx - Test  - Distance                    = 0.031
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.017
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 4.086
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 3.087
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 1.455
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 0.947
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 0.848
+sclsvrServer -    alx - Test  - Corrected magnitude[7] = 0.779
+sclsvrServer -    alx - Test  - Corrected magnitude[8] = 0.869
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 4.086
+sclsvrServer -    alx - Test  - V = 3.087
+sclsvrServer -    alx - Test  - R = 2.297 (2)
+sclsvrServer -    alx - Test  - I = 1.797 (2)
+sclsvrServer -    alx - Test  - J = 1.455 (2)
+sclsvrServer -    alx - Test  - H = 0.947 (2)
+sclsvrServer -    alx - Test  - K = 0.848 (2)
+sclsvrServer -    alx - Test  - L = 0.779 (2)
+sclsvrServer -    alx - Test  - M = 0.869 (2)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 4.109
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 3.104
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 2.310
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 1.806
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 1.503
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 0.950
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 0.850
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.780
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.870
+sclsvrServer -    alx - Test  - Diameter BV = 3.496(0.2797), VR = 3.841(0.3725), VK = 3.362(0.2320)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 3.200(0.034) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.480415
+sclsvrServer -    alx - Test  - dV  = 0.008677
+sclsvrServer -    alx - Test  - V2  = 0.230798
+sclsvrServer -    alx - Test  - dV2 = 0.008338
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='3.361596' and Teff='4660.000000',LogG='2.078000'...
+sclsvrServer -    alx - Test  - UD_U = 3.029267
+sclsvrServer -    alx - Test  - UD_B = 3.060425
+sclsvrServer -    alx - Test  - UD_V = 3.109762
+sclsvrServer -    alx - Test  - UD_R = 3.157596
+sclsvrServer -    alx - Test  - UD_I = 3.194951
+sclsvrServer -    alx - Test  - UD_J = 3.240136
+sclsvrServer -    alx - Test  - UD_H = 3.265040
+sclsvrServer -    alx - Test  - UD_K = 3.280912
+sclsvrServer -    alx - Test  - UD_L = 3.314527
+sclsvrServer -    alx - Test  - UD_N = 3.339537
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'K0III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star HD 496 - parallax 23.29(0.98) is OK...
+sclsvrServer -    alx - Test  - ra = 0.041062 radians
+sclsvrServer -    alx - Test  - dec = -0.798443 radians
+sclsvrServer -    alx - Test  - gLat = -69.600 degrees
+sclsvrServer -    alx - Test  - gLon = 324.340 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 324.337
+sclsvrServer -    alx - Test  - Distance                    = 0.043
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 4.899
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 3.875
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 3.130
+sclsvrServer -    alx - Test  - Corrected magnitude[3] = 2.610
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.190
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 1.756
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.635
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 4.899
+sclsvrServer -    alx - Test  - V = 3.875
+sclsvrServer -    alx - Test  - R = 3.130 (2)
+sclsvrServer -    alx - Test  - I = 2.610 (2)
+sclsvrServer -    alx - Test  - J = 2.190 (2)
+sclsvrServer -    alx - Test  - H = 1.756 (2)
+sclsvrServer -    alx - Test  - K = 1.635 (2)
+sclsvrServer -    alx - Test  - L = 1.535 (2)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 4.899
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 3.875
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 3.130
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 2.610
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.190
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 1.756
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.635
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 1.535
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Test  - Diameter BV = 2.523(0.2019), VR = 2.453(0.2379), VK = 2.340(0.1615)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.340(0.161) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.693045
+sclsvrServer -    alx - Test  - dV  = 0.037502
+sclsvrServer -    alx - Test  - V2  = 0.480311
+sclsvrServer -    alx - Test  - dV2 = 0.051981
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='2.339952' and Teff='4660.000000',LogG='2.078000'...
+sclsvrServer -    alx - Test  - UD_U = 2.108624
+sclsvrServer -    alx - Test  - UD_B = 2.130312
+sclsvrServer -    alx - Test  - UD_V = 2.164655
+sclsvrServer -    alx - Test  - UD_R = 2.197952
+sclsvrServer -    alx - Test  - UD_I = 2.223954
+sclsvrServer -    alx - Test  - UD_J = 2.255406
+sclsvrServer -    alx - Test  - UD_H = 2.272742
+sclsvrServer -    alx - Test  - UD_K = 2.283790
+sclsvrServer -    alx - Test  - UD_L = 2.307189
+sclsvrServer -    alx - Test  - UD_N = 2.324598
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III...'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III...'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III...'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'K0III...'.
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III...'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III...'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III...'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star HD 2261 - parallax 42.22(0.76) is OK...
+sclsvrServer -    alx - Test  - ra = 0.114686 radians
+sclsvrServer -    alx - Test  - dec = -0.738380 radians
+sclsvrServer -    alx - Test  - gLat = -73.980 degrees
+sclsvrServer -    alx - Test  - gLon = 320.000 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 320.001
+sclsvrServer -    alx - Test  - Distance                    = 0.024
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 3.486
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 2.391
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 1.590
+sclsvrServer -    alx - Test  - Corrected magnitude[3] = 1.000
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 0.579
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = -0.089
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = -0.162
+sclsvrServer -    alx - Test  - Original spectral type = 'K0III...'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K0III...'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III...'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 3.486
+sclsvrServer -    alx - Test  - V = 2.391
+sclsvrServer -    alx - Test  - R = 1.590 (2)
+sclsvrServer -    alx - Test  - I = 1.000 (2)
+sclsvrServer -    alx - Test  - J = 0.579 (2)
+sclsvrServer -    alx - Test  - H = -0.089 (2)
+sclsvrServer -    alx - Test  - K = -0.162 (2)
+sclsvrServer -    alx - Test  - L = -0.262 (2)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 3.486
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 2.391
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 1.590
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 1.000
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 0.579
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = -0.089
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = -0.162
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = -0.262
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Test  - Diameter BV = 5.571(0.4456), VR = 5.402(0.5239), VK = 5.502(0.3796)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 5.502(0.380) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.014390
+sclsvrServer -    alx - Test  - dV  = 0.053458
+sclsvrServer -    alx - Test  - V2  = 0.000207
+sclsvrServer -    alx - Test  - dV2 = 0.001539
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='5.501866' and Teff='4660.000000',LogG='2.078000'...
+sclsvrServer -    alx - Test  - UD_U = 4.957950
+sclsvrServer -    alx - Test  - UD_B = 5.008945
+sclsvrServer -    alx - Test  - UD_V = 5.089694
+sclsvrServer -    alx - Test  - UD_R = 5.167984
+sclsvrServer -    alx - Test  - UD_I = 5.229121
+sclsvrServer -    alx - Test  - UD_J = 5.303075
+sclsvrServer -    alx - Test  - UD_H = 5.343836
+sclsvrServer -    alx - Test  - UD_K = 5.369812
+sclsvrServer -    alx - Test  - UD_L = 5.424830
+sclsvrServer -    alx - Test  - UD_N = 5.465763
+sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'K5III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 16.350265
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 9.689625
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.507708
+sclsvrServer - sclsvr - Test  - star HD 198048 - parallax 8.17(0.81) is OK...
+sclsvrServer -    alx - Test  - ra = -0.831289 radians
+sclsvrServer -    alx - Test  - dec = -0.806810 radians
+sclsvrServer -    alx - Test  - gLat = -39.240 degrees
+sclsvrServer -    alx - Test  - gLon = 353.950 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 353.948
+sclsvrServer -    alx - Test  - Distance                    = 0.122
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.047
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 6.394
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 4.842
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.267
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 1.452
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.285
+sclsvrServer -    alx - Test  - Corrected magnitude[7] = 1.167
+sclsvrServer -    alx - Test  - Corrected magnitude[8] = 1.368
+sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 6.394
+sclsvrServer -    alx - Test  - V = 4.842
+sclsvrServer -    alx - Test  - R = 3.702 (2)
+sclsvrServer -    alx - Test  - I = 2.812 (2)
+sclsvrServer -    alx - Test  - J = 2.267 (2)
+sclsvrServer -    alx - Test  - H = 1.452 (2)
+sclsvrServer -    alx - Test  - K = 1.285 (2)
+sclsvrServer -    alx - Test  - L = 1.167 (2)
+sclsvrServer -    alx - Test  - M = 1.368 (2)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 6.456
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 4.889
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 3.737
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 2.836
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.396
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 1.460
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.290
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 1.170
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 1.370
+sclsvrServer -    alx - Test  - Diameter BV = 3.769(0.3015), VR = 3.142(0.3048), VK = 3.105(0.2143)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.970(0.035) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.538938
+sclsvrServer -    alx - Test  - dV  = 0.008861
+sclsvrServer -    alx - Test  - V2  = 0.290454
+sclsvrServer -    alx - Test  - dV2 = 0.009552
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='3.105269' and Teff='4050.000000',LogG='1.678000'...
+sclsvrServer -    alx - Test  - UD_U = 2.806150
+sclsvrServer -    alx - Test  - UD_B = 2.803707
+sclsvrServer -    alx - Test  - UD_V = 2.835325
+sclsvrServer -    alx - Test  - UD_R = 2.880837
+sclsvrServer -    alx - Test  - UD_I = 2.926661
+sclsvrServer -    alx - Test  - UD_J = 2.972197
+sclsvrServer -    alx - Test  - UD_H = 2.996330
+sclsvrServer -    alx - Test  - UD_K = 3.016632
+sclsvrServer -    alx - Test  - UD_L = 3.054253
+sclsvrServer -    alx - Test  - UD_N = 3.081315
+sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'M0III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 14.170353
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 8.443155
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.657213
+sclsvrServer - sclsvr - Test  - star HD 209688 - parallax 13.14(0.76) is OK...
+sclsvrServer -    alx - Test  - ra = -0.496918 radians
+sclsvrServer -    alx - Test  - dec = -0.690162 radians
+sclsvrServer -    alx - Test  - gLat = -53.670 degrees
+sclsvrServer -    alx - Test  - gLon = 2.220 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 2.215
+sclsvrServer -    alx - Test  - Distance                    = 0.076
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 5.888
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 4.465
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 3.460
+sclsvrServer -    alx - Test  - Corrected magnitude[3] = 2.680
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.270
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 1.580
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.440
+sclsvrServer -    alx - Test  - Corrected magnitude[7] = 1.340
+sclsvrServer -    alx - Test  - Corrected magnitude[8] = 1.500
+sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.423e+00 / B-V 1.560e+00; delta > 0.1
+sclsvrServer -    alx - Test  - B = 5.888
+sclsvrServer -    alx - Test  - V = 4.465
+sclsvrServer -    alx - Test  - R = 3.460 (2)
+sclsvrServer -    alx - Test  - I = 2.680 (2)
+sclsvrServer -    alx - Test  - J = 2.270 (2)
+sclsvrServer -    alx - Test  - H = 1.580 (2)
+sclsvrServer -    alx - Test  - K = 1.440 (2)
+sclsvrServer -    alx - Test  - L = 1.340 (2)
+sclsvrServer -    alx - Test  - M = 1.500 (2)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 5.888
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 4.465
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 3.460
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 2.680
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.270
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 1.580
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.440
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 1.340
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 1.500
+sclsvrServer -    alx - Test  - Diameter BV = 3.626(0.2901), VR = 2.990(0.2900), VK = 2.744(0.1893)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.640(0.030) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.621313
+sclsvrServer -    alx - Test  - dV  = 0.007351
+sclsvrServer -    alx - Test  - V2  = 0.386030
+sclsvrServer -    alx - Test  - dV2 = 0.009134
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='2.743936' and Teff='3690.000000',LogG='1.278000'...
+sclsvrServer -    alx - Test  - UD_U = 2.516476
+sclsvrServer -    alx - Test  - UD_B = 2.486026
+sclsvrServer -    alx - Test  - UD_V = 2.503390
+sclsvrServer -    alx - Test  - UD_R = 2.532468
+sclsvrServer -    alx - Test  - UD_I = 2.576767
+sclsvrServer -    alx - Test  - UD_J = 2.626068
+sclsvrServer -    alx - Test  - UD_H = 2.642681
+sclsvrServer -    alx - Test  - UD_K = 2.662409
+sclsvrServer -    alx - Test  - UD_L = 2.697329
+sclsvrServer -    alx - Test  - UD_N = 2.722570
+sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'K5III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - star HD 217902 - parallax 8.27(0.68) is OK...
+sclsvrServer -    alx - Test  - ra = -0.241464 radians
+sclsvrServer -    alx - Test  - dec = -0.941865 radians
+sclsvrServer -    alx - Test  - gLat = -56.770 degrees
+sclsvrServer -    alx - Test  - gLon = 331.770 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 331.766
+sclsvrServer -    alx - Test  - Distance                    = 0.121
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 6.879
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 5.373
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.810
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 2.010
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.840
+sclsvrServer -    alx - Test  - Corrected magnitude[7] = 1.720
+sclsvrServer -    alx - Test  - Corrected magnitude[8] = 1.920
+sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
+sclsvrServer -    alx - Test  -  - Code                = 'K'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '5.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 6.879
+sclsvrServer -    alx - Test  - V = 5.373
+sclsvrServer -    alx - Test  - R = 4.233 (2)
+sclsvrServer -    alx - Test  - I = 3.343 (2)
+sclsvrServer -    alx - Test  - J = 2.810 (2)
+sclsvrServer -    alx - Test  - H = 2.010 (2)
+sclsvrServer -    alx - Test  - K = 1.840 (2)
+sclsvrServer -    alx - Test  - L = 1.720 (2)
+sclsvrServer -    alx - Test  - M = 1.920 (2)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 6.879
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 5.373
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 4.233
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 3.343
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.810
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 2.010
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.840
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 1.720
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 1.920
+sclsvrServer -    alx - Test  - Diameter BV = 2.736(0.2189), VR = 2.461(0.2387), VK = 2.398(0.1655)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.300(0.027) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.702283
+sclsvrServer -    alx - Test  - dV  = 0.006215
+sclsvrServer -    alx - Test  - V2  = 0.493202
+sclsvrServer -    alx - Test  - dV2 = 0.008730
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='2.398357' and Teff='4050.000000',LogG='1.678000'...
+sclsvrServer -    alx - Test  - UD_U = 2.167332
+sclsvrServer -    alx - Test  - UD_B = 2.165445
+sclsvrServer -    alx - Test  - UD_V = 2.189866
+sclsvrServer -    alx - Test  - UD_R = 2.225016
+sclsvrServer -    alx - Test  - UD_I = 2.260409
+sclsvrServer -    alx - Test  - UD_J = 2.295578
+sclsvrServer -    alx - Test  - UD_H = 2.314218
+sclsvrServer -    alx - Test  - UD_K = 2.329898
+sclsvrServer -    alx - Test  - UD_L = 2.358954
+sclsvrServer -    alx - Test  - UD_N = 2.379856
+sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'M0III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 9.626925
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 5.736033
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 2.076946
+sclsvrServer - sclsvr - Test  - star HD 220440 - parallax 6.01(0.74) is OK...
+sclsvrServer -    alx - Test  - ra = -0.156115 radians
+sclsvrServer -    alx - Test  - dec = -0.905672 radians
+sclsvrServer -    alx - Test  - gLat = -60.320 degrees
+sclsvrServer -    alx - Test  - gLon = 330.500 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 330.504
+sclsvrServer -    alx - Test  - Distance                    = 0.166
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 7.322
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 5.742
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 2.910
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = 2.070
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = 1.880
+sclsvrServer -    alx - Test  - Corrected magnitude[7] = 1.760
+sclsvrServer -    alx - Test  - Corrected magnitude[8] = 1.970
+sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '0.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - B = 7.322
+sclsvrServer -    alx - Test  - V = 5.742
+sclsvrServer -    alx - Test  - R = 4.522 (2)
+sclsvrServer -    alx - Test  - I = 3.542 (2)
+sclsvrServer -    alx - Test  - J = 2.910 (2)
+sclsvrServer -    alx - Test  - H = 2.070 (2)
+sclsvrServer -    alx - Test  - K = 1.880 (2)
+sclsvrServer -    alx - Test  - L = 1.760 (2)
+sclsvrServer -    alx - Test  - M = 1.970 (2)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 7.322
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 5.742
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 4.522
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 3.542
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 2.910
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = 2.070
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = 1.880
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 1.760
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 1.970
+sclsvrServer -    alx - Test  - Diameter BV = 2.609(0.2087), VR = 2.358(0.2288), VK = 2.437(0.1681)
+sclsvrServer -    alx - Test  - Confidence index = 2 - (0=LOW, 1=MEDIUM and 2=HIGH)
+sclsvrServer -    alx - Test  - Diam= 2.310(0.026) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V   = 0.699979
+sclsvrServer -    alx - Test  - dV  = 0.005999
+sclsvrServer -    alx - Test  - V2  = 0.489970
+sclsvrServer -    alx - Test  - dV2 = 0.008398
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='2.436866' and Teff='3690.000000',LogG='1.278000'...
+sclsvrServer -    alx - Test  - UD_U = 2.234860
+sclsvrServer -    alx - Test  - UD_B = 2.207818
+sclsvrServer -    alx - Test  - UD_V = 2.223239
+sclsvrServer -    alx - Test  - UD_R = 2.249063
+sclsvrServer -    alx - Test  - UD_I = 2.288404
+sclsvrServer -    alx - Test  - UD_J = 2.332189
+sclsvrServer -    alx - Test  - UD_H = 2.346942
+sclsvrServer -    alx - Test  - UD_K = 2.364463
+sclsvrServer -    alx - Test  - UD_L = 2.395474
+sclsvrServer -    alx - Test  - UD_N = 2.417891
+sclsvrServer -    alx - Test  - Original spectral type = 'M4.5IIIa'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M4.5IIIA'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '4.500000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIA'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'M4.5IIIa'.
+sclsvrServer -    alx - Test  - Original spectral type = 'M4.5IIIa'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M4.5IIIA'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '4.500000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIA'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 126.862978
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 75.999987
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = -0.728559
+sclsvrServer - sclsvr - Test  - star HD 213080 - parallax 8.77(1.11) is OK...
+sclsvrServer -    alx - Test  - ra = -0.393758 radians
+sclsvrServer -    alx - Test  - dec = -0.763568 radians
+sclsvrServer -    alx - Test  - gLat = -57.060 degrees
+sclsvrServer -    alx - Test  - gLon = 353.280 degrees
+sclsvrServer -    alx - Test  - Galactic longitude          = 353.279
+sclsvrServer -    alx - Test  - Distance                    = 0.114
+sclsvrServer -    alx - Test  - Extinction coefficient in V = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[0] = 5.725
+sclsvrServer -    alx - Test  - Corrected magnitude[1] = 4.151
+sclsvrServer -    alx - Test  - Corrected magnitude[2] = 2.380
+sclsvrServer -    alx - Test  - Corrected magnitude[3] = 0.790
+sclsvrServer -    alx - Test  - Corrected magnitude[4] = 0.242
+sclsvrServer -    alx - Test  - Corrected magnitude[5] = -0.692
+sclsvrServer -    alx - Test  - Corrected magnitude[6] = -0.916
+sclsvrServer -    alx - Test  - Original spectral type = 'M4.5IIIa'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M4.5IIIA'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '4.500000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIA'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Inferior line = 43
+sclsvrServer -    alx - Test  - Superior line = 44
+sclsvrServer -    alx - Test  - mgB-mgV = 1.574 / B-V [99.990..99.990]; delta > 0.1
+sclsvrServer -    alx - Test  - B = 5.725
+sclsvrServer -    alx - Test  - V = 4.151
+sclsvrServer -    alx - Test  - R = 2.380 (2)
+sclsvrServer -    alx - Test  - I = 0.790 (2)
+sclsvrServer -    alx - Test  - J = 0.242 (2)
+sclsvrServer -    alx - Test  - H = -0.692 (2)
+sclsvrServer -    alx - Test  - K = -0.916 (2)
+sclsvrServer -    alx - Test  - L = 0.000 (-1)
+sclsvrServer -    alx - Test  - M = 0.000 (-1)
+sclsvrServer -    alx - Test  - Corrected magnitude[B] = 5.725
+sclsvrServer -    alx - Test  - Corrected magnitude[V] = 4.151
+sclsvrServer -    alx - Test  - Corrected magnitude[R] = 2.380
+sclsvrServer -    alx - Test  - Corrected magnitude[I] = 0.790
+sclsvrServer -    alx - Test  - Corrected magnitude[J] = 0.242
+sclsvrServer -    alx - Test  - Corrected magnitude[H] = -0.692
+sclsvrServer -    alx - Test  - Corrected magnitude[K] = -0.916
+sclsvrServer -    alx - Test  - Corrected magnitude[L] = 0.000
+sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
+sclsvrServer -    alx - Test  - Diameter BV = 5.374(0.4300), VR = 11.268(1.0930), VK = 10.037(0.6925)
+sclsvrServer -    alx - Test  - Computed diameters are not coherent between them; they are not kept
+sclsvrServer - sclsvr - Test  - star HD 213080 - error on diameter too high; computed diameters are not coherent
+sclsvrServer - sclsvr - Test  - star HD 213080 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer -    alx - Test  - Original spectral type = 'M8III:e'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M8IIIE'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '8.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIE'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'M8III:e'.
+sclsvrServer -    alx - Test  - Original spectral type = 'M8III:e'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M8IIIE'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '8.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIE'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M8III:e).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star HD 212539 - parallax 1.29(1.49) is not valid; could not compute diameter
+sclsvrServer -    alx - Test  - ra = -0.409754 radians
+sclsvrServer -    alx - Test  - dec = -0.845412 radians
+sclsvrServer -    alx - Test  - gLat = -54.770 degrees
+sclsvrServer -    alx - Test  - gLon = 345.880 degrees
+sclsvrServer - sclsvr - Test  - star HD 212539 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer -    alx - Test  - Original spectral type = 'M7 III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M7III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'M7 III'.
+sclsvrServer -    alx - Test  - Original spectral type = 'M7 III'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M7III'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.000000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M7 III).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star HD 193026 - parallax 21.88(14.60) is not valid; could not compute diameter
+sclsvrServer -    alx - Test  - ra = -0.958893 radians
+sclsvrServer -    alx - Test  - dec = -0.884937 radians
+sclsvrServer -    alx - Test  - gLat = -34.460 degrees
+sclsvrServer -    alx - Test  - gLon = 348.260 degrees
+sclsvrServer - sclsvr - Test  - star HD 193026 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer -    alx - Test  - Original spectral type = 'M7/M8IIIe'.
+sclsvrServer -    alx - Test  - Un-hesitate(2) spectral type = 'M7.50IIIE'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M7.50IIIE'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.500000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIE'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Spectral Type - Parsing SpType 'M7/M8IIIe'.
+sclsvrServer -    alx - Test  - Original spectral type = 'M7/M8IIIe'.
+sclsvrServer -    alx - Test  - Un-hesitate(2) spectral type = 'M7.50IIIE'.
+sclsvrServer -    alx - Test  - Final spectral type = 'M7.50IIIE'.
+sclsvrServer -    alx - Test  -  - Code                = 'M'.
+sclsvrServer -    alx - Test  -  - Sub-type Quantity   = '7.500000'.
+sclsvrServer -    alx - Test  -  - Luminosity Class    = 'IIIE'.
+sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
+sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
+sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M7/M8IIIe).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - star HD 1115 - parallax 2.13(2.65) is not valid; could not compute diameter
+sclsvrServer -    alx - Test  - ra = 0.067069 radians
+sclsvrServer -    alx - Test  - dec = -0.559296 radians
+sclsvrServer -    alx - Test  - gLat = -80.750 degrees
+sclsvrServer -    alx - Test  - gLon = 358.680 degrees
+sclsvrServer - sclsvr - Test  - star HD 1115 - unknown diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Sort()
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - exit
+sclsvrServer -   vobs - Test  - Star 'HD 213080' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 212539' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 213009' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 209688' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 218670' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 217902' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 220440' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 198048' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 196171' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 496' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 193026' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 2261' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - Star 'HD 1115' is farther than 0.000278 degrees of the reference star.
 VOTable:
 <?xml version="1.0"?>
 
