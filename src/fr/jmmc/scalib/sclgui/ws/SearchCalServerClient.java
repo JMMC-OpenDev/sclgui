@@ -125,13 +125,15 @@ public final class SearchCalServerClient {
 
       // Decipher which proxy script to use according to app version status (release, beta or alpha)
       String userName = "sclws"; // official release homedir      
-      if (App.isBetaVersion() || App.isAlphaVersion()) {
+      if (App.isBetaVersion()) {
+        userName = "betaswmgr"; // beta release homedir
+      } else if (App.isAlphaVersion()) {
         userName = "lafrasse"; // dev release homedir
       }
 
       // TODO : externalize SearchCal server URL:
       final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclwsProxy.php";
-
+      
       if (_logger.isLoggable(Level.INFO)) {
         _logger.info("SearchCal server URL: " + proxyScriptURL);
       }
