@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationData link="http://www.jmmc.fr/searchcal">
-  <program name="SearchCal" version="4.3.2"/>
-  <compilation date="01/06/2011" compiler="JDK 1.5.0_16"/>
-  <text><![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]>
+
+  <program name="SearchCal" version="4.3.3b1"/>
+  
+  <compilation date="21/07/2011" compiler="JDK 1.5.0_16"/>
+  
+  <text>
+    <![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]>
   </text>
+  
   <dependences>
     <package name="AppleJavaExtensions" description="toolkit to provide better user interface on Mac, provided by Apple, Inc." link="http://developer.apple.com/samplecode/AppleJavaExtensions/index.html"/>
     <package name="Axis" description="SOAP protocol stack, provided by The Apache Software Foundation." link="http://ws.apache.org/axis/java/"/>
@@ -12,6 +17,7 @@
     <package name="SAVOT" description="SearchCal uses source code created at the Centre de Donnees astronomiques de Strasbourg, France." link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"/>
     <package name="kXML" description="opensource XML pull parser and writer" link="http://kxml.sourceforge.net/"/>
   </dependences>
+
   <menubar>
     <menu label="File">
       <menu label="Open..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_openFileAction" accelerator="O"/>
@@ -49,7 +55,14 @@
       <menu label="Send All Calibrators to..." classpath="fr.jmmc.scalib.sclgui.VirtualObservatory" action="_shareCalibratorsThroughSAMPAction"/>
     </menu>
   </menubar>
+  
   <releasenotes>
+    <release version="4.3.3">
+      <prerelease version="4.3.3b1">
+        <change>Updated SearchCal server (beta): fixed concurrency issues, memory leaks and optimizations</change>
+        <change>Updated polynomial coefficients (FAINT) to compute uniform diameters</change>
+      </prerelease>
+    </release>
     <release version="4.3.2">
       <prerelease version="4.3.2b1">
         <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/160">Fixed memory leaks causing heap fill-up with big queries.</change>
