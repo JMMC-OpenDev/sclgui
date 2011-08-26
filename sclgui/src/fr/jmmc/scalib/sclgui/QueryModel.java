@@ -13,8 +13,8 @@ import cds.savot.model.TRSet;
 import cds.savot.pull.SavotPullEngine;
 import cds.savot.pull.SavotPullParser;
 
-import fr.jmmc.mcs.astro.ALX;
-import fr.jmmc.mcs.astro.star.Star;
+import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.star.Star;
 import fr.jmmc.mcs.util.PreferencesException;
 
 import java.io.StringBufferInputStream;

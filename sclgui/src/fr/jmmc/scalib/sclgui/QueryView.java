@@ -3,8 +3,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.star.Star;
-import fr.jmmc.mcs.astro.star.StarResolverWidget;
+import fr.jmmc.jmal.star.Star;
+import fr.jmmc.jmal.star.StarResolverWidget;
 import fr.jmmc.mcs.gui.MessagePane;
 import fr.jmmc.mcs.gui.StatusBar;
 import fr.jmmc.mcs.util.MCSAction;

@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.Catalog;
+import fr.jmmc.jmal.Catalog;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.util.*;
 

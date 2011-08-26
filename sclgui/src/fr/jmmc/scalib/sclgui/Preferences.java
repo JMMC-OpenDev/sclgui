@@ -3,7 +3,9 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.*;
+import fr.jmmc.jmal.Catalog;
+import fr.jmmc.jmal.ALX;
+
 import fr.jmmc.mcs.util.*;
 
 import java.awt.Color;

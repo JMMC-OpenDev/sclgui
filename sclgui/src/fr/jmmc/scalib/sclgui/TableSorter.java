@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.Catalog;
+import fr.jmmc.jmal.Catalog;
 import fr.jmmc.mcs.gui.*;
 import fr.jmmc.mcs.util.*;
 
@@ -612,38 +612,35 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
         // Get the detailled/simple view flag state
         if (_preferences.getPreferenceAsBoolean(
-                "view.result.verbosity.synthetic")) {
+                "view.result.verbosity.synthetic") == true) {
             selectedView = "view.columns.simple." + scenario + "." + magnitude;
         } else if (_preferences.getPreferenceAsBoolean(
-                "view.result.verbosity.detailled")) {
+                "view.result.verbosity.detailled") == true) {
             selectedView = "view.columns.detailled." + scenario + "."
                     + magnitude;
         } else if (_preferences.getPreferenceAsBoolean(
-                "view.result.verbosity.full")) {
+                "view.result.verbosity.full") == true) {
             selectedView = null;
         }
 
         // Compute the corresponding preference path
         if (_logger.isLoggable(Level.FINE)) {
             _logger.fine("Selected view = '"
-                    + ((selectedView != null) ? selectedView : "RAW") + "'.");
+                + ((selectedView != null) ? selectedView : "RAW") + "'.");
+        }
+        
+          
+        final String prefColumns = _preferences.getPreference(selectedView);
+
+        if (prefColumns == null) {
+          _logger.severe("No preference found for ["+ selectedView + "]");
         }
 
-        final String prefColumns;
-        if (selectedView == null) {
-            prefColumns = null;
-        } else {
-            prefColumns = _preferences.getPreference(selectedView);
-
-            if (prefColumns == null) {
-                _logger.severe("No preference found for [" + selectedView + "]");
-            }
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("Columns (preferences) = " + prefColumns);
         }
 
         if (prefColumns != null) {
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine("Columns (preferences) = " + prefColumns);
-            }
             // Get the selected ordered column name table
             String[] columnStrings = prefColumns.trim().split(" ");
             int nbOfColumns = columnStrings.length;
@@ -667,7 +664,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     } else {
                         if (_logger.isLoggable(Level.FINE)) {
                             _logger.fine("_viewIndex[" + i + "] = '" + columnId
-                                    + "' -> '" + columnName + "'.");
+                                + "' -> '" + columnName + "'.");
                         }
                     }
                 }
@@ -1087,11 +1084,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // Put the corresponding row font in bold
                 Font f = getFont();
                 setFont(f.deriveFont(f.getStyle() | Font.BOLD));
-
+                
                 if (_logger.isLoggable(Level.FINE)) {
                     _logger.fine("Put row['" + row
-                            + "'] in BOLD : (rowDistance = '" + rowDistance
-                            + "') < (prefDistance = '" + _prefDistance + "').");
+                        + "'] in BOLD : (rowDistance = '" + rowDistance
+                        + "') < (prefDistance = '" + _prefDistance + "').");
                 }
             }
 
@@ -1249,8 +1246,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
             if (_logger.isLoggable(Level.FINEST)) {
                 _logger.finest("getTableCellEditorComponent(" + row + "," + column
-                        + ") = '" + value + "' <==> Model[" + modelRow + ","
-                        + modelColumn + "] = '" + cellValue + "'.");
+                    + ") = '" + value + "' <==> Model[" + modelRow + ","
+                    + modelColumn + "] = '" + cellValue + "'.");
             }
 
             if (_starProperty.hasURL() == true) {
@@ -1258,9 +1255,9 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
                 if (_logger.isLoggable(Level.FINER)) {
                     _logger.finer("User clicked on column '"
-                            + calModel.getColumnNameById(modelColumn)
-                            + "' in the CalibratorView, will open '" + url
-                            + "' in default browser.");
+                        + calModel.getColumnNameById(modelColumn)
+                        + "' in the CalibratorView, will open '" + url
+                        + "' in default browser.");
                 }
 
                 // Open web browser with the computed URL

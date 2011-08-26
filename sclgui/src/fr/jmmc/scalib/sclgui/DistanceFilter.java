@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.*;
+import fr.jmmc.jmal.ALX;
 
 import java.util.*;
 import java.util.logging.*;
