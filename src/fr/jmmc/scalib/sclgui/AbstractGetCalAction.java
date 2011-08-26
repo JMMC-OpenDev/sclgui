@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.astro.Catalog;
+import fr.jmmc.jmal.Catalog;
 import fr.jmmc.mcs.util.MCSExceptionHandler;
 import fr.jmmc.mcs.util.RegisteredAction;
 import fr.jmmc.scalib.sclgui.VirtualObservatory.QueryState;

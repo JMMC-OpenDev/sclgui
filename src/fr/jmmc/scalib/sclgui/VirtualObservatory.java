@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.jmal.Catalog;
 import fr.jmmc.mcs.gui.App;
 import fr.jmmc.mcs.gui.MessagePane;
 import fr.jmmc.mcs.gui.MessagePane.ConfirmSaveChanges;
