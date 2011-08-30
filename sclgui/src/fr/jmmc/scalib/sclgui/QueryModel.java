@@ -15,7 +15,7 @@ import cds.savot.pull.SavotPullParser;
 
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
-import fr.jmmc.mcs.util.PreferencesException;
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 
 import java.io.StringBufferInputStream;
 

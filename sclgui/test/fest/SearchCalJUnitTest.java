@@ -10,8 +10,8 @@ import static org.fest.swing.timing.Pause.*;
 import fest.common.JmcsApplicationSetup;
 
 import fest.common.JmcsFestSwingJUnitTestCase;
-import fr.jmmc.mcs.timer.TimerFactory;
-import fr.jmmc.mcs.timer.TimerFactory.UNIT;
+import org.ivoa.util.timer.TimerFactory;
+import org.ivoa.util.timer.TimerFactory.UNIT;
 
 import java.awt.Frame;
 import java.util.logging.Level;

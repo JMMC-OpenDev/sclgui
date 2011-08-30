@@ -3,9 +3,9 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.gui.App;
-import fr.jmmc.mcs.gui.StatusBar;
-import fr.jmmc.mcs.gui.SwingSettings;
+import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.SwingSettings;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
@@ -60,7 +60,7 @@ public class SearchCalibrators extends App {
     /** Initialize application objects */
     protected void init(String[] args) {      
         // Set default resource
-        fr.jmmc.mcs.util.Resources.setResourceName(
+        fr.jmmc.jmcs.util.Resources.setResourceName(
                 "fr/jmmc/scalib/sclgui/Resources");
 
         try {

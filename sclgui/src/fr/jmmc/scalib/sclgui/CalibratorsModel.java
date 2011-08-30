@@ -8,7 +8,7 @@ import cds.savot.model.*;
 import cds.savot.pull.*;
 
 import cds.savot.writer.*;
-import fr.jmmc.mcs.util.FileUtils;
+import fr.jmmc.jmcs.util.FileUtils;
 
 import java.io.*;
 

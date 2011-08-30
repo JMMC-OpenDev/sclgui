@@ -3,10 +3,10 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.gui.App;
-import fr.jmmc.mcs.gui.HelpView;
-import fr.jmmc.mcs.gui.StatusBar;
-import fr.jmmc.mcs.util.RegisteredAction;
+import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.gui.HelpView;
+import fr.jmmc.jmcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -75,8 +75,6 @@ public class MainWindow extends JFrame {
         _calibratorsView = calibratorsView;
         _filtersView = filtersView;
         _statusBar = statusBar;
-
-        new HelpView();
 
         // Preferences
         _preferencesView = preferencesView;

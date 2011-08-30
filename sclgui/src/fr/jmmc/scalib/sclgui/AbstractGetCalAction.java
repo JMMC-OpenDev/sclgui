@@ -4,8 +4,8 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.jmal.Catalog;
-import fr.jmmc.mcs.util.MCSExceptionHandler;
-import fr.jmmc.mcs.util.RegisteredAction;
+import fr.jmmc.jmcs.util.MCSExceptionHandler;
+import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.scalib.sclgui.VirtualObservatory.QueryState;
 import fr.jmmc.scalib.sclgui.ws.SearchCalServerClient;
 import fr.jmmc.sclws_wsdl.SclwsPortType;

@@ -3,9 +3,9 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.jmcs.network.BrowserLauncher;
+import fr.jmmc.jmcs.util.Resources;
 import fr.jmmc.jmal.Catalog;
-import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.util.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

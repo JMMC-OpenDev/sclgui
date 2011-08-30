@@ -3,7 +3,8 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.util.*;
+import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
+import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
 import java.awt.*;
 import java.awt.event.*;
