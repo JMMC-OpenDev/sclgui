@@ -3,10 +3,9 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmal.ALX;
-
-import fr.jmmc.mcs.util.*;
 
 import java.awt.Color;
 
@@ -16,7 +15,7 @@ import java.util.logging.*;
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
-public class Preferences extends fr.jmmc.mcs.util.Preferences {
+public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(

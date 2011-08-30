@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui;
 
-import fr.jmmc.mcs.util.Urls;
+import fr.jmmc.jmcs.util.Urls;
 
 import java.util.logging.*;
 

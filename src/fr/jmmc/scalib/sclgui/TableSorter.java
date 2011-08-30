@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package fr.jmmc.scalib.sclgui;
 
+import fr.jmmc.jmcs.network.BrowserLauncher;
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmal.Catalog;
-import fr.jmmc.mcs.gui.*;
-import fr.jmmc.mcs.util.*;
 
 ////////////////////////////////////////////////////////////////////////////////
 import java.awt.*;

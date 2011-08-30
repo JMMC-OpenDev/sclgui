@@ -3,10 +3,10 @@
  ******************************************************************************/
 package fr.jmmc.scalib.sclgui.ws;
 
-import fr.jmmc.mcs.gui.App;
-import fr.jmmc.mcs.util.NetworkSettings;
-import fr.jmmc.mcs.util.Preferences;
-import fr.jmmc.mcs.util.Urls;
+import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.network.NetworkSettings;
+import fr.jmmc.jmcs.data.preference.Preferences;
+import fr.jmmc.jmcs.util.Urls;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;

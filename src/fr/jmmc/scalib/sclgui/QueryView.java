@@ -5,10 +5,10 @@ package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverWidget;
-import fr.jmmc.mcs.gui.MessagePane;
-import fr.jmmc.mcs.gui.StatusBar;
-import fr.jmmc.mcs.util.MCSAction;
-import fr.jmmc.mcs.util.RegisteredAction;
+import fr.jmmc.jmcs.gui.MessagePane;
+import fr.jmmc.jmcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.action.MCSAction;
+import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import java.awt.AWTEvent;
 import java.awt.Component;
 import java.awt.Cursor;

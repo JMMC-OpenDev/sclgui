@@ -4,18 +4,18 @@
 package fr.jmmc.scalib.sclgui;
 
 import fr.jmmc.jmal.Catalog;
-import fr.jmmc.mcs.gui.App;
-import fr.jmmc.mcs.gui.MessagePane;
-import fr.jmmc.mcs.gui.MessagePane.ConfirmSaveChanges;
+import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.gui.MessagePane;
+import fr.jmmc.jmcs.gui.MessagePane.ConfirmSaveChanges;
 
-import fr.jmmc.mcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.StatusBar;
 
-import fr.jmmc.mcs.interop.SampCapability;
-import fr.jmmc.mcs.interop.SampCapabilityAction;
-import fr.jmmc.mcs.interop.SampMessageHandler;
-import fr.jmmc.mcs.util.ActionRegistrar;
-import fr.jmmc.mcs.util.FileFilterRepository;
-import fr.jmmc.mcs.util.RegisteredAction;
+import fr.jmmc.jmcs.network.interop.SampCapability;
+import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
+import fr.jmmc.jmcs.network.interop.SampMessageHandler;
+import fr.jmmc.jmcs.gui.action.ActionRegistrar;
+import fr.jmmc.jmcs.util.FileFilterRepository;
+import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
