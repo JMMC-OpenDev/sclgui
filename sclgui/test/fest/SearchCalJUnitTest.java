@@ -74,7 +74,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     }
 
     JmcsApplicationSetup.define(
-            fr.jmmc.scalib.sclgui.SearchCalibrators.class,
+            fr.jmmc.sclgui.SearchCal.class,
             "-open",
             fileName);
 
