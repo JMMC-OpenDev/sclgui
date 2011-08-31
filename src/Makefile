@@ -35,13 +35,13 @@ EXECUTABLES_L   =
 
 #
 # <brief description of xxxxx program>
-sclguiControl_OBJECTS   = sclguiControl				  		\
+sclguiControl_OBJECTS   = sclguiControl				\
                           sclguiCALIBRATOR_LIST_MODEL  		\
-                          sclguiREQUEST_MODEL		   		\
-                          sclguiFILTER_LIST_MODEL	   		\
-                          sclguiBUTTONS_SUBPANEL	   		\
-                          sclguiACTIONS_VIEW		   		\
-                          sclguiFILTER_VIEW			   		\
+                          sclguiREQUEST_MODEL		   	\
+                          sclguiFILTER_LIST_MODEL	   	\
+                          sclguiBUTTONS_SUBPANEL	   	\
+                          sclguiACTIONS_VIEW		   	\
+                          sclguiFILTER_VIEW			\
                           sclguiDISTANCE_FILTER_VIEW   		\
                           sclguiVISIBILITY_FILTER_VIEW 		\
                           sclguiVARIABILITY_FILTER_VIEW		\
@@ -50,10 +50,10 @@ sclguiControl_OBJECTS   = sclguiControl				  		\
                           sclguiMAGNITUDE_FILTER_VIEW		\
                           sclguiSPECTRAL_TYPE_FILTER_VIEW	\
                           sclguiCALIBRATOR_LIST_VIEW   		\
-                          sclguiREQUEST_VIEW		   		\
-                          sclguiCONFIRM_SUBPANEL	   		\
-                          sclguiCONTROLLER			   		\
-                          sclguiGetCalCB					\
+                          sclguiREQUEST_VIEW		   	\
+                          sclguiCONFIRM_SUBPANEL	   	\
+                          sclguiCONTROLLER			\
+                          sclguiGetCalCB			\
                           sclguiExitCB
 sclguiControl_LDFLAGS   =
 sclguiControl_LIBS      = MCS C++ sclsvr vobs alx simcli 
@@ -65,23 +65,23 @@ sclguiControl_LIBS      = MCS C++ sclsvr vobs alx simcli
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        = sclgui.h 							\
-				  sclguiCALIBRATOR_LIST_MODEL.h				\
-				  sclguiREQUEST_MODEL.h					\
-				  sclguiFILTER_LIST_MODEL.h				\
-				  sclguiBUTTONS_SUBPANEL.h				\
-				  sclguiACTIONS_VIEW.h			\
-				  sclguiFILTER_VIEW.h				\
-				  sclguiDISTANCE_FILTER_VIEW.h		\
-				  sclguiVISIBILITY_FILTER_VIEW.h	\
-				  sclguiMULTIPLICITY_FILTER_VIEW.h	\
-				  sclguiLUMINOSITY_FILTER_VIEW.h	\
-				  sclguiMAGNITUDE_FILTER_VIEW.h		\
-				  sclguiSPECTRAL_TYPE_FILTER_VIEW.h		\
-				  sclguiCALIBRATOR_LIST_VIEW.h			\
-				  sclguiREQUEST_VIEW.h				\
-				  sclguiCONFIRM_SUBPANEL.h			\
-				  sclguiCONTROLLER.h					\
+INCLUDES        = sclgui.h 				\
+		  sclguiCALIBRATOR_LIST_MODEL.h		\
+		  sclguiREQUEST_MODEL.h			\
+		  sclguiFILTER_LIST_MODEL.h		\
+		  sclguiBUTTONS_SUBPANEL.h		\
+		  sclguiACTIONS_VIEW.h			\
+		  sclguiFILTER_VIEW.h			\
+		  sclguiDISTANCE_FILTER_VIEW.h		\
+		  sclguiVISIBILITY_FILTER_VIEW.h	\
+		  sclguiMULTIPLICITY_FILTER_VIEW.h	\
+		  sclguiLUMINOSITY_FILTER_VIEW.h	\
+		  sclguiMAGNITUDE_FILTER_VIEW.h		\
+		  sclguiSPECTRAL_TYPE_FILTER_VIEW.h	\
+		  sclguiCALIBRATOR_LIST_VIEW.h		\
+		  sclguiREQUEST_VIEW.h			\
+		  sclguiCONFIRM_SUBPANEL.h		\
+		  sclguiCONTROLLER.h			\
 
 #
 # Libraries (public and local)
@@ -91,7 +91,7 @@ LIBRARIES_L     =
 
 #
 # <brief description of lllll library>
-llllll_OBJECTS   =  			   		\
+llllll_OBJECTS   = 
 
 #
 # Scripts (public and local)
@@ -131,8 +131,6 @@ PY_SCRIPTS_L   =
 # Jarfiles and their directories
 # ---------------------------------
 JARFILES        = sclgui
-## For SIMBAD SOAP WebService (do not work here)
-#JARFILES        = simbad sclgui
 
 #
 # <brief description of sclgui jar files>
@@ -142,15 +140,13 @@ simbad_DIRS     = cds
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr \
                   org
-sclgui_EXTRAS   = fr/jmmc/scalib/sclgui/Resources.properties \
-                  fr/jmmc/scalib/sclgui/*.xsl \
-                  fr/jmmc/scalib/sclgui/ApplicationData.xml \
+sclgui_EXTRAS   = fr/jmmc/sclgui/resource/* \
                   org/apache/axis/client/*.wsdd
 
 #
 # Java programs
 # ---------------------------------
-JAVA_EXECUTABLES = SearchCalibrators 
+JAVA_EXECUTABLES = SearchCal
 
 #
 # other Jar Files
@@ -159,7 +155,7 @@ JAVA_JAR =
 
 #
 # <brief description of SearchCalibrators java program>
-SearchCalibrators_CLASS = fr.jmmc.scalib.sclgui.SearchCalibrators \
+SearchCal_CLASS = fr.jmmc.sclgui.SearchCal \
 
 #
 # Command Definition Files (CDF)
@@ -202,7 +198,7 @@ include $(MAKEDIR)/mkfMakefile
 # -------
 all:	do_soap do_all
 	@echo " . . . Copying xsl sources :"
-	cp -vp fr/jmmc/scalib/sclgui/*.xsl ../config
+	cp -vp fr/jmmc/sclgui/resource/*.xsl ../config
 	@echo " . . . 'all' done" 
 
 clean : clean_soap clean_all 
