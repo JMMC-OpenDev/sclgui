@@ -24,11 +24,13 @@
 
         <!-- JMMC modules -->
         <jar href="jar/jmcs.jar" />
+        <jar href="jar/jmal.jar" />
         <jar href="jar/sclgui.jar" />
         <jar href="jar/sclgui-doc.jar" />
 
-        <!-- JMCS libs -->
+        <!-- JMMC libs -->
         <extension href="../JmcsLibs/JmcsLibs.jnlp"/>
+        <extension href="../JmalLibs/JmalLibs.jnlp"/>
         
         <!-- Axis 1.4 (SOAP) -->
         <jar href="@SHARED@/axis.jar" />
@@ -46,7 +48,6 @@
         <jar href="@SHARED@/cds.savot.sax.jar" />
         <jar href="@SHARED@/cds.savot.writer.jar" />
         <jar href="@SHARED@/kxml2-min.jar" />
-
     </resources>
-    <application-desc main-class="fr.jmmc.scalib.sclgui.SearchCalibrators"/>
+    <application-desc main-class="fr.jmmc.sclgui.SearchCal"/>
 </jnlp>
