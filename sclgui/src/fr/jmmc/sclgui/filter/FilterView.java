@@ -29,6 +29,7 @@ import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+
 /**
  * Generic filter view.
  *
@@ -65,7 +66,6 @@ public final class FilterView extends JPanel implements Observer {
 
         // Members initialization
         _filter = filter;
-        _filter.addObserver(this);
 
         // JFormattedTextField formatter creation
         DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
@@ -110,6 +110,10 @@ public final class FilterView extends JPanel implements Observer {
 
         // Refresh each widget with the filter values
         update(_filter, null);
+    }
+
+    public void init() {
+        _filter.addObserver(this);
     }
 
     /**
@@ -227,7 +231,6 @@ public final class FilterView extends JPanel implements Observer {
          */
     }
 }
-
 /**
  * Handle any event coming from a given parameter widget.
  */

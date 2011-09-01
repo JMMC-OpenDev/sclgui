@@ -204,7 +204,6 @@ public final class QueryView extends JPanel implements Observer,
         label.setLabelFor(_instrumentalMagnitudeBandCombo);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalMagnitudeBandCombo, c);
-        _instrumentalMagnitudeBandCombo.addActionListener(this);
         // Wavelength field
         c.gridy++;
         c.gridx = 0;
@@ -213,8 +212,6 @@ public final class QueryView extends JPanel implements Observer,
         _instrumentalWavelengthTextfield.setFormatterFactory(doubleFormaterFactory);
         _instrumentalWavelengthTextfield.setMinimumSize(textfieldDimension);
         _instrumentalWavelengthTextfield.setPreferredSize(textfieldDimension);
-        _instrumentalWavelengthTextfield.addActionListener(this);
-        _instrumentalWavelengthTextfield.addFocusListener(this);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalWavelengthTextfield, c);
         // Maximum baseline
@@ -226,8 +223,6 @@ public final class QueryView extends JPanel implements Observer,
         _instrumentalMaxBaselineTextField.setFormatterFactory(doubleFormaterFactory);
         _instrumentalMaxBaselineTextField.setMinimumSize(textfieldDimension);
         _instrumentalMaxBaselineTextField.setPreferredSize(textfieldDimension);
-        _instrumentalMaxBaselineTextField.addActionListener(this);
-        _instrumentalMaxBaselineTextField.addFocusListener(this);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalMaxBaselineTextField, c);
 
@@ -242,8 +237,6 @@ public final class QueryView extends JPanel implements Observer,
         _scienceObjectPanel.add(label, c);
         _scienceObjectNameTextfield = new StarResolverWidget(_queryModel);
         label.setLabelFor(_scienceObjectNameTextfield);
-        _scienceObjectNameTextfield.addActionListener(this);
-        _scienceObjectNameTextfield.addFocusListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectNameTextfield, c);
         // RA coordinate field
@@ -254,8 +247,6 @@ public final class QueryView extends JPanel implements Observer,
         label.setLabelFor(_scienceObjectRATextfield);
         _scienceObjectRATextfield.setMinimumSize(textfieldDimension);
         _scienceObjectRATextfield.setPreferredSize(textfieldDimension);
-        _scienceObjectRATextfield.addActionListener(this);
-        _scienceObjectRATextfield.addFocusListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectRATextfield, c);
         // DEC coordinate field
@@ -266,8 +257,6 @@ public final class QueryView extends JPanel implements Observer,
         label.setLabelFor(_scienceObjectDECTextfield);
         _scienceObjectDECTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectDECTextfield.setPreferredSize(textfieldDimension);
-        _scienceObjectDECTextfield.addActionListener(this);
-        _scienceObjectDECTextfield.addFocusListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectDECTextfield, c);
         // Magnitude field
@@ -278,8 +267,6 @@ public final class QueryView extends JPanel implements Observer,
         _scienceObjectMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
-        _scienceObjectMagnitudeTextfield.addActionListener(this);
-        _scienceObjectMagnitudeTextfield.addFocusListener(this);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectMagnitudeTextfield, c);
 
@@ -295,8 +282,6 @@ public final class QueryView extends JPanel implements Observer,
         _minMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
-        _minMagnitudeTextfield.addActionListener(this);
-        _minMagnitudeTextfield.addFocusListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_minMagnitudeTextfield, c);
         // Maximum magnitude field
@@ -307,8 +292,6 @@ public final class QueryView extends JPanel implements Observer,
         _maxMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
         _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
         _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
-        _maxMagnitudeTextfield.addActionListener(this);
-        _maxMagnitudeTextfield.addFocusListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_maxMagnitudeTextfield, c);
         // Bright/Faint Scenario
@@ -336,8 +319,6 @@ public final class QueryView extends JPanel implements Observer,
         _diffRASizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _diffRASizeTextfield.setMinimumSize(textfieldDimension);
         _diffRASizeTextfield.setPreferredSize(textfieldDimension);
-        _diffRASizeTextfield.addActionListener(this);
-        _diffRASizeTextfield.addFocusListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_diffRASizeTextfield, c);
         // DEC delta field
@@ -348,8 +329,6 @@ public final class QueryView extends JPanel implements Observer,
         _diffDECSizeTextfield.setFormatterFactory(doubleFormaterFactory);
         _diffDECSizeTextfield.setMinimumSize(textfieldDimension);
         _diffDECSizeTextfield.setPreferredSize(textfieldDimension);
-        _diffDECSizeTextfield.addActionListener(this);
-        _diffDECSizeTextfield.addFocusListener(this);
         c.gridx = 1;
         _searchCalPanel.add(_diffDECSizeTextfield, c);
         // Radial size field
@@ -393,8 +372,6 @@ public final class QueryView extends JPanel implements Observer,
         _radialSizeTextfield.setFormatterFactory(radialDoubleFormaterFactory);
         _radialSizeTextfield.setMinimumSize(textfieldDimension);
         _radialSizeTextfield.setPreferredSize(textfieldDimension);
-        _radialSizeTextfield.addActionListener(this);
-        _radialSizeTextfield.addFocusListener(this);
 
         // Status panel global attributes and common objects
         _actionPanel.setLayout(new BoxLayout(_actionPanel, BoxLayout.X_AXIS));
@@ -432,6 +409,40 @@ public final class QueryView extends JPanel implements Observer,
         c.gridx = 0;
         c.gridwidth = 3;
         add(_actionPanel, c);
+    }
+
+    public void init() {
+        _instrumentalMagnitudeBandCombo.addActionListener(this);
+
+        _instrumentalWavelengthTextfield.addActionListener(this);
+        _instrumentalWavelengthTextfield.addFocusListener(this);
+
+        _instrumentalMaxBaselineTextField.addActionListener(this);
+        _instrumentalMaxBaselineTextField.addFocusListener(this);
+
+        _scienceObjectNameTextfield.addActionListener(this);
+        _scienceObjectNameTextfield.addFocusListener(this);
+
+        _scienceObjectRATextfield.addActionListener(this);
+        _scienceObjectRATextfield.addFocusListener(this);
+
+        _scienceObjectDECTextfield.addActionListener(this);
+        _scienceObjectDECTextfield.addFocusListener(this);
+
+        _scienceObjectMagnitudeTextfield.addActionListener(this);
+        _scienceObjectMagnitudeTextfield.addFocusListener(this);
+
+        _minMagnitudeTextfield.addActionListener(this);
+        _minMagnitudeTextfield.addFocusListener(this);
+
+        _maxMagnitudeTextfield.addActionListener(this);
+        _maxMagnitudeTextfield.addFocusListener(this);
+
+        _diffRASizeTextfield.addActionListener(this);
+        _diffRASizeTextfield.addFocusListener(this);
+
+        _radialSizeTextfield.addActionListener(this);
+        _radialSizeTextfield.addFocusListener(this);
 
         // Start listening to any updates of the monitored objects
         _queryModel.addObserver(this);

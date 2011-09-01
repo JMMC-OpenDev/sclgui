@@ -100,7 +100,6 @@ public class QueryModel extends Star implements Observer {
      */
     public QueryModel() throws IllegalStateException, IllegalArgumentException {
         _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
 
         resetInstrumentalWavelengthes();
         resetScienceObjectMagnitudes();
@@ -113,6 +112,10 @@ public class QueryModel extends Star implements Observer {
             // TODO : how to handle that : reset preferences ... ??
             throw new IllegalStateException("Incompatible Preferences found", pe);
         }
+    }
+
+    public void init() {
+        _preferences.addObserver(this);
     }
 
     /**

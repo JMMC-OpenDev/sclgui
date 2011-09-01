@@ -63,10 +63,12 @@ public class LegendView extends JPanel {
         // Append preference colors chooser component of catalogs
         ColorPreferencesView colorView = new ColorPreferencesView(_preferences,
                 "catalog", "Catalogs Origin", isEditable);
+        colorView.init();
 
         // Append preference colors chooser component of catalogs
         ColorPreferencesView confidenceView = new ColorPreferencesView(_preferences,
                 "confidence", "Confidence Index", true);
+        confidenceView.init();
 
         // Create the scrollpanes and add the tables.
         JScrollPane scrollPane = new JScrollPane(colorView);
@@ -118,10 +120,6 @@ public class LegendView extends JPanel {
             // Register to catalog preferences
             _colorPreferencePrefix = prefix + ".color.";
             _preferences = preferences;
-            _preferences.addObserver(this);
-
-            // Make data filled
-            update(null, null);
 
             TableModel tableModel = new ColorPreferencesViewTableModel();
 
@@ -140,7 +138,10 @@ public class LegendView extends JPanel {
             JTableHeader tableHeader = _table.getTableHeader();
             add(tableHeader, BorderLayout.NORTH);
             add(_table, BorderLayout.CENTER);
+        }
 
+        public void init() {
+            _preferences.addObserver(this);
             // Make table resized
             update(null, null);
         }
