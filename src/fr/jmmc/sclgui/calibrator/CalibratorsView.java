@@ -92,11 +92,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Store the model and register against it
         _calibratorsModel = calibratorsModel;
-        _calibratorsModel.addTableModelListener(this);
 
         // Store the application preferences and register against it
         _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
 
         // Create actions
         _deleteAction = new DeleteAction(classPath,
@@ -126,9 +124,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // Table initialization
         _calibratorsTable = new JTable();
 
-        // Handle the selection listener
-        _calibratorsTable.getSelectionModel().addListSelectionListener(this);
-
         // Configure table sorting
         _tableSorter = new TableSorter(_calibratorsModel,
                 _calibratorsTable.getTableHeader());
@@ -137,9 +132,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 new DefaultTableColumnModel(), null);
         _calibratorsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _calibratorsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // Become listselectionListener to forward selected list to model
-        _calibratorsTable.getSelectionModel().addListSelectionListener(this);
 
         // Place tables into scrollPane
         JScrollPane scrollPane = new JScrollPane(_calibratorsTable);
@@ -190,6 +182,18 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 showLegend();
             }
         });
+    }
+
+    public void init() {
+        _calibratorsModel.addTableModelListener(this);
+
+        _preferences.addObserver(this);
+
+        // Handle the selection listener
+        _calibratorsTable.getSelectionModel().addListSelectionListener(this);
+
+        // Become listselectionListener to forward selected list to model
+        _calibratorsTable.getSelectionModel().addListSelectionListener(this);
     }
 
     private void updateBorderTitle() {

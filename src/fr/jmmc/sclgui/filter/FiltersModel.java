@@ -45,6 +45,7 @@ public class FiltersModel {
         _filterList.add(distanceFilter);
 
         FilterView filterView = new FilterView(distanceFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Magnitude filter
@@ -52,6 +53,7 @@ public class FiltersModel {
         _filterList.add(magnitudeFilter);
 
         filterView = new FilterView(magnitudeFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Spectral Type filter
@@ -59,6 +61,7 @@ public class FiltersModel {
         _filterList.add(spectralTypeFilter);
 
         filterView = new FilterView(spectralTypeFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Luminosity filter
@@ -66,6 +69,7 @@ public class FiltersModel {
         _filterList.add(luminosityFilter);
 
         filterView = new FilterView(luminosityFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Visibiliy filter
@@ -73,6 +77,7 @@ public class FiltersModel {
         _filterList.add(visibiliyFilter);
 
         filterView = new FilterView(visibiliyFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Visibility accuracy filter
@@ -80,6 +85,7 @@ public class FiltersModel {
         _filterList.add(visibilityAccuracyFilter);
 
         filterView = new FilterView(visibilityAccuracyFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Variability filter
@@ -87,6 +93,7 @@ public class FiltersModel {
         _filterList.add(variabilityFilter);
 
         filterView = new FilterView(variabilityFilter);
+        filterView.init();
         _filterViews.add(filterView);
 
         // Multiplicity filter
@@ -94,6 +101,7 @@ public class FiltersModel {
         _filterList.add(multiplicityFilter);
 
         filterView = new FilterView(multiplicityFilter);
+        filterView.init();
         _filterViews.add(filterView);
     }
 

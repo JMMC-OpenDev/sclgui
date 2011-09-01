@@ -43,6 +43,7 @@ import javax.swing.event.ListSelectionListener;
 
 // @TODO handle close button correctly
 // @TODO add deleteObserver(this) to dispose() to dereference each subview properly
+
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
@@ -100,14 +101,17 @@ public class PreferencesView extends JFrame implements ActionListener {
         // Add the restore and sace buttons
         JPanel buttonsPanel = new JPanel();
         _restoreDefaultButton = new JButton("Restore Default Settings");
-        _restoreDefaultButton.addActionListener(this);
         buttonsPanel.add(_restoreDefaultButton);
         _saveModificationButton = new JButton("Save Modifications");
-        _saveModificationButton.addActionListener(this);
         buttonsPanel.add(_saveModificationButton);
         contentPane.add(buttonsPanel);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    public void init() {
+        _restoreDefaultButton.addActionListener(this);
+        _saveModificationButton.addActionListener(this);
     }
 
     /**
@@ -139,7 +143,6 @@ public class PreferencesView extends JFrame implements ActionListener {
         }
     }
 }
-
 /**
  * This Panel is dedicated to manage one ordered list of columns.
  */

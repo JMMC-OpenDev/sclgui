@@ -67,8 +67,7 @@ public class SearchCal extends App {
     @Override
     protected void init(String[] args) {      
         // Set default resource
-        fr.jmmc.jmcs.util.Resources.setResourceName(
-                "fr/jmmc/scalib/sclgui/Resources");
+        fr.jmmc.jmcs.util.Resources.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
         try {
             // Using invokeAndWait to be in sync with the main thread :
@@ -85,6 +84,7 @@ public class SearchCal extends App {
 
                     // Create a query model
                     QueryModel queryModel = new QueryModel();
+                    queryModel.init();
 
                     // Create filters
                     FiltersModel filtersModel = new FiltersModel(queryModel);
@@ -93,6 +93,7 @@ public class SearchCal extends App {
                     // Create a calibrators model and attach it to a calibrators view
                     CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
                     CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
+                    calibratorsView.init();
 
                     filtersModel.addObserver(calibratorsModel);
 
@@ -101,10 +102,13 @@ public class SearchCal extends App {
 
                     // Attach the query model to its query view
                     QueryView queryView = new QueryView(queryModel, _vo);
+                    queryView.init();
 
                     // Retrieve application preferences and attach them to their view
                     // (This instance must be instanciated after dependencies)
                     PreferencesView preferencesView = new PreferencesView();
+                    preferencesView.init();
+
                     StatusBar statusBar = new StatusBar();
                     // Show the user the app is been initialized
                     StatusBar.show("application initialization...");
