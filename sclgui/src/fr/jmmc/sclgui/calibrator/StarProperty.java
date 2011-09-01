@@ -24,7 +24,7 @@ public final class StarProperty implements Comparable<StarProperty> {
     private String _url;
 
     /**
-     * Fully parametred constructor.
+     * Fully parameter-ed constructor.
      */
     public StarProperty(Object value, String origin, String confidence,
             String url) {
