@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui;
 
+import fr.jmmc.jmcs.gui.AlternateRawColorCellRenderer;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -35,6 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -43,7 +45,6 @@ import javax.swing.event.ListSelectionListener;
 
 // @TODO handle close button correctly
 // @TODO add deleteObserver(this) to dispose() to dereference each subview properly
-
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
@@ -86,8 +87,8 @@ public class PreferencesView extends JFrame implements ActionListener {
         contentPane.add(tabbedPane);
 
         // Add the columns preferences pane
-        ColumnsPreferencesView columnsView = new ColumnsPreferencesView(
-                "view.columns");
+        ColumnsPreferencesView columnsView = new ColumnsPreferencesView("view.columns");
+        columnsView.init();
         tabbedPane.add("Columns Order", columnsView);
 
         // Add the catalog preferences pane
@@ -96,6 +97,7 @@ public class PreferencesView extends JFrame implements ActionListener {
 
         // Add the help preferences pane
         HelpPreferencesView helpView = new HelpPreferencesView();
+        helpView.init();
         tabbedPane.add("Help Settings", helpView);
 
         // Add the restore and sace buttons
@@ -143,6 +145,7 @@ public class PreferencesView extends JFrame implements ActionListener {
         }
     }
 }
+
 /**
  * This Panel is dedicated to manage one ordered list of columns.
  */
@@ -181,7 +184,6 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     ColumnsPreferencesView(String preferencePrefix) {
         // Register against shared application preferences
         _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
 
         // Set the pane vertical layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -196,7 +198,6 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         _columnsSetCombobox = new JComboBox();
         label.setLabelFor(_columnsSetCombobox);
         panel.add(_columnsSetCombobox);
-        _columnsSetCombobox.addActionListener(this);
         headPanel.add(panel, BorderLayout.LINE_START);
         add(headPanel);
 
@@ -229,8 +230,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         // Only one item can be selected at ance.
         _columnList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
 
-        // Add a 'selection modification' listener to enable/disable 'Up' & 'Down' buttons
-        _columnList.addListSelectionListener(this);
+        _columnList.setCellRenderer(new AlternateRawColorCellRenderer());
 
         // Add scrolling capacity to the list
         JScrollPane scrollingList = new JScrollPane(_columnList);
@@ -244,14 +244,23 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         // Add 'Up' & 'Down' buttons
         panel = new JPanel();
         _moveUpButton = new JButton("Up");
-        _moveUpButton.addActionListener(this);
         _moveUpButton.setEnabled(false);
         panel.add(_moveUpButton);
         _moveDownButton = new JButton("Down");
-        _moveDownButton.addActionListener(this);
         _moveDownButton.setEnabled(false);
         panel.add(_moveDownButton);
         add(panel);
+    }
+
+    public void init() {
+        _preferences.addObserver(this);
+        _columnsSetCombobox.addActionListener(this);
+
+        // Add a 'selection modification' listener to enable/disable 'Up' & 'Down' buttons
+        _columnList.addListSelectionListener(this);
+
+        _moveUpButton.addActionListener(this);
+        _moveDownButton.addActionListener(this);
     }
 
     /**
@@ -367,6 +376,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
 
         // Get the index of the current selected item
         int currentSelection = _columnList.getSelectedIndex();
+        _columnList.clearSelection();
 
         // Hold the future index of the selected item
         int futureSelection = 0;
@@ -430,16 +440,22 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
                     + "' preference : " + ex);
         }
 
-        /*
-         * Update selection to follow the moved item (at end: after preference
-         * changes triggered GUI update, otherwise selection disapears)
-         */
-        _columnList.setSelectionInterval(futureSelection, futureSelection);
+        final int selection = futureSelection;
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                /*
+                 * Update selection to follow the moved item (at end: after preference
+                 * changes triggered GUI update, otherwise selection disapears)
+                 */
+                _columnList.setSelectionInterval(selection, selection);
+            }
+        });
     }
 }
 
 /**
- * This Panel is dedicated to manage help behaviour configuration.
+ * This Panel is dedicated to manage help behavior configuration.
  */
 class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
 
@@ -459,7 +475,6 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
      */
     HelpPreferencesView() {
         _preferences = Preferences.getInstance();
-        _preferences.addObserver(this);
 
         // Layout management
         JPanel tempPanel = new JPanel();
@@ -519,8 +534,12 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
         // Handle "Show Tooltips" checkbox
         _enableToolTipCheckBox = new JCheckBox("Show Tooltips");
         _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
-        _enableToolTipCheckBox.addChangeListener(this);
         tempPanel.add(_enableToolTipCheckBox, c);
+    }
+
+    public void init() {
+        _preferences.addObserver(this);
+        _enableToolTipCheckBox.addChangeListener(this);
     }
 
     /**
