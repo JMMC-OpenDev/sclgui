@@ -11,12 +11,21 @@ sclsvrServer -    alx - Info  - Nb of star for this sky area = 335
 sclsvrServer -    alx - Test  - Sky research area size = 0.12 (deg)
 sclsvrServer -    alx - Test  - Sky research radius = 11.59 (arcmin)
 sclsvrServer - sclsvr - Info  - Sky research radius = 11.59(arcmin)
+sclsvrServer -   vobs - Info  - vobsSCENARIO::Execute() - start
 sclsvrServer -   vobs - Test  - Consulting II/246/out ...
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=05:18:19.27&-c.dec=-69:11:40.6&Kmag=10.00..12.00&-out.max=1000&-c.rm=12&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - Parsing XML document (12101 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (79 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 79
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 79
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 0
 sclsvrServer -   vobs - Test  - after COPY, star list size = 79
+sclsvrServer -   vobs - Info  - vobsSCENARIO::Execute() - 79 star(s) found.
 sclsvrServer -   vobs - Test  - vobsVIRTUAL_OBSERVATORY::Search()
+sclsvrServer -   vobs - Info  - vobsSCENARIO::Execute() - start
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 79
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 0
 sclsvrServer -   vobs - Test  - after COPY, star list size = 79
 sclsvrServer -   vobs - Info  - star 2MASS 05181715-6915475 has been removed by the filter 'Opt = T filter'
 sclsvrServer -   vobs - Info  - star 2MASS 05190849-6913154 has been removed by the filter 'Opt = T filter'
@@ -93,6 +102,8 @@ sclsvrServer -   vobs - Info  - star 2MASS 05173570-6922519 has been removed by 
 sclsvrServer -   vobs - Info  - star 2MASS 05201511-6917382 has been removed by the filter 'Opt = T filter'
 sclsvrServer -   vobs - Info  - star 2MASS 05193732-6921269 has been removed by the filter 'Opt = T filter'
 sclsvrServer -   vobs - Test  - after FILTER, star list size = 5
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 79
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 0
 sclsvrServer -   vobs - Test  - after COPY, star list size = 79
 sclsvrServer -   vobs - Info  - star 2MASS 05181920-6911406 has been removed by the filter 'Opt = U filter'
 sclsvrServer -   vobs - Info  - star 2MASS 05183017-6913140 has been removed by the filter 'Opt = U filter'
@@ -102,33 +113,71 @@ sclsvrServer -   vobs - Info  - star 2MASS 05191895-6918395 has been removed by 
 sclsvrServer -   vobs - Test  - after FILTER, star list size = 74
 sclsvrServer -   vobs - Test  - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+18+19.210-69+11+40.62&+05+18+30.170-69+13+14.04&+05+17+59.815-69+16+14.62&+05+17+33.152-69+17+29.33&+05+19+18.958-69+18+39.51&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (8029 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (5 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 5
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 5
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 0
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - after COPY, star list size = 5
 sclsvrServer -   vobs - Test  - Consulting I/284 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+18+17.153-69+15+47.54&+05+19+08.496-69+13+15.47&+05+17+38.185-69+08+28.01&+05+17+26.962-69+13+58.53&+05+17+20.480-69+10+18.45&+05+17+29.754-69+15+28.62&+05+18+20.564-69+17+53.15&+05+19+14.825-69+15+27.99&+05+17+09.707-69+12+31.08&+05+17+16.331-69+14+31.02&+05+17+37.399-69+16+47.94&+05+19+09.906-69+16+46.46&+05+17+51.346-69+18+15.45&+05+17+45.924-69+18+05.67&+05+19+02.340-69+17+44.57&+05+16+59.051-69+14+13.36&+05+17+57.286-69+19+09.75&+05+19+38.424-69+15+08.71&+05+18+16.483-69+19+37.57&+05+17+12.746-69+17+05.60&+05+16+50.841-69+09+35.08&+05+18+52.494-69+19+16.37&+05+17+59.115-69+19+38.37&+05+16+50.315-69+13+48.45&+05+17+50.136-69+19+29.36&+05+16+47.475-69+10+14.35&+05+16+50.985-69+14+54.29&+05+17+02.425-69+16+47.86&+05+19+50.561-69+14+37.48&+05+16+48.535-69+14+56.62&+05+17+47.959-69+20+01.05&+05+19+32.447-69+17+49.02&+05+19+59.490-69+12+35.31&+05+17+21.663-69+19+07.66&+05+20+02.403-69+12+45.50&+05+19+39.136-69+17+35.76&+05+17+04.543-69+18+24.59&+05+19+54.922-69+15+53.06&+05+16+36.527-69+14+28.55&+05+18+44.416-69+21+02.71&+05+16+34.399-69+08+57.75&+05+19+40.856-69+18+17.20&+05+18+31.477-69+21+26.99&+05+16+39.029-69+07+21.68&+05+20+06.216-69+15+01.29&+05+18+47.896-69+21+30.34&+05+17+32.721-69+21+00.51&+05+16+24.434-69+12+05.29&+05+20+09.053-69+14+47.89&+05+16+29.843-69+15+03.46&+05+19+32.875-69+19+48.31&+05+17+00.661-69+19+30.46&+05+18+17.580-69+22+16.82&+05+17+52.471-69+22+07.64&+05+20+19.644-69+12+58.22&+05+16+27.364-69+07+33.24&+05+19+06.286-69+21+46.33&+05+17+14.810-69+21+03.92&+05+20+23.119-69+10+46.27&+05+20+16.124-69+07+46.81&+05+20+00.325-69+18+37.97&+05+20+20.377-69+15+20.08&+05+20+26.325-69+13+12.12&+05+19+41.462-69+20+41.68&+05+18+23.439-69+23+18.73&+05+20+27.746-69+14+10.01&+05+16+45.215-69+19+52.13&+05+18+24.924-68+59+58.57&+05+16+07.498-69+10+34.87&+05+20+30.614-69+13+16.78&+05+20+24.724-69+15+30.90&+05+17+35.700-69+22+51.95&+05+20+15.119-69+17+38.23&+05+19+37.329-69+21+26.94&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (40718 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (124 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 124
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 124
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 0
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - after COPY, star list size = 80
+sclsvrServer -   vobs - Test  - Performing MERGE action on star list size = 80
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 5
 sclsvrServer -   vobs - Test  - after MERGE, star list size = 85
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 79
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 85
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 85
 sclsvrServer -   vobs - Test  - Consulting B/denis ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+18+19.214-69+11+40.75&+05+18+30.174-69+13+14.12&+05+17+59.797-69+16+14.66&+05+17+33.093-69+17+29.26&+05+19+18.962-69+18+39.61&+05+18+16.996-69+15+47.09&+05+19+08.562-69+13+14.85&+05+17+38.030-69+08+27.58&+05+17+26.951-69+13+57.89&+05+17+20.585-69+10+16.27&+05+17+19.864-69+10+16.89&+05+17+29.399-69+15+28.56&+05+18+20.211-69+17+53.48&+05+19+14.728-69+15+29.43&+05+17+09.640-69+12+30.95&+05+17+16.303-69+14+30.94&+05+17+37.491-69+16+48.42&+05+19+10.022-69+16+46.25&+05+17+51.240-69+18+15.14&+05+17+45.963-69+18+05.31&+05+19+02.523-69+17+44.75&+05+16+59.053-69+14+12.52&+05+17+57.121-69+19+08.81&+05+19+38.232-69+15+09.57&+05+18+16.404-69+19+37.72&+05+17+12.327-69+17+07.02&+05+16+50.623-69+09+35.98&+05+18+52.497-69+19+17.00&+05+17+58.843-69+19+37.65&+05+16+50.445-69+13+47.67&+05+17+50.094-69+19+29.50&+05+16+47.358-69+10+14.65&+05+16+50.833-69+14+53.98&+05+17+02.493-69+16+48.05&+05+19+50.322-69+14+37.44&+05+16+48.858-69+14+55.83&+05+16+48.134-69+14+57.63&+05+17+47.805-69+20+01.66&+05+19+32.410-69+17+47.21&+05+19+59.705-69+12+35.20&+05+17+22.227-69+19+07.60&+05+20+02.632-69+12+46.04&+05+19+39.135-69+17+35.44&+05+17+03.964-69+18+23.74&+05+19+54.710-69+15+53.55&+05+16+36.466-69+14+28.68&+05+18+44.344-69+21+00.95&+05+16+34.572-69+08+56.23&+05+19+40.900-69+18+17.51&+05+18+31.336-69+21+28.75&+05+18+30.615-69+21+25.60&+05+16+38.955-69+07+21.67&+05+20+06.148-69+15+01.70&+05+18+48.553-69+21+28.92&+05+17+32.640-69+21+00.68&+05+16+24.381-69+12+05.20&+05+20+09.034-69+14+48.39&+05+16+29.905-69+15+04.11&+05+19+32.893-69+19+48.92&+05+17+00.931-69+19+28.47&+05+18+17.306-69+22+16.13&+05+17+52.352-69+22+07.22&+05+20+19.705-69+12+57.93&+05+16+27.550-69+07+34.42&+05+16+28.273-69+07+34.30&+05+19+06.258-69+21+46.54&+05+17+14.159-69+21+03.29&+05+17+15.285-69+21+07.85&+05+20+22.963-69+10+44.38&+05+20+16.211-69+07+47.01&+05+20+00.255-69+18+37.79&+05+20+20.200-69+15+20.20&+05+20+26.310-69+13+12.63&+05+19+41.427-69+20+45.14&+05+18+23.511-69+23+17.83&+05+20+27.731-69+14+10.53&+05+16+45.180-69+19+52.17&+05+18+24.945-68+59+58.92&+05+18+25.613-69+00+00.64&+05+16+07.339-69+10+35.63&+05+20+30.528-69+13+16.02&+05+20+24.798-69+15+31.64&+05+17+35.772-69+22+52.56&+05+20+15.071-69+17+37.69&+05+19+37.350-69+21+27.75&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (72668 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (175 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 175
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 175
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 85
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 85
 sclsvrServer -   vobs - Test  - Consulting B/sb9/main ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+18+19.214-69+11+40.75&+05+18+30.174-69+13+14.12&+05+17+59.797-69+16+14.66&+05+17+33.093-69+17+29.26&+05+19+18.962-69+18+39.61&+05+18+16.996-69+15+47.09&+05+19+08.562-69+13+14.85&+05+17+38.030-69+08+27.58&+05+17+26.951-69+13+57.89&+05+17+20.585-69+10+16.27&+05+17+19.864-69+10+16.89&+05+17+29.399-69+15+28.56&+05+18+20.211-69+17+53.48&+05+19+14.728-69+15+29.43&+05+17+09.640-69+12+30.95&+05+17+16.303-69+14+30.94&+05+17+37.491-69+16+48.42&+05+19+10.022-69+16+46.25&+05+17+51.240-69+18+15.14&+05+17+45.963-69+18+05.31&+05+19+02.523-69+17+44.75&+05+16+59.053-69+14+12.52&+05+17+57.121-69+19+08.81&+05+19+38.232-69+15+09.57&+05+18+16.404-69+19+37.72&+05+17+12.327-69+17+07.02&+05+16+50.623-69+09+35.98&+05+18+52.497-69+19+17.00&+05+17+58.843-69+19+37.65&+05+16+50.445-69+13+47.67&+05+17+50.094-69+19+29.50&+05+16+47.358-69+10+14.65&+05+16+50.833-69+14+53.98&+05+17+02.493-69+16+48.05&+05+19+50.322-69+14+37.44&+05+16+48.858-69+14+55.83&+05+16+48.134-69+14+57.63&+05+17+47.805-69+20+01.66&+05+19+32.410-69+17+47.21&+05+19+59.705-69+12+35.20&+05+17+22.227-69+19+07.60&+05+20+02.632-69+12+46.04&+05+19+39.135-69+17+35.44&+05+17+03.964-69+18+23.74&+05+19+54.710-69+15+53.55&+05+16+36.466-69+14+28.68&+05+18+44.344-69+21+00.95&+05+16+34.572-69+08+56.23&+05+19+40.900-69+18+17.51&+05+18+31.336-69+21+28.75&+05+18+30.615-69+21+25.60&+05+16+38.955-69+07+21.67&+05+20+06.148-69+15+01.70&+05+18+48.553-69+21+28.92&+05+17+32.640-69+21+00.68&+05+16+24.381-69+12+05.20&+05+20+09.034-69+14+48.39&+05+16+29.905-69+15+04.11&+05+19+32.893-69+19+48.92&+05+17+00.931-69+19+28.47&+05+18+17.306-69+22+16.13&+05+17+52.352-69+22+07.22&+05+20+19.705-69+12+57.93&+05+16+27.550-69+07+34.42&+05+16+28.273-69+07+34.30&+05+19+06.258-69+21+46.54&+05+17+14.159-69+21+03.29&+05+17+15.285-69+21+07.85&+05+20+22.963-69+10+44.38&+05+20+16.211-69+07+47.01&+05+20+00.255-69+18+37.79&+05+20+20.200-69+15+20.20&+05+20+26.310-69+13+12.63&+05+19+41.427-69+20+45.14&+05+18+23.511-69+23+17.83&+05+20+27.731-69+14+10.53&+05+16+45.180-69+19+52.17&+05+18+24.945-68+59+58.92&+05+18+25.613-69+00+00.64&+05+16+07.339-69+10+35.63&+05+20+30.528-69+13+16.02&+05+20+24.798-69+15+31.64&+05+17+35.772-69+22+52.56&+05+20+15.071-69+17+37.69&+05+19+37.350-69+21+27.75&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - ...number of stars return = 85
+sclsvrServer -   vobs - Test  - Parsing XML document (16093 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - ...number of stars return = 0
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 0
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 85
 sclsvrServer -   vobs - Test  - Consulting B/wds/wds ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+18+19.214-69+11+40.75&+05+18+30.174-69+13+14.12&+05+17+59.797-69+16+14.66&+05+17+33.093-69+17+29.26&+05+19+18.962-69+18+39.61&+05+18+16.996-69+15+47.09&+05+19+08.562-69+13+14.85&+05+17+38.030-69+08+27.58&+05+17+26.951-69+13+57.89&+05+17+20.585-69+10+16.27&+05+17+19.864-69+10+16.89&+05+17+29.399-69+15+28.56&+05+18+20.211-69+17+53.48&+05+19+14.728-69+15+29.43&+05+17+09.640-69+12+30.95&+05+17+16.303-69+14+30.94&+05+17+37.491-69+16+48.42&+05+19+10.022-69+16+46.25&+05+17+51.240-69+18+15.14&+05+17+45.963-69+18+05.31&+05+19+02.523-69+17+44.75&+05+16+59.053-69+14+12.52&+05+17+57.121-69+19+08.81&+05+19+38.232-69+15+09.57&+05+18+16.404-69+19+37.72&+05+17+12.327-69+17+07.02&+05+16+50.623-69+09+35.98&+05+18+52.497-69+19+17.00&+05+17+58.843-69+19+37.65&+05+16+50.445-69+13+47.67&+05+17+50.094-69+19+29.50&+05+16+47.358-69+10+14.65&+05+16+50.833-69+14+53.98&+05+17+02.493-69+16+48.05&+05+19+50.322-69+14+37.44&+05+16+48.858-69+14+55.83&+05+16+48.134-69+14+57.63&+05+17+47.805-69+20+01.66&+05+19+32.410-69+17+47.21&+05+19+59.705-69+12+35.20&+05+17+22.227-69+19+07.60&+05+20+02.632-69+12+46.04&+05+19+39.135-69+17+35.44&+05+17+03.964-69+18+23.74&+05+19+54.710-69+15+53.55&+05+16+36.466-69+14+28.68&+05+18+44.344-69+21+00.95&+05+16+34.572-69+08+56.23&+05+19+40.900-69+18+17.51&+05+18+31.336-69+21+28.75&+05+18+30.615-69+21+25.60&+05+16+38.955-69+07+21.67&+05+20+06.148-69+15+01.70&+05+18+48.553-69+21+28.92&+05+17+32.640-69+21+00.68&+05+16+24.381-69+12+05.20&+05+20+09.034-69+14+48.39&+05+16+29.905-69+15+04.11&+05+19+32.893-69+19+48.92&+05+17+00.931-69+19+28.47&+05+18+17.306-69+22+16.13&+05+17+52.352-69+22+07.22&+05+20+19.705-69+12+57.93&+05+16+27.550-69+07+34.42&+05+16+28.273-69+07+34.30&+05+19+06.258-69+21+46.54&+05+17+14.159-69+21+03.29&+05+17+15.285-69+21+07.85&+05+20+22.963-69+10+44.38&+05+20+16.211-69+07+47.01&+05+20+00.255-69+18+37.79&+05+20+20.200-69+15+20.20&+05+20+26.310-69+13+12.63&+05+19+41.427-69+20+45.14&+05+18+23.511-69+23+17.83&+05+20+27.731-69+14+10.53&+05+16+45.180-69+19+52.17&+05+18+24.945-68+59+58.92&+05+18+25.613-69+00+00.64&+05+16+07.339-69+10+35.63&+05+20+30.528-69+13+16.02&+05+20+24.798-69+15+31.64&+05+17+35.772-69+22+52.56&+05+20+15.071-69+17+37.69&+05+19+37.350-69+21+27.75&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - ...number of stars return = 85
+sclsvrServer -   vobs - Test  - Parsing XML document (16615 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - ...number of stars return = 0
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 0
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 85
 sclsvrServer -   vobs - Test  - Consulting II/297/irc ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+18+19.214-69+11+40.75&+05+18+30.174-69+13+14.12&+05+17+59.797-69+16+14.66&+05+17+33.093-69+17+29.26&+05+19+18.962-69+18+39.61&+05+18+16.996-69+15+47.09&+05+19+08.562-69+13+14.85&+05+17+38.030-69+08+27.58&+05+17+26.951-69+13+57.89&+05+17+20.585-69+10+16.27&+05+17+19.864-69+10+16.89&+05+17+29.399-69+15+28.56&+05+18+20.211-69+17+53.48&+05+19+14.728-69+15+29.43&+05+17+09.640-69+12+30.95&+05+17+16.303-69+14+30.94&+05+17+37.491-69+16+48.42&+05+19+10.022-69+16+46.25&+05+17+51.240-69+18+15.14&+05+17+45.963-69+18+05.31&+05+19+02.523-69+17+44.75&+05+16+59.053-69+14+12.52&+05+17+57.121-69+19+08.81&+05+19+38.232-69+15+09.57&+05+18+16.404-69+19+37.72&+05+17+12.327-69+17+07.02&+05+16+50.623-69+09+35.98&+05+18+52.497-69+19+17.00&+05+17+58.843-69+19+37.65&+05+16+50.445-69+13+47.67&+05+17+50.094-69+19+29.50&+05+16+47.358-69+10+14.65&+05+16+50.833-69+14+53.98&+05+17+02.493-69+16+48.05&+05+19+50.322-69+14+37.44&+05+16+48.858-69+14+55.83&+05+16+48.134-69+14+57.63&+05+17+47.805-69+20+01.66&+05+19+32.410-69+17+47.21&+05+19+59.705-69+12+35.20&+05+17+22.227-69+19+07.60&+05+20+02.632-69+12+46.04&+05+19+39.135-69+17+35.44&+05+17+03.964-69+18+23.74&+05+19+54.710-69+15+53.55&+05+16+36.466-69+14+28.68&+05+18+44.344-69+21+00.95&+05+16+34.572-69+08+56.23&+05+19+40.900-69+18+17.51&+05+18+31.336-69+21+28.75&+05+18+30.615-69+21+25.60&+05+16+38.955-69+07+21.67&+05+20+06.148-69+15+01.70&+05+18+48.553-69+21+28.92&+05+17+32.640-69+21+00.68&+05+16+24.381-69+12+05.20&+05+20+09.034-69+14+48.39&+05+16+29.905-69+15+04.11&+05+19+32.893-69+19+48.92&+05+17+00.931-69+19+28.47&+05+18+17.306-69+22+16.13&+05+17+52.352-69+22+07.22&+05+20+19.705-69+12+57.93&+05+16+27.550-69+07+34.42&+05+16+28.273-69+07+34.30&+05+19+06.258-69+21+46.54&+05+17+14.159-69+21+03.29&+05+17+15.285-69+21+07.85&+05+20+22.963-69+10+44.38&+05+20+16.211-69+07+47.01&+05+20+00.255-69+18+37.79&+05+20+20.200-69+15+20.20&+05+20+26.310-69+13+12.63&+05+19+41.427-69+20+45.14&+05+18+23.511-69+23+17.83&+05+20+27.731-69+14+10.53&+05+16+45.180-69+19+52.17&+05+18+24.945-68+59+58.92&+05+18+25.613-69+00+00.64&+05+16+07.339-69+10+35.63&+05+20+30.528-69+13+16.02&+05+20+24.798-69+15+31.64&+05+17+35.772-69+22+52.56&+05+20+15.071-69+17+37.69&+05+19+37.350-69+21+27.75&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (20977 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (2 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 2
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 2
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 85
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 85
+sclsvrServer -   vobs - Info  - vobsSCENARIO::Execute() - 85 star(s) found.
 sclsvrServer -   vobs - Test  - Number of stars found : 85
 sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Copy()
 sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - start
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 269333'
 sclsvrServer -    alx - Test  - Original spectral type = 'Oe'.
 sclsvrServer -    alx - Test  - Final spectral type = 'OE'.
 sclsvrServer -    alx - Test  -  - Code                = 'O'.
@@ -230,19 +279,20 @@ sclsvrServer -    alx - Test  - Computed diameters are not coherent between them
 sclsvrServer - sclsvr - Test  - star HD 269333 - error on diameter too high; computed diameters are not coherent
 sclsvrServer - sclsvr - Test  - star HD 269333 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star HD 269333 - unknown diameter; could not compute visibility
-sclsvrServer - sclsvr - Test  - Computing UDs for LD='0.016446' and Teff='42000.000000',LogG='3.978000'...
-sclsvrServer -    alx - Test  - UD_U = 0.016165
-sclsvrServer -    alx - Test  - UD_B = 0.016176
-sclsvrServer -    alx - Test  - UD_V = 0.016208
-sclsvrServer -    alx - Test  - UD_R = 0.016248
-sclsvrServer -    alx - Test  - UD_I = 0.016283
-sclsvrServer -    alx - Test  - UD_J = 0.016323
-sclsvrServer -    alx - Test  - UD_H = 0.016340
-sclsvrServer -    alx - Test  - UD_K = 0.016353
+sclsvrServer - sclsvr - Test  - Computing UDs for LD='0.016446' and Teff='46120.000000',LogG='4.081000'...
+sclsvrServer -    alx - Test  - UD_U = 0.016169
+sclsvrServer -    alx - Test  - UD_B = 0.016180
+sclsvrServer -    alx - Test  - UD_V = 0.016213
+sclsvrServer -    alx - Test  - UD_R = 0.016252
+sclsvrServer -    alx - Test  - UD_I = 0.016286
+sclsvrServer -    alx - Test  - UD_J = 0.016324
+sclsvrServer -    alx - Test  - UD_H = 0.016341
+sclsvrServer -    alx - Test  - UD_K = 0.016354
 sclsvrServer -    alx - Test  - UD_L = 0.016391
-sclsvrServer -    alx - Test  - UD_N = 0.016400
+sclsvrServer -    alx - Test  - UD_N = 0.016401
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'TYC1 9162'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389731 radians
 sclsvrServer -    alx - Test  - dec = -1.208127 radians
@@ -321,8 +371,9 @@ sclsvrServer - sclsvr - Test  - star TYC1 9162 - error on diameter too high; com
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'TYC1 9162'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.387522 radians
 sclsvrServer -    alx - Test  - dec = -1.209002 radians
@@ -401,8 +452,9 @@ sclsvrServer - sclsvr - Test  - star TYC1 9162 - error on diameter too high; com
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'TYC1 9162'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385580 radians
 sclsvrServer -    alx - Test  - dec = -1.209364 radians
@@ -481,6 +533,7 @@ sclsvrServer - sclsvr - Test  - star TYC1 9162 - error on diameter too high; com
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star TYC1 9162 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 269369'
 sclsvrServer -    alx - Test  - Original spectral type = 'G5'.
 sclsvrServer -    alx - Test  - Final spectral type = 'G5'.
 sclsvrServer -    alx - Test  -  - Code                = 'G'.
@@ -615,8 +668,9 @@ sclsvrServer -    alx - Test  - UD_H = 0.038844
 sclsvrServer -    alx - Test  - UD_K = 0.038989
 sclsvrServer -    alx - Test  - UD_L = 0.039334
 sclsvrServer -    alx - Test  - UD_N = 0.039609
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05181715-6915475'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05181715-6915475 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.388773 radians
 sclsvrServer -    alx - Test  - dec = -1.208869 radians
@@ -650,8 +704,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05181715-6915475 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05181715-6915475 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05181715-6915475 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05190849-6913154'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05190849-6913154 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.392523 radians
 sclsvrServer -    alx - Test  - dec = -1.208131 radians
@@ -685,8 +740,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05190849-6913154 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05190849-6913154 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05190849-6913154 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05173818-6908280'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05173818-6908280 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385939 radians
 sclsvrServer -    alx - Test  - dec = -1.206738 radians
@@ -781,8 +837,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000048
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000102
 sclsvrServer - sclsvr - Test  - star 2MASS 05173818-6908280 - visibility error (0.000102) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05172696-6913585'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05172696-6913585 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385133 radians
 sclsvrServer -    alx - Test  - dec = -1.208339 radians
@@ -857,8 +914,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05172696-6913585 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05172696-6913585 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05172696-6913585 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05172048-6910184'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05172048-6910184 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384670 radians
 sclsvrServer -    alx - Test  - dec = -1.207265 radians
@@ -933,8 +991,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05172048-6910184 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05172048-6910184 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05172048-6910184 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'Coordinates-ra=05 17 19.864/de'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 17 19.864/de - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384618 radians
 sclsvrServer -    alx - Test  - dec = -1.207268 radians
@@ -955,8 +1014,9 @@ sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 17 19.864/de - unknown IO
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 17 19.864/de - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 17 19.864/de - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05172975-6915286'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05172975-6915286 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385311 radians
 sclsvrServer -    alx - Test  - dec = -1.208779 radians
@@ -1051,8 +1111,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000046
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000123
 sclsvrServer - sclsvr - Test  - star 2MASS 05172975-6915286 - visibility error (0.000123) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05182056-6917531'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05182056-6917531 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389007 radians
 sclsvrServer -    alx - Test  - dec = -1.209482 radians
@@ -1086,8 +1147,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05182056-6917531 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05182056-6917531 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05182056-6917531 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05191482-6915279'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05191482-6915279 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.392971 radians
 sclsvrServer -    alx - Test  - dec = -1.208783 radians
@@ -1132,8 +1194,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05191482-6915279 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05191482-6915279 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05191482-6915279 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05170970-6912310'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05170970-6912310 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.383874 radians
 sclsvrServer -    alx - Test  - dec = -1.207918 radians
@@ -1228,8 +1291,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000018
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000027
 sclsvrServer - sclsvr - Test  - star 2MASS 05170970-6912310 - visibility error (0.000027) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05171633-6914310'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05171633-6914310 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384359 radians
 sclsvrServer -    alx - Test  - dec = -1.208500 radians
@@ -1324,8 +1388,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000018
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000056
 sclsvrServer - sclsvr - Test  - star 2MASS 05171633-6914310 - visibility error (0.000056) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05173739-6916479'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05173739-6916479 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385900 radians
 sclsvrServer -    alx - Test  - dec = -1.209166 radians
@@ -1370,8 +1435,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05173739-6916479 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05173739-6916479 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05173739-6916479 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05190990-6916464'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05190990-6916464 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.392629 radians
 sclsvrServer -    alx - Test  - dec = -1.209156 radians
@@ -1405,8 +1471,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05190990-6916464 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05190990-6916464 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05190990-6916464 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05175134-6918154'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05175134-6918154 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.386900 radians
 sclsvrServer -    alx - Test  - dec = -1.209587 radians
@@ -1451,8 +1518,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05175134-6918154 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05175134-6918154 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05175134-6918154 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05174592-6918056'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05174592-6918056 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.386516 radians
 sclsvrServer -    alx - Test  - dec = -1.209539 radians
@@ -1497,8 +1565,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05174592-6918056 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05174592-6918056 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05174592-6918056 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05190234-6917445'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05190234-6917445 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.392084 radians
 sclsvrServer -    alx - Test  - dec = -1.209439 radians
@@ -1543,8 +1612,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05190234-6917445 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05190234-6917445 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05190234-6917445 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05165905-6914133'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05165905-6914133 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.383105 radians
 sclsvrServer -    alx - Test  - dec = -1.208410 radians
@@ -1639,8 +1709,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000020
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000029
 sclsvrServer - sclsvr - Test  - star 2MASS 05165905-6914133 - visibility error (0.000029) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05175728-6919097'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05175728-6919097 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.387327 radians
 sclsvrServer -    alx - Test  - dec = -1.209847 radians
@@ -1674,8 +1745,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05175728-6919097 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05175728-6919097 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05175728-6919097 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05193842-6915087'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05193842-6915087 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394680 radians
 sclsvrServer -    alx - Test  - dec = -1.208687 radians
@@ -1720,8 +1792,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05193842-6915087 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05193842-6915087 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05193842-6915087 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05181648-6919375'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05181648-6919375 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.388730 radians
 sclsvrServer -    alx - Test  - dec = -1.209987 radians
@@ -1796,8 +1869,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05181648-6919375 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05181648-6919375 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05181648-6919375 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05171274-6917056'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05171274-6917056 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384070 radians
 sclsvrServer -    alx - Test  - dec = -1.209256 radians
@@ -1881,8 +1955,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000071
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000215
 sclsvrServer - sclsvr - Test  - star 2MASS 05171274-6917056 - visibility error (0.000215) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05165084-6909350'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05165084-6909350 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382492 radians
 sclsvrServer -    alx - Test  - dec = -1.207070 radians
@@ -1927,8 +2002,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05165084-6909350 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05165084-6909350 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05165084-6909350 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05185249-6919163'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05185249-6919163 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.391354 radians
 sclsvrServer -    alx - Test  - dec = -1.209886 radians
@@ -2023,8 +2099,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000016
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000027
 sclsvrServer - sclsvr - Test  - star 2MASS 05185249-6919163 - visibility error (0.000027) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05175911-6919383'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05175911-6919383 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.387453 radians
 sclsvrServer -    alx - Test  - dec = -1.209987 radians
@@ -2069,8 +2146,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05175911-6919383 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05175911-6919383 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05175911-6919383 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05165031-6913484'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05165031-6913484 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382479 radians
 sclsvrServer -    alx - Test  - dec = -1.208290 radians
@@ -2104,8 +2182,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05165031-6913484 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05165031-6913484 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05165031-6913484 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05175013-6919293'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05175013-6919293 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.386816 radians
 sclsvrServer -    alx - Test  - dec = -1.209947 radians
@@ -2139,8 +2218,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05175013-6919293 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05175013-6919293 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05175013-6919293 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05164747-6910143'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05164747-6910143 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382254 radians
 sclsvrServer -    alx - Test  - dec = -1.207257 radians
@@ -2174,8 +2254,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05164747-6910143 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05164747-6910143 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05164747-6910143 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05165098-6914542'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05165098-6914542 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382507 radians
 sclsvrServer -    alx - Test  - dec = -1.208611 radians
@@ -2209,8 +2290,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05165098-6914542 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05165098-6914542 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05165098-6914542 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05170242-6916478'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05170242-6916478 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.383355 radians
 sclsvrServer -    alx - Test  - dec = -1.209164 radians
@@ -2244,8 +2326,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05170242-6916478 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05170242-6916478 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05170242-6916478 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05195056-6914374'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05195056-6914374 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.395560 radians
 sclsvrServer -    alx - Test  - dec = -1.208531 radians
@@ -2279,8 +2362,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05195056-6914374 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05195056-6914374 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05195056-6914374 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05164853-6914566'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05164853-6914566 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382363 radians
 sclsvrServer -    alx - Test  - dec = -1.208620 radians
@@ -2375,8 +2459,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000058
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000142
 sclsvrServer - sclsvr - Test  - star 2MASS 05164853-6914566 - visibility error (0.000142) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'Coordinates-ra=05 16 48.134/de'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 16 48.134/de - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382311 radians
 sclsvrServer -    alx - Test  - dec = -1.208629 radians
@@ -2396,6 +2481,7 @@ sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 16 48.134/de - unknown IO
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 16 48.134/de - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 16 48.134/de - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05174795-6920010'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05174795-6920010 - parallax is unknown
@@ -2431,8 +2517,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05174795-6920010 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05174795-6920010 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05174795-6920010 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05193244-6917490'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05193244-6917490 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394257 radians
 sclsvrServer -    alx - Test  - dec = -1.209451 radians
@@ -2527,8 +2614,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000043
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000064
 sclsvrServer - sclsvr - Test  - star 2MASS 05193244-6917490 - visibility error (0.000064) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05195949-6912353'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05195949-6912353 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.396242 radians
 sclsvrServer -    alx - Test  - dec = -1.207938 radians
@@ -2612,8 +2700,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000044
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000124
 sclsvrServer - sclsvr - Test  - star 2MASS 05195949-6912353 - visibility error (0.000124) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05172166-6919076'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05172166-6919076 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384790 radians
 sclsvrServer -    alx - Test  - dec = -1.209841 radians
@@ -2697,8 +2786,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000057
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000171
 sclsvrServer - sclsvr - Test  - star 2MASS 05172166-6919076 - visibility error (0.000171) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05200240-6912455'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05200240-6912455 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.396455 radians
 sclsvrServer -    alx - Test  - dec = -1.207991 radians
@@ -2743,8 +2833,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05200240-6912455 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05200240-6912455 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05200240-6912455 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05193913-6917357'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05193913-6917357 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394746 radians
 sclsvrServer -    alx - Test  - dec = -1.209394 radians
@@ -2778,8 +2869,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05193913-6917357 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05193913-6917357 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05193913-6917357 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05170454-6918245'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05170454-6918245 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.383462 radians
 sclsvrServer -    alx - Test  - dec = -1.209628 radians
@@ -2813,8 +2905,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05170454-6918245 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05170454-6918245 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05170454-6918245 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05195492-6915530'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05195492-6915530 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.395879 radians
 sclsvrServer -    alx - Test  - dec = -1.208900 radians
@@ -2909,8 +3002,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000085
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000235
 sclsvrServer - sclsvr - Test  - star 2MASS 05195492-6915530 - visibility error (0.000235) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05163652-6914285'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05163652-6914285 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.381462 radians
 sclsvrServer -    alx - Test  - dec = -1.208489 radians
@@ -3005,8 +3099,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000016
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000036
 sclsvrServer - sclsvr - Test  - star 2MASS 05163652-6914285 - visibility error (0.000036) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05184441-6921027'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05184441-6921027 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.390762 radians
 sclsvrServer -    alx - Test  - dec = -1.210390 radians
@@ -3051,8 +3146,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05184441-6921027 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05184441-6921027 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05184441-6921027 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05163439-6908577'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05163439-6908577 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.381324 radians
 sclsvrServer -    alx - Test  - dec = -1.206877 radians
@@ -3086,8 +3182,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05163439-6908577 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05163439-6908577 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05163439-6908577 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05194085-6918172'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05194085-6918172 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394874 radians
 sclsvrServer -    alx - Test  - dec = -1.209598 radians
@@ -3121,8 +3218,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05194085-6918172 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05194085-6918172 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05194085-6918172 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05183147-6921269'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05183147-6921269 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389816 radians
 sclsvrServer -    alx - Test  - dec = -1.210525 radians
@@ -3156,8 +3254,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05183147-6921269 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05183147-6921269 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05183147-6921269 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'DENIS J051830.1-692124'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star DENIS J051830.1-692124 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389763 radians
 sclsvrServer -    alx - Test  - dec = -1.210510 radians
@@ -3179,8 +3278,9 @@ sclsvrServer - sclsvr - Test  - star DENIS J051830.1-692124 - unknown JO propert
 sclsvrServer - sclsvr - Test  - star DENIS J051830.1-692124 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star DENIS J051830.1-692124 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05163902-6907216'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05163902-6907216 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.381643 radians
 sclsvrServer -    alx - Test  - dec = -1.206418 radians
@@ -3275,8 +3375,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000020
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000024
 sclsvrServer - sclsvr - Test  - star 2MASS 05163902-6907216 - visibility error (0.000024) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05200621-6915012'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05200621-6915012 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.396710 radians
 sclsvrServer -    alx - Test  - dec = -1.208649 radians
@@ -3310,8 +3411,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05200621-6915012 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05200621-6915012 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05200621-6915012 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05184789-6921303'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05184789-6921303 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.391068 radians
 sclsvrServer -    alx - Test  - dec = -1.210526 radians
@@ -3386,8 +3488,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05184789-6921303 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05184789-6921303 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05184789-6921303 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05173272-6921005'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05173272-6921005 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385547 radians
 sclsvrServer -    alx - Test  - dec = -1.210389 radians
@@ -3421,8 +3524,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05173272-6921005 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05173272-6921005 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05173272-6921005 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05162443-6912052'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05162443-6912052 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.380583 radians
 sclsvrServer -    alx - Test  - dec = -1.207793 radians
@@ -3506,8 +3610,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000079
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000237
 sclsvrServer - sclsvr - Test  - star 2MASS 05162443-6912052 - visibility error (0.000237) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05200905-6914478'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05200905-6914478 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.396920 radians
 sclsvrServer -    alx - Test  - dec = -1.208584 radians
@@ -3602,8 +3707,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000018
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000032
 sclsvrServer - sclsvr - Test  - star 2MASS 05200905-6914478 - visibility error (0.000032) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05162984-6915034'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05162984-6915034 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.380985 radians
 sclsvrServer -    alx - Test  - dec = -1.208660 radians
@@ -3698,8 +3804,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000022
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000029
 sclsvrServer - sclsvr - Test  - star 2MASS 05162984-6915034 - visibility error (0.000029) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05193287-6919483'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05193287-6919483 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394292 radians
 sclsvrServer -    alx - Test  - dec = -1.210041 radians
@@ -3733,6 +3840,7 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05193287-6919483 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05193287-6919483 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05193287-6919483 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05170066-6919304'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05170066-6919304 - parallax is unknown
@@ -3761,8 +3869,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05170066-6919304 - unknown IO propert
 sclsvrServer - sclsvr - Test  - star 2MASS 05170066-6919304 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05170066-6919304 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05181758-6922168'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05181758-6922168 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.388795 radians
 sclsvrServer -    alx - Test  - dec = -1.210755 radians
@@ -3846,8 +3955,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000082
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000231
 sclsvrServer - sclsvr - Test  - star 2MASS 05181758-6922168 - visibility error (0.000231) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05175247-6922076'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05175247-6922076 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.386981 radians
 sclsvrServer -    alx - Test  - dec = -1.210712 radians
@@ -3881,8 +3991,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05175247-6922076 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05175247-6922076 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05175247-6922076 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05201964-6912582'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05201964-6912582 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.397696 radians
 sclsvrServer -    alx - Test  - dec = -1.208049 radians
@@ -3916,8 +4027,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05201964-6912582 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05201964-6912582 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05201964-6912582 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05162736-6907332'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05162736-6907332 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.380814 radians
 sclsvrServer -    alx - Test  - dec = -1.206480 radians
@@ -3951,8 +4063,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05162736-6907332 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05162736-6907332 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05162736-6907332 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'DENIS J051628.7-690733'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star DENIS J051628.7-690733 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.380866 radians
 sclsvrServer -    alx - Test  - dec = -1.206480 radians
@@ -3973,8 +4086,9 @@ sclsvrServer - sclsvr - Test  - star DENIS J051628.7-690733 - unknown JO propert
 sclsvrServer - sclsvr - Test  - star DENIS J051628.7-690733 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star DENIS J051628.7-690733 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05190628-6921463'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05190628-6921463 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.392355 radians
 sclsvrServer -    alx - Test  - dec = -1.210611 radians
@@ -4069,8 +4183,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000026
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000072
 sclsvrServer - sclsvr - Test  - star 2MASS 05190628-6921463 - visibility error (0.000072) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05171481-6921039'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05171481-6921039 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384203 radians
 sclsvrServer -    alx - Test  - dec = -1.210402 radians
@@ -4097,8 +4212,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05171481-6921039 - unknown IO propert
 sclsvrServer - sclsvr - Test  - star 2MASS 05171481-6921039 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05171481-6921039 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'DENIS J051714.9-692104'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star DENIS J051714.9-692104 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.384285 radians
 sclsvrServer -    alx - Test  - dec = -1.210424 radians
@@ -4120,8 +4236,9 @@ sclsvrServer - sclsvr - Test  - star DENIS J051714.9-692104 - unknown JO propert
 sclsvrServer - sclsvr - Test  - star DENIS J051714.9-692104 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star DENIS J051714.9-692104 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05202311-6910462'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05202311-6910462 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.397933 radians
 sclsvrServer -    alx - Test  - dec = -1.207401 radians
@@ -4155,8 +4272,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05202311-6910462 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05202311-6910462 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05202311-6910462 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05201612-6907468'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05201612-6907468 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.397442 radians
 sclsvrServer -    alx - Test  - dec = -1.206541 radians
@@ -4251,8 +4369,9 @@ sclsvrServer - sclsvr - Test  - vis2Err = 0.000033
 sclsvrServer - sclsvr - Test  - visibilityErr = 0.000091
 sclsvrServer - sclsvr - Test  - star 2MASS 05201612-6907468 - visibility error (0.000091) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05200032-6918379'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05200032-6918379 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.396282 radians
 sclsvrServer -    alx - Test  - dec = -1.209696 radians
@@ -4286,8 +4405,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05200032-6918379 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05200032-6918379 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05200032-6918379 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05202037-6915200'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05202037-6915200 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.397732 radians
 sclsvrServer -    alx - Test  - dec = -1.208738 radians
@@ -4321,8 +4441,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05202037-6915200 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05202037-6915200 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05202037-6915200 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05202632-6913121'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05202632-6913121 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.398177 radians
 sclsvrServer -    alx - Test  - dec = -1.208120 radians
@@ -4356,8 +4477,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05202632-6913121 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05202632-6913121 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05202632-6913121 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05194146-6920416'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05194146-6920416 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394913 radians
 sclsvrServer -    alx - Test  - dec = -1.210314 radians
@@ -4443,8 +4565,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05194146-6920416 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05194146-6920416 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05194146-6920416 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05182343-6923187'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05182343-6923187 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389247 radians
 sclsvrServer -    alx - Test  - dec = -1.211054 radians
@@ -4478,8 +4601,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05182343-6923187 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05182343-6923187 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05182343-6923187 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05202774-6914100'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05202774-6914100 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.398280 radians
 sclsvrServer -    alx - Test  - dec = -1.208401 radians
@@ -4513,8 +4637,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05202774-6914100 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05202774-6914100 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05202774-6914100 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05164521-6919521'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05164521-6919521 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.382096 radians
 sclsvrServer -    alx - Test  - dec = -1.210057 radians
@@ -4548,8 +4673,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05164521-6919521 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05164521-6919521 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05164521-6919521 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05182492-6859585'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05182492-6859585 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389351 radians
 sclsvrServer -    alx - Test  - dec = -1.204272 radians
@@ -4583,8 +4709,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05182492-6859585 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05182492-6859585 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05182492-6859585 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'Coordinates-ra=05 18 25.613/de'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 18 25.613/de - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.389399 radians
 sclsvrServer -    alx - Test  - dec = -1.204280 radians
@@ -4605,8 +4732,9 @@ sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 18 25.613/de - unknown IO
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 18 25.613/de - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star Coordinates-ra=05 18 25.613/de - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05160749-6910348'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05160749-6910348 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.379344 radians
 sclsvrServer -    alx - Test  - dec = -1.207359 radians
@@ -4640,8 +4768,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05160749-6910348 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05160749-6910348 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05160749-6910348 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05203061-6913167'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05203061-6913167 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.398483 radians
 sclsvrServer -    alx - Test  - dec = -1.208136 radians
@@ -4716,8 +4845,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05203061-6913167 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05203061-6913167 - Computing diameter with absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05203061-6913167 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05202472-6915308'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05202472-6915308 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.398067 radians
 sclsvrServer -    alx - Test  - dec = -1.208794 radians
@@ -4751,8 +4881,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05202472-6915308 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05202472-6915308 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05202472-6915308 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05173570-6922519'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05173570-6922519 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.385775 radians
 sclsvrServer -    alx - Test  - dec = -1.210932 radians
@@ -4797,8 +4928,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05173570-6922519 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05173570-6922519 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05173570-6922519 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05201511-6917382'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05201511-6917382 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.397359 radians
 sclsvrServer -    alx - Test  - dec = -1.209405 radians
@@ -4832,8 +4964,9 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05201511-6917382 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05201511-6917382 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05201511-6917382 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = '2MASS 05193732-6921269'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 2MASS 05193732-6921269 - parallax is unknown
 sclsvrServer -    alx - Test  - ra = 1.394616 radians
 sclsvrServer -    alx - Test  - dec = -1.210520 radians
@@ -4878,7 +5011,8 @@ sclsvrServer - sclsvr - Test  - star 2MASS 05193732-6921269 - error on diameter 
 sclsvrServer - sclsvr - Test  - star 2MASS 05193732-6921269 - computing diameter without absorption...
 sclsvrServer - sclsvr - Test  - star 2MASS 05193732-6921269 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
-sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Sort()
+sclsvrServer -   vobs - Info  - vobsSTAR_LIST::Sort()
+sclsvrServer -   vobs - Info  - vobsSTAR_LIST::Sort() - done.
 sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - exit
 sclsvrServer -   vobs - Test  - Star 'HD 269333' is within 0.000278 degrees of the reference star.
 sclsvrServer -   vobs - Test  - Star 'TYC1 9162' is farther than 0.000278 degrees of the reference star.
@@ -4966,6 +5100,8 @@ sclsvrServer -   vobs - Test  - Star '2MASS 05173570-6922519' is farther than 0.
 sclsvrServer -   vobs - Test  - Star '2MASS 05201511-6917382' is farther than 0.000278 degrees of the reference star.
 sclsvrServer -   vobs - Test  - Star '2MASS 05193732-6921269' is farther than 0.000278 degrees of the reference star.
 sclsvrServer - sclsvr - Test  - (What should be) Science star HD 269333 has been removed.
+sclsvrServer -   vobs - Test  - GetVotable: buffer capacity = 486894 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 458736 / 486894  bytes
 VOTable:
 <?xml version="1.0"?>
 
@@ -7201,3 +7337,5 @@ VOTable:
   </TABLE>
  </RESOURCE>
 </VOTABLE>
+sclsvrServer -   vobs - Test  - GetVotable: buffer capacity = 486894 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 458715 / 486894  bytes

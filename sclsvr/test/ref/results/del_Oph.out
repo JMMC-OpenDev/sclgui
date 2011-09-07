@@ -1,14 +1,24 @@
 sclsvrServer -   vobs - Test  - vobsVIRTUAL_OBSERVATORY::Search()
+sclsvrServer -   vobs - Info  - vobsSCENARIO::Execute() - start
 sclsvrServer -   vobs - Test  - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Search area [3578.220 - 1200.000]
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:14:20.74&-c.dec=-03:41:39.6&Vmag=0.00..4.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=3578/1200&-c.u=arcmin&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
+sclsvrServer -   vobs - Test  - Parsing XML document (6480 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (13 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 13
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 0
 sclsvrServer -   vobs - Test  - after COPY, star list size = 13
 sclsvrServer -   vobs - Test  - Consulting II/246/out ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+14+20.741-03+41+39.56&+16+18+19.290-04+41+33.03&+15+49+37.214-03+25+48.74&+16+30+54.825%2b01+59+02.06&+16+37+09.538-10+34+01.52&+15+50+48.966%2b04+28+39.83&+15+17+00.415-09+22+58.49&+14+46+14.924%2b01+53+34.37&+14+43+03.626-05+39+29.51&+17+43+28.353%2b04+34+02.29&+17+47+53.561%2b02+42+26.20&+17+59+01.593-09+46+25.07&+18+00+38.716%2b02+55+53.64&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (11121 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (13 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 13
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 13
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 0
 sclsvrServer -   vobs - Test  - after COPY, star list size = 13
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[PHOT_JHN_K] with range = 1.500000
 sclsvrServer -   vobs - Test  - star 2MASS 16142073-0341393 has been removed by the filter 'K mag filter'
 sclsvrServer -   vobs - Test  - star 2MASS 15493722-0325486 has been removed by the filter 'K mag filter'
 sclsvrServer -   vobs - Test  - star 2MASS 16305483+0159024 has been removed by the filter 'K mag filter'
@@ -23,78 +33,169 @@ sclsvrServer -   vobs - Test  - after FILTER, star list size = 3
 sclsvrServer -   vobs - Test  - Consulting J/A+A/393/183/catalog ...
 sclsvrServer -   vobs - Test  - Search area [3578.220 - 1200.000]
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:14:20.74&-c.dec=-03:41:39.6&Kmag=-1.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=3578/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK'
+sclsvrServer -   vobs - Test  - Parsing XML document (4178 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (6 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 6
+sclsvrServer -   vobs - Test  - Performing MERGE action on star list size = 6
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 3
 sclsvrServer -   vobs - Test  - after MERGE, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting J/A+A/433/1155 ...
 sclsvrServer -   vobs - Test  - Search area [3578.220 - 1200.000]
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:14:20.74&-c.dec=-03:41:39.6&Ksmag=-1.00..2.00&-c.eq=J2000&-out.max=1000&-c.geom=b&-c.bm=3578/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam'
+sclsvrServer -   vobs - Test  - Parsing XML document (2979 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - ...number of stars return = 0
+sclsvrServer -   vobs - Test  - Performing MERGE action on star list size = 0
 sclsvrServer -   vobs - Test  - after MERGE, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting II/225/catalog ...
 sclsvrServer -   vobs - Test  - Search area [3578.220 - 1200.000]
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:14:20.74&-c.dec=-03:41:39.6&x_F(IR)=M&F(IR)=-1.00..2.00&lambda=&lambda=2.20&-out.max=1000&-c.geom=b&-c.bm=3578/1200&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&-sort=_r'
+sclsvrServer -   vobs - Test  - Parsing XML document (6087 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (88 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 88
+sclsvrServer -   vobs - Test  - Performing MERGE action on star list size = 88
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 9
 sclsvrServer -   vobs - Test  - after MERGE, star list size = 86
 sclsvrServer -   vobs - Test  - Consulting II/7A/catalog ...
 sclsvrServer -   vobs - Test  - Search area [3578.220 - 1200.000]
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.ra=16:14:20.74&-c.dec=-03:41:39.6&K=-1.00..2.00&-out.max=1000&-c.geom=b&-c.bm=3578/1200&-c.u=arcsec&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-sort=_r'
+sclsvrServer -   vobs - Test  - Parsing XML document (4533 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Performing MERGE action on star list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 86
 sclsvrServer -   vobs - Test  - after MERGE, star list size = 92
 sclsvrServer -   vobs - Test  - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.287-04+41+32.79&+17+43+28.351%2b04+34+02.29&+17+59+01.602-09+46+24.97&+14+28+41.723-06+54+01.93&+15+01+19.827-02+45+17.73&+15+02+54.037%2b02+05+28.69&+16+18+19.289-04+41+33.04&+17+26+30.880%2b04+08+25.29&+17+43+28.353%2b04+34+02.29&+16+09+49.3-03+28+19&+16+18+19.0-04+41+33&+16+18+19.7-04+41+45&+16+07+00.7-03+52+29&+16+08+37.3-01+32+17&+16+08+34.3-01+31+53&+16+22+58.4-07+12+33&+16+27+43.4-07+35+43&+16+27+43.9-07+35+38&+16+27+32.6%2b02+52+22&+16+45+12.1-03+05+09&+16+38+49.2-08+36+59&+15+43+37.3-01+42+26&+15+43+35.7-01+42+36&+16+13+51.2-11+50+33&+16+26+43.7-12+25+36&+16+26+43.2-12+25+48&+16+33+30.5-12+33+45&+15+48+47.4%2b05+24+17&+16+46+40.8-11+38+27&+16+46+39.5-11+38+54&+17+01+03.5-04+13+14&+15+24+56.7-02+14+02&+15+24+54.7-02+14+06&+16+56+45.8-10+24+36&+16+56+47.5-10+24+03&+15+32+25.3%2b03+38+30&+16+52+14.3-12+54+16&+16+52+12.9-12+57+03&+16+52+14.4-12+57+04&+15+19+21.8-09+08+44&+15+19+20.9-09+08+51&+15+14+57.8-02+24+59&+17+13+02.2-10+34+43&+17+13+02.9-10+34+36&+15+08+34.6-01+00+50&+15+08+32.9-01+00+44&+17+19+47.3%2b02+08+24&+15+01+19.0-02+45+13&+15+01+49.8-00+08+11&+15+02+55.0%2b02+05+28&+17+29+13.8-07+27+50&+17+29+15.4-07+27+44&+17+22+03.1-13+08+45&+17+26+31.0%2b04+08+23&+17+33+59.1-01+58+59&+17+33+16.6%2b00+06+04&+14+59+22.9%2b04+34+00&+14+57+48.9-12+25+30&+14+57+44.8-12+26+08&+17+40+11.3-02+09+02&+17+42+36.4-04+50+58&+14+45+12.8-01+25+19&+17+44+34.0-07+51+07&+17+47+41.0-03+38+42&+17+43+28.5%2b04+33+42&+17+43+28.5%2b04+33+54&+17+51+09.9-08+01+19&+17+53+03.4-02+34+45&+17+53+05.8-02+34+36&+17+56+09.4-01+24+28&+14+28+42.5-06+53+58&+17+59+01.6-09+46+19&+17+59+02.3-09+46+46&+14+27+20.4%2b04+40+29&+14+27+15.4%2b04+40+28&+14+27+15.6%2b04+40+41&+18+02+19.4-12+19+08&+14+21+36.3-02+23+16&+18+06+42.4-08+13+13&+18+05+26.3%2b02+30+53&+18+05+26.4%2b02+30+51&+18+05+27.9%2b02+30+24&+18+06+50.4-09+41+16&+18+04+22.9-12+44+23&+18+10+24.4-07+19+02&+18+08+35.6%2b05+17+26&+16+18+19.3-04+41+33&+15+02+54.0%2b02+05+29&+17+26+30.9%2b04+08+25&+17+43+28.4%2b04+34+02&+17+59+01.6-09+46+25&+18+05+27.3%2b02+30+00&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (28902 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (18 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 18
+sclsvrServer -   vobs - Test  - Performing COPY action on star list size = 18
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() without criteria - list size = 0
 sclsvrServer -   vobs - Test  - after COPY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting J/A+A/393/183/catalog ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=Nmag&-out=UDDK&-out=e_UDDK&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (7152 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (6 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 6
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 6
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting J/A+A/433/1155 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Parsing XML document (4437 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - ...number of stars return = 0
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 0
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting J/A+A/413/1037 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/413/1037&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Jmag&-out=Ksmag&-out=Var&Var=%3C4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (4937 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 1
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 1
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting II/246/out ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=2MASS&-out=Jmag&-out=Hmag&-out=Kmag&-out=*ID_CATALOG&-out=*CODE_QUALITY&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (8925 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting II/7A/catalog ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=*PHOT_JHN_R&-out=*PHOT_JHN_I&-out=*PHOT_JHN_J&-out=*PHOT_JHN_H&-out=*PHOT_JHN_K&-out=*PHOT_JHN_U&-out=*PHOT_JHN_L&-out=*PHOT_JHN_M&-out=*PHOT_IR_N:10.4&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (7384 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 3 on property[PHOT_JHN_V] with range = 0.100000
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting II/225/catalog ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-out.max=1000-c.r=1&-c.u=arcmin&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=lambda&-out=F(IR)&-out=x_F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (7069 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (48 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 48
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 48
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting I/196/main ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*VELOC_HC&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (6062 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 3 on property[ID_HD] with range = 0.000000
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting V/50/catalog ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (4942 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (7 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 7
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 7
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 3 on property[ID_HD] with range = 0.000000
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting V/36B/bsc4s ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*VELOC_ROTAT&-out=HD&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (3884 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 1
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 1
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 3 on property[ID_HD] with range = 0.000000
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting B/sb9/main ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Parsing XML document (3401 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - ...number of stars return = 0
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 0
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting B/wds/wds ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (4148 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 1
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 1
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000278
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000278
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
 sclsvrServer -   vobs - Test  - Consulting II/297/irc ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&16+18+19.290-04+41+33.03&+17+43+28.353%2b04+34+02.29&+17+59+01.593-09+46+25.07&+14+28+41.722-06+54+01.94&+15+01+19.826-02+45+17.73&+15+02+54.038%2b02+05+28.69&+17+26+30.881%2b04+08+25.29&+15+19+21.807-09+08+47.47&+17+53+03.318-02+34+45.65&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (6836 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - ...number of stars return = 9
+sclsvrServer -   vobs - Test  - Performing UPDATE_ONLY action on star list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Merge() with criteria - list size = 9
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000556
+sclsvrServer -   vobs - Test  - vobsSTAR_COMP_CRITERIA_LIST::log - criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000556
 sclsvrServer -   vobs - Test  - after UPDATE_ONLY, star list size = 9
+sclsvrServer -   vobs - Info  - vobsSCENARIO::Execute() - 9 star(s) found.
 sclsvrServer -   vobs - Test  - Number of stars found : 9
 sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Copy()
 sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - start
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 146791'
 sclsvrServer -    alx - Test  - Original spectral type = 'G8III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'G8III'.
 sclsvrServer -    alx - Test  -  - Code                = 'G'.
@@ -113,8 +214,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 20.769493
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 24.400000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 12.204099
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 5.598233
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.257211
 sclsvrServer - sclsvr - Test  - star HD 146791 - parallax 29.95(0.79) is OK...
 sclsvrServer -    alx - Test  - ra = -2.014452 radians
@@ -178,6 +280,7 @@ sclsvrServer -    alx - Test  - UD_H = 3.022291
 sclsvrServer -    alx - Test  - UD_K = 3.036983
 sclsvrServer -    alx - Test  - UD_L = 3.068099
 sclsvrServer -    alx - Test  - UD_N = 3.091249
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 161096'
 sclsvrServer -    alx - Test  - Original spectral type = 'K2III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'K2III'.
 sclsvrServer -    alx - Test  -  - Code                = 'K'.
@@ -196,7 +299,10 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no 9 mu flux available).
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 50.870000
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 25.611160
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 11.787594
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 0.452402
 sclsvrServer - sclsvr - Test  - star HD 161096 - parallax 39.86(0.75) is OK...
 sclsvrServer -    alx - Test  - ra = -1.642911 radians
 sclsvrServer -    alx - Test  - dec = 0.079714 radians
@@ -259,6 +365,7 @@ sclsvrServer -    alx - Test  - UD_H = 4.536800
 sclsvrServer -    alx - Test  - UD_K = 4.561370
 sclsvrServer -    alx - Test  - UD_L = 4.611800
 sclsvrServer -    alx - Test  - UD_N = 4.648246
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 163917'
 sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
 sclsvrServer -    alx - Test  -  - Code                = 'K'.
@@ -277,8 +384,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 18.433337
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 21.640000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 10.846269
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 4.980627
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.385274
 sclsvrServer - sclsvr - Test  - star HD 163917 - parallax 21.55(0.79) is OK...
 sclsvrServer -    alx - Test  - ra = -1.575044 radians
@@ -340,6 +448,7 @@ sclsvrServer -    alx - Test  - UD_H = 2.684049
 sclsvrServer -    alx - Test  - UD_K = 2.697096
 sclsvrServer -    alx - Test  - UD_L = 2.724730
 sclsvrServer -    alx - Test  - UD_N = 2.745289
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 126927'
 sclsvrServer -    alx - Test  - Original spectral type = 'K5III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'K5III'.
 sclsvrServer -    alx - Test  -  - Code                = 'K'.
@@ -358,8 +467,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 9.406533
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 11.000000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 5.574575
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 2.574537
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 2.107946
 sclsvrServer - sclsvr - Test  - star HD 126927 - parallax 6.84(0.75) is OK...
 sclsvrServer -    alx - Test  - ra = -2.492787 radians
@@ -421,6 +531,7 @@ sclsvrServer -    alx - Test  - UD_H = 2.222650
 sclsvrServer -    alx - Test  - UD_K = 2.237710
 sclsvrServer -    alx - Test  - UD_L = 2.265617
 sclsvrServer -    alx - Test  - UD_N = 2.285691
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 132833'
 sclsvrServer -    alx - Test  - Original spectral type = 'M0III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'M0III'.
 sclsvrServer -    alx - Test  -  - Code                = 'M'.
@@ -439,8 +550,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 16.759250
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 19.550000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 9.985703
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 4.635457
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.475028
 sclsvrServer - sclsvr - Test  - star HD 132833 - parallax 5.73(0.80) is OK...
 sclsvrServer -    alx - Test  - ra = -2.350389 radians
@@ -492,6 +604,7 @@ sclsvrServer -    alx - Test  - dV  = 0.008647
 sclsvrServer -    alx - Test  - V2  = 0.266355
 sclsvrServer -    alx - Test  - dV2 = 0.008926
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 133165'
 sclsvrServer -    alx - Test  - Original spectral type = 'K0III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'K0III'.
 sclsvrServer -    alx - Test  -  - Code                = 'K'.
@@ -510,8 +623,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 8.535214
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 10.020000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 5.022163
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 2.306187
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 2.221248
 sclsvrServer - sclsvr - Test  - star HD 133165 - parallax 17.37(0.88) is OK...
 sclsvrServer -    alx - Test  - ra = -2.343538 radians
@@ -575,6 +689,7 @@ sclsvrServer -    alx - Test  - UD_H = 1.957728
 sclsvrServer -    alx - Test  - UD_K = 1.967244
 sclsvrServer -    alx - Test  - UD_L = 1.987400
 sclsvrServer -    alx - Test  - UD_N = 2.002396
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 157999'
 sclsvrServer -    alx - Test  - Original spectral type = 'K3IIvar'.
 sclsvrServer -    alx - Test  - Un-VAR spectral type = 'K3II'.
 sclsvrServer -    alx - Test  - Final spectral type = 'K3II'.
@@ -595,8 +710,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'YES'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 21.870196
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 25.610000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 12.927470
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 5.957824
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.194691
 sclsvrServer - sclsvr - Test  - star HD 157999 - parallax 3.13(0.92) is not valid; could not compute diameter
 sclsvrServer -    alx - Test  - ra = -1.716904 radians
@@ -609,6 +725,7 @@ sclsvrServer -    alx - Test  - dV  = 0.008926
 sclsvrServer -    alx - Test  - V2  = 0.243218
 sclsvrServer -    alx - Test  - dV2 = 0.008804
 sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 136140'
 sclsvrServer -    alx - Test  - Original spectral type = 'M4III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'M4III'.
 sclsvrServer -    alx - Test  -  - Code                = 'M'.
@@ -627,8 +744,9 @@ sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9 akari  computed  = 24.089034
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 28.030000
 sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 14.428209
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 6.728908
 sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 1.075444
 sclsvrServer - sclsvr - Test  - star HD 136140 - parallax 5.57(1.12) is OK...
 sclsvrServer -    alx - Test  - ra = -2.271706 radians
@@ -674,6 +792,7 @@ sclsvrServer -    alx - Test  - Corrected magnitude[M] = 0.000
 sclsvrServer - sclsvr - Test  - star HD 136140 - unknown RO property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star HD 136140 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::Complete() - id = 'HD 162812'
 sclsvrServer -    alx - Test  - Original spectral type = 'M6 III'.
 sclsvrServer -    alx - Test  - Final spectral type = 'M6III'.
 sclsvrServer -    alx - Test  -  - Code                = 'M'.
@@ -691,8 +810,11 @@ sclsvrServer -    alx - Test  -  - Luminosity Class    = 'III'.
 sclsvrServer -    alx - Test  -  - Is Double           = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Spectral Binary  = 'NO'.
 sclsvrServer -    alx - Test  -  - Is Variable         = 'NO'.
-sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (alxRetrieveTeffAndLoggFromSptype() failed on this spectral type: M6 III).
-sclsvrServer - sclsvr - Test  - IR Fluxes - Skipping (no Teff available).
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_9  akari measured = 62.390000
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_12 akari computed = 32.327357
+sclsvrServer - sclsvr - Test  - IR Fluxes - fnu_18 akari computed = 15.125372
+sclsvrServer - sclsvr - Test  - IR Fluxes MagN akari computed = 0.199550
 sclsvrServer - sclsvr - Test  - star HD 162812 - parallax 2.76(1.01) is not valid; could not compute diameter
 sclsvrServer -    alx - Test  - ra = -1.601098 radians
 sclsvrServer -    alx - Test  - dec = -0.045018 radians
@@ -700,7 +822,8 @@ sclsvrServer -    alx - Test  - gLat = 11.740 degrees
 sclsvrServer -    alx - Test  - gLon = 23.830 degrees
 sclsvrServer - sclsvr - Test  - star HD 162812 - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
-sclsvrServer -   vobs - Test  - vobsSTAR_LIST::Sort()
+sclsvrServer -   vobs - Info  - vobsSTAR_LIST::Sort()
+sclsvrServer -   vobs - Info  - vobsSTAR_LIST::Sort() - done.
 sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR_LIST::Complete() - exit
 sclsvrServer -   vobs - Test  - Star 'HD 146791' is farther than 0.000278 degrees of the reference star.
 sclsvrServer -   vobs - Test  - Star 'HD 136140' is farther than 0.000278 degrees of the reference star.
@@ -711,6 +834,8 @@ sclsvrServer -   vobs - Test  - Star 'HD 161096' is farther than 0.000278 degree
 sclsvrServer -   vobs - Test  - Star 'HD 162812' is farther than 0.000278 degrees of the reference star.
 sclsvrServer -   vobs - Test  - Star 'HD 126927' is farther than 0.000278 degrees of the reference star.
 sclsvrServer -   vobs - Test  - Star 'HD 163917' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - GetVotable: buffer capacity = 141294 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 139882 / 141294  bytes
 VOTable:
 <?xml version="1.0"?>
 
@@ -2705,10 +2830,10 @@ VOTable:
       <TD>157999</TD><TD>I/280</TD><TD></TD><TD>85355</TD><TD>I/280</TD><TD></TD><TD>403422</TD><TD>I/280</TD><TD></TD><TD>409</TD><TD>I/280</TD><TD></TD><TD>1922</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>17263087+0408252</TD><TD>II/246/out</TD><TD></TD><TD>17 26 30.881</TD><TD>I/280</TD><TD></TD><TD>+04 08 25.29</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.78</TD><TD>I/280</TD><TD></TD><TD>6.76</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>K3IIvar</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>W</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>DCC</TD><TD>II/246/out</TD><TD></TD><TD>20.755</TD><TD>II/246/out</TD><TD></TD><TD>26.766</TD><TD>II/246/out</TD><TD></TD><TD>-27.1</TD><TD>I/196/main</TD><TD></TD><TD>19</TD><TD>V/50/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.15</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.035</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.879</TD><TD>I/280</TD><TD></TD><TD>5.86</TD><TD>II/246/out</TD><TD></TD><TD>4.324</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.23</TD><TD>II/7A/catalog</TD><TD></TD><TD>4.33</TD><TD>II/246/out</TD><TD></TD><TD>2.46</TD><TD>II/7A/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.78</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>1.1</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.98</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.89</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>1.03</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>1.195</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>25.61</TD><TD>II/297/irc</TD><TD></TD><TD>0.0174</TD><TD>II/297/irc</TD><TD></TD><TD>12.927</TD><TD>computed</TD><TD>HIGH</TD><TD>0.009</TD><TD>computed</TD><TD>HIGH</TD><TD>5.613</TD><TD>II/297/irc</TD><TD></TD><TD>0.0552</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>4250.000</TD><TD>computed</TD><TD>HIGH</TD><TD>1.978</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.243</TD><TD>computed</TD><TD>HIGH</TD><TD>0.009</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>19.657</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD>161096</TD><TD>I/280</TD><TD></TD><TD>86742</TD><TD>I/280</TD><TD></TD><TD>403489</TD><TD>I/280</TD><TD></TD><TD>423</TD><TD>I/280</TD><TD></TD><TD>1724</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>17432835+0434022</TD><TD>II/246/out</TD><TD></TD><TD>17 43 28.353</TD><TD>I/280</TD><TD></TD><TD>+04 34 02.29</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-40.93</TD><TD>I/280</TD><TD></TD><TD>158.44</TD><TD>I/280</TD><TD></TD><TD>39.86</TD><TD>I/280</TD><TD></TD><TD>0.75</TD><TD>I/280</TD><TD></TD><TD>K2III</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>W</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>DCC</TD><TD>II/246/out</TD><TD></TD><TD>17.191</TD><TD>II/246/out</TD><TD></TD><TD>29.213</TD><TD>II/246/out</TD><TD></TD><TD>-12.0</TD><TD>I/196/main</TD><TD></TD><TD>17</TD><TD>V/50/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>4.51</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.049</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.964</TD><TD>I/280</TD><TD></TD><TD>3.94</TD><TD>II/246/out</TD><TD></TD><TD>2.759</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.95</TD><TD>II/7A/catalog</TD><TD></TD><TD>2.75</TD><TD>II/246/out</TD><TD></TD><TD>1.38</TD><TD>II/7A/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.84</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.31</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.19</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.1</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.3</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.579</TD><TD>computed</TD><TD>HIGH</TD><TD>0.446</TD><TD>computed</TD><TD>HIGH</TD><TD>4.627</TD><TD>computed</TD><TD>HIGH</TD><TD>0.449</TD><TD>computed</TD><TD>HIGH</TD><TD>4.681</TD><TD>computed</TD><TD>HIGH</TD><TD>0.323</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>4390.000</TD><TD>computed</TD><TD>HIGH</TD><TD>2.028</TD><TD>computed</TD><TD>HIGH</TD><TD>4.245</TD><TD>computed</TD><TD>HIGH</TD><TD>4.438</TD><TD>computed</TD><TD>HIGH</TD><TD>4.500</TD><TD>computed</TD><TD>HIGH</TD><TD>4.537</TD><TD>computed</TD><TD>HIGH</TD><TD>4.561</TD><TD>computed</TD><TD>HIGH</TD><TD>4.612</TD><TD>computed</TD><TD>HIGH</TD><TD>4.648</TD><TD>computed</TD><TD>HIGH</TD><TD>4.381</TD><TD>computed</TD><TD>HIGH</TD><TD>4.206</TD><TD>computed</TD><TD>HIGH</TD><TD>4.309</TD><TD>computed</TD><TD>HIGH</TD><TD>0.030</TD><TD>computed</TD><TD>HIGH</TD><TD>0.299</TD><TD>computed</TD><TD>HIGH</TD><TD>0.098</TD><TD>computed</TD><TD>HIGH</TD><TD>0.187</TD><TD>computed</TD><TD>HIGH</TD><TD>0.305</TD><TD>computed</TD><TD>HIGH</TD><TD>0.832</TD><TD>computed</TD><TD>HIGH</TD><TD>1.365</TD><TD>computed</TD><TD>HIGH</TD><TD>1.928</TD><TD>computed</TD><TD>HIGH</TD><TD>2.729</TD><TD>computed</TD><TD>HIGH</TD><TD>3.925</TD><TD>computed</TD><TD>HIGH</TD><TD>0.027</TD><TD>computed</TD><TD>HIGH</TD><TD>0.003</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>23.745</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD>161096</TD><TD>I/280</TD><TD></TD><TD>86742</TD><TD>I/280</TD><TD></TD><TD>403489</TD><TD>I/280</TD><TD></TD><TD>423</TD><TD>I/280</TD><TD></TD><TD>1724</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>17432835+0434022</TD><TD>II/246/out</TD><TD></TD><TD>17 43 28.353</TD><TD>I/280</TD><TD></TD><TD>+04 34 02.29</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-40.93</TD><TD>I/280</TD><TD></TD><TD>158.44</TD><TD>I/280</TD><TD></TD><TD>39.86</TD><TD>I/280</TD><TD></TD><TD>0.75</TD><TD>I/280</TD><TD></TD><TD>K2III</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>W</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>DCC</TD><TD>II/246/out</TD><TD></TD><TD>17.191</TD><TD>II/246/out</TD><TD></TD><TD>29.213</TD><TD>II/246/out</TD><TD></TD><TD>-12.0</TD><TD>I/196/main</TD><TD></TD><TD>17</TD><TD>V/50/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>4.51</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.049</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3.964</TD><TD>I/280</TD><TD></TD><TD>3.94</TD><TD>II/246/out</TD><TD></TD><TD>2.759</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.95</TD><TD>II/7A/catalog</TD><TD></TD><TD>2.75</TD><TD>II/246/out</TD><TD></TD><TD>1.38</TD><TD>II/7A/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.84</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.31</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.19</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.1</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.3</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.452</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>50.87</TD><TD>II/297/irc</TD><TD></TD><TD>0.139</TD><TD>II/297/irc</TD><TD></TD><TD>25.611</TD><TD>computed</TD><TD>HIGH</TD><TD>0.070</TD><TD>computed</TD><TD>HIGH</TD><TD>10.89</TD><TD>II/297/irc</TD><TD></TD><TD>0.0772</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>5.579</TD><TD>computed</TD><TD>HIGH</TD><TD>0.446</TD><TD>computed</TD><TD>HIGH</TD><TD>4.627</TD><TD>computed</TD><TD>HIGH</TD><TD>0.449</TD><TD>computed</TD><TD>HIGH</TD><TD>4.681</TD><TD>computed</TD><TD>HIGH</TD><TD>0.323</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>4390.000</TD><TD>computed</TD><TD>HIGH</TD><TD>2.028</TD><TD>computed</TD><TD>HIGH</TD><TD>4.245</TD><TD>computed</TD><TD>HIGH</TD><TD>4.438</TD><TD>computed</TD><TD>HIGH</TD><TD>4.500</TD><TD>computed</TD><TD>HIGH</TD><TD>4.537</TD><TD>computed</TD><TD>HIGH</TD><TD>4.561</TD><TD>computed</TD><TD>HIGH</TD><TD>4.612</TD><TD>computed</TD><TD>HIGH</TD><TD>4.648</TD><TD>computed</TD><TD>HIGH</TD><TD>4.381</TD><TD>computed</TD><TD>HIGH</TD><TD>4.206</TD><TD>computed</TD><TD>HIGH</TD><TD>4.309</TD><TD>computed</TD><TD>HIGH</TD><TD>0.030</TD><TD>computed</TD><TD>HIGH</TD><TD>0.299</TD><TD>computed</TD><TD>HIGH</TD><TD>0.098</TD><TD>computed</TD><TD>HIGH</TD><TD>0.187</TD><TD>computed</TD><TD>HIGH</TD><TD>0.305</TD><TD>computed</TD><TD>HIGH</TD><TD>0.832</TD><TD>computed</TD><TD>HIGH</TD><TD>1.365</TD><TD>computed</TD><TD>HIGH</TD><TD>1.928</TD><TD>computed</TD><TD>HIGH</TD><TD>2.729</TD><TD>computed</TD><TD>HIGH</TD><TD>3.925</TD><TD>computed</TD><TD>HIGH</TD><TD>0.027</TD><TD>computed</TD><TD>HIGH</TD><TD>0.003</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>23.745</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
-      <TD>162812</TD><TD>I/280</TD><TD></TD><TD>87538</TD><TD>I/280</TD><TD></TD><TD>-204482</TD><TD>I/280</TD><TD></TD><TD>5087</TD><TD>I/280</TD><TD></TD><TD>261</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>17530332-0234458</TD><TD>II/246/out</TD><TD></TD><TD>17 53 03.318</TD><TD>I/280</TD><TD></TD><TD>-02 34 45.65</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-41.16</TD><TD>I/280</TD><TD></TD><TD>-40.25</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>M6 III</TD><TD>I/280</TD><TD></TD><TD>G</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>DDD</TD><TD>II/246/out</TD><TD></TD><TD>11.743</TD><TD>II/246/out</TD><TD></TD><TD>23.832</TD><TD>II/246/out</TD><TD></TD><TD>-64.0</TD><TD>I/196/main</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.925</TD><TD>I/280</TD><TD></TD><TD>8.91</TD><TD>II/246/out</TD><TD></TD><TD>7.559</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.57</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.723</TD><TD>II/246/out</TD><TD></TD><TD>0.791</TD><TD>II/246/out</TD><TD></TD><TD>0.499</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>62.39</TD><TD>II/297/irc</TD><TD></TD><TD>1.33</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>22.08</TD><TD>II/297/irc</TD><TD></TD><TD>0.0652</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>24.665</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
+      <TD>162812</TD><TD>I/280</TD><TD></TD><TD>87538</TD><TD>I/280</TD><TD></TD><TD>-204482</TD><TD>I/280</TD><TD></TD><TD>5087</TD><TD>I/280</TD><TD></TD><TD>261</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>17530332-0234458</TD><TD>II/246/out</TD><TD></TD><TD>17 53 03.318</TD><TD>I/280</TD><TD></TD><TD>-02 34 45.65</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-41.16</TD><TD>I/280</TD><TD></TD><TD>-40.25</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>M6 III</TD><TD>I/280</TD><TD></TD><TD>G</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>U</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>DDD</TD><TD>II/246/out</TD><TD></TD><TD>11.743</TD><TD>II/246/out</TD><TD></TD><TD>23.832</TD><TD>II/246/out</TD><TD></TD><TD>-64.0</TD><TD>I/196/main</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>8.925</TD><TD>I/280</TD><TD></TD><TD>8.91</TD><TD>II/246/out</TD><TD></TD><TD>7.559</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>7.57</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>1.723</TD><TD>II/246/out</TD><TD></TD><TD>0.791</TD><TD>II/246/out</TD><TD></TD><TD>0.499</TD><TD>II/246/out</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>0.200</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>62.39</TD><TD>II/297/irc</TD><TD></TD><TD>1.33</TD><TD>II/297/irc</TD><TD></TD><TD>32.327</TD><TD>computed</TD><TD>HIGH</TD><TD>0.689</TD><TD>computed</TD><TD>HIGH</TD><TD>22.08</TD><TD>II/297/irc</TD><TD></TD><TD>0.0652</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>3200.000</TD><TD>computed</TD><TD>HIGH</TD><TD>-0.122</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>24.665</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
      </TR>
      <TR>
       <TD>126927</TD><TD>I/280</TD><TD></TD><TD>70794</TD><TD>I/280</TD><TD></TD><TD>-604009</TD><TD>I/280</TD><TD></TD><TD>4983</TD><TD>I/280</TD><TD></TD><TD>1616</TD><TD>I/280</TD><TD></TD><TD>1</TD><TD>I/280</TD><TD></TD><TD>T</TD><TD>II/246/out</TD><TD></TD><TD>14284172-0654019</TD><TD>II/246/out</TD><TD></TD><TD>14 28 41.722</TD><TD>I/280</TD><TD></TD><TD>-06 54 01.94</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>-14.96</TD><TD>I/280</TD><TD></TD><TD>-51.84</TD><TD>I/280</TD><TD></TD><TD>6.84</TD><TD>I/280</TD><TD></TD><TD>0.75</TD><TD>I/280</TD><TD></TD><TD>K5III</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>DCD</TD><TD>II/246/out</TD><TD></TD><TD>48.624</TD><TD>II/246/out</TD><TD></TD><TD>341.131</TD><TD>II/246/out</TD><TD></TD><TD>-49.3</TD><TD>I/196/main</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2.24</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>0.026</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>6.953</TD><TD>I/280</TD><TD></TD><TD>6.94</TD><TD>II/246/out</TD><TD></TD><TD>5.421</TD><TD>I/280</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>4.279</TD><TD>computed</TD><TD>HIGH</TD><TD>5.43</TD><TD>II/246/out</TD><TD></TD><TD>3.387</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2.89</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>2.09</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>1.92</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>1.8</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>2</TD><TD>J/A+A/393/183/catalog</TD><TD></TD><TD>2.108</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>11</TD><TD>II/297/irc</TD><TD></TD><TD>0.034</TD><TD>II/297/irc</TD><TD></TD><TD>5.575</TD><TD>computed</TD><TD>HIGH</TD><TD>0.017</TD><TD>computed</TD><TD>HIGH</TD><TD>2.439</TD><TD>II/297/irc</TD><TD></TD><TD>0.0256</TD><TD>II/297/irc</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>2.792</TD><TD>computed</TD><TD>HIGH</TD><TD>0.223</TD><TD>computed</TD><TD>HIGH</TD><TD>2.415</TD><TD>computed</TD><TD>HIGH</TD><TD>0.234</TD><TD>computed</TD><TD>HIGH</TD><TD>2.303</TD><TD>computed</TD><TD>HIGH</TD><TD>0.159</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>OK</TD><TD>computed</TD><TD>HIGH</TD><TD>4050.000</TD><TD>computed</TD><TD>HIGH</TD><TD>1.678</TD><TD>computed</TD><TD>HIGH</TD><TD>2.080</TD><TD>computed</TD><TD>HIGH</TD><TD>2.171</TD><TD>computed</TD><TD>HIGH</TD><TD>2.205</TD><TD>computed</TD><TD>HIGH</TD><TD>2.223</TD><TD>computed</TD><TD>HIGH</TD><TD>2.238</TD><TD>computed</TD><TD>HIGH</TD><TD>2.266</TD><TD>computed</TD><TD>HIGH</TD><TD>2.286</TD><TD>computed</TD><TD>HIGH</TD><TD>2.137</TD><TD>computed</TD><TD>HIGH</TD><TD>2.082</TD><TD>computed</TD><TD>HIGH</TD><TD>2.103</TD><TD>computed</TD><TD>HIGH</TD><TD>0.007</TD><TD>computed</TD><TD>HIGH</TD><TD>2.000</TD><TD>computed</TD><TD>HIGH</TD><TD>1.800</TD><TD>computed</TD><TD>HIGH</TD><TD>1.919</TD><TD>computed</TD><TD>HIGH</TD><TD>2.089</TD><TD>computed</TD><TD>HIGH</TD><TD>2.888</TD><TD>computed</TD><TD>HIGH</TD><TD>3.384</TD><TD>computed</TD><TD>HIGH</TD><TD>4.274</TD><TD>computed</TD><TD>HIGH</TD><TD>5.414</TD><TD>computed</TD><TD>HIGH</TD><TD>6.943</TD><TD>computed</TD><TD>HIGH</TD><TD>0.513</TD><TD>computed</TD><TD>HIGH</TD><TD>0.008</TD><TD>computed</TD><TD>HIGH</TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD></TD><TD>-</TD><TD></TD><TD>26.489</TD><TD>computed</TD><TD>HIGH</TD><TD>false</TD><TD></TD><TD></TD>
@@ -2721,3 +2846,5 @@ VOTable:
   </TABLE>
  </RESOURCE>
 </VOTABLE>
+sclsvrServer -   vobs - Test  - GetVotable: buffer capacity = 141294 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 139862 / 141294  bytes
