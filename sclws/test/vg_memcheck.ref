@@ -2,18 +2,20 @@
  Copyright (C) 2002-2009, and GNU GPL'd, by Julian Seward et al.
  Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
  Command: sclwsServer -v 3
- Parent PID: 14857
+ Parent PID: 7710
  
  
  Valgrind options:
+    --run-libc-freeres=no
     -v
     --num-callers=12
     --freelist-vol=500000000
     --suppressions=./custom_suppressions.txt
     --log-file=./vg_memcheck.log
     --leak-check=full
+    --show-reachable=yes
  Contents of /proc/version:
-   Linux version 2.6.32-4-pve (unknown) (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Tue Mar 29 09:08:37 CEST 2011
+   Linux version 2.6.32-4-pve (unknown) (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Mon May 9 12:59:57 CEST 2011
  Arch and hwcaps: AMD64, amd64-sse3-cx16
  Page sizes: currently 4096, max supported 4096
  Valgrind library directory: /usr/lib64/valgrind
@@ -43,308 +45,159 @@
  Reading syms from /lib64/libuuid.so.1.2 (0x5ddc000)
     object doesn't have a symbol table
  Reading syms from /home/users/bourgesl/dev/SCALIB/DEVELOPMENT/sclws/lib/libsclws.so (0x5fe0000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libsclsvr.so (0x6204000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libvobs.so (0x643c000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libalx.so (0x66ab000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libsimcli.so (0x68df000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libthrd.so (0x6ae7000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libmcs.so (0x6cec000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/liblog.so (0x6eee000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/liberr.so (0x70f1000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libmisc.so (0x72f9000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libtimlog.so (0x7502000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libfnd.so (0x7704000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libmisco.so (0x7906000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libenv.so (0x7b0e000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libcmd.so (0x7d13000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libmsg.so (0x7f24000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libsdb.so (0x8133000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libevh.so (0x8336000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libgwt.so (0x8551000)
- Reading syms from /lib64/libgcc_s-4.1.2-20080825.so.1 (0x8779000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsclsvr.so (0x61fa000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libvobs.so (0x6429000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libalx.so (0x666c000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsimcli.so (0x689d000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libthrd.so (0x6aa5000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmcs.so (0x6ca9000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liblog.so (0x6eab000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liberr.so (0x70ae000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisc.so (0x72b3000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libtimlog.so (0x74bb000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libfnd.so (0x76bd000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisco.so (0x78bf000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libenv.so (0x7ac7000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libcmd.so (0x7ccc000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmsg.so (0x7edb000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsdb.so (0x80eb000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libevh.so (0x82ee000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libgwt.so (0x8509000)
+ Reading syms from /lib64/libgcc_s-4.1.2-20080825.so.1 (0x8731000)
     object doesn't have a symbol table
- Reading syms from /lib64/libc-2.5.so (0x8987000)
- Reading syms from /lib64/libdl-2.5.so (0x8cde000)
- Reading syms from /usr/lib64/libz.so.1.2.3 (0x8ee2000)
+ Reading syms from /lib64/libc-2.5.so (0x893f000)
+ Reading syms from /lib64/libdl-2.5.so (0x8c96000)
+ Reading syms from /usr/lib64/libz.so.1.2.3 (0x8e9a000)
     object doesn't have a symbol table
- Reading syms from /lib64/librt-2.5.so (0x90f6000)
- REDIR: 0x8a01cb0 (memset) redirected to 0x4c22030 (memset)
- REDIR: 0x8a030f0 (memcpy) redirected to 0x4c23030 (memcpy)
- REDIR: 0x8a00df0 (rindex) redirected to 0x4c21ae0 (rindex)
- REDIR: 0x8a00a00 (strlen) redirected to 0x4c21d80 (strlen)
- REDIR: 0x89fb890 (calloc) redirected to 0x4c20092 (calloc)
+ Reading syms from /lib64/librt-2.5.so (0x90ae000)
+ REDIR: 0x89b9cb0 (memset) redirected to 0x4c22030 (memset)
+ REDIR: 0x89bb0f0 (memcpy) redirected to 0x4c23030 (memcpy)
+ REDIR: 0x89b8df0 (rindex) redirected to 0x4c21ae0 (rindex)
+ REDIR: 0x89b8a00 (strlen) redirected to 0x4c21d80 (strlen)
+ REDIR: 0x89b3890 (calloc) redirected to 0x4c20092 (calloc)
  REDIR: 0x597e1c0 (operator new(unsigned long)) redirected to 0x4c215ea (operator new(unsigned long))
  REDIR: 0x597cf50 (operator delete(void*)) redirected to 0x4c206bc (operator delete(void*))
- REDIR: 0x8a00d40 (strncpy) redirected to 0x4c231a0 (strncpy)
- REDIR: 0x8a00c80 (strncmp) redirected to 0x4c21de0 (strncmp)
- REDIR: 0x89fbc70 (malloc) redirected to 0x4c20d9a (malloc)
- REDIR: 0x8a03d50 (rawmemchr) redirected to 0x4c22110 (rawmemchr)
+ REDIR: 0x89b0a40 (mallopt) redirected to 0x4c1fb90 (mallopt)
+ REDIR: 0x89b8d40 (strncpy) redirected to 0x4c231a0 (strncpy)
+ REDIR: 0x89b8c80 (strncmp) redirected to 0x4c21de0 (strncmp)
+ REDIR: 0x89b84c0 (strcpy) redirected to 0x4c232c0 (strcpy)
+ REDIR: 0x89b3c70 (malloc) redirected to 0x4c20d9a (malloc)
+ REDIR: 0x89bbd50 (rawmemchr) redirected to 0x4c22110 (rawmemchr)
  REDIR: 0xffffffffff600000 (???) redirected to 0x3803e753 (vgPlain_amd64_linux_REDIR_FOR_vgettimeofday)
- REDIR: 0x89f9720 (free) redirected to 0x4c209aa (free)
- REDIR: 0x8a004c0 (strcpy) redirected to 0x4c232c0 (strcpy)
- REDIR: 0x8a00480 (strcmp) redirected to 0x4c21e50 (strcmp)
- REDIR: 0x8a027e0 (mempcpy) redirected to 0x4c22870 (mempcpy)
- REDIR: 0x8a00110 (strcat) redirected to 0x4c22590 (strcat)
- REDIR: 0x8a014f0 (memchr) redirected to 0x4c21f10 (memchr)
- REDIR: 0x8a002d0 (index) redirected to 0x4c21b70 (index)
- REDIR: 0x8a03ea0 (strchrnul) redirected to 0x4c220e0 (strchrnul)
- REDIR: 0x8a02df0 (stpcpy) redirected to 0x4c22b10 (stpcpy)
- Reading syms from /lib64/libnss_files-2.5.so (0x96ff000)
- REDIR: 0x8a00be0 (strncat) redirected to 0x4c21c60 (strncat)
- REDIR: 0x8a01b10 (memmove) redirected to 0x4c22080 (memmove)
- REDIR: 0x89fc190 (realloc) redirected to 0x4c20e4b (realloc)
- Thread 3:
- Invalid read of size 1
-    at 0x72FBBA6: miscDynBufChkStringParam (miscDynBuf.c:252)
-    by 0x72FCF1E: miscDynBufAppendString (miscDynBuf.c:1537)
-    by 0x72FD7DE: miscResolvePath (miscFile.c:459)
-    by 0x72FE06C: miscLocateFileInPath (miscFile.c:845)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-  Address 0x9360cf0 is 0 bytes inside a block of size 512 free'd
-    at 0x4C20F1D: realloc (vg_replace_malloc.c:476)
-    by 0x72FBED1: miscDynBufStrip (miscDynBuf.c:422)
-    by 0x72FE01D: miscLocateFileInPath (miscFile.c:833)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
- 
- Invalid read of size 1
-    at 0x72FCEE5: miscDynBufAppendBytes (miscDynBuf.c:1507)
-    by 0x72FCFA9: miscDynBufAppendString (miscDynBuf.c:1576)
-    by 0x72FD7DE: miscResolvePath (miscFile.c:459)
-    by 0x72FE06C: miscLocateFileInPath (miscFile.c:845)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-  Address 0x9360cf0 is 0 bytes inside a block of size 512 free'd
-    at 0x4C20F1D: realloc (vg_replace_malloc.c:476)
-    by 0x72FBED1: miscDynBufStrip (miscDynBuf.c:422)
-    by 0x72FE01D: miscLocateFileInPath (miscFile.c:833)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
- 
- REDIR: 0x89fc0e0 (posix_memalign) redirected to 0x4c20047 (posix_memalign)
- Conditional jump or move depends on uninitialised value(s)
-    at 0x7D18525: cmdCOMMAND::ParseParams() (cmdCOMMAND.cpp:1635)
-    by 0x7D189A5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:120)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
-    by 0x5FFCE07: soap_serve(soap*) (soapServer.cpp:49)
-    by 0x403D4C: sclwsJobHandler(void*) (sclwsServer.cpp:120)
-    by 0x5BC773C: start_thread (in /lib64/libpthread-2.5.so)
-    by 0x8A5AF6C: clone (in /lib64/libc-2.5.so)
- 
- Invalid read of size 1
-    at 0x4C21B84: index (mc_replace_strmem.c:141)
-    by 0x72FC4C7: miscDynBufGetNextLine (miscDynBuf.c:897)
-    by 0x66B5F60: alxGetTeffLoggTable (alxCorrectedMagnitude.c:2012)
-    by 0x66B6197: alxRetrieveTeffAndLoggFromSptype (alxCorrectedMagnitude.c:2172)
-    by 0x6214C05: sclsvrCALIBRATOR::ComputeTeffLogg() (sclsvrCALIBRATOR.cpp:1981)
-    by 0x6219286: sclsvrCALIBRATOR::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR.cpp:239)
-    by 0x621B5BB: sclsvrCALIBRATOR_LIST::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR_LIST.cpp:173)
-    by 0x62232DF: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:315)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
-  Address 0xef9166f is 0 bytes after a block of size 2,927 alloc'd
-    at 0x4C20140: calloc (vg_replace_malloc.c:418)
-    by 0x72FBCDB: miscDynBufAlloc (miscDynBuf.c:348)
-    by 0x72FC88B: miscDynBufLoadFile (miscDynBuf.c:1090)
-    by 0x66B5CC7: alxGetTeffLoggTable (alxCorrectedMagnitude.c:2002)
-    by 0x66B6197: alxRetrieveTeffAndLoggFromSptype (alxCorrectedMagnitude.c:2172)
-    by 0x6214C05: sclsvrCALIBRATOR::ComputeTeffLogg() (sclsvrCALIBRATOR.cpp:1981)
-    by 0x6219286: sclsvrCALIBRATOR::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR.cpp:239)
-    by 0x621B5BB: sclsvrCALIBRATOR_LIST::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR_LIST.cpp:173)
-    by 0x62232DF: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:315)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
- 
- Discarding syms at 0x9700fe0-0x9707268 in /lib64/libnss_files-2.5.so due to munmap()
+ REDIR: 0x89b1720 (free) redirected to 0x4c209aa (free)
+ REDIR: 0x89b8480 (strcmp) redirected to 0x4c21e50 (strcmp)
+ REDIR: 0x89ba7e0 (mempcpy) redirected to 0x4c22870 (mempcpy)
+ REDIR: 0x89b8be0 (strncat) redirected to 0x4c21c60 (strncat)
+ REDIR: 0x89b82d0 (index) redirected to 0x4c21b70 (index)
+ REDIR: 0x89b9b10 (memmove) redirected to 0x4c22080 (memmove)
+ REDIR: 0x89b0420 (malloc_trim) redirected to 0x4c1fb9b (malloc_trim)
+ REDIR: 0x89b0000 (malloc_stats) redirected to 0x4c1fba6 (malloc_stats)
+ REDIR: 0x89b8110 (strcat) redirected to 0x4c22590 (strcat)
+ REDIR: 0x89b4190 (realloc) redirected to 0x4c20e4b (realloc)
+ REDIR: 0x89b94f0 (memchr) redirected to 0x4c21f10 (memchr)
+ REDIR: 0x597e2f0 (operator new[](unsigned long)) redirected to 0x4c21246 (operator new[](unsigned long))
+ REDIR: 0x597cf90 (operator delete[](void*)) redirected to 0x4c20338 (operator delete[](void*))
  
  HEAP SUMMARY:
-     in use at exit: 4,594 bytes in 12 blocks
-   total heap usage: 1,604,726 allocs, 1,604,714 frees, 102,831,318 bytes allocated
+     in use at exit: 3,370 bytes in 15 blocks
+   total heap usage: 4,332,014 allocs, 4,331,999 frees, 239,202,986 bytes allocated
  
- Searching for pointers to 12 not-freed blocks
- Checked 660,672 bytes
+ Searching for pointers to 15 not-freed blocks
+ Checked 33,369,992 bytes
  
- Thread 1:
- 240 bytes in 1 blocks are possibly lost in loss record 5 of 10
-    at 0x4C20016: memalign (vg_replace_malloc.c:532)
-    by 0x4C2006F: posix_memalign (vg_replace_malloc.c:660)
-    by 0x5664EA1: ??? (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x56661D3: g_slice_alloc (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x566696D: g_slist_prepend (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x5668D05: g_strsplit (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x4E4D9E8: gdome_xml_nnm_getNamedItem (in /usr/lib64/libgdome.so.0.8.1)
-    by 0x4E496B9: gdome_xml_el_getAttributeNode (in /usr/lib64/libgdome.so.0.8.1)
-    by 0x7D1B1D1: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1356)
-    by 0x7D19F25: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1194)
-    by 0x7D1C33A: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:996)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+ 15 bytes in 1 blocks are still reachable in loss record 1 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89B8771: strdup (in /lib64/libc-2.5.so)
+    by 0x89CB89B: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC34F: tzset (in /lib64/libc-2.5.so)
+    by 0x89D0C73: strftime_l (in /lib64/libc-2.5.so)
+    by 0x6EAC3DE: logGetTimeStamp (log.c:886)
+    by 0x6EACBDF: logPrint (log.c:629)
+    by 0x403CB5: sclwsStats() (sclwsServer.cpp:290)
+    by 0x4048E4: sclwsExit(int) (sclwsServer.cpp:584)
+    by 0x896F2CF: ??? (in /lib64/libc-2.5.so)
+    by 0x5BCEB38: ??? (in /lib64/libpthread-2.5.so)
+    by 0x4122E7: soap_accept (stdsoap2_cpp.cpp:4564)
  
- 720 bytes in 3 blocks are possibly lost in loss record 9 of 10
-    at 0x4C20016: memalign (vg_replace_malloc.c:532)
-    by 0x4C2006F: posix_memalign (vg_replace_malloc.c:660)
-    by 0x5664EA1: ??? (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x5666201: g_slice_alloc (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x566696D: g_slist_prepend (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x5668D05: g_strsplit (in /lib64/libglib-2.0.so.0.1200.3)
-    by 0x4E4D9E8: gdome_xml_nnm_getNamedItem (in /usr/lib64/libgdome.so.0.8.1)
-    by 0x4E496B9: gdome_xml_el_getAttributeNode (in /usr/lib64/libgdome.so.0.8.1)
-    by 0x7D1B1D1: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1356)
-    by 0x7D19F25: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1194)
-    by 0x7D1C33A: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:996)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+ 21 bytes in 1 blocks are possibly lost in loss record 2 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89CB783: __tzstring (in /lib64/libc-2.5.so)
+    by 0x89CD1BF: __tzfile_read (in /lib64/libc-2.5.so)
+    by 0x89CB8AE: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC17D: __tz_convert (in /lib64/libc-2.5.so)
+    by 0x6EAC3C7: logGetTimeStamp (log.c:885)
+    by 0x6EACBDF: logPrint (log.c:629)
+    by 0x40498E: sclwsInit() (sclwsServer.cpp:603)
+    by 0x404AFD: main (sclwsServer.cpp:704)
+ 
+ 44 bytes in 1 blocks are still reachable in loss record 3 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x72B8A9E: miscDuplicateString (miscString.c:370)
+    by 0x644847C: vobsGetVizierURI() (vobsREMOTE_CATALOG.cpp:95)
+    by 0x4049AE: sclwsInit() (sclwsServer.cpp:615)
+    by 0x404AFD: main (sclwsServer.cpp:704)
+ 
+ 56 bytes in 1 blocks are still reachable in loss record 4 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x400BA06: _dl_map_object_deps (in /lib64/ld-2.5.so)
+    by 0x4010C14: dl_open_worker (in /lib64/ld-2.5.so)
+    by 0x400CE05: _dl_catch_error (in /lib64/ld-2.5.so)
+    by 0x40105BB: _dl_open (in /lib64/ld-2.5.so)
+    by 0x8A47DEF: do_dlopen (in /lib64/libc-2.5.so)
+    by 0x400CE05: _dl_catch_error (in /lib64/ld-2.5.so)
+    by 0x8A47F56: __libc_dlopen_mode (in /lib64/libc-2.5.so)
+    by 0x5BD01DB: pthread_cancel_init (in /lib64/libpthread-2.5.so)
+    by 0x5BD02EF: _Unwind_ForcedUnwind (in /lib64/libpthread-2.5.so)
+    by 0x5BCE15F: __pthread_unwind (in /lib64/libpthread-2.5.so)
+    by 0x5BC8984: pthread_exit (in /lib64/libpthread-2.5.so)
+ 
+ 122 bytes in 6 blocks are still reachable in loss record 5 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89CB783: __tzstring (in /lib64/libc-2.5.so)
+    by 0x89CD1BF: __tzfile_read (in /lib64/libc-2.5.so)
+    by 0x89CB8AE: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC17D: __tz_convert (in /lib64/libc-2.5.so)
+    by 0x6EAC3C7: logGetTimeStamp (log.c:885)
+    by 0x6EACBDF: logPrint (log.c:629)
+    by 0x40498E: sclwsInit() (sclwsServer.cpp:603)
+    by 0x404AFD: main (sclwsServer.cpp:704)
+ 
+ 304 bytes in 1 blocks are possibly lost in loss record 6 of 8
+    at 0x4C20140: calloc (vg_replace_malloc.c:418)
+    by 0x400FE62: _dl_allocate_tls (in /lib64/ld-2.5.so)
+    by 0x5BC7EB8: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4049D0: sclwsInit() (sclwsServer.cpp:623)
+    by 0x404AFD: main (sclwsServer.cpp:704)
+ 
+ 912 bytes in 3 blocks are possibly lost in loss record 7 of 8
+    at 0x4C20140: calloc (vg_replace_malloc.c:418)
+    by 0x400FE62: _dl_allocate_tls (in /lib64/ld-2.5.so)
+    by 0x5BC7EB8: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x404BC3: main (sclwsServer.cpp:754)
+ 
+ 1,896 bytes in 1 blocks are still reachable in loss record 8 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89CCC05: __tzfile_read (in /lib64/libc-2.5.so)
+    by 0x89CB8AE: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC17D: __tz_convert (in /lib64/libc-2.5.so)
+    by 0x6EAC3C7: logGetTimeStamp (log.c:885)
+    by 0x6EACBDF: logPrint (log.c:629)
+    by 0x40498E: sclwsInit() (sclwsServer.cpp:603)
+    by 0x404AFD: main (sclwsServer.cpp:704)
  
  LEAK SUMMARY:
     definitely lost: 0 bytes in 0 blocks
     indirectly lost: 0 bytes in 0 blocks
-      possibly lost: 960 bytes in 4 blocks
-    still reachable: 3,634 bytes in 8 blocks
+      possibly lost: 1,237 bytes in 5 blocks
+    still reachable: 2,133 bytes in 10 blocks
          suppressed: 0 bytes in 0 blocks
- Reachable blocks (those to which a pointer was found) are not shown.
- To see them, rerun with: --leak-check=full --show-reachable=yes
  
- Use --track-origins=yes to see where uninitialised values come from
- ERROR SUMMARY: 914 errors from 6 contexts (suppressed: 4175 from 8)
+ ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 12838 from 97)
  
- 1 errors in context 1 of 6:
- Thread 3:
- Invalid read of size 1
-    at 0x4C21B84: index (mc_replace_strmem.c:141)
-    by 0x72FC4C7: miscDynBufGetNextLine (miscDynBuf.c:897)
-    by 0x66B5F60: alxGetTeffLoggTable (alxCorrectedMagnitude.c:2012)
-    by 0x66B6197: alxRetrieveTeffAndLoggFromSptype (alxCorrectedMagnitude.c:2172)
-    by 0x6214C05: sclsvrCALIBRATOR::ComputeTeffLogg() (sclsvrCALIBRATOR.cpp:1981)
-    by 0x6219286: sclsvrCALIBRATOR::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR.cpp:239)
-    by 0x621B5BB: sclsvrCALIBRATOR_LIST::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR_LIST.cpp:173)
-    by 0x62232DF: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:315)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
-  Address 0xef9166f is 0 bytes after a block of size 2,927 alloc'd
-    at 0x4C20140: calloc (vg_replace_malloc.c:418)
-    by 0x72FBCDB: miscDynBufAlloc (miscDynBuf.c:348)
-    by 0x72FC88B: miscDynBufLoadFile (miscDynBuf.c:1090)
-    by 0x66B5CC7: alxGetTeffLoggTable (alxCorrectedMagnitude.c:2002)
-    by 0x66B6197: alxRetrieveTeffAndLoggFromSptype (alxCorrectedMagnitude.c:2172)
-    by 0x6214C05: sclsvrCALIBRATOR::ComputeTeffLogg() (sclsvrCALIBRATOR.cpp:1981)
-    by 0x6219286: sclsvrCALIBRATOR::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR.cpp:239)
-    by 0x621B5BB: sclsvrCALIBRATOR_LIST::Complete(sclsvrREQUEST&) (sclsvrCALIBRATOR_LIST.cpp:173)
-    by 0x62232DF: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:315)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
- 
- 
- 3 errors in context 2 of 6:
- Conditional jump or move depends on uninitialised value(s)
-    at 0x7D18525: cmdCOMMAND::ParseParams() (cmdCOMMAND.cpp:1635)
-    by 0x7D189A5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:120)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
-    by 0x5FFCE07: soap_serve(soap*) (soapServer.cpp:49)
-    by 0x403D4C: sclwsJobHandler(void*) (sclwsServer.cpp:120)
-    by 0x5BC773C: start_thread (in /lib64/libpthread-2.5.so)
-    by 0x8A5AF6C: clone (in /lib64/libc-2.5.so)
- 
- 
- 454 errors in context 3 of 6:
- Invalid read of size 1
-    at 0x72FCEE5: miscDynBufAppendBytes (miscDynBuf.c:1507)
-    by 0x72FCFA9: miscDynBufAppendString (miscDynBuf.c:1576)
-    by 0x72FD7DE: miscResolvePath (miscFile.c:459)
-    by 0x72FE06C: miscLocateFileInPath (miscFile.c:845)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-  Address 0x9360cf0 is 0 bytes inside a block of size 512 free'd
-    at 0x4C20F1D: realloc (vg_replace_malloc.c:476)
-    by 0x72FBED1: miscDynBufStrip (miscDynBuf.c:422)
-    by 0x72FE01D: miscLocateFileInPath (miscFile.c:833)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
- 
- 
- 454 errors in context 4 of 6:
- Invalid read of size 1
-    at 0x72FBBA6: miscDynBufChkStringParam (miscDynBuf.c:252)
-    by 0x72FCF1E: miscDynBufAppendString (miscDynBuf.c:1537)
-    by 0x72FD7DE: miscResolvePath (miscFile.c:459)
-    by 0x72FE06C: miscLocateFileInPath (miscFile.c:845)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-  Address 0x9360cf0 is 0 bytes inside a block of size 512 free'd
-    at 0x4C20F1D: realloc (vg_replace_malloc.c:476)
-    by 0x72FBED1: miscDynBufStrip (miscDynBuf.c:422)
-    by 0x72FE01D: miscLocateFileInPath (miscFile.c:833)
-    by 0x72FE1C2: miscLocateFile (miscFile.c:910)
-    by 0x7D1C1D9: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:954)
-    by 0x7D18934: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
-    by 0x621F1A7: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:114)
-    by 0x6222F16: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF&, msgMESSAGE*) (sclsvrGetCalCB.cpp:179)
-    by 0x6222E72: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF&) (sclsvrGetCalCB.cpp:145)
-    by 0x5FEF994: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:315)
-    by 0x5FFC7FA: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FFCCB6: soap_serve_request(soap*) (soapServer.cpp:79)
- 
- 
- used_suppression:   4171 disable_strcpy_overlap
+ used_suppression:   1380 pow__memcheck_ignore
+ used_suppression:   5244 ieee754_pow__memcheck_2
+ used_suppression:   4968 ieee754_pow__memcheck_ignore
+ used_suppression:   1242 pow__memcheck_ignore_2
  used_suppression:      4 dl-hack3
  
- ERROR SUMMARY: 914 errors from 6 contexts (suppressed: 4175 from 8)
+ ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 12838 from 97)
