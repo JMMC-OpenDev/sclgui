@@ -22,10 +22,12 @@
     <resources>
         <j2se version="1.5+" initial-heap-size="256m" max-heap-size="512m"/>        
 
+        <!-- Application module first (main class) -->
+        <jar href="jar/sclgui.jar" />
+
         <!-- JMMC modules -->
         <jar href="jar/jmcs.jar" />
         <jar href="jar/jmal.jar" />
-        <jar href="jar/sclgui.jar" />
         <jar href="jar/sclgui-doc.jar" />
 
         <!-- JMMC libs -->
