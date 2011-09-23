@@ -7,7 +7,7 @@ import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
 import fr.jmmc.sclgui.LegendView;
-import fr.jmmc.sclgui.Preferences;
+import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;

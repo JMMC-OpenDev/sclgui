@@ -17,7 +17,7 @@ import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 
-import fr.jmmc.sclgui.Preferences;
+import fr.jmmc.sclgui.preference.Preferences;
 import java.io.StringBufferInputStream;
 
 import java.util.HashMap;

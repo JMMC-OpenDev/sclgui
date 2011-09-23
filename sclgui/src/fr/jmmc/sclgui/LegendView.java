@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui;
 
+import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.jmcs.network.BrowserLauncher;
 import fr.jmmc.jmcs.util.Resources;
 import fr.jmmc.jmal.Catalog;

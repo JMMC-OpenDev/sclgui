@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui;
 
+import fr.jmmc.sclgui.preference.PreferencesView;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.query.QueryView;

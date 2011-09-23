@@ -1,9 +1,10 @@
 /*******************************************************************************
  * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
-package fr.jmmc.sclgui;
+package fr.jmmc.sclgui.preference;
 
 import fr.jmmc.jmcs.gui.AlternateRawColorCellRenderer;
+import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.BorderLayout;
 import java.awt.Container;
