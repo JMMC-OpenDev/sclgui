@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.filter;
 
-import fr.jmmc.sclgui.Preferences;
+import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.HashMap;

@@ -6,7 +6,7 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmal.Catalog;
 
 ////////////////////////////////////////////////////////////////////////////////
-import fr.jmmc.sclgui.Preferences;
+import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.*;
 import java.awt.event.*;
 

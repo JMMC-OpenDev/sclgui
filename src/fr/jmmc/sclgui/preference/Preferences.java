@@ -1,7 +1,7 @@
 /*******************************************************************************
  * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
  ******************************************************************************/
-package fr.jmmc.sclgui;
+package fr.jmmc.sclgui.preference;
 
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmal.Catalog;
@@ -22,30 +22,30 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     private static final Logger _logger = Logger.getLogger(Preferences.class.getName());
     /** Singleton instance */
     private static Preferences _instance = null;
-    /** Detailled bright N columns order list, as of default in preference version 3 */
-    private static String _detailledBrightN_v3 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff";
-    /** Detailled bright N columns order list, as of default in preference version 4 */
-    private static String _detailledBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
-    /** Detailled bright N columns order list, as of default in current preference version */
-    private static String _detailledBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
-    /** Detailled bright V columns order list, as of default in preference version 3 */
-    private static String _detailledBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-    /** Detailled bright V columns order list, as of default in preference version 4 */
-    private static String _detailledBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-    /** Detailled bright V columns order list, as of default in current preference version */
-    private static String _detailledBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-    /** Detailled bright K columns order list, as of default in preference version 3 */
-    private static String _detailledBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-    /** Detailled bright K columns order list, as of default in preference version 4 */
-    private static String _detailledBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-    /** Detailled bright K columns order list, as of default in current preference version */
-    private static String _detailledBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
-    /** Detailled faint K columns order list, as of default in preference version 3 */
-    private static String _detailledFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
-    /** Detailled faint K columns order list, as of default in preference version 4 */
-    private static String _detailledFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
-    /** Detailled faint K columns order list, as of default in current preference version */
-    private static String _detailledFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+    /** Detailed bright N columns order list, as of default in preference version 3 */
+    private static String _detailedBrightN_v3 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff";
+    /** Detailed bright N columns order list, as of default in preference version 4 */
+    private static String _detailedBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
+    /** Detailed bright N columns order list, as of default in current preference version */
+    private static String _detailedBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
+    /** Detailed bright V columns order list, as of default in preference version 3 */
+    private static String _detailedBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright V columns order list, as of default in preference version 4 */
+    private static String _detailedBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright V columns order list, as of default in current preference version */
+    private static String _detailedBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright K columns order list, as of default in preference version 3 */
+    private static String _detailedBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright K columns order list, as of default in preference version 4 */
+    private static String _detailedBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright K columns order list, as of default in current preference version */
+    private static String _detailedBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed faint K columns order list, as of default in preference version 3 */
+    private static String _detailedFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+    /** Detailed faint K columns order list, as of default in preference version 4 */
+    private static String _detailedFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+    /** Detailed faint K columns order list, as of default in current preference version */
+    private static String _detailedFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
 
     /** Hidden constructor */
     protected Preferences() {
@@ -89,11 +89,11 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
                 + "'.");
 
         switch (loadedVersionNumber) {
-            // Wrong column identifiers in the the simple and detailled bright N columns order list
+            // Wrong column identifiers in the the simple and detailed bright N columns order list
             case 1:
                 return updateFromVersion1ToVersion2();
 
-            // Added SBC9 column to each detailled view
+            // Added SBC9 column to each detailed view
             case 2:
                 return updateFromVersion2ToVersion3();
 
@@ -101,11 +101,11 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             case 3:
                 return updateFromVersion3ToVersion4();
 
-            // Re-order detailled view columns
+            // Re-order detailed view columns
             case 4:
                 return updateFromVersion4ToVersion5();
 
-            // Replaced VarFlag3 with VFlag in bright N detailled view
+            // Replaced VarFlag3 with VFlag in bright N detailed view
             case 5:
                 return updateFromVersion5ToVersion6();
 
@@ -113,24 +113,24 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             case 6:
                 return updateFromVersion6ToVersion7();
 
-            // Replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailled", "view.result.verbosity.full" preferences to add 'Full View' support
+            // Replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailed", "view.result.verbosity.full" preferences to add 'Full View' support
             case 7:
                 return updateFromVersion7ToVersion8();
 
             /*
              * Add UD_x diameter columns in all bright views but N;
-             * Add WDS column in all detailled views but the Bright N;
-             * Reorder pmRa & pmDec in all detailled views but the Bright N;
-             * Fix variability flag from VarFlag3 to VFlag in detailled bright N view
+             * Add WDS column in all detailed views but the Bright N;
+             * Reorder pmRa & pmDec in all detailed views but the Bright N;
+             * Fix variability flag from VarFlag3 to VFlag in detailed bright N view
              */
             case 8:
                 return updateFromVersion8ToVersion9();
 
-            // Insert sep1 and sep2 after WDS for all detailled views but bright N
+            // Insert sep1 and sep2 after WDS for all detailed views but bright N
             case 9:
                 return updateFromVersion9ToVersion10();
 
-            // Rename VFlag to BinFlag in detailled bright N
+            // Rename VFlag to BinFlag in detailed bright N
             case 10:
                 return updateFromVersion10ToVersion11();
 
@@ -192,35 +192,35 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         // Place view behaviour
         setDefaultPreference("view.legend.show", "false");
         setDefaultPreference("view.result.verbosity.synthetic", "true");
-        setDefaultPreference("view.result.verbosity.detailled", "false");
+        setDefaultPreference("view.result.verbosity.detailed", "false");
         setDefaultPreference("view.result.verbosity.full", "false");
 
         // Simple 'Bright N' view
         setDefaultPreference("view.columns.simple.bright.N",
                 "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
-        // Detailled 'Bright N' view
-        setDefaultPreference("view.columns.detailled.bright.N",
-                _detailledBrightN);
+        // detailed 'Bright N' view
+        setDefaultPreference("view.columns.detailed.bright.N",
+                _detailedBrightN);
 
         // Simple 'Bright V' view
         setDefaultPreference("view.columns.simple.bright.V",
                 "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_B UD_V UD_R UD_I SpType B V R I");
-        // Detailled 'Bright V' view
-        setDefaultPreference("view.columns.detailled.bright.V",
-                _detailledBrightV);
+        // detailed 'Bright V' view
+        setDefaultPreference("view.columns.detailed.bright.V",
+                _detailedBrightV);
 
         // Simple 'Bright K' view
         setDefaultPreference("view.columns.simple.bright.K",
                 "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_V UD_J UD_H UD_K SpType V J H K");
-        // Detailled 'Bright K' view
-        setDefaultPreference("view.columns.detailled.bright.K",
-                _detailledBrightK);
+        // detailed 'Bright K' view
+        setDefaultPreference("view.columns.detailed.bright.K",
+                _detailedBrightK);
 
         // Simple 'Faint K' view
         setDefaultPreference("view.columns.simple.faint.K",
                 "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Icous J H K");
-        // Detailled 'Faint K' view
-        setDefaultPreference("view.columns.detailled.faint.K", _detailledFaintK);
+        // detailed 'Faint K' view
+        setDefaultPreference("view.columns.detailed.faint.K", _detailedFaintK);
 
         // Query default values preferences (ETA_TAU, bright V)
         setDefaultPreference("query.magnitudeBand", "V");
@@ -310,7 +310,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : wrong column identifiers in the simple and detailled bright N columns order list.
+     * Correction : wrong column identifiers in the simple and detailed bright N columns order list.
      *
      * @return true if fine and should write to file, false otherwise.
      */
@@ -322,7 +322,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
                 "e_diam_vk", "e_dia12 F12");
         status &= replaceTokenInPreference("view.columns.simple.bright.N",
                 "diam_vk", "Dia12");
-        status &= replaceTokenInPreference("view.columns.detailled.bright.N",
+        status &= replaceTokenInPreference("view.columns.detailed.bright.N",
                 "vis2Flag", "vis2");
 
         // Commit change to file if everything went fine
@@ -330,7 +330,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : added SBC9 column to each detailled view.
+     * Correction : added SBC9 column to each detailed view.
      *
      * @return true if fine and should write to file, false otherwise.
      */
@@ -339,12 +339,12 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         boolean status = true;
 
-        // Insert "SBC9" after "MultFlag" in the each detailled columns order list
+        // Insert "SBC9" after "MultFlag" in each detailed columns order list
         String[] viewList = {"bright.V", "bright.K", "faint.K"};
 
         for (String viewName : viewList) {
             // Get the current columns order list content
-            String completePreferencePath = "view.columns.detailled."
+            String completePreferencePath = "view.columns.detailed."
                     + viewName;
             status &= replaceTokenInPreference(completePreferencePath,
                     "MultFlag", "MultFlag SBC9");
@@ -372,71 +372,71 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : re-order detailled view columns if user never changed them.
+     * Correction : re-order detailed view columns if user never changed them.
      *
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion4ToVersion5() {
         _logger.entering("Preferences", "updateFromVersion4ToVersion5");
 
-        // Updating detailled bright N columns order list if not changed by user
-        String detailledBrightNViewColumnOrder = getPreference(
-                "view.columns.detailled.bright.N");
+        // Updating detailed bright N columns order list if not changed by user
+        String detailedBrightNViewColumnOrder = getPreference(
+                "view.columns.detailed.bright.N");
 
-        if (detailledBrightNViewColumnOrder.equals(_detailledBrightN_v3) == true) {
-            detailledBrightNViewColumnOrder = _detailledBrightN_v4;
-            _logger.finer("Re-ordered detailled bright N columns order list.");
+        if (detailedBrightNViewColumnOrder.equals(_detailedBrightN_v3) == true) {
+            detailedBrightNViewColumnOrder = _detailedBrightN_v4;
+            _logger.finer("Re-ordered detailed bright N columns order list.");
         } else {
             _logger.finer(
-                    "Leaved customized detailled bright N columns order list unchanged.");
+                    "Leaved customized detailed bright N columns order list unchanged.");
         }
 
-        // Updating detailled bright V columns order list if not changed by user
-        String detailledBrightVViewColumnOrder = getPreference(
-                "view.columns.detailled.bright.V");
+        // Updating detailed bright V columns order list if not changed by user
+        String detailedBrightVViewColumnOrder = getPreference(
+                "view.columns.detailed.bright.V");
 
-        if (detailledBrightVViewColumnOrder.equals(_detailledBrightV_v3) == true) {
-            detailledBrightVViewColumnOrder = _detailledBrightV_v4;
-            _logger.finer("Re-ordered detailled bright V columns order list.");
+        if (detailedBrightVViewColumnOrder.equals(_detailedBrightV_v3) == true) {
+            detailedBrightVViewColumnOrder = _detailedBrightV_v4;
+            _logger.finer("Re-ordered detailed bright V columns order list.");
         } else {
             _logger.finer(
-                    "Leaved customized detailled bright V columns order list unchanged.");
+                    "Leaved customized detailed bright V columns order list unchanged.");
         }
 
-        // Updating detailled bright K columns order list if not changed by user
-        String detailledBrightKViewColumnOrder = getPreference(
-                "view.columns.detailled.bright.K");
+        // Updating detailed bright K columns order list if not changed by user
+        String detailedBrightKViewColumnOrder = getPreference(
+                "view.columns.detailed.bright.K");
 
-        if (detailledBrightKViewColumnOrder.equals(_detailledBrightK_v3) == true) {
-            detailledBrightKViewColumnOrder = _detailledBrightK_v4;
-            _logger.finer("Re-ordered detailled bright K columns order list.");
+        if (detailedBrightKViewColumnOrder.equals(_detailedBrightK_v3) == true) {
+            detailedBrightKViewColumnOrder = _detailedBrightK_v4;
+            _logger.finer("Re-ordered detailed bright K columns order list.");
         } else {
             _logger.finer(
-                    "Leaved customized detailled bright K columns order list unchanged.");
+                    "Leaved customized detailed bright K columns order list unchanged.");
         }
 
-        // Updating detailled faint K columns order list if not changed by user
-        String detailledFaintKViewColumnOrder = getPreference(
-                "view.columns.detailled.faint.K");
+        // Updating detailed faint K columns order list if not changed by user
+        String detailedFaintKViewColumnOrder = getPreference(
+                "view.columns.detailed.faint.K");
 
-        if (detailledFaintKViewColumnOrder.equals(_detailledFaintK_v3) == true) {
-            detailledFaintKViewColumnOrder = _detailledFaintK_v4;
-            _logger.finer("Re-ordered detailled faint K columns order list.");
+        if (detailedFaintKViewColumnOrder.equals(_detailedFaintK_v3) == true) {
+            detailedFaintKViewColumnOrder = _detailedFaintK_v4;
+            _logger.finer("Re-ordered detailed faint K columns order list.");
         } else {
             _logger.finer(
-                    "Leaved customized detailled faint K columns order list unchanged.");
+                    "Leaved customized detailed faint K columns order list unchanged.");
         }
 
         // Store updated column order
         try {
-            setPreference("view.columns.detailled.bright.N",
-                    detailledBrightNViewColumnOrder);
-            setPreference("view.columns.detailled.bright.V",
-                    detailledBrightVViewColumnOrder);
-            setPreference("view.columns.detailled.bright.K",
-                    detailledBrightKViewColumnOrder);
-            setPreference("view.columns.detailled.faint.K",
-                    detailledFaintKViewColumnOrder);
+            setPreference("view.columns.detailed.bright.N",
+                    detailedBrightNViewColumnOrder);
+            setPreference("view.columns.detailed.bright.V",
+                    detailedBrightVViewColumnOrder);
+            setPreference("view.columns.detailed.bright.K",
+                    detailedBrightKViewColumnOrder);
+            setPreference("view.columns.detailed.faint.K",
+                    detailedFaintKViewColumnOrder);
         } catch (Exception ex) {
             _logger.log(Level.WARNING, "Could not store updated preference:", ex);
 
@@ -448,14 +448,14 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : replaced VarFlag3 with VFlag in bright N detailled view.
+     * Correction : replaced VarFlag3 with VFlag in bright N detailed view.
      *
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion5ToVersion6() {
         _logger.entering("Preferences", "updateFromVersion5ToVersion6");
 
-        return replaceTokenInPreference("view.columns.detailled.bright.N",
+        return replaceTokenInPreference("view.columns.detailed.bright.N",
                 "VarFlag3", "VFlag");
     }
 
@@ -492,7 +492,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailled", "view.result.verbosity.full" preferences to add 'Full View' support.
+     * Correction : replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailed", "view.result.verbosity.full" preferences to add 'Full View' support.
      *
      * @return true if fine and should write to file, false otherwise.
      */
@@ -513,7 +513,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         // Store the new preferences with respect to previous state
         try {
             setPreference("view.result.verbosity.synthetic", (!previousState));
-            setPreference("view.result.verbosity.detailled", previousState);
+            setPreference("view.result.verbosity.detailed", previousState);
             setPreference("view.result.verbosity.full", "false");
         } catch (Exception ex) {
             _logger.log(Level.WARNING,
@@ -530,9 +530,9 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     /**
      * Corrections :
      *  - add UD_x diameter columns in all bright views but N;
-     *  - add WDS column in all detailled views but the Bright N;
-     *  - reorder pmRa & pmDec in all detailled views but the Bright N;
-     *  - fix variability flag from VarFlag3 to VFlag in detailled bright N view.
+     *  - add WDS column in all detailed views but the Bright N;
+     *  - reorder pmRa & pmDec in all detailed views but the Bright N;
+     *  - fix variability flag from VarFlag3 to VFlag in detailed bright N view.
      *
      * @return true if fine and should write to file, false otherwise.
      */
@@ -541,16 +541,16 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         boolean status = true;
 
-        // Add UD_x to simple and detailled views
+        // Add UD_x to simple and detailed views
         final String UD_COLUMNS = "UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K";
         HashMap<String, String> udColumnsPreferencePathes = new HashMap<String, String>();
         udColumnsPreferencePathes.put("view.columns.simple.bright.V",
                 "UD_B UD_V UD_R UD_I");
-        udColumnsPreferencePathes.put("view.columns.detailled.bright.V",
+        udColumnsPreferencePathes.put("view.columns.detailed.bright.V",
                 UD_COLUMNS);
         udColumnsPreferencePathes.put("view.columns.simple.bright.K",
                 "UD_V UD_J UD_H UD_K");
-        udColumnsPreferencePathes.put("view.columns.detailled.bright.K",
+        udColumnsPreferencePathes.put("view.columns.detailed.bright.K",
                 UD_COLUMNS);
 
         // For each column list, insert UD_x after e_diam_vk
@@ -561,13 +561,13 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
                     + udColumnsPreferencePathes.get(completePreferencePath));
         }
 
-        // Insert WDS column in every detailled views column list but the Bright N (that doesn't have SBC9 anyway)
-        // Replace "pmDec pmRa" by "pmRa pmDec" in the each detailled columns order list but bright N
+        // Insert WDS column in every detailed views column list but the Bright N (that doesn't have SBC9 anyway)
+        // Replace "pmDec pmRa" by "pmRa pmDec" in the each detailed columns order list but bright N
         String[] viewList = {"bright.V", "bright.K", "faint.K"};
 
         for (String viewName : viewList) {
             // Get the current columns order list content
-            String completePreferencePath = "view.columns.detailled."
+            String completePreferencePath = "view.columns.detailed."
                     + viewName;
             status &= replaceTokenInPreference(completePreferencePath, "SBC9",
                     "SBC9 WDS");
@@ -575,8 +575,8 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
                     "pmDec pmRa", "pmRa pmDec");
         }
 
-        // Fix variability flag in detailled bright N view
-        status &= replaceTokenInPreference("view.columns.detailled.bright.N",
+        // Fix variability flag in detailed bright N view
+        status &= replaceTokenInPreference("view.columns.detailed.bright.N",
                 "VarFlag3", "VFlag");
 
         // Update legend colors and order
@@ -595,7 +595,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : Insert sep1 and sep2 after WDS for all detailled views but bright N.
+     * Correction : Insert sep1 and sep2 after WDS for all detailed views but bright N.
      *
      * @return true if fine and should write to file, false otherwise.
      */
@@ -604,12 +604,12 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         boolean status = true;
 
-        // Insert sep1 and sep2 after WDS for all detailled views but bright N
+        // Insert sep1 and sep2 after WDS for all detailed views but bright N
         String[] viewList = {"bright.V", "bright.K", "faint.K"};
 
         for (String viewName : viewList) {
             // Get the current columns order list content
-            String completePreferencePath = "view.columns.detailled."
+            String completePreferencePath = "view.columns.detailed."
                     + viewName;
             status &= replaceTokenInPreference(completePreferencePath, "WDS",
                     "WDS sep1 sep2");
@@ -620,14 +620,14 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : rename VFlag to BinFlag in detailled bright N.
+     * Correction : rename VFlag to BinFlag in detailed bright N.
      *
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion10ToVersion11() {
         _logger.entering("Preferences", "updateFromVersion10ToVersion11");
 
-        return replaceTokenInPreference("view.columns.detailled.bright.N",
+        return replaceTokenInPreference("view.columns.detailed.bright.N",
                 "VFlag", "BinFlag");
     }
 }
