@@ -25,7 +25,7 @@ public enum PreferenceKey {
         VIEW_SIMPLE_FAINT_K("view.columns.simple.faint.K"),
         VIEW_DETAILED_FAINT_K("view.columns.detailed.faint.K"),
 
-        QUERY_MAGNIUDE_BAND("query.magnitudeBand"),
+        QUERY_MAGNITUDE_BAND("query.magnitudeBand"),
         QUERY_INSTRUMENTAL_WAVELENGTH("query.instrumentalWavelength"),
         QUERY_INSTRUMENTAL_BASELINE("query.instrumentalMaxBaseLine"),
 
