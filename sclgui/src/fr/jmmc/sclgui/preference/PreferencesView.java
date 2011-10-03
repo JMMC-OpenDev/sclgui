@@ -169,9 +169,9 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
     private String _shownColumns = "";
     /** All available columns set */
     JComboBox _columnsSetCombobox = null;
-    /** The column sets combobox model */
+    /** The column sets combo box model */
     private DefaultComboBoxModel _columsSetModel = null;
-    /** The column sets combobox names to path correspondance table */
+    /** The column sets combo box names to path correspondance table */
     private HashMap<String, String> _columnSetNameToPathHashtable = null;
     /** Move up Button */
     private JButton _moveUpButton = null;
@@ -554,7 +554,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
         _logger.entering("HelpPreferencesView", "update");
 
         // Adjust view and behaviour according preferences entries
-        boolean b = _preferences.getPreferenceAsBoolean("help.tooltips.show");
+        boolean b = _preferences.getPreferenceAsBoolean(PreferenceKey.SHOW_TOOLTIPS_FLAG);
         _enableToolTipCheckBox.setSelected(b);
         _sharedToolTipManager.setEnabled(b);
     }
@@ -571,7 +571,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
 
         try {
             if (source.equals(_enableToolTipCheckBox)) {
-                _preferences.setPreference("help.tooltips.show",
+                _preferences.setPreference(PreferenceKey.SHOW_TOOLTIPS_FLAG,
                         _enableToolTipCheckBox.isSelected());
             }
         } catch (Exception ex) {
