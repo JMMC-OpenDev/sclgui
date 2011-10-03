@@ -6,6 +6,7 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
+import fr.jmmc.sclgui.preference.PreferenceKey;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Vector;
@@ -166,7 +167,7 @@ public abstract class Filter extends Observable {
         // Get the prefered distance to detect the science object
         Preferences preferences = Preferences.getInstance();
         Double prefDistance = preferences.getPreferenceAsDouble(
-                "query.scienceObjectDetectionDistance");
+                PreferenceKey.QUERY_SCIENCE_DETECTION);
 
         // If the current row distance is close enough to be detected as a science object
         if (rowDistance < prefDistance) {

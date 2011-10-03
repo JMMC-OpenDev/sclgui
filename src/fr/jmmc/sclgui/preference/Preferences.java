@@ -113,7 +113,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             case 6:
                 return updateFromVersion6ToVersion7();
 
-            // Replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailed", "view.result.verbosity.full" preferences to add 'Full View' support
+            // Replace "view.details.show" preference, with PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, PreferenceKey.VERBOSITY_DETAILED_FLAG, PreferenceKey.VERBOSITY_FULL_FLAG preferences to add 'Full View' support
             case 7:
                 return updateFromVersion7ToVersion8();
 
@@ -194,61 +194,57 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         setDefaultPreference(PreferenceKey.SHOW_TOOLTIPS_FLAG, "true");
 
         // Place view behaviour
-        setDefaultPreference("view.legend.show", "false");
-        setDefaultPreference("view.result.verbosity.synthetic", "true");
-        setDefaultPreference("view.result.verbosity.detailed", "false");
-        setDefaultPreference("view.result.verbosity.full", "false");
+        setDefaultPreference(PreferenceKey.SHOW_LEGEND_FLAG, "false");
+        setDefaultPreference(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, "true");
+        setDefaultPreference(PreferenceKey.VERBOSITY_DETAILED_FLAG, "false");
+        setDefaultPreference(PreferenceKey.VERBOSITY_FULL_FLAG, "false");
 
         // Simple 'Bright N' view
-        setDefaultPreference("view.columns.simple.bright.N",
+        setDefaultPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N,
                 "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
         // detailed 'Bright N' view
-        setDefaultPreference("view.columns.detailed.bright.N",
+        setDefaultPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 _detailedBrightN);
 
         // Simple 'Bright V' view
-        setDefaultPreference("view.columns.simple.bright.V",
+        setDefaultPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_V,
                 "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_B UD_V UD_R UD_I SpType B V R I");
         // detailed 'Bright V' view
-        setDefaultPreference("view.columns.detailed.bright.V",
+        setDefaultPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_V,
                 _detailedBrightV);
 
         // Simple 'Bright K' view
-        setDefaultPreference("view.columns.simple.bright.K",
+        setDefaultPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_K,
                 "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_V UD_J UD_H UD_K SpType V J H K");
         // detailed 'Bright K' view
-        setDefaultPreference("view.columns.detailed.bright.K",
+        setDefaultPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_K,
                 _detailedBrightK);
 
         // Simple 'Faint K' view
-        setDefaultPreference("view.columns.simple.faint.K",
+        setDefaultPreference(PreferenceKey.VIEW_SIMPLE_FAINT_K,
                 "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean V Icous J H K");
         // detailed 'Faint K' view
-        setDefaultPreference("view.columns.detailed.faint.K", _detailedFaintK);
+        setDefaultPreference(PreferenceKey.VIEW_DETAILED_FAINT_K, _detailedFaintK);
 
         // Query default values preferences (ETA_TAU, bright V)
-        setDefaultPreference("query.magnitudeBand", "V");
-        setDefaultPreference("query.instrumentalWavelength",
-                Double.toString(1.0d * ALX.MICRON));
-        setDefaultPreference("query.instrumentalMaxBaseLine",
-                Double.toString(102.45d * ALX.METER));
-        setDefaultPreference("query.scienceObjectName", "ETA_TAU");
-        setDefaultPreference("query.scienceObjectRA", "03:47:29.0765");
-        setDefaultPreference("query.scienceObjectDEC", "24:06:18.494");
-        setDefaultPreference("query.scienceObjectMagnitude", "0");
-        setDefaultPreference("query.queryMinMagnitude", "2.0");
-        setDefaultPreference("query.queryMaxMagnitude", "4.0");
-        setDefaultPreference("query.queryBrightScenarioFlag", "true");
-        setDefaultPreference("query.queryDiffRASize", Double.toString(3600d * ALX.ARCSEC));
-        setDefaultPreference("query.queryDiffDECSize", ""
-                + (1200 * ALX.ARCSEC));
-        setDefaultPreference("query.queryRadialSize", Double.toString(5.0d * ALX.ARCMIN));
-        setDefaultPreference("query.queryAutoRadius", "true");
+        setDefaultPreference(PreferenceKey.QUERY_MAGNITUDE_BAND, "V");
+        setDefaultPreference(PreferenceKey.QUERY_INSTRUMENTAL_WAVELENGTH, Double.toString(1.0d * ALX.MICRON));
+        setDefaultPreference(PreferenceKey.QUERY_INSTRUMENTAL_BASELINE, Double.toString(102.45d * ALX.METER));
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_NAME, "ETA_TAU");
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_RA, "03:47:29.0765");
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_DEC, "24:06:18.494");
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_MAGNITUDE, "0");
+        setDefaultPreference(PreferenceKey.QUERY_MINIMUM_MAGNITUDE, "2.0");
+        setDefaultPreference(PreferenceKey.QUERY_MAXIMUM_MAGNITUDE, "4.0");
+        setDefaultPreference(PreferenceKey.QUERY_BRIGHT_FLAG, "true");
+        setDefaultPreference(PreferenceKey.QUERY_DIFF_RA, Double.toString(3600d * ALX.ARCSEC));
+        setDefaultPreference(PreferenceKey.QUERY_DIFF_DEC, "" + (1200 * ALX.ARCSEC));
+        setDefaultPreference(PreferenceKey.QUERY_RADIAL_SIZE, Double.toString(5.0d * ALX.ARCMIN));
+        setDefaultPreference(PreferenceKey.QUERY_RADIAL_FLAG, "true");
 
-        setDefaultPreference("query.scienceObjectDetectionDistance",
-                Double.toString(1d * ALX.ARCSEC_IN_DEGREES));
-        setDefaultPreference("query.queryMinMagnitudeDelta", "-2.0");
-        setDefaultPreference("query.queryMaxMagnitudeDelta", "2.0");
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, Double.toString(1d * ALX.ARCSEC_IN_DEGREES));
+        setDefaultPreference(PreferenceKey.QUERY_MINIMUM_DELTA, "-2.0");
+        setDefaultPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, "2.0");
     }
 
     /**
@@ -268,15 +264,17 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     /**
      * Replace a given string token in a preference by another string.
      *
-     * @param preferencePath the path of the preference value to update.
+     * @param preferenceName the path of the preference value to update.
      * @param searchedToken the string token to be replaced in the preference value.
      * @param replacingToken the new string to put in the preference value.
      *
      * @return true if everything went fine, false otherwise.
      */
-    private boolean replaceTokenInPreference(String preferencePath,
+    private boolean replaceTokenInPreference(Object preferenceName,
             String searchedToken, String replacingToken) {
         _logger.entering("Preferences", "replaceTokenInPreference");
+
+        String preferencePath = preferenceName.toString();
 
         // Get the preference current value
         String originalPreferenceValue = getPreference(preferencePath);
@@ -322,11 +320,11 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         _logger.entering("Preferences", "updateFromVersion1ToVersion2");
 
         boolean status = true;
-        status &= replaceTokenInPreference("view.columns.simple.bright.N",
+        status &= replaceTokenInPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N,
                 "e_diam_vk", "e_dia12 F12");
-        status &= replaceTokenInPreference("view.columns.simple.bright.N",
+        status &= replaceTokenInPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N,
                 "diam_vk", "Dia12");
-        status &= replaceTokenInPreference("view.columns.detailed.bright.N",
+        status &= replaceTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 "vis2Flag", "vis2");
 
         // Commit change to file if everything went fine
@@ -385,7 +383,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Updating detailed bright N columns order list if not changed by user
         String detailedBrightNViewColumnOrder = getPreference(
-                "view.columns.detailed.bright.N");
+                PreferenceKey.VIEW_DETAILED_BRIGHT_N);
 
         if (detailedBrightNViewColumnOrder.equals(_detailedBrightN_v3) == true) {
             detailedBrightNViewColumnOrder = _detailedBrightN_v4;
@@ -397,7 +395,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Updating detailed bright V columns order list if not changed by user
         String detailedBrightVViewColumnOrder = getPreference(
-                "view.columns.detailed.bright.V");
+                PreferenceKey.VIEW_DETAILED_BRIGHT_V);
 
         if (detailedBrightVViewColumnOrder.equals(_detailedBrightV_v3) == true) {
             detailedBrightVViewColumnOrder = _detailedBrightV_v4;
@@ -409,7 +407,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Updating detailed bright K columns order list if not changed by user
         String detailedBrightKViewColumnOrder = getPreference(
-                "view.columns.detailed.bright.K");
+                PreferenceKey.VIEW_DETAILED_BRIGHT_K);
 
         if (detailedBrightKViewColumnOrder.equals(_detailedBrightK_v3) == true) {
             detailedBrightKViewColumnOrder = _detailedBrightK_v4;
@@ -421,7 +419,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Updating detailed faint K columns order list if not changed by user
         String detailedFaintKViewColumnOrder = getPreference(
-                "view.columns.detailed.faint.K");
+                PreferenceKey.VIEW_DETAILED_FAINT_K);
 
         if (detailedFaintKViewColumnOrder.equals(_detailedFaintK_v3) == true) {
             detailedFaintKViewColumnOrder = _detailedFaintK_v4;
@@ -433,13 +431,13 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Store updated column order
         try {
-            setPreference("view.columns.detailed.bright.N",
+            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                     detailedBrightNViewColumnOrder);
-            setPreference("view.columns.detailed.bright.V",
+            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_V,
                     detailedBrightVViewColumnOrder);
-            setPreference("view.columns.detailed.bright.K",
+            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_K,
                     detailedBrightKViewColumnOrder);
-            setPreference("view.columns.detailed.faint.K",
+            setPreference(PreferenceKey.VIEW_DETAILED_FAINT_K,
                     detailedFaintKViewColumnOrder);
         } catch (Exception ex) {
             _logger.log(Level.WARNING, "Could not store updated preference:", ex);
@@ -459,7 +457,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     private boolean updateFromVersion5ToVersion6() {
         _logger.entering("Preferences", "updateFromVersion5ToVersion6");
 
-        return replaceTokenInPreference("view.columns.detailed.bright.N",
+        return replaceTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 "VarFlag3", "VFlag");
     }
 
@@ -471,7 +469,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     private boolean updateFromVersion6ToVersion7() {
         _logger.entering("Preferences", "updateFromVersion6ToVersion7");
 
-        String preferencePath = "query.scienceObjectDetectionDistance";
+        Object preferencePath = PreferenceKey.QUERY_SCIENCE_DETECTION;
         String previousValue = getPreference(preferencePath);
         String newValue = Double.toString(1d * ALX.ARCSEC_IN_DEGREES);
 
@@ -496,7 +494,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Correction : replace "view.details.show" preference, with "view.result.verbosity.synthetic", "view.result.verbosity.detailed", "view.result.verbosity.full" preferences to add 'Full View' support.
+     * Correction : replace "view.details.show" preference, with PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, PreferenceKey.VERBOSITY_DETAILED_FLAG, PreferenceKey.VERBOSITY_FULL_FLAG preferences to add 'Full View' support.
      *
      * @return true if fine and should write to file, false otherwise.
      */
@@ -516,9 +514,9 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Store the new preferences with respect to previous state
         try {
-            setPreference("view.result.verbosity.synthetic", (!previousState));
-            setPreference("view.result.verbosity.detailed", previousState);
-            setPreference("view.result.verbosity.full", "false");
+            setPreference(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, (!previousState));
+            setPreference(PreferenceKey.VERBOSITY_DETAILED_FLAG, previousState);
+            setPreference(PreferenceKey.VERBOSITY_FULL_FLAG, "false");
         } catch (Exception ex) {
             _logger.log(Level.WARNING,
                     "Could not store updated preference for 'view.result.verbosity.*' : ",
@@ -547,18 +545,18 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Add UD_x to simple and detailed views
         final String UD_COLUMNS = "UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K";
-        HashMap<String, String> udColumnsPreferencePathes = new HashMap<String, String>();
-        udColumnsPreferencePathes.put("view.columns.simple.bright.V",
+        HashMap<Object, String> udColumnsPreferencePathes = new HashMap<Object, String>();
+        udColumnsPreferencePathes.put(PreferenceKey.VIEW_SIMPLE_BRIGHT_V,
                 "UD_B UD_V UD_R UD_I");
-        udColumnsPreferencePathes.put("view.columns.detailed.bright.V",
+        udColumnsPreferencePathes.put(PreferenceKey.VIEW_DETAILED_BRIGHT_V,
                 UD_COLUMNS);
-        udColumnsPreferencePathes.put("view.columns.simple.bright.K",
+        udColumnsPreferencePathes.put(PreferenceKey.VIEW_SIMPLE_BRIGHT_K,
                 "UD_V UD_J UD_H UD_K");
-        udColumnsPreferencePathes.put("view.columns.detailed.bright.K",
+        udColumnsPreferencePathes.put(PreferenceKey.VIEW_DETAILED_BRIGHT_K,
                 UD_COLUMNS);
 
         // For each column list, insert UD_x after e_diam_vk
-        for (String completePreferencePath : udColumnsPreferencePathes.keySet()) {
+        for (Object completePreferencePath : udColumnsPreferencePathes.keySet()) {
             status &= replaceTokenInPreference(completePreferencePath,
                     "e_diam_vk",
                     "e_diam_vk "
@@ -580,7 +578,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         }
 
         // Fix variability flag in detailed bright N view
-        status &= replaceTokenInPreference("view.columns.detailed.bright.N",
+        status &= replaceTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 "VarFlag3", "VFlag");
 
         // Update legend colors and order
@@ -631,7 +629,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     private boolean updateFromVersion10ToVersion11() {
         _logger.entering("Preferences", "updateFromVersion10ToVersion11");
 
-        return replaceTokenInPreference("view.columns.detailed.bright.N",
+        return replaceTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 "VFlag", "BinFlag");
     }
 
@@ -644,7 +642,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         _logger.entering("Preferences", "updateFromVersion11ToVersion12");
 
         String[] oldNames = {"view.result.verbosity.detailled", "view.columns.detailled.bright.N", "view.columns.detailled.bright.V", "view.columns.detailled.bright.K", "view.columns.detailled.faint.K"};
-        String[] newNames = {"view.result.verbosity.detailed", "view.columns.detailed.bright.N", "view.columns.detailed.bright.V", "view.columns.detailed.bright.K", "view.columns.detailed.faint.K"};
+        Object[] newNames = {PreferenceKey.VERBOSITY_DETAILED_FLAG, PreferenceKey.VIEW_DETAILED_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_K, PreferenceKey.VIEW_DETAILED_FAINT_K};
         for (int i = 0; i < oldNames.length; i++) {
 
             // Get stored value
@@ -652,7 +650,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             String value = getPreference(oldName);
 
             // Store the value in the new renamed preference
-            String newName = newNames[i];
+            String newName = newNames[i].toString();
             try {
                 setPreference(newName, value);
             } catch (Exception ex) {
