@@ -69,7 +69,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     protected int getPreferencesVersionNumber() {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 11;
+        return 12;
     }
 
     /**
@@ -134,6 +134,10 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             case 10:
                 return updateFromVersion10ToVersion11();
 
+            // Rename detailed preferences from 'detaiLLed'
+            case 11:
+                return updateFromVersion11ToVersion12();
+
             // By default, triggers default values load.
             default:
                 return false;
@@ -187,7 +191,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         setLegendColorsAndOrders(true);
 
         // Place help behaviour
-        setDefaultPreference("help.tooltips.show", "true");
+        setDefaultPreference(PreferenceKey.SHOW_TOOLTIPS_FLAG, "true");
 
         // Place view behaviour
         setDefaultPreference("view.legend.show", "false");
@@ -629,5 +633,38 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         return replaceTokenInPreference("view.columns.detailed.bright.N",
                 "VFlag", "BinFlag");
+    }
+
+    /**
+     * Correction : Rename detailed preferences from 'detaiLLed' to 'detaiLed'.
+     *
+     * @return true if fine and should write to file, false otherwise.
+     */
+    private boolean updateFromVersion11ToVersion12() {
+        _logger.entering("Preferences", "updateFromVersion11ToVersion12");
+
+        String[] oldNames = {"view.result.verbosity.detailled", "view.columns.detailled.bright.N", "view.columns.detailled.bright.V", "view.columns.detailled.bright.K", "view.columns.detailled.faint.K"};
+        String[] newNames = {"view.result.verbosity.detailed", "view.columns.detailed.bright.N", "view.columns.detailed.bright.V", "view.columns.detailed.bright.K", "view.columns.detailed.faint.K"};
+        for (int i = 0; i < oldNames.length; i++) {
+
+            // Get stored value
+            String oldName = oldNames[i];
+            String value = getPreference(oldName);
+
+            // Store the value in the new renamed preference
+            String newName = newNames[i];
+            try {
+                setPreference(newName, value);
+            } catch (Exception ex) {
+                _logger.log(Level.WARNING, "Could not store updated preference in '" + newName + "' : ", ex);
+                return false;
+            }
+
+            // Remove the old preference
+            removePreference(oldName);
+        }
+
+        // Commit change to file
+        return true;
     }
 }
