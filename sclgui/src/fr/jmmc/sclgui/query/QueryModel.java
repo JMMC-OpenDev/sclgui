@@ -17,6 +17,7 @@ import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 
+import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.io.StringBufferInputStream;
 
@@ -179,40 +180,40 @@ public class QueryModel extends Star implements Observer {
 
         // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
         setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
-                "query.queryBrightScenarioFlag"));
+                PreferenceKey.QUERY_BRIGHT_FLAG));
 
         setInstrumentalMagnitudeBand(_preferences.getPreference(
-                "query.magnitudeBand"));
+                PreferenceKey.QUERY_MAGNITUDE_BAND));
 
         setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
-                "query.instrumentalMaxBaseLine"));
+                PreferenceKey.QUERY_INSTRUMENTAL_BASELINE));
 
         setScienceObjectName(_preferences.getPreference(
-                "query.scienceObjectName"));
+                PreferenceKey.QUERY_SCIENCE_NAME));
         setScienceObjectRA(_preferences.getPreference(
-                "query.scienceObjectRA"));
+                PreferenceKey.QUERY_SCIENCE_RA));
         setScienceObjectDEC(_preferences.getPreference(
-                "query.scienceObjectDEC"));
+                PreferenceKey.QUERY_SCIENCE_DEC));
         setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
-                "query.scienceObjectMagnitude"));
+                PreferenceKey.QUERY_SCIENCE_MAGNITUDE));
 
         setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
-                "query.queryMinMagnitude"));
+                PreferenceKey.QUERY_MINIMUM_MAGNITUDE));
         setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                "query.queryMinMagnitudeDelta"));
+                PreferenceKey.QUERY_MINIMUM_DELTA));
         setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
-                "query.queryMaxMagnitude"));
+                PreferenceKey.QUERY_MAXIMUM_MAGNITUDE));
         setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                "query.queryMaxMagnitudeDelta"));
+                PreferenceKey.QUERY_MAXIMUM_DELTA));
 
         setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(
-                _preferences.getPreferenceAsDouble("query.queryDiffRASize")));
+                _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_DIFF_RA)));
         setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(
-                _preferences.getPreferenceAsDouble("query.queryDiffDECSize")));
+                _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_DIFF_DEC)));
         setQueryRadialSize(_preferences.getPreferenceAsDouble(
-                "query.queryRadialSize"));
+                PreferenceKey.QUERY_RADIAL_SIZE));
         setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(
-                "query.queryAutoRadius"));
+                PreferenceKey.QUERY_RADIAL_FLAG));
 
         restoreMinMaxMagnitudeFieldsAutoUpdating();
 
@@ -424,22 +425,22 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "saveDefaultValues");
 
         try {
-            _preferences.setPreference("query.magnitudeBand", getInstrumentalMagnitudeBand());
-            _preferences.setPreference("query.instrumentalWavelength", getInstrumentalWavelength());
-            _preferences.setPreference("query.instrumentalMaxBaseLine", getInstrumentalMaxBaseLine());
+            _preferences.setPreference(PreferenceKey.QUERY_MAGNITUDE_BAND, getInstrumentalMagnitudeBand());
+            _preferences.setPreference(PreferenceKey.QUERY_INSTRUMENTAL_WAVELENGTH, getInstrumentalWavelength());
+            _preferences.setPreference(PreferenceKey.QUERY_INSTRUMENTAL_BASELINE, getInstrumentalMaxBaseLine());
 
-            _preferences.setPreference("query.scienceObjectName", getScienceObjectName());
-            _preferences.setPreference("query.scienceObjectRA", getScienceObjectRA());
-            _preferences.setPreference("query.scienceObjectDEC", getScienceObjectDEC());
-            _preferences.setPreference("query.scienceObjectMagnitude", getScienceObjectMagnitude());
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_NAME, getScienceObjectName());
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_RA, getScienceObjectRA());
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DEC, getScienceObjectDEC());
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_MAGNITUDE, getScienceObjectMagnitude());
 
-            _preferences.setPreference("query.queryMinMagnitude", getQueryMinMagnitude());
-            _preferences.setPreference("query.queryMaxMagnitude", getQueryMaxMagnitude());
-            _preferences.setPreference("query.queryBrightScenarioFlag", getQueryBrightScenarioFlag());
-            _preferences.setPreference("query.queryDiffRASize", ALX.minutes2arcmin(getQueryDiffRASizeInMinutes()));
-            _preferences.setPreference("query.queryDiffDECSize", ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees()));
-            _preferences.setPreference("query.queryRadialSize", getQueryRadialSize());
-            _preferences.setPreference("query.queryAutoRadius", getQueryAutoRadiusFlag());
+            _preferences.setPreference(PreferenceKey.QUERY_MINIMUM_MAGNITUDE, getQueryMinMagnitude());
+            _preferences.setPreference(PreferenceKey.QUERY_MAXIMUM_MAGNITUDE, getQueryMaxMagnitude());
+            _preferences.setPreference(PreferenceKey.QUERY_BRIGHT_FLAG, getQueryBrightScenarioFlag());
+            _preferences.setPreference(PreferenceKey.QUERY_DIFF_RA, ALX.minutes2arcmin(getQueryDiffRASizeInMinutes()));
+            _preferences.setPreference(PreferenceKey.QUERY_DIFF_DEC, ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees()));
+            _preferences.setPreference(PreferenceKey.QUERY_RADIAL_SIZE, getQueryRadialSize());
+            _preferences.setPreference(PreferenceKey.QUERY_RADIAL_FLAG, getQueryAutoRadiusFlag());
 
             _preferences.saveToFile();
         } catch (Exception e) {
@@ -805,7 +806,7 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "getScienceObjectDetectionDistance");
 
         return _preferences.getPreferenceAsDouble(
-                "query.scienceObjectDetectionDistance");
+                PreferenceKey.QUERY_SCIENCE_DETECTION);
     }
 
     /**
@@ -819,7 +820,7 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "setScienceObjectDetectionDistance");
 
         try {
-            _preferences.setPreference("query.scienceObjectDetectionDistance",
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DETECTION,
                     new Double(distance));
         } catch (Exception e) {
             throw e;
@@ -906,7 +907,7 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "getQueryMinMagnitudeDelta");
 
         return _preferences.getPreferenceAsDouble(
-                "query.queryMinMagnitudeDelta");
+                PreferenceKey.QUERY_MINIMUM_DELTA);
     }
 
     /**
@@ -919,7 +920,7 @@ public class QueryModel extends Star implements Observer {
             throws PreferencesException {
         _logger.entering("QueryModel", "setQueryMinMagnitudeDelta");
 
-        _preferences.setPreference("query.queryMinMagnitudeDelta",
+        _preferences.setPreference(PreferenceKey.QUERY_MINIMUM_DELTA,
                 new Double(delta));
 
         setChanged();
@@ -992,7 +993,7 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "getQueryMaxMagnitudeDelta");
 
         return _preferences.getPreferenceAsDouble(
-                "query.queryMaxMagnitudeDelta");
+                PreferenceKey.QUERY_MAXIMUM_DELTA);
     }
 
     /**
@@ -1005,7 +1006,7 @@ public class QueryModel extends Star implements Observer {
             throws PreferencesException {
         _logger.entering("QueryModel", "setQueryMaxMagnitudeDelta");
 
-        _preferences.setPreference("query.queryMaxMagnitudeDelta",
+        _preferences.setPreference(PreferenceKey.QUERY_MAXIMUM_DELTA,
                 new Double(delta));
 
         setChanged();

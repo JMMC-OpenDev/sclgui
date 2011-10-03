@@ -6,6 +6,7 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmal.Catalog;
 
 ////////////////////////////////////////////////////////////////////////////////
+import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.*;
 import java.awt.event.*;
@@ -612,14 +613,14 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
         // Get the detailled/simple view flag state
         if (_preferences.getPreferenceAsBoolean(
-                "view.result.verbosity.synthetic")) {
+                PreferenceKey.VERBOSITY_SYNTHETIC_FLAG)) {
             selectedView = "view.columns.simple." + scenario + "." + magnitude;
         } else if (_preferences.getPreferenceAsBoolean(
                 "view.result.verbosity.detailled")) {
             selectedView = "view.columns.detailled." + scenario + "."
                     + magnitude;
         } else if (_preferences.getPreferenceAsBoolean(
-                "view.result.verbosity.full")) {
+                PreferenceKey.VERBOSITY_FULL_FLAG)) {
             selectedView = null;
         }
 
@@ -1178,7 +1179,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             if (o.equals(_preferences)) {
                 // Get science object detection distance
                 _prefDistance = _preferences.getPreferenceAsDouble(
-                        "query.scienceObjectDetectionDistance");
+                        PreferenceKey.QUERY_SCIENCE_DETECTION);
 
                 // Read colors preferences for catalogs
                 String prefix = "catalog.color.";

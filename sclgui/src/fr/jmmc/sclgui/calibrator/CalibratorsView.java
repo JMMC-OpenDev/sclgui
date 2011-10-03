@@ -7,6 +7,7 @@ import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
 import fr.jmmc.sclgui.LegendView;
+import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Color;
 import java.awt.Component;
@@ -103,16 +104,16 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 "_undeleteAction");
         _showLegendAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_showLegendAction", "Show Legend", _preferences,
-                "view.legend.show");
+                PreferenceKey.SHOW_LEGEND_FLAG);
         _syntheticResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_syntheticResultsVerbosityAction", "Synthetic", _preferences,
-                "view.result.verbosity.synthetic");
+                PreferenceKey.VERBOSITY_SYNTHETIC_FLAG);
         _detailledResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_detailledResultsVerbosityAction", "Detailled", _preferences,
                 "view.result.verbosity.detailled");
         _fullResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_fullResultsVerbosityAction", "Full", _preferences,
-                "view.result.verbosity.full");
+                PreferenceKey.VERBOSITY_FULL_FLAG);
 
         // Gray border of the view.
         updateBorderTitle();
@@ -321,7 +322,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _logger.entering("CalibratorsView", "showLegend");
 
         boolean preferencedLegendShouldBeVisible = _preferences.getPreferenceAsBoolean(
-                "view.legend.show");
+                PreferenceKey.SHOW_LEGEND_FLAG);
 
         int totalWidth = (int) _tableAndLegendPane.getBounds().getWidth();
         int dividerWidth = _tableAndLegendPane.getDividerSize();
