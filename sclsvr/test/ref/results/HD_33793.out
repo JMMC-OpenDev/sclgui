@@ -1,3 +1,22 @@
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxAngDiamPolynomial.cfg ...
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxExtinctionRatioTable.cfg ...
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForBrightDwarfStar.cfg ...
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForFaintDwarfStar.cfg ...
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForBrightGiantStar.cfg ...
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForFaintGiantStar.cfg ...
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForBrightSuperGiantStar.cfg ...
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForFaintSuperGiantStar.cfg ...
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxAkariBlackBodyCorrectionTable.cfg ...
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxTableTeffLogg.cfg ...
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxTableUDCoefficientCorrection.cfg ...
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxIntAbsPolynomial.cfg ...
+sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxStarPopulationInKBand.cfg ...
 sclsvrServer -    alx - Test  - Sky coordinates (in degrees) : RA = 77.9 - DEC = -45.0
 sclsvrServer -    alx - Test  - Magnitude range = [5.0..8.0]
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.359945 / -0.785720 radians - -36.000 / 250.530 degrees
@@ -11,7 +30,7 @@ sclsvrServer -   vobs - Info  - Execute: start
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting II/246/out ...
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=05:11:40.58&-c.dec=-45:01:06.3&Kmag=5.00..8.00&-out.max=1000&-c.rm=46&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
-sclsvrServer -   vobs - Test  - Parsing XML document (5863 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (5864 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (16 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -29,15 +48,15 @@ sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for p
 sclsvrServer -   vobs - Test  - Execute: Step 1 - number of returned stars = 16
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing COPY action with 16 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [16 stars]
-sclsvrServer -   vobs - Test  - Merge: done = 16 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 16 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 16 stars
-sclsvrServer -   vobs - Info  - Execute: 16 star(s) found.
+sclsvrServer -   vobs - Info  - Execute: done = 16 star(s) found.
 sclsvrServer - sclsvr - Info  - New Sky research radius = 65.47(arcmin)
 sclsvrServer -   vobs - Test  - Search: start
 sclsvrServer -   vobs - Info  - Execute: start
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting II/246/out ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=05:11:40.58&-c.dec=-45:01:06.3&Kmag=5.00..8.00&-out.max=1000&-c.rm=65&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
-sclsvrServer -   vobs - Test  - Parsing XML document (7447 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (7448 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (32 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -55,53 +74,55 @@ sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for p
 sclsvrServer -   vobs - Test  - Execute: Step 1 - number of returned stars = 32
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing COPY action with 32 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [32 stars]
-sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 32 stars
 sclsvrServer -   vobs - Test  - Execute: Step 2 - Performing COPY action with 32 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [32 stars]
-sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 2 - after COPY, 32 stars
-sclsvrServer -   vobs - Info  - star 2MASS 05084435-4530078 has been removed by the filter 'Opt = T filter'
-sclsvrServer -   vobs - Test  - Execute: Step 2 - after FILTER, star list size = 31
+sclsvrServer -   vobs - Test  - Execute: Step 2 - apply FILTER 'Opt = T filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05084435-4530078' has been removed by the filter 'Opt = T filter'
+sclsvrServer -   vobs - Test  - Execute: Step 2 - after FILTER 'Opt = T filter', star list size = 31
 sclsvrServer -   vobs - Test  - Execute: Step 3 - Performing COPY action with 32 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [32 stars]
-sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 3 - after COPY, 32 stars
-sclsvrServer -   vobs - Info  - star 2MASS 05114046-4501051 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05112095-4457237 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05115883-4514575 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05102651-4455276 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05120399-4440241 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05094950-4452270 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05105210-4435030 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05104310-4434185 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05094644-4524022 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05131376-4530596 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05081619-4449039 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05081544-4449097 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05083153-4524161 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05074304-4504441 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05155379-4457283 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05094859-4542519 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05093978-4420076 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05072593-4449179 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05073838-4534245 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05143141-4547284 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05070814-4528441 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05122741-4406004 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05111586-4557584 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05155217-4424456 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05101850-4404588 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05150157-4415072 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05075583-4414348 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05114321-4358501 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05055383-4446438 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05162704-4541092 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Info  - star 2MASS 05112886-4356483 has been removed by the filter 'Opt = U filter'
-sclsvrServer -   vobs - Test  - Execute: Step 3 - after FILTER, star list size = 1
+sclsvrServer -   vobs - Test  - Execute: Step 3 - apply FILTER 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05114046-4501051' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05112095-4457237' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05115883-4514575' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05102651-4455276' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05120399-4440241' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05094950-4452270' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05105210-4435030' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05104310-4434185' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05094644-4524022' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05131376-4530596' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05081619-4449039' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05081544-4449097' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05083153-4524161' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05074304-4504441' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05155379-4457283' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05094859-4542519' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05093978-4420076' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05072593-4449179' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05073838-4534245' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05143141-4547284' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05070814-4528441' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05122741-4406004' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05111586-4557584' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05155217-4424456' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05101850-4404588' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05150157-4415072' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05075583-4414348' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05114321-4358501' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05055383-4446438' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05162704-4541092' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Info  - star '2MASS 05112886-4356483' has been removed by the filter 'Opt = U filter'
+sclsvrServer -   vobs - Test  - Execute: Step 3 - after FILTER 'Opt = U filter', star list size = 1
 sclsvrServer -   vobs - Test  - Execute: Step 4 - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+11+40.465-45+01+05.12&+05+11+20.952-44+57+23.73&+05+11+58.834-45+14+57.58&+05+10+26.516-44+55+27.66&+05+12+03.990-44+40+24.11&+05+09+49.509-44+52+27.05&+05+10+52.104-44+35+03.03&+05+10+43.101-44+34+18.59&+05+09+46.448-45+24+02.29&+05+13+13.767-45+30+59.62&+05+08+16.194-44+49+03.94&+05+08+15.447-44+49+09.76&+05+08+31.531-45+24+16.17&+05+07+43.043-45+04+44.19&+05+15+53.794-44+57+28.33&+05+09+48.596-45+42+51.99&+05+09+39.783-44+20+07.70&+05+07+25.934-44+49+17.93&+05+07+38.389-45+34+24.56&+05+14+31.412-45+47+28.48&+05+07+08.148-45+28+44.17&+05+12+27.411-44+06+00.46&+05+11+15.867-45+57+58.41&+05+15+52.173-44+24+45.64&+05+10+18.506-44+04+58.85&+05+15+01.572-44+15+07.23&+05+07+55.831-44+14+34.81&+05+11+43.217-43+58+50.20&+05+05+53.839-44+46+43.87&+05+16+27.048-45+41+09.27&+05+11+28.869-43+56+48.39&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (24632 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (24633 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (31 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -128,11 +149,11 @@ sclsvrServer -   vobs - Test  - Execute: Step 4 - Performing COPY action with 31
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [31 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: done = 30 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 30 stars added / 1 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 4 - after COPY, 30 stars
 sclsvrServer -   vobs - Test  - Execute: Step 5 - Consulting I/284 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+08+44.354-45+30+07.83&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (3601 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (3602 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/284':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -149,17 +170,17 @@ sclsvrServer -   vobs - Test  - Execute: Step 5 - Performing COPY action with 1 
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [1 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: done = 1 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 1 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 5 - after COPY, 1 stars
 sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing MERGE action with 1 stars
 sclsvrServer -   vobs - Test  - Merge: list [30 stars] without criteria - input list [1 stars]
-sclsvrServer -   vobs - Test  - Merge: done = 1 stars added / 0 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 1 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 6 - after MERGE, 31 stars
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Performing UPDATE_ONLY action with 32 stars
 sclsvrServer -   vobs - Test  - Merge: list [31 stars] with criteria - input list [32 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 31 updated / 1 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 31 found / 31 updated / 1 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'opt' [ID_CATALOG] updated 31 times
 sclsvrServer -   vobs - Test  - Merge: Property '2MASS' [ID_2MASS] updated 31 times
 sclsvrServer -   vobs - Test  - Merge: Property 'Qflag' [CODE_QUALITY] updated 31 times
@@ -173,7 +194,7 @@ sclsvrServer -   vobs - Test  - Merge: Property 'K' [PHOT_JHN_K] updated 31 time
 sclsvrServer -   vobs - Test  - Execute: Step 7 - after UPDATE_ONLY, 31 stars
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Consulting B/denis ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+11+20.951-44+57+23.68&+05+11+58.831-45+14+57.71&+05+10+26.515-44+55+27.65&+05+12+03.995-44+40+24.06&+05+09+49.507-44+52+27.06&+05+10+52.097-44+35+03.02&+05+10+43.102-44+34+18.43&+05+09+46.450-45+24+02.17&+05+13+13.759-45+30+59.55&+05+08+16.196-44+49+03.93&+05+08+15.455-44+49+09.70&+05+08+31.530-45+24+16.02&+05+07+43.044-45+04+44.10&+05+15+53.798-44+57+28.40&+05+09+48.613-45+42+52.13&+05+09+39.773-44+20+07.74&+05+07+25.926-44+49+18.08&+05+07+38.387-45+34+24.74&+05+14+31.416-45+47+28.55&+05+07+08.161-45+28+44.29&+05+12+27.415-44+06+00.46&+05+11+15.882-45+57+58.36&+05+15+52.160-44+24+45.62&+05+10+18.489-44+04+58.83&+05+15+01.574-44+15+07.07&+05+07+55.836-44+14+34.87&+05+11+43.221-43+58+50.26&+05+05+53.856-44+46+43.95&+05+16+27.037-45+41+09.29&+05+11+28.879-43+56+48.31&+05+08+44.253-45+30+07.92&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (24400 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (24401 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (38 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/denis':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -196,7 +217,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 8 - Performing UPDATE_ONLY action 
 sclsvrServer -   vobs - Test  - Merge: list [31 stars] with criteria - input list [38 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 27 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 38 found / 27 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'DENIS' [ID_DENIS] updated 27 times
 sclsvrServer -   vobs - Test  - Merge: Property 'A2RAdeg' [POS_EQ_RA_OTHER] updated 25 times
 sclsvrServer -   vobs - Test  - Merge: Property 'A2DEdeg' [POS_EQ_DEC_OTHER] updated 25 times
@@ -205,14 +226,14 @@ sclsvrServer -   vobs - Test  - Merge: Property 'Icous' [PHOT_COUS_I] updated 27
 sclsvrServer -   vobs - Test  - Execute: Step 8 - after UPDATE_ONLY, 31 stars
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Consulting B/sb9/main ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+11+20.951-44+57+23.68&+05+11+58.831-45+14+57.71&+05+10+26.515-44+55+27.65&+05+12+03.995-44+40+24.06&+05+09+49.507-44+52+27.06&+05+10+52.097-44+35+03.02&+05+10+43.102-44+34+18.43&+05+09+46.450-45+24+02.17&+05+13+13.759-45+30+59.55&+05+08+16.196-44+49+03.93&+05+08+15.455-44+49+09.70&+05+08+31.530-45+24+16.02&+05+07+43.044-45+04+44.10&+05+15+53.798-44+57+28.40&+05+09+48.613-45+42+52.13&+05+09+39.773-44+20+07.74&+05+07+25.926-44+49+18.08&+05+07+38.387-45+34+24.74&+05+14+31.416-45+47+28.55&+05+07+08.161-45+28+44.29&+05+12+27.415-44+06+00.46&+05+11+15.882-45+57+58.36&+05+15+52.160-44+24+45.62&+05+10+18.489-44+04+58.83&+05+15+01.574-44+15+07.07&+05+07+55.836-44+14+34.87&+05+11+43.221-43+58+50.26&+05+05+53.856-44+46+43.95&+05+16+27.037-45+41+09.29&+05+11+28.879-43+56+48.31&+05+08+44.253-45+30+07.92&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (7074 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (7075 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 9 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Performing UPDATE_ONLY action with 0 stars
 sclsvrServer -   vobs - Test  - Execute: Step 9 - after UPDATE_ONLY, 31 stars
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Consulting B/wds/wds ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+11+20.951-44+57+23.68&+05+11+58.831-45+14+57.71&+05+10+26.515-44+55+27.65&+05+12+03.995-44+40+24.06&+05+09+49.507-44+52+27.06&+05+10+52.097-44+35+03.02&+05+10+43.102-44+34+18.43&+05+09+46.450-45+24+02.17&+05+13+13.759-45+30+59.55&+05+08+16.196-44+49+03.93&+05+08+15.455-44+49+09.70&+05+08+31.530-45+24+16.02&+05+07+43.044-45+04+44.10&+05+15+53.798-44+57+28.40&+05+09+48.613-45+42+52.13&+05+09+39.773-44+20+07.74&+05+07+25.926-44+49+18.08&+05+07+38.387-45+34+24.74&+05+14+31.416-45+47+28.55&+05+07+08.161-45+28+44.29&+05+12+27.415-44+06+00.46&+05+11+15.882-45+57+58.36&+05+15+52.160-44+24+45.62&+05+10+18.489-44+04+58.83&+05+15+01.574-44+15+07.07&+05+07+55.836-44+14+34.87&+05+11+43.221-43+58+50.26&+05+05+53.856-44+46+43.95&+05+16+27.037-45+41+09.29&+05+11+28.879-43+56+48.31&+05+08+44.253-45+30+07.92&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (7821 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (7822 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -225,14 +246,14 @@ sclsvrServer -   vobs - Test  - Execute: Step 10 - Performing UPDATE_ONLY action
 sclsvrServer -   vobs - Test  - Merge: list [31 stars] with criteria - input list [1 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 1 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 1 found / 1 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'WDS' [ID_WDS] updated 1 times
 sclsvrServer -   vobs - Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 1 times
 sclsvrServer -   vobs - Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] updated 1 times
 sclsvrServer -   vobs - Test  - Execute: Step 10 - after UPDATE_ONLY, 31 stars
 sclsvrServer -   vobs - Test  - Execute: Step 11 - Consulting II/297/irc ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+11+20.951-44+57+23.68&+05+11+58.831-45+14+57.71&+05+10+26.515-44+55+27.65&+05+12+03.995-44+40+24.06&+05+09+49.507-44+52+27.06&+05+10+52.097-44+35+03.02&+05+10+43.102-44+34+18.43&+05+09+46.450-45+24+02.17&+05+13+13.759-45+30+59.55&+05+08+16.196-44+49+03.93&+05+08+15.455-44+49+09.70&+05+08+31.530-45+24+16.02&+05+07+43.044-45+04+44.10&+05+15+53.798-44+57+28.40&+05+09+48.613-45+42+52.13&+05+09+39.773-44+20+07.74&+05+07+25.926-44+49+18.08&+05+07+38.387-45+34+24.74&+05+14+31.416-45+47+28.55&+05+07+08.161-45+28+44.29&+05+12+27.415-44+06+00.46&+05+11+15.882-45+57+58.36&+05+15+52.160-44+24+45.62&+05+10+18.489-44+04+58.83&+05+15+01.574-44+15+07.07&+05+07+55.836-44+14+34.87&+05+11+43.221-43+58+50.26&+05+05+53.856-44+46+43.95&+05+16+27.037-45+41+09.29&+05+11+28.879-43+56+48.31&+05+08+44.253-45+30+07.92&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (14944 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (14945 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (23 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
@@ -246,16 +267,15 @@ sclsvrServer -   vobs - Test  - Execute: Step 11 - Performing UPDATE_ONLY action
 sclsvrServer -   vobs - Test  - Merge: list [31 stars] with criteria - input list [23 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 23 updated / 0 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 23 found / 23 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'S09' [PHOT_FLUX_IR_09] updated 23 times
 sclsvrServer -   vobs - Test  - Merge: Property 'e_S09' [PHOT_FLUX_IR_09_ERROR] updated 23 times
 sclsvrServer -   vobs - Test  - Execute: Step 11 - after UPDATE_ONLY, 31 stars
-sclsvrServer -   vobs - Info  - Execute: 31 star(s) found.
+sclsvrServer -   vobs - Info  - Execute: done = 31 star(s) found.
 sclsvrServer -   vobs - Test  - Search: done = Number of stars found : 31
 sclsvrServer - sclsvr - Test  - Complete: start [31 stars]
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33908'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.113200; computed fnu_12 = 0.056358, fnu_18 = 0.025789
@@ -263,7 +283,6 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.096091
 sclsvrServer - sclsvr - Test  - star 'HD 33908' - parallax 3.50(14.18) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.358517 / -0.784640 radians - -36.060 / 250.450 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.230 (HIGH), V = 9.324 (HIGH), R = 9.300 (HIGH), I = 0.000 (NO), J = 7.689 (HIGH), H = 7.157 (HIGH), K = 7.098 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.230 (HIGH), V = 9.324 (HIGH), R = 9.300 (HIGH), I = 8.465 (HIGH), J = 7.689 (HIGH), H = 7.157 (HIGH), K = 7.098 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.230, V = 9.324, R = 9.300, I = 8.465, J = 7.689, H = 7.157, K = 7.098, L = 0.000, M = 0.000
@@ -276,7 +295,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33908' - computing diameter without abs
 sclsvrServer -    alx - Test  - Diam = 0.188 (0.015) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997780 (0.000364), 0.995564 (0.000726)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.262 (HIGH), V = 6.324 (HIGH), R = 7.055 (HIGH), I = 0.000 (NO), J = 6.856 (HIGH), H = 6.644 (HIGH), K = 6.750 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.262 (HIGH), V = 6.324 (HIGH), R = 7.055 (HIGH), I = 7.987 (HIGH), J = 6.856 (HIGH), H = 6.644 (HIGH), K = 6.750 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.222, V = 9.324, R = 9.299, I = 9.505, J = 15.187, H = 7.157, K = 7.098, L = 0.000, M = 0.000
@@ -293,14 +311,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.168585, B = 0.169996, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273499'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K2'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.105200; computed fnu_12 = 0.052595, fnu_18 = 0.024121
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.171120
 sclsvrServer - sclsvr - Test  - star 'HD 273499' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.361272 / -0.789750 radians - -35.970 / 250.820 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.860 (HIGH), V = 11.347 (HIGH), R = 11.360 (HIGH), I = 0.000 (NO), J = 8.171 (HIGH), H = 7.398 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.860 (HIGH), V = 11.347 (HIGH), R = 11.360 (HIGH), I = 9.778 (HIGH), J = 8.171 (HIGH), H = 7.398 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.860, V = 11.347, R = 11.360, I = 9.778, J = 8.171, H = 7.398, K = 7.152, L = 0.000, M = 0.000
@@ -313,7 +329,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273499' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.266 (0.022) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.995551 (0.000728), 0.991122 (0.001451)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.892 (HIGH), V = 8.347 (HIGH), R = 9.115 (HIGH), I = 0.000 (NO), J = 7.338 (HIGH), H = 6.885 (HIGH), K = 6.804 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.892 (HIGH), V = 8.347 (HIGH), R = 9.115 (HIGH), I = 7.978 (HIGH), J = 7.338 (HIGH), H = 6.885 (HIGH), K = 6.804 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.852, V = 11.347, R = 11.359, I = 9.496, J = 15.669, H = 7.398, K = 7.152, L = 0.000, M = 0.000
@@ -333,14 +348,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.212084, B = 0.212564, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273495'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K5'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.113300; computed fnu_12 = 0.057022, fnu_18 = 0.026240
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.083377
 sclsvrServer - sclsvr - Test  - star 'HD 273495' - parallax -15.68(29.00) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.354558 / -0.784078 radians - -36.210 / 250.390 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.530 (HIGH), V = 10.133 (HIGH), R = 10.140 (HIGH), I = 0.000 (NO), J = 7.876 (HIGH), H = 7.240 (HIGH), K = 7.038 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.530 (HIGH), V = 10.133 (HIGH), R = 10.140 (HIGH), I = 8.992 (HIGH), J = 7.876 (HIGH), H = 7.240 (HIGH), K = 7.038 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.530, V = 10.133, R = 10.140, I = 8.992, J = 7.876, H = 7.240, K = 7.038, L = 0.000, M = 0.000
@@ -353,7 +366,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273495' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.233 (0.019) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.996583 (0.000560), 0.993177 (0.001116)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.562 (HIGH), V = 7.133 (HIGH), R = 7.895 (HIGH), I = 0.000 (NO), J = 7.044 (HIGH), H = 6.727 (HIGH), K = 6.690 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.562 (HIGH), V = 7.133 (HIGH), R = 7.895 (HIGH), I = 8.233 (HIGH), J = 7.044 (HIGH), H = 6.727 (HIGH), K = 6.690 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.522, V = 10.133, R = 10.139, I = 9.751, J = 15.375, H = 7.240, K = 7.038, L = 0.000, M = 0.000
@@ -373,14 +385,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.208953, B = 0.208448, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4401921'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K2'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.087520; computed fnu_12 = 0.043756, fnu_18 = 0.020067
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.370891
 sclsvrServer - sclsvr - Test  - star 'DM -4401921' - parallax 16.88(15.30) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.361647 / -0.779697 radians - -35.910 / 250.110 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.640 (HIGH), V = 9.586 (HIGH), R = 9.580 (HIGH), I = 0.000 (NO), J = 7.778 (HIGH), H = 7.276 (HIGH), K = 7.144 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.640 (HIGH), V = 9.586 (HIGH), R = 9.580 (HIGH), I = 8.617 (HIGH), J = 7.778 (HIGH), H = 7.276 (HIGH), K = 7.144 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.640, V = 9.586, R = 9.580, I = 8.617, J = 7.778, H = 7.276, K = 7.144, L = 0.000, M = 0.000
@@ -393,7 +403,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4401921' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.189 (0.016) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997752 (0.000368), 0.995509 (0.000735)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.672 (HIGH), V = 6.586 (HIGH), R = 7.335 (HIGH), I = 0.000 (NO), J = 6.946 (HIGH), H = 6.763 (HIGH), K = 6.796 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.672 (HIGH), V = 6.586 (HIGH), R = 7.335 (HIGH), I = 8.335 (HIGH), J = 6.946 (HIGH), H = 6.763 (HIGH), K = 6.796 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.632, V = 9.586, R = 9.579, I = 9.853, J = 15.277, H = 7.276, K = 7.144, L = 0.000, M = 0.000
@@ -409,15 +418,13 @@ sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.184512', Teff = '4830.
 sclsvrServer -    alx - Test  - Computed UD: U = 0.168146, B = 0.168526, V = 0.170689, R = 0.173205, I = 0.175325, J = 0.177650, H = 0.179047, K = 0.179909, L = 0.181843, N = 0.183328
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33681'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'F0 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F0V' : Code = 'F', Sub-type Quantity = '0.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F0V' : Code = 'F', Sub-type Quantity = '0.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'F0 V' : Code = 'F', Sub-type Quantity = '0.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.075850; computed fnu_12 = 0.037049, fnu_18 = 0.016769
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.551539
 sclsvrServer - sclsvr - Test  - star 'HD 33681' - parallax 10.50(4.50) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351867 / -0.783202 radians - -36.320 / 250.320 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.230 (HIGH), V = 7.986 (HIGH), R = 7.990 (HIGH), I = 0.000 (NO), J = 7.474 (HIGH), H = 7.357 (HIGH), K = 7.348 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F0V' : Code = 'F', Sub-type Quantity = '0.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.230 (HIGH), V = 7.986 (HIGH), R = 7.990 (HIGH), I = 7.665 (HIGH), J = 7.474 (HIGH), H = 7.357 (HIGH), K = 7.348 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 8.230, V = 7.986, R = 7.990, I = 7.665, J = 7.474, H = 7.357, K = 7.348, L = 0.000, M = 0.000
@@ -430,7 +437,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33681' - computing diameter without abs
 sclsvrServer -    alx - Test  - Diam = 0.128 (0.010) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998972 (0.000168), 0.997945 (0.000337)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.262 (HIGH), V = 4.986 (HIGH), R = 5.745 (HIGH), I = 0.000 (NO), J = 6.641 (HIGH), H = 6.844 (HIGH), K = 7.000 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F0V' : Code = 'F', Sub-type Quantity = '0.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 4.262 (HIGH), V = 4.986 (HIGH), R = 5.745 (HIGH), I = 7.778 (HIGH), J = 6.641 (HIGH), H = 6.844 (HIGH), K = 7.000 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 8.222, V = 7.986, R = 7.989, I = 9.296, J = 14.972, H = 7.357, K = 7.348, L = 0.000, M = 0.000
@@ -447,14 +453,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.121041, B = 0.120717, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33823'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G8III'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.200300; computed fnu_12 = 0.100184, fnu_18 = 0.045956
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.471483
 sclsvrServer - sclsvr - Test  - star 'HD 33823' - parallax 2.38(0.81) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.356419 / -0.778141 radians - -36.120 / 249.980 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.590 (HIGH), V = 8.569 (HIGH), R = 8.560 (HIGH), I = 0.000 (NO), J = 6.848 (HIGH), H = 6.319 (HIGH), K = 6.238 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.590 (HIGH), V = 8.569 (HIGH), R = 8.560 (HIGH), I = 7.543 (HIGH), J = 6.848 (HIGH), H = 6.319 (HIGH), K = 6.238 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.590, V = 8.569, R = 8.560, I = 7.543, J = 6.848, H = 6.319, K = 6.238, L = 0.000, M = 0.000
@@ -467,7 +471,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33823' - computing diameter without abs
 sclsvrServer -    alx - Test  - Diam = 0.283 (0.023) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.994987 (0.000821), 0.989998 (0.001633)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.622 (HIGH), V = 5.569 (HIGH), R = 6.315 (HIGH), I = 0.000 (NO), J = 6.015 (HIGH), H = 5.806 (HIGH), K = 5.890 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 5.622 (HIGH), V = 5.569 (HIGH), R = 6.315 (HIGH), I = 6.710 (HIGH), J = 6.015 (HIGH), H = 5.806 (HIGH), K = 5.890 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.582, V = 8.569, R = 8.559, I = 8.228, J = 14.346, H = 6.319, K = 6.238, L = 0.000, M = 0.000
@@ -484,7 +487,6 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.250924, B = 0.253505, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33811'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G8IV/V'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'G8IV/V' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'IV/V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8IV/V' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'IV/V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.093580; computed fnu_12 = 0.046505, fnu_18 = 0.021257
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.304722
@@ -492,7 +494,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33811' - parallax 17.72(0.81) is OK...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.355765 / -0.777924 radians - -36.140 / 249.960 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 249.966 / 0.056 / 0.031
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.409 (HIGH), V = 8.663 (HIGH), R = 8.657 (HIGH), I = 0.000 (NO), J = 7.446 (HIGH), H = 7.120 (HIGH), K = 7.065 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8IV/V' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'IV/V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.409 (HIGH), V = 8.663 (HIGH), R = 8.657 (HIGH), I = 7.958 (HIGH), J = 7.446 (HIGH), H = 7.120 (HIGH), K = 7.065 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.450, V = 8.694, R = 8.680, I = 7.974, J = 7.533, H = 7.125, K = 7.069, L = 0.000, M = 0.000
@@ -507,15 +508,13 @@ sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.176747', Teff = '5310.
 sclsvrServer -    alx - Test  - Computed UD: U = 0.161096, B = 0.162444, V = 0.164722, R = 0.166966, I = 0.168699, J = 0.170879, H = 0.172093, K = 0.172775, L = 0.174436, N = 0.175713
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33682'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K1/K2III'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K1.50III' : Code = 'K', Sub-type Quantity = '1.50', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K1.50III' : Code = 'K', Sub-type Quantity = '1.50', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K1/K2III' : Code = 'K', Sub-type Quantity = '1.50', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.386800; computed fnu_12 = 0.194545, fnu_18 = 0.089496
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.750923
 sclsvrServer - sclsvr - Test  - star 'HD 33682' - parallax 1.46(0.79) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351645 / -0.792390 radians - -36.360 / 250.970 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.800 (HIGH), V = 8.517 (HIGH), R = 8.540 (HIGH), I = 0.000 (NO), J = 6.330 (HIGH), H = 5.667 (HIGH), K = 5.532 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K1.50III' : Code = 'K', Sub-type Quantity = '1.50', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.800 (HIGH), V = 8.517 (HIGH), R = 8.540 (HIGH), I = 7.308 (HIGH), J = 6.330 (HIGH), H = 5.667 (HIGH), K = 5.532 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.800, V = 8.517, R = 8.540, I = 7.308, J = 6.330, H = 5.667, K = 5.532, L = 0.000, M = 0.000
@@ -528,7 +527,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33682' - computing diameter without abs
 sclsvrServer -    alx - Test  - Diam = 0.450 (0.037) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.987302 (0.002074), 0.974765 (0.004095)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.832 (HIGH), V = 5.517 (HIGH), R = 6.295 (HIGH), I = 0.000 (NO), J = 5.498 (HIGH), H = 5.154 (HIGH), K = 5.184 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K1.50III' : Code = 'K', Sub-type Quantity = '1.50', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 5.832 (HIGH), V = 5.517 (HIGH), R = 6.295 (HIGH), I = 6.624 (HIGH), J = 5.498 (HIGH), H = 5.154 (HIGH), K = 5.184 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.792, V = 8.517, R = 8.539, I = 8.142, J = 13.829, H = 5.667, K = 5.532, L = 0.000, M = 0.000
@@ -545,14 +543,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.368041, B = 0.371407, V = 0.3
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4501858'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.127500; computed fnu_12 = 0.063477, fnu_18 = 0.029046
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.966931
 sclsvrServer - sclsvr - Test  - star 'DM -4501858' - parallax 1.20(12.89) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.366721 / -0.794414 radians - -35.770 / 251.170 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.400 (HIGH), V = 9.324 (HIGH), R = 9.330 (HIGH), I = 0.000 (NO), J = 7.469 (HIGH), H = 6.938 (HIGH), K = 6.809 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.400 (HIGH), V = 9.324 (HIGH), R = 9.330 (HIGH), I = 8.366 (HIGH), J = 7.469 (HIGH), H = 6.938 (HIGH), K = 6.809 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.400, V = 9.324, R = 9.330, I = 8.366, J = 7.469, H = 6.938, K = 6.809, L = 0.000, M = 0.000
@@ -565,7 +561,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4501858' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.225 (0.018) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.996833 (0.000519), 0.993676 (0.001034)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.432 (HIGH), V = 6.324 (HIGH), R = 7.085 (HIGH), I = 0.000 (NO), J = 6.636 (HIGH), H = 6.425 (HIGH), K = 6.461 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.432 (HIGH), V = 6.324 (HIGH), R = 7.085 (HIGH), I = 7.646 (HIGH), J = 6.636 (HIGH), H = 6.425 (HIGH), K = 6.461 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.392, V = 9.324, R = 9.329, I = 9.164, J = 14.967, H = 6.938, K = 6.809, L = 0.000, M = 0.000
@@ -582,14 +577,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.197763, B = 0.199418, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273417'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G5'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.113700; computed fnu_12 = 0.056352, fnu_18 = 0.025719
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.096195
 sclsvrServer - sclsvr - Test  - star 'HD 273417' - parallax 22.38(17.20) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.345081 / -0.782217 radians - -36.590 / 250.230 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.420 (HIGH), V = 9.619 (HIGH), R = 9.650 (HIGH), I = 0.000 (NO), J = 8.252 (HIGH), H = 7.868 (HIGH), K = 7.785 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.420 (HIGH), V = 9.619 (HIGH), R = 9.650 (HIGH), I = 8.732 (HIGH), J = 8.252 (HIGH), H = 7.868 (HIGH), K = 7.785 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.420, V = 9.619, R = 9.650, I = 8.732, J = 8.252, H = 7.868, K = 7.785, L = 0.000, M = 0.000
@@ -602,7 +595,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273417' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.128 (0.011) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998969 (0.000169), 0.997940 (0.000338)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.452 (HIGH), V = 6.619 (HIGH), R = 7.405 (HIGH), I = 0.000 (NO), J = 7.419 (HIGH), H = 7.355 (HIGH), K = 7.437 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.452 (HIGH), V = 6.619 (HIGH), R = 7.405 (HIGH), I = 7.899 (HIGH), J = 7.419 (HIGH), H = 7.355 (HIGH), K = 7.437 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.412, V = 9.619, R = 9.649, I = 9.417, J = 15.750, H = 7.868, K = 7.785, L = 0.000, M = 0.000
@@ -649,13 +641,11 @@ sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4501828'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G5'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'DM -4501828' - parallax -3.58(14.60) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.346196 / -0.792457 radians - -36.580 / 250.960 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.380 (HIGH), V = 9.562 (HIGH), R = 9.570 (HIGH), I = 0.000 (NO), J = 8.241 (HIGH), H = 7.952 (HIGH), K = 7.831 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.380 (HIGH), V = 9.562 (HIGH), R = 9.570 (HIGH), I = 8.721 (HIGH), J = 8.241 (HIGH), H = 7.952 (HIGH), K = 7.831 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.380, V = 9.562, R = 9.570, I = 8.721, J = 8.241, H = 7.952, K = 7.831, L = 0.000, M = 0.000
@@ -668,7 +658,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4501828' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.122 (0.010) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.999065 (0.000153), 0.998131 (0.000306)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.412 (HIGH), V = 6.562 (HIGH), R = 7.325 (HIGH), I = 0.000 (NO), J = 7.408 (HIGH), H = 7.439 (HIGH), K = 7.483 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.412 (HIGH), V = 6.562 (HIGH), R = 7.325 (HIGH), I = 7.888 (HIGH), J = 7.408 (HIGH), H = 7.439 (HIGH), K = 7.483 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.372, V = 9.562, R = 9.569, I = 9.406, J = 15.739, H = 7.952, K = 7.831, L = 0.000, M = 0.000
@@ -685,14 +674,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.114558, B = 0.115615, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273420'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.098520; computed fnu_12 = 0.049049, fnu_18 = 0.022444
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.246896
 sclsvrServer - sclsvr - Test  - star 'HD 273420' - parallax -4.40(25.00) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.342670 / -0.786776 radians - -36.710 / 250.550 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.130 (HIGH), V = 9.899 (HIGH), R = 9.900 (HIGH), I = 0.000 (NO), J = 8.148 (HIGH), H = 7.608 (HIGH), K = 7.517 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.130 (HIGH), V = 9.899 (HIGH), R = 9.900 (HIGH), I = 8.996 (HIGH), J = 8.148 (HIGH), H = 7.608 (HIGH), K = 7.517 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.130, V = 9.899, R = 9.900, I = 8.996, J = 8.148, H = 7.608, K = 7.517, L = 0.000, M = 0.000
@@ -705,7 +692,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273420' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.159 (0.013) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998411 (0.000260), 0.996825 (0.000520)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.162 (HIGH), V = 6.899 (HIGH), R = 7.655 (HIGH), I = 0.000 (NO), J = 7.316 (HIGH), H = 7.095 (HIGH), K = 7.169 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.162 (HIGH), V = 6.899 (HIGH), R = 7.655 (HIGH), I = 8.376 (HIGH), J = 7.316 (HIGH), H = 7.095 (HIGH), K = 7.169 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.122, V = 9.899, R = 9.899, I = 9.894, J = 15.647, H = 7.608, K = 7.517, L = 0.000, M = 0.000
@@ -722,14 +708,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.140664, B = 0.141841, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273580'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K7'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K7' : Code = 'K', Sub-type Quantity = '7.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K7' : Code = 'K', Sub-type Quantity = '7.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.094840; computed fnu_12 = 0.048113, fnu_18 = 0.022233
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.267830
 sclsvrServer - sclsvr - Test  - star 'HD 273580' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.378359 / -0.784663 radians - -35.250 / 250.530 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.590 (HIGH), V = 10.819 (HIGH), R = 10.830 (HIGH), I = 0.000 (NO), J = 8.224 (HIGH), H = 7.426 (HIGH), K = 7.207 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K7' : Code = 'K', Sub-type Quantity = '7.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.590 (HIGH), V = 10.819 (HIGH), R = 10.830 (HIGH), I = 9.371 (HIGH), J = 8.224 (HIGH), H = 7.426 (HIGH), K = 7.207 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.590, V = 10.819, R = 10.830, I = 9.371, J = 8.224, H = 7.426, K = 7.207, L = 0.000, M = 0.000
@@ -742,7 +726,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273580' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.259 (0.021) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.995788 (0.000690), 0.991594 (0.001374)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.622 (HIGH), V = 7.819 (HIGH), R = 8.585 (HIGH), I = 0.000 (NO), J = 7.392 (HIGH), H = 6.913 (HIGH), K = 6.859 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K7' : Code = 'K', Sub-type Quantity = '7.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.622 (HIGH), V = 7.819 (HIGH), R = 8.585 (HIGH), I = 8.347 (HIGH), J = 7.392 (HIGH), H = 6.913 (HIGH), K = 6.859 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.582, V = 10.819, R = 10.829, I = 9.865, J = 15.723, H = 7.426, K = 7.207, L = 0.000, M = 0.000
@@ -762,14 +745,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.204182, B = 0.203111, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273509'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K2'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.117700; computed fnu_12 = 0.058844, fnu_18 = 0.026987
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.049218
 sclsvrServer - sclsvr - Test  - star 'HD 273509' - parallax 19.20(36.59) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351802 / -0.797868 radians - -36.370 / 251.360 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.040 (HIGH), V = 10.565 (HIGH), R = 10.580 (HIGH), I = 0.000 (NO), J = 8.085 (HIGH), H = 7.297 (HIGH), K = 7.178 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.040 (HIGH), V = 10.565 (HIGH), R = 10.580 (HIGH), I = 9.469 (HIGH), J = 8.085 (HIGH), H = 7.297 (HIGH), K = 7.178 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.040, V = 10.565, R = 10.580, I = 9.469, J = 8.085, H = 7.297, K = 7.178, L = 0.000, M = 0.000
@@ -785,7 +766,6 @@ sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33649'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'F5V'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'F5V' : Code = 'F', Sub-type Quantity = '5.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F5V' : Code = 'F', Sub-type Quantity = '5.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.159900; computed fnu_12 = 0.078459, fnu_18 = 0.035602
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.736873
@@ -793,7 +773,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33649' - parallax 16.35(0.60) is OK...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351159 / -0.773800 radians - -36.310 / 249.650 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 249.656 / 0.061 / 0.033
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.866 (HIGH), V = 7.445 (HIGH), R = 7.465 (HIGH), I = 0.000 (NO), J = 6.662 (HIGH), H = 6.488 (HIGH), K = 6.410 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F5V' : Code = 'F', Sub-type Quantity = '5.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.866 (HIGH), V = 7.445 (HIGH), R = 7.465 (HIGH), I = 6.983 (HIGH), J = 6.662 (HIGH), H = 6.488 (HIGH), K = 6.410 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.910, V = 7.478, R = 7.490, I = 7.000, J = 6.754, H = 6.493, K = 6.414, L = 0.000, M = 0.000
@@ -809,7 +788,6 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.206821, B = 0.206875, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33331'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'B5III'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'B5III' : Code = 'B', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'B5III' : Code = 'B', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.074840; computed fnu_12 = 0.035839, fnu_18 = 0.016028
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.587587
@@ -817,7 +795,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33331' - parallax 3.14(0.56) is OK...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.341426 / -0.782286 radians - -36.740 / 250.220 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 250.227 / 0.318 / 0.098
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.681 (HIGH), V = 6.803 (HIGH), R = 6.817 (HIGH), I = 0.000 (NO), J = 7.068 (HIGH), H = 7.113 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'B5III' : Code = 'B', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.681 (HIGH), V = 6.803 (HIGH), R = 6.817 (HIGH), I = 6.878 (HIGH), J = 7.068 (HIGH), H = 7.113 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.810, V = 6.901, R = 6.890, I = 6.928, J = 7.340, H = 7.130, K = 7.163, L = 0.000, M = 0.000
@@ -833,14 +810,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.094117, B = 0.093848, V = 0.0
 sclsvrServer - sclsvr - Test  - Complete: star 'HIP 23853'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.296100; computed fnu_12 = 0.147416, fnu_18 = 0.067456
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.052111
 sclsvrServer - sclsvr - Test  - star 'HIP 23853' - parallax 1.35(0.81) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.342332 / -0.795408 radians - -36.750 / 251.160 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.090 (HIGH), V = 8.838 (HIGH), R = 8.850 (HIGH), I = 0.000 (NO), J = 6.650 (HIGH), H = 5.989 (HIGH), K = 5.856 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.090 (HIGH), V = 8.838 (HIGH), R = 8.850 (HIGH), I = 7.783 (HIGH), J = 6.650 (HIGH), H = 5.989 (HIGH), K = 5.856 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.090, V = 8.838, R = 8.850, I = 7.783, J = 6.650, H = 5.989, K = 5.856, L = 0.000, M = 0.000
@@ -853,7 +828,6 @@ sclsvrServer - sclsvr - Test  - star 'HIP 23853' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.387 (0.032) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.990629 (0.001532), 0.981346 (0.003035)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.122 (HIGH), V = 5.838 (HIGH), R = 6.605 (HIGH), I = 0.000 (NO), J = 5.818 (HIGH), H = 5.476 (HIGH), K = 5.508 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.122 (HIGH), V = 5.838 (HIGH), R = 6.605 (HIGH), I = 6.592 (HIGH), J = 5.818 (HIGH), H = 5.476 (HIGH), K = 5.508 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.082, V = 8.838, R = 8.849, I = 8.110, J = 14.149, H = 5.989, K = 5.856, L = 0.000, M = 0.000
@@ -870,14 +844,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.321026, B = 0.323713, V = 0.3
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 34346'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A9V'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'A9V' : Code = 'A', Sub-type Quantity = '9.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A9V' : Code = 'A', Sub-type Quantity = '9.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 34346' - parallax 4.36(0.80) is OK...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.372368 / -0.799208 radians - -35.560 / 251.520 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 251.525 / 0.229 / 0.091
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.860 (HIGH), V = 8.606 (HIGH), R = 8.622 (HIGH), I = 0.000 (NO), J = 8.132 (HIGH), H = 7.982 (HIGH), K = 7.953 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A9V' : Code = 'A', Sub-type Quantity = '9.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.860 (HIGH), V = 8.606 (HIGH), R = 8.622 (HIGH), I = 8.428 (HIGH), J = 8.132 (HIGH), H = 7.982 (HIGH), K = 7.953 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 8.980, V = 8.697, R = 8.690, I = 8.474, J = 8.384, H = 7.997, K = 7.964, L = 0.000, M = 0.000
@@ -893,14 +865,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.094857, B = 0.094603, V = 0.0
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4501817'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.066510; computed fnu_12 = 0.033113, fnu_18 = 0.015152
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.673490
 sclsvrServer - sclsvr - Test  - star 'DM -4501817' - parallax -7.69(12.50) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.340134 / -0.793758 radians - -36.830 / 251.040 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.280 (HIGH), V = 9.286 (HIGH), R = 9.300 (HIGH), I = 0.000 (NO), J = 7.790 (HIGH), H = 7.362 (HIGH), K = 7.270 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.280 (HIGH), V = 9.286 (HIGH), R = 9.300 (HIGH), I = 8.441 (HIGH), J = 7.790 (HIGH), H = 7.362 (HIGH), K = 7.270 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.280, V = 9.286, R = 9.300, I = 8.441, J = 7.790, H = 7.362, K = 7.270, L = 0.000, M = 0.000
@@ -913,7 +883,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4501817' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.167 (0.014) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998251 (0.000287), 0.996506 (0.000572)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.312 (HIGH), V = 6.286 (HIGH), R = 7.055 (HIGH), I = 0.000 (NO), J = 6.957 (HIGH), H = 6.849 (HIGH), K = 6.922 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.312 (HIGH), V = 6.286 (HIGH), R = 7.055 (HIGH), I = 8.212 (HIGH), J = 6.957 (HIGH), H = 6.849 (HIGH), K = 6.922 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.272, V = 9.286, R = 9.299, I = 9.730, J = 15.288, H = 7.362, K = 7.270, L = 0.000, M = 0.000
@@ -930,13 +899,11 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.152659, B = 0.153937, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273471'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K5'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 273471' - parallax -56.20(38.40) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.363350 / -0.769692 radians - -35.790 / 249.410 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.760 (HIGH), V = 10.777 (HIGH), R = 10.760 (HIGH), I = 0.000 (NO), J = 8.641 (HIGH), H = 8.016 (HIGH), K = 7.942 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.760 (HIGH), V = 10.777 (HIGH), R = 10.760 (HIGH), I = 9.548 (HIGH), J = 8.641 (HIGH), H = 8.016 (HIGH), K = 7.942 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.760, V = 10.777, R = 10.760, I = 9.548, J = 8.641, H = 8.016, K = 7.942, L = 0.000, M = 0.000
@@ -949,7 +916,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273471' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.137 (0.011) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998820 (0.000193), 0.997642 (0.000386)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.792 (HIGH), V = 7.777 (HIGH), R = 8.515 (HIGH), I = 0.000 (NO), J = 7.808 (HIGH), H = 7.503 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.792 (HIGH), V = 7.777 (HIGH), R = 8.515 (HIGH), I = 9.206 (HIGH), J = 7.808 (HIGH), H = 7.503 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.752, V = 10.777, R = 10.759, I = 10.724, J = 16.139, H = 8.016, K = 7.942, L = 0.000, M = 0.000
@@ -966,13 +932,11 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.120379, B = 0.120089, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4601721'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'DM -4601721' - parallax -9.10(16.10) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.358148 / -0.802262 radians - -36.140 / 251.690 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.890 (HIGH), V = 9.937 (HIGH), R = 9.940 (HIGH), I = 0.000 (NO), J = 8.353 (HIGH), H = 7.878 (HIGH), K = 7.761 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.890 (HIGH), V = 9.937 (HIGH), R = 9.940 (HIGH), I = 9.130 (HIGH), J = 8.353 (HIGH), H = 7.878 (HIGH), K = 7.761 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.890, V = 9.937, R = 9.940, I = 9.130, J = 8.353, H = 7.878, K = 7.761, L = 0.000, M = 0.000
@@ -985,7 +949,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4601721' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.139 (0.011) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998793 (0.000198), 0.997587 (0.000395)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.922 (HIGH), V = 6.937 (HIGH), R = 7.695 (HIGH), I = 0.000 (NO), J = 7.520 (HIGH), H = 7.365 (HIGH), K = 7.413 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.922 (HIGH), V = 6.937 (HIGH), R = 7.695 (HIGH), I = 8.649 (HIGH), J = 7.520 (HIGH), H = 7.365 (HIGH), K = 7.413 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.882, V = 9.937, R = 9.939, I = 10.167, J = 15.851, H = 7.878, K = 7.761, L = 0.000, M = 0.000
@@ -1002,13 +965,11 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.123312, B = 0.124344, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273570'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 273570' - parallax 3.20(19.00) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.378240 / -0.775147 radians - -35.210 / 249.860 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.970 (HIGH), V = 9.920 (HIGH), R = 9.950 (HIGH), I = 0.000 (NO), J = 8.205 (HIGH), H = 7.714 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.970 (HIGH), V = 9.920 (HIGH), R = 9.950 (HIGH), I = 9.015 (HIGH), J = 8.205 (HIGH), H = 7.714 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.970, V = 9.920, R = 9.950, I = 9.015, J = 8.205, H = 7.714, K = 7.594, L = 0.000, M = 0.000
@@ -1021,7 +982,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273570' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.151 (0.012) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998559 (0.000236), 0.997119 (0.000472)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.002 (HIGH), V = 6.920 (HIGH), R = 7.705 (HIGH), I = 0.000 (NO), J = 7.372 (HIGH), H = 7.201 (HIGH), K = 7.246 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.002 (HIGH), V = 6.920 (HIGH), R = 7.705 (HIGH), I = 8.468 (HIGH), J = 7.372 (HIGH), H = 7.201 (HIGH), K = 7.246 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.962, V = 9.920, R = 9.949, I = 9.986, J = 15.703, H = 7.714, K = 7.594, L = 0.000, M = 0.000
@@ -1038,14 +998,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.135055, B = 0.136185, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4401903'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.112600; computed fnu_12 = 0.056059, fnu_18 = 0.025652
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.101861
 sclsvrServer - sclsvr - Test  - star 'DM -4401903' - parallax -9.80(10.50) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.353975 / -0.769394 radians - -36.180 / 249.350 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.180 (HIGH), V = 9.088 (HIGH), R = 9.100 (HIGH), I = 0.000 (NO), J = 7.442 (HIGH), H = 6.939 (HIGH), K = 6.839 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.180 (HIGH), V = 9.088 (HIGH), R = 9.100 (HIGH), I = 8.240 (HIGH), J = 7.442 (HIGH), H = 6.939 (HIGH), K = 6.839 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.180, V = 9.088, R = 9.100, I = 8.240, J = 7.442, H = 6.939, K = 6.839, L = 0.000, M = 0.000
@@ -1058,7 +1016,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4401903' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.213 (0.017) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997139 (0.000469), 0.994287 (0.000935)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.212 (HIGH), V = 6.088 (HIGH), R = 6.855 (HIGH), I = 0.000 (NO), J = 6.610 (HIGH), H = 6.426 (HIGH), K = 6.491 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.212 (HIGH), V = 6.088 (HIGH), R = 6.855 (HIGH), I = 7.719 (HIGH), J = 6.610 (HIGH), H = 6.426 (HIGH), K = 6.491 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.172, V = 9.088, R = 9.099, I = 9.237, J = 14.941, H = 6.939, K = 6.839, L = 0.000, M = 0.000
@@ -1075,13 +1032,11 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.190547, B = 0.192141, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273560'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 273560' - parallax -0.50(25.29) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.374561 / -0.772342 radians - -35.350 / 249.650 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.420 (HIGH), V = 10.354 (HIGH), R = 10.340 (HIGH), I = 0.000 (NO), J = 8.640 (HIGH), H = 8.082 (HIGH), K = 7.991 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.420 (HIGH), V = 10.354 (HIGH), R = 10.340 (HIGH), I = 9.519 (HIGH), J = 8.640 (HIGH), H = 8.082 (HIGH), K = 7.991 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.420, V = 10.354, R = 10.340, I = 9.519, J = 8.640, H = 8.082, K = 7.991, L = 0.000, M = 0.000
@@ -1094,7 +1049,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273560' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.129 (0.011) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998948 (0.000172), 0.997897 (0.000345)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.452 (HIGH), V = 7.354 (HIGH), R = 8.095 (HIGH), I = 0.000 (NO), J = 7.808 (HIGH), H = 7.569 (HIGH), K = 7.643 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.452 (HIGH), V = 7.354 (HIGH), R = 8.095 (HIGH), I = 8.836 (HIGH), J = 7.808 (HIGH), H = 7.569 (HIGH), K = 7.643 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 11.412, V = 10.354, R = 10.339, I = 10.354, J = 16.139, H = 8.082, K = 7.991, L = 0.000, M = 0.000
@@ -1111,14 +1065,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.112657, B = 0.113600, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'DM -4401877'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G5'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.107600; computed fnu_12 = 0.053329, fnu_18 = 0.024339
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.156065
 sclsvrServer - sclsvr - Test  - star 'DM -4401877' - parallax 32.00(14.80) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.343601 / -0.772186 radians - -36.610 / 249.510 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.620 (HIGH), V = 9.486 (HIGH), R = 9.490 (HIGH), I = 0.000 (NO), J = 7.632 (HIGH), H = 7.057 (HIGH), K = 6.932 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.620 (HIGH), V = 9.486 (HIGH), R = 9.490 (HIGH), I = 8.112 (HIGH), J = 7.632 (HIGH), H = 7.057 (HIGH), K = 6.932 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.620, V = 9.486, R = 9.490, I = 8.112, J = 7.632, H = 7.057, K = 6.932, L = 0.000, M = 0.000
@@ -1131,7 +1083,6 @@ sclsvrServer - sclsvr - Test  - star 'DM -4401877' - computing diameter without 
 sclsvrServer -    alx - Test  - Diam = 0.218 (0.018) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997007 (0.000490), 0.994022 (0.000978)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.652 (HIGH), V = 6.486 (HIGH), R = 7.245 (HIGH), I = 0.000 (NO), J = 6.799 (HIGH), H = 6.544 (HIGH), K = 6.584 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.652 (HIGH), V = 6.486 (HIGH), R = 7.245 (HIGH), I = 7.279 (HIGH), J = 6.799 (HIGH), H = 6.544 (HIGH), K = 6.584 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.612, V = 9.486, R = 9.489, I = 8.797, J = 15.130, H = 7.057, K = 6.932, L = 0.000, M = 0.000
@@ -1148,13 +1099,11 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.187948, B = 0.189682, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273182'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 273182' - parallax 27.60(16.10) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.360137 / -0.767607 radians - -35.920 / 249.250 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.740 (HIGH), V = 9.755 (HIGH), R = 9.740 (HIGH), I = 0.000 (NO), J = 8.052 (HIGH), H = 7.520 (HIGH), K = 7.451 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.740 (HIGH), V = 9.755 (HIGH), R = 9.740 (HIGH), I = 8.846 (HIGH), J = 8.052 (HIGH), H = 7.520 (HIGH), K = 7.451 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.740, V = 9.755, R = 9.740, I = 8.846, J = 8.052, H = 7.520, K = 7.451, L = 0.000, M = 0.000
@@ -1167,7 +1116,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273182' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.161 (0.013) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998375 (0.000266), 0.996753 (0.000532)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.772 (HIGH), V = 6.755 (HIGH), R = 7.495 (HIGH), I = 0.000 (NO), J = 7.220 (HIGH), H = 7.007 (HIGH), K = 7.103 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.772 (HIGH), V = 6.755 (HIGH), R = 7.495 (HIGH), I = 8.332 (HIGH), J = 7.220 (HIGH), H = 7.007 (HIGH), K = 7.103 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.732, V = 9.755, R = 9.739, I = 9.850, J = 15.551, H = 7.520, K = 7.451, L = 0.000, M = 0.000
@@ -1184,7 +1132,6 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.144060, B = 0.145265, V = 0.1
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33115'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G8III'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.412400; computed fnu_12 = 0.206269, fnu_18 = 0.094619
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.687389
@@ -1192,7 +1139,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33115' - parallax 3.49(0.66) is OK...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.334730 / -0.781539 radians - -37.010 / 250.150 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 250.154 / 0.287 / 0.092
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.349 (HIGH), V = 7.464 (HIGH), R = 7.501 (HIGH), I = 0.000 (NO), J = 5.954 (HIGH), H = 5.562 (HIGH), K = 5.427 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.349 (HIGH), V = 7.464 (HIGH), R = 7.501 (HIGH), I = 6.649 (HIGH), J = 5.954 (HIGH), H = 5.562 (HIGH), K = 5.427 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 8.470, V = 7.556, R = 7.570, I = 6.695, J = 6.208, H = 5.578, K = 5.438, L = 0.000, M = 0.000
@@ -1208,14 +1154,12 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.357995, B = 0.361677, V = 0.3
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 273669'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.134700; computed fnu_12 = 0.067062, fnu_18 = 0.030687
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.907288
 sclsvrServer - sclsvr - Test  - star 'HD 273669' - parallax -19.20(19.10) is not valid...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.380776 / -0.797370 radians - -35.220 / 251.420 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.910 (HIGH), V = 9.666 (HIGH), R = 9.660 (HIGH), I = 0.000 (NO), J = 7.496 (HIGH), H = 6.831 (HIGH), K = 6.680 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.910 (HIGH), V = 9.666 (HIGH), R = 9.660 (HIGH), I = 8.667 (HIGH), J = 7.496 (HIGH), H = 6.831 (HIGH), K = 6.680 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.910, V = 9.666, R = 9.660, I = 8.667, J = 7.496, H = 6.831, K = 6.680, L = 0.000, M = 0.000
@@ -1228,7 +1172,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 273669' - computing diameter without ab
 sclsvrServer -    alx - Test  - Diam = 0.270 (0.022) - base = 102.5 - wlen= 2.200
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.995434 (0.000748), 0.990889 (0.001489)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.942 (HIGH), V = 6.666 (HIGH), R = 7.415 (HIGH), I = 0.000 (NO), J = 6.664 (HIGH), H = 6.318 (HIGH), K = 6.332 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.942 (HIGH), V = 6.666 (HIGH), R = 7.415 (HIGH), I = 7.400 (HIGH), J = 6.664 (HIGH), H = 6.318 (HIGH), K = 6.332 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 10.902, V = 9.666, R = 9.659, I = 8.918, J = 14.995, H = 6.831, K = 6.680, L = 0.000, M = 0.000
@@ -1245,7 +1188,6 @@ sclsvrServer -    alx - Test  - Computed UD: U = 0.218937, B = 0.220769, V = 0.2
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 33921'
 sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K0III'.
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.276000; computed fnu_12 = 0.138335, fnu_18 = 0.063524
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.121145
@@ -1253,7 +1195,6 @@ sclsvrServer - sclsvr - Test  - star 'HD 33921' - parallax 4.32(0.73) is OK...
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.359094 / -0.767016 radians - -35.960 / 249.210 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 249.208 / 0.231 / 0.089
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.202 (HIGH), V = 8.143 (HIGH), R = 8.193 (HIGH), I = 0.000 (NO), J = 6.453 (HIGH), H = 5.927 (HIGH), K = 5.855 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.202 (HIGH), V = 8.143 (HIGH), R = 8.193 (HIGH), I = 7.225 (HIGH), J = 6.453 (HIGH), H = 5.927 (HIGH), K = 5.855 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.320, V = 8.232, R = 8.260, I = 7.270, J = 6.700, H = 5.942, K = 5.865, L = 0.000, M = 0.000
