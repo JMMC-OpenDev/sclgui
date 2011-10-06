@@ -1,4 +1,4 @@
-sclwsTestServer -  sclws - Info  - 2011-09-06T08:20:51.685616 - sclwsTestServer.cpp:197 - Connection to 'http://jmmc.fr:6666' established (ID = '3df2652c-8f83-4103-8778-6fb5b78455c6').
+sclwsTestServer -  sclws - Info  - 2011-10-06T13:17:43.344819 - sclwsTestServer.cpp:197 - Connection to 'http://jmmc.fr:6666' established (ID = '63311b52-66f6-4d5c-bf34-bdd1a5da185a').
 Looking in 'II/246/out' catalog 1/1...
 Looking in 'II/246/out' catalog 1/7...
 Looking in 'I/280' catalog 2/7...
@@ -7,7 +7,7 @@ Looking in 'B/denis' catalog 4/7...
 Looking in 'B/sb9/main' catalog 5/7...
 Looking in 'B/wds/wds' catalog 6/7...
 Looking in 'II/297/irc' catalog 7/7...
-sclwsTestServer -  sclws - Info  - 2011-09-06T08:21:06.073953 - sclwsTestServer.cpp:85 - Elapsed time in execution of 'GETCAL' 00:00:14.387
+sclwsTestServer -  sclws - Info  - 2011-10-06T13:17:46.429787 - sclwsTestServer.cpp:85 - Elapsed time in execution of 'GETCAL' 00:00:03.084
 <?xml version="1.0"?>
 
 <VOTABLE version="1.1"
@@ -17,13 +17,13 @@ sclwsTestServer -  sclws - Info  - 2011-09-06T08:21:06.073953 - sclwsTestServer.
 
  <DESCRIPTION>
   SearchCal software: http://www.jmmc.fr/searchcal (In case of problem, please report to jmmc-user-support@ujf-grenoble.fr)
-  Request parameters: -objectName hip 32617_FAINT -mag 5.01 -diffRa 3600.0 -diffDec 1200.0 -band K -minMagRange 3.01 -maxMagRange 7.01 -ra 06 48 19.08795 -dec -01 19 07.8207 -baseMax 102.45 -wlen 2.2 -radius 0.0 -bright false -noScienceStar false
-  Generated on (UTC): 2011-09-06T08:21:04
+  Request parameters: -objectName hip 32617_FAINT -mag 5.01 -diffRa 3600.0 -diffDec 1200.0 -band K -minMagRange 3.01 -maxMagRange 7.01 -ra 06 48 19.08795 -dec -01 19 07.8207 -baseMax 102.45 -wlen 2.2 -radius 0.0 -bright false -noScienceStar true
+  Generated on (UTC): 2011-10-06T13:17:46
  </DESCRIPTION>
 
  <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
 
- <RESOURCE name="SearchCal v3.8.2">
+ <RESOURCE name="SearchCal v4.0.1">
   <TABLE>
 
 <PARAM name="objectName" datatype="char" arraysize="*" unit="" value="hip 32617_FAINT"/>
@@ -42,7 +42,7 @@ sclwsTestServer -  sclws - Info  - 2011-09-06T08:21:06.073953 - sclwsTestServer.
 <PARAM name="diamVK" datatype="double" unit="mas" value=""/>
 <PARAM name="bright" datatype="boolean" unit="" value="false"/>
 <PARAM name="visErr" datatype="double" unit="" value="0.5"/>
-<PARAM name="noScienceStar" datatype="boolean" unit="" value="false"/>
+<PARAM name="noScienceStar" datatype="boolean" unit="" value="true"/>
 
    <FIELD name="HD" ID="col0" ucd="ID_HD" datatype="char" arraysize="*">
     <DESCRIPTION>HD identifier, click to call Simbad on this object</DESCRIPTION>
@@ -2037,4 +2037,4 @@ sclwsTestServer -  sclws - Info  - 2011-09-06T08:21:06.073953 - sclwsTestServer.
   </TABLE>
  </RESOURCE>
 </VOTABLE>
-sclwsTestServer -  sclws - Info  - 2011-09-06T08:21:06.075191 - sclwsTestServer.cpp:292 - Connection closed.
+sclwsTestServer -  sclws - Info  - 2011-10-06T13:17:46.430753 - sclwsTestServer.cpp:292 - Connection closed.
