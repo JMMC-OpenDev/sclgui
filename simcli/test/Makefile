@@ -35,7 +35,7 @@ EXECUTABLES     = simbadclient  \
 				  cliname       \
 				  clitest       \
 				  clitime		\
-				  simcliTestGetCoordinates \
+				  simcliTestGetCoordinates
 EXECUTABLES_L   = 
 
 #
