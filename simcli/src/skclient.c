@@ -411,7 +411,7 @@ int sk_open(machine, service)
 	}
     	(void) memcpy( 
 		(char *)&socketname.sin_addr, 
-		(char *)remote_host->h_addr, 
+		(char *)remote_host->h_addr_list[0], 
 		remote_host->h_length );
     }
     else socketname.sin_addr.s_addr = inet_addr(machine);
