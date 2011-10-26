@@ -124,16 +124,6 @@ public class MainWindow extends JFrame {
             // Add the Status bar
             _mainPane.add(statusBar, BorderLayout.SOUTH);
 
-            // Show all the GUI
-            _queryView.setVisible(true);
-            _calibratorsView.setVisible(true);
-            _filtersView.setVisible(true);
-            _statusBar.setVisible(true);
-
-            // Set the GUI up
-            pack();
-            setVisible(true);
-
             // Show the user the app is ready to be used
             StatusBar.show("application ready.");
         } catch (Exception e) {

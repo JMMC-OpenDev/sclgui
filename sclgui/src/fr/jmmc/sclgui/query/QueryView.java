@@ -46,7 +46,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
@@ -678,13 +677,7 @@ public final class QueryView extends JPanel implements Observer,
         if (validationMessages.length() > 0) {
             final String userMessage = validationMessages;
             // report messages to the user:
-            SwingUtilities.invokeLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    MessagePane.showErrorMessage(userMessage);
-                }
-            });
+            MessagePane.showErrorMessage(userMessage);
         }
 
         if (source == _scienceObjectNameTextfield) {

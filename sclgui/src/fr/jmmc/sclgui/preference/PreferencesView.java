@@ -4,6 +4,7 @@
 package fr.jmmc.sclgui.preference;
 
 import fr.jmmc.jmcs.gui.AlternateRawColorCellRenderer;
+import fr.jmmc.jmcs.gui.SwingUtils;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.BorderLayout;
@@ -37,7 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -442,8 +442,10 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
         }
 
         final int selection = futureSelection;
-        SwingUtilities.invokeLater(new Runnable() {
+        
+        SwingUtils.invokeLaterEDT(new Runnable() {
 
+            @Override
             public void run() {
                 /*
                  * Update selection to follow the moved item (at end: after preference
