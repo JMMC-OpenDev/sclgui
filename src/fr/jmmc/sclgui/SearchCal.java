@@ -15,10 +15,9 @@ import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.gui.StatusBar;
 import fr.jmmc.jmcs.gui.SwingSettings;
-import java.lang.reflect.InvocationTargetException;
+import fr.jmmc.jmcs.gui.SwingUtils;
 import java.util.logging.Logger;
 
-import javax.swing.SwingUtilities;
 
 /**
  * SearchCal application launcher
@@ -71,87 +70,82 @@ public class SearchCal extends App {
         // Set default resource
         fr.jmmc.jmcs.util.Resources.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
-        try {
-            // Using invokeAndWait to be in sync with the main thread :
-            SwingUtilities.invokeAndWait(new Runnable() {
+        // Using invokeAndWait to be in sync with this thread :
+        // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
+        SwingUtils.invokeAndWaitEDT(new Runnable() {
 
-                /**
-                 * Initializes the swing components with their actions in EDT
-                 */
-                @Override
-                public void run() {
+            /**
+             * Initializes the swing components with their actions in EDT
+             */
+            @Override
+            public void run() {
 
-                    // Get preferences
-                    Preferences preferences = Preferences.getInstance();
+                // Get preferences
+                Preferences preferences = Preferences.getInstance();
 
-                    // Create a query model
-                    QueryModel queryModel = new QueryModel();
-                    queryModel.init();
+                // Create a query model
+                QueryModel queryModel = new QueryModel();
+                queryModel.init();
 
-                    // Create filters
-                    FiltersModel filtersModel = new FiltersModel(queryModel);
-                    FiltersView filtersView = new FiltersView(filtersModel);
+                // Create filters
+                FiltersModel filtersModel = new FiltersModel(queryModel);
+                FiltersView filtersView = new FiltersView(filtersModel);
 
-                    // Create a calibrators model and attach it to a calibrators view
-                    CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
-                    CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
-                    calibratorsView.init();
+                // Create a calibrators model and attach it to a calibrators view
+                CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
+                CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
+                calibratorsView.init();
 
-                    filtersModel.addObserver(calibratorsModel);
+                filtersModel.addObserver(calibratorsModel);
 
-                    // Link everything up
-                    _vo = new VirtualObservatory(queryModel, calibratorsModel);
+                // Link everything up
+                _vo = new VirtualObservatory(queryModel, calibratorsModel);
 
-                    // Attach the query model to its query view
-                    QueryView queryView = new QueryView(queryModel, _vo);
-                    queryView.init();
+                // Attach the query model to its query view
+                QueryView queryView = new QueryView(queryModel, _vo);
+                queryView.init();
 
-                    // Retrieve application preferences and attach them to their view
-                    // (This instance must be instanciated after dependencies)
-                    PreferencesView preferencesView = new PreferencesView();
-                    preferencesView.init();
+                // Retrieve application preferences and attach them to their view
+                // (This instance must be instanciated after dependencies)
+                PreferencesView preferencesView = new PreferencesView();
+                preferencesView.init();
 
-                    StatusBar statusBar = new StatusBar();
-                    // Show the user the app is been initialized
-                    StatusBar.show("application initialization...");
+                StatusBar statusBar = new StatusBar();
+                // Show the user the app is been initialized
+                StatusBar.show("application initialization...");
 
-                    // Build the main window
-                    MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
-                            preferencesView, filtersView, statusBar);
-                    App.setFrame(window);
+                // Build the main window
+                MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
+                        preferencesView, filtersView, statusBar);
+                App.setFrame(window);
 
-                    // Triggers all preferences observers notification to finnish GUI setup.
-                    preferences.triggerObserversNotification();
-                }
-            });
-        } catch (InterruptedException ie) {
-            // propagate the exception :
-            throw new IllegalStateException("SearchCalibrators.init : interrupted", ie);
-        } catch (InvocationTargetException ite) {
-            // propagate the internal exception :
-            throw new IllegalStateException("SearchCalibrators.init : exception", ite.getCause());
-        }
-
+                // Triggers all preferences observers notification to finnish GUI setup.
+                preferences.triggerObserversNotification();
+            }
+        });
     }
 
     /** Execute application body */
     @Override
     protected void execute() {
-        // If a query was received (when instanciated by ASPRO)
-        if (_query != null) {
+        SwingUtils.invokeLaterEDT(new Runnable() {
 
-            SwingUtilities.invokeLater(new Runnable() {
+            /**
+             * Show the application frame using EDT
+             */
+            @Override
+            public void run() {
+                _logger.fine("SearchCal.ready : handler called.");
 
-                /**
-                 * Synchronized by EDT
-                 */
-                @Override
-                public void run() {
+                getFrame().setVisible(true);
+
+                // If a query was received (when instanciated by ASPRO)
+                if (_query != null) {
                   // Launch the request
                   _vo.executeQuery(_query);
                 }
-            });
-        }
+            }
+        });
     }
 
     /** Handle operations before closing application */

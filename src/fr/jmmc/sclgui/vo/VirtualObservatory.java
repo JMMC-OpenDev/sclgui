@@ -11,6 +11,7 @@ import fr.jmmc.jmcs.gui.MessagePane.ConfirmSaveChanges;
 
 import fr.jmmc.jmcs.gui.StatusBar;
 
+import fr.jmmc.jmcs.gui.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
 import fr.jmmc.jmcs.network.interop.SampMessageHandler;
@@ -29,7 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
 import org.astrogrid.samp.Message;
 
 /**
@@ -150,8 +150,7 @@ public final class VirtualObservatory extends Observable {
                 final String query = (String) message.getParam("query");
                 if (query != null) {
 
-                    SwingUtilities.invokeLater(new Runnable() {
-
+                    SwingUtils.invokeLaterEDT(new Runnable() {
                         /**
                          * Synchronized by EDT
                          */
@@ -261,13 +260,9 @@ public final class VirtualObservatory extends Observable {
             }
         };
 
-        if (SwingUtilities.isEventDispatchThread()) {
-            task.run();
-        } else {
-            // Use invokeLater to avoid concurrency and ensure that
-            // data model is modified and fire events using Swing EDT :
-            SwingUtilities.invokeLater(task);
-        }
+        // Use EDT to avoid concurrency and ensure that
+        // data model is modified and fire events using Swing EDT :
+        SwingUtils.invokeEDT(task);
     }
 
     /**
@@ -815,7 +810,7 @@ public final class VirtualObservatory extends Observable {
         protected void setQueryProgress(final String catalogName, final int catalogIndex, final int nbOfCatalogs) {
             // Use invokeLater to avoid concurrency and ensure that
             // data model is modified and fire events using Swing EDT :
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtils.invokeLaterEDT(new Runnable() {
 
                 @Override
                 public void run() {
@@ -837,7 +832,7 @@ public final class VirtualObservatory extends Observable {
 
                 // Use invokeLater to avoid concurrency and ensure that
                 // data model is modified and fire events using Swing EDT :
-                SwingUtilities.invokeLater(new Runnable() {
+                SwingUtils.invokeLaterEDT(new Runnable() {
 
                     /**
                      * Update the GUI using SearchCal results (VOTable)
