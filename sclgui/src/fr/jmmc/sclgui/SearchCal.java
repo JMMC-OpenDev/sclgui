@@ -16,7 +16,11 @@ import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.gui.StatusBar;
 import fr.jmmc.jmcs.gui.SwingSettings;
 import fr.jmmc.jmcs.gui.SwingUtils;
+import fr.jmmc.jmcs.network.interop.SampCapability;
+import fr.jmmc.jmcs.network.interop.SampMessageHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.astrogrid.samp.Message;
 
 
 /**
@@ -123,6 +127,52 @@ public class SearchCal extends App {
                 preferences.triggerObserversNotification();
             }
         });
+    }
+    
+    /**
+     * Create SAMP Message handlers
+     */
+    @Override
+    protected void declareInteroperability() {
+        
+        // Add handler to load query params and launch calibrator search
+        new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
+
+            /**
+             * Implements message processing
+             *
+             * @param senderId public ID of sender client
+             * @param message message with MType this handler is subscribed to
+             * @throws SampException if any error occurred while message processing
+             */
+            @Override
+            protected void processMessage(final String senderId, final Message message) {
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
+                }
+
+                final String query = (String) message.getParam("query");
+                if (query != null) {
+
+                    SwingUtils.invokeLaterEDT(new Runnable() {
+                        /**
+                         * Synchronized by EDT
+                         */
+                        @Override
+                        public void run() {
+                            // bring this application to front :
+                            App.showFrameToFront();
+
+                            _vo.executeQuery(query);
+                        }
+                    });
+
+                } else {
+                    StatusBar.show("Could not start query from SAMP.");
+                }
+            }
+        };
+
     }
 
     /** Execute application body */

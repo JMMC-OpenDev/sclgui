@@ -5,7 +5,6 @@ package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.query.QueryModel;
-import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.gui.MessagePane;
 import fr.jmmc.jmcs.gui.MessagePane.ConfirmSaveChanges;
 
@@ -14,7 +13,6 @@ import fr.jmmc.jmcs.gui.StatusBar;
 import fr.jmmc.jmcs.gui.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
-import fr.jmmc.jmcs.network.interop.SampMessageHandler;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.util.FileFilterRepository;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
@@ -30,7 +28,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
-import org.astrogrid.samp.Message;
 
 /**
  * Handle JMMC WebServices interactions and file input/output.
@@ -131,44 +128,6 @@ public final class VirtualObservatory extends Observable {
         // Query related members
         _getCalAction = new GetCalAction(this, classPath, "_getCalAction");
 
-        // Add handler to load query params and launch calibrator search
-        new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
-
-            /**
-             * Implements message processing
-             *
-             * @param senderId public ID of sender client
-             * @param message message with MType this handler is subscribed to
-             * @throws SampException if any error occurred while message processing
-             */
-            @Override
-            protected void processMessage(final String senderId, final Message message) {
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
-                }
-
-                final String query = (String) message.getParam("query");
-                if (query != null) {
-
-                    SwingUtils.invokeLaterEDT(new Runnable() {
-                        /**
-                         * Synchronized by EDT
-                         */
-                        @Override
-                        public void run() {
-                            // bring this application to front :
-                            App.showFrameToFront();
-
-                            executeQuery(query);
-                        }
-                    });
-
-                } else {
-                    StatusBar.show("Could not start query from SAMP.");
-                }
-            }
-        };
-
         // Add handler to load science object coordinates
 /* @TBD
         try {
@@ -216,7 +175,7 @@ public final class VirtualObservatory extends Observable {
         // WebService related members
         setQueryLaunchedState(false);
     }
-
+    
     /**
      * Return whether the query has been launched or not.
      *
