@@ -3,7 +3,7 @@
 
   <program name="SearchCal" version="4.4b1"/>
   
-  <compilation date="13/09/2011" compiler="JDK 1.5.0_16"/>
+  <compilation date="14/11/2011" compiler="JDK 1.5.0_16"/>
   
   <text>
     <![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]>
@@ -62,6 +62,7 @@
     <release version="4.4">
       <prerelease version="4.4b1" tag="SC_V4_4b1">
         <change type="FEATURE">Added AKARI catalog querying to provide IR photometries and compute N flux when missing.</change>
+        <change type="CHANGE">Updated acknowledgements to include SearchCal Faint Mode article.</change>
       </prerelease>
       <prerelease version="4.3.3b2" tag="SC_V4_3_3b2">
         <change type="FEATURE">Enhanced columns order preference list readability.</change>
@@ -250,6 +251,22 @@ stars: fundamentals parameters, catalogs, astronomical database: miscellaneous},
      doi = {10.1051/0004-6361:20054469},
   adsurl = {http://cdsads.u-strasbg.fr/abs/2006A%26A...456..789B},
  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@ARTICLE{2011A&A...535A..53B,
+   author = {{Bonneau}, D. and {Delfosse}, X. and {Mourard}, D. and {Lafrasse}, S. and 
+	{Mella}, G. and {Cetre}, S. and {Clausse}, J.-M. and {Zins}, G.
+	},
+    title = "{SearchCal: a Virtual Observatory tool for searching calibrators in optical long-baseline interferometry. II. The faint-object case}",
+  journal = {\aap},
+ keywords = {stars: fundamental parameters, techniques: interferometric, catalogs, techniques: high angular resolution, astronomical databases: miscellaneous},
+     year = 2011,
+    month = nov,
+   volume = 535,
+      eid = {A53},
+    pages = {A53},
+      doi = {10.1051/0004-6361/201015124},
+   adsurl = {http://cdsads.u-strasbg.fr/abs/2011A%26A...535A..53B},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }]]>
   </acknowledgment>
 </ApplicationData>
