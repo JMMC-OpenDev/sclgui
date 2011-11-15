@@ -199,7 +199,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
     ////////////////////////////////////////////////////////////////////////////
     /**
      * Creates a new TableSorter object, specialized for SearchCal needs.
-     * (color cell renderers, simple/detailled views).
+     * (color cell renderers, simple/detailed views).
      *
      * @param tableModel DOCUMENT ME!
      * @param tableHeader DOCUMENT ME!
@@ -611,16 +611,13 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
         String selectedView = null;
 
-        // Get the detailled/simple view flag state
-        if (_preferences.getPreferenceAsBoolean(
-                PreferenceKey.VERBOSITY_SYNTHETIC_FLAG)) {
+        // Get the detailed/simple view flag state
+        if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG)) {
             selectedView = "view.columns.simple." + scenario + "." + magnitude;
-        } else if (_preferences.getPreferenceAsBoolean(
-                "view.result.verbosity.detailled")) {
-            selectedView = "view.columns.detailled." + scenario + "."
+        } else if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG)) {
+            selectedView = "view.columns.detailed." + scenario + "."
                     + magnitude;
-        } else if (_preferences.getPreferenceAsBoolean(
-                PreferenceKey.VERBOSITY_FULL_FLAG)) {
+        } else if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_FULL_FLAG)) {
             selectedView = null;
         }
 

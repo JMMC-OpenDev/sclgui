@@ -515,10 +515,10 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
         radioPanel.add(syntheticRadioButton, gbc);
         gbc.gridy++;
 
-        JRadioButton detailledRadioButton = new JRadioButton(CalibratorsView._detailledResultsVerbosityAction);
-        CalibratorsView._detailledResultsVerbosityAction.addBoundButton(detailledRadioButton);
-        radioGroup.add(detailledRadioButton);
-        radioPanel.add(detailledRadioButton, gbc);
+        JRadioButton detailedRadioButton = new JRadioButton(CalibratorsView._detailedResultsVerbosityAction);
+        CalibratorsView._detailedResultsVerbosityAction.addBoundButton(detailedRadioButton);
+        radioGroup.add(detailedRadioButton);
+        radioPanel.add(detailedRadioButton, gbc);
         gbc.gridy++;
 
         JRadioButton fullRadioButton = new JRadioButton(CalibratorsView._fullResultsVerbosityAction);
