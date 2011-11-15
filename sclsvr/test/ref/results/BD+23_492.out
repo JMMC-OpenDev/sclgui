@@ -17,6 +17,8 @@ sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxT
 sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxTableUDCoefficientCorrection.cfg ...
 sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxIntAbsPolynomial.cfg ...
 sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxStarPopulationInKBand.cfg ...
+sclsvrServer -   vobs - Test  - vobsSTAR has defined 66 properties.
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR has defined 118 properties.
 sclsvrServer -    alx - Test  - Sky coordinates (in degrees) : RA = 55.7 - DEC = 24.3
 sclsvrServer -    alx - Test  - Magnitude range = [5.0..8.0]
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.971999 / 0.423613 radians - -24.050 / 165.670 degrees
@@ -25,36 +27,38 @@ sclsvrServer -    alx - Test  - Number of estimated stars into 1 degree solid an
 sclsvrServer -    alx - Test  - Nb of star for this sky area = 20
 sclsvrServer -    alx - Test  - Sky research area size = 1.96 (deg)
 sclsvrServer -    alx - Test  - Sky research radius = 47.43 (arcmin)
-sclsvrServer - sclsvr - Info  - Sky research radius = 47.43(arcmin)
+sclsvrServer - sclsvr - Test  - Sky research radius = 47.43(arcmin)
 sclsvrServer -   vobs - Info  - Execute: start
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting II/246/out ...
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.ra=03:42:45.95&-c.dec=+24:16:16.5&Kmag=5.00..8.00&-out.max=1000&-c.rm=47&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out=2MASS&-out=*POS_GAL_LAT&-out=*POS_GAL_LON&-out=*CODE_QUALITY&-out=Jmag&-out=Hmag&-out=Kmag&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=*PHOT_PHG_V&-out=*ID_CATALOG&-sort=_r&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.ra=03+42+45.95&-c.dec=%2b24+16+16.5&Kmag=5.00..8.00&-c.rm=47&-out=2MASS&-out=GLAT&-out=GLON&-out=Jmag&-out=Hmag&-out=Kmag&-out=Rmag&-out=Bmag&-out=opt&-out=Qflg&opt=%5bTU%5d&Qflg=AAA'
 sclsvrServer -   vobs - Test  - Parsing XML document (7844 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (36 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
-sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter 'POS_EQ_DEC_MAIN' (UCD = 'POS_EQ_DEC_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter 'ID_MAIN' (UCD = 'ID_2MASS')
-sclsvrServer -   vobs - Test  - Extract: Property 'GLAT' [POS_GAL_LAT] found for parameter 'POS_GAL_LAT' (UCD = 'POS_GAL_LAT')
-sclsvrServer -   vobs - Test  - Extract: Property 'GLON' [POS_GAL_LON] found for parameter 'POS_GAL_LON' (UCD = 'POS_GAL_LON')
-sclsvrServer -   vobs - Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'CODE_QUALITY' (UCD = 'CODE_QUALITY')
-sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'PHOT_JHN_J' (UCD = 'PHOT_JHN_J')
-sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'PHOT_JHN_H' (UCD = 'PHOT_JHN_H')
-sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'PHOT_JHN_K' (UCD = 'PHOT_JHN_K')
-sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'PHOT_PHG_R' (UCD = 'PHOT_PHG_R')
-sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'PHOT_PHG_B' (UCD = 'PHOT_PHG_B')
-sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'ID_CATALOG' (UCD = 'ID_CATALOG')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter '2MASS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'GLAT' [POS_GAL_LAT] found for parameter 'GLAT' (UCD = 'POS_GAL_LAT')
+sclsvrServer -   vobs - Test  - Extract: Property 'GLON' [POS_GAL_LON] found for parameter 'GLON' (UCD = 'POS_GAL_LON')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD = 'PHOT_JHN_H')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'Rmag' (UCD = 'PHOT_PHG_R')
+sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'Bmag' (UCD = 'PHOT_PHG_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'opt' (UCD = 'ID_CATALOG')
+sclsvrServer -   vobs - Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'Qflg' (UCD = 'CODE_QUALITY')
 sclsvrServer -   vobs - Test  - Execute: Step 1 - number of returned stars = 36
+sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] without criteria - input list [36 stars]
+sclsvrServer -   vobs - Test  - FilterDuplicates: done = 36 unique stars / 0 duplicates found : 0 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing COPY action with 36 stars
-sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [36 stars]
+sclsvrServer -   vobs - Test  - Merge: list [0 stars] WITHOUT criteria - input list [36 stars]; duplicated stars can occur !
 sclsvrServer -   vobs - Test  - Merge: done = 36 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 36 stars
 sclsvrServer -   vobs - Info  - Execute: done = 36 star(s) found.
 sclsvrServer -   vobs - Test  - Search: start
 sclsvrServer -   vobs - Info  - Execute: start
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing COPY action with 36 stars
-sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [36 stars]
+sclsvrServer -   vobs - Test  - Merge: list [0 stars] WITHOUT criteria - input list [36 stars]; duplicated stars can occur !
 sclsvrServer -   vobs - Test  - Merge: done = 36 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 36 stars
 sclsvrServer -   vobs - Test  - Execute: Step 1 - apply FILTER 'Opt = T filter'
@@ -73,7 +77,7 @@ sclsvrServer -   vobs - Info  - star '2MASS 03395654+2353336' has been removed b
 sclsvrServer -   vobs - Info  - star '2MASS 03422414+2330576' has been removed by the filter 'Opt = T filter'
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after FILTER 'Opt = T filter', star list size = 23
 sclsvrServer -   vobs - Test  - Execute: Step 2 - Performing COPY action with 36 stars
-sclsvrServer -   vobs - Test  - Merge: list [0 stars] without criteria - input list [36 stars]
+sclsvrServer -   vobs - Test  - Merge: list [0 stars] WITHOUT criteria - input list [36 stars]; duplicated stars can occur !
 sclsvrServer -   vobs - Test  - Merge: done = 36 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 2 - after COPY, 36 stars
 sclsvrServer -   vobs - Test  - Execute: Step 2 - apply FILTER 'Opt = U filter'
@@ -102,66 +106,66 @@ sclsvrServer -   vobs - Info  - star '2MASS 03455447+2433162' has been removed b
 sclsvrServer -   vobs - Info  - star '2MASS 03450528+2342097' has been removed by the filter 'Opt = U filter'
 sclsvrServer -   vobs - Test  - Execute: Step 2 - after FILTER 'Opt = U filter', star list size = 13
 sclsvrServer -   vobs - Test  - Execute: Step 3 - Consulting I/280 ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*POS_PARLX_TRIG&-out=e_Plx&-out=*SPECT_TYPE_MK&-out=*PHOT_JHN_B&-out=*PHOT_JHN_V&-out=v1&-out=v2&-out=v3&-out=d5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.934%2b24+16+16.39&+03+43+43.250%2b24+22+28.38&+03+43+55.320%2b24+15+01.09&+03+44+23.547%2b24+07+57.50&+03+42+55.868%2b23+52+34.78&+03+44+25.707%2b24+23+40.83&+03+44+00.266%2b24+33+25.02&+03+40+45.944%2b24+09+12.09&+03+42+20.099%2b23+46+55.92&+03+45+06.535%2b24+15+48.68&+03+41+30.519%2b23+48+05.04&+03+43+14.004%2b23+43+24.52&+03+42+11.775%2b24+53+54.73&+03+45+26.136%2b24+02+06.50&+03+45+37.778%2b24+20+08.33&+03+43+41.527%2b23+38+56.88&+03+43+14.871%2b23+35+06.44&+03+44+23.605%2b23+40+08.34&+03+41+12.884%2b24+53+34.47&+03+43+47.130%2b24+58+05.21&+03+45+51.636%2b24+02+20.05&+03+45+54.475%2b24+33+16.22&+03+45+05.282%2b23+42+09.75&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (18795 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.934%2b24+16+16.39&+03+43+43.250%2b24+22+28.38&+03+43+55.320%2b24+15+01.09&+03+44+23.547%2b24+07+57.50&+03+42+55.868%2b23+52+34.78&+03+44+25.707%2b24+23+40.83&+03+44+00.266%2b24+33+25.02&+03+40+45.944%2b24+09+12.09&+03+42+20.099%2b23+46+55.92&+03+45+06.535%2b24+15+48.68&+03+41+30.519%2b23+48+05.04&+03+43+14.004%2b23+43+24.52&+03+42+11.775%2b24+53+54.73&+03+45+26.136%2b24+02+06.50&+03+45+37.778%2b24+20+08.33&+03+43+41.527%2b23+38+56.88&+03+43+14.871%2b23+35+06.44&+03+44+23.605%2b23+40+08.34&+03+41+12.884%2b24+53+34.47&+03+43+47.130%2b24+58+05.21&+03+45+51.636%2b24+02+20.05&+03+45+54.475%2b24+33+16.22&+03+45+05.282%2b23+42+09.75&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (18774 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (21 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
-sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter 'POS_EQ_DEC_MAIN' (UCD = 'POS_EQ_DEC_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'POS_EQ_PMDEC' (UCD = 'POS_EQ_PMDEC')
-sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'POS_EQ_PMRA' (UCD = 'POS_EQ_PMRA')
-sclsvrServer -   vobs - Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'POS_PARLX_TRIG' (UCD = 'POS_PARLX_TRIG')
-sclsvrServer -   vobs - Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'ERROR' (UCD = 'POS_PARLX_TRIG_ERROR')
-sclsvrServer -   vobs - Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SPECT_TYPE_MK' (UCD = 'SPECT_TYPE_MK')
-sclsvrServer -   vobs - Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'PHOT_JHN_B' (UCD = 'PHOT_JHN_B')
-sclsvrServer -   vobs - Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'PHOT_JHN_V' (UCD = 'PHOT_JHN_V')
-sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'CODE_VARIAB' (UCD = 'CODE_VARIAB_V1')
-sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'CODE_VARIAB' (UCD = 'CODE_VARIAB_V2')
-sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'VAR_CLASS' (UCD = 'VAR_CLASS')
-sclsvrServer -   vobs - Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'CODE_MULT_FLAG' (UCD = 'CODE_MULT_FLAG')
-sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'ID_ALTERNATIVE' (UCD = 'ID_HIP')
-sclsvrServer -   vobs - Test  - Extract: Property 'HD' [ID_HD] found for parameter 'ID_ALTERNATIVE' (UCD = 'ID_HD')
-sclsvrServer -   vobs - Test  - Extract: Property 'DM' [ID_DM] found for parameter 'ID_ALTERNATIVE' (UCD = 'ID_DM')
-sclsvrServer -   vobs - Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'ID_ALTERNATIVE' (UCD = 'ID_TYC1')
-sclsvrServer -   vobs - Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'ID_ALTERNATIVE' (UCD = 'ID_TYC2')
-sclsvrServer -   vobs - Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'ID_ALTERNATIVE' (UCD = 'ID_TYC3')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'DM' [ID_DM] found for parameter 'DM' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'TYC1' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'TYC2' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'TYC3' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD = 'POS_PARLX_TRIG')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SpType' (UCD = 'SPECT_TYPE_MK')
+sclsvrServer -   vobs - Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD = 'PHOT_JHN_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD = 'PHOT_JHN_V')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'v1' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'v2' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'v3' (UCD = 'VAR_CLASS')
+sclsvrServer -   vobs - Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'd5' (UCD = 'CODE_MULT_FLAG')
 sclsvrServer -   vobs - Test  - Execute: Step 3 - number of returned stars = 21
 sclsvrServer -   vobs - Test  - Execute: Step 3 - Performing COPY action with 21 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [21 stars]
-sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780000
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780000
 sclsvrServer -   vobs - Test  - Merge: done = 21 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 3 - after COPY, 21 stars
 sclsvrServer -   vobs - Test  - Execute: Step 4 - Consulting I/284 ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_PMDEC&-out=*POS_EQ_PMRA&-out=*PHOT_PHG_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-sort=_r&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+43+19.096%2b24+15+11.49&+03+43+59.526%2b24+08+52.12&+03+44+05.380%2b24+23+48.17&+03+44+24.288%2b24+25+34.54&+03+42+54.959%2b24+40+53.71&+03+44+35.240%2b24+03+45.86&+03+45+01.126%2b24+35+05.91&+03+45+29.171%2b24+14+43.43&+03+45+34.454%2b24+27+47.88&+03+45+49.598%2b24+25+35.80&+03+45+54.540%2b24+15+09.59&+03+39+56.547%2b23+53+33.69&+03+42+24.144%2b23+30+57.64&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out=pmRA&-out=pmDE&-out=Imag&-out=R1mag&-out=R2mag&-out=B1mag&-out=B2mag&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+43+19.096%2b24+15+11.49&+03+43+59.526%2b24+08+52.12&+03+44+05.380%2b24+23+48.17&+03+44+24.288%2b24+25+34.54&+03+42+54.959%2b24+40+53.71&+03+44+35.240%2b24+03+45.86&+03+45+01.126%2b24+35+05.91&+03+45+29.171%2b24+14+43.43&+03+45+34.454%2b24+27+47.88&+03+45+49.598%2b24+25+35.80&+03+45+54.540%2b24+15+09.59&+03+39+56.547%2b23+53+33.69&+03+42+24.144%2b23+30+57.64&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer -   vobs - Test  - Parsing XML document (9281 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (15 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/284':
-sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter 'POS_EQ_DEC_MAIN' (UCD = 'POS_EQ_DEC_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'POS_EQ_PMDEC' (UCD = 'POS_EQ_PMDEC')
-sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'POS_EQ_PMRA' (UCD = 'POS_EQ_PMRA')
-sclsvrServer -   vobs - Test  - Extract: Property 'Iphg' [PHOT_PHG_I] found for parameter 'PHOT_PHG_I' (UCD = 'PHOT_PHG_I')
-sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'PHOT_PHG_R' (UCD = 'PHOT_PHG_R')
-sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'PHOT_PHG_R' (UCD = 'PHOT_PHG_R')
-sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'PHOT_PHG_B' (UCD = 'PHOT_PHG_B')
-sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'PHOT_PHG_B' (UCD = 'PHOT_PHG_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'Iphg' [PHOT_PHG_I] found for parameter 'Imag' (UCD = 'PHOT_PHG_I')
+sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'R1mag' (UCD = 'PHOT_PHG_R')
+sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'R2mag' (UCD = 'PHOT_PHG_R')
+sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'B1mag' (UCD = 'PHOT_PHG_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'B2mag' (UCD = 'PHOT_PHG_B')
 sclsvrServer -   vobs - Test  - Execute: Step 4 - number of returned stars = 15
 sclsvrServer -   vobs - Test  - Execute: Step 4 - Performing COPY action with 15 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [15 stars]
-sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780000
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780000
 sclsvrServer -   vobs - Test  - Merge: done = 13 stars added / 2 found / 2 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'Iphg' [PHOT_PHG_I] updated 2 times
 sclsvrServer -   vobs - Test  - Execute: Step 4 - after COPY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 5 - Performing MERGE action with 13 stars
-sclsvrServer -   vobs - Test  - Merge: list [21 stars] without criteria - input list [13 stars]
+sclsvrServer -   vobs - Test  - Merge: list [21 stars] WITHOUT criteria - input list [13 stars]; duplicated stars can occur !
 sclsvrServer -   vobs - Test  - Merge: done = 13 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 5 - after MERGE, 34 stars
 sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing UPDATE_ONLY action with 36 stars
 sclsvrServer -   vobs - Test  - Merge: list [34 stars] with criteria - input list [36 stars]
-sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780000
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780000
 sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 34 found / 34 updated / 2 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'opt' [ID_CATALOG] updated 34 times
 sclsvrServer -   vobs - Test  - Merge: Property '2MASS' [ID_2MASS] updated 34 times
@@ -175,58 +179,60 @@ sclsvrServer -   vobs - Test  - Merge: Property 'H' [PHOT_JHN_H] updated 34 time
 sclsvrServer -   vobs - Test  - Merge: Property 'K' [PHOT_JHN_K] updated 34 times
 sclsvrServer -   vobs - Test  - Execute: Step 6 - after UPDATE_ONLY, 34 stars
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Consulting B/denis ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=*POS_EQ_RA_OTHER&-out=*POS_EQ_DEC_OTHER&-out=*PHOT_COUS_I&-out=*PHOT_PHG_R&-out=*PHOT_PHG_B&-out=Iflg&-out=DENIS&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-file=-c&-c.rs=5&-out=DENIS&-out=A2RAdeg&-out=A2DEdeg&-out=Imag&-out=Imag1.5c&-out=Imag2.5c&-out=Imag3.5c&-out=Imag3.5&-out=Imag4.5&-out=Imag5.5&-out=Iflg&-out=Rmag&-out=Bmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer -   vobs - Test  - Parsing XML document (9997 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 7 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Performing UPDATE_ONLY action with 0 stars
 sclsvrServer -   vobs - Test  - Execute: Step 7 - after UPDATE_ONLY, 34 stars
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Consulting B/sb9/main ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer -   vobs - Test  - Parsing XML document (7576 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 8 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Performing UPDATE_ONLY action with 0 stars
 sclsvrServer -   vobs - Test  - Execute: Step 8 - after UPDATE_ONLY, 34 stars
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Consulting B/wds/wds ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-file=-c&-c.rs=5&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
 sclsvrServer -   vobs - Test  - Parsing XML document (9415 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
-sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter 'POS_EQ_DEC_MAIN' (UCD = 'POS_EQ_DEC_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'ID_MAIN' (UCD = 'ID_WDS')
-sclsvrServer -   vobs - Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'ORBIT_SEPARATION' (UCD = 'ORBIT_SEPARATION_SEP1')
-sclsvrServer -   vobs - Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'ORBIT_SEPARATION' (UCD = 'ORBIT_SEPARATION_SEP2')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'WDS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'sep1' (UCD = 'ORBIT_SEPARATION')
+sclsvrServer -   vobs - Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'sep2' (UCD = 'ORBIT_SEPARATION')
 sclsvrServer -   vobs - Test  - Execute: Step 9 - number of returned stars = 9
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Performing UPDATE_ONLY action with 9 stars
 sclsvrServer -   vobs - Test  - Merge: list [34 stars] with criteria - input list [9 stars]
-sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780000
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780000
 sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 9 found / 5 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'WDS' [ID_WDS] updated 5 times
 sclsvrServer -   vobs - Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 5 times
 sclsvrServer -   vobs - Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] updated 5 times
 sclsvrServer -   vobs - Test  - Execute: Step 9 - after UPDATE_ONLY, 34 stars
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Consulting II/297/irc ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-file=-c&-c.eq=J2000&-c.r=5&-c.u=arcsec&-out.max=1000&-out.add=_RAJ2000,_DEJ2000&-oc=hms&-out=AKARI&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (13591 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&03+42+45.937%2b24+16+16.36&+03+43+43.245%2b24+22+28.49&+03+43+55.331%2b24+15+01.13&+03+44+23.545%2b24+07+57.59&+03+42+55.862%2b23+52+34.83&+03+44+25.717%2b24+23+40.99&+03+44+00.268%2b24+33+25.18&+03+40+45.953%2b24+09+12.10&+03+45+06.538%2b24+15+48.65&+03+41+30.521%2b23+48+05.22&+03+43+14.015%2b23+43+24.54&+03+42+11.776%2b24+53+54.76&+03+45+26.140%2b24+02+06.53&+03+45+37.788%2b24+20+08.20&+03+43+41.534%2b23+38+56.96&+03+43+14.894%2b23+35+06.34&+03+41+12.880%2b24+53+34.60&+03+43+47.139%2b24+58+05.17&+03+45+51.633%2b24+02+19.97&+03+45+54.476%2b24+33+16.24&+03+45+05.283%2b23+42+09.63&+03+43+19.078%2b24+15+11.21&+03+43+59.511%2b24+08+52.18&+03+44+05.361%2b24+23+48.41&+03+44+24.282%2b24+25+34.68&+03+42+54.964%2b24+40+53.80&+03+44+35.225%2b24+03+46.15&+03+45+01.125%2b24+35+05.59&+03+45+29.193%2b24+14+43.60&+03+45+34.447%2b24+27+48.32&+03+45+49.618%2b24+25+35.65&+03+45+54.543%2b24+15+09.37&+03+39+56.540%2b23+53+33.84&+03+42+24.147%2b23+30+57.66&%3D%3D%3D%3Dresult1%5F280%2Etxt'
+sclsvrServer -   vobs - Test  - Parsing XML document (12385 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (15 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
-sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter 'POS_EQ_RA_MAIN' (UCD = 'POS_EQ_RA_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter 'POS_EQ_DEC_MAIN' (UCD = 'POS_EQ_DEC_MAIN')
-sclsvrServer -   vobs - Test  - Extract: Property 'S09' [PHOT_FLUX_IR_09] found for parameter 'PHOT_FLUX_IR_9' (UCD = 'PHOT_FLUX_IR_09')
-sclsvrServer -   vobs - Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_09_ERROR] found for parameter 'ERROR' (UCD = 'PHOT_FLUX_IR_09_ERROR')
-sclsvrServer -   vobs - Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'PHOT_FLUX_IR_25' (UCD = 'PHOT_FLUX_IR_18')
-sclsvrServer -   vobs - Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'ERROR' (UCD = 'PHOT_FLUX_IR_18_ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'AKARI' [ID_AKARI] found for parameter 'objID' (UCD = 'ID_NUMBER')
+sclsvrServer -   vobs - Test  - Extract: Property 'S09' [PHOT_FLUX_IR_9] found for parameter 'S09' (UCD = 'PHOT_FLUX_IR_9')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] found for parameter 'e_S09' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'S18' (UCD = 'PHOT_FLUX_IR_25')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'e_S18' (UCD = 'ERROR')
 sclsvrServer -   vobs - Test  - Execute: Step 10 - number of returned stars = 15
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Performing UPDATE_ONLY action with 15 stars
 sclsvrServer -   vobs - Test  - Merge: list [34 stars] with criteria - input list [15 stars]
-sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780
-sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.002780000
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.002780000
 sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 15 found / 15 updated / 0 skipped.
-sclsvrServer -   vobs - Test  - Merge: Property 'S09' [PHOT_FLUX_IR_09] updated 15 times
-sclsvrServer -   vobs - Test  - Merge: Property 'e_S09' [PHOT_FLUX_IR_09_ERROR] updated 15 times
+sclsvrServer -   vobs - Test  - Merge: Property 'AKARI' [ID_AKARI] updated 15 times
+sclsvrServer -   vobs - Test  - Merge: Property 'S09' [PHOT_FLUX_IR_9] updated 15 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] updated 15 times
 sclsvrServer -   vobs - Test  - Merge: Property 'S18' [PHOT_FLUX_IR_18] updated 2 times
 sclsvrServer -   vobs - Test  - Merge: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] updated 2 times
 sclsvrServer -   vobs - Test  - Execute: Step 10 - after UPDATE_ONLY, 34 stars
@@ -264,12 +270,11 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - Computing diameter with absor
 sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23156'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A7 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A7 V' : Code = 'A', Sub-type Quantity = '7.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A7 V' - Our spectral type = 'A7.0V' : Code = 'A', Sub-type Quantity = '7.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23156' - parallax 16.50(11.89) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.976166 / 0.425417 radians - -23.830 / 165.770 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.976166 / 0.425417 radians - -23.828 / 165.773 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.510 (HIGH), V = 8.244 (HIGH), R = 8.270 (HIGH), I = 0.000 (NO), J = 7.721 (HIGH), H = 7.605 (HIGH), K = 7.585 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.510 (HIGH), V = 8.244 (HIGH), R = 8.270 (HIGH), I = 7.943 (HIGH), J = 7.721 (HIGH), H = 7.605 (HIGH), K = 7.585 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -300,7 +305,7 @@ sclsvrServer - sclsvr - Test  - Complete: star 'TYC1 1799'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - parallax 59.90(64.40) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977045 / 0.423248 radians - -23.890 / 165.900 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977045 / 0.423248 radians - -23.891 / 165.900 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.160 (HIGH), V = 10.121 (HIGH), R = 10.160 (HIGH), I = 0.000 (NO), J = 7.875 (HIGH), H = 7.225 (HIGH), K = 7.129 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.160 (HIGH), V = 10.121 (HIGH), R = 10.160 (HIGH), I = 8.789 (HIGH), J = 7.875 (HIGH), H = 7.225 (HIGH), K = 7.129 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -327,12 +332,11 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - Computing diameter with absor
 sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23247'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'F 3 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F 3 V' : Code = 'F', Sub-type Quantity = '3.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'F 3 V' - Our spectral type = 'F3.0V' : Code = 'F', Sub-type Quantity = '3.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23247' - parallax -13.50(17.38) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979097 / 0.421194 radians - -23.910 / 166.070 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979097 / 0.421194 radians - -23.907 / 166.074 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.530 (HIGH), V = 9.114 (HIGH), R = 9.120 (HIGH), I = 0.000 (NO), J = 8.102 (HIGH), H = 7.806 (HIGH), K = 7.793 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.530 (HIGH), V = 9.114 (HIGH), R = 9.120 (HIGH), I = 8.456 (HIGH), J = 8.102 (HIGH), H = 7.806 (HIGH), K = 7.793 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -363,7 +367,7 @@ sclsvrServer - sclsvr - Test  - Complete: star 'TYC1 1799'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - parallax -26.79(34.50) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.972720 / 0.416721 radians - -24.320 / 165.990 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.972720 / 0.416721 radians - -24.320 / 165.988 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.000 (HIGH), V = 10.250 (HIGH), R = 10.230 (HIGH), I = 0.000 (NO), J = 8.409 (HIGH), H = 8.018 (HIGH), K = 7.907 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.000 (HIGH), V = 10.250 (HIGH), R = 10.230 (HIGH), I = 9.017 (HIGH), J = 8.409 (HIGH), H = 8.018 (HIGH), K = 7.907 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -390,12 +394,11 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - Computing diameter with absor
 sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23246'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A8 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A8 V' : Code = 'A', Sub-type Quantity = '8.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A8 V' - Our spectral type = 'A8.0V' : Code = 'A', Sub-type Quantity = '8.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23246' - parallax 16.38(8.60) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979255 / 0.425768 radians - -23.710 / 165.890 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979255 / 0.425768 radians - -23.706 / 165.890 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.390 (HIGH), V = 8.119 (HIGH), R = 8.110 (HIGH), I = 0.000 (NO), J = 7.618 (HIGH), H = 7.523 (HIGH), K = 7.494 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.390 (HIGH), V = 8.119 (HIGH), R = 8.110 (HIGH), I = 7.803 (HIGH), J = 7.618 (HIGH), H = 7.523 (HIGH), K = 7.494 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -423,12 +426,11 @@ sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.119225', Teff = '7500.000000', LogG = '4.278000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.112922, B = 0.112532, V = 0.113544, R = 0.114779, I = 0.115650, J = 0.116734, H = 0.117304, K = 0.117518, L = 0.118192, N = 0.118729
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23194'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A5 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A5 V' : Code = 'A', Sub-type Quantity = '5.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A5 V' - Our spectral type = 'A5.0V' : Code = 'A', Sub-type Quantity = '5.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23194' - parallax 13.50(8.39) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977404 / 0.428600 radians - -23.650 / 165.690 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977404 / 0.428600 radians - -23.649 / 165.693 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.270 (HIGH), V = 8.060 (HIGH), R = 8.060 (HIGH), I = 0.000 (NO), J = 7.666 (HIGH), H = 7.613 (HIGH), K = 7.607 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.270 (HIGH), V = 8.060 (HIGH), R = 8.060 (HIGH), I = 7.757 (HIGH), J = 7.666 (HIGH), H = 7.613 (HIGH), K = 7.607 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -459,7 +461,7 @@ sclsvrServer - sclsvr - Test  - Complete: star 'TYC1 1799'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - parallax 142.60(45.90) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.963273 / 0.421556 radians - -24.440 / 165.380 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.963273 / 0.421556 radians - -24.440 / 165.379 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.920 (HIGH), V = 10.682 (HIGH), R = 10.790 (HIGH), I = 0.000 (NO), J = 8.476 (HIGH), H = 7.944 (HIGH), K = 7.790 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.920 (HIGH), V = 10.682 (HIGH), R = 10.790 (HIGH), I = 9.348 (HIGH), J = 8.476 (HIGH), H = 7.944 (HIGH), K = 7.790 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -486,12 +488,11 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - Computing diameter with absor
 sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23325'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'AM?'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'AM?' : Code = 'A', Sub-type Quantity = '5.00', Luminosity Class = 'M?', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'AM?' - Our spectral type = 'A5.0M?' : Code = 'A', Sub-type Quantity = '5.00', Luminosity Class = 'M?', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23325' - parallax 19.20(13.80) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.982223 / 0.423478 radians - -23.700 / 166.110 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.982223 / 0.423478 radians - -23.700 / 166.111 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.860 (HIGH), V = 8.545 (HIGH), R = 8.520 (HIGH), I = 0.000 (NO), J = 7.920 (HIGH), H = 7.762 (HIGH), K = 7.762 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.860 (HIGH), V = 8.545 (HIGH), R = 8.520 (HIGH), I = 8.108 (HIGH), J = 7.920 (HIGH), H = 7.762 (HIGH), K = 7.762 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -519,13 +520,12 @@ sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.110006', Teff = '8180.000000', LogG = '4.228000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.104660, B = 0.103474, V = 0.104434, R = 0.105787, I = 0.106778, J = 0.107754, H = 0.108303, K = 0.108542, L = 0.109198, N = 0.109602
 sclsvrServer - sclsvr - Test  - Complete: star 'DM 2300491'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G5'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' - Our spectral type = 'G5.0' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.170800; computed fnu_12 = 0.084652, fnu_18 = 0.038634
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.654377
 sclsvrServer - sclsvr - Test  - star 'DM 2300491' - parallax 1.00(21.50) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.966514 / 0.415414 radians - -24.590 / 165.770 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.966514 / 0.415414 radians - -24.592 / 165.775 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.520 (HIGH), V = 9.472 (HIGH), R = 9.510 (HIGH), I = 0.000 (NO), J = 7.226 (HIGH), H = 6.663 (HIGH), K = 6.570 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 10.520 (HIGH), V = 9.472 (HIGH), R = 9.510 (HIGH), I = 7.706 (HIGH), J = 7.226 (HIGH), H = 6.663 (HIGH), K = 6.570 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -553,13 +553,12 @@ sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.250886', Teff = '5560.000000', LogG = '4.428000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.229332, B = 0.231448, V = 0.234752, R = 0.237790, I = 0.240057, J = 0.243044, H = 0.244670, K = 0.245583, L = 0.247758, N = 0.249489
 sclsvrServer - sclsvr - Test  - Complete: star 'DM 2300494'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'K5'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' - Our spectral type = 'K5.0' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.535000; computed fnu_12 = 0.269254, fnu_18 = 0.123902
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.398068
 sclsvrServer - sclsvr - Test  - star 'DM 2300494' - parallax 36.20(24.70) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.974040 / 0.414053 radians - -24.390 / 166.160 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.974040 / 0.414053 radians - -24.388 / 166.156 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.360 (HIGH), V = 9.526 (HIGH), R = 9.540 (HIGH), I = 0.000 (NO), J = 6.232 (HIGH), H = 5.414 (HIGH), K = 5.205 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.360 (HIGH), V = 9.526 (HIGH), R = 9.540 (HIGH), I = 7.633 (HIGH), J = 6.232 (HIGH), H = 5.414 (HIGH), K = 5.205 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -593,7 +592,7 @@ sclsvrServer - sclsvr - Test  - Complete: star 'TYC1 1803'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'TYC1 1803' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.969514 / 0.434562 radians - -23.660 / 165.110 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.969514 / 0.434562 radians - -23.665 / 165.110 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.630 (HIGH), V = 10.253 (HIGH), R = 10.260 (HIGH), I = 0.000 (NO), J = 7.355 (HIGH), H = 6.629 (HIGH), K = 6.468 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 11.630 (HIGH), V = 10.253 (HIGH), R = 10.260 (HIGH), I = 9.291 (HIGH), J = 7.355 (HIGH), H = 6.629 (HIGH), K = 6.468 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -620,13 +619,12 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 1803' - Computing diameter with absor
 sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23361'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A3 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A3 V' : Code = 'A', Sub-type Quantity = '3.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A3 V' - Our spectral type = 'A3.0V' : Code = 'A', Sub-type Quantity = '3.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.128500; computed fnu_12 = 0.062354, fnu_18 = 0.028122
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.986309
 sclsvrServer - sclsvr - Test  - star 'HD 23361' - parallax -3.58(9.50) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.983649 / 0.419492 radians - -23.820 / 166.340 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.983649 / 0.419492 radians - -23.820 / 166.339 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.260 (HIGH), V = 8.119 (HIGH), R = 8.070 (HIGH), I = 0.000 (NO), J = 7.593 (HIGH), H = 7.492 (HIGH), K = 7.483 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.260 (HIGH), V = 8.119 (HIGH), R = 8.070 (HIGH), I = 7.734 (HIGH), J = 7.593 (HIGH), H = 7.492 (HIGH), K = 7.483 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -654,13 +652,12 @@ sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.120237', Teff = '8600.000000', LogG = '4.178000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.114674, B = 0.113322, V = 0.114368, R = 0.115824, I = 0.116880, J = 0.117894, H = 0.118470, K = 0.118711, L = 0.119397, N = 0.119812
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23387'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A1 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A1 V' : Code = 'A', Sub-type Quantity = '1.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A1 V' - Our spectral type = 'A1.0V' : Code = 'A', Sub-type Quantity = '1.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.079540; computed fnu_12 = 0.038465, fnu_18 = 0.017308
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.510804
 sclsvrServer - sclsvr - Test  - star 'HD 23387' - parallax 6.40(5.59) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.984496 / 0.424737 radians - -23.570 / 166.150 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.984496 / 0.424737 radians - -23.567 / 166.155 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.330 (HIGH), V = 7.177 (HIGH), R = 7.180 (HIGH), I = 0.000 (NO), J = 6.746 (HIGH), H = 6.625 (HIGH), K = 6.651 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.330 (HIGH), V = 7.177 (HIGH), R = 7.180 (HIGH), I = 7.173 (HIGH), J = 6.746 (HIGH), H = 6.625 (HIGH), K = 6.651 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -688,13 +685,12 @@ sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.171230', Teff = '9500.000000', LogG = '4.128000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.164100, B = 0.162648, V = 0.163927, R = 0.165656, I = 0.166973, J = 0.168253, H = 0.168977, K = 0.169302, L = 0.170192, N = 0.170707
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23157'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A9V...'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A9V...' : Code = 'A', Sub-type Quantity = '9.00', Luminosity Class = 'V...', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A9V...' - Our spectral type = 'A9.0V...' : Code = 'A', Sub-type Quantity = '9.00', Luminosity Class = 'V...', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.125000; computed fnu_12 = 0.061039, fnu_18 = 0.027624
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.009460
 sclsvrServer - sclsvr - Test  - star 'HD 23157' - parallax 9.36(1.11) is OK...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.976041 / 0.412756 radians - -24.370 / 166.300 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.976041 / 0.412756 radians - -24.374 / 166.296 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 166.299 / 0.107 / 0.091
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.120 (HIGH), V = 7.840 (HIGH), R = 7.862 (HIGH), I = 0.000 (NO), J = 7.200 (HIGH), H = 7.049 (HIGH), K = 7.041 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
@@ -713,7 +709,7 @@ sclsvrServer - sclsvr - Test  - Complete: star 'TYC1 1799'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.974104 / 0.411638 radians - -24.490 / 166.260 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.974104 / 0.411638 radians - -24.489 / 166.260 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.610 (HIGH), V = 11.979 (HIGH), R = 11.990 (HIGH), I = 0.000 (NO), J = 8.089 (HIGH), H = 7.245 (HIGH), K = 7.052 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.610 (HIGH), V = 11.979 (HIGH), R = 11.990 (HIGH), I = 10.784 (HIGH), J = 8.089 (HIGH), H = 7.245 (HIGH), K = 7.052 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -743,13 +739,12 @@ sclsvrServer - sclsvr - Test  - vis2Err / visibilityErr = 0.001654 / 0.004027
 sclsvrServer - sclsvr - Test  - star 'TYC1 1799' - visibility error (0.004027) is lower than the expected one (0.500000)
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'DM 2400532'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'G0'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'G0' : Code = 'G', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G0' - Our spectral type = 'G0.0' : Code = 'G', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.572900; computed fnu_12 = 0.282873, fnu_18 = 0.128836
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.344498
 sclsvrServer - sclsvr - Test  - star 'DM 2400532' - parallax 15.00(18.38) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.965231 / 0.434464 radians - -23.820 / 164.930 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.965231 / 0.434464 radians - -23.815 / 164.931 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.750 (HIGH), V = 8.949 (HIGH), R = 8.950 (HIGH), I = 0.000 (NO), J = 7.707 (HIGH), H = 7.573 (HIGH), K = 7.434 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.750 (HIGH), V = 8.949 (HIGH), R = 8.950 (HIGH), I = 8.247 (HIGH), J = 7.707 (HIGH), H = 7.573 (HIGH), K = 7.434 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -767,7 +762,7 @@ sclsvrServer - sclsvr - Test  - Complete: star 'TYC1 1803'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'TYC1 1803' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.976449 / 0.435776 radians - -23.370 / 165.360 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.976449 / 0.435776 radians - -23.374 / 165.355 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.310 (HIGH), V = 10.857 (HIGH), R = 10.870 (HIGH), I = 0.000 (NO), J = 8.669 (HIGH), H = 8.056 (HIGH), K = 7.924 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.310 (HIGH), V = 10.857 (HIGH), R = 10.870 (HIGH), I = 9.582 (HIGH), J = 8.669 (HIGH), H = 8.056 (HIGH), K = 7.924 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -794,12 +789,11 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 1803' - Computing diameter with absor
 sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (Teff unknown).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23409'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'A2 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'A2 V' : Code = 'A', Sub-type Quantity = '2.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A2 V' - Our spectral type = 'A2.0V' : Code = 'A', Sub-type Quantity = '2.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23409' - parallax 3.00(8.30) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985503 / 0.419558 radians - -23.750 / 166.410 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985503 / 0.419558 radians - -23.753 / 166.415 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.070 (HIGH), V = 7.874 (HIGH), R = 7.860 (HIGH), I = 0.000 (NO), J = 7.485 (HIGH), H = 7.357 (HIGH), K = 7.356 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.070 (HIGH), V = 7.874 (HIGH), R = 7.860 (HIGH), I = 8.083 (HIGH), J = 7.485 (HIGH), H = 7.357 (HIGH), K = 7.356 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -827,13 +821,12 @@ sclsvrServer - sclsvr - Test  - unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.122877', Teff = '9000.000000', LogG = '4.178000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.117599, B = 0.116354, V = 0.117320, R = 0.118682, I = 0.119695, J = 0.120652, H = 0.121194, K = 0.121429, L = 0.122088, N = 0.122477
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23432'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'B8V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'B8V' : Code = 'B', Sub-type Quantity = '8.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'B8V' - Our spectral type = 'B8.0V' : Code = 'B', Sub-type Quantity = '8.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.532600; computed fnu_12 = 0.256302, fnu_18 = 0.114945
 sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.451594
 sclsvrServer - sclsvr - Test  - star 'HD 23432' - parallax 8.18(0.87) is OK...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985709 / 0.428557 radians - -23.360 / 166.050 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985709 / 0.428557 radians - -23.362 / 166.047 degrees
 sclsvrServer -    alx - Test  - GLon/dist/Av = 166.049 / 0.122 / 0.105
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.571 (HIGH), V = 5.652 (HIGH), R = 5.671 (HIGH), I = 0.000 (NO), J = 5.763 (HIGH), H = 5.803 (HIGH), K = 5.789 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
@@ -849,12 +842,11 @@ sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997203 (0.000458), 0.994414 (
 sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.208028', Teff = '11400.000000', LogG = '3.978000' ...
 sclsvrServer -    alx - Test  - Computed UD: U = 0.200068, B = 0.199240, V = 0.200531, R = 0.202127, I = 0.203440, J = 0.204790, H = 0.205529, K = 0.205950, L = 0.206899, N = 0.207479
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 23326'
-sclsvrServer - sclsvr - Test  - Parsing Spectral Type 'F2 V'.
-sclsvrServer -    alx - Test  - Parsed spectral type = 'F2 V' : Code = 'F', Sub-type Quantity = '2.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'F2 V' - Our spectral type = 'F2.0V' : Code = 'F', Sub-type Quantity = '2.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
 sclsvrServer - sclsvr - Test  - star 'HD 23326' - parallax 27.60(11.00) is not valid...
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.982132 / 0.413690 radians - -24.120 / 166.520 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.982132 / 0.413690 radians - -24.120 / 166.518 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.300 (HIGH), V = 8.942 (HIGH), R = 8.940 (HIGH), I = 0.000 (NO), J = 8.230 (HIGH), H = 8.036 (HIGH), K = 8.024 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.300 (HIGH), V = 8.942 (HIGH), R = 8.940 (HIGH), I = 8.525 (HIGH), J = 8.230 (HIGH), H = 8.036 (HIGH), K = 8.024 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -885,7 +877,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03431909+2415114'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03431909+2415114' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.974408 / 0.423297 radians - -23.980 / 165.790 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.974408 / 0.423297 radians - -23.980 / 165.786 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.350 (HIGH), V = 0.000 (NO), R = 11.160 (HIGH), I = 0.000 (NO), J = 8.547 (HIGH), H = 7.667 (HIGH), K = 7.379 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    err - Test  - errAddInStack(alx, 18)
@@ -899,7 +891,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03435952+2408521'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03435952+2408521' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977349 / 0.421459 radians - -23.960 / 165.990 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977349 / 0.421459 radians - -23.956 / 165.988 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.140 (HIGH), V = 0.000 (NO), R = 9.710 (HIGH), I = 0.000 (NO), J = 8.231 (HIGH), H = 7.607 (HIGH), K = 7.478 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.140 (HIGH), V = 10.648 (HIGH), R = 9.710 (HIGH), I = 9.148 (HIGH), J = 8.231 (HIGH), H = 7.607 (HIGH), K = 7.478 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -927,7 +919,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03440538+2423481'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03440538+2423481' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977774 / 0.425804 radians - -23.760 / 165.830 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.977774 / 0.425804 radians - -23.756 / 165.825 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.660 (HIGH), V = 0.000 (NO), R = 11.400 (HIGH), I = 0.000 (NO), J = 8.787 (HIGH), H = 7.862 (HIGH), K = 7.637 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    err - Test  - errAddInStack(alx, 18)
@@ -941,7 +933,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03442428+2425345'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03442428+2425345' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979150 / 0.426319 radians - -23.690 / 165.860 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979150 / 0.426319 radians - -23.686 / 165.862 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 13.660 (HIGH), V = 0.000 (NO), R = 10.800 (HIGH), I = 0.000 (NO), J = 6.858 (HIGH), H = 6.004 (HIGH), K = 5.674 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    err - Test  - errAddInStack(alx, 18)
@@ -955,7 +947,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03425495+2440537'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03425495+2440537' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.972655 / 0.430775 radians - -23.720 / 165.400 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.972655 / 0.430775 radians - -23.720 / 165.401 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.440 (HIGH), V = 0.000 (NO), R = 11.130 (HIGH), I = 0.000 (NO), J = 8.729 (HIGH), H = 7.874 (HIGH), K = 7.617 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 14.440 (HIGH), V = 16.254 (HIGH), R = 11.130 (HIGH), I = 11.677 (HIGH), J = 8.729 (HIGH), H = 7.874 (HIGH), K = 7.617 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -986,7 +978,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03443523+2403458'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03443523+2403458' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979946 / 0.419975 radians - -23.930 / 166.160 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.979946 / 0.419975 radians - -23.929 / 166.161 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.240 (HIGH), V = 0.000 (NO), R = 10.430 (HIGH), I = 0.000 (NO), J = 8.165 (HIGH), H = 7.378 (HIGH), K = 7.149 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 14.240 (HIGH), V = 15.287 (HIGH), R = 10.430 (HIGH), I = 10.791 (HIGH), J = 8.165 (HIGH), H = 7.378 (HIGH), K = 7.149 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1017,7 +1009,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03450112+2435059'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03450112+2435059' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.981830 / 0.429087 radians - -23.470 / 165.860 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.981830 / 0.429087 radians - -23.475 / 165.861 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 13.490 (HIGH), V = 0.000 (NO), R = 10.550 (HIGH), I = 0.000 (NO), J = 7.808 (HIGH), H = 6.974 (HIGH), K = 6.743 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 13.490 (HIGH), V = 15.136 (HIGH), R = 10.550 (HIGH), I = 10.598 (HIGH), J = 7.808 (HIGH), H = 6.974 (HIGH), K = 6.743 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1048,7 +1040,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03452917+2414434'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03452917+2414434' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.983871 / 0.423163 radians - -23.660 / 166.190 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.983871 / 0.423163 radians - -23.656 / 166.194 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.840 (HIGH), V = 0.000 (NO), R = 11.140 (HIGH), I = 0.000 (NO), J = 8.951 (HIGH), H = 8.143 (HIGH), K = 7.938 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 14.840 (HIGH), V = 16.062 (HIGH), R = 11.140 (HIGH), I = 11.568 (HIGH), J = 8.951 (HIGH), H = 8.143 (HIGH), K = 7.938 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1079,7 +1071,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03453445+2427478'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03453445+2427478' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.984253 / 0.426967 radians - -23.480 / 166.050 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.984253 / 0.426967 radians - -23.481 / 166.051 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.940 (HIGH), V = 0.000 (NO), R = 9.890 (HIGH), I = 0.000 (NO), J = 7.878 (HIGH), H = 7.705 (HIGH), K = 7.694 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.940 (HIGH), V = 8.569 (HIGH), R = 9.890 (HIGH), I = 8.161 (HIGH), J = 7.878 (HIGH), H = 7.705 (HIGH), K = 7.694 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1104,7 +1096,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03454959+2425357'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03454959+2425357' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985356 / 0.426324 radians - -23.470 / 166.120 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985356 / 0.426324 radians - -23.470 / 166.125 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 16.910 (HIGH), V = 0.000 (NO), R = 10.060 (HIGH), I = 0.000 (NO), J = 8.430 (HIGH), H = 7.832 (HIGH), K = 7.666 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 16.910 (HIGH), V = 10.871 (HIGH), R = 10.060 (HIGH), I = 9.354 (HIGH), J = 8.430 (HIGH), H = 7.832 (HIGH), K = 7.666 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1135,7 +1127,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03455454+2415095'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03455454+2415095' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985714 / 0.423288 radians - -23.590 / 166.270 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.985714 / 0.423288 radians - -23.586 / 166.267 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.840 (HIGH), V = 0.000 (NO), R = 10.590 (HIGH), I = 0.000 (NO), J = 7.242 (HIGH), H = 6.311 (HIGH), K = 6.007 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    err - Test  - errAddInStack(alx, 18)
@@ -1149,7 +1141,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03395654+2353336'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03395654+2353336' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.959679 / 0.417007 radians - -24.760 / 165.410 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.959679 / 0.417007 radians - -24.760 / 165.412 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 13.660 (HIGH), V = 0.000 (NO), R = 10.750 (HIGH), I = 0.000 (NO), J = 8.607 (HIGH), H = 7.842 (HIGH), K = 7.628 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 13.660 (HIGH), V = 15.576 (HIGH), R = 10.750 (HIGH), I = 11.110 (HIGH), J = 8.607 (HIGH), H = 7.842 (HIGH), K = 7.628 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1180,7 +1172,7 @@ sclsvrServer - sclsvr - Test  - Complete: star '2MASS 03422414+2330576'
 sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
 sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star '2MASS 03422414+2330576' - parallax is unknown
-sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.970414 / 0.410432 radians - -24.670 / 166.150 degrees
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.970414 / 0.410432 radians - -24.670 / 166.152 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 13.670 (HIGH), V = 0.000 (NO), R = 10.790 (HIGH), I = 0.000 (NO), J = 8.774 (HIGH), H = 8.043 (HIGH), K = 7.859 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 13.670 (HIGH), V = 14.945 (HIGH), R = 10.790 (HIGH), I = 10.941 (HIGH), J = 8.774 (HIGH), H = 8.043 (HIGH), K = 7.859 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
@@ -1210,40 +1202,40 @@ sclsvrServer - sclsvr - Test  - Skipping (LD unknown).
 sclsvrServer -   vobs - Info  - Sort: start
 sclsvrServer -   vobs - Info  - Sort: done.
 sclsvrServer - sclsvr - Test  - Complete(): done [34 stars]
-sclsvrServer -   vobs - Test  - Star 'TYC1 1799' is within 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03431909+2415114' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23156' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'TYC1 1799' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03435952+2408521' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03440538+2423481' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23247' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'TYC1 1799' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23246' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23194' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03442428+2425345' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03425495+2440537' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03443523+2403458' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'TYC1 1799' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23325' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'DM 2300491' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'DM 2300494' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03450112+2435059' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03452917+2414434' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'TYC1 1803' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23361' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23387' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23157' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03453445+2427478' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'TYC1 1799' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03454959+2425357' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'DM 2400532' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03455454+2415095' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'TYC1 1803' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23409' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03395654+2353336' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star '2MASS 03422414+2330576' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23432' is farther than 0.000278 degrees of the reference star.
-sclsvrServer -   vobs - Test  - Star 'HD 23326' is farther than 0.000278 degrees of the reference star.
+sclsvrServer -   vobs - Test  - star 'TYC1 1799' skipped by the distance filter: close to the reference star: 0.000063 < 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03431909+2415114' has been removed by the distance filter : too far from the reference star: 0.127142 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23156' has been removed by the distance filter : too far from the reference star: 0.240833 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'TYC1 1799' has been removed by the distance filter : too far from the reference star: 0.264387 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03435952+2408521' has been removed by the distance filter : too far from the reference star: 0.305581 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03440538+2423481' has been removed by the distance filter : too far from the reference star: 0.326573 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23247' has been removed by the distance filter : too far from the reference star: 0.395949 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'TYC1 1799' has been removed by the distance filter : too far from the reference star: 0.396704 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23246' has been removed by the distance filter : too far from the reference star: 0.398384 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23194' has been removed by the distance filter : too far from the reference star: 0.401443 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03442428+2425345' has been removed by the distance filter : too far from the reference star: 0.404195 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03425495+2440537' has been removed by the distance filter : too far from the reference star: 0.411782 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03443523+2403458' has been removed by the distance filter : too far from the reference star: 0.464764 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'TYC1 1799' has been removed by the distance filter : too far from the reference star: 0.470996 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23325' has been removed by the distance filter : too far from the reference star: 0.534078 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'DM 2300491' has been removed by the distance filter : too far from the reference star: 0.550545 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'DM 2300494' has been removed by the distance filter : too far from the reference star: 0.558087 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03450112+2435059' has been removed by the distance filter : too far from the reference star: 0.601115 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03452917+2414434' has been removed by the distance filter : too far from the reference star: 0.620657 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'TYC1 1803' has been removed by the distance filter : too far from the reference star: 0.640519 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23361' has been removed by the distance filter : too far from the reference star: 0.653188 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23387' has been removed by the distance filter : too far from the reference star: 0.655705 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23157' has been removed by the distance filter : too far from the reference star: 0.657110 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03453445+2427478' has been removed by the distance filter : too far from the reference star: 0.667778 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'TYC1 1799' has been removed by the distance filter : too far from the reference star: 0.694954 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03454959+2425357' has been removed by the distance filter : too far from the reference star: 0.714302 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'DM 2400532' has been removed by the distance filter : too far from the reference star: 0.714745 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03455454+2415095' has been removed by the distance filter : too far from the reference star: 0.716641 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'TYC1 1803' has been removed by the distance filter : too far from the reference star: 0.734386 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23409' has been removed by the distance filter : too far from the reference star: 0.743196 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03395654+2353336' has been removed by the distance filter : too far from the reference star: 0.747376 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star '2MASS 03422414+2330576' has been removed by the distance filter : too far from the reference star: 0.759787 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23432' has been removed by the distance filter : too far from the reference star: 0.769335 > 0.000278 deg
+sclsvrServer -   vobs - Test  - star 'HD 23326' has been removed by the distance filter : too far from the reference star: 0.777570 > 0.000278 deg
 sclsvrServer - sclsvr - Test  - (What should be) Science star 'TYC1 1799' has been removed.
-sclsvrServer -   vobs - Test  - GetVotable: buffer capacity = 251886 bytes
-sclsvrServer -   vobs - Test  - GetVotable: buffer size = 244028 / 251886  bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer capacity = 239312 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 226639 / 239312 bytes
