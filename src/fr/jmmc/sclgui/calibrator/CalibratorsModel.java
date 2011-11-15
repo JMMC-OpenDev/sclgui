@@ -198,7 +198,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     /**
      * Returns false regardless of parameter values.
      *
-     * Because the Jtable should not allow data edition at all.
+     * Because the JTable should not allow data edition at all.
      *
      * @param row
      * @param column
