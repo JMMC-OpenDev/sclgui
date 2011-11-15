@@ -638,6 +638,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             }
         }
 
+        // Either simple or detailed views
         if (prefColumns != null) {
             if (_logger.isLoggable(Level.FINE)) {
                 _logger.fine("Columns (preferences) = " + prefColumns);
@@ -648,12 +649,11 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
             _viewIndex = new int[nbOfColumns];
 
-            for (int i = 0;
-                    i < Math.min(nbOfColumns, _calibratorsModel.getColumnCount());
-                    i++) {
-                String columnName = columnStrings[i];
+            for (int i = 0; i < Math.min(nbOfColumns, _calibratorsModel.getColumnCount()); i++) {
 
+                String columnName = columnStrings[i];
                 if (columnName != null) {
+
                     // Get each column name column index
                     int columnId = _calibratorsModel.getColumnIdByName(columnName);
                     _viewIndex[i] = columnId;
@@ -664,8 +664,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                                 + "'.");
                     } else {
                         if (_logger.isLoggable(Level.FINE)) {
-                            _logger.fine("_viewIndex[" + i + "] = '" + columnId
-                                    + "' -> '" + columnName + "'.");
+                            _logger.fine("_viewIndex[" + i + "] = '" + columnId + "' -> '" + columnName + "'.");
                         }
                     }
                 }
@@ -691,8 +690,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             }
 
             _viewIndex = result;
-        } else // Full view, with all columns
-        {
+        } else { // Full view, with all columns
+
             // Get column count and allocate correspondaing memory for the inderection array
             int nbOfColumns = _calibratorsModel.getColumnCount();
             _viewIndex = new int[nbOfColumns];
