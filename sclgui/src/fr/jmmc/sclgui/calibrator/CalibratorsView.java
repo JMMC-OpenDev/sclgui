@@ -63,7 +63,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     /** Synthetic Results Verbosity action */
     public static RegisteredPreferencedBooleanAction _syntheticResultsVerbosityAction = null;
     /** Detailed Results Verbosity action */
-    public static RegisteredPreferencedBooleanAction _detailledResultsVerbosityAction = null;
+    public static RegisteredPreferencedBooleanAction _detailedResultsVerbosityAction = null;
     /** Full Results Verbosity action */
     public static RegisteredPreferencedBooleanAction _fullResultsVerbosityAction = null;
     /** Delete action */
@@ -108,9 +108,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _syntheticResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_syntheticResultsVerbosityAction", "Synthetic", _preferences,
                 PreferenceKey.VERBOSITY_SYNTHETIC_FLAG);
-        _detailledResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
-                "_detailledResultsVerbosityAction", "Detailled", _preferences,
-                "view.result.verbosity.detailled");
+        _detailedResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
+                "_detailedResultsVerbosityAction", "Detailed", _preferences,
+                "view.result.verbosity.detailed");
         _fullResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_fullResultsVerbosityAction", "Full", _preferences,
                 PreferenceKey.VERBOSITY_FULL_FLAG);
