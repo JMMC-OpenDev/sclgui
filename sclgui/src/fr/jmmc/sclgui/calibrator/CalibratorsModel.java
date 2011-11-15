@@ -564,7 +564,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     /**
      * Return the star at the given row.
      *
-     * @param row the indice of one star which in the filtered list of the model.
+     * @param row the index of one star which in the filtered list of the model.
      *
      * @return the Star corresponding to the given index.
      */
