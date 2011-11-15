@@ -660,8 +660,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
                     // If no column Id was found for the given column name
                     if (columnId < 0) {
-                        _logger.warning("No column called '" + columnName
-                                + "'.");
+                        _logger.warning("No column called '" + columnName + "'.");
                     } else {
                         if (_logger.isLoggable(Level.FINE)) {
                             _logger.fine("_viewIndex[" + i + "] = '" + columnId + "' -> '" + columnName + "'.");
@@ -953,7 +952,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 if (unit.length() > 0) {
                     // If a description was found
                     if (tooltip.length() > 0) {
-                        // Add a spce separator betwenn description and unit
+                        // Add a space separator between description and unit
                         tooltip += " ";
                     }
 
