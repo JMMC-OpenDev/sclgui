@@ -32,20 +32,26 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     private static String _detailedBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright V columns order list, as of default in preference version 4 */
     private static String _detailedBrightV_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright V columns order list, as of default in preference version 12 */
+    private static String _detailedBrightV_v12 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright V columns order list, as of default in current preference version */
-    private static String _detailedBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    private static String _detailedBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright K columns order list, as of default in preference version 3 */
     private static String _detailedBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright K columns order list, as of default in preference version 4 */
     private static String _detailedBrightK_v4 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    /** Detailed bright K columns order list, as of default in preference version 12 */
+    private static String _detailedBrightK_v12 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright K columns order list, as of default in current preference version */
-    private static String _detailedBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
+    private static String _detailedBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed faint K columns order list, as of default in preference version 3 */
     private static String _detailedFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
     /** Detailed faint K columns order list, as of default in preference version 4 */
     private static String _detailedFaintK_v4 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+    /** Detailed faint K columns order list, as of default in preference version 12 */
+    private static String _detailedFaintK_v12 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
     /** Detailed faint K columns order list, as of default in current preference version */
-    private static String _detailedFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
+    private static String _detailedFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
 
     /** Hidden constructor */
     protected Preferences() {
@@ -69,7 +75,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     protected int getPreferencesVersionNumber() {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 12;
+        return 13;
     }
 
     /**
@@ -137,6 +143,10 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             // Rename detailed preferences from 'detaiLLed'
             case 11:
                 return updateFromVersion11ToVersion12();
+
+            // Remove deprecated columns as of server version 4.0.2
+            case 12:
+                return updateFromVersion12ToVersion13();
 
             // By default, triggers default values load.
             default:
@@ -262,10 +272,10 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     }
 
     /**
-     * Replace a given string token in a preference by another string.
+     * Replace a given string token in a preference by another string (and trim the result).
      *
      * @param preferenceName the path of the preference value to update.
-     * @param searchedToken the string token to be replaced in the preference value.
+     * @param searchedToken the string token to be replaced in the preference value (you can add a trailing space to decipher between similarly names tokens - last occurrence will also be detected flawlessly in this case).
      * @param replacingToken the new string to put in the preference value.
      *
      * @return true if everything went fine, false otherwise.
@@ -274,41 +284,50 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             String searchedToken, String replacingToken) {
         _logger.entering("Preferences", "replaceTokenInPreference");
 
-        String preferencePath = preferenceName.toString();
+        final String preferencePath = preferenceName.toString();
 
         // Get the preference current value
-        String originalPreferenceValue = getPreference(preferencePath);
+        final String originalPreferenceValue = getPreference(preferencePath) + " "; // Add a space to also match last token if it contains an ending space
 
         if (_logger.isLoggable(Level.FINEST)) {
-            _logger.finest("Preference '" + preferencePath + "' contains : '"
-                    + originalPreferenceValue + "'.");
+            _logger.finest("Preference '" + preferencePath + "' contains : '" + originalPreferenceValue + "'.");
         }
 
         // Search for the token and replace it
         if (_logger.isLoggable(Level.FINER)) {
-            _logger.finer("Replacing '" + searchedToken + "' with '"
-                    + replacingToken + "' in '" + preferencePath + "'.");
+            _logger.finer("Replacing '" + searchedToken + "' with '" + replacingToken + "' in '" + preferencePath + "'.");
         }
 
-        String newPreferenceValue = originalPreferenceValue.replaceAll(searchedToken,
-                replacingToken);
+        final String newPreferenceValue = originalPreferenceValue.replaceAll(searchedToken, replacingToken).trim(); // Trim any spare spaces
 
         // Store updated preference value
         try {
             setPreference(preferencePath, newPreferenceValue);
 
             if (_logger.isLoggable(Level.FINEST)) {
-                _logger.finest("Preference '" + preferencePath + "' contains : '"
-                        + getPreference(preferencePath) + "'.");
+                _logger.finest("Preference '" + preferencePath + "' contains : '" + getPreference(preferencePath) + "'.");
             }
         } catch (Exception ex) {
-            _logger.log(Level.WARNING,
-                    "Could not store '" + preferencePath + "' preference:", ex);
+            _logger.log(Level.WARNING, "Could not store '" + preferencePath + "' preference:", ex);
 
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Remove a given string token in a preference (and trim the result).
+     *
+     * @param preferenceName the path of the preference value to update.
+     * @param searchedToken the string token to be removed (you can add a trailing space to decipher between similarly named tokens - last occurrence will also be detected flawlessly in this case).
+     *
+     * @return true if everything went fine, false otherwise.
+     */
+    private boolean removeTokenInPreference(Object preferenceName, String searchedToken) {
+        _logger.entering("Preferences", "removeTokenInPreference");
+
+        return replaceTokenInPreference(preferenceName, searchedToken, "");
     }
 
     /**
@@ -664,5 +683,34 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Commit change to file
         return true;
+    }
+
+    /**
+     * Correction : Remove deprecated columns as of server version 4.0.2.
+     *
+     * @return true if fine and should write to file, false otherwise.
+     */
+    private boolean updateFromVersion12ToVersion13() {
+        _logger.entering("Preferences", "updateFromVersion12ToVersion13");
+
+        boolean status = true;
+        String[] deprecatedColumns = {"Jflag ", "Kflag ", "e_LD ", "LD ", "e_UD ", "UD ", "color ", "Meth ", "lambda ", "photflux ", "units ", "vis2Flag "};
+        Object[] viewNames = {PreferenceKey.VIEW_DETAILED_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_K, PreferenceKey.VIEW_DETAILED_FAINT_K};
+
+        // For each detailed views
+        for (Object view : viewNames) {
+            String before = this.getPreference(view);
+
+            // Remove any deprecated columns found
+            for (String column : deprecatedColumns) {
+                status &= removeTokenInPreference(view, column);
+                //System.out.println("\tstatus['" + column + "'] = " + status);
+            }
+
+            String after = this.getPreference(view);
+        }
+
+        // Commit all changes if and only if all went fine.
+        return status;
     }
 }

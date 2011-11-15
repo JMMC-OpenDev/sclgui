@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 
-  <program name="SearchCal" version="4.4b1"/>
+  <program name="SearchCal" version="4.4b2"/>
   
-  <compilation date="14/11/2011" compiler="JDK 1.5.0_16"/>
+  <compilation date="15/11/2011" compiler="JDK 1.5.0_16"/>
   
   <text>
     <![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]>
@@ -60,9 +60,13 @@
   
   <releasenotes>
     <release version="4.4">
+      <prerelease version="4.4b2" tag="SC_V4_4b2">
+        <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/212">Removed deprecated columns 'LD', 'e_LD', 'UD', 'e_UD', 'Meth' and 'lambda' from detailed views.</change>
+        <change type="BUGFIX">Fixed 'detailLed' typo.</change>
+        <change type="CHANGE">Updated acknowledgements to include SearchCal Faint Mode article.</change>
+      </prerelease>
       <prerelease version="4.4b1" tag="SC_V4_4b1">
         <change type="FEATURE">Added AKARI catalog querying to provide IR photometries and compute N flux when missing.</change>
-        <change type="CHANGE">Updated acknowledgements to include SearchCal Faint Mode article.</change>
       </prerelease>
       <prerelease version="4.3.3b2" tag="SC_V4_3_3b2">
         <change type="FEATURE">Enhanced columns order preference list readability.</change>
