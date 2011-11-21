@@ -36,7 +36,6 @@ import java.io.StringBufferInputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
@@ -87,7 +86,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     private Vector<String> _columnNames = null;
     /** JTable column URLs */
     private Vector _columnURLs = null;
-    /** JTable column tooltips */
+    /** JTable column tool-tips */
     private Vector _columnDescriptions = null;
     /** JTable column units */
     private Vector _columnUnits = null;
@@ -313,7 +312,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     /**
      * Return the current scenario bright flag.
      *
-     * @return true wether the query is of the bright type, otherwise false for
+     * @return true whether the query is of the bright type, otherwise false for
      * the faint ones.
      */
     public Boolean getBrightScenarioFlag() {
@@ -368,7 +367,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
          */
 
         // WARNING : this is not compatible with other VOTable than JMMC ones
-        Hashtable groupNameToGroupId = new Hashtable();
+        HashMap<String, Integer> groupNameToGroupId = new HashMap<String, Integer>();
         _columnClasses = new Vector();
         _columnURLs = new Vector();
         _columnDescriptions = new Vector();
@@ -425,7 +424,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         }
 
         // Add the group name to group id conversion table to the star list
-        _originalStarList.setHashTable(groupNameToGroupId);
+        _originalStarList.setHashMap(groupNameToGroupId);
 
         // For each data row
         TRSet rows = resource.getTRSet(0);
@@ -717,7 +716,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             for (int index = 0; index < _selectedStarIndices.length; index++) {
                 int selectedIndex = _selectedStarIndices[index];
                 // Use filtered star list because selection works on filtered list
-                Object selectedStar = _filteredStarList.get(selectedIndex);
+                Vector<StarProperty> selectedStar = _filteredStarList.get(selectedIndex);
                 selectedStarsList.add(selectedStar);
             }
         } else {
