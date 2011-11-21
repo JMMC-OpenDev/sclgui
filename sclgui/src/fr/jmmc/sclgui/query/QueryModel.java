@@ -15,8 +15,10 @@ import cds.savot.pull.SavotPullParser;
 
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
+import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 
+import fr.jmmc.jmcs.gui.SwingUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.io.StringBufferInputStream;
@@ -28,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  * Query model.
@@ -107,11 +110,43 @@ public class QueryModel extends Star implements Observer {
 
         // Initialize values from user defined preferences
         try {
-            // can throw IllegalArgumentException if parsing RA / DEC failed
+            // Can throw IllegalArgumentException if parsing RA / DEC failed
             loadDefaultValues();
         } catch (PreferencesException pe) {
-            // TODO : how to handle that : reset preferences ... ??
-            throw new IllegalStateException("Incompatible Preferences found", pe);
+            _logger.log(Level.WARNING, "Could not load user default values : ", pe);
+
+            Object[] options = {"Use Factory Settings", "Quit"};
+            String message = "An error occured while loading default preferences value from file:\n"
+                    + "    '" + Preferences.getInstance().computePreferenceFilepath() + "'\n"
+                    + "\n"
+                    + "You could either quit and delete it manually, or try to use factory settings instead.";
+
+            final int result = JOptionPane.showOptionDialog(App.getFrame(), message, null, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            // Handle user choice
+            switch (result) {
+
+                case 1: // Quit
+                    SwingUtils.invokeLaterEDT(new Runnable() {
+
+                        public void run() {
+                            App.quitAction().actionPerformed(null);
+                        }
+                    });
+                    break;
+
+                case 0: // Use Factory Settings
+                case JOptionPane.CLOSED_OPTION: // 'esc' key
+                default: // Any other case
+                    // Try again with internal default values that should always work
+                    Preferences.getInstance().resetToDefaultPreferences();
+                    try {
+                        loadDefaultValues();
+                    } catch (PreferencesException ex) {
+                        _logger.log(Level.SEVERE, "Could not load factory default values : ", ex);
+                        throw new IllegalStateException("Incompatible Preferences found", ex);
+                    }
+                    break;
+            }
         }
     }
 
