@@ -440,7 +440,7 @@ public class LegendView extends JPanel {
                         _dialog.setVisible(true);
                     } else {
                         String url = Resources.getResource("catalog.url."
-                                + _catalogReference);
+                                + _catalogReference, Level.FINE);
 
                         if (url == null) {
                             url = Resources.getResource("catalog.url.header")
