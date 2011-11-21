@@ -112,8 +112,8 @@ public class QueryModel extends Star implements Observer {
         try {
             // Can throw IllegalArgumentException if parsing RA / DEC failed
             loadDefaultValues();
-        } catch (PreferencesException pe) {
-            _logger.log(Level.WARNING, "Could not load user default values : ", pe);
+        } catch (Exception e) {
+            _logger.log(Level.WARNING, "Could not load user default values : ", e);
 
             Object[] options = {"Use Factory Settings", "Quit"};
             String message = "An error occured while loading default preferences value from file:\n"
@@ -143,7 +143,7 @@ public class QueryModel extends Star implements Observer {
                         loadDefaultValues();
                     } catch (PreferencesException ex) {
                         _logger.log(Level.SEVERE, "Could not load factory default values : ", ex);
-                        throw new IllegalStateException("Incompatible Preferences found", ex);
+                        throw new IllegalStateException("Incompatible Factory Preferences found", ex);
                     }
                     break;
             }
