@@ -549,15 +549,13 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     public StarProperty getStarProperty(int row, int column) {
         _logger.entering("CalibratorsModel", "getStarProperty");
 
-        // The real column index
-        Vector starsProperties = (Vector) _filteredStarList.get(row);
+        StarProperty starProperty = getStar(row).get(column);
 
-        // Return the StarProperty
-        if (starsProperties.get(column) instanceof StarProperty) {
-            return (StarProperty) starsProperties.get(column);
+        if (starProperty == null) {
+            _logger.severe("Could get StarProperty at row '" + row + "' and column '" + column + "'.");
         }
-        // TODO put error log or use Vector<Vector> for starlists
-        return null;
+
+        return starProperty;
     }
 
     /**
@@ -567,16 +565,16 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return the Star corresponding to the given index.
      */
-    public Vector getStar(int row) {
+    public Vector<StarProperty> getStar(int row) {
         _logger.entering("CalibratorsModel", "getStar");
 
-        Object s = _filteredStarList.get(row);
+        Vector<StarProperty> star = _filteredStarList.get(row);
 
-        if (s instanceof Vector) {
-            return (Vector) s;
+        if (star == null) {
+            _logger.severe("Could get Star at row '" + row + "'.");
         }
-        // TODO put error log or use Vector<Vector> for starlists
-        return null;
+
+        return star;
     }
 
     /**
