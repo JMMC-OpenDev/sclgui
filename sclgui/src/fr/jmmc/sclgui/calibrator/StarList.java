@@ -3,20 +3,20 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Logger;
 
 /**
  * Vector of star property vector.
  */
-public class StarList extends Vector {
+public class StarList extends Vector<Vector<StarProperty>> {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(StarList.class.getName());
     private static final long serialVersionUID = 1L;
-    /** Hashtable linking each colum group name to its ID */
-    private Hashtable _fieldIdToColNumber;
+    /** HashMap linking each colum group name to its ID */
+    private HashMap<String, Integer> _fieldIdToColNumber;
 
     /**
      * Default constructor
@@ -24,7 +24,7 @@ public class StarList extends Vector {
     public StarList() {
         super();
 
-        _fieldIdToColNumber = new Hashtable();
+        _fieldIdToColNumber = new HashMap<String, Integer>();
     }
 
     /**
@@ -32,7 +32,7 @@ public class StarList extends Vector {
      *
      * @param fieldIdToColNumber the new hash table.
      */
-    public void setHashTable(Hashtable fieldIdToColNumber) {
+    public void setHashMap(HashMap<String, Integer> fieldIdToColNumber) {
         _logger.entering("StarList", "setHashTable");
 
         _fieldIdToColNumber = fieldIdToColNumber;
@@ -70,20 +70,17 @@ public class StarList extends Vector {
         _logger.entering("StarList", "hasSomeDeletedStars");
 
         for (int i = 0; i < size(); i++) {
-            Vector star = (Vector) elementAt(i);
-            int deletedFlagColumnID = getColumnIdByName("deletedFlag");
-            StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
+
+            StarProperty deletedFlag = getPropertyAtRowByName(i, "deletedFlag");
             boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
 
             if (starShouldBeRemoved == true) {
                 _logger.fine("hasSomeDeletedStars = 'true'");
-
                 return true;
             }
         }
 
         _logger.fine("hasSomeDeletedStars = 'false'");
-
         return false;
     }
 
@@ -106,15 +103,12 @@ public class StarList extends Vector {
         _logger.entering("StarList", "removeAllDeletedStars");
 
         int i = 0;
-
         while (i < size()) {
-            Vector star = (Vector) elementAt(i);
-            int deletedFlagColumnID = getColumnIdByName("deletedFlag");
-            StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
+            StarProperty deletedFlag = getPropertyAtRowByName(i, "deletedFlag");
             boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
 
             if (starShouldBeRemoved == true) {
-                removeElement(star);
+                remove(i);
             } else {
                 // Jump to the next only if the current one as not been removed.
                 i++;
@@ -129,11 +123,30 @@ public class StarList extends Vector {
         _logger.entering("StarList", "undeleteAll");
 
         for (int i = 0; i < size(); i++) {
-            int deletedFlagColumnID = getColumnIdByName("deletedFlag");
-            Vector star = (Vector) elementAt(i);
-            StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
+            StarProperty deletedFlag = getPropertyAtRowByName(i, "deletedFlag");
             deletedFlag.setValue(Boolean.FALSE);
         }
+    }
+
+    /**
+     * Get StarProperty at row by name.
+     * @param row the star identifier
+     * @param name the StarProperty name
+     * @return the sought StarProperty, null otherwise.
+     */
+    private StarProperty getPropertyAtRowByName(int row, String name) {
+
+        Vector<StarProperty> star = get(row);
+        if (star == null) {
+            return null;
+        }
+
+        int columnID = getColumnIdByName(name);
+        if (columnID < 0) {
+            return null;
+        }
+
+        return star.get(columnID);
     }
 }
 /*___oOo___*/
