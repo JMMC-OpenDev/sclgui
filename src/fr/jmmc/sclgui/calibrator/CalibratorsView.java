@@ -247,22 +247,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // Enable/disable the Undelete menu item
         _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
 
-        // Update identification table if the table has a minimum of one column
-        if (_calibratorsTable.getColumnModel().getColumnCount() > 0) {
-            /*
-             * If _calibratorsIdTable has not exactly one column
-             * remove every other column and append correct one
-             * @todo manage selection of one named column instead of first one
-             */
-            if (_calibratorsIdTable.getColumnModel().getColumnCount() != 1) {
-                _logger.fine(
-                        "Setting first column of table to Identification table");
-
-                // @todo try to make next line run without eating all cpu resource
-                // _calibratorsIdTable.getColumnModel().addColumn(_calibratorsTable.getColumnModel().getColumn(0));
-            }
-        }
-
         update(null, null);
     }
 
