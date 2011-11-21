@@ -118,9 +118,7 @@ public class SpectralTypeFilter extends Filter {
                 return true;
             }
         } else {
-            // @TODO : ASSERTION FAILED
-            _logger.warning("Unknown Spectral Type Column Name = '"
-                    + _spTypeColumnName + "'.");
+            _logger.warning("Unknown Spectral Type Column Name = '" + _spTypeColumnName + "'.");
         }
 
         _logger.fine("Line kept.\n");
