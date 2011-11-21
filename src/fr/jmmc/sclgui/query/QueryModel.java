@@ -1265,13 +1265,11 @@ public class QueryModel extends Star implements Observer {
 
     /**
      * Indicates to listener if this query is well filled and can be consumed.
-     * If it returns false, then one reason must be given TBD...
+     *
      * @return true if this query is well filled and can be consumed.
      */
     public boolean isConsumable() {
         _logger.entering("QueryModel", "isConsumable");
-
-        // @TODO : Verify any mandatory missing parameter
 
         // If the RA coordinate is not defined
         if (getPropertyAsString(Property.RA).length() < 1) {
@@ -1284,6 +1282,7 @@ public class QueryModel extends Star implements Observer {
         }
 
         // The magnitude is not tested as any Double value is valid
+
         return true;
     }
 
