@@ -607,12 +607,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @param starList the list of stars to be converted.
      *
-     * @return a Savot VOTable object, or null.
+     * @return a SAVOT VOTable object, or null.
      */
     private SavotVOTable getSavotVOTable(StarList starList) {
         _logger.entering("CalibratorsModel", "getSavotVOTable");
-
-        // @TODO : if no change occured do not generate again
 
         // If null received
         if (starList.size() <= 0) {
