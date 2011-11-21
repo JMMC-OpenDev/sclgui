@@ -28,8 +28,6 @@ public class VisibilityAccuracyFilter extends Filter {
     public VisibilityAccuracyFilter() {
         super();
 
-        //setConstraint(_visibilityAccuracyConstraintName, new Double(0.0));
-        // @TODO : remove the demo value
         setConstraint(_visibilityAccuracyConstraintName, new Double(2.0));
     }
 
