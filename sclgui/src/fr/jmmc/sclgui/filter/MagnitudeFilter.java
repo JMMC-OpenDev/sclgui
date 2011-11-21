@@ -34,8 +34,6 @@ public class MagnitudeFilter extends Filter {
 
         _queryModel = queryModel;
 
-        //setConstraint(_magnitudeConstraintName, new Double(0.0));
-        // @TODO : remove the demo values
         setConstraint(_magnitudeConstraintName, new Double(1.5));
     }
 
