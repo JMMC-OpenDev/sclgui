@@ -147,7 +147,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         d.width = 50;
         rowHeader.setPreferredScrollableViewportSize(d);
         rowHeader.setRowHeight(_calibratorsTable.getRowHeight());
-        // @TODO : allow selection that select main table correspondins rows -> must derive JTable :((
         rowHeader.setRowSelectionAllowed(false);
         scrollPane.setRowHeaderView(rowHeader);
 
