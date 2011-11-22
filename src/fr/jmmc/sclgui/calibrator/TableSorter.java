@@ -614,7 +614,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         // Get the detailed/simple view flag state
         if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG))) {
             selectedView = "view.columns.simple." + scenario + "." + magnitude;
-        } else if ((magnitude != null && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
+        } else if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
             selectedView = "view.columns.detailed." + scenario + "." + magnitude;
         } else if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_FULL_FLAG)) {
             selectedView = null;
