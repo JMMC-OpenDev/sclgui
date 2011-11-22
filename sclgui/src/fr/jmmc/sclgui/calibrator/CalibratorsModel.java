@@ -25,17 +25,19 @@ import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.sclgui.SearchCal;
 import fr.jmmc.sclgui.filter.FiltersModel;
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringBufferInputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
@@ -65,13 +67,14 @@ import javax.xml.transform.stream.StreamSource;
 public class CalibratorsModel extends DefaultTableModel implements Observer {
 
     /** default serial UID for Serializable interface */
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1L;
     /** Logger */
     private static final Logger _logger = Logger.getLogger(CalibratorsModel.class.getName());
-    /** Original VOTable as a string */
+    /** 
+     * Original VOTable as a string 
+     * NOTE: it can waste a lot of memory for big tables.
+     */
     private String _voTable = null;
-    /** Current VOTable as a string */
-    private String _currentVOTable = null;
     /** Original VOTable as a star list
      * NOTE: this object is actually not really used could be deleted?
      */
@@ -82,6 +85,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     private StarList _filteredStarList = null;
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
+    /** number of columns */
+    private int _nColumns = 0;
     /** JTable column names */
     private Vector<String> _columnNames = null;
     /** JTable column URLs */
@@ -90,6 +95,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     private Vector _columnDescriptions = null;
     /** JTable column units */
     private Vector _columnUnits = null;
+    /** Column data types */
+    public Vector _columnClasses = null;
     /** Filters */
     private FiltersModel _filtersModel = null;
     /** Filters */
@@ -98,8 +105,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     private boolean _dataHaveChanged;
     /** Raw headers */
     public RowHeadersModel _rowHeadersModel = null;
-    /** Column data types */
-    public Vector _columnClasses = null;
     /** Selected magnitude band */
     private String _magnitudeBand = "V";
     /** Selected scenario */
@@ -206,8 +211,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      */
     @Override
     public boolean isCellEditable(int row, int column) {
-        _logger.entering("CalibratorsModel", "isCellEditable");
-
         // Fake editor in order to handle clickable cell to open page in browser (in TableSorter)
         return true;
     }
@@ -221,13 +224,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      * @return the specified cell value.
      */
     @Override
-    public Object getValueAt(int row, int column) {
-        _logger.entering("CalibratorsModel", "getValueAt");
-
-        Object _value = getStarProperty(row, column).getValue();
-
+    public Object getValueAt(final int row, final int column) {
+        final StarProperty property = getStarProperty(row, column);
         // Return the StarProperty value
-        return _value;
+        return (property != null) ? property.getValue() : null;
     }
 
     /**
@@ -238,10 +238,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      * @return the specified cell value.
      */
     @Override
-    public Class getColumnClass(int column) {
-        _logger.entering("CalibratorsModel", "getColumnClass");
-
-        if (_columnClasses != null) {
+    public Class getColumnClass(final int column) {
+        if (_columnClasses != null && column >= 0 && column < _nColumns) {
             return (Class) _columnClasses.elementAt(column);
         }
 
@@ -255,8 +253,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return the specified column header tooltip.
      */
-    public String getHeaderTooltipForColumn(int column) {
-        return (String) _columnDescriptions.elementAt(column);
+    public String getHeaderTooltipForColumn(final int column) {
+        if (column >= 0 && column < _nColumns) {
+            return (String) _columnDescriptions.elementAt(column);
+        }
+        return "";
     }
 
     /**
@@ -266,36 +267,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return the specified column header tooltip.
      */
-    public String getHeaderUnitForColumn(int column) {
-        return (String) _columnUnits.elementAt(column);
-    }
-
-    /**
-     * Parse a VOTablegetting its content from an BufferReader and update any attached JTable to show
-     * its content.
-     *
-     * @param reader BufferedReader used to read the voTable.
-     * @throws Exception  
-     */
-    public void parseVOTable(final BufferedReader reader) throws Exception {
-        _logger.entering("CalibratorsModel", "parseVOTable");
-
-        try {
-            // 32K buffer at least:
-            final StringBuilder sb = new StringBuilder(32 * 1024);
-            String str;
-
-            while ((str = reader.readLine()) != null) {
-                sb.append(str);
-            }
-
-            parseVOTable(sb.toString());
-
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            FileUtils.closeFile(reader);
+    public String getHeaderUnitForColumn(final int column) {
+        if (column >= 0 && column < _nColumns) {
+            return (String) _columnUnits.elementAt(column);
         }
+        return "";
     }
 
     /**
@@ -320,7 +296,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
         return _brightScenarioFlag;
     }
-
+    
     /**
      * Parse a given string as a VOTable and update any attached JTable to show
      * its content.
@@ -328,34 +304,47 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      * @param voTable the string to parse.
      * @throws Exception  
      */
-    public void parseVOTable(String voTable) throws Exception {
-        _logger.entering("CalibratorsModel", "parseVOTable");
-
-        _voTable = voTable;
-        _currentVOTable = voTable;
-
-        // Clear all the internal list before new parsing
-        _originalStarList.clear();
-        _currentStarList.clear();
-        _columnNames.clear();
-
+    public void parseVOTable(final String voTable) throws Exception {
+        if (_logger.isLoggable(Level.INFO)) {
+            _logger.info("CalibratorsModel.parseVOTable: VOTable size = " + voTable.length() + " bytes.");
+        }
+        
+        // Perform GC if possible before loading any VOTable (memory consuming task)
+        System.gc();
+        
+        _logger.fine("CalibratorsModel.parseVOTable: SavotPullParser(FULL) ...");
+        
         // Put the whole VOTable file into memory
-        SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
-                _voTable), SavotPullEngine.FULL, "UTF-8");
-
+        final SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(voTable), SavotPullEngine.FULL, "UTF-8");
+        
+        _logger.fine("CalibratorsModel.parseVOTable: SavotPullParser(FULL) done.");
+        
         // Parse the VOTable
-        SavotVOTable parsedVOTable = parser.getVOTable();
-
+        final SavotVOTable parsedVOTable = parser.getVOTable();
+        
         // Get the VOTable resources
-        ResourceSet resourceSet = parsedVOTable.getResources();
+        final ResourceSet resourceSet = parsedVOTable.getResources();
 
         // Get the first table of the first resource
         // WARNING : this is not compatible with other VOTable than JMMC ones
         // (0 should not be used, but the name of the Resource instead)
-        SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
-        SavotTable table = (SavotTable) resource.getTables().getItemAt(0);
-        GroupSet groupSet = table.getGroups();
-        FieldSet fieldSet = table.getFields();
+        final SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
+        
+        // check that the votable corresponds to the SearchCal VOTable format:
+        if (!resource.getName().startsWith("SearchCal")) {
+            throw new IllegalArgumentException("Incorrect Votable format; expected one SearchCal Votable.");
+        }
+        
+        // reset internal data model:
+        _voTable = voTable;
+
+        // Clear all the internal list before new parsing
+        _originalStarList.clear();
+        _currentStarList.clear();
+
+        final SavotTable table = (SavotTable) resource.getTables().getItemAt(0);
+        final GroupSet groupSet = table.getGroups();
+        final FieldSet fieldSet = table.getFields();
 
         // Retrieve VOTable parameters
         _paramSet = table.getParams();
@@ -365,44 +354,46 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
          * hashtable, and put its name in a vector for JTable columns title
          * definition.
          */
+        final int nGroups = groupSet.getItemCount();
 
-        // WARNING : this is not compatible with other VOTable than JMMC ones
-        HashMap<String, Integer> groupNameToGroupId = new HashMap<String, Integer>();
-        _columnClasses = new Vector();
-        _columnURLs = new Vector();
-        _columnDescriptions = new Vector();
-        _columnUnits = new Vector();
+        final Map<String, Integer> groupNameToGroupId = new HashMap<String, Integer>(nGroups);
+        _columnNames.clear();
+        _columnNames.ensureCapacity(nGroups);
+        _columnURLs = new Vector(nGroups);
+        _columnDescriptions = new Vector(nGroups);
+        _columnUnits = new Vector(nGroups);
+        _columnClasses = new Vector(nGroups);
 
-        for (int groupId = 0; groupId < groupSet.getItemCount(); groupId++) {
-            SavotGroup currentGroup = (SavotGroup) groupSet.getItemAt(groupId);
+        for (int groupId = 0; groupId < nGroups; groupId++) {
+            final SavotGroup currentGroup = (SavotGroup) groupSet.getItemAt(groupId);
 
-            String groupName = currentGroup.getName();
+            final String groupName = currentGroup.getName();
 
             // Associate the group name with its index as a table column
-            groupNameToGroupId.put(groupName, new Integer(groupId));
+            groupNameToGroupId.put(groupName, Integer.valueOf(groupId));
             _columnNames.add(groupName);
 
             // Get back the field type
-            SavotField field = (SavotField) fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
-            String fieldType = field.getDataType();
+            final SavotField field = (SavotField) fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
+            final String fieldType = field.getDataType();
 
             // Get back the field link
-            LinkSet linkSet = field.getLinks();
+            final LinkSet linkSet = field.getLinks();
             String url = "";
 
             if (linkSet.getItemCount() > 0) {
-                SavotLink savotLink = (SavotLink) linkSet.getItemAt(0);
+                final SavotLink savotLink = (SavotLink) linkSet.getItemAt(0);
                 url = savotLink.getHref();
             }
 
             _columnURLs.add(url);
 
             // Get back the field description
-            String description = field.getDescription();
+            final String description = field.getDescription();
             _columnDescriptions.add(description);
 
             // Get back the field description
-            String unit = field.getUnit();
+            final String unit = field.getUnit();
             _columnUnits.add(unit);
 
             if (fieldType != null) {
@@ -422,38 +413,53 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
                 throw new Exception("Invalid VOTable - empty fieldType");
             }
         }
+        
+        _nColumns = _columnNames.size();
 
         // Add the group name to group id conversion table to the star list
         _originalStarList.setHashMap(groupNameToGroupId);
 
+        // origin and confidence index are enumerations: use shared instance cache to use less memory:
+        final Map<String, String> originValues = new HashMap<String, String>();
+        final Map<String, String> confidenceValues = new HashMap<String, String>();
+        
         // For each data row
-        TRSet rows = resource.getTRSet(0);
+        final TRSet rows = resource.getTRSet(0);
+        final int nRows = rows.getItemCount();
 
-        for (int rowId = 0; rowId < rows.getItemCount(); rowId++) {
+        if (_logger.isLoggable(Level.INFO)) {
+            _logger.info("CalibratorsModel.parseVOTable: extracting " + nRows + " rows ...");
+        }
+
+        _originalStarList.ensureCapacity(nRows);
+
+        for (int rowId = 0; rowId < nRows; rowId++) {
             // Get the data corresponding to the current row
-            TDSet row = rows.getTDSet(rowId);
+            final TDSet row = rows.getTDSet(rowId);
 
             // For each group of the row create a star property of each 3 cells
-            Vector starProperties = new Vector();
+            final Vector starProperties = new Vector(nGroups);
 
-            for (int groupId = 0; groupId < groupSet.getItemCount();
-                    groupId++) {
+            for (int groupId = 0; groupId < nGroups; groupId++) {
                 /*
                  * The index of first cell of the current group (as there is
                  * always 3 cells for each group).
                  */
-                int mainGroupCellId = 3 * groupId;
+                final int mainGroupCellId = 3 * groupId;
 
                 // Store the group value (always the first group cell)
-                Object value = row.getContent(mainGroupCellId + 0);
+                Object value = row.getContent(mainGroupCellId);
 
                 // Get back the value type and convert the value accordinaly
-                SavotField field = (SavotField) fieldSet.getItemAt(mainGroupCellId
-                        + 0);
-                String fieldType = field.getDataType();
+                final SavotField field = (SavotField) fieldSet.getItemAt(mainGroupCellId);
+                final String fieldType = field.getDataType();
 
                 if (fieldType.equals("char")) {
                     value = (String) value;
+                    // replace "" by null to use less memory:
+                    if (value.toString().length() == 0) {
+                        value = null;
+                    }
                 } else if (fieldType.equals("float")) {
                     try {
                         value = Double.valueOf((String) value);
@@ -470,16 +476,39 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
                 // Store the group origin (always the second group cell)
                 String origin = row.getContent(mainGroupCellId + 1);
+                // replace "" or "-" by null to use less memory:
+                if ((origin.length() == 0) || ("-".equals(origin))) {
+                    origin = null;
+                } else {
+                    String originValue = originValues.get(origin);
+                    if (originValue == null) {
+                        originValues.put(origin, origin);
+                    } else {
+                        // use shared instance
+                        origin = originValue;
+                    }
+                }
 
                 // Store the group confidence (always the third group cell)
                 String confidence = row.getContent(mainGroupCellId + 2);
+                // replace "" by null to use less memory:
+                if (confidence.length() == 0) {
+                    confidence = null;
+                } else {
+                    String confidenceValue = confidenceValues.get(confidence);
+                    if (confidenceValue == null) {
+                        confidenceValues.put(confidence, confidence);
+                    } else {
+                        // use shared instance
+                        confidence = confidenceValue;
+                    }
+                }
 
                 /*
                  * Create a new StarProperty instance from the retrieved value,
                  * origin and confidence.
                  */
-                StarProperty starProperty = new StarProperty(value, origin,
-                        confidence, (String) _columnURLs.elementAt(groupId));
+                final StarProperty starProperty = new StarProperty(value, origin, confidence, (String) _columnURLs.elementAt(groupId));
 
                 // Add the newly created star property to the star property list
                 starProperties.add(starProperty);
@@ -487,7 +516,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
             // Store each VOTable row as a list of star properties
             _originalStarList.add(starProperties);
+            
+            // free memory related to the previously read row:
+            row.removeAllItems();
         }
+
+        _logger.fine("CalibratorsModel.parseVOTable: rows read.");
 
         // Copy content of originalStarList into currentStarList
         _currentStarList = (StarList) _originalStarList.clone();
@@ -496,12 +530,13 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         _currentStarList.removeAllDeletedStars();
 
         // Compute selected magnitude band and scenario
-        HashMap<String, String> parameters = new HashMap<String, String>();
+        final int nParams = _paramSet.getItemCount();
+        final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
 
-        for (int i = 0; i < _paramSet.getItemCount(); i++) {
-            SavotParam param = (SavotParam) _paramSet.getItemAt(i);
-            String paramName = param.getName();
-            String paramValue = param.getValue();
+        for (int i = 0; i < nParams; i++) {
+            final SavotParam param = (SavotParam) _paramSet.getItemAt(i);
+            final String paramName = param.getName();
+            final String paramValue = param.getValue();
 
             if (_logger.isLoggable(Level.FINE)) {
                 _logger.fine(paramName + " = '" + paramValue + "'");
@@ -511,8 +546,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
         _magnitudeBand = parameters.get("band");
 
-        if (_magnitudeBand.matches("I") || _magnitudeBand.matches("J")
-                || _magnitudeBand.matches("H")) {
+        if ((_magnitudeBand != null) && 
+            (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") || _magnitudeBand.matches("H"))) {
             _magnitudeBand = "K";
         }
 
@@ -546,16 +581,16 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return the StarProperty corresponding to the cell.
      */
-    public StarProperty getStarProperty(int row, int column) {
-        _logger.entering("CalibratorsModel", "getStarProperty");
-
-        StarProperty starProperty = getStar(row).get(column);
-
-        if (starProperty == null) {
-            _logger.severe("Could get StarProperty at row '" + row + "' and column '" + column + "'.");
+    public StarProperty getStarProperty(final int row, final int column) {
+        final Vector<StarProperty> star = getStar(row);
+        if (star != null) {
+            if (column >= 0 && column < _nColumns) {
+                return star.get(column);
+            }
         }
 
-        return starProperty;
+        _logger.severe("Could get StarProperty at row '" + row + "' and column '" + column + "'.");
+        return null;
     }
 
     /**
@@ -565,10 +600,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return the Star corresponding to the given index.
      */
-    public Vector<StarProperty> getStar(int row) {
-        _logger.entering("CalibratorsModel", "getStar");
-
-        Vector<StarProperty> star = _filteredStarList.get(row);
+    public Vector<StarProperty> getStar(final int row) {
+        final Vector<StarProperty> star = (row >= 0 && row < _filteredStarList.size()) ? _filteredStarList.get(row) : null;
 
         if (star == null) {
             _logger.severe("Could get Star at row '" + row + "'.");
@@ -584,9 +617,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return the column ID, or -1 if nothing found.
      */
-    public int getColumnIdByName(String groupName) {
-        _logger.entering("CalibratorsModel", "getColumnIdByName");
-
+    public int getColumnIdByName(final String groupName) {
         return _originalStarList.getColumnIdByName(groupName);
     }
 
@@ -596,10 +627,11 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      * @param groupId 
      * @return name of the column's ID.
      */
-    public String getColumnNameById(int groupId) {
-        _logger.entering("CalibratorsModel", "getColumnNameById");
-
-        return _columnNames.elementAt(groupId);
+    public String getColumnNameById(final int groupId) {
+        if (groupId >= 0 && groupId < _nColumns) {
+            return _columnNames.elementAt(groupId);
+        }
+        return "";
     }
 
     /**
@@ -627,8 +659,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         }
 
         // Put the whole original VOTable file into memory
-        SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
-                _voTable), SavotPullEngine.FULL, "UTF-8");
+        SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(_voTable), SavotPullEngine.FULL, "UTF-8");
 
         // Parse the VOTable
         SavotVOTable parsedVOTable = parser.getVOTable();
@@ -683,16 +714,12 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     public void openFile(final File file) throws Exception {
         _logger.entering("CalibratorsModel", "openFile");
 
-        try {
-            // Get a BufferedReader from file
-            final BufferedReader fileReader = new BufferedReader(new FileReader(file));
+        // Read the buffer into memory into one String:
+        // NOTE: it can waste a lot of memory for big tables.
+        final String voTable = FileUtils.readFile(file);
 
-            // Build CalibratorModel and parse votable
-            parseVOTable(fileReader);
-
-        } catch (Exception e) {
-            throw e;
-        }
+        // Build CalibratorModel and parse votable
+        parseVOTable(voTable);
     }
 
     /**
@@ -751,7 +778,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             return;
         }
 
-        SavotWriter wd = new SavotWriter();
+        final SavotWriter wd = new SavotWriter();
         wd.generateDocument(voTable, filename);
     }
 
@@ -769,9 +796,15 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             return null;
         }
 
-        SavotWriter wd = new SavotWriter();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        // Use 128K buffer:
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(128 * 1024);
+        final SavotWriter wd = new SavotWriter();
         wd.generateDocument(voTable, outputStream);
+        
+        if (_logger.isLoggable(Level.INFO)) {
+            _logger.info("CalibratorsModel.getVOTable: VOTable size = " + outputStream.size() + " bytes.");
+        }
+        
         // The original data
         return outputStream.toString();
     }
@@ -871,8 +904,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      */
     private void applyXSLTranformationOnCurrentVOTable(File outputFile,
             String xslFileName) {
-        _logger.entering("CalibratorsModel",
-                "applyXSLTranformationOnCurrentVOTable");
+        _logger.entering("CalibratorsModel", "applyXSLTranformationOnCurrentVOTable");
 
         URL xslFile = SearchCal.getSharedInstance().getURLFromResourceFilename(xslFileName);
 
@@ -887,18 +919,15 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             TransformerFactory factory = TransformerFactory.newInstance();
 
             // Use the factory to create a template containing the xsl file
-            Templates template = factory.newTemplates(new StreamSource(
-                    xslFile.openStream()));
+            Templates template = factory.newTemplates(new StreamSource(xslFile.openStream()));
 
             // Use the template to create a transformer
             Transformer xformer = template.newTransformer();
 
             // Prepare the input and output files
             String currentVOTable = getVOTable();
-            Source source = new StreamSource(new StringBufferInputStream(
-                    currentVOTable));
-            Result result = new StreamResult(new FileOutputStream(
-                    outputFile));
+            Source source = new StreamSource(new StringBufferInputStream(currentVOTable));
+            Result result = new StreamResult(new FileOutputStream(outputFile));
 
             // Apply the xsl file to the source file and write the result to
             // the output file
@@ -940,8 +969,6 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
         @Override
         public boolean isCellEditable(int row, int column) {
-            _logger.entering("RowHeadersModel", "isCellEditable");
-
             // Return always false as no row header should be editable
             return false;
         }
