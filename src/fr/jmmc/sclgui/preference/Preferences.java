@@ -247,7 +247,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_NAME, "ETA_TAU");
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_RA, "03:47:29.0765");
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_DEC, "24:06:18.494");
-        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_MAGNITUDE, "0");
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_MAGNITUDE, "2.873");
         setDefaultPreference(PreferenceKey.QUERY_MINIMUM_MAGNITUDE, "2.0");
         setDefaultPreference(PreferenceKey.QUERY_MAXIMUM_MAGNITUDE, "4.0");
         setDefaultPreference(PreferenceKey.QUERY_BRIGHT_FLAG, "true");
