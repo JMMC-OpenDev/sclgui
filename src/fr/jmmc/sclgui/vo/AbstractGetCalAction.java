@@ -325,10 +325,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 // 5 - get results and parse them :
                 final String result = _queryResultThread.getResult();
 
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("VOTable size = " + ((result != null) ? Integer.toString(result.length()) : "NULL"));
-                }
-
                 // Parse the received VOTable
                 parseResults(result);
 
