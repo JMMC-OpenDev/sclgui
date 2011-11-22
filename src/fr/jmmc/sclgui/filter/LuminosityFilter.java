@@ -57,8 +57,6 @@ public class LuminosityFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("LuminosityFilter", "shouldRemoveRow");
-
         /*
         // DO NOT REMOVE !!! - Validity test code
         String[] rawSpectralTypes = {

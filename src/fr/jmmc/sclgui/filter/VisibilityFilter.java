@@ -65,8 +65,6 @@ public class VisibilityFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("VisibilityFilter", "shouldRemoveRow");
-
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
 

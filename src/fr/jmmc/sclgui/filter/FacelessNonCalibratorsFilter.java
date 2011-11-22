@@ -51,8 +51,6 @@ public class FacelessNonCalibratorsFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("FacelessNonCalibratorsFilter", "shouldRemoveRow");
-
         // Get the ID of the column contaning 'visibility' star property
         int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
 
