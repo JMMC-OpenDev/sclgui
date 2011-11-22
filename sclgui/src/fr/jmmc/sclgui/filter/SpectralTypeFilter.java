@@ -59,8 +59,6 @@ public class SpectralTypeFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("SpectralTypeFilter", "shouldRemoveRow");
-
         // Get the ID of the column contaning 'SpType' star property
         int rawSpectralTypeID = starList.getColumnIdByName(_spTypeColumnName);
 

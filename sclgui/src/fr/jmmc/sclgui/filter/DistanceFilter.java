@@ -105,8 +105,6 @@ public class DistanceFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("DistanceFilter", "shouldRemoveRow");
-
         // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
         int raId = starList.getColumnIdByName(_raColumnName);
         int decId = starList.getColumnIdByName(_decColumnName);

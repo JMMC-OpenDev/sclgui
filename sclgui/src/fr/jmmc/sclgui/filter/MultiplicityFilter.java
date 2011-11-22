@@ -55,8 +55,6 @@ public class MultiplicityFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("MultiplicityFilter", "shouldRemoveRow");
-
         StarProperty cell = null;
 
         for (String columnName : _multiplicityIDs) {

@@ -139,8 +139,6 @@ public abstract class Filter extends Observable {
      * @return true if the given row should be rejected, false otherwise.
      */
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("Filter", "shouldRemoveRow");
-
         return true;
     }
 
@@ -153,8 +151,6 @@ public abstract class Filter extends Observable {
      * @return true if the given row is the science object, false otherwise.
      */
     public boolean isScienceObject(StarList starList, Vector row) {
-        _logger.entering("Filter", "isScienceObject");
-
         boolean isScienceObject = false;
 
         // Get the 'distance' column Id

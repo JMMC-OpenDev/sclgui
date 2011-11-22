@@ -70,8 +70,6 @@ public class MagnitudeFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("MagnitudeFilter", "shouldRemoveRow");
-
         // Get the query magnitude band
         String magnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
 

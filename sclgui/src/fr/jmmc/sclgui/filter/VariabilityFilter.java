@@ -53,8 +53,6 @@ public class VariabilityFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(StarList starList, Vector row) {
-        _logger.entering("VariabilityFilter", "shouldRemoveRow");
-
         List<String> columns = new ArrayList<String>();
         int varFlagID = -1;
         StarProperty cell = null;
