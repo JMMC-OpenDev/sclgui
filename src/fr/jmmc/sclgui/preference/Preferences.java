@@ -75,7 +75,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     protected int getPreferencesVersionNumber() {
         _logger.entering("Preferences", "getPreferencesVersionNumber");
 
-        return 13;
+        return 14;
     }
 
     /**
@@ -147,6 +147,10 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             // Remove deprecated columns as of server version 4.0.2
             case 12:
                 return updateFromVersion12ToVersion13();
+
+            // Remove CHARM2 color preference
+            case 13:
+                return updateFromVersion13ToVersion14();
 
             // By default, triggers default values load.
             default:
@@ -653,5 +657,22 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         // Commit all changes if and only if all went fine.
         return status;
+    }
+
+    /**
+     * Correction : remove CHARM2 color preference.
+     *
+     * @return true if fine and should write to file, false otherwise.
+     */
+    private boolean updateFromVersion13ToVersion14() {
+        _logger.entering("Preferences", "updateFromVersion13ToVersion14");
+
+        String preferenceToRemove = "catalog.color.J/A+A/431/773/charm2";
+        removePreference(preferenceToRemove);
+
+        _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+
+        // Commit change to file
+        return true;
     }
 }
