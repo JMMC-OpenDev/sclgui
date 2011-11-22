@@ -114,7 +114,8 @@ public final class StarProperty implements Comparable<StarProperty> {
             return false;
         }
 
-        if (_origin != null) {
+        // note: always return true whereas '-' means nothing !!
+        if (getOrigin().length() > 0) {
             return true;
         }
 
