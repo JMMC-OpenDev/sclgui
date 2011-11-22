@@ -248,31 +248,21 @@ public class LegendView extends JPanel {
 
             @Override
             public int getColumnCount() {
-                _logger.entering("ColorPreferencesViewTableModel",
-                        "getColumnCount");
-
                 return columnNames.length;
             }
 
             @Override
             public int getRowCount() {
-                _logger.entering("ColorPreferencesViewTableModel", "getRowCount");
-
                 return _data.length;
             }
 
             @Override
             public String getColumnName(int col) {
-                _logger.entering("ColorPreferencesViewTableModel",
-                        "getColumnName");
-
                 return columnNames[col];
             }
 
             @Override
             public Object getValueAt(int row, int col) {
-                _logger.entering("ColorPreferencesViewTableModel", "getValueAt");
-
                 return _data[row][col];
             }
 
@@ -284,30 +274,21 @@ public class LegendView extends JPanel {
              */
             @Override
             public Class getColumnClass(int c) {
-                _logger.entering("ColorPreferencesViewTableModel",
-                        "getColumnClass");
-
                 return getValueAt(0, c).getClass();
             }
 
             @Override
             public boolean isCellEditable(int row, int col) {
-                _logger.entering("ColorPreferencesViewTableModel",
-                        "isCellEditable");
-
                 // Note that the data/cell address is constant, no matter where the cell appears onscreen.
                 return true;
             }
 
             @Override
             public void setValueAt(Object value, int row, int col) {
-                _logger.entering("ColorPreferencesViewTableModel", "setValueAt");
-
                 _data[row][col] = value;
                 fireTableCellUpdated(row, col);
 
-                String preferenceName = _colorPreferencePrefix
-                        + _data[row][REFERENCE];
+                String preferenceName = _colorPreferencePrefix + _data[row][REFERENCE];
                 Color newColor = (Color) _data[row][COLOR];
 
                 try {
@@ -338,8 +319,6 @@ public class LegendView extends JPanel {
             public Component getTableCellRendererComponent(JTable table,
                     Object color, boolean isSelected, boolean hasFocus, int row,
                     int column) {
-                _logger.entering("ColorRenderer",
-                        "getTableCellRendererComponent");
 
                 String cellReference = (String) _data[row][REFERENCE];
                 String cellName = (String) _data[row][TITLE];
@@ -467,8 +446,6 @@ public class LegendView extends JPanel {
             // Implement the one CellEditor method that AbstractCellEditor doesn't.
             @Override
             public Object getCellEditorValue() {
-                _logger.entering("ColorEditor", "getCellEditorValue");
-
                 return _currentColor;
             }
 
@@ -476,7 +453,6 @@ public class LegendView extends JPanel {
             @Override
             public Component getTableCellEditorComponent(JTable table,
                     Object value, boolean isSelected, int row, int column) {
-                _logger.entering("ColorEditor", "getTableCellEditorComponent");
 
                 _currentColor = (Color) value;
                 _catalogReference = (String) _data[row][REFERENCE];
