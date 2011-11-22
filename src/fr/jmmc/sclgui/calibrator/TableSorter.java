@@ -568,12 +568,12 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
      *
      * @return DOCUMENT ME!
      */
-    public Object getValueAt(int row, int column) {
+    public Object getValueAt(final int row, final int column) {
         ////////////////////////////////////////////////////////////////////////
-        column = _viewIndex[column];
+        final int realColumn = _viewIndex[column];
 
         ////////////////////////////////////////////////////////////////////////
-        return tableModel.getValueAt(modelIndex(row), column);
+        return tableModel.getValueAt(modelIndex(row), realColumn);
     }
 
     /**
@@ -612,11 +612,10 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         String selectedView = null;
 
         // Get the detailed/simple view flag state
-        if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG)) {
+        if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG))) {
             selectedView = "view.columns.simple." + scenario + "." + magnitude;
-        } else if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG)) {
-            selectedView = "view.columns.detailed." + scenario + "."
-                    + magnitude;
+        } else if ((magnitude != null && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
+            selectedView = "view.columns.detailed." + scenario + "." + magnitude;
         } else if (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_FULL_FLAG)) {
             selectedView = null;
         }
@@ -1042,7 +1041,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             int modelRow = modelIndex(row);
             int modelColumn;
 
-            try {
+            try{
                 modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
             } catch (ArrayIndexOutOfBoundsException ex) {
                 // This code is reached when model / _viewIndex array / or table size mismatch
@@ -1055,8 +1054,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             }
 
             String cellValue = "";
-            StarProperty starProperty = _calModel.getStarProperty(modelRow,
-                    modelColumn);
+            StarProperty starProperty = _calModel.getStarProperty(modelRow, modelColumn);
 
             if (starProperty != null) {
                 cellValue = starProperty.getStringValue();
@@ -1073,8 +1071,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             }
 
             // Get the row's distance star property
-            StarProperty distanceProperty = _calModel.getStarProperty(modelRow,
-                    _distId);
+            StarProperty distanceProperty = _calModel.getStarProperty(modelRow, _distId);
             Double rowDistance = distanceProperty.getDoubleValue();
 
             // If the current row distance is close enough to be detected as a science object
@@ -1226,8 +1223,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         // This method is called when a cell value is edited by the user.
         public Component getTableCellEditorComponent(JTable table,
                 Object value, boolean isSelected, int row, int column) {
-            _logger.entering("TableCellColorsEditor",
-                    "getTableCellEditorComponent()");
 
             // Retrieve clicked cell informations
             int modelRow = modelIndex(row);
