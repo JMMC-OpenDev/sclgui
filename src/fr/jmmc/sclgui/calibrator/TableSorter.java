@@ -1136,8 +1136,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                     } else if (starProperty.hasConfidence() == true) {
                         // Get confidence and set it as tooltip
                         String confidence = starProperty.getConfidence();
-                        tooltip = "Confidence index: "
-                                + confidence;
+                        tooltip = "Computed value (confidence index: "
+                                + confidence + ")";
 
                         // Get confidence color and set it as cell backgroung color
                         backgroundColor = _colorForConfidence.get(confidence);
