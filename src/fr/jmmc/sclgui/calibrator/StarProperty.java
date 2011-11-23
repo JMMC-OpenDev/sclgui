@@ -99,7 +99,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      */
     public String getOrigin() {
         if (_origin == null) {
-            return "-";
+            return "";
         }
         return _origin;
     }
@@ -114,8 +114,7 @@ public final class StarProperty implements Comparable<StarProperty> {
             return false;
         }
 
-        // note: always return true whereas '-' means nothing !!
-        if (getOrigin().length() > 0) {
+        if (_origin != null) {
             return true;
         }
 

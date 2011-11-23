@@ -1091,8 +1091,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             // Compose catalog URL
             if (starProperty.hasURL() == true) {
                 if (cellValue.length() != 0) {
-                    setText("<html><a href='#empty'>" + cellValue
-                            + "</a></html>");
+                    setText("<html><a href='#empty'>" + cellValue + "</a></html>");
                     tooltip = "Click to see star '"
                             + _calModel.getColumnNameById(modelColumn)
                             + "' entry at CDS - ";
@@ -1109,39 +1108,40 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
                 if (starProperty != null) {
                     // Set Background Color corresponding to the Catalog Origin Color or confidence index
-                    if (starProperty.hasOrigin() == true) {
+                    if (starProperty.hasOrigin()) {
                         // Get origin and set it as tooltip
-                        String origin = starProperty.getOrigin();
+                        final String origin = starProperty.getOrigin();
 
-                        // If the cell as an origin ("-" is the used blanking value for empty cell origins)
-                        if (!origin.equals("-")) {
-                            String originDescription = "Catalog origin: "
-                                    + Catalog.catalogFromReference(origin);
+                        final String originDescription = "Catalog origin: " + Catalog.catalogFromReference(origin);
 
-                            // If tooltip already contains an explanation about clickable cells
-                            if (tooltip != null) {
-                                // Add catalog origin to it
-                                tooltip += originDescription;
-                            } else {
-                                // Only use catalog origin as tooltip
-                                tooltip = originDescription;
-                            }
+                        // If tooltip already contains an explanation about clickable cells
+                        if (tooltip != null) {
+                            // Add catalog origin to it
+                            tooltip += originDescription;
+                        } else {
+                            // Only use catalog origin as tooltip
+                            tooltip = originDescription;
                         }
 
                         // Get origin color and set it as cell backgroung color
                         backgroundColor = _colorForOrigin.get(origin);
-                    } else if (starProperty.hasConfidence() == true) {
+                        
+                    } else if (starProperty.hasConfidence()) {
                         // Get confidence and set it as tooltip
-                        String confidence = starProperty.getConfidence();
-                        tooltip = "Computed value (confidence index: "
-                                + confidence + ")";
+                        final String confidence = starProperty.getConfidence();
+                        tooltip = "Computed value (confidence index: " + confidence + ")";
 
                         // Get confidence color and set it as cell backgroung color
                         backgroundColor = _colorForConfidence.get(confidence);
-                    } else {
-                        // If something bad appent, write text in red !
+                        
+                    } else if (starProperty.hasValue()) {
+                         // If something bad appent, write text in red !
                         foregroundColor = Color.RED;
                         tooltip = "!!! BUG !!!";
+                        
+                    } else {
+                        // If the property has no origin nor confidence: it is empty
+                        tooltip = null;
                     }
 
                     // Apply colors
