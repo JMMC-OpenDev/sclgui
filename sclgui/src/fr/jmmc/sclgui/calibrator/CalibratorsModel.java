@@ -314,6 +314,17 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         
         _logger.fine("CalibratorsModel.parseVOTable: SavotPullParser(FULL) ...");
         
+        // TODO: see getSavotVOTable: 
+        // when loading Votable, keep the parsed SavotVOTable without tabledata
+        // ie TRSet rows = resource.getTRSet(0).removeAllItems() (see below)
+
+        // TODO: for very big tables, enhance SavotPullParser to parse TRs chunk by chunk (partial parsing)
+        // for performance (less memory used)
+        
+        // TODO: DO not load the complete votable in memory (as string) and free such string once parsed !!
+        // but use directly streams when loading files (for example jsdc.vot)
+        // correct for remote votables (already loaded into memory by Axis SOAP)
+        
         // Put the whole VOTable file into memory
         final SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(voTable), SavotPullEngine.FULL, "UTF-8");
         
@@ -476,7 +487,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
                 // Store the group origin (always the second group cell)
                 String origin = row.getContent(mainGroupCellId + 1);
-                // replace "" or "-" by null to use less memory:
+                // replace "" or "-" (blanking value used up to SearchCal release 4.4) 
+                // by null to use less memory:
                 if ((origin.length() == 0) || ("-".equals(origin))) {
                     origin = null;
                 } else {
@@ -641,7 +653,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      *
      * @return a SAVOT VOTable object, or null.
      */
-    private SavotVOTable getSavotVOTable(StarList starList) {
+    private SavotVOTable getSavotVOTable(final StarList starList) {
         _logger.entering("CalibratorsModel", "getSavotVOTable");
 
         // If null received
@@ -657,49 +669,77 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             // Abort
             return null;
         }
+        
+        // TODO: avoid using Savot to parse again votable as string again 
+        // to only get table structure (fields / parameters)
+        // solution: when loading Votable, keep the parsed SavotVOTable without tabledata
+        // ie TRSet rows = resource.getTRSet(0).removeAllItems() (see below)
 
         // Put the whole original VOTable file into memory
-        SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(_voTable), SavotPullEngine.FULL, "UTF-8");
+        final SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(_voTable), SavotPullEngine.FULL, "UTF-8");
 
         // Parse the VOTable
-        SavotVOTable parsedVOTable = parser.getVOTable();
+        final SavotVOTable parsedVOTable = parser.getVOTable();
 
         // Get the VOTable resources
-        ResourceSet resourceSet = parsedVOTable.getResources();
+        final ResourceSet resourceSet = parsedVOTable.getResources();
 
         // Get the first table of the first resource
         // WARNING : this is not compatible with other VOTable than SearchCal ones
-        SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
+        final SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
 
         // Remove every row
-        TRSet rows = resource.getTRSet(0);
+        final TRSet rows = resource.getTRSet(0);
         rows.removeAllItems();
 
+        // shared empty TD instance
+        final SavotTD emptyTD = new SavotTD();
+
+        SavotTR tr;
+        TDSet tdSet;
+        SavotTD valueTd;
+        SavotTD originTd;
+        SavotTD confidenceTd;
+        
         // And create one row per star entry
-        Enumeration stars = starList.elements();
+        for (Vector<StarProperty> starProperties : starList) {
 
-        while (stars.hasMoreElements()) {
-            Vector starProperties = (Vector) stars.nextElement();
-            Enumeration props = starProperties.elements();
-
-            SavotTR tr = new SavotTR();
-            TDSet tds = new TDSet();
-            tr.setTDs(tds);
-            rows.addItem(tr);
-
-            while (props.hasMoreElements()) {
-                StarProperty prop = (StarProperty) props.nextElement();
-
-                SavotTD valueTd = new SavotTD();
-                SavotTD originTd = new SavotTD();
-                SavotTD confidenceTd = new SavotTD();
-                tds.addItem(valueTd);
-                tds.addItem(originTd);
-                tds.addItem(confidenceTd);
-                valueTd.setContent(prop.getStringValue());
-                originTd.setContent(prop.getOrigin());
-                confidenceTd.setContent(prop.getConfidence());
+            tr = new SavotTR();
+            tdSet = new TDSet();
+            tr.setTDs(tdSet);
+            
+            for (StarProperty prop : starProperties) {
+                
+                // value:
+                if (prop.hasValue()) {
+                    valueTd = new SavotTD();
+                    valueTd.setContent(prop.getStringValue());
+                } else {
+                    valueTd = emptyTD;
+                }
+                tdSet.addItem(valueTd);
+                
+                // origin:
+                if (prop.hasOrigin()) {
+                    originTd = new SavotTD();
+                    originTd.setContent(prop.getOrigin());
+                } else {
+                    originTd = emptyTD;
+                }
+                tdSet.addItem(originTd);
+                
+                // confidence index:
+                if (prop.hasConfidence()) {
+                    confidenceTd = new SavotTD();
+                    confidenceTd.setContent(prop.getConfidence());
+                } else {
+                    confidenceTd = emptyTD;
+                }
+                tdSet.addItem(confidenceTd);
             }
+            
+            // add TR
+            rows.addItem(tr);
         }
 
         return parsedVOTable;
