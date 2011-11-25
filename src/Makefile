@@ -28,35 +28,8 @@
 #
 # C programs (public and local)
 # -----------------------------
-# Next line was needed in one very old architecture
-#EXECUTABLES     = sclguiControl
 EXECUTABLES     =
 EXECUTABLES_L   = 
-
-#
-# <brief description of xxxxx program>
-sclguiControl_OBJECTS   = sclguiControl				\
-                          sclguiCALIBRATOR_LIST_MODEL  		\
-                          sclguiREQUEST_MODEL		   	\
-                          sclguiFILTER_LIST_MODEL	   	\
-                          sclguiBUTTONS_SUBPANEL	   	\
-                          sclguiACTIONS_VIEW		   	\
-                          sclguiFILTER_VIEW			\
-                          sclguiDISTANCE_FILTER_VIEW   		\
-                          sclguiVISIBILITY_FILTER_VIEW 		\
-                          sclguiVARIABILITY_FILTER_VIEW		\
-                          sclguiMULTIPLICITY_FILTER_VIEW 	\
-                          sclguiLUMINOSITY_FILTER_VIEW		\
-                          sclguiMAGNITUDE_FILTER_VIEW		\
-                          sclguiSPECTRAL_TYPE_FILTER_VIEW	\
-                          sclguiCALIBRATOR_LIST_VIEW   		\
-                          sclguiREQUEST_VIEW		   	\
-                          sclguiCONFIRM_SUBPANEL	   	\
-                          sclguiCONTROLLER			\
-                          sclguiGetCalCB			\
-                          sclguiExitCB
-sclguiControl_LDFLAGS   =
-sclguiControl_LIBS      = MCS C++ sclsvr vobs alx simcli 
 
 #
 # special compilation flags for single c sources
@@ -65,23 +38,7 @@ sclguiControl_LIBS      = MCS C++ sclsvr vobs alx simcli
 #
 # Includes (.h) files (public only)
 # ---------------------------------
-INCLUDES        = sclgui.h 				\
-		  sclguiCALIBRATOR_LIST_MODEL.h		\
-		  sclguiREQUEST_MODEL.h			\
-		  sclguiFILTER_LIST_MODEL.h		\
-		  sclguiBUTTONS_SUBPANEL.h		\
-		  sclguiACTIONS_VIEW.h			\
-		  sclguiFILTER_VIEW.h			\
-		  sclguiDISTANCE_FILTER_VIEW.h		\
-		  sclguiVISIBILITY_FILTER_VIEW.h	\
-		  sclguiMULTIPLICITY_FILTER_VIEW.h	\
-		  sclguiLUMINOSITY_FILTER_VIEW.h	\
-		  sclguiMAGNITUDE_FILTER_VIEW.h		\
-		  sclguiSPECTRAL_TYPE_FILTER_VIEW.h	\
-		  sclguiCALIBRATOR_LIST_VIEW.h		\
-		  sclguiREQUEST_VIEW.h			\
-		  sclguiCONFIRM_SUBPANEL.h		\
-		  sclguiCONTROLLER.h			\
+INCLUDES        = 
 
 #
 # Libraries (public and local)
