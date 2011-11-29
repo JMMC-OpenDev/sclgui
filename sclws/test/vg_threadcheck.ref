@@ -2,7 +2,7 @@
  Copyright (C) 2007-2009, and GNU GPL'd, by OpenWorks LLP et al.
  Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
  Command: sclwsServer -l 0 -v 3
- Parent PID: 9067
+ Parent PID: 14732
  
  
  Valgrind options:
@@ -13,7 +13,7 @@
     --read-var-info=yes
     --log-file=./vg_threadcheck.log
  Contents of /proc/version:
-   Linux version 2.6.32-4-pve (unknown) (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Mon May 9 12:59:57 CEST 2011
+   Linux version 2.6.32-6-pve (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Mon Sep 26 06:32:53 CEST 2011
  Arch and hwcaps: AMD64, amd64-sse3-cx16
  Page sizes: currently 4096, max supported 4096
  Valgrind library directory: /usr/lib64/valgrind
@@ -36,194 +36,76 @@
     object doesn't have a symbol table
  Reading syms from /lib64/libglib-2.0.so.0.1200.3 (0x5627000)
     object doesn't have a symbol table
- Reading syms from /usr/lib64/libstdc++.so.6.0.8 (0x58c5000)
+ Reading syms from /lib64/libpthread-2.5.so (0x58c5000)
+ Reading syms from /usr/lib64/libstdc++.so.6.0.8 (0x5ae0000)
     object doesn't have a symbol table
- Reading syms from /lib64/libpthread-2.5.so (0x5bc5000)
  Reading syms from /lib64/libuuid.so.1.2 (0x5de0000)
     object doesn't have a symbol table
  Reading syms from /home/users/bourgesl/dev/SCALIB/DEVELOPMENT/sclws/lib/libsclws.so (0x5fe4000)
  warning: addVar: unknown size (dynBuf)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libsclsvr.so (0x61ff000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsclsvr.so (0x61fe000)
  warning: addVar: unknown size (star)
  warning: addVar: unknown size (star)
  warning: addVar: unknown size (properties)
+ warning: addVar: unknown size (propIsRaDec)
  warning: addVar: unknown size (propIsWaveLength)
  warning: addVar: unknown size (propIsFlux)
  warning: addVar: unknown size (cData)
  warning: addVar: unknown size (calibrator)
- warning: addVar: unknown size (cdata)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libvobs.so (0x642e000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libalx.so (0x666c000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libsimcli.so (0x68a1000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libthrd.so (0x6aa9000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libmcs.so (0x6cae000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/liblog.so (0x6eb0000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/liberr.so (0x70b4000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libmisc.so (0x72ba000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libtimlog.so (0x74c2000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libfnd.so (0x76c4000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libmisco.so (0x78c6000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libenv.so (0x7acd000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libcmd.so (0x7cd2000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libmsg.so (0x7ee1000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libsdb.so (0x80f2000)
- Reading syms from /home/users/bourgesl/INTROOT/lib/libevh.so (0x82f5000)
- Reading syms from /home/MCS/DEVELOPMENT/lib/libgwt.so (0x8511000)
- Reading syms from /lib64/libgcc_s-4.1.2-20080825.so.1 (0x8739000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libvobs.so (0x642b000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libalx.so (0x6667000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsimcli.so (0x689f000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libthrd.so (0x6aa7000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmcs.so (0x6cab000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liblog.so (0x6ead000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liberr.so (0x70b1000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisc.so (0x72b7000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libtimlog.so (0x74bf000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libfnd.so (0x76c1000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisco.so (0x78c3000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libenv.so (0x7aca000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libcmd.so (0x7ccf000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmsg.so (0x7edd000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsdb.so (0x80ed000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libevh.so (0x82f0000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libgwt.so (0x850c000)
+ Reading syms from /lib64/libgcc_s-4.1.2-20080825.so.1 (0x8735000)
     object doesn't have a symbol table
- Reading syms from /lib64/libc-2.5.so (0x8947000)
- Reading syms from /lib64/libdl-2.5.so (0x8c9e000)
- Reading syms from /usr/lib64/libz.so.1.2.3 (0x8ea2000)
+ Reading syms from /lib64/libc-2.5.so (0x8943000)
+ Reading syms from /lib64/libdl-2.5.so (0x8c9a000)
+ Reading syms from /usr/lib64/libz.so.1.2.3 (0x8e9e000)
     object doesn't have a symbol table
- Reading syms from /lib64/librt-2.5.so (0x90b6000)
- REDIR: 0x89c30f0 (memcpy) redirected to 0x4c24e3c (memcpy)
- REDIR: 0x89c02d0 (index) redirected to 0x4c24bc9 (index)
- REDIR: 0x89c0a00 (strlen) redirected to 0x4c24cbb (strlen)
- REDIR: 0x89bb890 (calloc) redirected to 0x4c20942 (calloc)
- REDIR: 0x59821c0 (operator new(unsigned long)) redirected to 0x4c21e9a (operator new(unsigned long))
- REDIR: 0x5980f50 (operator delete(void*)) redirected to 0x4c20f6c (operator delete(void*))
- REDIR: 0x89b8a40 (mallopt) redirected to 0x4c20440 (mallopt)
- REDIR: 0x5bcdca0 (pthread_mutex_lock) redirected to 0x4c226c2 (pthread_mutex_lock)
- REDIR: 0x89c04c0 (strcpy) redirected to 0x4c24d18 (strcpy)
- REDIR: 0x5bcf020 (pthread_mutex_unlock) redirected to 0x4c22b66 (pthread_mutex_unlock)
- REDIR: 0x89bbc70 (malloc) redirected to 0x4c2164a (malloc)
- REDIR: 0x5bcd5b0 (pthread_mutex_init) redirected to 0x4c25ff1 (pthread_mutex_init)
+ Reading syms from /lib64/librt-2.5.so (0x90b2000)
+ REDIR: 0x89bf0f0 (memcpy) redirected to 0x4c24e3c (memcpy)
+ REDIR: 0x89bc2d0 (index) redirected to 0x4c24bc9 (index)
+ REDIR: 0x89bca00 (strlen) redirected to 0x4c24cbb (strlen)
+ REDIR: 0x89b7890 (calloc) redirected to 0x4c20942 (calloc)
+ REDIR: 0x5b9d1c0 (operator new(unsigned long)) redirected to 0x4c21e9a (operator new(unsigned long))
+ REDIR: 0x5b9bf50 (operator delete(void*)) redirected to 0x4c20f6c (operator delete(void*))
+ REDIR: 0x89b4a40 (mallopt) redirected to 0x4c20440 (mallopt)
+ REDIR: 0x58cdca0 (pthread_mutex_lock) redirected to 0x4c226c2 (pthread_mutex_lock)
+ REDIR: 0x89bc4c0 (strcpy) redirected to 0x4c24d18 (strcpy)
+ REDIR: 0x58cf020 (pthread_mutex_unlock) redirected to 0x4c22b66 (pthread_mutex_unlock)
+ REDIR: 0x89b7c70 (malloc) redirected to 0x4c2164a (malloc)
+ REDIR: 0x58cd5b0 (pthread_mutex_init) redirected to 0x4c25ff1 (pthread_mutex_init)
  REDIR: 0xffffffffff600000 (???) redirected to 0x3802e3b3 (vgPlain_amd64_linux_REDIR_FOR_vgettimeofday)
- REDIR: 0x89b9720 (free) redirected to 0x4c2125a (free)
- REDIR: 0x89c0480 (strcmp) redirected to 0x4c24d46 (strcmp)
- REDIR: 0x5bcb9a0 (pthread_create@@GLIBC_2.2.5) redirected to 0x4c262a5 (pthread_create@*)
- REDIR: 0x89b8420 (malloc_trim) redirected to 0x4c2044b (malloc_trim)
- REDIR: 0x89b8000 (malloc_stats) redirected to 0x4c20456 (malloc_stats)
- REDIR: 0x5bcca10 (pthread_join) redirected to 0x4c22431 (pthread_join)
- REDIR: 0x89bc190 (realloc) redirected to 0x4c216fb (realloc)
- REDIR: 0x5bcd740 (pthread_mutex_destroy) redirected to 0x4c2257a (pthread_mutex_destroy)
- REDIR: 0x59822f0 (operator new[](unsigned long)) redirected to 0x4c21af6 (operator new[](unsigned long))
- REDIR: 0x5980f90 (operator delete[](void*)) redirected to 0x4c20be8 (operator delete[](void*))
- Thread #6 was created
-    at 0x8A1AF2E: clone (in /lib64/libc-2.5.so)
-    by 0x5BCBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
-    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
-    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
-    by 0x404C9B: main (sclwsServer.cpp:751)
+ REDIR: 0x89b5720 (free) redirected to 0x4c2125a (free)
+ REDIR: 0x89bc480 (strcmp) redirected to 0x4c24d46 (strcmp)
+ REDIR: 0x58cb9a0 (pthread_create@@GLIBC_2.2.5) redirected to 0x4c262a5 (pthread_create@*)
+ REDIR: 0x89b4420 (malloc_trim) redirected to 0x4c2044b (malloc_trim)
+ REDIR: 0x89b4000 (malloc_stats) redirected to 0x4c20456 (malloc_stats)
+ REDIR: 0x58cca10 (pthread_join) redirected to 0x4c22431 (pthread_join)
+ REDIR: 0x89b8190 (realloc) redirected to 0x4c216fb (realloc)
+ REDIR: 0x58cd740 (pthread_mutex_destroy) redirected to 0x4c2257a (pthread_mutex_destroy)
+ REDIR: 0x5b9d2f0 (operator new[](unsigned long)) redirected to 0x4c21af6 (operator new[](unsigned long))
+ REDIR: 0x5b9bf90 (operator delete[](void*)) redirected to 0x4c20be8 (operator delete[](void*))
  
- Thread #8 was created
-    at 0x8A1AF2E: clone (in /lib64/libc-2.5.so)
-    by 0x5BCBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
-    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
-    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
-    by 0x404C9B: main (sclwsServer.cpp:751)
+ ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6173902 from 2943)
  
- Possible data race during read of size 8 at 0x5bb4e00 by thread #6
-    at 0x5961B28: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x621D570: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:375)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FF8D2A: soap_serve_request(soap*) (soapServer.cpp:79)
-    by 0x5FF8E11: soap_serve(soap*) (soapServer.cpp:49)
-    by 0x404F5B: sclwsJobHandler(void*) (sclwsServer.cpp:419)
-    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
-    by 0x5BCB73C: start_thread (in /lib64/libpthread-2.5.so)
-    by 0x8A1AF6C: clone (in /lib64/libc-2.5.so)
-  This conflicts with a previous write of size 8 by thread #8
-    at 0x5962156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x596228B: std::string::_M_replace_safe(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x644AA87: vobsREQUEST::vobsREQUEST() (basic_string.h:915)
-    by 0x621804E: sclsvrREQUEST::sclsvrREQUEST() (sclsvrREQUEST.cpp:37)
-    by 0x621CFF2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:185)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+ used_suppression:  56837 helgrind-glibc2X-005
+ used_suppression: 6116091 helgrind-glibc2X-004
+ used_suppression:    201 helgrind-glibc2X-112
+ used_suppression:    757 helgrind-glibc2X-102
+ used_suppression:     16 helgrind-glibc2X-101
  
- Thread #13 was created
-    at 0x8A1AF2E: clone (in /lib64/libc-2.5.so)
-    by 0x5BCBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
-    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
-    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
-    by 0x404C9B: main (sclwsServer.cpp:751)
- 
- Possible data race during read of size 8 at 0x5bb4e00 by thread #8
-    at 0x5961F81: std::string::append(std::string const&) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x7CDA3F9: cmdCOMMAND::AppendParamsToVOTable(std::string&) (cmdCOMMAND.cpp:382)
-    by 0x6217703: sclsvrREQUEST::AppendParamsToVOTable(std::string&) (sclsvrREQUEST.cpp:621)
-    by 0x621D580: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:376)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FF8D2A: soap_serve_request(soap*) (soapServer.cpp:79)
-    by 0x5FF8E11: soap_serve(soap*) (soapServer.cpp:49)
-    by 0x404F5B: sclwsJobHandler(void*) (sclwsServer.cpp:419)
-    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
-    by 0x5BCB73C: start_thread (in /lib64/libpthread-2.5.so)
-  This conflicts with a previous write of size 8 by thread #13
-    at 0x5962156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x596228B: std::string::_M_replace_safe(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x644AA87: vobsREQUEST::vobsREQUEST() (basic_string.h:915)
-    by 0x621804E: sclsvrREQUEST::sclsvrREQUEST() (sclsvrREQUEST.cpp:37)
-    by 0x621CFF2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:185)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
- 
- 
- ERROR SUMMARY: 6 errors from 2 contexts (suppressed: 6222107 from 2616)
- 
- 1 errors in context 1 of 2:
- Possible data race during read of size 8 at 0x5bb4e00 by thread #8
-    at 0x5961F81: std::string::append(std::string const&) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x7CDA3F9: cmdCOMMAND::AppendParamsToVOTable(std::string&) (cmdCOMMAND.cpp:382)
-    by 0x6217703: sclsvrREQUEST::AppendParamsToVOTable(std::string&) (sclsvrREQUEST.cpp:621)
-    by 0x621D580: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:376)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FF8D2A: soap_serve_request(soap*) (soapServer.cpp:79)
-    by 0x5FF8E11: soap_serve(soap*) (soapServer.cpp:49)
-    by 0x404F5B: sclwsJobHandler(void*) (sclwsServer.cpp:419)
-    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
-    by 0x5BCB73C: start_thread (in /lib64/libpthread-2.5.so)
-  This conflicts with a previous write of size 8 by thread #13
-    at 0x5962156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x596228B: std::string::_M_replace_safe(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x644AA87: vobsREQUEST::vobsREQUEST() (basic_string.h:915)
-    by 0x621804E: sclsvrREQUEST::sclsvrREQUEST() (sclsvrREQUEST.cpp:37)
-    by 0x621CFF2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:185)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
- 
- 
- 5 errors in context 2 of 2:
- Possible data race during read of size 8 at 0x5bb4e00 by thread #6
-    at 0x5961B28: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x621D570: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:375)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
-    by 0x5FF8D2A: soap_serve_request(soap*) (soapServer.cpp:79)
-    by 0x5FF8E11: soap_serve(soap*) (soapServer.cpp:49)
-    by 0x404F5B: sclwsJobHandler(void*) (sclwsServer.cpp:419)
-    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
-    by 0x5BCB73C: start_thread (in /lib64/libpthread-2.5.so)
-    by 0x8A1AF6C: clone (in /lib64/libc-2.5.so)
-  This conflicts with a previous write of size 8 by thread #8
-    at 0x5962156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x596228B: std::string::_M_replace_safe(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
-    by 0x644AA87: vobsREQUEST::vobsREQUEST() (basic_string.h:915)
-    by 0x621804E: sclsvrREQUEST::sclsvrREQUEST() (sclsvrREQUEST.cpp:37)
-    by 0x621CFF2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:185)
-    by 0x621CD12: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:150)
-    by 0x5FF01B9: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:517)
-    by 0x5FF8ACF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
- 
- 
- used_suppression:  35633 helgrind-glibc2X-005
- used_suppression: 6174562 helgrind-glibc2X-004
- used_suppression:     17 std_string_M_replace_safe__ignore
- used_suppression:      5 std_string_assign__ignore
- used_suppression:    196 helgrind-glibc2X-112
- used_suppression:      9 std_basic_string__ignore
- used_suppression:    714 helgrind-glibc2X-102
- used_suppression:  10971 helgrind-glibc2X-101
- 
- ERROR SUMMARY: 6 errors from 2 contexts (suppressed: 6222107 from 2616)
+ ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6173902 from 2943)
