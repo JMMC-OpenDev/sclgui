@@ -218,6 +218,8 @@
     <releasenotes>
         <release version="4.4">
             <prerelease version="4.4b2" tag="SC_V4_4b2">
+                <change type="CHANGE">Enhanced VOTable output efficiency.</change>
+                <change type="CHANGE">Enhanced cross-matching algorithm on the server side.</change>
                 <change type="CHANGE">Removed L and M columns but added UD_N in bright detailed views.</change>
                 <change type="BUGFIX">Fixed query's magnitude default value.</change>
                 <change type="CHANGE">Enhanced calibrator's table cell tool-tips for computed values.</change>
@@ -225,7 +227,6 @@
                 <change type="CHANGE">Better handling of user default values parsing problem.</change>
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/212">Removed deprecated columns 'LD', 'e_LD', 'UD', 'e_UD', 'Meth' and 'lambda' from detailed views.</change>
                 <change type="BUGFIX">Fixed 'detailLed' typo.</change>
-                <change type="CHANGE">Updated acknowledgements to include SearchCal Faint Mode article.</change>
             </prerelease>
             <prerelease version="4.4b1" tag="SC_V4_4b1">
                 <change type="FEATURE">Added AKARI catalog querying to provide IR photometries and compute N flux when missing.</change>
@@ -233,11 +234,11 @@
             <prerelease version="4.3.3b2" tag="SC_V4_3_3b2">
                 <change type="FEATURE">Enhanced columns order preference list readability.</change>
                 <change type="BUGFIX">Fixed columns order preference list selection tracking.</change>
-                <change type="CHANGE">Updated acknowledgements to add reference to our new FAINT paper (Bonneau et al, 2011).</change>
+                <change type="CHANGE">Updated acknowledgements to add reference to our new FAINT article (Bonneau et al, 2011).</change>
                 <change type="CHANGE">Updated dependencies to add reference to our jMCS framework.</change>
             </prerelease>
             <prerelease version="4.3.3b1" tag="SC_V4_3_3b1">
-                <change type="BUGFIX">Fixed concurrency issues, memory leaks and optimizations.</change>
+                <change type="BUGFIX">Fixed concurrency issues, memory leaks and major optimizations on server side.</change>
                 <change type="CHANGE">Updated polynomial coefficients (FAINT) to compute uniform diameters.</change>
             </prerelease>
         </release>
