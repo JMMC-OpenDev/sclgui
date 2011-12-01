@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
+import fr.jmmc.jmcs.gui.SearchField;
 import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
@@ -14,6 +15,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
 import java.awt.print.PageFormat;
@@ -21,9 +27,13 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -51,12 +61,21 @@ import javax.swing.table.JTableHeader;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-        ListSelectionListener, Observer, Printable {
+                                                       ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
     private static final Logger _logger = Logger.getLogger(CalibratorsView.class.getName());
+
+    /** Quick search direction */
+    private static enum SEARCH_DIRECTION {
+
+        /** previous */
+        PREVIOUS,
+        /** next */
+        NEXT
+    };
     /** Show Legend action */
     //public static ShowLegendAction _showLegendAction;
     public static RegisteredPreferencedBooleanAction _showLegendAction = null;
@@ -82,6 +101,10 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     private TableSorter _tableSorter = null;
     /** Calibrators table and Legend container */
     private JSplitPane _tableAndLegendPane = null;
+    /** quick search field */
+    private SearchField _searchField = null;
+    /** quick search helper */
+    private final QuickSearchHelper _searchHelper;
 
     /**
      * Constructor.
@@ -120,17 +143,57 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Size management
         setMinimumSize(new Dimension(895, 320));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+        // Search Panel
+        final JPanel searchPanel = new JPanel(new GridBagLayout());
+        searchPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        _searchHelper = new QuickSearchHelper();
+
+        // SearchField
+        _searchField = new SearchField("exact value or regexp");
+        _searchField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final String text = _searchField.getRealText().trim();
+
+                if (text.length() > 0) {
+                    if (!_searchHelper.find(text)) {
+                        _searchField.setBackground(Color.red);
+                    } else {
+                        _searchField.setBackground(Color.WHITE);
+                    }
+                }
+            }
+        });
+
+        // add search label:
+        final GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 10);
+
+        searchPanel.add(new JLabel("Search:"), gridBagConstraints);
+
+        // add search field:
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+        searchPanel.add(_searchField, gridBagConstraints);
+
+        add(searchPanel);
 
         // Table initialization
         _calibratorsTable = new JTable();
 
         // Configure table sorting
-        _tableSorter = new TableSorter(_calibratorsModel,
-                _calibratorsTable.getTableHeader());
+        _tableSorter = new TableSorter(_calibratorsModel, _calibratorsTable.getTableHeader());
         _calibratorsTable.setModel(_tableSorter);
-        _calibratorsIdTable = new JTable(_tableSorter,
-                new DefaultTableColumnModel(), null);
+        _calibratorsIdTable = new JTable(_tableSorter, new DefaultTableColumnModel(), null);
         _calibratorsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _calibratorsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -162,11 +225,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         legendPanel.setSize(new Dimension(0, 0));
 
         // Set and place TableId, Table and Legend group
-        _tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                scrollPane, legendPanel);
+        _tableAndLegendPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, legendPanel);
         _tableAndLegendPane.setOneTouchExpandable(true);
         _tableAndLegendPane.setResizeWeight(1.0);
         _tableAndLegendPane.setContinuousLayout(true);
+        _tableAndLegendPane.setAlignmentX(CENTER_ALIGNMENT);
         add(_tableAndLegendPane);
 
         // Handle window resize
@@ -357,7 +420,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         }
     }
 
-    /** Returns the indices list of stars selected in the calibrator table .
+    /** 
+     * Returns the indices list of stars selected in the calibrator table .
      * 
      * @return the indices list
      */
@@ -371,6 +435,139 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         }
 
         return convertedSelectedRows;
+    }
+
+    /**
+     * Quick search algorithm supporting previous / next ...
+     */
+    private final class QuickSearchHelper {
+
+        /** undefined */
+        private final static int UNDEFINED = -1;
+        /* members */
+        /** current found row index related to table view (visible rows) */
+        private int _currentRow;
+        /** current found column index related to table view (visible columns)*/
+        private int _currentCol;
+        /** current search value */
+        private String _searchValue;
+
+        /**
+         * Protected constructor
+         */
+        protected QuickSearchHelper() {
+            reset();
+        }
+
+        /**
+         * Reset current state
+         */
+        protected void reset() {
+            _currentRow = UNDEFINED;
+            _currentCol = UNDEFINED;
+            _searchValue = null;
+        }
+
+        protected boolean find(final String searchValue) {
+            return search(searchValue, SEARCH_DIRECTION.NEXT);
+        }
+
+        protected boolean next() {
+            return search(_searchValue, SEARCH_DIRECTION.NEXT);
+        }
+
+        protected boolean previous() {
+            return search(_searchValue, SEARCH_DIRECTION.PREVIOUS);
+        }
+
+        public boolean search(final String searchValue, final SEARCH_DIRECTION dir) {
+            boolean found = false;
+            if (searchValue != null && searchValue.length() > 0) {
+
+                SEARCH_DIRECTION currentDir = dir;
+                if (!searchValue.equals(this._searchValue)) {
+                    reset();
+                    currentDir = SEARCH_DIRECTION.NEXT;
+                    this._searchValue = searchValue;
+                }
+
+                if (_logger.isLoggable(Level.INFO)) {
+                    _logger.info("Searching value '" + searchValue + "' in direction " + currentDir);
+                }
+                if (_currentRow != UNDEFINED && _currentCol != UNDEFINED) {
+                    if (_logger.isLoggable(Level.INFO)) {
+                        _logger.info("Current row = " + _currentRow + ", col = " + _currentCol);
+                    }
+                }
+
+                final long start = System.nanoTime();
+
+                // use tableSorter to process only visible rows and columns:
+                final int nStars = _tableSorter.getRowCount();
+                final int nCols = _tableSorter.getColumnCount();
+
+                String foundValue = null;
+                int foundRow = -1;
+                int foundCol = -1;
+                boolean done = false;
+                Object value;
+                String textValue;
+
+                final Pattern pattern = Pattern.compile(searchValue);
+                Matcher matcher;
+
+                // Traverse all rows:
+                for (int row = 0; row < nStars && !done; row++) {
+
+                    // Traverse visible columns:
+                    for (int col = 0; col < nCols; col++) {
+                        value = _tableSorter.getValueAt(row, col);
+
+                        if (value != null) {
+                            textValue = value.toString();
+
+                            if (textValue.length() > 0) {
+                                if (_logger.isLoggable(Level.FINE)) {
+                                    _logger.fine("Cell value '" + textValue + "' at row " + row + ", col = " + col + ".");
+                                }
+
+                                matcher = pattern.matcher(textValue);
+
+                                if (matcher.matches()) {
+                                    foundValue = textValue;
+                                    foundRow = row;
+                                    foundCol = col;
+                                    done = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (foundValue != null) {
+                    if (_logger.isLoggable(Level.INFO)) {
+                        _logger.info("Found value '" + foundValue + "' at row " + foundRow + ", col = " + foundCol + ".");
+                    }
+
+                    // Clear previous selection:
+                    _calibratorsTable.changeSelection(foundRow, foundCol, false, false);
+                    _calibratorsTable.changeSelection(foundRow, foundCol, true, true);
+
+                    _calibratorsTable.scrollRectToVisible(_calibratorsTable.getCellRect(foundRow, foundCol, true));
+                    _calibratorsTable.requestFocus();
+
+                    // memorize state:
+                    _currentRow = foundRow;
+                    _currentCol = foundCol;
+                    found = true;
+                }
+
+                _logger.info("QuickSearchHelper.search: " + 1e-6d * (System.nanoTime() - start) + " ms.");
+
+            }
+            return found;
+        }
     }
 }
 /*___oOo___*/
