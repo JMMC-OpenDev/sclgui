@@ -33,6 +33,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -61,7 +63,7 @@ import javax.swing.table.JTableHeader;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-        ListSelectionListener, Observer, Printable {
+                                                       ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -75,6 +77,15 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         PREVIOUS,
         /** next */
         NEXT
+    };
+    /* regexp tokens */
+    /** tokens to replace from "([{\^-=$!|]})?*+." except "*?" */
+    private final static String[] REGEXP_TOKEN_FROM = new String[]{
+        "(", "[", "{", "\\", "^", "-", "=", "$", "!", "|", "]", "}", ")", "+", ".", "*", "?"
+    };
+    /** tokens to replace by */
+    private final static String[] REGEXP_TOKEN_REPLACE = new String[]{
+        "\\(", "\\[", "\\{", "\\\\", "\\^", "\\-", "\\=", "\\$", "\\!", "\\|", "\\]", "\\}", "\\)", "\\+", "\\.", ".*", ".?"
     };
     /** Show Legend action */
     //public static ShowLegendAction _showLegendAction;
@@ -109,6 +120,8 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     private JSplitPane _tableAndLegendPane = null;
     /** quick search field */
     private SearchField _searchField = null;
+    /** regexp check box */
+    private JCheckBox _regexpCheckBox;
     /** quick search helper */
     private final QuickSearchHelper _searchHelper;
 
@@ -159,15 +172,21 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _searchHelper = new QuickSearchHelper();
 
         // SearchField
-        _searchField = new SearchField("exact value or regexp");
+        _searchField = new SearchField("");
+        _searchField.setToolTipText("exact value or regular exp");
         _searchField.addActionListener(new ActionListener() {
 
+            /**
+             * Perform find action
+             */
             @Override
             public void actionPerformed(final ActionEvent e) {
+                // TODO: factorize such code
                 final String text = _searchField.getRealText().trim();
 
+                final boolean isRegExp = _regexpCheckBox.isSelected();
                 if (text.length() > 0) {
-                    if (!_searchHelper.find(text)) {
+                    if (!_searchHelper.find(text, isRegExp)) {
                         _searchField.setBackground(Color.red);
                     } else {
                         _searchField.setBackground(Color.WHITE);
@@ -179,7 +198,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         // add search label:
         final GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new Insets(0, 0, 0, 10);
 
@@ -187,10 +205,28 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // add search field:
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         searchPanel.add(_searchField, gridBagConstraints);
+
+        // add previous button
+        final JButton prevButton = new JButton(_findPreviousAction);
+        prevButton.setText("Previous");
+        gridBagConstraints.gridx = 2;
+        searchPanel.add(prevButton, gridBagConstraints);
+
+        // add next button
+        final JButton nextButton = new JButton(_findNextAction);
+        nextButton.setText("Next");
+        gridBagConstraints.gridx = 3;
+        searchPanel.add(nextButton, gridBagConstraints);
+
+        // add regexp check box
+        _regexpCheckBox = new JCheckBox("Regular expression");
+        gridBagConstraints.gridx = 4;
+        searchPanel.add(_regexpCheckBox, gridBagConstraints);
+
+        // TODO: match case checkbox ??
 
         add(searchPanel);
 
@@ -428,7 +464,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("FindAction", "actionPerformed");
-            
+
             // TODO : Show Search Window
         }
     }
@@ -446,8 +482,18 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("FindNextAction", "actionPerformed");
-            
-            // TODO : Find next token
+
+            // TODO: factorize such code
+            final String text = _searchField.getRealText().trim();
+
+            final boolean isRegExp = _regexpCheckBox.isSelected();
+            if (text.length() > 0) {
+                if (!_searchHelper.next(text, isRegExp)) {
+                    _searchField.setBackground(Color.red);
+                } else {
+                    _searchField.setBackground(Color.WHITE);
+                }
+            }
         }
     }
 
@@ -464,8 +510,18 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("FindPreviousAction", "actionPerformed");
-            
+
             // TODO : Find previous token
+            final String text = _searchField.getRealText().trim();
+
+            final boolean isRegExp = _regexpCheckBox.isSelected();
+            if (text.length() > 0) {
+                if (!_searchHelper.previous(text, isRegExp)) {
+                    _searchField.setBackground(Color.red);
+                } else {
+                    _searchField.setBackground(Color.WHITE);
+                }
+            }
         }
     }
 
@@ -529,29 +585,30 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         /**
          * Reset current state
          */
-        protected void reset() {
+        private void reset() {
             _currentRow = UNDEFINED;
             _currentCol = UNDEFINED;
             _searchValue = null;
         }
 
-        protected boolean find(final String searchValue) {
-            return search(searchValue, SEARCH_DIRECTION.NEXT);
+        protected boolean find(final String searchValue, final boolean isRegExp) {
+            reset();
+            return search(searchValue, false, SEARCH_DIRECTION.NEXT);
         }
 
-        protected boolean next() {
-            return search(_searchValue, SEARCH_DIRECTION.NEXT);
+        protected boolean next(final String searchValue, final boolean isRegExp) {
+            return search(searchValue, false, SEARCH_DIRECTION.NEXT);
         }
 
-        protected boolean previous() {
-            return search(_searchValue, SEARCH_DIRECTION.PREVIOUS);
+        protected boolean previous(final String searchValue, final boolean isRegExp) {
+            return search(searchValue, false, SEARCH_DIRECTION.PREVIOUS);
         }
 
-        public boolean search(final String searchValue, final SEARCH_DIRECTION dir) {
+        private boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION direction) {
             boolean found = false;
             if (searchValue != null && searchValue.length() > 0) {
 
-                SEARCH_DIRECTION currentDir = dir;
+                SEARCH_DIRECTION currentDir = direction;
                 if (!searchValue.equals(this._searchValue)) {
                     reset();
                     currentDir = SEARCH_DIRECTION.NEXT;
@@ -561,17 +618,41 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 if (_logger.isLoggable(Level.INFO)) {
                     _logger.info("Searching value '" + searchValue + "' in direction " + currentDir);
                 }
+
+                final String regexp = (isRegExp) ? searchValue : convertToRegExp(searchValue);
+
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine("RegExp '" + regexp + "'");
+                }
+
+                // use tableSorter to process only visible rows and columns:
+                final int nRows = _tableSorter.getRowCount();
+                final int nCols = _tableSorter.getColumnCount();
+
+                int row = 0;
+                int col = 0;
+
+                final int initCol;
+                final int dir;
+
+                if (direction == SEARCH_DIRECTION.PREVIOUS) {
+                    dir = -1;
+                    initCol = nCols - 1;
+                } else {
+                    dir = 1;
+                    initCol = 0;
+                }
+
+                // Use current row/col:
                 if (_currentRow != UNDEFINED && _currentCol != UNDEFINED) {
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.info("Current row = " + _currentRow + ", col = " + _currentCol);
+                    if (_logger.isLoggable(Level.FINE)) {
+                        _logger.fine("Current row = " + _currentRow + ", col = " + _currentCol);
                     }
+                    row = _currentRow;
+                    col = _currentCol + dir; // skip current cell
                 }
 
                 final long start = System.nanoTime();
-
-                // use tableSorter to process only visible rows and columns:
-                final int nStars = _tableSorter.getRowCount();
-                final int nCols = _tableSorter.getColumnCount();
 
                 String foundValue = null;
                 int foundRow = -1;
@@ -580,14 +661,16 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                 Object value;
                 String textValue;
 
-                final Pattern pattern = Pattern.compile(searchValue);
+                // insensitive regexp:
+                final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
                 Matcher matcher;
 
                 // Traverse all rows:
-                for (int row = 0; row < nStars && !done; row++) {
+                for (; row >= 0 && row < nRows && !done; row += dir) {
 
                     // Traverse visible columns:
-                    for (int col = 0; col < nCols; col++) {
+                    for (; col >= 0 && col < nCols; col += dir) {
+
                         value = _tableSorter.getValueAt(row, col);
 
                         if (value != null) {
@@ -610,6 +693,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
                             }
                         }
                     }
+
+                    // reset column index:
+                    col = initCol;
                 }
 
                 if (foundValue != null) {
@@ -634,6 +720,59 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
             }
             return found;
+        }
+
+        /**
+         * Convert the given string value to become one regexp:
+         * - escape "([{\^-=$!|]})?*+." by using '\' prefix
+         * - '*' replaced by '.*'
+         * - '?' replaced by '.?'
+         * @param value string value
+         * @return regexp string
+         */
+        private String convertToRegExp(final String value) {
+            final StringBuilder regexp = new StringBuilder(value.length() + 16);
+
+            // replace non regexp value to '*value*' to performs one contains operation (case sensitive):
+            regexp.append("*").append(value).append("*");
+
+            String token, replace;
+            for (int i = 0, len = REGEXP_TOKEN_FROM.length; i < len; i++) {
+                token = REGEXP_TOKEN_FROM[i];
+                replace = REGEXP_TOKEN_REPLACE[i];
+
+                replace(regexp, token, replace);
+            }
+
+            return regexp.toString();
+        }
+
+        /**
+         * Replace the given source string by the dest string in the given string builder
+         * @param sb string builder to process
+         * @param source source string
+         * @param dest destination string
+         */
+        private void replace(final StringBuilder sb, final String source, final String dest) {
+
+            for (int from = 0, pos = -1; from != -1;) {
+                pos = sb.indexOf(source, from);
+
+                if (pos != -1) {
+                    // ignore escaped string '\source'
+                    if ((pos == 0) || (pos > 0 && sb.charAt(pos - 1) != '\\')) {
+                        sb.replace(pos, pos + source.length(), dest);
+
+                        // find from last replaced char (avoid reentrance):
+                        from = pos + dest.length();
+                    } else {
+                        // find from last char (avoid reentrance):
+                        from = pos + source.length();
+                    }
+                } else {
+                    break;
+                }
+            }
         }
     }
 }
