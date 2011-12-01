@@ -63,7 +63,7 @@ import javax.swing.table.JTableHeader;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-                                                       ListSelectionListener, Observer, Printable {
+        ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -327,19 +327,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _logger.entering("CalibratorsView", "valueChanged");
 
         // If there is any row selected in the table
-        if (_calibratorsTable.getSelectedRowCount() > 0) {
-            // Enable the delete menu item
-            _deleteAction.setEnabled(true);
-            _findAction.setEnabled(true);
-            _findNextAction.setEnabled(true);
-            _findPreviousAction.setEnabled(true);
-        } else {
-            // Disable the delte menu item
-            _deleteAction.setEnabled(false);
-            _findAction.setEnabled(false);
-            _findNextAction.setEnabled(false);
-            _findPreviousAction.setEnabled(false);
-        }
+        boolean rowSelected = (_calibratorsTable.getSelectedRowCount() > 0);
+        // (Dis)Enable the delete menu item
+        _deleteAction.setEnabled(rowSelected);
 
         // Update model with current selection
         _calibratorsModel.setSelectedStars(getSelectedStarIndices());
@@ -357,6 +347,14 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // Enable/disable the Undelete menu item
         _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
+
+        // (Dis)enable Find widgets according to data availability
+        boolean dataAvailable = (_calibratorsTable.getRowCount() > 0);
+        _searchField.setEnabled(dataAvailable);
+        _findAction.setEnabled(dataAvailable);
+        _findNextAction.setEnabled(dataAvailable);
+        _findPreviousAction.setEnabled(dataAvailable);
+        _regexpCheckBox.setEnabled(dataAvailable);
 
         update(null, null);
     }
