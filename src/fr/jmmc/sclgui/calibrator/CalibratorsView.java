@@ -61,7 +61,7 @@ import javax.swing.table.JTableHeader;
  * application preferences change.
  */
 public class CalibratorsView extends JPanel implements TableModelListener,
-                                                       ListSelectionListener, Observer, Printable {
+        ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -89,6 +89,12 @@ public class CalibratorsView extends JPanel implements TableModelListener,
     public DeleteAction _deleteAction = null;
     /** Undelete action */
     public UndeleteAction _undeleteAction = null;
+    /** Find action */
+    public FindAction _findAction = null;
+    /** Find Next action */
+    public FindNextAction _findNextAction = null;
+    /** Find Previous action */
+    public FindPreviousAction _findPreviousAction = null;
     /** The monitored data source displayed by the embedded JTable */
     private CalibratorsModel _calibratorsModel = null;
     /** The monitored application preferences */
@@ -121,10 +127,11 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _preferences = Preferences.getInstance();
 
         // Create actions
-        _deleteAction = new DeleteAction(classPath,
-                "_deleteAction");
-        _undeleteAction = new UndeleteAction(classPath,
-                "_undeleteAction");
+        _deleteAction = new DeleteAction(classPath, "_deleteAction");
+        _undeleteAction = new UndeleteAction(classPath, "_undeleteAction");
+        _findAction = new FindAction(classPath, "_findAction");
+        _findNextAction = new FindNextAction(classPath, "_findNextAction");
+        _findPreviousAction = new FindPreviousAction(classPath, "_findPreviousAction");
         _showLegendAction = new RegisteredPreferencedBooleanAction(classPath,
                 "_showLegendAction", "Show Legend", _preferences,
                 PreferenceKey.SHOW_LEGEND_FLAG);
@@ -285,11 +292,17 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         // If there is any row selected in the table
         if (_calibratorsTable.getSelectedRowCount() > 0) {
-            // Enable the delte menu item
+            // Enable the delete menu item
             _deleteAction.setEnabled(true);
+            _findAction.setEnabled(true);
+            _findNextAction.setEnabled(true);
+            _findPreviousAction.setEnabled(true);
         } else {
             // Disable the delte menu item
             _deleteAction.setEnabled(false);
+            _findAction.setEnabled(false);
+            _findNextAction.setEnabled(false);
+            _findPreviousAction.setEnabled(false);
         }
 
         // Update model with current selection
@@ -399,6 +412,60 @@ public class CalibratorsView extends JPanel implements TableModelListener,
             _logger.entering("DeleteAction", "actionPerformed");
 
             _calibratorsModel.deleteStars(_calibratorsTable.getSelectedRows());
+        }
+    }
+
+    protected class FindAction extends RegisteredAction {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        FindAction(String classPath, String fieldName) {
+            super(classPath, fieldName);
+            setEnabled(false);
+        }
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            _logger.entering("FindAction", "actionPerformed");
+            
+            // TODO : Show Search Window
+        }
+    }
+
+    protected class FindNextAction extends RegisteredAction {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        FindNextAction(String classPath, String fieldName) {
+            super(classPath, fieldName);
+            setEnabled(false);
+        }
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            _logger.entering("FindNextAction", "actionPerformed");
+            
+            // TODO : Find next token
+        }
+    }
+
+    protected class FindPreviousAction extends RegisteredAction {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        FindPreviousAction(String classPath, String fieldName) {
+            super(classPath, fieldName);
+            setEnabled(false);
+        }
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            _logger.entering("FindPreviousAction", "actionPerformed");
+            
+            // TODO : Find previous token
         }
     }
 
