@@ -118,7 +118,7 @@ public class SearchPanel extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                doSearch();
+                doSearch(SEARCH_DIRECTION.UNDEFINED);
             }
         });
     }
@@ -139,12 +139,12 @@ public class SearchPanel extends JFrame {
         _findPreviousAction.setEnabled(flag);
     }
 
-    private void doSearch() {
+    private void doSearch(SEARCH_DIRECTION direction) {
         final String text = _searchField.getText().trim();
 
         final boolean isRegExp = _regexpCheckBox.isSelected();
         if (text.length() > 0) {
-            if (!_searchHelper.next(text, isRegExp)) {
+            if (!_searchHelper.search(text, isRegExp, direction)) {
                 _searchField.setBackground(Color.red);
             } else {
                 _searchField.setBackground(Color.WHITE);
@@ -182,7 +182,7 @@ public class SearchPanel extends JFrame {
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("FindNextAction", "actionPerformed");
-            doSearch();
+            doSearch(SEARCH_DIRECTION.NEXT);
         }
     }
 
@@ -199,7 +199,7 @@ public class SearchPanel extends JFrame {
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("FindPreviousAction", "actionPerformed");
-            doSearch();
+            doSearch(SEARCH_DIRECTION.PREVIOUS);
         }
     }
 
@@ -209,7 +209,9 @@ public class SearchPanel extends JFrame {
         /** previous */
         PREVIOUS,
         /** next */
-        NEXT
+        NEXT,
+        /** reset */
+        UNDEFINED
     };
     /* regexp tokens */
     /** tokens to replace from "([{\^-=$!|]})?*+." except "*?" */
@@ -252,25 +254,12 @@ public class SearchPanel extends JFrame {
             _searchValue = null;
         }
 
-        protected boolean find(final String searchValue, final boolean isRegExp) {
-            reset();
-            return search(searchValue, false, SEARCH_DIRECTION.NEXT);
-        }
-
-        protected boolean next(final String searchValue, final boolean isRegExp) {
-            return search(searchValue, false, SEARCH_DIRECTION.NEXT);
-        }
-
-        protected boolean previous(final String searchValue, final boolean isRegExp) {
-            return search(searchValue, false, SEARCH_DIRECTION.PREVIOUS);
-        }
-
-        private boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION direction) {
+        protected boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION direction) {
             boolean found = false;
             if (searchValue != null && searchValue.length() > 0) {
 
                 SEARCH_DIRECTION currentDir = direction;
-                if (!searchValue.equals(this._searchValue)) {
+                if (!searchValue.equals(this._searchValue) || (direction == SEARCH_DIRECTION.UNDEFINED)) {
                     reset();
                     currentDir = SEARCH_DIRECTION.NEXT;
                     this._searchValue = searchValue;
