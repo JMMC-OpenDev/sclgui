@@ -9,9 +9,7 @@ import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -29,38 +27,54 @@ import javax.swing.KeyStroke;
 
 /**
  * Search Panel
- * @author Sylvain LAFRASSE
  *
- * TODO : handle ctrl-W or Escape to close the window.
+ * @author Sylvain LAFRASSE, Laurent BOURGES.
+ *
  * TODO : get search token from dedicated pasteboard (Mac!, Windows?, Linux...).
+ * TODO : Handle case-sensitive searches.
  */
 public class SearchPanel extends JFrame {
 
+    /** Logger */
     private static final Logger _logger = Logger.getLogger(SearchPanel.class.getName());
+    // GUI stuff
+    /** Window panel */
     private JPanel _panel;
+    /** 'Find:" label */
     private JLabel _findLabel;
+    /** Search Field */
     private JTextField _searchField;
+    /** Get whether to use regexp syntax or not */
     private JCheckBox _regexpCheckBox;
+    /** Find next searched token */
     private JButton _nextButton;
+    /** Find previous searched token */
     private JButton _previousButton;
-    private QuickSearchHelper _searchHelper;
+    // Action stuff
     /** Find action */
     public FindAction _findAction;
     /** Find Next action */
     public FindNextAction _findNextAction;
     /** Find Previous action */
     public FindPreviousAction _findPreviousAction;
+    // Search Controler stuff
+    /** Search and select algorithm */
+    private QuickSearchHelper _searchHelper;
     /** The calibrators table */
     private JTable _calibratorsTable;
     /** The calibrator table sorter */
     private TableSorter _tableSorter;
 
+    /**
+     * Constructor
+     * @param tableSorter the object to use to select found result.
+     * @param calibratorsTable the data source to search in.
+     */
     public SearchPanel(TableSorter tableSorter, JTable calibratorsTable) {
         super("Find");
 
         _calibratorsTable = calibratorsTable;
         _tableSorter = tableSorter;
-
         _searchHelper = new QuickSearchHelper();
 
         setupActions();
@@ -70,6 +84,7 @@ public class SearchPanel extends JFrame {
         prepareFrame();
     }
 
+    /** Create required actions */
     private void setupActions() {
         String classPath = getClass().getName();
         _findAction = new FindAction(classPath, "_findAction");
@@ -77,28 +92,36 @@ public class SearchPanel extends JFrame {
         _findPreviousAction = new FindPreviousAction(classPath, "_findPreviousAction");
     }
 
+    /** Create graphical widgets */
     private void createWidgets() {
+        // The 'Find' window's panel
         _panel = new JPanel();
 
+        // 'Find:' label
         _findLabel = new JLabel("Find:");
         _panel.add(_findLabel);
 
+        // Search field
         _searchField = new JTextField();
         _panel.add(_searchField);
 
+        // Regexp check box
         _regexpCheckBox = new JCheckBox("Use Regular Expression");
         _panel.add(_regexpCheckBox);
 
+        // Previous button
         _previousButton = new JButton(_findPreviousAction);
         _previousButton.setText("Previous");
         _panel.add(_previousButton);
 
+        // Next buton (the default one in the Find window)
         _nextButton = new JButton(_findNextAction);
         _nextButton.setText("Next");
         getRootPane().setDefaultButton(_nextButton);
         _panel.add(_nextButton);
     }
 
+    /** Place graphical widgets on the 'Find' window */
     private void layoutWidgets() {
         GroupLayout layout = new GroupLayout(_panel);
         _panel.setLayout(layout);
@@ -113,6 +136,7 @@ public class SearchPanel extends JFrame {
                 layout.createSequentialGroup().addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(_findLabel).addComponent(_searchField).addComponent(_previousButton)).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(_regexpCheckBox).addComponent(_nextButton)));
     }
 
+    /** Start SearchField listening */
     private void monitorWidgets() {
         _searchField.addActionListener(new ActionListener() {
 
@@ -123,6 +147,7 @@ public class SearchPanel extends JFrame {
         });
     }
 
+    /** Finish window setup */
     private void prepareFrame() {
         getContentPane().add(_panel);
         pack();
@@ -131,14 +156,40 @@ public class SearchPanel extends JFrame {
         setResizable(false);
 
         WindowCenterer.centerOnMainScreen(this);
+
+        // Trap Escape key
+        KeyStroke escapeStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+        // Trap command-W key
+        KeyStroke metaWStroke = KeyStroke.getKeyStroke(MainMenuBar.getSystemCommandKey() + "W");
+
+        // Close window on either strike
+        ActionListener actionListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                _logger.finer("Hiding about box on keyboard shortcut.");
+                setVisible(false);
+            }
+        };
+        getRootPane().registerKeyboardAction(actionListener, escapeStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
+        getRootPane().registerKeyboardAction(actionListener, metaWStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
-    public void enableMenus(boolean flag) {
-        _findAction.setEnabled(flag);
-        _findNextAction.setEnabled(flag);
-        _findPreviousAction.setEnabled(flag);
+    /**
+     * (Dis)enable menu actions on demand.
+     *
+     * @param shouldBeEnabled Enables menu if true, disables them otherwise.
+     */
+    public void enableMenus(boolean shouldBeEnabled) {
+        _findAction.setEnabled(shouldBeEnabled);
+        _findNextAction.setEnabled(shouldBeEnabled);
+        _findPreviousAction.setEnabled(shouldBeEnabled);
     }
 
+    /**
+     * Handle search requests.
+     * @param direction Going 'NEXT' or 'PREVIOUS', or reset in 'UNDEFINED'.
+     */
     private void doSearch(SEARCH_DIRECTION direction) {
         final String text = _searchField.getText().trim();
 
@@ -152,6 +203,7 @@ public class SearchPanel extends JFrame {
         }
     }
 
+    /** Show the Search window when user click the 'Find' menu. */
     protected class FindAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
@@ -159,7 +211,7 @@ public class SearchPanel extends JFrame {
 
         FindAction(String classPath, String fieldName) {
             super(classPath, fieldName);
-            setEnabled(false); // Will be (dis)enabled dynamically by CalibratorView::tableChanged()
+            setEnabled(false); // Will be (dis)enabled dynamically on CalibratorView::tableChanged()
         }
 
         @Override
@@ -169,6 +221,7 @@ public class SearchPanel extends JFrame {
         }
     }
 
+    /** Tries to find the next occurrence of the current searched token. */
     protected class FindNextAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
@@ -176,7 +229,7 @@ public class SearchPanel extends JFrame {
 
         FindNextAction(String classPath, String fieldName) {
             super(classPath, fieldName);
-            setEnabled(false); // Will be (dis)enabled dynamically by CalibratorView::tableChanged()
+            setEnabled(false); // Will be (dis)enabled dynamically on CalibratorView::tableChanged()
         }
 
         @Override
@@ -186,6 +239,7 @@ public class SearchPanel extends JFrame {
         }
     }
 
+    /** Tries to find the previous occurrence of the current searched token. */
     protected class FindPreviousAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
@@ -193,7 +247,7 @@ public class SearchPanel extends JFrame {
 
         FindPreviousAction(String classPath, String fieldName) {
             super(classPath, fieldName);
-            setEnabled(false); // Will be (dis)enabled dynamically by CalibratorView::tableChanged()
+            setEnabled(false); // Will be (dis)enabled dynamically on CalibratorView::tableChanged()
         }
 
         @Override
@@ -203,7 +257,7 @@ public class SearchPanel extends JFrame {
         }
     }
 
-    /** Quick search direction */
+    /** Quick search direction enumeration */
     private static enum SEARCH_DIRECTION {
 
         /** previous */
@@ -223,153 +277,168 @@ public class SearchPanel extends JFrame {
         "\\(", "\\[", "\\{", "\\\\", "\\^", "\\-", "\\=", "\\$", "\\!", "\\|", "\\]", "\\}", "\\)", "\\+", "\\.", ".*", ".?"
     };
 
-    /**
-     * Quick search algorithm supporting previous / next ...
-     */
+    /** Quick search algorithm supporting previous/next, the selected the result (if any) in the calibrator view. */
     private final class QuickSearchHelper {
 
         /** undefined */
-        private final static int UNDEFINED = -1;
+        private final static int UNDEFINED_INDEX = -1;
         /* members */
         /** current found row index related to table view (visible rows) */
-        private int _currentRow;
+        private int _lastFoundRow;
         /** current found column index related to table view (visible columns)*/
-        private int _currentCol;
+        private int _lastFoundColumn;
         /** current search value */
         private String _searchValue;
 
-        /**
-         * Protected constructor
-         */
+        /** Protected constructor */
         protected QuickSearchHelper() {
             reset();
         }
 
-        /**
-         * Reset current state
-         */
+        /** Reset current search state */
         private void reset() {
-            _currentRow = UNDEFINED;
-            _currentCol = UNDEFINED;
+            _lastFoundRow = UNDEFINED_INDEX;
+            _lastFoundColumn = UNDEFINED_INDEX;
             _searchValue = null;
         }
 
-        protected boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION direction) {
-            boolean found = false;
-            if (searchValue != null && searchValue.length() > 0) {
+        /**
+         * Tries to find the given token (regexp syntax or not) in the given direction.
+         *
+         * @param searchValue the string token to search for.
+         * @param isRegExp if true the token is of regexp style, simple style otherwise.
+         * @param givenDirection either NEXT or PREVIOUS search direction.
+         *
+         * @return true if something found, false otherwise.
+         */
+        protected boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION givenDirection) {
 
-                SEARCH_DIRECTION currentDir = direction;
-                if (!searchValue.equals(this._searchValue) || (direction == SEARCH_DIRECTION.UNDEFINED)) {
-                    reset();
-                    currentDir = SEARCH_DIRECTION.NEXT;
-                    this._searchValue = searchValue;
-                }
+            // If the SearchField is empty or undefined
+            boolean foundFlag = false;
+            if (searchValue == null || searchValue.length() < 1) {
+                return foundFlag;
+            }
 
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("Searching value '" + searchValue + "' in direction " + currentDir);
-                }
+            // If the search token changed or a search reset was requested
+            SEARCH_DIRECTION currentDirection = givenDirection;
+            if (!searchValue.equals(_searchValue) || (currentDirection == SEARCH_DIRECTION.UNDEFINED)) {
+                reset(); // Reset search context
+                currentDirection = SEARCH_DIRECTION.NEXT; // Use NEXT direction by default
+                _searchValue = searchValue; // Backup new search token
+            }
 
-                final String regexp = (isRegExp) ? searchValue : convertToRegExp(searchValue);
+            if (_logger.isLoggable(Level.INFO)) {
+                _logger.info("Searching value '" + searchValue + "' in '" + currentDirection + "' direction.");
+            }
 
+            // Convert search token to standard regexp if not yet in this syntax
+            final String regexp;
+            if (isRegExp) {
+                regexp = searchValue; // Use given regexp straight away !
+            } else {
+                regexp = convertToRegExp(searchValue); // Otherwise convert simple syntax to regexp
+            }
+
+            if (_logger.isLoggable(Level.FINE)) {
+                _logger.fine("Searched RegExp = '" + regexp + "'.");
+            }
+
+            // Use tableSorter to process only currently visible rows and columns
+            final int nbOfRows = _tableSorter.getRowCount();
+            final int nbOfColumns = _tableSorter.getColumnCount();
+
+            int currentRow = 0;
+            int currentColumn = 0;
+
+            // If the backward direction is requested
+            final int initColumn; // Either 0 for the first row column in forward mode, or (nbOfColumns - 1) for the last row in backward mode
+            final int directionalIncrement; // Either -1 to go backward r +1 to go forward
+            if (currentDirection == SEARCH_DIRECTION.PREVIOUS) { // Going backward
+                initColumn = nbOfColumns - 1; // Will start search at the last cell of the current row
+                directionalIncrement = -1; // Will decrement indexes
+            } else { // Going forward
+                initColumn = 0; // Will start search at the first cell of the row after the current one
+                directionalIncrement = 1; // Will increment indexes
+            }
+
+            // Use previously found row/column if available
+            if (_lastFoundRow != UNDEFINED_INDEX && _lastFoundColumn != UNDEFINED_INDEX) {
                 if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("RegExp '" + regexp + "'");
+                    _logger.fine("Current row = " + _lastFoundRow + ", col = " + _lastFoundColumn);
                 }
+                currentRow = _lastFoundRow;
+                currentColumn = _lastFoundColumn + directionalIncrement; // Skip current cell (i.e last one found) anyway !
+            }
 
-                // use tableSorter to process only visible rows and columns:
-                final int nRows = _tableSorter.getRowCount();
-                final int nCols = _tableSorter.getColumnCount();
+            // Performance timer
+            final long startTime = System.nanoTime();
 
-                int row = 0;
-                int col = 0;
+            // Use insensitive regexp for the time being
+            final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
 
-                final int initCol;
-                final int dir;
+            // Traverse all rows
+            String foundValue = null;
+            boolean searchDone = false;
+            int foundRow = UNDEFINED_INDEX;
+            int foundColumn = UNDEFINED_INDEX;
+            for (; currentRow >= 0 && currentRow < nbOfRows && !searchDone; currentRow += directionalIncrement) {
 
-                if (direction == SEARCH_DIRECTION.PREVIOUS) {
-                    dir = -1;
-                    initCol = nCols - 1;
-                } else {
-                    dir = 1;
-                    initCol = 0;
-                }
+                // Traverse visible columns
+                for (; currentColumn >= 0 && currentColumn < nbOfColumns; currentColumn += directionalIncrement) {
 
-                // Use current row/col:
-                if (_currentRow != UNDEFINED && _currentCol != UNDEFINED) {
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("Current row = " + _currentRow + ", col = " + _currentCol);
-                    }
-                    row = _currentRow;
-                    col = _currentCol + dir; // skip current cell
-                }
+                    // Get current cell object
+                    Object currentCell = _tableSorter.getValueAt(currentRow, currentColumn);
+                    if (currentCell != null) {
 
-                final long start = System.nanoTime();
+                        // Get current cell string value
+                        String currentValue = currentCell.toString();
+                        if (currentValue.length() > 0) {
+                            if (_logger.isLoggable(Level.FINE)) {
+                                _logger.fine("Cell value '" + currentValue + "' at row " + currentRow + ", col = " + currentColumn + ".");
+                            }
 
-                String foundValue = null;
-                int foundRow = -1;
-                int foundCol = -1;
-                boolean done = false;
-                Object value;
-                String textValue;
-
-                // insensitive regexp:
-                final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
-                Matcher matcher;
-
-                // Traverse all rows:
-                for (; row >= 0 && row < nRows && !done; row += dir) {
-
-                    // Traverse visible columns:
-                    for (; col >= 0 && col < nCols; col += dir) {
-
-                        value = _tableSorter.getValueAt(row, col);
-
-                        if (value != null) {
-                            textValue = value.toString();
-
-                            if (textValue.length() > 0) {
-                                if (_logger.isLoggable(Level.FINE)) {
-                                    _logger.fine("Cell value '" + textValue + "' at row " + row + ", col = " + col + ".");
-                                }
-
-                                matcher = pattern.matcher(textValue);
-
-                                if (matcher.matches()) {
-                                    foundValue = textValue;
-                                    foundRow = row;
-                                    foundCol = col;
-                                    done = true;
-                                    break;
-                                }
+                            // Do current value matches searched regexp ?
+                            Matcher matcher = pattern.matcher(currentValue);
+                            if (matcher.matches()) {
+                                foundValue = currentValue;
+                                searchDone = true;
+                                foundRow = currentRow;
+                                foundColumn = currentColumn;
+                                break;
                             }
                         }
                     }
-
-                    // reset column index:
-                    col = initCol;
                 }
 
-                if (foundValue != null) {
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.info("Found value '" + foundValue + "' at row " + foundRow + ", col = " + foundCol + ".");
-                    }
-
-                    // Clear previous selection:
-                    _calibratorsTable.changeSelection(foundRow, foundCol, false, false);
-                    _calibratorsTable.changeSelection(foundRow, foundCol, true, true);
-
-                    _calibratorsTable.scrollRectToVisible(_calibratorsTable.getCellRect(foundRow, foundCol, true));
-                    _calibratorsTable.requestFocus();
-
-                    // memorize state:
-                    _currentRow = foundRow;
-                    _currentCol = foundCol;
-                    found = true;
-                }
-
-                _logger.info("QuickSearchHelper.search: " + 1e-6d * (System.nanoTime() - start) + " ms.");
-
+                // Reset column index (either first column in forward mode, last one in backward mode)
+                currentColumn = initColumn;
             }
-            return found;
+
+            if (foundValue == null) {
+                if (_logger.isLoggable(Level.INFO)) {
+                    _logger.info("Searched value '" + foundValue + "' not found.");
+                }
+            } else {
+                if (_logger.isLoggable(Level.INFO)) {
+                    _logger.info("Found value '" + foundValue + "' at row " + foundRow + ", col = " + foundColumn + ".");
+                }
+
+                // Clear previous selection and set new selection
+                _calibratorsTable.changeSelection(foundRow, foundColumn, false, false);
+                _calibratorsTable.changeSelection(foundRow, foundColumn, true, true);
+
+                // Move view to show found cell
+                _calibratorsTable.scrollRectToVisible(_calibratorsTable.getCellRect(foundRow, foundColumn, true));
+                _calibratorsTable.requestFocus();
+
+                // Memorize state for 'NEXT/PREVIOUS' purpose
+                _lastFoundRow = foundRow;
+                _lastFoundColumn = foundColumn;
+                foundFlag = true;
+            }
+
+            _logger.info("QuickSearchHelper.search() done in " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
+            return foundFlag;
         }
 
         /**
@@ -383,14 +452,13 @@ public class SearchPanel extends JFrame {
         private String convertToRegExp(final String value) {
             final StringBuilder regexp = new StringBuilder(value.length() + 16);
 
-            // replace non regexp value to '*value*' to performs one contains operation (case sensitive):
+            // Replace non regexp value to '*value*' to performs one contains operation (case sensitive)
             regexp.append("*").append(value).append("*");
 
             String token, replace;
             for (int i = 0, len = REGEXP_TOKEN_FROM.length; i < len; i++) {
                 token = REGEXP_TOKEN_FROM[i];
                 replace = REGEXP_TOKEN_REPLACE[i];
-
                 replace(regexp, token, replace);
             }
 
@@ -398,26 +466,26 @@ public class SearchPanel extends JFrame {
         }
 
         /**
-         * Replace the given source string by the dest string in the given string builder
+         * Replace the given source string by the destination string in the given string builder.
          * @param sb string builder to process
          * @param source source string
-         * @param dest destination string
+         * @param destination destination string
          */
-        private void replace(final StringBuilder sb, final String source, final String dest) {
+        private void replace(final StringBuilder sb, final String source, final String destination) {
 
-            for (int from = 0, pos = -1; from != -1;) {
-                pos = sb.indexOf(source, from);
+            for (int from = 0, position = -1; from != -1;) {
+                position = sb.indexOf(source, from);
 
-                if (pos != -1) {
+                if (position != -1) {
                     // ignore escaped string '\source'
-                    if ((pos == 0) || (pos > 0 && sb.charAt(pos - 1) != '\\')) {
-                        sb.replace(pos, pos + source.length(), dest);
+                    if ((position == 0) || (position > 0 && sb.charAt(position - 1) != '\\')) {
+                        sb.replace(position, position + source.length(), destination);
 
                         // find from last replaced char (avoid reentrance):
-                        from = pos + dest.length();
+                        from = position + destination.length();
                     } else {
                         // find from last char (avoid reentrance):
-                        from = pos + source.length();
+                        from = position + source.length();
                     }
                 } else {
                     break;
