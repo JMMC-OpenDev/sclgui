@@ -2,8 +2,8 @@
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 
-    <program name="SearchCal" version="4.4b2"/>
-    <compilation date="25/11/2011" compiler="JDK 1.5.0_16"/>
+    <program name="SearchCal" version="4.4"/>
+    <compilation date="7/12/2011" compiler="JDK 1.5.0_16"/>
   
     <text>
     <![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]>
@@ -218,6 +218,7 @@
     <releasenotes>
         <release version="4.4">
             <prerelease version="4.4b2" tag="SC_V4_4b2">
+                <change type="BUGFIX">Fixed FAINT crossmatch radius from 10 (!) to 1 arcsecond.</change>
                 <change type="CHANGE">Enhanced VOTable output efficiency.</change>
                 <change type="CHANGE">Enhanced cross-matching algorithm on the server side.</change>
                 <change type="CHANGE">Removed L and M columns but added UD_N in bright detailed views.</change>
