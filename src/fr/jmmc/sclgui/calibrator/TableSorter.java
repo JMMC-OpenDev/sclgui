@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
@@ -1031,8 +1032,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             super.getTableCellRendererComponent(table, value, isSelected,
                     hasFocus, row, column);
 
-            // Generated tooltip
-            String tooltip = null;
 
             _calModel = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
             _distId = _calModel.getColumnIdByName("dist");
@@ -1041,7 +1040,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             int modelRow = modelIndex(row);
             int modelColumn;
 
-            try{
+            try {
                 modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
             } catch (ArrayIndexOutOfBoundsException ex) {
                 // This code is reached when model / _viewIndex array / or table size mismatch
@@ -1053,33 +1052,85 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 return this;
             }
 
+            String tooltip = null;
             String cellValue = "";
-            StarProperty starProperty = _calModel.getStarProperty(modelRow, modelColumn);
+            Color foregroundColor = Color.BLACK;
+            Color backgroundColor = Color.WHITE;
+            Font cellFont = getFont();
 
+            StarProperty starProperty = _calModel.getStarProperty(modelRow, modelColumn);
             if (starProperty != null) {
                 cellValue = starProperty.getStringValue();
+
+                // Set Background Color corresponding to the Catalog Origin Color or confidence index
+                if (starProperty.hasOrigin()) {
+                    // Get origin and set it as tooltip
+                    final String origin = starProperty.getOrigin();
+
+                    final String originDescription = "Catalog origin: " + Catalog.catalogFromReference(origin);
+
+                    // If tooltip already contains an explanation about clickable cells
+                    if (tooltip != null) {
+                        // Add catalog origin to it
+                        tooltip += originDescription;
+                    } else {
+                        // Only use catalog origin as tooltip
+                        tooltip = originDescription;
+                    }
+
+                    // Get origin color and set it as cell backgroung color
+                    backgroundColor = _colorForOrigin.get(origin);
+
+                } else if (starProperty.hasConfidence()) {
+                    // Get confidence and set it as tooltip
+                    final String confidence = starProperty.getConfidence();
+                    tooltip = "Computed value (confidence index: " + confidence + ")";
+
+                    // Get confidence color and set it as cell backgroung color
+                    backgroundColor = _colorForConfidence.get(confidence);
+
+                } else if (starProperty.hasValue()) {
+                    // If something bad appent, write text in red !
+                    foregroundColor = Color.RED;
+                    tooltip = "!!! BUG !!!";
+
+                } else {
+                    // If the property has no origin nor confidence: it is empty
+                    tooltip = null;
+                }
             }
 
-            // Do not change color if cell is located onto a selected row
-            int[] selectedRows = table.getSelectedRows();
+            // Set tooltip (if any)
+            if (tooltip != null) {
+                setToolTipText(tooltip);
+            } else {
+                setToolTipText("");
+            }
 
+            // Do not change color if cell is located on a selected row
+            int[] selectedRows = table.getSelectedRows();
             for (int i = 0; i < selectedRows.length; i++) {
                 if (selectedRows[i] == row) {
-                    // Should provide tooltips before !!!
+                    // Except if it is the selected cell itself (to highlight found tokens)
+                    if (column == table.getSelectedColumn()) {
+                        Border border = BorderFactory.createLineBorder(Color.ORANGE, 2);
+                        setBorder(border);
+                        setBackground(Color.YELLOW);
+                        setForeground(Color.BLACK);
+                        setFont(cellFont.deriveFont(cellFont.getStyle() | Font.ITALIC));
+                    }
+
                     return this;
                 }
             }
 
-            // Get the row's distance star property
-            StarProperty distanceProperty = _calModel.getStarProperty(modelRow, _distId);
-            Double rowDistance = distanceProperty.getDoubleValue();
-
             // If the current row distance is close enough to be detected as a science object
             // @note SCIENCE_DISTANCE_CHECK : The same is used in ASPRO for science object star detection and removal.
+            StarProperty distanceProperty = _calModel.getStarProperty(modelRow, _distId);
+            Double rowDistance = distanceProperty.getDoubleValue();
             if (rowDistance < _prefDistance) {
                 // Put the corresponding row font in bold
-                Font f = getFont();
-                setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+                setFont(cellFont.deriveFont(cellFont.getStyle() | Font.BOLD));
 
                 if (_logger.isLoggable(Level.FINE)) {
                     _logger.fine("Put row['" + row
@@ -1100,61 +1151,10 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
             // If cell is not selected and not focused 
             if (!(isSelected && hasFocus)) {
-                // Set default text color to black
-                Color foregroundColor = Color.BLACK;
-
-                // Set default cell color to white
-                Color backgroundColor = Color.WHITE;
-
-                if (starProperty != null) {
-                    // Set Background Color corresponding to the Catalog Origin Color or confidence index
-                    if (starProperty.hasOrigin()) {
-                        // Get origin and set it as tooltip
-                        final String origin = starProperty.getOrigin();
-
-                        final String originDescription = "Catalog origin: " + Catalog.catalogFromReference(origin);
-
-                        // If tooltip already contains an explanation about clickable cells
-                        if (tooltip != null) {
-                            // Add catalog origin to it
-                            tooltip += originDescription;
-                        } else {
-                            // Only use catalog origin as tooltip
-                            tooltip = originDescription;
-                        }
-
-                        // Get origin color and set it as cell backgroung color
-                        backgroundColor = _colorForOrigin.get(origin);
-                        
-                    } else if (starProperty.hasConfidence()) {
-                        // Get confidence and set it as tooltip
-                        final String confidence = starProperty.getConfidence();
-                        tooltip = "Computed value (confidence index: " + confidence + ")";
-
-                        // Get confidence color and set it as cell backgroung color
-                        backgroundColor = _colorForConfidence.get(confidence);
-                        
-                    } else if (starProperty.hasValue()) {
-                         // If something bad appent, write text in red !
-                        foregroundColor = Color.RED;
-                        tooltip = "!!! BUG !!!";
-                        
-                    } else {
-                        // If the property has no origin nor confidence: it is empty
-                        tooltip = null;
-                    }
-
-                    // Apply colors
-                    setForeground(foregroundColor);
-                    setBackground(backgroundColor);
-                }
-            }
-
-            // Set tooltip (if any)
-            if (tooltip != null) {
-                setToolTipText(tooltip);
-            } else {
-                setToolTipText("");
+                // Apply colors
+                setForeground(foregroundColor);
+                setBackground(backgroundColor);
+                setBorder(noFocusBorder);
             }
 
             // Return the component
