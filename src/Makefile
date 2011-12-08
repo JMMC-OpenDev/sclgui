@@ -98,7 +98,7 @@ simbad_DIRS     = cds
 sclgui_DIRS     = fr \
                   org
 
-sclgui__EXTRAS  = jmmc-app-logback.xml \
+sclgui_EXTRAS   = jmmc-app-logback.xml \
                   fr/jmmc/sclgui/resource/* \
                   org/apache/axis/client/*.wsdd
 
