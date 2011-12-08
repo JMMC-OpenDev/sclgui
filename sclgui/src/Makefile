@@ -97,7 +97,9 @@ simbad_DIRS     = cds
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr \
                   org
-sclgui_EXTRAS   = fr/jmmc/sclgui/resource/* \
+
+sclgui__EXTRAS  = jmmc-app-logback.xml \
+                  fr/jmmc/sclgui/resource/* \
                   org/apache/axis/client/*.wsdd
 
 #
