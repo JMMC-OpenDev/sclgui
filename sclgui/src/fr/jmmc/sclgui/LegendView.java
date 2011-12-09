@@ -418,8 +418,7 @@ public class LegendView extends JPanel {
                         _colorChooser.setColor(_currentColor);
                         _dialog.setVisible(true);
                     } else {
-                        String url = Resources.getResource("catalog.url."
-                                + _catalogReference, Level.FINE);
+                        String url = Resources.getResource("catalog.url." + _catalogReference, true);
 
                         if (url == null) {
                             url = Resources.getResource("catalog.url.header")
