@@ -248,7 +248,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         setDefaultPreference(PreferenceKey.QUERY_MAGNITUDE_BAND, "V");
         setDefaultPreference(PreferenceKey.QUERY_INSTRUMENTAL_WAVELENGTH, Double.toString(1.0d * ALX.MICRON));
         setDefaultPreference(PreferenceKey.QUERY_INSTRUMENTAL_BASELINE, Double.toString(102.45d * ALX.METER));
-        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_NAME, "ETA_TAU");
+        setDefaultPreference(PreferenceKey.QUERY_SCIENCE_NAME, "ETA TAU");
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_RA, "03:47:29.0765");
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_DEC, "24:06:18.494");
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_MAGNITUDE, "2.873");
