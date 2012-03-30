@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
 /**
  * This Panel is dedicated to manage help behavior configuration.
  */
-class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
+public class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -38,7 +38,7 @@ class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
     /**
      * Constructor.
      */
-    HelpPreferencesView() {
+    public HelpPreferencesView() {
         _preferences = Preferences.getInstance();
 
         // Layout management
