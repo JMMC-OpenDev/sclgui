@@ -5,7 +5,7 @@ package fr.jmmc.sclgui;
 
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.jmcs.network.BrowserLauncher;
-import fr.jmmc.jmcs.util.Resources;
+import fr.jmmc.jmcs.util.ResourceUtils;
 import fr.jmmc.jmal.Catalog;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -418,10 +418,10 @@ public class LegendView extends JPanel {
                         _colorChooser.setColor(_currentColor);
                         _dialog.setVisible(true);
                     } else {
-                        String url = Resources.getResource("catalog.url." + _catalogReference, true);
+                        String url = ResourceUtils.getResource("catalog.url." + _catalogReference, true);
 
                         if (url == null) {
-                            url = Resources.getResource("catalog.url.header")
+                            url = ResourceUtils.getResource("catalog.url.header")
                                     + _catalogReference;
                         }
 
