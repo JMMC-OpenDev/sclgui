@@ -50,10 +50,6 @@ public class MainWindow extends JFrame {
     public final FiltersView _filtersView;
     /** Status bar */
     private final StatusBar _statusBar;
-    /** Preferences view */
-    private final PreferencesView _preferencesView;
-    /** Preferences... action */
-    public final ShowPreferencesAction _showPreferencesAction;
     /** Page Setup... action */
     public final PageSetupAction _pageSetupAction;
     /** Print... action */
@@ -73,8 +69,8 @@ public class MainWindow extends JFrame {
      * @param statusBar  
      */
     public MainWindow(final VirtualObservatory vo, final QueryView queryView,
-            final CalibratorsView calibratorsView, final PreferencesView preferencesView,
-            final FiltersView filtersView, final StatusBar statusBar) {
+            final CalibratorsView calibratorsView, final FiltersView filtersView,
+            final StatusBar statusBar) {
         super("SearchCal");
 
         final String classPath = getClass().getName();
@@ -84,11 +80,6 @@ public class MainWindow extends JFrame {
         _calibratorsView = calibratorsView;
         _filtersView = filtersView;
         _statusBar = statusBar;
-
-        // Preferences
-        _preferencesView = preferencesView;
-        _showPreferencesAction = new ShowPreferencesAction(classPath,
-                "_showPreferencesAction");
 
         _pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
         _printAction = new PrintAction(classPath, "_printAction");
@@ -157,28 +148,6 @@ public class MainWindow extends JFrame {
         if (_landscape == null) {
             _landscape = _printJob.defaultPage();
             _landscape.setOrientation(PageFormat.LANDSCAPE);
-        }
-    }
-
-    /**
-     * Called to show the preferences window.
-     */
-    protected class ShowPreferencesAction extends RegisteredAction {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        ShowPreferencesAction(String classPath, String fieldName) {
-            super(classPath, fieldName);
-            flagAsPreferenceAction();
-        }
-
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("ShowPreferencesAction", "actionPerformed");
-
-            // Show the Preferences window
-            _preferencesView.setVisible(true);
         }
     }
 

@@ -119,8 +119,7 @@ public class SearchCal extends App {
                 StatusBar.show("application initialization...");
 
                 // Build the main window
-                MainWindow window = new MainWindow(_vo, queryView, calibratorsView,
-                        preferencesView, filtersView, statusBar);
+                MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
                 App.setFrame(window);
 
                 // Triggers all preferences observers notification to finnish GUI setup.
