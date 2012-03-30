@@ -10,7 +10,7 @@ import fr.jmmc.jmcs.gui.MessagePane.ConfirmSaveChanges;
 
 import fr.jmmc.jmcs.gui.StatusBar;
 
-import fr.jmmc.jmcs.gui.SwingUtils;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;

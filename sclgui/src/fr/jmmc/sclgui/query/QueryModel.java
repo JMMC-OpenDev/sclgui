@@ -18,7 +18,7 @@ import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 
-import fr.jmmc.jmcs.gui.SwingUtils;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.io.StringBufferInputStream;
