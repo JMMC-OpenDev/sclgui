@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.preference;
 
+import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.util.WindowUtils;
 import fr.jmmc.sclgui.LegendView;
 import java.awt.Container;
@@ -29,6 +30,8 @@ public class PreferencesView extends JFrame implements ActionListener {
     private static final Logger _logger = Logger.getLogger(PreferencesView.class.getName());
     /** Data model */
     Preferences _preferences = null;
+    /** Preferences... action */
+    public final ShowPreferencesAction _showPreferencesAction;
     /** "Restore to Default Settings" button */
     protected JButton _restoreDefaultButton = null;
     /** "Save Modifications" button */
@@ -82,6 +85,8 @@ public class PreferencesView extends JFrame implements ActionListener {
         // Window screen position (centered)
         WindowUtils.centerOnMainScreen(this);
         WindowUtils.setClosingKeyboardShortcuts(rootPane, this);
+
+        _showPreferencesAction = new ShowPreferencesAction(getClass().getName(), "_showPreferencesAction");
     }
 
     public void init() {
@@ -115,6 +120,28 @@ public class PreferencesView extends JFrame implements ActionListener {
             } catch (Exception ex) {
                 _logger.log(Level.WARNING, "Could not save preferences.", ex);
             }
+        }
+    }
+
+    /**
+     * Called to show the preferences window.
+     */
+    protected class ShowPreferencesAction extends RegisteredAction {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        ShowPreferencesAction(String classPath, String fieldName) {
+            super(classPath, fieldName);
+            flagAsPreferenceAction();
+        }
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            _logger.entering("ShowPreferencesAction", "actionPerformed");
+
+            // Show the Preferences window
+            setVisible(true);
         }
     }
 }
