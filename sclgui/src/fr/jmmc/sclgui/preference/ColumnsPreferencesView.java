@@ -33,8 +33,7 @@ import javax.swing.event.ListSelectionListener;
 /**
  * This Panel is dedicated to manage one ordered list of columns.
  */
-class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
-        ListSelectionListener {
+public class ColumnsPreferencesView extends JPanel implements Observer, ActionListener, ListSelectionListener {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -65,7 +64,7 @@ class ColumnsPreferencesView extends JPanel implements Observer, ActionListener,
      * Constructor.
      * @param preferencePrefix 
      */
-    ColumnsPreferencesView(String preferencePrefix) {
+    public ColumnsPreferencesView(String preferencePrefix) {
         // Register against shared application preferences
         _preferences = Preferences.getInstance();
 
