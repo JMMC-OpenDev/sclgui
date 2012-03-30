@@ -5,8 +5,8 @@ package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.query.QueryModel;
-import fr.jmmc.jmcs.gui.MessagePane;
-import fr.jmmc.jmcs.gui.MessagePane.ConfirmSaveChanges;
+import fr.jmmc.jmcs.gui.component.MessagePane;
+import fr.jmmc.jmcs.gui.component.MessagePane.ConfirmSaveChanges;
 
 import fr.jmmc.jmcs.gui.component.StatusBar;
 
