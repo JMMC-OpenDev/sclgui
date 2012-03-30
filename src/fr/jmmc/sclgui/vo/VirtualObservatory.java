@@ -8,7 +8,7 @@ import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.jmcs.gui.MessagePane;
 import fr.jmmc.jmcs.gui.MessagePane.ConfirmSaveChanges;
 
-import fr.jmmc.jmcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.component.StatusBar;
 
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
