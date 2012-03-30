@@ -14,7 +14,7 @@ import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.gui.StatusBar;
-import fr.jmmc.jmcs.gui.SwingSettings;
+import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampMessageHandler;
