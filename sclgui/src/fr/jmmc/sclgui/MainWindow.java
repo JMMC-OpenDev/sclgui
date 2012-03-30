@@ -3,29 +3,20 @@
  ******************************************************************************/
 package fr.jmmc.sclgui;
 
-import fr.jmmc.sclgui.preference.PreferencesView;
-import fr.jmmc.sclgui.vo.VirtualObservatory;
-import fr.jmmc.sclgui.calibrator.CalibratorsView;
-import fr.jmmc.sclgui.query.QueryView;
-import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.jmcs.App;
-import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
-
+import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.sclgui.calibrator.CalibratorsView;
+import fr.jmmc.sclgui.filter.FiltersView;
+import fr.jmmc.sclgui.query.QueryView;
+import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import java.awt.print.Book;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-
+import java.awt.print.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 

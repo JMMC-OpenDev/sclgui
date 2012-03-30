@@ -3,25 +3,28 @@
  ******************************************************************************/
 package fr.jmmc.sclgui;
 
-import fr.jmmc.sclgui.preference.Preferences;
-import fr.jmmc.sclgui.preference.PreferencesView;
-import fr.jmmc.sclgui.vo.VirtualObservatory;
-import fr.jmmc.sclgui.calibrator.CalibratorsModel;
-import fr.jmmc.sclgui.calibrator.CalibratorsView;
-import fr.jmmc.sclgui.query.QueryView;
-import fr.jmmc.sclgui.query.QueryModel;
-import fr.jmmc.sclgui.filter.FiltersModel;
-import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampMessageHandler;
+import fr.jmmc.sclgui.calibrator.CalibratorsModel;
+import fr.jmmc.sclgui.calibrator.CalibratorsView;
+import fr.jmmc.sclgui.filter.FiltersModel;
+import fr.jmmc.sclgui.filter.FiltersView;
+import fr.jmmc.sclgui.preference.ColumnsPreferencesView;
+import fr.jmmc.sclgui.preference.HelpPreferencesView;
+import fr.jmmc.sclgui.preference.Preferences;
+import fr.jmmc.sclgui.query.QueryModel;
+import fr.jmmc.sclgui.query.QueryView;
+import fr.jmmc.sclgui.vo.VirtualObservatory;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 import org.astrogrid.samp.Message;
-
 
 /**
  * SearchCal application launcher
@@ -70,7 +73,7 @@ public class SearchCal extends App {
 
     /** Initialize application objects */
     @Override
-    protected void init(String[] args) {      
+    protected void init(String[] args) {
         // Set default resource
         fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
@@ -111,7 +114,19 @@ public class SearchCal extends App {
 
                 // Retrieve application preferences and attach them to their view
                 // (This instance must be instanciated after dependencies)
-                PreferencesView preferencesView = new PreferencesView();
+                LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
+                // Add the columns preferences pane
+                ColumnsPreferencesView columnsView = new ColumnsPreferencesView("view.columns");
+                columnsView.init();
+                panels.put("Columns Order", columnsView);
+                // Add the catalog preferences pane
+                JPanel catalogView = new LegendView(true);
+                panels.put("Legend Colors", catalogView);
+                // Add the help preferences pane
+                HelpPreferencesView helpView = new HelpPreferencesView();
+                helpView.init();
+                panels.put("Help Settings", helpView);
+                PreferencesView preferencesView = new PreferencesView(preferences, panels);
                 preferencesView.init();
 
                 StatusBar statusBar = new StatusBar();
@@ -127,13 +142,13 @@ public class SearchCal extends App {
             }
         });
     }
-    
+
     /**
      * Create SAMP Message handlers
      */
     @Override
     protected void declareInteroperability() {
-        
+
         // Add handler to load query params and launch calibrator search
         new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
 
@@ -154,6 +169,7 @@ public class SearchCal extends App {
                 if (query != null) {
 
                     SwingUtils.invokeLaterEDT(new Runnable() {
+
                         /**
                          * Synchronized by EDT
                          */
@@ -190,8 +206,8 @@ public class SearchCal extends App {
 
                 // If a query was received (when instanciated by ASPRO)
                 if (_query != null) {
-                  // Launch the request
-                  _vo.executeQuery(_query);
+                    // Launch the request
+                    _vo.executeQuery(_query);
                 }
             }
         });
@@ -211,7 +227,7 @@ public class SearchCal extends App {
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public static void main(final String[] args) {
         // init swing application for science
-        SwingSettings.setup();        
+        SwingSettings.setup();
 
         new SearchCal(args);
     }
