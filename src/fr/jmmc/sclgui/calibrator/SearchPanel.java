@@ -4,7 +4,7 @@
 package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmcs.gui.MainMenuBar;
-import fr.jmmc.jmcs.gui.util.WindowCenterer;
+import fr.jmmc.jmcs.gui.util.WindowUtils;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -149,30 +149,16 @@ public class SearchPanel extends JFrame {
 
     /** Finish window setup */
     private void prepareFrame() {
+
         getContentPane().add(_panel);
+
         pack();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        WindowCenterer.centerOnMainScreen(this);
-
-        // Trap Escape key
-        KeyStroke escapeStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-        // Trap command-W key
-        KeyStroke metaWStroke = KeyStroke.getKeyStroke(MainMenuBar.getSystemCommandKey() + "W");
-
-        // Close window on either strike
-        ActionListener actionListener = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                _logger.finer("Hiding about box on keyboard shortcut.");
-                setVisible(false);
-            }
-        };
-        getRootPane().registerKeyboardAction(actionListener, escapeStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
-        getRootPane().registerKeyboardAction(actionListener, metaWStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
+        WindowUtils.centerOnMainScreen(this);
+        WindowUtils.setClosingKeyboardShortcuts(getRootPane(), this);
     }
 
     /**
