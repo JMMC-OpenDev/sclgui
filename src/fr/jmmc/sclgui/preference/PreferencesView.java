@@ -5,6 +5,7 @@ package fr.jmmc.sclgui.preference;
 
 import fr.jmmc.jmcs.gui.AlternateRawColorCellRenderer;
 import fr.jmmc.jmcs.gui.SwingUtils;
+import fr.jmmc.jmcs.gui.WindowCenterer;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.BorderLayout;
@@ -72,12 +73,6 @@ public class PreferencesView extends JFrame implements ActionListener {
         setSize(600, 400);
         setResizable(false);
 
-        // Window screen position (centered)
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize = getSize();
-        setLocation((screenSize.width - frameSize.width) / 2,
-                (screenSize.height - frameSize.height) / 2);
-
         // Get and listen to data model modifications
         _preferences = Preferences.getInstance();
 
@@ -110,6 +105,11 @@ public class PreferencesView extends JFrame implements ActionListener {
         contentPane.add(buttonsPanel);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        pack();
+
+        // Window screen position (centered)
+        WindowCenterer.centerOnMainScreen(this);
     }
 
     public void init() {
