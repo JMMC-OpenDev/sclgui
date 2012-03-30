@@ -6,7 +6,7 @@ package fr.jmmc.sclgui.vo;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.network.NetworkSettings;
 import fr.jmmc.jmcs.data.preference.Preferences;
-import fr.jmmc.jmcs.util.Urls;
+import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;
@@ -160,7 +160,7 @@ public final class SearchCalServerClient {
         final SclwsLocator locator = getSclwsLocator();
 
         if (_sclwsURL == null) {
-            _sclwsURL = Urls.parseURL(locator.getsclwsAddress());
+            _sclwsURL = UrlUtils.parseURL(locator.getsclwsAddress());
         }
 
         try {
