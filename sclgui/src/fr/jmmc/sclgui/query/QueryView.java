@@ -6,7 +6,7 @@ package fr.jmmc.sclgui.query;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverWidget;
 import fr.jmmc.jmcs.gui.MessagePane;
-import fr.jmmc.jmcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.action.MCSAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.sclgui.vo.VirtualObservatory;

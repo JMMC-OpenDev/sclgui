@@ -9,7 +9,7 @@ import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.query.QueryView;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.jmcs.App;
-import fr.jmmc.jmcs.gui.StatusBar;
+import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
 import java.awt.BorderLayout;
