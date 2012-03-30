@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import fr.jmmc.jmcs.util.Urls;
+import fr.jmmc.jmcs.util.UrlUtils;
 
 /**
  * Star property.
@@ -157,7 +157,7 @@ public final class StarProperty implements Comparable<StarProperty> {
         }
 
         // Convert the current value to HTML compatible encoding
-        final String encodedValue = Urls.encode(getStringValue());
+        final String encodedValue = UrlUtils.encode(getStringValue());
 
         // Forge the URL by replacing any '${...}' token with the current value
         final String url = _url.replaceAll("[${].+[}]", encodedValue);
