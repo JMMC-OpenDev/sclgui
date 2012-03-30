@@ -5,7 +5,7 @@ package fr.jmmc.sclgui.preference;
 
 import fr.jmmc.jmcs.gui.component.AlternateRawColorCellRenderer;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
-import fr.jmmc.jmcs.gui.util.WindowCenterer;
+import fr.jmmc.jmcs.gui.util.WindowUtils;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.BorderLayout;
@@ -109,7 +109,7 @@ public class PreferencesView extends JFrame implements ActionListener {
         pack();
 
         // Window screen position (centered)
-        WindowCenterer.centerOnMainScreen(this);
+        WindowUtils.centerOnMainScreen(this);
     }
 
     public void init() {
