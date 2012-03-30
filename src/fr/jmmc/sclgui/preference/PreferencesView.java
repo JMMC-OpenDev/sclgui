@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.preference;
 
-import fr.jmmc.jmcs.gui.AlternateRawColorCellRenderer;
+import fr.jmmc.jmcs.gui.component.AlternateRawColorCellRenderer;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.gui.util.WindowCenterer;
 import fr.jmmc.sclgui.LegendView;
