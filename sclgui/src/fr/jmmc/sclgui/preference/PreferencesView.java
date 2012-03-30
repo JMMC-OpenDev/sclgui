@@ -110,6 +110,7 @@ public class PreferencesView extends JFrame implements ActionListener {
 
         // Window screen position (centered)
         WindowUtils.centerOnMainScreen(this);
+        WindowUtils.setClosingKeyboardShortcuts(rootPane, this);
     }
 
     public void init() {
