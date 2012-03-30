@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import fr.jmmc.jmcs.gui.SearchField;
+import fr.jmmc.jmcs.gui.component.SearchField;
 import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 
