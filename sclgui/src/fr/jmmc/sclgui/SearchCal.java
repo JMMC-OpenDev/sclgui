@@ -72,7 +72,7 @@ public class SearchCal extends App {
     @Override
     protected void init(String[] args) {      
         // Set default resource
-        fr.jmmc.jmcs.util.Resources.setResourceName("fr/jmmc/sclgui/resource/Resources");
+        fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
         // Using invokeAndWait to be in sync with this thread :
         // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
