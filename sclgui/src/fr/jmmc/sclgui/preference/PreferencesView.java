@@ -5,7 +5,7 @@ package fr.jmmc.sclgui.preference;
 
 import fr.jmmc.jmcs.gui.AlternateRawColorCellRenderer;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
-import fr.jmmc.jmcs.gui.WindowCenterer;
+import fr.jmmc.jmcs.gui.util.WindowCenterer;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.BorderLayout;

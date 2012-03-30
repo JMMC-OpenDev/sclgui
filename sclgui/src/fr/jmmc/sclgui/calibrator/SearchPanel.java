@@ -4,7 +4,7 @@
 package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmcs.gui.MainMenuBar;
-import fr.jmmc.jmcs.gui.WindowCenterer;
+import fr.jmmc.jmcs.gui.util.WindowCenterer;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
