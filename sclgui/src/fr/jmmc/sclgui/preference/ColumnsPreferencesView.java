@@ -73,9 +73,11 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
 
         // Column sets combobox creation
         JPanel headPanel = new JPanel();
+        headPanel.setOpaque(false);
         headPanel.setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         JLabel label = new JLabel("Column Set : ", JLabel.TRAILING);
         panel.add(label);
         _columnsSetCombobox = new JComboBox();
@@ -126,6 +128,7 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
 
         // Add 'Up' & 'Down' buttons
         panel = new JPanel();
+        panel.setOpaque(false);
         _moveUpButton = new JButton("Up");
         _moveUpButton.setEnabled(false);
         panel.add(_moveUpButton);
