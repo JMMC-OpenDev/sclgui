@@ -6,6 +6,7 @@ package fr.jmmc.sclgui.preference;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Observable;
@@ -42,9 +43,10 @@ public class HelpPreferencesView extends JPanel implements Observer, ChangeListe
         _preferences = Preferences.getInstance();
 
         // Layout management
-        JPanel tempPanel = new JPanel();
-        add(tempPanel);
-        tempPanel.setLayout(new GridBagLayout());
+        JPanel topPanel = new JPanel();
+        topPanel.setOpaque(false);
+        add(topPanel);
+        topPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -57,6 +59,7 @@ public class HelpPreferencesView extends JPanel implements Observer, ChangeListe
 
         // Handle "Result Verbosity" radio buttons
         JPanel radioPanel = new JPanel();
+        radioPanel.setOpaque(false);
         radioPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -87,19 +90,19 @@ public class HelpPreferencesView extends JPanel implements Observer, ChangeListe
         CalibratorsView._fullResultsVerbosityAction.addBoundButton(fullRadioButton);
         radioGroup.add(fullRadioButton);
         radioPanel.add(fullRadioButton, gbc);
-        tempPanel.add(radioPanel, c);
+        topPanel.add(radioPanel, c);
         c.gridy++;
 
         // Handle "Show Legend" checkbox
         JCheckBox showLegendCheckBox = new JCheckBox(CalibratorsView._showLegendAction);
         CalibratorsView._showLegendAction.addBoundButton(showLegendCheckBox);
-        tempPanel.add(showLegendCheckBox, c);
+        topPanel.add(showLegendCheckBox, c);
         c.gridy++;
 
         // Handle "Show Tooltips" checkbox
         _enableToolTipCheckBox = new JCheckBox("Show Tooltips");
         _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
-        tempPanel.add(_enableToolTipCheckBox, c);
+        topPanel.add(_enableToolTipCheckBox, c);
     }
 
     public void init() {
