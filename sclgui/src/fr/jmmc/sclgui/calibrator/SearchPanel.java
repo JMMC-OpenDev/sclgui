@@ -158,7 +158,7 @@ public class SearchPanel extends JFrame {
         setResizable(false);
 
         WindowUtils.centerOnMainScreen(this);
-        WindowUtils.setClosingKeyboardShortcuts(getRootPane(), this);
+        WindowUtils.setClosingKeyboardShortcuts(this);
     }
 
     /**
