@@ -118,47 +118,47 @@ public final class VirtualObservatory extends Observable {
 
         // Add handler to load science object coordinates
 /* @TBD
-        try {
-        SampMessageHandler handler = new SampMessageHandler(SampCapability.POINT_COORDINATES) {
+         try {
+         SampMessageHandler handler = new SampMessageHandler(SampCapability.POINT_COORDINATES) {
         
-        public Map processCall(HubConnection c, String senderId, Message msg) {
-        System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
+         public Map processCall(HubConnection c, String senderId, Message msg) {
+         System.out.println("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + msg + "'.");
         
-        Double ra = SampUtils.decodeFloat((String) msg.getParam("ra"));
-        if (ra == null)
-        {
-        _logger.warning("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
-        return null;
-        }
-        String raHMS = ALX.toHMS(ra);
-        if (raHMS == null)
-        {
-        _logger.warning("Could not convert RA degree value '" + ra + "' to HMS.");
-        return null;
-        }
+         Double ra = SampUtils.decodeFloat((String) msg.getParam("ra"));
+         if (ra == null)
+         {
+         _logger.warning("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
+         return null;
+         }
+         String raHMS = ALX.toHMS(ra);
+         if (raHMS == null)
+         {
+         _logger.warning("Could not convert RA degree value '" + ra + "' to HMS.");
+         return null;
+         }
         
-        Double dec = SampUtils.decodeFloat((String) msg.getParam("dec"));
-        if (dec == null)
-        {
-        _logger.warning("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
-        return null;
-        }
-        String decDMS = ALX.toDMS(dec);
-        if (decDMS == null)
-        {
-        _logger.warning("Could not convert DEC degree value '" + dec + "' to DMS.");
-        return null;
-        }
-        _queryModel.setScienceObjectRA(raHMS);
-        _queryModel.setScienceObjectDEC(decDMS);
-        _queryModel.update(null, null);
+         Double dec = SampUtils.decodeFloat((String) msg.getParam("dec"));
+         if (dec == null)
+         {
+         _logger.warning("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
+         return null;
+         }
+         String decDMS = ALX.toDMS(dec);
+         if (decDMS == null)
+         {
+         _logger.warning("Could not convert DEC degree value '" + dec + "' to DMS.");
+         return null;
+         }
+         _queryModel.setScienceObjectRA(raHMS);
+         _queryModel.setScienceObjectDEC(decDMS);
+         _queryModel.update(null, null);
         
-        return null;
-        }
-        };
-        } catch (Exception ex) {
-        _logger.log(Level.SEVERE, "failure : ", e);
-        }
+         return null;
+         }
+         };
+         } catch (Exception ex) {
+         _logger.log(Level.SEVERE, "failure : ", e);
+         }
          */
         // WebService related members
         setQueryLaunchedState(false);
@@ -346,18 +346,12 @@ public final class VirtualObservatory extends Observable {
             return; // Exit immediatly
         }
 
-        switch (mimeType) {
-            case CSV:
-                _calibratorsModel.exportCurrentVOTableToCSV(selectedFile);
-                break;
-
-            case HTML:
-                _calibratorsModel.exportCurrentVOTableToHTML(selectedFile);
-                break;
-
-            default:
-                _logger.warning("Unknown export mime type '" + mimeTypeName + "'.");
-                break;
+        if (mimeType == MimeType.CSV) {
+            _calibratorsModel.exportCurrentVOTableToCSV(selectedFile);
+        } else if (mimeType == MimeType.HTML) {
+            _calibratorsModel.exportCurrentVOTableToHTML(selectedFile);
+        } else {
+            _logger.warning("Unknown export mime type '" + mimeTypeName + "'.");
         }
 
         StatusBar.show("calibrator list exported to " + mimeTypeName + " file.");
