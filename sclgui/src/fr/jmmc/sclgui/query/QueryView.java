@@ -29,6 +29,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -55,14 +56,14 @@ import javax.swing.text.NumberFormatter;
  * Query view.
  */
 public final class QueryView extends JPanel implements Observer,
-        PropertyChangeListener, ActionListener, FocusListener, Printable {
+                                                       PropertyChangeListener, ActionListener, FocusListener, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
     private static final Logger _logger = Logger.getLogger(QueryView.class.getName());
     /** MVC associated model */
-    public QueryModel _queryModel = null;
+    private QueryModel _queryModel = null;
     /** Associated virtual observatory */
     private VirtualObservatory _vo = null;
     /** Instrument panel */
@@ -73,11 +74,9 @@ public final class QueryView extends JPanel implements Observer,
     private JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
             JLabel.TRAILING);
     /** Instrument wavelentgh */
-    private JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(0));
     /** Instrument maximun baseline */
-    private JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(0));
     /** Science object panel */
     private JPanel _scienceObjectPanel = null;
     /** Science object name resolver widget */
@@ -90,20 +89,17 @@ public final class QueryView extends JPanel implements Observer,
     private JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ",
             JLabel.TRAILING);
     /** Science object magnitude */
-    private JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(0));
     /** SearchCal parameters panel */
     private JPanel _searchCalPanel = null;
     /** Search minimum magnitude label */
     private JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ", JLabel.TRAILING);
     /** Search minimum magnitude */
-    private JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(0));
     /** Search maximum magnitude label */
     private JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ", JLabel.TRAILING);
     /** Search maximum magnitude */
-    private JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(0));
     /** Bright query button */
     private JRadioButton _brightRadioButton = null;
     /** Faint query button */
@@ -111,13 +107,11 @@ public final class QueryView extends JPanel implements Observer,
     /** Search box RA size label */
     private JLabel _diffRASizeLabel = new JLabel("RA Range [mn] : ", JLabel.TRAILING);
     /** Search box RA size */
-    private JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(0));
     /** Search box DEC size label */
     private JLabel _diffDECSizeLabel = new JLabel("DEC Range [deg] : ", JLabel.TRAILING);
     /** Search box DEC size */
-    private JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(0));
     /** Search box radial size label */
     private JLabel _radialSizeLabel = new JLabel("Radius [arcmin] : ", JLabel.TRAILING);
     /** Auto/Manual radius radio button group */
@@ -129,8 +123,7 @@ public final class QueryView extends JPanel implements Observer,
     /** Manual radius radio button */
     private JRadioButton _manualRadiusRadioButton = null;
     /** Search box radial size */
-    private JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(
-            0));
+    private JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(0));
     /** Query action and progression panel */
     private JPanel _actionPanel = new JPanel();
     /** Query launcher/canceler */
@@ -177,8 +170,7 @@ public final class QueryView extends JPanel implements Observer,
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setNaN("???"); // Set the symbol for a Double.NaN to an empty String
 
-        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
-                "0.0####", symbols));
+        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####", symbols));
         doubleFormater.setValueClass(java.lang.Double.class);
 
         DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
@@ -192,8 +184,7 @@ public final class QueryView extends JPanel implements Observer,
         c.weightx = 1;
 
         // Instrumental Configuration panel
-        _instrumentPanel.setBorder(new TitledBorder(
-                "1)  Instrumental Configuration"));
+        _instrumentPanel.setBorder(new TitledBorder("1)  Instrumental Configuration"));
         _instrumentPanel.setLayout(new GridBagLayout());
         // Magnitude band field
         c.gridy = 0;
@@ -440,6 +431,9 @@ public final class QueryView extends JPanel implements Observer,
         _diffRASizeTextfield.addActionListener(this);
         _diffRASizeTextfield.addFocusListener(this);
 
+        _diffDECSizeTextfield.addActionListener(this);
+        _diffDECSizeTextfield.addFocusListener(this);
+
         _radialSizeTextfield.addActionListener(this);
         _radialSizeTextfield.addFocusListener(this);
 
@@ -447,8 +441,9 @@ public final class QueryView extends JPanel implements Observer,
         _queryModel.addObserver(this);
         _vo.addObserver(this);
 
-        // Refresh the GUI with the model values
+        // Refresh the GUI with the model values and reset progress bar:
         update(null, null);
+        update(null, QueryModel.Notification.PROGRESS);
 
         // To overcome silent call on setQueryMxxMagnitude() by storeValues() after update(null, null)
         _queryModel.restoreMinMaxMagnitudeFieldsAutoUpdating();
@@ -461,10 +456,26 @@ public final class QueryView extends JPanel implements Observer,
      */
     @Override
     public void update(final Observable o, final Object arg) {
-        _logger.entering("QueryView", "update");
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("QueryView.update: arg = " + arg);
+        }
+
+        // handle query progress notifications:
+        if (arg instanceof QueryModel.Notification) {
+            final QueryModel.Notification notification = (QueryModel.Notification) arg;
+
+            if (notification == QueryModel.Notification.PROGRESS) {
+                // update Progress bar only:
+                _progressBar.setValue(_queryModel.getCurrentStep());
+                _progressBar.setMaximum(_queryModel.getTotalStep());
+                _progressBar.setString(_queryModel.getCatalogName());
+
+                // do nothing, simply return to stop updating model:
+                return;
+            }
+        }
 
         // handle Star resolver errors:
-
         if (arg instanceof Star.Notification) {
             final Star.Notification notification = (Star.Notification) arg;
 
@@ -481,14 +492,12 @@ public final class QueryView extends JPanel implements Observer,
 
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
-        _instrumentalWavelengthLabel.setText("Wavelength ("
-                + instrumentalMagnitudeBand + ") [µm] : ");
+        _instrumentalWavelengthLabel.setText("Wavelength (" + instrumentalMagnitudeBand + ") [µm] : ");
         _instrumentalWavelengthTextfield.setValue(_queryModel.getInstrumentalWavelength());
         _instrumentalMaxBaselineTextField.setValue(_queryModel.getInstrumentalMaxBaseLine());
 
         // Compute all the magnitude labels from the current magnitude band
-        String magnitudeWithBand = "Magnitude (" + instrumentalMagnitudeBand
-                + ") : ";
+        String magnitudeWithBand = "Magnitude (" + instrumentalMagnitudeBand + ") : ";
 
         // Science object parameters
         String scienceObjectName = _queryModel.getScienceObjectName();
@@ -528,11 +537,6 @@ public final class QueryView extends JPanel implements Observer,
         _manualRadiusRadioButton.setVisible(!brightScenarioFlag);
         _radialSizeTextfield.setVisible(!brightScenarioFlag);
         _radialSizeLabel.setVisible(!brightScenarioFlag);
-
-        // Progress bar
-        _progressBar.setValue(_queryModel.getCurrentStep());
-        _progressBar.setMaximum(_queryModel.getTotalStep());
-        _progressBar.setString(_queryModel.getCatalogName());
 
         // If the virtual obervatory is busy
         if (_vo.isQueryLaunched() == true) {
@@ -625,19 +629,22 @@ public final class QueryView extends JPanel implements Observer,
      *
      * @param ae awt event
      */
-    public void storeValues(AWTEvent ae) {
-        _logger.entering("QueryView", "storeValues");
-
+    public void storeValues(final AWTEvent ae) {
         // Get back the widget
-        Object source = ae.getSource();
+        final Object source = ae.getSource();
+
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.fine("QueryView.storeValues: source = " + source);
+        }
 
         // If the widget is a JFormattedTextField
-        if (source.getClass() == javax.swing.JFormattedTextField.class) {
+        if (source.getClass() == JFormattedTextField.class) {
+            final JFormattedTextField textField = (JFormattedTextField) source;
             try {
-                // Convert and commit the new value
-                ((JFormattedTextField) source).commitEdit();
-            } catch (Exception ex) {
-                _logger.log(Level.SEVERE, "Could not handle input", ex);
+                // Convert and commit the new value:
+                textField.commitEdit();
+            } catch (ParseException pe) {
+                _logger.log(Level.INFO, "Could not handle input: " + textField.getText(), pe);
             }
         }
 
