@@ -39,10 +39,6 @@ public class QueryModel extends Star implements Observer {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(QueryModel.class.getName());
-    /** For default values */
-    private Preferences _preferences = null;
-    /** Magnitude to Preselected Wavelength conversion table */
-    private HashMap<String, Double> _magnitudeBandToWavelength = null;
     /**
      * All handled magnitude bands.
      *
@@ -55,13 +51,28 @@ public class QueryModel extends Star implements Observer {
      * @warning Do not change the order,as it is linked to ALL_MAGNITUDE_BANDS.
      * @sa ALL_MAGNITUDE_BANDS
      */
-    private double[] _defaultWavelengths = {0.55, 0.9, 1.25, 1.65, 2.2, 10};
-    /** The instrumental magnitude band */
-    private DefaultComboBoxModel _instrumentalMagnitudeBands = new DefaultComboBoxModel();
+    private static final Double[] _defaultWavelengths = {0.55d, 0.9d, 1.25d, 1.65d, 2.2d, 10d};
     /** Available magnitude band for BRIGHT scenario */
     private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
     /** Available magnitude band for FAINT scenario */
     private static final String[] FAINT_MAGNITUDE_BANDS = {"K"};
+
+    /**
+     * Enumeration of all different observers notification a star can raise.
+     */
+    public enum Notification {
+
+        /** model updated */
+        MODEL,
+        /** query progress */
+        PROGRESS;
+    };
+    /** For default values */
+    private Preferences _preferences = null;
+    /** Magnitude to Preselected Wavelength conversion table */
+    private HashMap<String, Double> _magnitudeBandToWavelength = null;
+    /** The instrumental magnitude band */
+    private DefaultComboBoxModel _instrumentalMagnitudeBands = new DefaultComboBoxModel();
     /** The instrumental maximum base line */
     private double _instrumentalMaxBaseLine;
     /** The query minimum magnitude */
@@ -72,9 +83,7 @@ public class QueryModel extends Star implements Observer {
     private double _queryMaxMagnitude;
     /** The query maximum magnitude auto-update flag */
     private boolean _queryMaxMagnitudeAutoUpdate = true;
-    /** The query bright scenario flag
-     * Contains true if BRIGHT scenario is selected, false if FAINT.
-     */
+    /** The query bright scenario flag: contains true if BRIGHT scenario is selected, false if FAINT.*/
     private boolean _queryBrightScenarioFlag;
     /** The query diff. RA */
     private double _queryDiffRASize;
@@ -84,18 +93,16 @@ public class QueryModel extends Star implements Observer {
     private double _queryRadialSize;
     /** The query radius automatic computation flag */
     private boolean _queryAutoRadiusFlag;
-    /** The current step of the querying progress.
-     * 0 < _currentStep < _totalStep
-     */
+    /** The current step of the querying progress. 0 < _currentStep < _totalStep */
     private int _currentStep;
-    /** The total number of step of the querying progress.
-     * _totalStep > 0
-     */
+    /** The total number of step of the querying progress. _totalStep > 0 */
     private int _totalStep;
     /** The current catalog name of the querying progress step. */
     private String _catalogName;
     /** Remind whether the query can be edited or not (when loaded from file for example) */
     private boolean _isEditable;
+    /** flag to enable / disable observer notifications */
+    private boolean _notify = true;
 
     /**
      * Default constructor.
@@ -117,8 +124,7 @@ public class QueryModel extends Star implements Observer {
 
             Object[] options = {"Use Factory Settings", "Quit"};
             String message = "An error occured while loading default preferences value from file:\n"
-                    + "    '" + Preferences.getInstance().computePreferenceFilepath() + "'\n"
-                    + "\n"
+                    + "    '" + Preferences.getInstance().computePreferenceFilepath() + "'\n\n"
                     + "You could either quit and delete it manually, or try to use factory settings instead.";
 
             final int result = JOptionPane.showOptionDialog(App.getFrame(), message, null, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
@@ -127,7 +133,6 @@ public class QueryModel extends Star implements Observer {
 
                 case 1: // Quit
                     SwingUtils.invokeLaterEDT(new Runnable() {
-
                         public void run() {
                             App.quitAction().actionPerformed(null);
                         }
@@ -155,6 +160,82 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
+     * @return flag to enable / disable observer notifications
+     */
+    private boolean isNotify() {
+        return _notify;
+    }
+
+    /**
+     * Enable / disable observer notifications. If enabled, notify observers
+     * @param notify true to enable notifications (immediately)
+     */
+    private void setNotify(final boolean notify) {
+        setNotify(notify, Notification.MODEL);
+    }
+
+    /**
+     * Enable / disable observer notifications. If enabled, notify observers
+     * @param notify true to enable notifications (immediately)
+     * @param notification notification type
+     */
+    private void setNotify(final boolean notify, final Notification notification) {
+        this._notify = notify;
+        if (notify) {
+            notifyObservers(notification);
+        }
+    }
+
+    /**
+     * If this object has changed, as indicated by the
+     * <code>hasChanged</code> method, then notify all of its observers
+     * and then call the <code>clearChanged</code> method to
+     * indicate that this object has no longer changed.
+     * 
+     * This overriden implementation provides the Notification.MODEL argument
+     */
+    @Override
+    public void notifyObservers() {
+        notifyObservers(Notification.MODEL);
+    }
+
+    /**
+     * If this object has changed, as indicated by the
+     * <code>hasChanged</code> method, then notify all of its observers
+     * and then call the <code>clearChanged</code> method to
+     * indicate that this object has no longer changed.
+     * @param notification notification type
+     * 
+     * This overriden implementation provides the given notification argument
+     */
+    @Override
+    public void notifyObservers(final Object notification) {
+        if (this._notify) {
+            if (_logger.isLoggable(Level.FINE)) {
+                _logger.log(Level.FINE, "notifyObservers: " + notification, new Throwable());
+            }
+            super.notifyObservers(notification);
+        }
+    }
+
+    /**
+     * Adds an observer to the set of observers for this object, provided
+     * that it is not the same as some observer already in the set.
+     * The order in which notifications will be delivered to multiple
+     * observers is not specified. See the class comment.
+     *
+     * @param   observer   an observer to be added.
+     * @throws NullPointerException   if the parameter o is null.
+     */
+    @Override
+    public void addObserver(final Observer observer) {
+        if (_logger.isLoggable(Level.FINE)) {
+            _logger.log(Level.FINE, "addObserver: " + observer);
+        }
+        super.addObserver(observer);
+    }
+
+    /**
      * Called when observed objects change.
      *
      * @param o the observed object that changed
@@ -176,33 +257,39 @@ public class QueryModel extends Star implements Observer {
     public void reset() {
         _logger.entering("QueryModel", "reset");
 
-        // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
-        setQueryBrightScenarioFlag(true);
+        final boolean prevNotify = isNotify();
+        try {
+            // avoid multiple observer notifications:
+            setNotify(false);
 
-        setInstrumentalMagnitudeBand("K");
-        setInstrumentalMaxBaseLine(0.0);
-        resetInstrumentalWavelengthes();
+            // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
+            setQueryBrightScenarioFlag(true);
 
-        setScienceObjectName("");
-        setScienceObjectRA("+00:00:00.00");
-        setScienceObjectDEC("+00:00:00.00");
-        resetScienceObjectMagnitudes();
+            setInstrumentalMagnitudeBand("K");
+            setInstrumentalMaxBaseLine(0.0);
+            resetInstrumentalWavelengthes();
 
-        setQueryDiffRASizeInMinutes(0.0);
-        setQueryDiffDECSizeInDegrees(0.0);
-        setQueryAutoRadiusFlag(true);
-        setQueryRadialSize(0.0);
+            setScienceObjectName("");
+            setScienceObjectRA("+00:00:00.00");
+            setScienceObjectDEC("+00:00:00.00");
+            resetScienceObjectMagnitudes();
 
-        restoreMinMaxMagnitudeFieldsAutoUpdating();
+            setQueryDiffRASizeInMinutes(0.0);
+            setQueryDiffDECSizeInDegrees(0.0);
+            setQueryAutoRadiusFlag(true);
+            setQueryRadialSize(0.0);
 
-        setCurrentStep(0);
-        setTotalStep(0);
-        setCatalogName("");
+            restoreMinMaxMagnitudeFieldsAutoUpdating();
 
-        // Enable the edition as the values where not loaded from file
-        setEditableState(true);
+            setQueryProgress("", 0, 0);
 
-        notifyObservers();
+            // Enable the edition as the values where not loaded from file
+            setEditableState(true);
+
+        } finally {
+            // do notifyObservers():
+            setNotify(prevNotify);
+        }
     }
 
     /**
@@ -213,49 +300,42 @@ public class QueryModel extends Star implements Observer {
     public final void loadDefaultValues() throws PreferencesException, IllegalArgumentException {
         _logger.entering("QueryModel", "loadDefaultValues");
 
-        // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
-        setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(
-                PreferenceKey.QUERY_BRIGHT_FLAG));
+        final boolean prevNotify = isNotify();
+        try {
+            // avoid multiple observer notifications:
+            setNotify(false);
 
-        setInstrumentalMagnitudeBand(_preferences.getPreference(
-                PreferenceKey.QUERY_MAGNITUDE_BAND));
+            // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
+            setQueryBrightScenarioFlag(_preferences.getPreferenceAsBoolean(PreferenceKey.QUERY_BRIGHT_FLAG));
 
-        setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_INSTRUMENTAL_BASELINE));
+            setInstrumentalMagnitudeBand(_preferences.getPreference(PreferenceKey.QUERY_MAGNITUDE_BAND));
 
-        setScienceObjectName(_preferences.getPreference(
-                PreferenceKey.QUERY_SCIENCE_NAME));
-        setScienceObjectRA(_preferences.getPreference(
-                PreferenceKey.QUERY_SCIENCE_RA));
-        setScienceObjectDEC(_preferences.getPreference(
-                PreferenceKey.QUERY_SCIENCE_DEC));
-        setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_SCIENCE_MAGNITUDE));
+            setInstrumentalMaxBaseLine(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_INSTRUMENTAL_BASELINE));
 
-        setQueryMinMagnitude(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_MINIMUM_MAGNITUDE));
-        setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_MINIMUM_DELTA));
-        setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_MAXIMUM_MAGNITUDE));
-        setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_MAXIMUM_DELTA));
+            setScienceObjectName(_preferences.getPreference(PreferenceKey.QUERY_SCIENCE_NAME));
+            setScienceObjectRA(_preferences.getPreference(PreferenceKey.QUERY_SCIENCE_RA));
+            setScienceObjectDEC(_preferences.getPreference(PreferenceKey.QUERY_SCIENCE_DEC));
+            setScienceObjectMagnitude(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_SCIENCE_MAGNITUDE));
 
-        setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(
-                _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_DIFF_RA)));
-        setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(
-                _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_DIFF_DEC)));
-        setQueryRadialSize(_preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_RADIAL_SIZE));
-        setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(
-                PreferenceKey.QUERY_RADIAL_FLAG));
+            setQueryMinMagnitude(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_MINIMUM_MAGNITUDE));
+            setQueryMinMagnitudeDelta(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_MINIMUM_DELTA));
+            setQueryMaxMagnitude(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_MAXIMUM_MAGNITUDE));
+            setQueryMaxMagnitudeDelta(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_MAXIMUM_DELTA));
 
-        restoreMinMaxMagnitudeFieldsAutoUpdating();
+            setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_DIFF_RA)));
+            setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_DIFF_DEC)));
+            setQueryRadialSize(_preferences.getPreferenceAsDouble(PreferenceKey.QUERY_RADIAL_SIZE));
+            setQueryAutoRadiusFlag(_preferences.getPreferenceAsBoolean(PreferenceKey.QUERY_RADIAL_FLAG));
 
-        // Enable the edition as the values where not loaded from file
-        setEditableState(true);
+            restoreMinMaxMagnitudeFieldsAutoUpdating();
 
-        notifyObservers();
+            // Enable the edition as the values where not loaded from file
+            setEditableState(true);
+
+        } finally {
+            // do notifyObservers():
+            setNotify(prevNotify);
+        }
     }
 
     /**
@@ -294,63 +374,72 @@ public class QueryModel extends Star implements Observer {
         if (paramValue != null) {
             bright = Boolean.valueOf(paramValue).booleanValue();
         }
-        // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
-        setQueryBrightScenarioFlag(bright);
 
-        setInstrumentalMagnitudeBand(parameters.get("band"));
-        setInstrumentalWavelength(Double.valueOf(parameters.get("wlen")));
-        setInstrumentalMaxBaseLine(Double.valueOf(parameters.get("baseMax")));
-        setScienceObjectName(parameters.get("objectName"));
-        setScienceObjectRA(parameters.get("ra"));
-        setScienceObjectDEC(parameters.get("dec"));
-        setScienceObjectMagnitude(Double.valueOf(parameters.get("mag")));
+        final boolean prevNotify = isNotify();
+        try {
+            // avoid multiple observer notifications:
+            setNotify(false);
 
-        // optional "minMagRange" parameter (Aspro2):
-        paramValue = parameters.get("minMagRange");
-        if (paramValue != null) {
-            setQueryMinMagnitude(Double.valueOf(paramValue));
-        }
+            // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
+            setQueryBrightScenarioFlag(bright);
 
-        // optional "maxMagRange" parameter (Aspro2):
-        paramValue = parameters.get("maxMagRange");
-        if (paramValue != null) {
-            setQueryMaxMagnitude(Double.valueOf(paramValue));
-        }
+            setInstrumentalMagnitudeBand(parameters.get("band"));
+            setInstrumentalWavelength(Double.valueOf(parameters.get("wlen")));
+            setInstrumentalMaxBaseLine(Double.valueOf(parameters.get("baseMax")));
+            setScienceObjectName(parameters.get("objectName"));
+            setScienceObjectRA(parameters.get("ra"));
+            setScienceObjectDEC(parameters.get("dec"));
+            setScienceObjectMagnitude(Double.valueOf(parameters.get("mag")));
 
-        // optional "diffRa" parameter (Aspro2):
-        paramValue = parameters.get("diffRa");
-        if (paramValue != null) {
-            setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(Double.valueOf(paramValue)));
-        }
+            // optional "minMagRange" parameter (Aspro2):
+            paramValue = parameters.get("minMagRange");
+            if (paramValue != null) {
+                setQueryMinMagnitude(Double.valueOf(paramValue));
+            }
 
-        // optional "diffDec" parameter (Aspro2):
-        paramValue = parameters.get("diffDec");
-        if (paramValue != null) {
-            setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(Double.valueOf(paramValue)));
-        }
+            // optional "maxMagRange" parameter (Aspro2):
+            paramValue = parameters.get("maxMagRange");
+            if (paramValue != null) {
+                setQueryMaxMagnitude(Double.valueOf(paramValue));
+            }
 
-        // optional "radius" parameter (Aspro2):
-        paramValue = parameters.get("radius");
+            // optional "diffRa" parameter (Aspro2):
+            paramValue = parameters.get("diffRa");
+            if (paramValue != null) {
+                setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(Double.valueOf(paramValue)));
+            }
 
-        if (paramValue != null) {
-            setQueryAutoRadiusFlag(true);
+            // optional "diffDec" parameter (Aspro2):
+            paramValue = parameters.get("diffDec");
+            if (paramValue != null) {
+                setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(Double.valueOf(paramValue)));
+            }
 
-            // If radius exists
-            if (paramValue.length() > 0) {
-                final Double radiusValue = Double.valueOf(paramValue);
-                setQueryRadialSize(radiusValue);
+            // optional "radius" parameter (Aspro2):
+            paramValue = parameters.get("radius");
 
-                // If radius is not irrevelant
-                if (radiusValue > 0d) {
-                    setQueryAutoRadiusFlag(false);
+            if (paramValue != null) {
+                setQueryAutoRadiusFlag(true);
+
+                // If radius exists
+                if (paramValue.length() > 0) {
+                    final Double radiusValue = Double.valueOf(paramValue);
+                    setQueryRadialSize(radiusValue);
+
+                    // If radius is not irrevelant
+                    if (radiusValue > 0d) {
+                        setQueryAutoRadiusFlag(false);
+                    }
                 }
             }
+
+            // Disable the edition as the values where loaded from file
+            setEditableState(false);
+
+        } finally {
+            // do notifyObservers():
+            setNotify(prevNotify);
         }
-
-        // Disable the edition as the values where loaded from file
-        setEditableState(false);
-
-        notifyObservers();
     }
 
     /**
@@ -788,8 +877,7 @@ public class QueryModel extends Star implements Observer {
         // For each "magnitude-band" couple
         for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
             // Construct the conversion table between both
-            setPropertyAsDouble(Property.fromString("FLUX_"
-                    + ALL_MAGNITUDE_BANDS[i]), Double.NaN);
+            setPropertyAsDouble(Property.fromString("FLUX_" + ALL_MAGNITUDE_BANDS[i]), Double.NaN);
         }
     }
 
@@ -819,8 +907,7 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "setScienceObjectMagnitude");
 
         String currentBand = (String) _instrumentalMagnitudeBands.getSelectedItem();
-        setPropertyAsDouble(Property.fromString("FLUX_" + currentBand),
-                magnitude);
+        setPropertyAsDouble(Property.fromString("FLUX_" + currentBand), magnitude);
     }
 
     /**
@@ -840,8 +927,7 @@ public class QueryModel extends Star implements Observer {
     public Double getScienceObjectDetectionDistance() {
         _logger.entering("QueryModel", "getScienceObjectDetectionDistance");
 
-        return _preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_SCIENCE_DETECTION);
+        return _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_SCIENCE_DETECTION);
     }
 
     /**
@@ -855,8 +941,7 @@ public class QueryModel extends Star implements Observer {
         _logger.entering("QueryModel", "setScienceObjectDetectionDistance");
 
         try {
-            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DETECTION,
-                    new Double(distance));
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, new Double(distance));
         } catch (Exception e) {
             throw e;
         }
@@ -889,8 +974,7 @@ public class QueryModel extends Star implements Observer {
             // If science object magnitude is known
             if (Double.isNaN(scienceObjectMagnitude) == false) {
                 // Compute min. magnitude accordinaly
-                return scienceObjectMagnitude
-                        + getQueryMinMagnitudeDelta();
+                return scienceObjectMagnitude + getQueryMinMagnitudeDelta();
             }
         }
 
@@ -941,8 +1025,7 @@ public class QueryModel extends Star implements Observer {
     public Double getQueryMinMagnitudeDelta() {
         _logger.entering("QueryModel", "getQueryMinMagnitudeDelta");
 
-        return _preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_MINIMUM_DELTA);
+        return _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_MINIMUM_DELTA);
     }
 
     /**
@@ -955,8 +1038,7 @@ public class QueryModel extends Star implements Observer {
             throws PreferencesException {
         _logger.entering("QueryModel", "setQueryMinMagnitudeDelta");
 
-        _preferences.setPreference(PreferenceKey.QUERY_MINIMUM_DELTA,
-                new Double(delta));
+        _preferences.setPreference(PreferenceKey.QUERY_MINIMUM_DELTA, new Double(delta));
 
         setChanged();
     }
@@ -1027,8 +1109,7 @@ public class QueryModel extends Star implements Observer {
     public Double getQueryMaxMagnitudeDelta() {
         _logger.entering("QueryModel", "getQueryMaxMagnitudeDelta");
 
-        return _preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_MAXIMUM_DELTA);
+        return _preferences.getPreferenceAsDouble(PreferenceKey.QUERY_MAXIMUM_DELTA);
     }
 
     /**
@@ -1041,8 +1122,7 @@ public class QueryModel extends Star implements Observer {
             throws PreferencesException {
         _logger.entering("QueryModel", "setQueryMaxMagnitudeDelta");
 
-        _preferences.setPreference(PreferenceKey.QUERY_MAXIMUM_DELTA,
-                new Double(delta));
+        _preferences.setPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, new Double(delta));
 
         setChanged();
     }
@@ -1216,6 +1296,27 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
+     * Define the current catalog name, step and total number of steps
+     * @param catalogName the catalog name of querying step.
+     * @param currentStep the current querying step.
+     * @param totalStep the total number of querying step.
+     */
+    public void setQueryProgress(final String catalogName, final int currentStep, final int totalStep) {
+        try {
+            // avoid multiple observer notifications:
+            setNotify(false);
+
+            setCatalogName(catalogName);
+            setCurrentStep(currentStep);
+            setTotalStep(totalStep);
+
+        } finally {
+            // do notifyObservers():
+            setNotify(true, Notification.PROGRESS);
+        }
+    }
+
+    /**
      * Return the current step of query progress.
      *
      * @return the current querying step.
@@ -1231,7 +1332,7 @@ public class QueryModel extends Star implements Observer {
      *
      * @param currentStep the current querying step.
      */
-    public void setCurrentStep(int currentStep) {
+    private void setCurrentStep(int currentStep) {
         _logger.entering("QueryModel", "setCurrentStep");
 
         if (currentStep <= _totalStep) {
@@ -1241,7 +1342,6 @@ public class QueryModel extends Star implements Observer {
         }
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -1260,13 +1360,12 @@ public class QueryModel extends Star implements Observer {
      *
      * @param totalStep the total number of querying step.
      */
-    public void setTotalStep(int totalStep) {
+    private void setTotalStep(int totalStep) {
         _logger.entering("QueryModel", "setTotalStep");
 
         _totalStep = totalStep;
 
         setChanged();
-        notifyObservers();
     }
 
     /**
@@ -1289,13 +1388,12 @@ public class QueryModel extends Star implements Observer {
      *
      * @param catalogName the catalog name of querying step.
      */
-    public void setCatalogName(String catalogName) {
+    private void setCatalogName(String catalogName) {
         _logger.entering("QueryModel", "setCatalogName");
 
         _catalogName = catalogName;
 
         setChanged();
-        notifyObservers();
     }
 
     /**

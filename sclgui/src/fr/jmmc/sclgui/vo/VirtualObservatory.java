@@ -14,7 +14,6 @@ import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
-import fr.jmmc.jmcs.util.FileFilterRepository;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.FileChooser;
 import fr.jmmc.jmcs.util.MimeType;
@@ -184,7 +183,6 @@ public final class VirtualObservatory extends Observable {
         _logger.entering("VirtualObservatory", "setQueryLaunchedState");
 
         final Runnable task = new Runnable() {
-
             @Override
             public void run() {
                 _queryIsLaunched.set(running);
@@ -194,9 +192,7 @@ public final class VirtualObservatory extends Observable {
                 if (!running) {
                     // Change button title to 'Get Calibrators'
                     newActionName = "Get Calibrators";
-                    _queryModel.setCurrentStep(0);
-                    _queryModel.setTotalStep(0);
-                    _queryModel.setCatalogName("");
+                    _queryModel.setQueryProgress("", 0, 0);
                 }
 
                 // Set new action name
@@ -492,8 +488,6 @@ public final class VirtualObservatory extends Observable {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
-        private FileFilterRepository _fileFilterRepository = FileFilterRepository.getInstance();
-        private String _scvotMimeType = "application-x/searchcal-votable-file";
 
         SaveFileAsAction(String classPath, String fieldName) {
             super(classPath, fieldName);
@@ -660,13 +654,10 @@ public final class VirtualObservatory extends Observable {
             // Use invokeLater to avoid concurrency and ensure that
             // data model is modified and fire events using Swing EDT :
             SwingUtils.invokeLaterEDT(new Runnable() {
-
                 @Override
                 public void run() {
                     // Update the query model accordingly
-                    _queryModel.setCatalogName(catalogName);
-                    _queryModel.setCurrentStep(catalogIndex);
-                    _queryModel.setTotalStep(nbOfCatalogs);
+                    _queryModel.setQueryProgress(catalogName, catalogIndex, nbOfCatalogs);
                 }
             });
         }
@@ -682,7 +673,6 @@ public final class VirtualObservatory extends Observable {
                 // Use invokeLater to avoid concurrency and ensure that
                 // data model is modified and fire events using Swing EDT :
                 SwingUtils.invokeLaterEDT(new Runnable() {
-
                     /**
                      * Update the GUI using SearchCal results (VOTable)
                      */
