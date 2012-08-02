@@ -2,9 +2,9 @@
 
 <ApplicationData link="http://www.jmmc.fr/searchcal">
 
-    <program name="SearchCal" version="4.4.2"/>
+    <program name="SearchCal" version="4.4.3 beta 1"/>
 
-    <compilation date="11/06/2012" compiler="JDK 1.5.0_16"/>
+    <compilation date="02/08/2012" compiler="JDK 1.5.0_16"/>
   
     <text>
     <![CDATA[Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]>
@@ -128,6 +128,13 @@
     </menubar>
   
     <releasenotes>
+        <release version="4.4.3">
+            <prerelease version="4.4.3 beta 1">
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/336">Enhanced progress bar updates to avoid updating form fields related to query parameters.</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/336">Fixed lost changes in the DEC range field (focus issue).</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/337">Fix minor concurrency issue when the query status fails with an Invalid server id error but the query was successfully performed.</change>
+            </prerelease>
+        </release>
         <release version="4.4.2">
             <prerelease version="4.4.2b1" tag="SC_V4_4_2b1">
                 <change type="FEATURE">Added an easy way to choose SIMBAD mirrors from star search field.</change>
