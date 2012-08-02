@@ -335,8 +335,30 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 // can occur when thie thread wait for the query thread to finish (4)
                 handleException(ie, currentState);
             } catch (RemoteException re) {
-                // server or http failure
-                handleException(re, currentState);
+                // try to get result in case of GetCalStatus failure (Invalid server id):
+                boolean hasResult = false;
+                if (_queryResultThread != null) {
+
+                    // Check if the query was cancelled:
+                    if (!isCancelled()) {
+                        final String result = _queryResultThread.getResult();
+
+                        // check if null ie query terminated properly (no join):
+                        if (result != null) {
+                            _logger.log(Level.FINE, "Silenced error (invalid server id): ", re);
+
+                            hasResult = true;
+
+                            // Parse the received VOTable
+                            parseResults(result);
+                        }
+                    }
+                }
+
+                if (!hasResult) {
+                    // server or http failure
+                    handleException(re, currentState);
+                }
             } finally {
                 if (_logger.isLoggable(Level.INFO)) {
                     _logger.log(Level.INFO, getName() + " thread.run done.");
@@ -421,15 +443,15 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 // Disabled cancel query because it crashes the SearchCal Server !
 /*
                 
-                if (_id != null) {
-                // Launch the cancel query thread to free resources on the server side:
-                final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
+                 if (_id != null) {
+                 // Launch the cancel query thread to free resources on the server side:
+                 final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
                 
-                // define UncaughtExceptionHandler :
-                MCSExceptionHandler.installThreadHandler(cancelThread);
+                 // define UncaughtExceptionHandler :
+                 MCSExceptionHandler.installThreadHandler(cancelThread);
                 
-                cancelThread.start();
-                }
+                 cancelThread.start();
+                 }
                  */
 
                 // If the QueryResult thread has already been launched
@@ -499,7 +521,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             /** QuerySearchCal query */
             private final String _query;
             /** QuerySearchCal server response (VOTable) */
-            private String _result = null;
+            private volatile String _result = null;
 
             /**
              * Creates a new Thread to send query to the server
