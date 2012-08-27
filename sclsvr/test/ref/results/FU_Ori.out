@@ -17,8 +17,8 @@ sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxT
 sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxTableUDCoefficientCorrection.cfg ...
 sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxIntAbsPolynomial.cfg ...
 sclsvrServer -    alx - Info  - Loading /home/users/bourgesl/INTROOT/config/alxStarPopulationInKBand.cfg ...
-sclsvrServer -   vobs - Test  - vobsSTAR has defined 66 properties.
-sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR has defined 118 properties.
+sclsvrServer -   vobs - Test  - vobsSTAR has defined 67 properties.
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR has defined 119 properties.
 sclsvrServer -    alx - Test  - Sky coordinates (in degrees) : RA = 86.3 - DEC = 9.1
 sclsvrServer -    alx - Test  - Magnitude range = [5.0..8.0]
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.506990 / 0.158301 radians - -10.251 / 197.107 degrees
@@ -31,8 +31,8 @@ sclsvrServer - sclsvr - Test  - Sky research radius = 33.54(arcmin)
 sclsvrServer -   vobs - Info  - Execute: start
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting II/246/out ...
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.ra=05+45+22.60&-c.dec=%2b09+04+12.0&Kmag=5.00..8.00&-c.rm=34&-out=2MASS&-out=GLAT&-out=GLON&-out=Jmag&-out=Hmag&-out=Kmag&-out=Rmag&-out=Bmag&-out=opt&-out=Qflg&opt=%5bTU%5d&Qflg=AAA'
-sclsvrServer -   vobs - Test  - Parsing XML document (7151 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=086.344167%2b9.070000&Kmag=5.00..8.00&-c.rm=34&-out=2MASS&-out=GLAT&-out=GLON&-out=Jmag&-out=Hmag&-out=Kmag&-out=Rmag&-out=Bmag&-out=opt&-out=Qflg&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - Parsing XML document (7499 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (29 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
@@ -56,6 +56,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing COPY action with 29
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [29 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 29 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 29 stars
 sclsvrServer -   vobs - Info  - Execute: done = 29 star(s) found.
@@ -65,6 +66,7 @@ sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] without criteri
 sclsvrServer -   vobs - Test  - FilterDuplicates: done = 29 unique stars / 0 duplicates found : 0 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing COPY action with 29 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] WITHOUT criteria - input list [29 stars]; duplicated stars can occur !
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 29 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 29 stars
 sclsvrServer -   vobs - Test  - Execute: Step 1 - apply FILTER 'Opt = T filter'
@@ -84,6 +86,7 @@ sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] without criteri
 sclsvrServer -   vobs - Test  - FilterDuplicates: done = 29 unique stars / 0 duplicates found : 0 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 2 - Performing COPY action with 29 stars
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] WITHOUT criteria - input list [29 stars]; duplicated stars can occur !
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 29 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 2 - after COPY, 29 stars
 sclsvrServer -   vobs - Test  - Execute: Step 2 - apply FILTER 'Opt = U filter'
@@ -107,10 +110,11 @@ sclsvrServer -   vobs - Info  - star '2MASS 05433235+0845304' has been removed b
 sclsvrServer -   vobs - Info  - star '2MASS 05473169+0855210' has been removed by the filter 'Opt = U filter'
 sclsvrServer -   vobs - Test  - Execute: Step 2 - after FILTER 'Opt = U filter', star list size = 11
 sclsvrServer -   vobs - Test  - Execute: Step 3 - Consulting I/280 ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.357%2b09+04+12.40&+05+44+43.196%2b08+56+05.43&+05+44+37.215%2b08+57+27.91&+05+45+47.054%2b09+20+36.33&+05+46+34.482%2b08+55+07.98&+05+45+55.733%2b08+43+43.81&+05+44+59.964%2b08+38+40.58&+05+43+33.505%2b09+06+29.16&+05+44+04.142%2b08+45+03.04&+05+45+34.931%2b08+37+03.66&+05+44+31.109%2b08+40+00.08&+05+46+46.058%2b08+45+27.09&+05+44+30.842%2b08+38+13.98&+05+45+33.684%2b08+34+55.03&+05+43+34.145%2b09+17+17.42&+05+43+24.304%2b09+15+48.32&+05+43+32.353%2b08+45+30.46&+05+47+31.693%2b08+55+21.08&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (16488 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out.add=_1&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&086.343154%2b9.070111&+086.179983%2b8.934842&+086.155062%2b8.957753&+086.446058%2b9.343425&+086.643675%2b8.918883&+086.482221%2b8.728836&+086.249850%2b8.644606&+085.889604%2b9.108100&+086.017258%2b8.750844&+086.395546%2b8.617683&+086.129621%2b8.666689&+086.691908%2b8.757525&+086.128508%2b8.637217&+086.390350%2b8.581953&+085.892271%2b9.288172&+085.851267%2b9.263422&+085.884804%2b8.758461&+086.882054%2b8.922522&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (20262 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (18 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD = 'ID_ALTERNATIVE')
@@ -139,13 +143,15 @@ sclsvrServer -   vobs - Test  - Execute: Step 3 - Performing COPY action with 18
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [18 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 18 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 3 - after COPY, 18 stars
 sclsvrServer -   vobs - Test  - Execute: Step 4 - Consulting I/284 ...
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out=pmRA&-out=pmDE&-out=Imag&-out=R1mag&-out=R2mag&-out=B1mag&-out=B2mag&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+28.860%2b09+01+45.22&+05+46+11.847%2b09+03+54.87&+05+44+58.277%2b09+15+25.64&+05+45+40.273%2b09+21+29.51&+05+44+06.789%2b09+14+27.50&+05+46+20.755%2b08+47+14.60&+05+46+53.943%2b09+01+32.07&+05+46+40.634%2b09+23+19.65&+05+47+12.664%2b09+00+41.26&+05+44+18.388%2b09+26+35.04&+05+43+25.314%2b09+11+55.46&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (8227 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out.add=_1&-out=pmRA&-out=pmDE&-out=Imag&-out=R1mag&-out=R2mag&-out=B1mag&-out=B2mag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&086.370250%2b9.029228&+086.549363%2b9.065242&+086.242821%2b9.257122&+086.417804%2b9.358197&+086.028288%2b9.240972&+086.586479%2b8.787389&+086.724763%2b9.025575&+086.669308%2b9.388792&+086.802767%2b9.011461&+086.076617%2b9.443067&+085.855475%2b9.198739&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (10560 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (11 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/284':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
@@ -164,6 +170,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 4 - Performing COPY action with 11
 sclsvrServer -   vobs - Test  - Merge: list [0 stars] with criteria - input list [11 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 11 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 4 - after COPY, 11 stars
 sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [11 stars]
@@ -174,6 +181,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 5 - Performing MERGE action with 1
 sclsvrServer -   vobs - Test  - Merge: list [18 stars] with criteria - input list [11 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 11 stars added / 0 found / 0 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Execute: Step 5 - after MERGE, 29 stars
 sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [29 stars]
@@ -184,6 +192,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing UPDATE_ONLY action 
 sclsvrServer -   vobs - Test  - Merge: list [29 stars] with criteria - input list [29 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star for each star in the given list
 sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 29 found / 29 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'opt' [ID_CATALOG] updated 29 times
 sclsvrServer -   vobs - Test  - Merge: Property '2MASS' [ID_2MASS] updated 29 times
@@ -198,40 +207,38 @@ sclsvrServer -   vobs - Test  - Merge: Property 'K' [PHOT_JHN_K] updated 29 time
 sclsvrServer -   vobs - Test  - Execute: Step 6 - after UPDATE_ONLY, 29 stars
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Consulting B/denis ...
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Optimized ConeSearchRadius = 1.0 arcsec
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out=DENIS&-out=A2RAdeg&-out=A2DEdeg&-out=Imag&-out=Imag1.5c&-out=Imag2.5c&-out=Imag3.5c&-out=Imag3.5&-out=Imag4.5&-out=Imag5.5&-out=Iflg&-out=Rmag&-out=Bmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (9162 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=DENIS&-out=A2RAdeg&-out=A2DEdeg&-out=Imag&-out=Imag1.5c&-out=Imag2.5c&-out=Imag3.5c&-out=Imag3.5&-out=Imag4.5&-out=Imag5.5&-out=Iflg&-out=Rmag&-out=Bmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&086.343208%2b9.070175&+086.179983%2b8.934758&+086.155075%2b8.957756&+086.446067%2b9.343428&+086.643658%2b8.918942&+086.482242%2b8.728861&+086.249887%2b8.644631&+085.889592%2b9.108117&+086.017267%2b8.750878&+086.395550%2b8.617692&+086.129587%2b8.666706&+086.691925%2b8.757511&+086.128471%2b8.637194&+086.390338%2b8.581975&+085.892300%2b9.288144&+085.851279%2b9.263456&+085.884808%2b8.758422&+086.882125%2b8.922486&+086.370271%2b9.029206&+086.549363%2b9.065225&+086.242804%2b9.257083&+086.417821%2b9.358269&+086.028463%2b9.241131&+086.586475%2b8.787414&+086.724775%2b9.025414&+086.669363%2b9.388778&+086.802800%2b9.011433&+086.076637%2b9.443078&+085.855446%2b9.198692&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (14106 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 7 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Performing UPDATE_ONLY action with 0 stars
 sclsvrServer -   vobs - Test  - Execute: Step 7 - after UPDATE_ONLY, 29 stars
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Consulting B/sb9/main ...
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Optimized ConeSearchRadius = 1.0 arcsec
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (6741 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&086.343208%2b9.070175&+086.179983%2b8.934758&+086.155075%2b8.957756&+086.446067%2b9.343428&+086.643658%2b8.918942&+086.482242%2b8.728861&+086.249887%2b8.644631&+085.889592%2b9.108117&+086.017267%2b8.750878&+086.395550%2b8.617692&+086.129587%2b8.666706&+086.691925%2b8.757511&+086.128471%2b8.637194&+086.390338%2b8.581975&+085.892300%2b9.288144&+085.851279%2b9.263456&+085.884808%2b8.758422&+086.882125%2b8.922486&+086.370271%2b9.029206&+086.549363%2b9.065225&+086.242804%2b9.257083&+086.417821%2b9.358269&+086.028463%2b9.241131&+086.586475%2b8.787414&+086.724775%2b9.025414&+086.669363%2b9.388778&+086.802800%2b9.011433&+086.076637%2b9.443078&+085.855446%2b9.198692&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (11428 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 8 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Performing UPDATE_ONLY action with 0 stars
 sclsvrServer -   vobs - Test  - Execute: Step 8 - after UPDATE_ONLY, 29 stars
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Consulting B/wds/wds ...
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Optimized ConeSearchRadius = 1.0 arcsec
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-file=-c&-c.rs=1.0&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (7488 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-file=-c&-c.rs=1.0&-out.add=_1&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&086.343208%2b9.070175&+086.179983%2b8.934758&+086.155075%2b8.957756&+086.446067%2b9.343428&+086.643658%2b8.918942&+086.482242%2b8.728861&+086.249887%2b8.644631&+085.889592%2b9.108117&+086.017267%2b8.750878&+086.395550%2b8.617692&+086.129587%2b8.666706&+086.691925%2b8.757511&+086.128471%2b8.637194&+086.390338%2b8.581975&+085.892300%2b9.288144&+085.851279%2b9.263456&+085.884808%2b8.758422&+086.882125%2b8.922486&+086.370271%2b9.029206&+086.549363%2b9.065225&+086.242804%2b9.257083&+086.417821%2b9.358269&+086.028463%2b9.241131&+086.586475%2b8.787414&+086.724775%2b9.025414&+086.669363%2b9.388778&+086.802800%2b9.011433&+086.076637%2b9.443078&+085.855446%2b9.198692&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (12190 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'WDS' (UCD = 'ID_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'sep1' (UCD = 'ORBIT_SEPARATION')
 sclsvrServer -   vobs - Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'sep2' (UCD = 'ORBIT_SEPARATION')
 sclsvrServer -   vobs - Test  - Execute: Step 9 - number of returned stars = 1
-sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [1 stars]
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
-sclsvrServer -   vobs - Test  - FilterDuplicates: done = 1 unique stars / 0 duplicates found : 0 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Performing UPDATE_ONLY action with 1 stars
 sclsvrServer -   vobs - Test  - Merge: list [29 stars] with criteria - input list [1 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star among the star list for each reference star
 sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 1 found / 1 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'WDS' [ID_WDS] updated 1 times
 sclsvrServer -   vobs - Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 1 times
@@ -239,10 +246,11 @@ sclsvrServer -   vobs - Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] u
 sclsvrServer -   vobs - Test  - Execute: Step 9 - after UPDATE_ONLY, 29 stars
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Consulting II/297/irc ...
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Optimized ConeSearchRadius = 3.0 arcsec
-sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=3.0&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3Dresult1%5F280%2Etxt&05+45+22.370%2b09+04+12.63&+05+44+43.196%2b08+56+05.13&+05+44+37.218%2b08+57+27.92&+05+45+47.056%2b09+20+36.34&+05+46+34.478%2b08+55+08.19&+05+45+55.738%2b08+43+43.90&+05+44+59.973%2b08+38+40.67&+05+43+33.502%2b09+06+29.22&+05+44+04.144%2b08+45+03.16&+05+45+34.932%2b08+37+03.69&+05+44+31.101%2b08+40+00.14&+05+46+46.062%2b08+45+27.04&+05+44+30.833%2b08+38+13.90&+05+45+33.681%2b08+34+55.11&+05+43+34.152%2b09+17+17.32&+05+43+24.307%2b09+15+48.44&+05+43+32.354%2b08+45+30.32&+05+47+31.710%2b08+55+20.95&+05+45+28.865%2b09+01+45.14&+05+46+11.847%2b09+03+54.81&+05+44+58.273%2b09+15+25.50&+05+45+40.277%2b09+21+29.77&+05+44+06.831%2b09+14+28.07&+05+46+20.754%2b08+47+14.69&+05+46+53.946%2b09+01+31.49&+05+46+40.647%2b09+23+19.60&+05+47+12.672%2b09+00+41.16&+05+44+18.393%2b09+26+35.08&+05+43+25.307%2b09+11+55.29&%3D%3D%3D%3Dresult1%5F280%2Etxt'
-sclsvrServer -   vobs - Test  - Parsing XML document (9559 bytes)
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=3.0&-out.add=_1&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&086.343208%2b9.070175&+086.179983%2b8.934758&+086.155075%2b8.957756&+086.446067%2b9.343428&+086.643658%2b8.918942&+086.482242%2b8.728861&+086.249887%2b8.644631&+085.889592%2b9.108117&+086.017267%2b8.750878&+086.395550%2b8.617692&+086.129587%2b8.666706&+086.691925%2b8.757511&+086.128471%2b8.637194&+086.390338%2b8.581975&+085.892300%2b9.288144&+085.851279%2b9.263456&+085.884808%2b8.758422&+086.882125%2b8.922486&+086.370271%2b9.029206&+086.549363%2b9.065225&+086.242804%2b9.257083&+086.417821%2b9.358269&+086.028463%2b9.241131&+086.586475%2b8.787414&+086.724775%2b9.025414&+086.669363%2b9.388778&+086.802800%2b9.011433&+086.076637%2b9.443078&+085.855446%2b9.198692&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (14672 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (8 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
 sclsvrServer -   vobs - Test  - Extract: Property 'AKARI' [ID_AKARI] found for parameter 'objID' (UCD = 'ID_NUMBER')
@@ -251,14 +259,11 @@ sclsvrServer -   vobs - Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR]
 sclsvrServer -   vobs - Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'S18' (UCD = 'PHOT_FLUX_IR_25')
 sclsvrServer -   vobs - Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'e_S18' (UCD = 'ERROR')
 sclsvrServer -   vobs - Test  - Execute: Step 10 - number of returned stars = 8
-sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [8 stars]
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000833333
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000833333
-sclsvrServer -   vobs - Test  - FilterDuplicates: done = 8 unique stars / 0 duplicates found : 0 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Performing UPDATE_ONLY action with 8 stars
 sclsvrServer -   vobs - Test  - Merge: list [29 stars] with criteria - input list [8 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000833333
 sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000833333
+sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star among the star list for each reference star
 sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 8 found / 8 updated / 0 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'AKARI' [ID_AKARI] updated 8 times
 sclsvrServer -   vobs - Test  - Merge: Property 'S09' [PHOT_FLUX_IR_9] updated 8 times
@@ -1090,4 +1095,4 @@ sclsvrServer -   vobs - Test  - star '2MASS 05432531+0911554' has been removed b
 sclsvrServer -   vobs - Test  - star 'HD 246829' has been removed by the distance filter : too far from the reference star: 0.523639 > 0.000278 deg
 sclsvrServer -   vobs - Test  - star 'HIP 26984' has been removed by the distance filter : too far from the reference star: 0.550476 > 0.000278 deg
 sclsvrServer -   vobs - Test  - star 'TYC1 715' has been removed by the distance filter : too far from the reference star: 0.551437 > 0.000278 deg
-sclsvrServer -   vobs - Test  - GetVotable: buffer size = 206424 / 220412 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 207990 / 221252 bytes
