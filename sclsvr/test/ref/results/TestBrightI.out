@@ -1192,19 +1192,6 @@ sclsvrServer -   vobs - Test  - Extract: Property 'L' [PHOT_JHN_L] found for par
 sclsvrServer -   vobs - Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'M' (UCD = 'PHOT_JHN_M')
 sclsvrServer -   vobs - Test  - Extract: Property 'N' [PHOT_JHN_N] found for parameter 'N' (UCD = 'PHOT_IR_N:10.4')
 sclsvrServer -   vobs - Test  - Execute: Step 6 - number of returned stars = 52
-sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [52 stars]
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(2) {POS_EQ_RA_MAIN = '22 25 16.6' POS_EQ_DEC_MAIN = '+01 22 39' } - LEFT(4) {PHOT_JHN_B = '4.6' PHOT_JHN_V = '4.64' PHOT_JHN_R = '4.48' PHOT_JHN_I = '4.48' } - RIGHT(4) {PHOT_JHN_B = '4.46' PHOT_JHN_V = '4.41' PHOT_JHN_R = '4.3' PHOT_JHN_I = '4.26' }
-sclsvrServer -   vobs - Warn  - Compare Properties[2]: COMMON(3) {POS_EQ_RA_MAIN = '22 05 47.0' POS_EQ_DEC_MAIN = '-00 19 11' PHOT_JHN_I = '1.8' } - LEFT(5) {PHOT_JHN_B = '3.9' PHOT_JHN_V = '2.93' PHOT_JHN_R = '2.27' PHOT_JHN_J = '1.48' PHOT_JHN_K = '0.96' } - RIGHT(3) {PHOT_JHN_B = '3.92' PHOT_JHN_V = '2.97' PHOT_JHN_R = '2.32' }
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(2) {POS_EQ_RA_MAIN = '22 04 47.4' POS_EQ_DEC_MAIN = '-00 54 23' } - LEFT(4) {PHOT_JHN_B = '5.54' PHOT_JHN_V = '5.31' PHOT_JHN_R = '5.13' PHOT_JHN_I = '5.03' } - RIGHT(4) {PHOT_JHN_B = '5.51' PHOT_JHN_V = '5.27' PHOT_JHN_R = '5.09' PHOT_JHN_I = '4.98' }
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(2) {POS_EQ_RA_MAIN = '22 04 47.4' POS_EQ_DEC_MAIN = '-00 54 23' } - LEFT(4) {PHOT_JHN_B = '5.54' PHOT_JHN_V = '5.31' PHOT_JHN_R = '5.13' PHOT_JHN_I = '5.03' } - RIGHT(4) {PHOT_JHN_B = '5.52' PHOT_JHN_V = '5.28' PHOT_JHN_R = '5.09' PHOT_JHN_I = '4.98' }
-sclsvrServer -   vobs - Warn  - Compare Properties[1]: COMMON(3) {POS_EQ_RA_MAIN = '22 03 18.8' POS_EQ_DEC_MAIN = '-02 09 19' PHOT_JHN_I = '4.74' } - LEFT(3) {PHOT_JHN_B = '4.64' PHOT_JHN_V = '4.69' PHOT_JHN_R = '4.7' } - RIGHT(2) {PHOT_JHN_B = '4.62' PHOT_JHN_R = '4.67' }
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(2) {POS_EQ_RA_MAIN = '22 03 18.8' POS_EQ_DEC_MAIN = '-02 09 19' } - LEFT(4) {PHOT_JHN_B = '4.64' PHOT_JHN_V = '4.69' PHOT_JHN_R = '4.7' PHOT_JHN_I = '4.74' } - RIGHT(4) {PHOT_JHN_B = '4.62' PHOT_JHN_V = '4.72' PHOT_JHN_R = '4.66' PHOT_JHN_I = '4.69' }
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(2) {POS_EQ_RA_MAIN = '22 03 18.8' POS_EQ_DEC_MAIN = '-02 09 19' } - LEFT(4) {PHOT_JHN_B = '4.64' PHOT_JHN_V = '4.69' PHOT_JHN_R = '4.7' PHOT_JHN_I = '4.74' } - RIGHT(4) {PHOT_JHN_B = '4.61' PHOT_JHN_V = '4.71' PHOT_JHN_R = '4.68' PHOT_JHN_I = '4.76' }
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(3) {POS_EQ_RA_MAIN = '22 03 18.8' POS_EQ_DEC_MAIN = '-02 09 19' PHOT_JHN_I = '4.74' } - LEFT(3) {PHOT_JHN_B = '4.64' PHOT_JHN_V = '4.69' PHOT_JHN_R = '4.7' } - RIGHT(3) {PHOT_JHN_B = '4.6' PHOT_JHN_V = '4.73' PHOT_JHN_R = '4.71' }
-sclsvrServer -   vobs - Warn  - Compare Properties[0]: COMMON(2) {POS_EQ_RA_MAIN = '22 03 18.8' POS_EQ_DEC_MAIN = '-02 09 19' } - LEFT(4) {PHOT_JHN_B = '4.64' PHOT_JHN_V = '4.69' PHOT_JHN_R = '4.7' PHOT_JHN_I = '4.74' } - RIGHT(4) {PHOT_JHN_B = '4.58' PHOT_JHN_V = '4.71' PHOT_JHN_R = '4.66' PHOT_JHN_I = '4.73' }
-sclsvrServer -   vobs - Test  - FilterDuplicates: done = 43 unique stars / 9 duplicates found : 9 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing MERGE action with 52 stars
 sclsvrServer -   vobs - Test  - Merge: list [18 stars] with criteria - input list [52 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
@@ -1401,45 +1388,19 @@ sclsvrServer -   vobs - Test  - Merge: Criteria 3 on property[PHOT_JHN_V] with r
 sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star among the star list for each reference star
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [2 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000097696, star = 'Coordinates-ra=00 53 00.5/dec=-01 08 39'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000097696, star = 'Coordinates-ra=00 53 00.5/dec=-01 08 39'
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
 sclsvrServer -   vobs - Test  - process subList size = 4 (same targetId)
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [2 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000195846, star = 'Coordinates-ra=23 39 57.0/dec=+05 37 35'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000195846, star = 'Coordinates-ra=23 39 57.0/dec=+05 37 35'
-sclsvrServer -   vobs - Test  - No star matching all criteria for targetId '348.962525-9.078578'
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
-sclsvrServer -   vobs - Test  - No star matching all criteria for targetId '337.207971-0.019975'
 sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
 sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
-sclsvrServer -   vobs - Test  - No star matching all criteria for targetId '336.319262+1.377397'
 sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [2 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000159081, star = 'Coordinates-ra=22 16 50.0/dec=-07 47 00'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000159081, star = 'Coordinates-ra=22 16 50.0/dec=-07 47 00'
 sclsvrServer -   vobs - Test  - process subList size = 4 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [3 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000197044, star = 'Coordinates-ra=22 05 47.0/dec=-00 19 11'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000197044, star = 'Coordinates-ra=22 05 47.0/dec=-00 19 11'
-sclsvrServer -   vobs - Test  - Star    3: key = 0.000197044, star = 'Coordinates-ra=22 05 47.0/dec=-00 19 11'
 sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [3 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000101863, star = 'Coordinates-ra=22 04 47.4/dec=-00 54 23'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000101863, star = 'Coordinates-ra=22 04 47.4/dec=-00 54 23'
-sclsvrServer -   vobs - Test  - Star    3: key = 0.000101863, star = 'Coordinates-ra=22 04 47.4/dec=-00 54 23'
 sclsvrServer -   vobs - Test  - process subList size = 6 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [5 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000203629, star = 'Coordinates-ra=22 03 18.8/dec=-02 09 19'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000203629, star = 'Coordinates-ra=22 03 18.8/dec=-02 09 19'
-sclsvrServer -   vobs - Test  - Star    3: key = 0.000203629, star = 'Coordinates-ra=22 03 18.8/dec=-02 09 19'
-sclsvrServer -   vobs - Test  - Star    4: key = 0.000203629, star = 'Coordinates-ra=22 03 18.8/dec=-02 09 19'
-sclsvrServer -   vobs - Test  - Star    5: key = 0.000203629, star = 'Coordinates-ra=22 03 18.8/dec=-02 09 19'
-sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 36 found / 36 updated / 29 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 47 found / 36 updated / 18 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'R' [PHOT_JHN_R] updated 36 times
 sclsvrServer -   vobs - Test  - Merge: Property 'I' [PHOT_JHN_I] updated 36 times
 sclsvrServer -   vobs - Test  - Merge: Property 'L' [PHOT_JHN_L] updated 3 times
@@ -1626,7 +1587,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.089874 / 0.142947 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 109.907 / 0.115 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.775 (HIGH), V = 5.377 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.090 (HIGH), H = 2.430 (HIGH), K = 2.290 (HIGH), L = 2.190 (HIGH), M = 2.350 (HIGH)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.398 / B-V [1.270..1.270]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.398e+00 / B-V 1.270e+00; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.775 (HIGH), V = 5.377 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.090 (HIGH), H = 2.430 (HIGH), K = 2.290 (HIGH), L = 2.190 (HIGH), M = 2.350 (HIGH)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.775, V = 5.377, R = 0.000, I = 0.000, J = 3.090, H = 2.430, K = 2.290, L = 2.190, M = 2.350
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
@@ -1797,7 +1758,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.442579 / 0.095777 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 145.117 / 0.115 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.841 (HIGH), V = 4.435 (HIGH), R = 3.380 (HIGH), I = 2.670 (HIGH), J = 2.150 (HIGH), H = 1.440 (HIGH), K = 1.300 (HIGH), L = 1.200 (HIGH), M = 1.400 (HIGH)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.406 / B-V [1.270..1.270]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.406e+00 / B-V 1.270e+00; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.841 (HIGH), V = 4.435 (HIGH), R = 3.380 (HIGH), I = 2.670 (HIGH), J = 2.150 (HIGH), H = 1.440 (HIGH), K = 1.300 (HIGH), L = 1.200 (HIGH), M = 1.400 (HIGH)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.841, V = 4.435, R = 3.380, I = 2.670, J = 2.150, H = 1.440, K = 1.300, L = 1.200, M = 1.400
 sclsvrServer -    alx - Test  - Diameter BV = 3.575(0.2860), VR = 3.298(0.3199), VK = 2.957(0.2040)
@@ -1862,7 +1823,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.049998 / -0.111359 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 84.325 / 0.233 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.583 (HIGH), V = 6.072 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.910 (HIGH), H = 3.080 (HIGH), K = 2.888 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.511 / B-V [1.380..1.380]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.511e+00 / B-V 1.380e+00; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.583 (HIGH), V = 6.072 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.910 (HIGH), H = 3.080 (HIGH), K = 2.888 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.583, V = 6.072, R = 0.000, I = 0.000, J = 3.910, H = 3.080, K = 2.888, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
@@ -1969,7 +1930,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.008554 / -0.104965 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 91.582 / 0.122 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.984 (HIGH), V = 4.401 (HIGH), R = 2.850 (HIGH), I = 1.440 (HIGH), J = 0.623 (HIGH), H = -0.238 (HIGH), K = -0.397 (HIGH), L = -0.650 (HIGH), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.583 / B-V [99.990..99.990]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.583e+00 / B-V 9.999e+01; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.984 (HIGH), V = 4.401 (HIGH), R = 2.850 (HIGH), I = 1.440 (HIGH), J = 0.623 (HIGH), H = -0.238 (HIGH), K = -0.397 (HIGH), L = -0.650 (HIGH), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.984, V = 4.401, R = 2.850, I = 1.440, J = 0.623, H = -0.238, K = -0.397, L = -0.650, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 4.862(0.3889), VR = 7.235(0.7018), VK = 7.689(0.5305)
@@ -2049,7 +2010,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.037725 / 0.162549 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 99.086 / 0.242 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.409 (HIGH), V = 5.800 (HIGH), R = 5.530 (HIGH), I = 4.990 (HIGH), J = 2.570 (HIGH), H = 1.665 (HIGH), K = 1.358 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.609 / B-V [99.990..99.990]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.609e+00 / B-V 9.999e+01; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.409 (HIGH), V = 5.800 (HIGH), R = 5.530 (HIGH), I = 4.990 (HIGH), J = 2.570 (HIGH), H = 1.665 (HIGH), K = 1.358 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.409, V = 5.800, R = 5.530, I = 4.990, J = 2.570, H = 1.665, K = 1.358, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 2.664(0.2132), VR = 0.373(0.0362), VK = 3.299(0.2277)
@@ -2275,7 +2236,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.397796 / -0.000349 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 65.354 / 0.032 / 0.006
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.274 (HIGH), V = 4.029 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.890 (HIGH), H = 2.788 (HIGH), K = 2.747 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 0.245 / B-V [0.350..0.430]; delta > 0.1
+sclsvrServer -    alx - Test  - mgB-mgV = 0.245 / B-V [0.350..0.430]; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.274 (HIGH), V = 4.029 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.890 (HIGH), H = 2.788 (HIGH), K = 2.747 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.282, V = 4.035, R = 0.000, I = 0.000, J = 2.906, H = 2.789, K = 2.748, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
@@ -2291,14 +2252,14 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.397797 / -0.000358 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 65.360 / 0.032 / 0.006
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.827 (HIGH), V = 4.440 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.827 (HIGH), V = 4.440 (HIGH), R = 3.984 (LOW), I = 3.615 (LOW), J = 3.449 (LOW), H = 3.162 (LOW), K = 3.096 (LOW), L = 3.026 (LOW), M = 3.006 (LOW)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.835, V = 4.446, R = 3.988, I = 3.618, J = 3.464, H = 3.163, K = 3.097, L = 3.026, M = 3.006
-sclsvrServer -    alx - Test  - Diameter BV = 0.797(0.0638), VR = 1.048(0.1017), VK = 1.083(0.0748)
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.827 (HIGH), V = 4.440 (HIGH), R = 3.984 (LOW), I = 3.615 (LOW), J = 3.449 (LOW), H = 3.162 (LOW), K = 3.189 (LOW), L = 3.119 (LOW), M = 3.099 (LOW)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.835, V = 4.446, R = 3.988, I = 3.618, J = 3.464, H = 3.163, K = 3.189, L = 3.119, M = 3.099
+sclsvrServer -    alx - Test  - Diameter BV = 0.797(0.0638), VR = 1.048(0.1017), VK = 1.024(0.0706)
 sclsvrServer -    alx - Test  - Confidence index = LOW
-sclsvrServer -    alx - Test  - Diam = 1.083 (0.075) - base = 102.5 - wlen= 0.870
-sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.596705 (0.046910), 0.356057 (0.055983)
-sclsvrServer - sclsvr - Test  - Computing UDs for LD = '1.083457', Teff = '6500.000000', LogG = '4.328000' ...
-sclsvrServer -    alx - Test  - Computed UD: U = 1.010968, B = 1.013519, V = 1.026301, R = 1.037468, I = 1.045550, J = 1.056522, H = 1.062431, K = 1.065227, L = 1.072476, N = 1.078420
+sclsvrServer -    alx - Test  - Diam = 1.024 (0.071) - base = 102.5 - wlen= 0.870
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.633786 (0.043446), 0.401685 (0.055070)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '1.023795', Teff = '6500.000000', LogG = '4.328000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.955298, B = 0.957709, V = 0.969787, R = 0.980339, I = 0.987976, J = 0.998344, H = 1.003927, K = 1.006569, L = 1.013419, N = 1.019036
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 212943'
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' - Our spectral type = 'K0.0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
@@ -2454,7 +2415,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.502697 / -0.015819 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 59.096 / 0.071 / 0.023
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.516 (HIGH), V = 5.252 (HIGH), R = 5.113 (HIGH), I = 5.018 (HIGH), J = 4.943 (HIGH), H = 4.954 (HIGH), K = 4.824 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 0.264 / B-V [0.150..0.150]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 2.636e-01 / B-V 1.500e-01; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.516 (HIGH), V = 5.252 (HIGH), R = 5.113 (HIGH), I = 5.018 (HIGH), J = 4.943 (HIGH), H = 4.954 (HIGH), K = 4.824 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.546, V = 5.275, R = 5.130, I = 5.030, J = 5.006, H = 4.958, K = 4.826, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 0.457(0.0365), VR = 0.357(0.0346), VK = 0.395(0.0272)
@@ -2473,7 +2434,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.498819 / 0.088288 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 65.369 / 0.081 / 0.036
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.310 (HIGH), V = 4.818 (HIGH), R = 3.743 (HIGH), I = 2.992 (HIGH), J = 2.476 (HIGH), H = 1.812 (HIGH), K = 1.686 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.491 / B-V [1.380..1.380]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.491e+00 / B-V 1.380e+00; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.310 (HIGH), V = 4.818 (HIGH), R = 3.743 (HIGH), I = 2.992 (HIGH), J = 2.476 (HIGH), H = 1.812 (HIGH), K = 1.686 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.357, V = 4.854, R = 3.770, I = 3.010, J = 2.576, H = 1.818, K = 1.690, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 3.449(0.2759), VR = 2.857(0.2772), VK = 2.475(0.1707)

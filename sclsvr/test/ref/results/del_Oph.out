@@ -182,13 +182,6 @@ sclsvrServer -   vobs - Test  - Extract: Property 'L' [PHOT_JHN_L] found for par
 sclsvrServer -   vobs - Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'M' (UCD = 'PHOT_JHN_M')
 sclsvrServer -   vobs - Test  - Extract: Property 'N' [PHOT_JHN_N] found for parameter 'N' (UCD = 'PHOT_IR_N:10.4')
 sclsvrServer -   vobs - Test  - Execute: Step 6 - number of returned stars = 9
-sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [9 stars]
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
-sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000277778
-sclsvrServer -   vobs - Warn  - Compare Properties[-1]: COMMON(6) {POS_EQ_RA_MAIN = '17 43 28.4' POS_EQ_DEC_MAIN = '+04 34 02' PHOT_JHN_B = '3.94' PHOT_JHN_V = '2.77' PHOT_JHN_R = '1.95' PHOT_JHN_I = '1.38' } - LEFT(3) {PHOT_JHN_J = '0.92' PHOT_JHN_K = '0.23' PHOT_JHN_L = '0.13' } - RIGHT(4) {PHOT_JHN_J = '0.91' PHOT_JHN_H = '0.32' PHOT_JHN_K = '0.22' PHOT_JHN_L = '0.12' }
-sclsvrServer -   vobs - Warn  - Compare Properties[2]: COMMON(2) {POS_EQ_RA_MAIN = '17 59 01.6' POS_EQ_DEC_MAIN = '-09 46 25' } - LEFT(6) {PHOT_JHN_B = '4.33' PHOT_JHN_V = '3.34' PHOT_JHN_R = '2.63' PHOT_JHN_I = '2.15' PHOT_JHN_J = '1.68' PHOT_JHN_K = '1.12' } - RIGHT(4) {PHOT_JHN_J = '1.74' PHOT_JHN_H = '1.28' PHOT_JHN_K = '1.16' PHOT_JHN_L = '1.05' }
-sclsvrServer -   vobs - Warn  - Compare Properties[3]: COMMON(2) {POS_EQ_RA_MAIN = '18 05 27.3' POS_EQ_DEC_MAIN = '+02 30 00' } - LEFT(6) {PHOT_JHN_B = '4.89' PHOT_JHN_V = '4.03' PHOT_JHN_R = '3.38' PHOT_JHN_I = '2.92' PHOT_JHN_J = '2.49' PHOT_JHN_K = '1.88' } - RIGHT(3) {PHOT_JHN_H = '2.04' PHOT_JHN_K = '1.96' PHOT_JHN_L = '1.8' }
-sclsvrServer -   vobs - Test  - FilterDuplicates: done = 6 unique stars / 3 duplicates found : 3 different stars.
 sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing MERGE action with 9 stars
 sclsvrServer -   vobs - Test  - Merge: list [84 stars] with criteria - input list [9 stars]
 sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000277778
@@ -365,13 +358,8 @@ sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] w
 sclsvrServer -   vobs - Test  - Merge: Criteria 3 on property[PHOT_JHN_V] with range = 0.100000000
 sclsvrServer -   vobs - Test  - Merge: crossmatch algorithm using the closest star among the star list for each reference star
 sclsvrServer -   vobs - Test  - process subList size = 4 (same targetId)
-sclsvrServer -   vobs - Test  - Star index [4 stars]
-sclsvrServer -   vobs - Test  - Star    1: key = 0.000211179, star = 'Coordinates-ra=17 43 28.4/dec=+04 34 02'
-sclsvrServer -   vobs - Test  - Star    2: key = 0.000211179, star = 'Coordinates-ra=17 43 28.4/dec=+04 34 02'
-sclsvrServer -   vobs - Test  - Star    3: key = 0.000211179, star = 'Coordinates-ra=17 43 28.4/dec=+04 34 02'
-sclsvrServer -   vobs - Test  - Star    4: key = 0.000211179, star = 'Coordinates-ra=17 43 28.4/dec=+04 34 02'
 sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
-sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 5 found / 5 updated / 4 skipped.
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 8 found / 5 updated / 1 skipped.
 sclsvrServer -   vobs - Test  - Merge: Property 'R' [PHOT_JHN_R] updated 5 times
 sclsvrServer -   vobs - Test  - Merge: Property 'I' [PHOT_JHN_I] updated 5 times
 sclsvrServer -   vobs - Test  - Execute: Step 12 - after UPDATE_ONLY, 9 stars
@@ -573,7 +561,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.350389 / -0.048083 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 354.403 / 0.175 / 0.019
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.172 (HIGH), V = 5.499 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.435 (HIGH), H = 1.497 (HIGH), K = 1.308 (HIGH), L = 1.189 (HIGH), M = 1.399 (HIGH)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.673 / B-V [1.560..1.560]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.673e+00 / B-V 1.560e+00; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.172 (HIGH), V = 5.499 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.435 (HIGH), H = 1.497 (HIGH), K = 1.308 (HIGH), L = 1.189 (HIGH), M = 1.399 (HIGH)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.197, V = 5.518, R = 0.000, I = 0.000, J = 2.488, H = 1.500, K = 1.310, L = 1.190, M = 1.400
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
@@ -636,7 +624,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.271706 / -0.159637 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 352.777 / 0.180 / 0.061
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.408 (HIGH), V = 6.991 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.228 (HIGH), H = 1.382 (HIGH), K = 1.101 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.417 / B-V [99.990..99.990]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.417e+00 / B-V 9.999e+01; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 8.408 (HIGH), V = 6.991 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.228 (HIGH), H = 1.382 (HIGH), K = 1.101 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 8.489, V = 7.052, R = 0.000, I = 0.000, J = 2.398, H = 1.392, K = 1.108, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
