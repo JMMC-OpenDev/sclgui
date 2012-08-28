@@ -25,7 +25,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000] (arcmin)
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=335.684188-45.947944&Vmag=0.00..4.00&-c.geom=b&-c.bm=2914/1200&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
-sclsvrServer -   vobs - Test  - Parsing XML document (7019 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (7018 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (10 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
@@ -61,7 +61,7 @@ sclsvrServer -   vobs - Test  - Merge: done = 10 stars added / 0 found / 0 updat
 sclsvrServer -   vobs - Test  - Execute: Step 1 - after COPY, 10 stars
 sclsvrServer -   vobs - Test  - Execute: Step 2 - Consulting II/246/out ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out.add=_1&-out=2MASS&-out=GLAT&-out=GLON&-out=Jmag&-out=Hmag&-out=Kmag&-out=Rmag&-out=Bmag&-out=opt&-out=Qflg&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&332.058275-46.960981&+337.317396-43.495564&+340.666875-46.884578&+342.138742-51.316869&+347.589746-45.246714&+328.482200-37.364861&+309.391808-47.291503&+002.352671-45.747425&+006.550842-43.679831&+006.571000-42.306056&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (11094 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (11093 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -99,7 +99,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 2 - after FILTER 'filter List', st
 sclsvrServer -   vobs - Test  - Execute: Step 3 - Consulting J/A+A/393/183/catalog ...
 sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000] (arcmin)
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=335.684188-45.947944&Kmag=-2.00..2.00&-c.geom=b&-c.bm=2914/1200&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=UDDK&-out=e_UDDK'
-sclsvrServer -   vobs - Test  - Parsing XML document (4220 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (4219 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (5 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'J/A+A/393/183/catalog':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
@@ -134,7 +134,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 3 - after MERGE, 9 stars
 sclsvrServer -   vobs - Test  - Execute: Step 4 - Consulting J/A+A/433/1155 ...
 sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000] (arcmin)
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=335.684188-45.947944&Ksmag=-2.00..2.00&-c.geom=b&-c.bm=2914/1200&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam'
-sclsvrServer -   vobs - Test  - Parsing XML document (3288 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (3287 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 4 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 4 - Performing MERGE action with 0 stars
@@ -142,7 +142,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 4 - after MERGE, 9 stars
 sclsvrServer -   vobs - Test  - Execute: Step 5 - Consulting II/225/catalog ...
 sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000] (arcmin)
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=335.684188-45.947944&lambda=2.20&x_F(IR)=M&F(IR)=-2.00..2.00&-c.geom=b&-c.bm=2914/1200&-out=lambda&-out=F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0'
-sclsvrServer -   vobs - Test  - Parsing XML document (5170 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (5169 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (65 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/225/catalog':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
@@ -160,7 +160,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 5 - after MERGE, 61 stars
 sclsvrServer -   vobs - Test  - Execute: Step 6 - Consulting II/7A/catalog ...
 sclsvrServer -   vobs - Test  - Search area [2914.382 - 1200.000] (arcmin)
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=335.684188-45.947944&K=-2.00..2.00&-c.geom=b&-c.bm=2914/1200&-out=B&-out=V&-out=R&-out=I&-out=J&-out=H&-out=K&-out=L&-out=M&-out=N'
-sclsvrServer -   vobs - Test  - Parsing XML document (4268 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (4267 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (2 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/7A/catalog':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
@@ -189,7 +189,7 @@ sclsvrServer -   vobs - Test  - Merge: done = 1 stars added / 1 found / 0 update
 sclsvrServer -   vobs - Test  - Execute: Step 6 - after MERGE, 62 stars
 sclsvrServer -   vobs - Test  - Execute: Step 7 - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=5&-out.add=_1&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317446-43.495522&+347.589692-45.246692&+309.391767-47.291450&+002.352800-45.747394&+006.570812-42.306011&+331.528687-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370671-46.226825&+337.439583-43.749444&+337.436667-43.743611&+336.520833-48.438889&+336.518333-48.442500&+337.318333-43.494722&+332.980000-40.552778&+340.872917-41.420833&+327.140417-46.903611&+340.844583-40.104167&+331.668333-39.572500&+347.560417-40.595000&+328.062500-37.326111&+350.589167-48.058889&+322.305417-41.414167&+351.028750-45.083333&+320.039167-45.021944&+319.988750-45.021389&+324.975833-38.039722&+324.973333-37.987500&+320.801667-42.068889&+320.941667-40.706667&+346.896667-36.129167&+317.225000-44.580278&+317.530000-38.517500&+359.106250-49.805000&+000.332083-50.321389&+310.522917-50.287500&+309.390417-47.292222&+002.350000-45.744444&+310.334583-42.138056&+305.074167-50.705556&+309.796250-37.930833&+305.060000-50.703333&+305.004583-50.642222&+309.725833-37.923611&+307.315417-40.420000&+006.567083-42.306389&+303.870417-44.410000&+303.867083-44.414722&+303.868750-44.363333&+305.462917-40.756667&+306.623750-37.102222&+007.108750-39.906944&+304.432917-39.077500&+300.167500-49.611944&+302.663750-41.718056&+301.924583-42.539167&+012.509167-48.730000&+305.820833-35.005278&+003.834167-32.040278&+003.840833-32.045833&+003.842500-32.044444&+002.352500-45.747500&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (33601 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (33600 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (16 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -227,7 +227,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 7 - after COPY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Consulting J/A+A/393/183/catalog ...
 sclsvrServer -   vobs - Test  - Execute: Step 8 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=UDDK&-out=e_UDDK&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (9620 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (9619 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (5 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'J/A+A/393/183/catalog':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -260,7 +260,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 8 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Consulting J/A+A/433/1155 ...
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (7504 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (7503 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 9 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 9 - Performing UPDATE_ONLY action with 0 stars
@@ -268,7 +268,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 9 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Consulting J/A+A/413/1037/table1 ...
 sclsvrServer -   vobs - Test  - Execute: Step 10 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/413/1037/table1&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=Jmag&-out=Ksmag&-out=Var&Var=%3C4&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (8163 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (8162 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (6 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'J/A+A/413/1037/table1':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -290,7 +290,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 10 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 11 - Consulting II/246/out ...
 sclsvrServer -   vobs - Test  - Execute: Step 11 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=2MASS&-out=GLAT&-out=GLON&-out=Jmag&-out=Hmag&-out=Kmag&-out=Rmag&-out=Bmag&-out=opt&-out=Qflg&opt=T&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (13652 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (13651 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (13 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -327,7 +327,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 11 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 12 - Consulting II/7A/catalog ...
 sclsvrServer -   vobs - Test  - Execute: Step 12 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=B&-out=V&-out=R&-out=I&-out=J&-out=H&-out=K&-out=L&-out=M&-out=N&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (11140 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (11139 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (13 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/7A/catalog':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -378,7 +378,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 12 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 13 - Consulting II/225/catalog ...
 sclsvrServer -   vobs - Test  - Execute: Step 13 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=lambda&-out=F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (6575 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (6574 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 13 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 13 - Performing UPDATE_ONLY action with 0 stars
@@ -386,7 +386,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 13 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 14 - Consulting I/196/main ...
 sclsvrServer -   vobs - Test  - Execute: Step 14 - Optimized ConeSearchRadius = 3.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=3.0&-out.add=_1&-out=HD&-out=GLAT&-out=GLON&-out=RV&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (9907 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (9906 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (12 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/196/main':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -409,7 +409,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 14 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 15 - Consulting V/50/catalog ...
 sclsvrServer -   vobs - Test  - Execute: Step 15 - Optimized ConeSearchRadius = 3.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=3.0&-out.add=_1&-out=HD&-out=RotVel&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (8503 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (8502 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (10 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'V/50/catalog':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -429,7 +429,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 15 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 16 - Consulting V/36B/bsc4s ...
 sclsvrServer -   vobs - Test  - Execute: Step 16 - Optimized ConeSearchRadius = 3.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=3.0&-out.add=_1&-out=HD&-out=vsini&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (6611 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (6610 bytes)
 sclsvrServer -   vobs - Test  - No CDATA section in XML document.
 sclsvrServer -   vobs - Test  - Execute: Step 16 - number of returned stars = 0
 sclsvrServer -   vobs - Test  - Execute: Step 16 - Performing UPDATE_ONLY action with 0 stars
@@ -437,7 +437,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 16 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 17 - Consulting B/sb9/main ...
 sclsvrServer -   vobs - Test  - Execute: Step 17 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=1.0&-out.add=_1&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (6629 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (6628 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (2 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/sb9/main':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -456,7 +456,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 17 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 18 - Consulting B/wds/wds ...
 sclsvrServer -   vobs - Test  - Execute: Step 18 - Optimized ConeSearchRadius = 1.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-file=-c&-c.rs=1.0&-out.add=_1&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (7640 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (7639 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (4 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -483,7 +483,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 18 - after UPDATE_ONLY, 13 stars
 sclsvrServer -   vobs - Test  - Execute: Step 19 - Consulting II/297/irc ...
 sclsvrServer -   vobs - Test  - Execute: Step 19 - Optimized ConeSearchRadius = 3.0 arcsec
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-file=-c&-c.rs=3.0&-out.add=_1&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&337.317396-43.495564&+347.589746-45.246714&+309.391808-47.291503&+002.352671-45.747425&+006.571000-42.306056&+331.528692-39.543353&+346.165113-53.964906&+351.055254-51.891175&+312.370675-46.226828&+337.439313-43.749219&+336.522812-48.438544&+305.059504-50.703183&+003.842775-32.045275&%3D%3D%3D%3DLIST'
-sclsvrServer -   vobs - Test  - Parsing XML document (10808 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (10807 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (12 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
 sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
@@ -520,7 +520,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.395886 / -0.759141 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 353.773 / 0.099 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.993 (HIGH), V = 3.959 (HIGH), R = 3.240 (HIGH), I = 2.630 (HIGH), J = 2.193 (HIGH), H = 1.728 (HIGH), K = 1.679 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.034e+00 / B-V 9.100e-01; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.034 / B-V [0.910..0.910]; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.993 (HIGH), V = 3.959 (HIGH), R = 3.240 (HIGH), I = 2.630 (HIGH), J = 2.193 (HIGH), H = 1.728 (HIGH), K = 1.679 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.993, V = 3.959, R = 3.240, I = 2.630, J = 2.193, H = 1.728, K = 1.679, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 2.465(0.1972), VR = 2.244(0.2177), VK = 2.301(0.1587)
@@ -611,7 +611,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.496918 / -0.690162 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 2.215 / 0.076 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.888 (HIGH), V = 4.465 (HIGH), R = 3.460 (HIGH), I = 2.680 (HIGH), J = 2.270 (HIGH), H = 1.580 (HIGH), K = 1.440 (HIGH), L = 1.340 (HIGH), M = 1.500 (HIGH)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.423e+00 / B-V 1.560e+00; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.423 / B-V [1.560..1.560]; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.888 (HIGH), V = 4.465 (HIGH), R = 3.460 (HIGH), I = 2.680 (HIGH), J = 2.270 (HIGH), H = 1.580 (HIGH), K = 1.440 (HIGH), L = 1.340 (HIGH), M = 1.500 (HIGH)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.888, V = 4.465, R = 3.460, I = 2.680, J = 2.270, H = 1.580, K = 1.440, L = 1.340, M = 1.500
 sclsvrServer -    alx - Test  - Diameter BV = 3.626(0.2901), VR = 2.990(0.2900), VK = 2.744(0.1893)
@@ -684,7 +684,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.393758 / -0.763568 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 353.279 / 0.114 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.725 (HIGH), V = 4.151 (HIGH), R = 2.380 (HIGH), I = 0.790 (HIGH), J = 0.242 (HIGH), H = -0.692 (HIGH), K = -0.916 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - mgB-mgV = 1.574 / B-V [99.990..99.990]; delta > 0.1
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.574 / B-V [99.990..99.990]; delta > 0.1
 sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.725 (HIGH), V = 4.151 (HIGH), R = 2.380 (HIGH), I = 0.790 (HIGH), J = 0.242 (HIGH), H = -0.692 (HIGH), K = -0.916 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.725, V = 4.151, R = 2.380, I = 0.790, J = 0.242, H = -0.692, K = -0.916, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 5.374(0.4300), VR = 11.268(1.0930), VK = 10.037(0.6925)
