@@ -29,7 +29,6 @@ import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
-
 /**
  * Generic filter view.
  *
@@ -104,7 +103,6 @@ public final class FilterView extends JPanel implements Observer {
         if (_filter.getNbOfConstraints() > 0) {
             _widgetsPanel.setLayout(new BoxLayout(_widgetsPanel,
                     BoxLayout.X_AXIS));
-            _widgetsPanel.setBorder((EtchedBorder) BorderFactory.createEtchedBorder());
             add(_widgetsPanel);
         }
 
@@ -226,11 +224,12 @@ public final class FilterView extends JPanel implements Observer {
 
         // Disabled to make filter GUI always enabled.
         /*
-        // Enable or disable all the constraint widgets
-        QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
+         // Enable or disable all the constraint widgets
+         QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
          */
     }
 }
+
 /**
  * Handle any event coming from a given parameter widget.
  */
