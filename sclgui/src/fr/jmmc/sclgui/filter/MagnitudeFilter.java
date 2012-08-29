@@ -3,9 +3,9 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.filter;
 
-import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
+import fr.jmmc.sclgui.query.QueryModel;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -17,7 +17,8 @@ public class MagnitudeFilter extends Filter {
     /** Logger */
     private static final Logger _logger = Logger.getLogger(MagnitudeFilter.class.getName());
     /** Store the magnitude constraint name */
-    private final String _magnitudeConstraintName = "Magnitude";
+    private final String _belowMagnitudeConstraintName = "below";
+    private final String _aboveMagnitudeConstraintName = "and above";
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
@@ -34,7 +35,8 @@ public class MagnitudeFilter extends Filter {
 
         _queryModel = queryModel;
 
-        setConstraint(_magnitudeConstraintName, new Double(1.5));
+        setConstraint(_belowMagnitudeConstraintName, new Double(0));
+        setConstraint(_aboveMagnitudeConstraintName, new Double(10));
     }
 
     /**
@@ -46,16 +48,27 @@ public class MagnitudeFilter extends Filter {
     public String getName() {
         _logger.entering("MagnitudeFilter", "getName");
 
-        return "Reject stars with magnitude above :";
+        return "Reject stars with magnitude :";
+    }
+
+    /**
+     * @return the user defined minimum magnitude.
+     */
+    private double getLowerLimitAllowedMagnitude() {
+        _logger.entering("MagnitudeFilter", "getLowerLimitAllowedMagnitude");
+
+        Double magnitude = (Double) getConstraintByName(_belowMagnitudeConstraintName);
+
+        return magnitude.doubleValue();
     }
 
     /**
      * @return the user defined maximum magnitude.
      */
-    private double getAllowedMagnitude() {
-        _logger.entering("MagnitudeFilter", "getAllowedMagnitude");
+    private double getUpperLimitAllowedMagnitude() {
+        _logger.entering("MagnitudeFilter", "getUpperLimitAllowedMagnitude");
 
-        Double magnitude = (Double) getConstraintByName(_magnitudeConstraintName);
+        Double magnitude = (Double) getConstraintByName(_aboveMagnitudeConstraintName);
 
         return magnitude.doubleValue();
     }
@@ -86,7 +99,7 @@ public class MagnitudeFilter extends Filter {
                 double currentMagnitude = cell.getDoubleValue();
 
                 // if the magnitude is greater than the allowed one
-                if (currentMagnitude > getAllowedMagnitude()) {
+                if ((currentMagnitude < getLowerLimitAllowedMagnitude()) || (currentMagnitude > getUpperLimitAllowedMagnitude())) {
                     // This row should be removed
                     return true;
                 }
