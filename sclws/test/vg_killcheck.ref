@@ -2,7 +2,7 @@
  Copyright (C) 2007-2009, and GNU GPL'd, by OpenWorks LLP et al.
  Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
  Command: sclwsServer -l 0 -v 3
- Parent PID: 19955
+ Parent PID: 27544
  
  
  Valgrind options:
@@ -11,7 +11,7 @@
     --suppressions=./custom_suppressions.txt
     --tool=helgrind
     --read-var-info=yes
-    --log-file=./vg_threadcheck.log
+    --log-file=./vg_killcheck.log
  Contents of /proc/version:
    Linux version 2.6.32-7-pve (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Mon Feb 13 07:33:21 CET 2012
  Arch and hwcaps: AMD64, amd64-sse3-cx16
@@ -100,14 +100,14 @@
  REDIR: 0x5b9d2f0 (operator new[](unsigned long)) redirected to 0x4c21af6 (operator new[](unsigned long))
  REDIR: 0x5b9bf90 (operator delete[](void*)) redirected to 0x4c20be8 (operator delete[](void*))
  
- ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 7266774 from 2724)
+ ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 10678099 from 1560)
  
- used_suppression:  27331 helgrind-glibc2X-005
- used_suppression: 7222483 helgrind-glibc2X-004
- used_suppression:    199 helgrind-glibc2X-112
- used_suppression:  15262 helgrind-glibc2X-101
- used_suppression:    273 helgrind---pthread_setspecific
- used_suppression:    710 helgrind-glibc2X-102
- used_suppression:    516 helgrind-glibc2X-109
+ used_suppression: 10667814 helgrind-glibc2X-004
+ used_suppression:   3338 helgrind-glibc2X-005
+ used_suppression:   6830 helgrind-glibc2X-101
+ used_suppression:     21 helgrind---pthread_setspecific
+ used_suppression:     48 helgrind-glibc2X-102
+ used_suppression:     27 helgrind-glibc2X-109
+ used_suppression:     21 helgrind-glibc2X-112
  
- ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 7266774 from 2724)
+ ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 10678099 from 1560)

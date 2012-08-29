@@ -2,7 +2,7 @@
  Copyright (C) 2002-2009, and GNU GPL'd, by Julian Seward et al.
  Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
  Command: sclwsServer -l 0 -v 3
- Parent PID: 8112
+ Parent PID: 16946
  
  
  Valgrind options:
@@ -11,7 +11,7 @@
     --num-callers=12
     --freelist-vol=500000000
     --suppressions=./custom_suppressions.txt
-    --log-file=./vg_memcheck.log
+    --log-file=./vg_killcurlmemcheck.log
     --leak-check=full
     --show-reachable=yes
  Contents of /proc/version:
@@ -95,15 +95,13 @@
  REDIR: 0x89b9110 (strcat) redirected to 0x4c22590 (strcat)
  REDIR: 0x89b5190 (realloc) redirected to 0x4c20e4b (realloc)
  REDIR: 0x89ba4f0 (memchr) redirected to 0x4c21f10 (memchr)
- REDIR: 0x5b992f0 (operator new[](unsigned long)) redirected to 0x4c21246 (operator new[](unsigned long))
- REDIR: 0x5b97f90 (operator delete[](void*)) redirected to 0x4c20338 (operator delete[](void*))
  
  HEAP SUMMARY:
      in use at exit: 3,066 bytes in 14 blocks
-   total heap usage: 2,727,967 allocs, 2,727,953 frees, 203,344,106 bytes allocated
+   total heap usage: 18,394 allocs, 18,380 frees, 2,886,396 bytes allocated
  
  Searching for pointers to 14 not-freed blocks
- Checked 31,803,288 bytes
+ Checked 32,068,440 bytes
  
  15 bytes in 1 blocks are still reachable in loss record 1 of 8
     at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
@@ -192,10 +190,8 @@
     still reachable: 2,133 bytes in 10 blocks
          suppressed: 0 bytes in 0 blocks
  
- ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 6700 from 97)
+ ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 4 from 4)
  
- used_suppression:   6048 pow__memcheck_ignore
- used_suppression:    648 ieee754_pow__memcheck_ignore
  used_suppression:      4 dl-hack3
  
- ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 6700 from 97)
+ ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 4 from 4)
