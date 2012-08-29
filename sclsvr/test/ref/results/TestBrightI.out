@@ -25,7 +25,7 @@ sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting I/280 ...
 sclsvrServer -   vobs - Test  - Search area [3545.308 - 1200.000] (arcmin)
 sclsvrServer -   vobs - Quiet - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
 sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=000.000000%2b0.000000&Vmag=0.00..10.00&-c.geom=b&-c.bm=3545/1200&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
-sclsvrServer -   vobs - Test  - Parsing XML document (142732 bytes)
+sclsvrServer -   vobs - Test  - Parsing XML document (142731 bytes)
 sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1000 rows)
 sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
 sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
@@ -1587,8 +1587,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.089874 / 0.142947 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 109.907 / 0.115 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.775 (HIGH), V = 5.377 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.090 (HIGH), H = 2.430 (HIGH), K = 2.290 (HIGH), L = 2.190 (HIGH), M = 2.350 (HIGH)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.398e+00 / B-V 1.270e+00; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.775 (HIGH), V = 5.377 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.090 (HIGH), H = 2.430 (HIGH), K = 2.290 (HIGH), L = 2.190 (HIGH), M = 2.350 (HIGH)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.398 / B-V [1.270..1.270]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.775, V = 5.377, R = 0.000, I = 0.000, J = 3.090, H = 2.430, K = 2.290, L = 2.190, M = 2.350
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
 sclsvrServer -    alx - Test  - Diam = 1.760 (0.020) - base = 102.5 - wlen= 0.870
@@ -1758,8 +1757,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.442579 / 0.095777 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 145.117 / 0.115 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.841 (HIGH), V = 4.435 (HIGH), R = 3.380 (HIGH), I = 2.670 (HIGH), J = 2.150 (HIGH), H = 1.440 (HIGH), K = 1.300 (HIGH), L = 1.200 (HIGH), M = 1.400 (HIGH)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.406e+00 / B-V 1.270e+00; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.841 (HIGH), V = 4.435 (HIGH), R = 3.380 (HIGH), I = 2.670 (HIGH), J = 2.150 (HIGH), H = 1.440 (HIGH), K = 1.300 (HIGH), L = 1.200 (HIGH), M = 1.400 (HIGH)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.406 / B-V [1.270..1.270]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.841, V = 4.435, R = 3.380, I = 2.670, J = 2.150, H = 1.440, K = 1.300, L = 1.200, M = 1.400
 sclsvrServer -    alx - Test  - Diameter BV = 3.575(0.2860), VR = 3.298(0.3199), VK = 2.957(0.2040)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
@@ -1823,8 +1821,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.049998 / -0.111359 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 84.325 / 0.233 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.583 (HIGH), V = 6.072 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.910 (HIGH), H = 3.080 (HIGH), K = 2.888 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.511e+00 / B-V 1.380e+00; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.583 (HIGH), V = 6.072 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.910 (HIGH), H = 3.080 (HIGH), K = 2.888 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.511 / B-V [1.380..1.380]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.583, V = 6.072, R = 0.000, I = 0.000, J = 3.910, H = 3.080, K = 2.888, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
 sclsvrServer -    alx - Test  - Diam = 1.510 (0.020) - base = 102.5 - wlen= 0.870
@@ -1840,8 +1837,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.258680 / 0.052566 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 77.060 / 0.167 / 0.002
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.254 (HIGH), V = 5.840 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.910 (HIGH), H = 3.140 (HIGH), K = 2.968 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.254 (HIGH), V = 5.840 (HIGH), R = 4.790 (HIGH), I = 3.910 (HIGH), J = 3.910 (HIGH), H = 3.140 (HIGH), K = 2.968 (HIGH), L = 2.828 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.256, V = 5.842, R = 4.792, I = 3.911, J = 3.914, H = 3.140, K = 2.969, L = 2.828, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.254 (HIGH), V = 5.840 (HIGH), R = 4.790 (HIGH), I = 3.910 (HIGH), J = 3.910 (HIGH), H = 3.140 (HIGH), K = 2.968 (HIGH), L = 2.828 (HIGH), M = 2.898 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.256, V = 5.842, R = 4.792, I = 3.911, J = 3.914, H = 3.140, K = 2.969, L = 2.828, M = 2.898
 sclsvrServer -    alx - Test  - Diameter BV = 1.895(0.1516), VR = 1.712(0.1661), VK = 1.338(0.0924)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.522 (0.021) - base = 102.5 - wlen= 0.870
@@ -1858,8 +1855,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.264166 / 0.016806 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 74.589 / 0.083 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.414 (HIGH), V = 5.421 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.630 (HIGH), H = 3.070 (HIGH), K = 2.999 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.414 (HIGH), V = 5.421 (HIGH), R = 4.591 (HIGH), I = 4.031 (HIGH), J = 3.630 (HIGH), H = 3.070 (HIGH), K = 2.999 (HIGH), L = 2.889 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.414, V = 5.421, R = 4.591, I = 4.031, J = 3.630, H = 3.070, K = 2.999, L = 2.889, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.414 (HIGH), V = 5.421 (HIGH), R = 4.591 (HIGH), I = 4.031 (HIGH), J = 3.630 (HIGH), H = 3.070 (HIGH), K = 2.999 (HIGH), L = 2.889 (HIGH), M = 2.929 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.414, V = 5.421, R = 4.591, I = 4.031, J = 3.630, H = 3.070, K = 2.999, L = 2.889, M = 2.929
 sclsvrServer -    alx - Test  - Diameter BV = 1.182(0.0946), VR = 1.412(0.1370), VK = 1.269(0.0875)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.108 (0.016) - base = 102.5 - wlen= 0.870
@@ -1876,8 +1873,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.312960 / -0.039289 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 134.840 / 0.132 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.349 (HIGH), V = 5.927 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 3.750 (HIGH), H = 2.870 (HIGH), K = 2.747 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.349 (HIGH), V = 5.927 (HIGH), R = 4.877 (HIGH), I = 3.997 (HIGH), J = 3.750 (HIGH), H = 2.870 (HIGH), K = 2.747 (HIGH), L = 2.607 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.349, V = 5.927, R = 4.877, I = 3.997, J = 3.750, H = 2.870, K = 2.747, L = 2.607, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.349 (HIGH), V = 5.927 (HIGH), R = 4.877 (HIGH), I = 3.997 (HIGH), J = 3.750 (HIGH), H = 2.870 (HIGH), K = 2.747 (HIGH), L = 2.607 (HIGH), M = 2.677 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.349, V = 5.927, R = 4.877, I = 3.997, J = 3.750, H = 2.870, K = 2.747, L = 2.607, M = 2.677
 sclsvrServer -    alx - Test  - Diameter BV = 1.846(0.1477), VR = 1.645(0.1596), VK = 1.525(0.1053)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.580 (0.021) - base = 102.5 - wlen= 0.870
@@ -1894,8 +1891,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.078336 / 0.031068 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 90.145 / 0.031 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.712 (HIGH), V = 4.491 (HIGH), R = 4.330 (HIGH), I = 4.230 (HIGH), J = 4.372 (HIGH), H = 4.204 (HIGH), K = 4.102 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.712 (HIGH), V = 4.491 (HIGH), R = 4.330 (HIGH), I = 4.230 (HIGH), J = 4.372 (HIGH), H = 4.204 (HIGH), K = 4.102 (HIGH), L = 4.042 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.712, V = 4.491, R = 4.330, I = 4.230, J = 4.372, H = 4.204, K = 4.102, L = 4.042, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.712 (HIGH), V = 4.491 (HIGH), R = 4.330 (HIGH), I = 4.230 (HIGH), J = 4.372 (HIGH), H = 4.204 (HIGH), K = 4.102 (HIGH), L = 4.042 (HIGH), M = 4.012 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.712, V = 4.491, R = 4.330, I = 4.230, J = 4.372, H = 4.204, K = 4.102, L = 4.042, M = 4.012
 sclsvrServer -    alx - Test  - Diameter BV = 0.606(0.0485), VR = 0.533(0.0517), VK = 0.543(0.0375)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.543 (0.037) - base = 102.5 - wlen= 0.870
@@ -1912,8 +1909,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.023281 / -0.099617 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 93.754 / 0.039 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.662 (HIGH), V = 4.617 (HIGH), R = 3.830 (HIGH), I = 3.290 (HIGH), J = 2.642 (HIGH), H = 2.091 (HIGH), K = 2.010 (HIGH), L = 2.180 (HIGH), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.662 (HIGH), V = 4.617 (HIGH), R = 3.830 (HIGH), I = 3.290 (HIGH), J = 2.642 (HIGH), H = 2.091 (HIGH), K = 2.010 (HIGH), L = 2.180 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.662, V = 4.617, R = 3.830, I = 3.290, J = 2.642, H = 2.091, K = 2.010, L = 2.180, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.662 (HIGH), V = 4.617 (HIGH), R = 3.830 (HIGH), I = 3.290 (HIGH), J = 2.642 (HIGH), H = 2.091 (HIGH), K = 2.010 (HIGH), L = 2.180 (HIGH), M = 1.940 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.662, V = 4.617, R = 3.830, I = 3.290, J = 2.642, H = 2.091, K = 2.010, L = 2.180, M = 1.940
 sclsvrServer -    alx - Test  - Diameter BV = 1.851(0.1481), VR = 1.888(0.1831), VK = 2.033(0.1403)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 2.033 (0.140) - base = 102.5 - wlen= 0.870
@@ -1930,8 +1927,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.008554 / -0.104965 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 91.582 / 0.122 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.984 (HIGH), V = 4.401 (HIGH), R = 2.850 (HIGH), I = 1.440 (HIGH), J = 0.623 (HIGH), H = -0.238 (HIGH), K = -0.397 (HIGH), L = -0.650 (HIGH), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.583e+00 / B-V 9.999e+01; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.984 (HIGH), V = 4.401 (HIGH), R = 2.850 (HIGH), I = 1.440 (HIGH), J = 0.623 (HIGH), H = -0.238 (HIGH), K = -0.397 (HIGH), L = -0.650 (HIGH), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.583 / B-V [99.990..99.990]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.984, V = 4.401, R = 2.850, I = 1.440, J = 0.623, H = -0.238, K = -0.397, L = -0.650, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 4.862(0.3889), VR = 7.235(0.7018), VK = 7.689(0.5305)
 sclsvrServer -    alx - Test  - Computed diameters are not coherent between them; they are not kept
@@ -1965,8 +1961,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.087482 / 0.098197 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 92.464 / 0.014 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.651 (HIGH), V = 4.126 (HIGH), R = 3.690 (HIGH), I = 3.380 (HIGH), J = 3.299 (HIGH), H = 2.988 (HIGH), K = 2.975 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.651 (HIGH), V = 4.126 (HIGH), R = 3.690 (HIGH), I = 3.380 (HIGH), J = 3.299 (HIGH), H = 2.988 (HIGH), K = 2.975 (HIGH), L = 2.905 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.651, V = 4.126, R = 3.690, I = 3.380, J = 3.299, H = 2.988, K = 2.975, L = 2.905, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.651 (HIGH), V = 4.126 (HIGH), R = 3.690 (HIGH), I = 3.380 (HIGH), J = 3.299 (HIGH), H = 2.988 (HIGH), K = 2.975 (HIGH), L = 2.905 (HIGH), M = 2.885 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.651, V = 4.126, R = 3.690, I = 3.380, J = 3.299, H = 2.988, K = 2.975, L = 2.905, M = 2.885
 sclsvrServer -    alx - Test  - Diameter BV = 1.115(0.0892), VR = 1.160(0.1126), VK = 1.111(0.0767)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.111 (0.077) - base = 102.5 - wlen= 0.870
@@ -1983,8 +1979,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.144284 / 0.021914 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 83.916 / 0.050 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.980 (HIGH), V = 4.919 (HIGH), R = 4.870 (HIGH), I = 4.900 (HIGH), J = 5.317 (HIGH), H = 4.984 (HIGH), K = 4.946 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.980 (HIGH), V = 4.919 (HIGH), R = 4.870 (HIGH), I = 4.900 (HIGH), J = 5.317 (HIGH), H = 4.984 (HIGH), K = 4.946 (HIGH), L = 4.916 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.980, V = 4.919, R = 4.870, I = 4.900, J = 5.317, H = 4.984, K = 4.946, L = 4.916, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.980 (HIGH), V = 4.919 (HIGH), R = 4.870 (HIGH), I = 4.900 (HIGH), J = 5.317 (HIGH), H = 4.984 (HIGH), K = 4.946 (HIGH), L = 4.916 (HIGH), M = 4.916 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.980, V = 4.919, R = 4.870, I = 4.900, J = 5.317, H = 4.984, K = 4.946, L = 4.916, M = 4.916
 sclsvrServer -    alx - Test  - Diameter BV = 0.372(0.0298), VR = 0.333(0.0323), VK = 0.306(0.0211)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.306 (0.021) - base = 102.5 - wlen= 0.870
@@ -2010,8 +2006,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.037725 / 0.162549 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 99.086 / 0.242 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.409 (HIGH), V = 5.800 (HIGH), R = 5.530 (HIGH), I = 4.990 (HIGH), J = 2.570 (HIGH), H = 1.665 (HIGH), K = 1.358 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.609e+00 / B-V 9.999e+01; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.409 (HIGH), V = 5.800 (HIGH), R = 5.530 (HIGH), I = 4.990 (HIGH), J = 2.570 (HIGH), H = 1.665 (HIGH), K = 1.358 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.609 / B-V [99.990..99.990]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.409, V = 5.800, R = 5.530, I = 4.990, J = 2.570, H = 1.665, K = 1.358, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 2.664(0.2132), VR = 0.373(0.0362), VK = 3.299(0.2277)
 sclsvrServer -    alx - Test  - Computed diameters are not coherent between them; they are not kept
@@ -2028,8 +2023,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.199305 / -0.105575 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 70.940 / 0.067 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.804 (HIGH), V = 4.230 (HIGH), R = 2.940 (HIGH), I = 1.860 (HIGH), J = 1.088 (HIGH), H = 0.169 (HIGH), K = -0.095 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.804 (HIGH), V = 4.230 (HIGH), R = 2.940 (HIGH), I = 1.860 (HIGH), J = 1.088 (HIGH), H = 0.169 (HIGH), K = -0.095 (HIGH), L = -0.275 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.804, V = 4.230, R = 2.940, I = 1.860, J = 1.088, H = 0.169, K = -0.095, L = -0.275, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.804 (HIGH), V = 4.230 (HIGH), R = 2.940 (HIGH), I = 1.860 (HIGH), J = 1.088 (HIGH), H = 0.169 (HIGH), K = -0.095 (HIGH), L = -0.275 (HIGH), M = -0.155 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.804, V = 4.230, R = 2.940, I = 1.860, J = 1.088, H = 0.169, K = -0.095, L = -0.275, M = -0.155
 sclsvrServer -    alx - Test  - Diameter BV = 5.182(0.4146), VR = 5.277(0.5119), VK = 6.360(0.4388)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 6.360 (0.439) - base = 102.5 - wlen= 0.870
@@ -2046,8 +2041,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.183680 / -0.160265 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 67.617 / 0.098 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.284 (HIGH), V = 4.401 (HIGH), R = 4.470 (HIGH), I = 4.600 (HIGH), J = 4.704 (HIGH), H = 4.758 (HIGH), K = 4.801 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.284 (HIGH), V = 4.401 (HIGH), R = 4.470 (HIGH), I = 4.600 (HIGH), J = 4.704 (HIGH), H = 4.758 (HIGH), K = 4.801 (HIGH), L = 4.791 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.284, V = 4.401, R = 4.470, I = 4.600, J = 4.704, H = 4.758, K = 4.801, L = 4.791, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.284 (HIGH), V = 4.401 (HIGH), R = 4.470 (HIGH), I = 4.600 (HIGH), J = 4.704 (HIGH), H = 4.758 (HIGH), K = 4.801 (HIGH), L = 4.791 (HIGH), M = 4.811 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.284, V = 4.401, R = 4.470, I = 4.600, J = 4.704, H = 4.758, K = 4.801, L = 4.791, M = 4.811
 sclsvrServer -    alx - Test  - Diameter BV = 0.309(0.0247), VR = 0.290(0.0281), VK = 0.265(0.0183)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.265 (0.018) - base = 102.5 - wlen= 0.870
@@ -2073,8 +2068,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.212417 / 0.132385 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 121.733 / 0.096 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.984 (HIGH), V = 4.427 (HIGH), R = 3.270 (HIGH), I = 2.400 (HIGH), J = 2.031 (HIGH), H = 1.198 (HIGH), K = 1.119 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.984 (HIGH), V = 4.427 (HIGH), R = 3.270 (HIGH), I = 2.400 (HIGH), J = 2.031 (HIGH), H = 1.198 (HIGH), K = 1.119 (HIGH), L = 0.969 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.984, V = 4.427, R = 3.270, I = 2.400, J = 2.031, H = 1.198, K = 1.119, L = 0.969, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.984 (HIGH), V = 4.427 (HIGH), R = 3.270 (HIGH), I = 2.400 (HIGH), J = 2.031 (HIGH), H = 1.198 (HIGH), K = 1.119 (HIGH), L = 0.969 (HIGH), M = 1.049 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.984, V = 4.427, R = 3.270, I = 2.400, J = 2.031, H = 1.198, K = 1.119, L = 0.969, M = 1.049
 sclsvrServer -    alx - Test  - Diameter BV = 4.602(0.3682), VR = 3.910(0.3793), VK = 3.269(0.2255)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 3.269 (0.226) - base = 102.5 - wlen= 0.870
@@ -2091,8 +2086,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.244883 / 0.066672 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 78.794 / 0.164 / 0.002
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.377 (HIGH), V = 4.485 (HIGH), R = 4.538 (HIGH), I = 4.669 (HIGH), J = 4.763 (HIGH), H = 4.808 (HIGH), K = 4.793 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.377 (HIGH), V = 4.485 (HIGH), R = 4.538 (HIGH), I = 4.669 (HIGH), J = 4.763 (HIGH), H = 4.808 (HIGH), K = 4.793 (HIGH), L = 4.763 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.380, V = 4.487, R = 4.540, I = 4.670, J = 4.770, H = 4.808, K = 4.793, L = 4.763, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.377 (HIGH), V = 4.485 (HIGH), R = 4.538 (HIGH), I = 4.669 (HIGH), J = 4.763 (HIGH), H = 4.808 (HIGH), K = 4.793 (HIGH), L = 4.763 (HIGH), M = 4.793 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.380, V = 4.487, R = 4.540, I = 4.670, J = 4.770, H = 4.808, K = 4.793, L = 4.763, M = 4.793
 sclsvrServer -    alx - Test  - Diameter BV = 0.305(0.0244), VR = 0.296(0.0287), VK = 0.281(0.0194)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.281 (0.019) - base = 102.5 - wlen= 0.870
@@ -2109,8 +2104,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.231237 / 0.164227 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 84.618 / 0.103 / 0.018
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.088 (HIGH), V = 4.521 (HIGH), R = 3.236 (HIGH), I = 2.221 (HIGH), J = 1.579 (HIGH), H = 0.770 (HIGH), K = 0.616 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.088 (HIGH), V = 4.521 (HIGH), R = 3.236 (HIGH), I = 2.221 (HIGH), J = 1.579 (HIGH), H = 0.770 (HIGH), K = 0.616 (HIGH), L = 0.436 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.112, V = 4.539, R = 3.250, I = 2.230, J = 1.630, H = 0.773, K = 0.618, L = 0.437, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.088 (HIGH), V = 4.521 (HIGH), R = 3.236 (HIGH), I = 2.221 (HIGH), J = 1.579 (HIGH), H = 0.770 (HIGH), K = 0.616 (HIGH), L = 0.436 (HIGH), M = 0.556 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.112, V = 4.539, R = 3.250, I = 2.230, J = 1.630, H = 0.773, K = 0.618, L = 0.437, M = 0.556
 sclsvrServer -    alx - Test  - Diameter BV = 4.482(0.3585), VR = 4.576(0.4439), VK = 4.382(0.3024)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 4.382 (0.302) - base = 102.5 - wlen= 0.870
@@ -2128,8 +2123,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.267975 / 0.163308 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 82.172 / 0.031 / 0.008
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.074 (HIGH), V = 6.425 (HIGH), R = 5.894 (HIGH), I = 5.536 (HIGH), J = 5.295 (HIGH), H = 5.069 (HIGH), K = 4.938 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.074 (HIGH), V = 6.425 (HIGH), R = 5.894 (HIGH), I = 5.536 (HIGH), J = 5.295 (HIGH), H = 5.069 (HIGH), K = 4.938 (HIGH), L = 4.858 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.085, V = 6.433, R = 5.900, I = 5.540, J = 5.318, H = 5.070, K = 4.939, L = 4.859, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 7.074 (HIGH), V = 6.425 (HIGH), R = 5.894 (HIGH), I = 5.536 (HIGH), J = 5.295 (HIGH), H = 5.069 (HIGH), K = 4.938 (HIGH), L = 4.858 (HIGH), M = 4.848 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.085, V = 6.433, R = 5.900, I = 5.540, J = 5.318, H = 5.070, K = 4.939, L = 4.859, M = 4.849
 sclsvrServer -    alx - Test  - Diameter BV = 0.458(0.0366), VR = 0.493(0.0478), VK = 0.473(0.0326)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.473 (0.033) - base = 102.5 - wlen= 0.870
@@ -2146,8 +2141,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.298320 / 0.098608 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 130.676 / 0.036 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.857 (HIGH), V = 5.506 (HIGH), R = 5.180 (HIGH), I = 5.000 (HIGH), J = 4.893 (HIGH), H = 4.771 (HIGH), K = 4.718 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.857 (HIGH), V = 5.506 (HIGH), R = 5.180 (HIGH), I = 5.000 (HIGH), J = 4.893 (HIGH), H = 4.771 (HIGH), K = 4.718 (HIGH), L = 4.668 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.857, V = 5.506, R = 5.180, I = 5.000, J = 4.893, H = 4.771, K = 4.718, L = 4.668, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.857 (HIGH), V = 5.506 (HIGH), R = 5.180 (HIGH), I = 5.000 (HIGH), J = 4.893 (HIGH), H = 4.771 (HIGH), K = 4.718 (HIGH), L = 4.668 (HIGH), M = 4.668 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.857, V = 5.506, R = 5.180, I = 5.000, J = 4.893, H = 4.771, K = 4.718, L = 4.668, M = 4.668
 sclsvrServer -    alx - Test  - Diameter BV = 0.463(0.0371), VR = 0.484(0.0469), VK = 0.461(0.0318)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.461 (0.032) - base = 102.5 - wlen= 0.870
@@ -2164,8 +2159,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.282622 / 0.153871 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 80.790 / 0.087 / 0.020
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.886 (HIGH), V = 4.881 (HIGH), R = 4.845 (HIGH), I = 4.870 (HIGH), J = 5.216 (HIGH), H = 5.009 (HIGH), K = 4.881 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.886 (HIGH), V = 4.881 (HIGH), R = 4.845 (HIGH), I = 4.870 (HIGH), J = 5.216 (HIGH), H = 5.009 (HIGH), K = 4.881 (HIGH), L = 4.851 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.913, V = 4.901, R = 4.860, I = 4.880, J = 5.272, H = 5.012, K = 4.884, L = 4.853, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.886 (HIGH), V = 4.881 (HIGH), R = 4.845 (HIGH), I = 4.870 (HIGH), J = 5.216 (HIGH), H = 5.009 (HIGH), K = 4.881 (HIGH), L = 4.851 (HIGH), M = 4.851 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.913, V = 4.901, R = 4.860, I = 4.880, J = 5.272, H = 5.012, K = 4.884, L = 4.853, M = 4.852
 sclsvrServer -    alx - Test  - Diameter BV = 0.337(0.0269), VR = 0.327(0.0317), VK = 0.320(0.0221)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.320 (0.022) - base = 102.5 - wlen= 0.870
@@ -2182,8 +2177,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.294025 / -0.132289 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 62.191 / 0.116 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.348 (HIGH), V = 3.750 (HIGH), R = 2.370 (HIGH), I = 1.180 (HIGH), J = 0.423 (HIGH), H = -0.430 (HIGH), K = -0.668 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.348 (HIGH), V = 3.750 (HIGH), R = 2.370 (HIGH), I = 1.180 (HIGH), J = 0.423 (HIGH), H = -0.430 (HIGH), K = -0.668 (HIGH), L = -0.848 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.348, V = 3.750, R = 2.370, I = 1.180, J = 0.423, H = -0.430, K = -0.668, L = -0.848, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.348 (HIGH), V = 3.750 (HIGH), R = 2.370 (HIGH), I = 1.180 (HIGH), J = 0.423 (HIGH), H = -0.430 (HIGH), K = -0.668 (HIGH), L = -0.848 (HIGH), M = -0.728 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.348, V = 3.750, R = 2.370, I = 1.180, J = 0.423, H = -0.430, K = -0.668, L = -0.848, M = -0.728
 sclsvrServer -    alx - Test  - Diameter BV = 6.726(0.5380), VR = 7.554(0.7327), VK = 8.366(0.5773)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 8.366 (0.577) - base = 102.5 - wlen= 0.870
@@ -2218,8 +2213,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.369328 / -0.002051 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 66.842 / 0.055 / 0.006
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 3.958 (HIGH), V = 4.026 (HIGH), R = 4.055 (HIGH), I = 4.127 (HIGH), J = 4.274 (HIGH), H = 4.333 (HIGH), K = 4.274 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 3.958 (HIGH), V = 4.026 (HIGH), R = 4.055 (HIGH), I = 4.127 (HIGH), J = 4.274 (HIGH), H = 4.333 (HIGH), K = 4.274 (HIGH), L = 4.244 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.966, V = 4.032, R = 4.060, I = 4.130, J = 4.291, H = 4.334, K = 4.275, L = 4.245, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 3.958 (HIGH), V = 4.026 (HIGH), R = 4.055 (HIGH), I = 4.127 (HIGH), J = 4.274 (HIGH), H = 4.333 (HIGH), K = 4.274 (HIGH), L = 4.244 (HIGH), M = 4.254 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.966, V = 4.032, R = 4.060, I = 4.130, J = 4.291, H = 4.334, K = 4.275, L = 4.245, M = 4.254
 sclsvrServer -    alx - Test  - Diameter BV = 0.419(0.0335), VR = 0.398(0.0386), VK = 0.370(0.0255)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.370 (0.026) - base = 102.5 - wlen= 0.870
@@ -2236,10 +2231,11 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.397796 / -0.000349 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 65.354 / 0.032 / 0.006
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.274 (HIGH), V = 4.029 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.890 (HIGH), H = 2.788 (HIGH), K = 2.747 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - mgB-mgV = 0.245 / B-V [0.350..0.430]; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.274 (HIGH), V = 4.029 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.890 (HIGH), H = 2.788 (HIGH), K = 2.747 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.282, V = 4.035, R = 0.000, I = 0.000, J = 2.906, H = 2.789, K = 2.748, L = 0.000, M = 0.000
-sclsvrServer - sclsvr - Warn  - Unknown 'RO' property; could not compute diameter
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.274 (HIGH), V = 4.029 (HIGH), R = 3.588 (HIGH), I = 3.173 (HIGH), J = 2.890 (HIGH), H = 2.788 (HIGH), K = 2.747 (HIGH), L = 2.697 (HIGH), M = 2.697 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.282, V = 4.035, R = 3.592, I = 3.176, J = 2.906, H = 2.789, K = 2.748, L = 2.697, M = 2.697
+sclsvrServer -    alx - Test  - Diameter BV = 0.779(0.0623), VR = 1.228(0.1191), VK = 1.261(0.0870)
+sclsvrServer -    alx - Test  - Computed diameters are not coherent between them; they are not kept
+sclsvrServer - sclsvr - Test  - Error on diameter too high; computed diameters are not coherent
 sclsvrServer - sclsvr - Test  - Unknown diameter; could not compute visibility
 sclsvrServer - sclsvr - Test  - Skipping (diameters are not OK).
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 213051'
@@ -2252,14 +2248,14 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.397797 / -0.000358 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 65.360 / 0.032 / 0.006
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.827 (HIGH), V = 4.440 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.827 (HIGH), V = 4.440 (HIGH), R = 3.984 (LOW), I = 3.615 (LOW), J = 3.449 (LOW), H = 3.162 (LOW), K = 3.189 (LOW), L = 3.119 (LOW), M = 3.099 (LOW)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.835, V = 4.446, R = 3.988, I = 3.618, J = 3.464, H = 3.163, K = 3.189, L = 3.119, M = 3.099
-sclsvrServer -    alx - Test  - Diameter BV = 0.797(0.0638), VR = 1.048(0.1017), VK = 1.024(0.0706)
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.827 (HIGH), V = 4.440 (HIGH), R = 3.984 (LOW), I = 3.615 (LOW), J = 3.449 (LOW), H = 3.162 (LOW), K = 3.096 (LOW), L = 3.026 (LOW), M = 3.006 (LOW)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.835, V = 4.446, R = 3.988, I = 3.618, J = 3.464, H = 3.163, K = 3.097, L = 3.026, M = 3.006
+sclsvrServer -    alx - Test  - Diameter BV = 0.797(0.0638), VR = 1.048(0.1017), VK = 1.083(0.0748)
 sclsvrServer -    alx - Test  - Confidence index = LOW
-sclsvrServer -    alx - Test  - Diam = 1.024 (0.071) - base = 102.5 - wlen= 0.870
-sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.633786 (0.043446), 0.401685 (0.055070)
-sclsvrServer - sclsvr - Test  - Computing UDs for LD = '1.023795', Teff = '6500.000000', LogG = '4.328000' ...
-sclsvrServer -    alx - Test  - Computed UD: U = 0.955298, B = 0.957709, V = 0.969787, R = 0.980339, I = 0.987976, J = 0.998344, H = 1.003927, K = 1.006569, L = 1.013419, N = 1.019036
+sclsvrServer -    alx - Test  - Diam = 1.083 (0.075) - base = 102.5 - wlen= 0.870
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.596705 (0.046910), 0.356057 (0.055983)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '1.083457', Teff = '6500.000000', LogG = '4.328000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 1.010968, B = 1.013519, V = 1.026301, R = 1.037468, I = 1.045550, J = 1.056522, H = 1.062431, K = 1.065227, L = 1.072476, N = 1.078420
 sclsvrServer - sclsvr - Test  - Complete: star 'HD 212943'
 sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' - Our spectral type = 'K0.0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
 sclsvrServer -    alx - Test  - Type of star = GIANT
@@ -2270,8 +2266,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.402042 / 0.081955 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 69.975 / 0.049 / 0.015
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.821 (HIGH), V = 4.778 (HIGH), R = 4.008 (HIGH), I = 3.452 (HIGH), J = 3.078 (HIGH), H = 2.494 (HIGH), K = 2.443 (HIGH), L = 2.219 (HIGH), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.821 (HIGH), V = 4.778 (HIGH), R = 4.008 (HIGH), I = 3.452 (HIGH), J = 3.078 (HIGH), H = 2.494 (HIGH), K = 2.443 (HIGH), L = 2.219 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.841, V = 4.793, R = 4.020, I = 3.460, J = 3.121, H = 2.497, K = 2.444, L = 2.220, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.821 (HIGH), V = 4.778 (HIGH), R = 4.008 (HIGH), I = 3.452 (HIGH), J = 3.078 (HIGH), H = 2.494 (HIGH), K = 2.443 (HIGH), L = 2.219 (HIGH), M = 2.373 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.841, V = 4.793, R = 4.020, I = 3.460, J = 3.121, H = 2.497, K = 2.444, L = 2.220, M = 2.373
 sclsvrServer -    alx - Test  - Diameter BV = 1.714(0.1371), VR = 1.695(0.1644), VK = 1.627(0.1122)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.627 (0.112) - base = 102.5 - wlen= 0.870
@@ -2288,8 +2284,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.413307 / 0.024040 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 66.007 / 0.308 / 0.039
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.579 (HIGH), V = 4.758 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 5.294 (HIGH), H = 5.358 (HIGH), K = 5.394 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.579 (HIGH), V = 4.758 (HIGH), R = 4.878 (HIGH), I = 5.088 (HIGH), J = 5.294 (HIGH), H = 5.358 (HIGH), K = 5.394 (HIGH), L = 5.404 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.631, V = 4.797, R = 4.907, I = 5.108, J = 5.403, H = 5.365, K = 5.399, L = 5.407, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.579 (HIGH), V = 4.758 (HIGH), R = 4.878 (HIGH), I = 5.088 (HIGH), J = 5.294 (HIGH), H = 5.358 (HIGH), K = 5.394 (HIGH), L = 5.404 (HIGH), M = 5.454 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.631, V = 4.797, R = 4.907, I = 5.108, J = 5.403, H = 5.365, K = 5.399, L = 5.407, M = 5.456
 sclsvrServer -    alx - Test  - Diameter BV = 0.217(0.0173), VR = 0.194(0.0188), VK = 0.176(0.0122)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.176 (0.012) - base = 102.5 - wlen= 0.870
@@ -2306,8 +2302,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.429105 / -0.024214 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 62.179 / 0.046 / 0.009
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 3.806 (HIGH), V = 3.835 (HIGH), R = 3.793 (HIGH), I = 3.835 (HIGH), J = 4.108 (HIGH), H = 4.051 (HIGH), K = 4.057 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 3.806 (HIGH), V = 3.835 (HIGH), R = 3.793 (HIGH), I = 3.835 (HIGH), J = 4.108 (HIGH), H = 4.051 (HIGH), K = 4.057 (HIGH), L = 4.027 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.818, V = 3.844, R = 3.800, I = 3.840, J = 4.132, H = 4.053, K = 4.058, L = 4.028, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 3.806 (HIGH), V = 3.835 (HIGH), R = 3.793 (HIGH), I = 3.835 (HIGH), J = 4.108 (HIGH), H = 4.051 (HIGH), K = 4.057 (HIGH), L = 4.027 (HIGH), M = 4.027 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.818, V = 3.844, R = 3.800, I = 3.840, J = 4.132, H = 4.053, K = 4.058, L = 4.028, M = 4.027
 sclsvrServer -    alx - Test  - Diameter BV = 0.503(0.0403), VR = 0.537(0.0521), VK = 0.415(0.0286)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.415 (0.029) - base = 102.5 - wlen= 0.870
@@ -2324,8 +2320,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.450147 / -0.135844 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 53.507 / 0.059 / 0.004
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.139 (HIGH), V = 4.160 (HIGH), R = 3.447 (HIGH), I = 2.968 (HIGH), J = 2.620 (HIGH), H = 2.170 (HIGH), K = 1.966 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.139 (HIGH), V = 4.160 (HIGH), R = 3.447 (HIGH), I = 2.968 (HIGH), J = 2.620 (HIGH), H = 2.170 (HIGH), K = 1.966 (HIGH), L = 1.876 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.144, V = 4.164, R = 3.450, I = 2.970, J = 2.631, H = 2.171, K = 1.967, L = 1.876, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.139 (HIGH), V = 4.160 (HIGH), R = 3.447 (HIGH), I = 2.968 (HIGH), J = 2.620 (HIGH), H = 2.170 (HIGH), K = 1.966 (HIGH), L = 1.876 (HIGH), M = 1.886 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.144, V = 4.164, R = 3.450, I = 2.970, J = 2.631, H = 2.171, K = 1.967, L = 1.876, M = 1.886
 sclsvrServer -    alx - Test  - Diameter BV = 2.068(0.1654), VR = 2.022(0.1961), VK = 2.001(0.1380)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 2.001 (0.138) - base = 102.5 - wlen= 0.870
@@ -2342,8 +2338,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.459867 / 0.159833 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 144.608 / 0.076 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.221 (HIGH), V = 4.261 (HIGH), R = 3.520 (HIGH), I = 3.040 (HIGH), J = 2.571 (HIGH), H = 2.153 (HIGH), K = 2.046 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.221 (HIGH), V = 4.261 (HIGH), R = 3.520 (HIGH), I = 3.040 (HIGH), J = 2.571 (HIGH), H = 2.153 (HIGH), K = 2.046 (HIGH), L = 1.946 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.221, V = 4.261, R = 3.520, I = 3.040, J = 2.571, H = 2.153, K = 2.046, L = 1.946, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.221 (HIGH), V = 4.261 (HIGH), R = 3.520 (HIGH), I = 3.040 (HIGH), J = 2.571 (HIGH), H = 2.153 (HIGH), K = 2.046 (HIGH), L = 1.946 (HIGH), M = 1.976 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.221, V = 4.261, R = 3.520, I = 3.040, J = 2.571, H = 2.153, K = 2.046, L = 1.946, M = 1.976
 sclsvrServer -    alx - Test  - Diameter BV = 1.920(0.1536), VR = 2.037(0.1976), VK = 1.932(0.1333)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.932 (0.133) - base = 102.5 - wlen= 0.870
@@ -2360,8 +2356,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.479094 / 0.108173 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 67.417 / 0.030 / 0.015
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 3.605 (HIGH), V = 3.505 (HIGH), R = 3.489 (HIGH), I = 3.452 (HIGH), J = 3.451 (HIGH), H = 3.387 (HIGH), K = 3.407 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 3.605 (HIGH), V = 3.505 (HIGH), R = 3.489 (HIGH), I = 3.452 (HIGH), J = 3.451 (HIGH), H = 3.387 (HIGH), K = 3.407 (HIGH), L = 3.367 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.625, V = 3.520, R = 3.500, I = 3.460, J = 3.492, H = 3.390, K = 3.409, L = 3.368, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 3.605 (HIGH), V = 3.505 (HIGH), R = 3.489 (HIGH), I = 3.452 (HIGH), J = 3.451 (HIGH), H = 3.387 (HIGH), K = 3.407 (HIGH), L = 3.367 (HIGH), M = 3.357 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.625, V = 3.520, R = 3.500, I = 3.460, J = 3.492, H = 3.390, K = 3.409, L = 3.368, M = 3.358
 sclsvrServer -    alx - Test  - Diameter BV = 0.771(0.0617), VR = 0.582(0.0565), VK = 0.662(0.0457)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.662 (0.046) - base = 102.5 - wlen= 0.870
@@ -2379,8 +2375,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 0.495481 / 0.055633 radian
 sclsvrServer -    alx - Test  - GLon/dist/Av = 151.638 / 0.058 / 0.000
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.551 (HIGH), V = 4.610 (HIGH), R = 3.900 (HIGH), I = 3.430 (HIGH), J = 3.068 (HIGH), H = 2.628 (HIGH), K = 2.566 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.551 (HIGH), V = 4.610 (HIGH), R = 3.900 (HIGH), I = 3.430 (HIGH), J = 3.068 (HIGH), H = 2.628 (HIGH), K = 2.566 (HIGH), L = 2.466 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.551, V = 4.610, R = 3.900, I = 3.430, J = 3.068, H = 2.628, K = 2.566, L = 2.466, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.551 (HIGH), V = 4.610 (HIGH), R = 3.900 (HIGH), I = 3.430 (HIGH), J = 3.068 (HIGH), H = 2.628 (HIGH), K = 2.566 (HIGH), L = 2.466 (HIGH), M = 2.496 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.551, V = 4.610, R = 3.900, I = 3.430, J = 3.068, H = 2.628, K = 2.566, L = 2.466, M = 2.496
 sclsvrServer -    alx - Test  - Diameter BV = 1.590(0.1272), VR = 1.634(0.1585), VK = 1.497(0.1033)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 1.497 (0.103) - base = 102.5 - wlen= 0.870
@@ -2415,8 +2411,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.502697 / -0.015819 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 59.096 / 0.071 / 0.023
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.516 (HIGH), V = 5.252 (HIGH), R = 5.113 (HIGH), I = 5.018 (HIGH), J = 4.943 (HIGH), H = 4.954 (HIGH), K = 4.824 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 2.636e-01 / B-V 1.500e-01; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 5.516 (HIGH), V = 5.252 (HIGH), R = 5.113 (HIGH), I = 5.018 (HIGH), J = 4.943 (HIGH), H = 4.954 (HIGH), K = 4.824 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 0.264 / B-V [0.150..0.150]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.546, V = 5.275, R = 5.130, I = 5.030, J = 5.006, H = 4.958, K = 4.826, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 0.457(0.0365), VR = 0.357(0.0346), VK = 0.395(0.0272)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
@@ -2434,8 +2429,7 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.498819 / 0.088288 radia
 sclsvrServer -    alx - Test  - GLon/dist/Av = 65.369 / 0.081 / 0.036
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.310 (HIGH), V = 4.818 (HIGH), R = 3.743 (HIGH), I = 2.992 (HIGH), J = 2.476 (HIGH), H = 1.812 (HIGH), K = 1.686 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = GIANT
-sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.491e+00 / B-V 1.380e+00; delta > 0.1
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 6.310 (HIGH), V = 4.818 (HIGH), R = 3.743 (HIGH), I = 2.992 (HIGH), J = 2.476 (HIGH), H = 1.812 (HIGH), K = 1.686 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.491 / B-V [1.380..1.380]; delta > 0.1
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.357, V = 4.854, R = 3.770, I = 3.010, J = 2.576, H = 1.818, K = 1.690, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter BV = 3.449(0.2759), VR = 2.857(0.2772), VK = 2.475(0.1707)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
@@ -2453,8 +2447,8 @@ sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -0.509138 / -0.037618 radi
 sclsvrServer -    alx - Test  - GLon/dist/Av = 57.438 / 0.119 / 0.032
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.635 (HIGH), V = 4.735 (HIGH), R = 4.676 (HIGH), I = 4.724 (HIGH), J = 4.856 (HIGH), H = 4.803 (HIGH), K = 4.700 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF
-sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.635 (HIGH), V = 4.735 (HIGH), R = 4.676 (HIGH), I = 4.724 (HIGH), J = 4.856 (HIGH), H = 4.803 (HIGH), K = 4.700 (HIGH), L = 4.670 (HIGH), M = 0.000 (NO)
-sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.678, V = 4.767, R = 4.700, I = 4.740, J = 4.946, H = 4.809, K = 4.703, L = 4.672, M = 0.000
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B = 4.635 (HIGH), V = 4.735 (HIGH), R = 4.676 (HIGH), I = 4.724 (HIGH), J = 4.856 (HIGH), H = 4.803 (HIGH), K = 4.700 (HIGH), L = 4.670 (HIGH), M = 4.690 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.678, V = 4.767, R = 4.700, I = 4.740, J = 4.946, H = 4.809, K = 4.703, L = 4.672, M = 4.691
 sclsvrServer -    alx - Test  - Diameter BV = 0.278(0.0222), VR = 0.372(0.0360), VK = 0.354(0.0244)
 sclsvrServer -    alx - Test  - Confidence index = HIGH
 sclsvrServer -    alx - Test  - Diam = 0.354 (0.024) - base = 102.5 - wlen= 0.870
@@ -2515,4 +2509,4 @@ sclsvrServer -   vobs - Test  - star 'HD 209750' has been removed by the distanc
 sclsvrServer -   vobs - Test  - star 'HD 209625' has been removed by the distance filter : too far from the reference star: 28.815444 > 0.000278 deg
 sclsvrServer -   vobs - Test  - star 'HD 209747' has been removed by the distance filter : too far from the reference star: 28.987194 > 0.000278 deg
 sclsvrServer -   vobs - Test  - star 'HD 209409' has been removed by the distance filter : too far from the reference star: 29.244016 > 0.000278 deg
-sclsvrServer -   vobs - Test  - GetVotable: buffer size = 311843 / 307052 bytes
+sclsvrServer -   vobs - Test  - GetVotable: buffer size = 312944 / 307052 bytes

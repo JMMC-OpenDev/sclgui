@@ -344,6 +344,7 @@ sclsvrServer - sclsvr - Test  - star 'TYC1 8999' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.766074 / -1.129907 radians - -2.117 / 306.615 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.190 (HIGH), V = 11.060 (HIGH), R = 11.070 (HIGH), I = 0.000 (NO), J = 8.742 (HIGH), H = 8.161 (HIGH), K = 8.006 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - try with J-K
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 12.190 (HIGH), V = 11.060 (HIGH), R = 11.070 (HIGH), I = 9.650 (HIGH), J = 8.742 (HIGH), H = 8.161 (HIGH), K = 8.006 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.190, V = 11.060, R = 11.070, I = 9.650, J = 8.742, H = 8.161, K = 8.006, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter JH = 0.129(0.0124), JK = 0.137(0.0112)
@@ -356,6 +357,7 @@ sclsvrServer -    alx - Test  - Diam = 0.137 (0.011) - base = 102.5 - wlen= 2.20
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998823 (0.000193), 0.997648 (0.000385)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.222 (HIGH), V = 8.060 (HIGH), R = 8.825 (HIGH), I = 0.000 (NO), J = 7.909 (HIGH), H = 7.648 (HIGH), K = 7.658 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - try with J-K
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.222 (HIGH), V = 8.060 (HIGH), R = 8.825 (HIGH), I = 8.231 (HIGH), J = 7.909 (HIGH), H = 7.648 (HIGH), K = 7.658 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 12.182, V = 11.060, R = 11.069, I = 9.749, J = 16.240, H = 8.161, K = 8.006, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter JH = 0.131(0.0126), JK = 0.122(0.0100)
@@ -373,6 +375,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 54.882/dec=-64 39 26.36' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.771082 / -1.128483 radians - -2.020 / 306.504 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 16.270 (HIGH), V = 0.000 (NO), R = 13.010 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 16.270, V = 0.000, R = 13.010, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 54.882/dec=-64 39 26.36' - computing diameter without absorption...
@@ -385,8 +388,8 @@ sclsvrServer - sclsvr - Test  - star '2MASS 13245711-6438509' - parallax is unkn
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.770922 / -1.128311 radians - -2.011 / 306.509 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 15.170 (HIGH), V = 0.000 (NO), R = 12.610 (HIGH), I = 0.000 (NO), J = 6.692 (HIGH), H = 5.631 (HIGH), K = 5.158 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer -    err - Test  - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Warn  - J-K differential magnitude (1.534) not found in color table 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - try with J-K
+sclsvrServer -    alx - Test  - Cannot find J-K (1.534) in 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 15.170, V = 0.000, R = 12.610, I = 0.000, J = 6.692, H = 5.631, K = 5.158, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star '2MASS 13245711-6438509' - computing diameter without absorption...
@@ -399,8 +402,8 @@ sclsvrServer - sclsvr - Test  - star '2MASS 13243568-6439316' - parallax is unkn
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.772482 / -1.128508 radians - -2.017 / 306.470 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 20.500 (HIGH), V = 0.000 (NO), R = 14.450 (HIGH), I = 0.000 (NO), J = 8.907 (HIGH), H = 7.868 (HIGH), K = 7.364 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer -    err - Test  - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Warn  - J-K differential magnitude (1.543) not found in color table 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - try with J-K
+sclsvrServer -    alx - Test  - Cannot find J-K (1.543) in 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 20.500, V = 0.000, R = 14.450, I = 0.000, J = 8.907, H = 7.868, K = 7.364, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star '2MASS 13243568-6439316' - computing diameter without absorption...
@@ -412,6 +415,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 35.853/dec=-64 39 33.77' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.772466 / -1.128519 radians - -2.018 / 306.470 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 19.640 (HIGH), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 19.640, V = 0.000, R = 0.000, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 35.853/dec=-64 39 33.77' - computing diameter without absorption...
@@ -423,6 +427,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 25 27.924/dec=-64 41 43.26' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.768679 / -1.129147 radians - -2.065 / 306.557 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 13.600 (HIGH), V = 0.000 (NO), R = 10.680 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 13.600, V = 0.000, R = 10.680, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 25 27.924/dec=-64 41 43.26' - computing diameter without absorption...
@@ -435,8 +440,8 @@ sclsvrServer - sclsvr - Test  - star '2MASS 13251154-6444282' - parallax is unkn
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.769867 / -1.129945 radians - -2.107 / 306.522 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.230 (HIGH), V = 0.000 (NO), R = 11.010 (HIGH), I = 0.000 (NO), J = 7.748 (HIGH), H = 6.848 (HIGH), K = 6.537 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer -    err - Test  - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Warn  - J-K differential magnitude (1.211) not found in color table 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - try with J-K
+sclsvrServer -    alx - Test  - Cannot find J-K (1.211) in 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 14.230, V = 0.000, R = 11.010, I = 0.000, J = 7.748, H = 6.848, K = 6.537, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star '2MASS 13251154-6444282' - computing diameter without absorption...
@@ -449,6 +454,7 @@ sclsvrServer - sclsvr - Test  - star '2MASS 13243503-6445192' - parallax is unkn
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.772530 / -1.130192 radians - -2.112 / 306.456 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 13.470 (HIGH), V = 0.000 (NO), R = 10.760 (HIGH), I = 0.000 (NO), J = 8.865 (HIGH), H = 8.048 (HIGH), K = 7.808 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - try with J-K
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 13.470 (HIGH), V = 16.157 (HIGH), R = 10.760 (HIGH), I = 11.626 (HIGH), J = 8.865 (HIGH), H = 8.048 (HIGH), K = 7.808 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 13.470, V = 16.157, R = 10.760, I = 11.626, J = 8.865, H = 8.048, K = 7.808, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter JH = 0.204(0.0196), JK = 0.205(0.0168)
@@ -460,6 +466,7 @@ sclsvrServer -    alx - Test  - Diam = 0.205 (0.017) - base = 102.5 - wlen= 2.20
 sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997352 (0.000434), 0.994711 (0.000865)
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.502 (HIGH), V = 0.000 (NO), R = 8.515 (HIGH), I = 0.000 (NO), J = 8.032 (HIGH), H = 7.535 (HIGH), K = 7.460 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
+sclsvrServer -    alx - Test  - try with J-K
 sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.502 (HIGH), V = 9.796 (HIGH), R = 8.515 (HIGH), I = 8.748 (HIGH), J = 8.032 (HIGH), H = 7.535 (HIGH), K = 7.460 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 13.462, V = 12.796, R = 10.759, I = 10.266, J = 16.363, H = 8.048, K = 7.808, L = 0.000, M = 0.000
 sclsvrServer -    alx - Test  - Diameter JH = 0.158(0.0151), JK = 0.157(0.0129)
@@ -479,6 +486,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 35.185/dec=-64 45 22.15' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.772515 / -1.130208 radians - -2.113 / 306.456 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 15.340 (HIGH), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 15.340, V = 0.000, R = 0.000, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 35.185/dec=-64 45 22.15' - computing diameter without absorption...
@@ -490,6 +498,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 42.355/dec=-64 45 53.49' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.771993 / -1.130360 radians - -2.124 / 306.468 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 15.890 (HIGH), V = 0.000 (NO), R = 14.210 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 15.890, V = 0.000, R = 14.210, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 42.355/dec=-64 45 53.49' - computing diameter without absorption...
@@ -501,6 +510,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 42.246/dec=-64 45 54.78' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.772001 / -1.130366 radians - -2.124 / 306.468 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 15.200 (HIGH), V = 0.000 (NO), R = 12.960 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 15.200, V = 0.000, R = 12.960, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 42.246/dec=-64 45 54.78' - computing diameter without absorption...
@@ -512,6 +522,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 17.589/dec=-64 44 45.62' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.773794 / -1.130031 radians - -2.099 / 306.427 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.340 (HIGH), V = 0.000 (NO), R = 10.250 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 14.340, V = 0.000, R = 10.250, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 17.589/dec=-64 44 45.62' - computing diameter without absorption...
@@ -523,6 +534,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 17.395/dec=-64 44 42.49' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.773809 / -1.130016 radians - -2.098 / 306.426 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.180 (HIGH), V = 0.000 (NO), R = 12.200 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 14.180, V = 0.000, R = 12.200, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 17.395/dec=-64 44 42.49' - computing diameter without absorption...
@@ -534,6 +546,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 17.302/dec=-64 44 41.80' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.773815 / -1.130012 radians - -2.098 / 306.426 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 0.000 (NO), V = 0.000 (NO), R = 14.950 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 0.000, V = 0.000, R = 14.950, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 24 17.302/dec=-64 44 41.80' - computing diameter without absorption...
@@ -546,8 +559,8 @@ sclsvrServer - sclsvr - Test  - star '2MASS 13252010-6446564' - parallax is unkn
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.769251 / -1.130665 radians - -2.150 / 306.532 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 17.570 (HIGH), V = 0.000 (NO), R = 15.000 (HIGH), I = 0.000 (NO), J = 9.467 (HIGH), H = 8.365 (HIGH), K = 7.897 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
 sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Spectral Type provided)
-sclsvrServer -    err - Test  - errAddInStack(alx, 18)
-sclsvrServer - sclsvr - Warn  - J-K differential magnitude (1.570) not found in color table 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
+sclsvrServer -    alx - Test  - try with J-K
+sclsvrServer -    alx - Test  - Cannot find J-K (1.570) in 'alxColorTableForFaintDwarfStar.cfg'; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 17.570, V = 0.000, R = 15.000, I = 0.000, J = 9.467, H = 8.365, K = 7.897, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star '2MASS 13252010-6446564' - computing diameter without absorption...
@@ -559,6 +572,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 25 19.983/dec=-64 46 57.65' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.769257 / -1.130671 radians - -2.150 / 306.532 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 18.760 (HIGH), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 18.760, V = 0.000, R = 0.000, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 25 19.983/dec=-64 46 57.65' - computing diameter without absorption...
@@ -570,6 +584,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 26 09.051/dec=-64 41 20.96' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.765689 / -1.129039 radians - -2.069 / 306.631 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 15.930 (HIGH), V = 0.000 (NO), R = 13.080 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 15.930, V = 0.000, R = 13.080, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 26 09.051/dec=-64 41 20.96' - computing diameter without absorption...
@@ -581,6 +596,7 @@ sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 25 37.547/dec=-64 47 13.72' - parallax is unknown
 sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.767980 / -1.130749 radians - -2.159 / 306.562 degrees
 sclsvrServer -    alx - Test  - Corrected magnitudes: B = 14.440 (HIGH), V = 0.000 (NO), R = 11.200 (HIGH), I = 0.000 (NO), J = 0.000 (NO), H = 0.000 (NO), K = 0.000 (NO), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - J and K mag are not set; could not compute missing magnitudes
 sclsvrServer -    alx - Test  - Apparent magnitudes: B = 14.440, V = 0.000, R = 11.200, I = 0.000, J = 0.000, H = 0.000, K = 0.000, L = 0.000, M = 0.000
 sclsvrServer - sclsvr - Warn  - Unknown 'IO' property; could not compute diameter
 sclsvrServer - sclsvr - Test  - star 'Coordinates-ra=13 25 37.547/dec=-64 47 13.72' - computing diameter without absorption...
