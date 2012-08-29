@@ -1,0 +1,202 @@
+ Memcheck, a memory error detector
+ Copyright (C) 2002-2009, and GNU GPL'd, by Julian Seward et al.
+ Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
+ Command: sclwsServer -l 0 -v 3
+ Parent PID: 7201
+ 
+ 
+ Valgrind options:
+    --run-libc-freeres=no
+    -v
+    --num-callers=12
+    --freelist-vol=500000000
+    --suppressions=./custom_suppressions.txt
+    --log-file=./vg_memcheck.log
+    --leak-check=full
+    --show-reachable=yes
+ Contents of /proc/version:
+   Linux version 2.6.32-6-pve (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Mon Sep 26 06:32:53 CEST 2011
+ Arch and hwcaps: AMD64, amd64-sse3-cx16
+ Page sizes: currently 4096, max supported 4096
+ Valgrind library directory: /usr/lib64/valgrind
+ Reading syms from /home/users/bourgesl/dev/SCALIB/DEVELOPMENT/sclws/bin/sclwsServer (0x400000)
+ Reading syms from /lib64/ld-2.5.so (0x4000000)
+ Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux (0x38000000)
+    object doesn't have a dynamic symbol table
+ Reading suppressions file: ./custom_suppressions.txt
+ Reading suppressions file: /usr/lib64/valgrind/default.supp
+ REDIR: 0x4014550 (strlen) redirected to 0x3803e767 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+ Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so (0x4a1d000)
+ Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so (0x4c1e000)
+ WARNING: new redirection conflicts with existing -- ignoring it
+     new: 0x04014550 (strlen              ) R-> 0x04c21dc0 strlen
+ REDIR: 0x4014370 (index) redirected to 0x4c21c30 (index)
+ REDIR: 0x4014520 (strcmp) redirected to 0x4c21e90 (strcmp)
+ Reading syms from /usr/lib64/libgdome.so.0.8.1 (0x4e25000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libm-2.5.so (0x5063000)
+ Reading syms from /usr/lib64/libxml2.so.2.6.26 (0x52e6000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libglib-2.0.so.0.1200.3 (0x5623000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libpthread-2.5.so (0x58c1000)
+ Reading syms from /usr/lib64/libstdc++.so.6.0.8 (0x5adc000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libuuid.so.1.2 (0x5ddc000)
+    object doesn't have a symbol table
+ Reading syms from /home/users/bourgesl/dev/SCALIB/DEVELOPMENT/sclws/lib/libsclws.so (0x5fe0000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsclsvr.so (0x61fa000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libvobs.so (0x6427000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libalx.so (0x6663000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsimcli.so (0x689b000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libthrd.so (0x6aa3000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmcs.so (0x6ca7000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liblog.so (0x6ea9000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liberr.so (0x70ad000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisc.so (0x72b3000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libtimlog.so (0x74bb000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libfnd.so (0x76bd000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisco.so (0x78bf000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libenv.so (0x7ac6000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libcmd.so (0x7ccb000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmsg.so (0x7ed9000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsdb.so (0x80e9000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libevh.so (0x82ec000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libgwt.so (0x8508000)
+ Reading syms from /lib64/libgcc_s-4.1.2-20080825.so.1 (0x8731000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libc-2.5.so (0x893f000)
+ Reading syms from /lib64/libdl-2.5.so (0x8c96000)
+ Reading syms from /usr/lib64/libz.so.1.2.3 (0x8e9a000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/librt-2.5.so (0x90ae000)
+ REDIR: 0x89b9cb0 (memset) redirected to 0x4c22030 (memset)
+ REDIR: 0x89bb0f0 (memcpy) redirected to 0x4c23030 (memcpy)
+ REDIR: 0x89b8df0 (rindex) redirected to 0x4c21ae0 (rindex)
+ REDIR: 0x89b8a00 (strlen) redirected to 0x4c21d80 (strlen)
+ REDIR: 0x89b3890 (calloc) redirected to 0x4c20092 (calloc)
+ REDIR: 0x5b991c0 (operator new(unsigned long)) redirected to 0x4c215ea (operator new(unsigned long))
+ REDIR: 0x5b97f50 (operator delete(void*)) redirected to 0x4c206bc (operator delete(void*))
+ REDIR: 0x89b0a40 (mallopt) redirected to 0x4c1fb90 (mallopt)
+ REDIR: 0x89b8d40 (strncpy) redirected to 0x4c231a0 (strncpy)
+ REDIR: 0x89b8c80 (strncmp) redirected to 0x4c21de0 (strncmp)
+ REDIR: 0x89b84c0 (strcpy) redirected to 0x4c232c0 (strcpy)
+ REDIR: 0x89b3c70 (malloc) redirected to 0x4c20d9a (malloc)
+ REDIR: 0x89bbd50 (rawmemchr) redirected to 0x4c22110 (rawmemchr)
+ REDIR: 0xffffffffff600000 (???) redirected to 0x3803e753 (vgPlain_amd64_linux_REDIR_FOR_vgettimeofday)
+ REDIR: 0x89b1720 (free) redirected to 0x4c209aa (free)
+ REDIR: 0x89b8480 (strcmp) redirected to 0x4c21e50 (strcmp)
+ REDIR: 0x89ba7e0 (mempcpy) redirected to 0x4c22870 (mempcpy)
+ REDIR: 0x89b8be0 (strncat) redirected to 0x4c21c60 (strncat)
+ REDIR: 0x89b82d0 (index) redirected to 0x4c21b70 (index)
+ REDIR: 0x89b9b10 (memmove) redirected to 0x4c22080 (memmove)
+ REDIR: 0x89b0420 (malloc_trim) redirected to 0x4c1fb9b (malloc_trim)
+ REDIR: 0x89b0000 (malloc_stats) redirected to 0x4c1fba6 (malloc_stats)
+ REDIR: 0x89b8110 (strcat) redirected to 0x4c22590 (strcat)
+ REDIR: 0x89b4190 (realloc) redirected to 0x4c20e4b (realloc)
+ REDIR: 0x89b94f0 (memchr) redirected to 0x4c21f10 (memchr)
+ REDIR: 0x5b992f0 (operator new[](unsigned long)) redirected to 0x4c21246 (operator new[](unsigned long))
+ REDIR: 0x5b97f90 (operator delete[](void*)) redirected to 0x4c20338 (operator delete[](void*))
+ REDIR: 0x89b8af0 (strnlen) redirected to 0x4c21d50 (strnlen)
+ 
+ HEAP SUMMARY:
+     in use at exit: 3,066 bytes in 14 blocks
+   total heap usage: 1,983,169 allocs, 1,983,155 frees, 151,812,286 bytes allocated
+ 
+ Searching for pointers to 14 not-freed blocks
+ Checked 31,568,728 bytes
+ 
+ 15 bytes in 1 blocks are still reachable in loss record 1 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89B8771: strdup (in /lib64/libc-2.5.so)
+    by 0x89CB89B: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC34F: tzset (in /lib64/libc-2.5.so)
+    by 0x89D0C73: strftime_l (in /lib64/libc-2.5.so)
+    by 0x6EAA3FA: logGetTimeStamp (log.c:879)
+    by 0x6EAAC08: logPrint (log.c:611)
+    by 0x403C2B: sclwsStats() (sclwsServer.cpp:290)
+    by 0x404564: sclwsExit(int) (sclwsServer.cpp:584)
+    by 0x40460A: sclwsSignalHandler(int) (sclwsServer.cpp:646)
+    by 0x896F2CF: ??? (in /lib64/libc-2.5.so)
+    by 0x58CEB38: ??? (in /lib64/libpthread-2.5.so)
+ 
+ 21 bytes in 1 blocks are possibly lost in loss record 2 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89CB783: __tzstring (in /lib64/libc-2.5.so)
+    by 0x89CD1BF: __tzfile_read (in /lib64/libc-2.5.so)
+    by 0x89CB8AE: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC17D: __tz_convert (in /lib64/libc-2.5.so)
+    by 0x6EAA3E3: logGetTimeStamp (log.c:878)
+    by 0x6EAAC08: logPrint (log.c:611)
+    by 0x404654: sclwsInit() (sclwsServer.cpp:603)
+    by 0x4048B2: main (sclwsServer.cpp:701)
+ 
+ 44 bytes in 1 blocks are still reachable in loss record 3 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x72B860E: miscDuplicateString (miscString.c:368)
+    by 0x6446EEB: vobsGetVizierURI() (vobsREMOTE_CATALOG.cpp:93)
+    by 0x404664: sclwsInit() (sclwsServer.cpp:612)
+    by 0x4048B2: main (sclwsServer.cpp:701)
+ 
+ 56 bytes in 1 blocks are still reachable in loss record 4 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x400BA06: _dl_map_object_deps (in /lib64/ld-2.5.so)
+    by 0x4010C14: dl_open_worker (in /lib64/ld-2.5.so)
+    by 0x400CE05: _dl_catch_error (in /lib64/ld-2.5.so)
+    by 0x40105BB: _dl_open (in /lib64/ld-2.5.so)
+    by 0x8A47DEF: do_dlopen (in /lib64/libc-2.5.so)
+    by 0x400CE05: _dl_catch_error (in /lib64/ld-2.5.so)
+    by 0x8A47F56: __libc_dlopen_mode (in /lib64/libc-2.5.so)
+    by 0x58D01DB: pthread_cancel_init (in /lib64/libpthread-2.5.so)
+    by 0x58D02EF: _Unwind_ForcedUnwind (in /lib64/libpthread-2.5.so)
+    by 0x58CE15F: __pthread_unwind (in /lib64/libpthread-2.5.so)
+    by 0x58C8984: pthread_exit (in /lib64/libpthread-2.5.so)
+ 
+ 122 bytes in 6 blocks are still reachable in loss record 5 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89CB783: __tzstring (in /lib64/libc-2.5.so)
+    by 0x89CD1BF: __tzfile_read (in /lib64/libc-2.5.so)
+    by 0x89CB8AE: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC17D: __tz_convert (in /lib64/libc-2.5.so)
+    by 0x6EAA3E3: logGetTimeStamp (log.c:878)
+    by 0x6EAAC08: logPrint (log.c:611)
+    by 0x404654: sclwsInit() (sclwsServer.cpp:603)
+    by 0x4048B2: main (sclwsServer.cpp:701)
+ 
+ 304 bytes in 1 blocks are possibly lost in loss record 6 of 8
+    at 0x4C20140: calloc (vg_replace_malloc.c:418)
+    by 0x400FE62: _dl_allocate_tls (in /lib64/ld-2.5.so)
+    by 0x58C7EB8: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x40468B: sclwsInit() (sclwsServer.cpp:620)
+    by 0x4048B2: main (sclwsServer.cpp:701)
+ 
+ 608 bytes in 2 blocks are possibly lost in loss record 7 of 8
+    at 0x4C20140: calloc (vg_replace_malloc.c:418)
+    by 0x400FE62: _dl_allocate_tls (in /lib64/ld-2.5.so)
+    by 0x58C7EB8: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4049E8: main (sclwsServer.cpp:751)
+ 
+ 1,896 bytes in 1 blocks are still reachable in loss record 8 of 8
+    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
+    by 0x89CCC05: __tzfile_read (in /lib64/libc-2.5.so)
+    by 0x89CB8AE: tzset_internal (in /lib64/libc-2.5.so)
+    by 0x89CC17D: __tz_convert (in /lib64/libc-2.5.so)
+    by 0x6EAA3E3: logGetTimeStamp (log.c:878)
+    by 0x6EAAC08: logPrint (log.c:611)
+    by 0x404654: sclwsInit() (sclwsServer.cpp:603)
+    by 0x4048B2: main (sclwsServer.cpp:701)
+ 
+ LEAK SUMMARY:
+    definitely lost: 0 bytes in 0 blocks
+    indirectly lost: 0 bytes in 0 blocks
+      possibly lost: 933 bytes in 4 blocks
+    still reachable: 2,133 bytes in 10 blocks
+         suppressed: 0 bytes in 0 blocks
+ 
+ ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 6700 from 97)
+ 
+ used_suppression:   6048 pow__memcheck_ignore
+ used_suppression:    648 ieee754_pow__memcheck_ignore
+ used_suppression:      4 dl-hack3
+ 
+ ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 6700 from 97)
