@@ -10,7 +10,7 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.4.3 beta 1"/>
+    <program name="SearchCal" version="4.4.3b2"/>
     <compilation date="02/08/2012" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -132,9 +132,8 @@
   
     <releasenotes>
         <release version="4.4.3">
-            <prerelease version="4.4.3 beta 2">
-                <change type="CHANGE">Fixed interpolation of missing magnitudes B, K.</change>
-                <change type="CHANGE">Fixed computation of missing magnitude M (bright scenario).</change>
+            <prerelease version="4.4.3b2" tag="SC_V4_4_3b2">
+                <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/332">Added a filter to reject stars with magnitude below a given value.</change>
             </prerelease>
             <prerelease version="4.4.3 beta 1">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/336">Enhanced progress bar updates to avoid updating form fields related to query parameters.</change>
