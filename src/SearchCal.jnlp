@@ -36,6 +36,8 @@
         
         <!-- Axis 1.4 (SOAP) -->
         <jar href="@SHARED@/axis.jar" />
+        <!-- saaj provides SoapException for java 1.5 -->
+        <jar href="@SHARED@/saaj.jar" />
         <jar href="@SHARED@/jaxrpc.jar" />
         <jar href="@SHARED@/wsdl4j-1.5.1.jar" />
         <jar href="@SHARED@/commons-discovery-0.2.jar" />
