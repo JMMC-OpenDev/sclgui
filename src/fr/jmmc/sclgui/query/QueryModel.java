@@ -12,23 +12,19 @@ import cds.savot.model.TDSet;
 import cds.savot.model.TRSet;
 import cds.savot.pull.SavotPullEngine;
 import cds.savot.pull.SavotPullParser;
-
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
-
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.io.StringBufferInputStream;
-
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -44,16 +40,16 @@ public class QueryModel extends Star implements Observer {
      *
      * @warning Do not change the order, as it is used to parse SIMBAD VOTables.
      */
-    private static final String[] ALL_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
+    private static final String[] ALL_MAGNITUDE_BANDS = {"V", "J", "H", "K", "N"};
     /**
      * Default magnitude band wavelengthes in micrometer.
      *
      * @warning Do not change the order,as it is linked to ALL_MAGNITUDE_BANDS.
      * @sa ALL_MAGNITUDE_BANDS
      */
-    private static final Double[] _defaultWavelengths = {0.55d, 0.9d, 1.25d, 1.65d, 2.2d, 10d};
+    private static final Double[] _defaultWavelengths = {0.55d, 1.25d, 1.65d, 2.2d, 10d};
     /** Available magnitude band for BRIGHT scenario */
-    private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "I", "J", "H", "K", "N"};
+    private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "J", "H", "K", "N"};
     /** Available magnitude band for FAINT scenario */
     private static final String[] FAINT_MAGNITUDE_BANDS = {"K"};
 
@@ -961,7 +957,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Return the minimun calibrator magnitude for the actual query.
+     * Return the minimum calibrator magnitude for the actual query.
      *
      * @return the minimum magnitude as a Double value.
      */
@@ -1018,7 +1014,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Return the auto-update delta for the minimun calibrator magnitude.
+     * Return the auto-update delta for the minimum calibrator magnitude.
      *
      * @return the minimum magnitude delta as a Double value.
      */
@@ -1102,7 +1098,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Return the auto-update delta for the maximun calibrator magnitude.
+     * Return the auto-update delta for the maximum calibrator magnitude.
      *
      * @return the maximum magnitude delta as a Double value.
      */
@@ -1113,7 +1109,7 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Change the auto-update delta for the maximun calibrator magnitude.
+     * Change the auto-update delta for the maximum calibrator magnitude.
      *
      * @param delta the new delta as a double value.
      * @throws PreferencesException  
