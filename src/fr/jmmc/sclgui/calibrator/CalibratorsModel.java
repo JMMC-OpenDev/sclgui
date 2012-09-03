@@ -343,7 +343,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         
         // check that the votable corresponds to the SearchCal VOTable format:
         if (!resource.getName().startsWith("SearchCal")) {
-            throw new IllegalArgumentException("Incorrect Votable format; expected one SearchCal Votable.");
+            _logger.warning("Ressource should be 'SearchCal' but is : "+resource.getName());
+            throw new IllegalArgumentException("Incorrect Votable format; expected one SearchCal Votable");
         }
         
         // reset internal data model:
