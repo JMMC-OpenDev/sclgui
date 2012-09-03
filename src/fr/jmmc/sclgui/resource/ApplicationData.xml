@@ -24,7 +24,7 @@
         <!-- Java Mariotti Astronomical library -->
         <package name="jMAL"
             description="JMMC library to provide common astronomical computations (coordinate conversion, SIMBAD star resolver and analytical object models in interferometry)"
-            link="https://www.jmmc.fr/dev/jmal/"
+            link="http://www.jmmc.fr/dev/jmal/"
             jars="jmal.jar"
             license="CECILL-B ???"/>     
 
@@ -133,7 +133,12 @@
     <releasenotes>
         <release version="4.4.3">
             <prerelease version="4.4.3b3" tag="SC_V4_4_3b3">
-                <change type="CHANGE">Removed deprecated I-band querying.</change>
+                <change type="CHANGE">Removed deprecated I-band querying.</change>                
+                
+                <change type="BUGFIX">Fix compatibility for java 1.5.</change>
+                <change type="DEVELOPER">Replace GroupLayout(java1.6) by GridBagLayout</change>
+                <change type="DEVELOPER">Add saaj.jar to fix SoapException NoClassDefFoundError</change>
+                
             </prerelease>
             <prerelease version="4.4.3b2" tag="SC_V4_4_3b2">
                 <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/332">Added a filter to reject stars with magnitude below a given value.</change>
