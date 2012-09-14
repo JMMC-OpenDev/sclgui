@@ -1,1 +1,0 @@
-sclsvrServer -noDate -noFileLine -v 3 GETSTAR "-file GetStarEtaTau.vot -objectName eta tau  "
