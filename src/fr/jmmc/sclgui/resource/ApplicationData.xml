@@ -134,14 +134,14 @@
         <release version="4.4.3">
             <prerelease version="4.4.3b3" tag="SC_V4_4_3b3">
                 <change type="CHANGE">Removed deprecated I-band querying.</change>                
-                
                 <change type="BUGFIX">Fix compatibility for java 1.5.</change>
                 <change type="DEVELOPER">Replace GroupLayout(java1.6) by GridBagLayout</change>
                 <change type="DEVELOPER">Add saaj.jar to fix SoapException NoClassDefFoundError</change>
-                
             </prerelease>
             <prerelease version="4.4.3b2" tag="SC_V4_4_3b2">
                 <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/332">Added a filter to reject stars with magnitude below a given value.</change>
+                <change type="CHANGE">Fixed interpolation of missing magnitudes B, K.</change>
+                <change type="CHANGE">Fixed computation of missing magnitude M (bright scenario).</change>
             </prerelease>
             <prerelease version="4.4.3 beta 1">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/336">Enhanced progress bar updates to avoid updating form fields related to query parameters.</change>
