@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<ApplicationData link="http://www.jmmc.fr/searchcal">
+<ApplicationData link="http://www.jmmc.fr/SearchCal" faqlink="http://www.jmmc.fr/SearchCal/faq" rsslink="http://www.jmmc.fr/searchcal/searchcal.rss" releaselink="http://www.jmmc.fr/searchcal/releasenotes.htm">
 
     <company>
         <short_name>JMMC</short_name>
@@ -10,7 +9,7 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.4.3"/>
+    <program name="SearchCal" version="4.4.4b1"/>
     <compilation date="02/08/2012" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -131,10 +130,15 @@
     </menubar>
   
     <releasenotes>
+        <release version="4.4.4">
+            <prerelease version="4.4.4b1" tag="SC_V4_4_4b1">
+                <change type="BUGFIX">Fixed missing Hot News/Release Notes/FAQ links in Help menu.</change>
+            </prerelease>
+        </release>
         <release version="4.4.3">
             <prerelease version="4.4.3b3" tag="SC_V4_4_3b3">
                 <change type="CHANGE">Removed deprecated I-band querying.</change>                
-                <change type="BUGFIX">Fix compatibility for java 1.5.</change>
+                <change type="BUGFIX">Fixed compatibility for java 1.5.</change>
                 <change type="DEVELOPER">Replace GroupLayout(java1.6) by GridBagLayout</change>
                 <change type="DEVELOPER">Add saaj.jar to fix SoapException NoClassDefFoundError</change>
             </prerelease>
@@ -146,7 +150,7 @@
             <prerelease version="4.4.3 beta 1">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/336">Enhanced progress bar updates to avoid updating form fields related to query parameters.</change>
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/336">Fixed lost changes in the DEC range field (focus issue).</change>
-                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/337">Fix minor concurrency issue when the query status fails with an Invalid server id error but the query was successfully performed.</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/337">Fixed minor concurrency issue when the query status fails with an Invalid server id error but the query was successfully performed.</change>
             </prerelease>
         </release>
         <release version="4.4.2">
