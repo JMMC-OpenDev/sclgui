@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.vo;
 
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -279,10 +280,11 @@ public final class VirtualObservatory extends Observable {
             _logger.fine("Received query = " + query);
         }
 
-        // Parse the query
-        try {
-            StatusBar.show("parsing query...");
+        StatusBar.show("parsing query...");
 
+        // Parse the query     
+        Exception e = null;
+        try {
             _calibratorsModel.parseVOTable(query);
 
             // load default values to reset completely the query model:
@@ -290,12 +292,20 @@ public final class VirtualObservatory extends Observable {
             // load given parameters (some may be missing)
             _queryModel.loadParamSet(_calibratorsModel.getParamSet());
 
-        } catch (Exception e) {
-            StatusBar.show("calibrator search aborted (could not parse query) !");
-            MessagePane.showErrorMessage("Could not parse query.", e);
-            return;
+        } catch (NumberFormatException nfe) {
+            e = nfe;
+        } catch (IllegalArgumentException iae) {
+            e = iae;
+        } catch (PreferencesException pe) {
+            e = pe;
+        } finally {
+            if (e != null) {
+                StatusBar.show("calibrator search aborted (could not parse query) !");
+                MessagePane.showErrorMessage("Could not parse query.", e);
+                // TODO reset or restore model ?                
+                return;
+            }
         }
-
         // Launch the request
         StatusBar.show("Lauching search...");
         _getCalAction.actionPerformed(null);
@@ -385,31 +395,44 @@ public final class VirtualObservatory extends Observable {
                     StatusBar.show("loading file...");
 
                     // Loading the file in the calibrators model
+                    String errorMsg = null;
+                    Exception ex = null;
                     try {
+
                         StatusBar.show("loading file (parsing calibrators)...");
-
                         _calibratorsModel.openFile(_currentFile);
-
                         StatusBar.show("loading file (calibrators successfully parsed)...");
-                    } catch (Exception ex) {
-                        StatusBar.show("loading aborted (calibrators parsing error) !");
-                        MessagePane.showErrorMessage("Could not open file (calibrators parsing error).", ex);
+
+                    } catch (IOException ioe) {
+                        errorMsg = "Could not load the file : " + _currentFile.getAbsolutePath();
+                        ex = ioe;
+
+                    } catch (IllegalArgumentException iae) {
+                        errorMsg = "Loading aborted:  calibrators parsing error in file : " + _currentFile.getAbsolutePath();
+                        ex = iae;
+                    }
+                    
+                    // Exit if any error occurs 
+                    // TODO clean query and table content ?
+                    if (ex != null) {
+                        StatusBar.show(errorMsg);
+                        MessagePane.showErrorMessage(errorMsg, ex);
+                        return;
                     }
 
                     // Loading the file in the query model
+                    StatusBar.show("loading file (parsing query)...");
                     try {
-                        StatusBar.show("loading file (parsing query)...");
 
                         _queryModel.loadParamSet(_calibratorsModel.getParamSet());
-
                         StatusBar.show("loading file (query successfully parsed)...");
+                        StatusBar.show("file succesfully loaded.");
 
-                    } catch (Exception ex) {
+                    } catch (NumberFormatException nfe) {
                         StatusBar.show("loading aborted (query parsing error) !");
                         MessagePane.showErrorMessage("Could not open file (query parsing error).", ex);
+                        // TODO reset table content ?
                     }
-
-                    StatusBar.show("file succesfully loaded.");
 
                     // Enabling the 'Save' menus
                     enableDataRelatedMenus(true);
@@ -448,9 +471,14 @@ public final class VirtualObservatory extends Observable {
                     _calibratorsModel.openFile(_currentFile);
 
                     StatusBar.show("file succesfully re-loaded.");
-                } catch (Exception ex) {
-                    StatusBar.show("re-loading aborted (file error) !");
-                    MessagePane.showErrorMessage("Could not re-open file.", ex);
+                } catch (IOException ioe) {
+                    String errorMsg = "Could not reload the file : " + _currentFile.getAbsolutePath();
+                    StatusBar.show(errorMsg);
+                    MessagePane.showErrorMessage(errorMsg, ioe);
+                } catch (IllegalArgumentException iae) {
+                    String errorMsg = "ReLoading aborted:  calibrators parsing error in file : " + _currentFile.getAbsolutePath();
+                    StatusBar.show(errorMsg);
+                    MessagePane.showErrorMessage(errorMsg, iae);
                 }
             }
         }
@@ -683,7 +711,6 @@ public final class VirtualObservatory extends Observable {
                             StatusBar.show("parsing calibrators... (please wait, this may take a while)");
 
                             // Parse the received VOTable
-                            // TODO : refine the possible exceptions in parseVOTable(string):
                             _calibratorsModel.parseVOTable(votable);
 
                             StatusBar.show("searching calibrators... done.");
