@@ -302,9 +302,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      * its content.
      *
      * @param voTable the string to parse.
-     * @throws Exception  
+     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
      */
-    public void parseVOTable(final String voTable) throws Exception {
+    public void parseVOTable(final String voTable) throws IllegalArgumentException{
         if (_logger.isLoggable(Level.INFO)) {
             _logger.info("CalibratorsModel.parseVOTable: VOTable size = " + voTable.length() + " bytes.");
         }
@@ -341,10 +341,16 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         // (0 should not be used, but the name of the Resource instead)
         final SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
         
+        // check that we found one votable
+        if (resource==null) {
+            _logger.warning("Incorrect VOTable format");
+            throw new IllegalArgumentException("Incorrect VOTable format");
+        }
+        
         // check that the votable corresponds to the SearchCal VOTable format:
         if (!resource.getName().startsWith("SearchCal")) {
             _logger.warning("Ressource should be 'SearchCal' but is : "+resource.getName());
-            throw new IllegalArgumentException("Incorrect Votable format; expected one SearchCal Votable");
+            throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
         }
         
         // reset internal data model:
@@ -422,7 +428,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
                 _columnClasses.add(columnClass);
             } else {
-                throw new Exception("Invalid VOTable - empty fieldType");
+                throw new IllegalArgumentException("Invalid VOTable - empty fieldType for "+field.getName());
             }
         }
         
@@ -750,9 +756,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
      * Open the given file as a VOTable.
      *
      * @param file the file to be read.
-     * @throws Exception  
+     * @throws IOException if I/O error occurs reading the file
+     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
      */
-    public void openFile(final File file) throws Exception {
+    public void openFile(final File file) throws IOException, IllegalArgumentException {
         _logger.entering("CalibratorsModel", "openFile");
 
         // Read the buffer into memory into one String:
