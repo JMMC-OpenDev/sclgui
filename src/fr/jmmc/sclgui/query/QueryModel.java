@@ -4,14 +4,7 @@
 package fr.jmmc.sclgui.query;
 
 import cds.savot.model.ParamSet;
-import cds.savot.model.ResourceSet;
 import cds.savot.model.SavotParam;
-import cds.savot.model.SavotResource;
-import cds.savot.model.SavotVOTable;
-import cds.savot.model.TDSet;
-import cds.savot.model.TRSet;
-import cds.savot.pull.SavotPullEngine;
-import cds.savot.pull.SavotPullParser;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.App;
@@ -19,7 +12,6 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
-import java.io.StringBufferInputStream;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -290,8 +282,8 @@ public class QueryModel extends Star implements Observer {
 
     /**
      * Reset all properties to their default values.
-     * @throws PreferencesException
-     * @throws IllegalArgumentException  
+     * @throws PreferencesException if preference error occurs
+     * @throws IllegalArgumentException  if default values have wrong values
      */
     public final void loadDefaultValues() throws PreferencesException, IllegalArgumentException {
         _logger.entering("QueryModel", "loadDefaultValues");
@@ -338,8 +330,10 @@ public class QueryModel extends Star implements Observer {
      * Set all properties from the given SAVOT ParamSet.
      *
      * @param paramSet the part of the VOTable containing our query parameters.
+     * @throws NumberFormatException  if the string does not contain a
+     * parsable number.
      */
-    public void loadParamSet(ParamSet paramSet) {
+    public void loadParamSet(ParamSet paramSet) throws NumberFormatException {
         _logger.entering("QueryModel", "loadParamSet");
 
         final int nParams = paramSet.getItemCount();
@@ -439,112 +433,12 @@ public class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Reset all properties to their default values.
-     * @param simbadVOTable
-     * @throws Exception  
-     */
-    public void loadFromSimbadVOTable(String simbadVOTable)
-            throws Exception {
-        _logger.entering("QueryModel", "loadFromSimbadVOTable");
-
-        try {
-            // Parse using SAVOT
-            // Put the whole VOTable file into memory
-            SavotPullParser parser = new SavotPullParser(new StringBufferInputStream(
-                    simbadVOTable), SavotPullEngine.FULL, "UTF-8");
-
-            // Parse the VOTable
-            SavotVOTable parsedVOTable = parser.getVOTable();
-
-            // Get the VOTable resources
-            ResourceSet resourceSet = parsedVOTable.getResources();
-
-            // Get the first table of the first resource
-            // WARNING : this is not compatible with other VOTable than JMMC ones
-            // (0 should not be used, but the name of the Resource instead)
-            SavotResource resource = (SavotResource) resourceSet.getItemAt(0);
-
-            // For first data row (if any)
-            TRSet rows = resource.getTRSet(0);
-
-            for (int rowId = 0; rowId < Math.min(1, rows.getItemCount());
-                    rowId++) {
-                // Get the data corresponding to the current row
-                TDSet row = rows.getTDSet(rowId);
-
-                // @TODO : highly unportable as it is heavily dependant on the order of
-                //         the desired SIMBAD VOTable defined in
-                //         VirtualObservatory::GetStarAction::GetStarThread::simbadResult()
-                int index = 0;
-                String str;
-                str = row.getContent(index++);
-
-                if (str.length() != 0) {
-                    str = str.replace(' ', ':');
-
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("loaded RA = '" + str + "'.");
-                    }
-                    setScienceObjectRA(str);
-                }
-
-                str = row.getContent(index++);
-
-                if (str.length() != 0) {
-                    str = str.replace(' ', ':');
-
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("loaded DEC = '" + str + "'.");
-                    }
-                    setScienceObjectDEC(str);
-                }
-
-                // For each "magnitude-band" couple
-                for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
-                    String currentMagnitudeBand = ALL_MAGNITUDE_BANDS[i];
-                    Double loadedValue = Double.NaN;
-
-                    try {
-                        str = row.getContent(index++);
-
-                        if (str.length() != 0) {
-                            if (_logger.isLoggable(Level.FINE)) {
-                                _logger.fine("loaded '" + currentMagnitudeBand + "' Mag = '" + str + "'.");
-                            }
-                            loadedValue = new Double(str);
-                        } else {
-                            if (_logger.isLoggable(Level.FINE)) {
-                                _logger.fine("loaded '" + currentMagnitudeBand + "' Mag = 'NaN'.");
-                            }
-                        }
-                    } catch (Exception exc) {
-                        if (_logger.isLoggable(Level.FINE)) {
-                            _logger.fine("blanked '" + currentMagnitudeBand + "' Mag = 'NaN'.");
-                        }
-                    }
-
-                    setPropertyAsDouble(Property.fromString("FLUX_" + currentMagnitudeBand), loadedValue);
-                }
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-
-        restoreMinMaxMagnitudeFieldsAutoUpdating();
-
-        // Enable the edition as the values where not loaded from file
-        setEditableState(true);
-        notifyObservers();
-    }
-
-    /**
      * Store all current properties as the futur default values.
-     * @throws Exception 
+     * @throws IllegalStateException if preferences exception occurs
      */
-    public void saveDefaultValues() throws Exception {
-        _logger.entering("QueryModel", "saveDefaultValues");
-
+    public void saveDefaultValues() throws IllegalStateException {
         try {
+            _logger.entering("QueryModel", "saveDefaultValues");
             _preferences.setPreference(PreferenceKey.QUERY_MAGNITUDE_BAND, getInstrumentalMagnitudeBand());
             _preferences.setPreference(PreferenceKey.QUERY_INSTRUMENTAL_WAVELENGTH, getInstrumentalWavelength());
             _preferences.setPreference(PreferenceKey.QUERY_INSTRUMENTAL_BASELINE, getInstrumentalMaxBaseLine());
@@ -563,8 +457,8 @@ public class QueryModel extends Star implements Observer {
             _preferences.setPreference(PreferenceKey.QUERY_RADIAL_FLAG, getQueryAutoRadiusFlag());
 
             _preferences.saveToFile();
-        } catch (Exception e) {
-            throw e;
+        } catch (PreferencesException pex) {
+            throw new IllegalStateException("Can't save default values", pex);
         }
     }
 
@@ -930,16 +824,15 @@ public class QueryModel extends Star implements Observer {
      * Change the tolerated distance to detect the science object.
      *
      * @param distance the new tolerated distance as a double value.
-     * @throws Exception  
+     * @throws IllegalStateException if preferences exception occurs
      */
     public void setScienceObjectDetectionDistance(double distance)
-            throws Exception {
+            throws IllegalStateException {
         _logger.entering("QueryModel", "setScienceObjectDetectionDistance");
-
         try {
             _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, new Double(distance));
-        } catch (Exception e) {
-            throw e;
+        } catch (PreferencesException pe) {
+            throw new IllegalStateException("Can't change the tolerated distance to detect the science object", pe);
         }
 
         setChanged();
