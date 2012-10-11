@@ -3,8 +3,6 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import fr.jmmc.jmcs.util.UrlUtils;
-
 /**
  * Star property.
  */
@@ -17,21 +15,17 @@ public final class StarProperty implements Comparable<StarProperty> {
     private final String _origin;
     /** Confidence */
     private final String _confidence;
-    /** URL */
-    private final String _url;
 
     /**
      * Fully parameter-ed constructor.
      * @param value the new star property value.
      * @param origin the origin of the star property
      * @param confidence the confidence index of the star property 
-     * @param url URL of the star property 
      */
-    public StarProperty(final Object value, final String origin, final String confidence, final String url) {
+    public StarProperty(final Object value, final String origin, final String confidence) {
         setValue(value);
         _origin = origin;
         _confidence = confidence;
-        _url = url;
     }
 
     /**
@@ -61,7 +55,6 @@ public final class StarProperty implements Comparable<StarProperty> {
         if (_value == null) {
             return "";
         }
-
         return _value.toString();
     }
 
@@ -71,6 +64,9 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a Double object representing the star property value.
      */
     public double getDoubleValue() {
+        if (_value instanceof Double) {
+            return ((Double) _value).doubleValue();
+        }
         return Double.parseDouble(_value.toString());
     }
 
@@ -80,6 +76,9 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a Boolean object representing the star property value.
      */
     public boolean getBooleanValue() {
+        if (_value instanceof Boolean) {
+            return ((Boolean) _value).booleanValue();
+        }
         return Boolean.parseBoolean(_value.toString());
     }
 
@@ -143,50 +142,6 @@ public final class StarProperty implements Comparable<StarProperty> {
     }
 
     /**
-     * Get the URL of the star property as a String object.
-     *
-     * @return a String object representing the star property URL, null otherwise.
-     */
-    public String getURL() {
-        if (hasURL() == false) {
-            return null;
-        }
-
-        if (hasValue() == false) {
-            return null;
-        }
-
-        // Convert the current value to HTML compatible encoding
-        final String encodedValue = UrlUtils.encode(getStringValue());
-
-        // Forge the URL by replacing any '${...}' token with the current value
-        final String url = _url.replaceAll("[${].+[}]", encodedValue);
-
-        return url;
-    }
-
-    /**
-     * Return whether the star property has an URL.
-     *
-     * @return true if a URL is set, false otherwise.
-     */
-    public boolean hasURL() {
-        if (_url.length() <= 0) {
-            return false;
-        }
-
-        // If more than, or less than 1 '${...}' token in the URL
-        final String[] array = _url.split("[$]");
-
-        if (array.length != 2) {
-            // Discard this URL
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Compare the star property the given object for sorting.
      *
      * @param o the object to be compared.
@@ -195,23 +150,9 @@ public final class StarProperty implements Comparable<StarProperty> {
      * is less than, equal to, or greater than the specified object.
      */
     @Override
+    @SuppressWarnings("unchecked")
     public int compareTo(final StarProperty o) {
         return ((Comparable) _value).compareTo((Comparable) o);
-
-        /*
-        // If the _value member instance class implements 'Comparable' interface
-        Class[] interfaces = _value.getClass().getInterfaces();
-        for (int i = 0; i < interfaces.length; i++)
-        {
-        // Compare it against the given object
-        if (interfaces[i] == java.lang.Comparable.class)
-        {
-        return ((Comparable)_value).compareTo((Comparable)o);
-        }
-        }
-        // Otherwise only return whether the given object is the same or not
-        return (_value.equals(o) == true ? 0 : 1);
-         */
     }
 }
 /*___oOo___*/
