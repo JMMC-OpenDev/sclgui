@@ -373,13 +373,40 @@ public class QueryModel extends Star implements Observer {
             // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
             setQueryBrightScenarioFlag(bright);
 
-            setInstrumentalMagnitudeBand(parameters.get("band"));
-            setInstrumentalWavelength(Double.valueOf(parameters.get("wlen")));
-            setInstrumentalMaxBaseLine(Double.valueOf(parameters.get("baseMax")));
-            setScienceObjectName(parameters.get("objectName"));
-            setScienceObjectRA(parameters.get("ra"));
-            setScienceObjectDEC(parameters.get("dec"));
-            setScienceObjectMagnitude(Double.valueOf(parameters.get("mag")));
+            paramValue = parameters.get("band");
+            if (paramValue != null) {
+                setInstrumentalMagnitudeBand(paramValue);
+            }
+
+            paramValue = parameters.get("wlen");
+            if (paramValue != null) {
+                setInstrumentalWavelength(Double.valueOf(paramValue));
+            }
+
+            paramValue = parameters.get("baseMax");
+            if (paramValue != null) {
+                setInstrumentalMaxBaseLine(Double.valueOf(paramValue));
+            }
+
+            paramValue = parameters.get("objectName");
+            if (paramValue != null) {
+                setScienceObjectName(paramValue);
+            }
+
+            paramValue = parameters.get("ra");
+            if (paramValue != null) {
+                setScienceObjectRA(paramValue);
+            }
+
+            paramValue = parameters.get("dec");
+            if (paramValue != null) {
+                setScienceObjectDEC(paramValue);
+            }
+
+            paramValue = parameters.get("mag");
+            if (paramValue != null) {
+                setScienceObjectMagnitude(Double.valueOf(paramValue));
+            }
 
             // optional "minMagRange" parameter (Aspro2):
             paramValue = parameters.get("minMagRange");
@@ -412,7 +439,7 @@ public class QueryModel extends Star implements Observer {
                 setQueryAutoRadiusFlag(true);
 
                 // If radius exists
-                if (paramValue.length() > 0) {
+                if (paramValue.length() != 0) {
                     final Double radiusValue = Double.valueOf(paramValue);
                     setQueryRadialSize(radiusValue);
 
@@ -857,11 +884,11 @@ public class QueryModel extends Star implements Observer {
     public Double getQueryMinMagnitude() {
         _logger.entering("QueryModel", "getQueryMinMagnitude");
 
-        if (_queryMinMagnitudeAutoUpdate == true) {
+        if (_queryMinMagnitudeAutoUpdate) {
             Double scienceObjectMagnitude = getScienceObjectMagnitude();
 
             // If science object magnitude is known
-            if (Double.isNaN(scienceObjectMagnitude) == false) {
+            if (!Double.isNaN(scienceObjectMagnitude)) {
                 // Compute min. magnitude accordinaly
                 return scienceObjectMagnitude + getQueryMinMagnitudeDelta();
             }
@@ -940,14 +967,13 @@ public class QueryModel extends Star implements Observer {
     public Double getQueryMaxMagnitude() {
         _logger.entering("QueryModel", "getQueryMaxMagnitude");
 
-        if (_queryMaxMagnitudeAutoUpdate == true) {
+        if (_queryMaxMagnitudeAutoUpdate) {
             Double scienceObjectMagnitude = getScienceObjectMagnitude();
 
             // If science object magnitude is known
-            if (Double.isNaN(scienceObjectMagnitude) == false) {
+            if (!Double.isNaN(scienceObjectMagnitude)) {
                 // Compute max. magnitude accordinaly
-                return scienceObjectMagnitude
-                        + getQueryMaxMagnitudeDelta();
+                return scienceObjectMagnitude + getQueryMaxMagnitudeDelta();
             }
         }
 
@@ -1040,7 +1066,7 @@ public class QueryModel extends Star implements Observer {
 
         // Use the right magnitude band set for the selected scenario
         Object selectedItem = _instrumentalMagnitudeBands.getSelectedItem();
-        if (_queryBrightScenarioFlag == true) {
+        if (_queryBrightScenarioFlag) {
             _instrumentalMagnitudeBands = new DefaultComboBoxModel(BRIGHT_MAGNITUDE_BANDS);
         } else {
             _instrumentalMagnitudeBands = new DefaultComboBoxModel(FAINT_MAGNITUDE_BANDS);
@@ -1154,7 +1180,7 @@ public class QueryModel extends Star implements Observer {
      * @param radiusSize the new query box radial size as a Double.
      */
     public void setQueryRadialSize(Double radiusSize) {
-        if (radiusSize.isNaN() == false) {
+        if (!radiusSize.isNaN()) {
             setQueryRadialSize(radiusSize.doubleValue());
         }
     }
