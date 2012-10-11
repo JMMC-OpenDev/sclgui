@@ -6,24 +6,34 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.query.QueryModel;
-import java.util.Vector;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Magnitude filter.
  */
-public class MagnitudeFilter extends Filter {
+public final class MagnitudeFilter extends Filter {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(MagnitudeFilter.class.getName());
-    /** Store the magnitude constraint name */
-    private final String _belowMagnitudeConstraintName = "below";
-    private final String _aboveMagnitudeConstraintName = "and above";
+    /** Store the magnitude constraint name below */
+    private final static String _belowMagnitudeConstraintName = "below";
+    /** Store the magnitude constraint name above */
+    private final static String _aboveMagnitudeConstraintName = "and above";
+    /* members */
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
      */
     private QueryModel _queryModel;
+
+    /* filter execution variables */
+    /** the good magnitude column Id */
+    private int _magnitudeId = -1;
+    /** user defined minimum magnitude */
+    private double _lowerMag = 0d;
+    /** user defined maximum magnitude */
+    private double _upperMag = 0d;
 
     /**
      * Default constructor.
@@ -74,32 +84,43 @@ public class MagnitudeFilter extends Filter {
     }
 
     /**
+     * Prepare the filter execution with the given star list.
+     *
+     * @param starList the list of star to get column information
+     */
+    @Override
+    public void onPrepare(final StarList starList) {
+        // Get the query magnitude band
+        final String magnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
+
+        // Get the id of the column contaning the good magnitude
+        _magnitudeId = starList.getColumnIdByName(magnitudeBand);
+
+        // Get the magnitude range allowed
+        _lowerMag = getLowerLimitAllowedMagnitude();
+        _upperMag = getUpperLimitAllowedMagnitude();
+    }
+
+    /**
      * Return whether the given row should be removed or not.
      *
-     * @param starList the list of stars from which the row may be removed.
      * @param row the star properties to be evaluated.
      *
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row) {
-        // Get the query magnitude band
-        String magnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
-
-        // Get the id of the column contaning the good magnitude
-        int magnitudeId = starList.getColumnIdByName(magnitudeBand);
-
+    public boolean shouldRemoveRow(final List<StarProperty> row) {
         // If the desired column name exists
-        if (magnitudeId != -1) {
+        if (_magnitudeId != -1) {
             // Get the cell of the desired column
-            StarProperty cell = ((StarProperty) row.elementAt(magnitudeId));
+            final StarProperty cell = row.get(_magnitudeId);
 
             // Only test and eventualy remove if the cell has a value
-            if (cell.hasValue() == true) {
-                double currentMagnitude = cell.getDoubleValue();
+            if (cell.hasValue()) {
+                final double currentMagnitude = cell.getDoubleValue();
 
                 // if the magnitude is greater than the allowed one
-                if ((currentMagnitude < getLowerLimitAllowedMagnitude()) || (currentMagnitude > getUpperLimitAllowedMagnitude())) {
+                if ((currentMagnitude < _lowerMag) || (currentMagnitude > _upperMag)) {
                     // This row should be removed
                     return true;
                 }

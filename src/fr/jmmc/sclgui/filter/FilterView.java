@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -67,17 +68,14 @@ public final class FilterView extends JPanel implements Observer {
         _filter = filter;
 
         // JFormattedTextField formatter creation
-        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat(
-                "0.0####"));
+        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####"));
         doubleFormater.setValueClass(java.lang.Double.class);
         _doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
                 doubleFormater, doubleFormater);
 
         // Create the filter enable/disable checkbox
-        _enabledCheckbox = new JCheckBox(_filter.getName(),
-                _filter.isEnabled());
-        _enabledCheckbox.addActionListener(new ParamListener(_filter, null,
-                _enabledCheckbox));
+        _enabledCheckbox = new JCheckBox(_filter.getName(), _filter.isEnabled());
+        _enabledCheckbox.addActionListener(new ParamListener(_filter, null, _enabledCheckbox));
         add(_enabledCheckbox);
 
         // Add an empty panel to force filter to be aligned
@@ -100,9 +98,8 @@ public final class FilterView extends JPanel implements Observer {
         setBorder((EtchedBorder) BorderFactory.createEtchedBorder());
 
         // Display the widget panel only if there are some constraints
-        if (_filter.getNbOfConstraints() > 0) {
-            _widgetsPanel.setLayout(new BoxLayout(_widgetsPanel,
-                    BoxLayout.X_AXIS));
+        if (_filter.getNbOfConstraints() != 0) {
+            _widgetsPanel.setLayout(new BoxLayout(_widgetsPanel, BoxLayout.X_AXIS));
             add(_widgetsPanel);
         }
 
@@ -303,7 +300,7 @@ class ParamListener implements ActionListener, FocusListener {
         // If there is no constraint name
         if (_constraintName == null) {
             // Enable or disable the whole filter
-            Boolean checkBoxState = ((JCheckBox) _widget).isSelected();
+            Boolean checkBoxState = Boolean.valueOf(((JCheckBox) _widget).isSelected());
             _filter.setEnabled(checkBoxState);
         } else // If a constraint name was given
         {
@@ -316,7 +313,7 @@ class ParamListener implements ActionListener, FocusListener {
                 try {
                     // Convert and commit the new value (focus lost)
                     ((JFormattedTextField) _widget).commitEdit();
-                } catch (Exception ex) {
+                } catch (ParseException pe) {
                     _logger.severe("Could not handle input");
                 }
 

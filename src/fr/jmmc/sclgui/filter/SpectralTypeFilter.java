@@ -15,12 +15,14 @@ import java.util.logging.Logger;
 /**
  *  SpectralTypeFilter filter.
  */
-public class SpectralTypeFilter extends Filter {
+public final class SpectralTypeFilter extends Filter {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(SpectralTypeFilter.class.getName());
-    /** Store the spectral type column name */
-    private String _spTypeColumnName = "SpType";
+    /* members */
+    /* filter execution variables */
+    /** the 'SpType' column ID */
+    private int _rawSpectralTypeID = -1;
 
     /**
      * Default constructor.
@@ -50,41 +52,47 @@ public class SpectralTypeFilter extends Filter {
     }
 
     /**
+     * Prepare the filter execution with the given star list.
+     *
+     * @param starList the list of star to get column information
+     */
+    @Override
+    public void onPrepare(final StarList starList) {
+        // Get the ID of the column contaning 'SpType' star property
+        _rawSpectralTypeID = starList.getColumnIdByName(StarList.SpTypeColumnName);
+    }
+
+    /**
      * Return whether the given row should be removed or not.
      *
-     * @param starList the list of stars from which the row may be removed.
      * @param row the star properties to be evaluated.
      *
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row) {
-        // Get the ID of the column contaning 'SpType' star property
-        int rawSpectralTypeID = starList.getColumnIdByName(_spTypeColumnName);
-
+    public boolean shouldRemoveRow(final List<StarProperty> row) {
         // If the desired column name exists
-        if (rawSpectralTypeID != -1) {
+        if (_rawSpectralTypeID != -1) {
             // Get the spectral type from the row
-            StarProperty cell = (StarProperty) row.elementAt(rawSpectralTypeID);
+            StarProperty cell = row.get(_rawSpectralTypeID);
 
             // If spectral type was found in the current line
-            if (cell.hasValue() == true) {
-                String rawSpectralType = (String) cell.getValue();
+            if (cell.hasValue()) {
+                String rawSpectralType = cell.getStringValue();
                 if (_logger.isLoggable(Level.FINE)) {
                     _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
                 }
 
                 // Get back the spectral types found in the given spectral type
-                List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
+                final List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
 
                 if (_logger.isLoggable(Level.FINE)) {
                     _logger.fine("foundSpectralTypes = '" + foundSpectralTypes + "'.");
                 }
 
                 // For each spectral type found
-                for (int i = 0; i < foundSpectralTypes.size(); i++) {
+                for (String spectralTypeName : foundSpectralTypes) {
                     // Get the spectral type check box boolean state
-                    String spectralTypeName = foundSpectralTypes.get(i);
                     Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
                     if (_logger.isLoggable(Level.FINE)) {
@@ -101,7 +109,7 @@ public class SpectralTypeFilter extends Filter {
                     }
 
                     // If the current spectral type checkbox is checked
-                    if (spectralTypeCheckBoxState == true) {
+                    if (spectralTypeCheckBoxState.booleanValue()) {
                         _logger.fine("Line removed.\n");
 
                         // This line must be removed
@@ -116,7 +124,7 @@ public class SpectralTypeFilter extends Filter {
                 return true;
             }
         } else {
-            _logger.warning("Unknown Spectral Type Column Name = '" + _spTypeColumnName + "'.");
+            _logger.warning("Unknown Spectral Type Column Name = '" + StarList.SpTypeColumnName + "'.");
         }
 
         _logger.fine("Line kept.\n");

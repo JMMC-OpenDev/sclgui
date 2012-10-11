@@ -5,20 +5,24 @@ package fr.jmmc.sclgui.filter;
 
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
-import java.util.Vector;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Visibiliy filter.
+ * Visibility filter.
  */
-public class VisibilityFilter extends Filter {
+public final class VisibilityFilter extends Filter {
 
     /** Logger */
     private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(VisibilityFilter.class.getName());
     /** Store the visibility constraint name */
-    private String _visibilityColumnName = "vis2";
-    /** Store the visibility constraint name */
-    private String _visibilityConstraintName = "vis2";
+    private static final String _visibilityConstraintName = "vis2";
+    /* members */
+    /* filter execution variables */
+    /** the 'visibility' column ID */
+    private int _vis2Id = -1;
+    /** maximum visibility allowed */
+    private double _allowedVis = 0d;
 
     /**
      * Default constructor.
@@ -27,7 +31,7 @@ public class VisibilityFilter extends Filter {
         super();
 
         setConstraint(_visibilityConstraintName, new Double(0.5));
-        setEnabled(true);
+        setEnabled(Boolean.TRUE);
     }
 
     /**
@@ -43,9 +47,9 @@ public class VisibilityFilter extends Filter {
     }
 
     /**
-     * Return the maximum visibility accuracy allowed by this filter.
+     * Return the maximum visibility allowed by this filter.
      *
-     * @return the visibility accuracy allowed by this filter.
+     * @return the visibility allowed by this filter.
      */
     private double getAllowedVisibility() {
         _logger.entering("VisibilityFilter", "getAllowedVisibility");
@@ -56,25 +60,35 @@ public class VisibilityFilter extends Filter {
     }
 
     /**
+     * Prepare the filter execution with the given star list.
+     *
+     * @param starList the list of star to get column information
+     */
+    @Override
+    public void onPrepare(final StarList starList) {
+        // Get the ID of the column contaning 'visibility' star property
+        _vis2Id = starList.getColumnIdByName(StarList.Vis2ColumnName);
+
+        // Get the maximum visibility accuracy allowed
+        _allowedVis = getAllowedVisibility();
+    }
+
+    /**
      * Return whether the given row should be removed or not.
      *
-     * @param starList the list of stars from which the row may be removed.
      * @param row the star properties to be evaluated.
      *
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row) {
-        // Get the ID of the column contaning 'visibility' star property
-        int vis2Id = starList.getColumnIdByName(_visibilityColumnName);
-
+    public boolean shouldRemoveRow(final List<StarProperty> row) {
         // If the desired column names exists
-        if (vis2Id != -1) {
+        if (_vis2Id != -1) {
             // Get the cell of the desired column
-            StarProperty vis2Cell = ((StarProperty) row.elementAt(vis2Id));
+            final StarProperty vis2Cell = row.get(_vis2Id);
 
             // If the visibility is undefined
-            if (vis2Cell.hasValue() == false) {
+            if (!vis2Cell.hasValue()) {
                 _logger.fine("No vis2 - Line removed.");
 
                 // This row should be removed
@@ -82,10 +96,9 @@ public class VisibilityFilter extends Filter {
             }
 
             // If the visibility is less than 0.5
-            if (vis2Cell.getDoubleValue() < getAllowedVisibility()) {
+            if (vis2Cell.getDoubleValue() < _allowedVis) {
                 if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("vis2 < " + getAllowedVisibility()
-                            + " - Line removed.");
+                    _logger.fine("vis2 < " + _allowedVis + " - Line removed.");
                 }
 
                 // This row should be removed

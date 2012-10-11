@@ -4,27 +4,28 @@
 package fr.jmmc.sclgui.filter;
 
 import fr.jmmc.sclgui.calibrator.StarList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Vector;
 import java.util.logging.Logger;
 
 /**
  * Filter list.
  */
-public class FilterList extends Filter implements Observer {
+public final class FilterList extends Filter implements Observer {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(FilterList.class.getName());
     /** Filter list */
-    private Vector _filters = null;
+    private List<Filter> _filters = null;
 
     /**
      * Default constructor.
      */
     public FilterList() {
         super();
-        _filters = new Vector();
+        _filters = new ArrayList<Filter>();
     }
 
     /**
@@ -63,15 +64,15 @@ public class FilterList extends Filter implements Observer {
     }
 
     /**
-     * Return the number of filters in the filter list.
+     * Return the filter at the given index in the filter list.
      *
      * @param index 
-     * @return the number of filters in the filter list.
+     * @return filter at the given index
      */
-    public Filter elementAt(int index) {
-        _logger.entering("FilterList", "elementAt");
+    public Filter get(int index) {
+        _logger.entering("FilterList", "get");
 
-        return ((Filter) _filters.elementAt(index));
+        return _filters.get(index);
     }
 
     /**
@@ -80,15 +81,21 @@ public class FilterList extends Filter implements Observer {
      * @param starList the list of star to filter.
      */
     @Override
-    public void process(StarList starList) {
-        _logger.entering("FilterList", "process");
-
-        // If the filter list is enbled
-        if (isEnabled() == true) {
-            // Process each filter of the filter list against the star list
-            for (int filterId = 0; filterId < _filters.size(); filterId++) {
-                ((Filter) _filters.get(filterId)).process(starList);
+    public void process(final StarList starList) {
+        // If the filter is enabled
+        if (isEnabled()) {
+            if (starList.size() == 0) {
+                return;
             }
+            
+            final long start = System.nanoTime();
+            
+            // Process each filter of the filter list against the star list:
+            for (int filterId = 0, size = _filters.size(); filterId < size; filterId++) {
+                _filters.get(filterId).process(starList);
+            }
+            
+            _logger.info(getName() + " process done: " + 1e-6d * (System.nanoTime() - start) + " ms.");
         }
     }
 

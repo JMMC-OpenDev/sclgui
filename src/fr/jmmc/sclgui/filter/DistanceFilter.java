@@ -8,20 +8,18 @@ import fr.jmmc.jmal.ALX;
 import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
-import java.util.Vector;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Distance filter.
  */
-public class DistanceFilter extends Filter {
+public final class DistanceFilter extends Filter {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(DistanceFilter.class.getName());
-    /** Store the RA column name */
-    private String _raColumnName = "RAJ2000";
-    /** Store the DEC column name */
-    private String _decColumnName = "DEJ2000";
+
+    /* members */
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
@@ -39,6 +37,11 @@ public class DistanceFilter extends Filter {
     private double _deltaDEC;
     /** Store the DEC delta constraint name */
     private String _deltaDECConstraintName = "Maximum DEC Separation (degree)";
+    /* filter execution variables */
+    /** the 'RA' column ID */
+    private int _raId = -1;
+    /** the 'DEC' column ID */
+    private int _decId = -1;
 
     /**
      * Default constructor.
@@ -96,35 +99,44 @@ public class DistanceFilter extends Filter {
     }
 
     /**
+     * Prepare the filter execution with the given star list.
+     *
+     * @param starList the list of star to get column information
+     */
+    @Override
+    public void onPrepare(final StarList starList) {
+        // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
+        _raId = starList.getColumnIdByName("RAJ2000");
+        _decId = starList.getColumnIdByName("DEJ2000");
+    }
+
+    /**
      * Return whether the given row should be removed or not.
      *
-     * @param starList the list of stars from which the row may be removed.
      * @param row the star properties to be evaluated.
      *
      * @return true if the given row should be rejected, false otherwise.
      */
     @Override
-    public boolean shouldRemoveRow(StarList starList, Vector row) {
-        // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
-        int raId = starList.getColumnIdByName(_raColumnName);
-        int decId = starList.getColumnIdByName(_decColumnName);
-
+    public boolean shouldRemoveRow(final List<StarProperty> row) {
         // If the desired column names exists
-        if ((raId != -1) && (decId != -1)) {
+        if ((_raId != -1) && (_decId != -1)) {
             // Get the current star RA value
-            StarProperty raCell = ((StarProperty) row.elementAt(raId));
+            StarProperty raCell = row.get(_raId);
 
             // Get the current star DEC value
-            StarProperty decCell = ((StarProperty) row.elementAt(decId));
+            StarProperty decCell = row.get(_decId);
 
             // If the 2 values were found in the current line
-            if ((raCell.hasValue() == true) && (decCell.hasValue() == true)) {
+            if (raCell.hasValue() && decCell.hasValue()) {
+                // TODO: use RA/DEC in degrees here !
+
                 // Convert RA cell value
-                String raString = (String) raCell.getValue();
+                String raString = raCell.getStringValue();
                 double currentRA = ALX.parseRA(raString);
 
                 // Convert DEC cell value
-                String decString = (String) decCell.getValue();
+                String decString = decCell.getStringValue();
                 double currentDEC = ALX.parseDEC(decString);
 
                 // Get back query and filter values
@@ -137,6 +149,7 @@ public class DistanceFilter extends Filter {
 
                 // If the current star is out of range
                 if ((raSeparation > _deltaRA) || (decSeparation > _deltaDEC)) {
+                    // TODO: use correct distance computation ?
                     // The current star row should be removed
                     return true;
                 }

@@ -7,9 +7,11 @@ import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.preference.PreferenceKey;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
-import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -19,12 +21,19 @@ public abstract class Filter extends Observable {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(Filter.class.getName());
+    /* members */
     /** Enabled flag */
     private Boolean _enabledFlag = null;
     /** 'constraint name-constraint value' table */
     private HashMap<String, Object> _constraints = null;
     /** Ordered table of filter constraint names */
-    private Vector _orderedConstraintNames = null;
+    private List<String> _orderedConstraintNames = null;
+
+    /* filter execution variables */
+    /** the 'distance' column Id */
+    private int _distId = -1;
+    /** preferred distance to detect the science object */
+    private double _prefDistance = 0d;
 
     /**
      * Default constructor.
@@ -32,7 +41,7 @@ public abstract class Filter extends Observable {
     public Filter() {
         _enabledFlag = false;
         _constraints = new HashMap<String, Object>();
-        _orderedConstraintNames = new Vector();
+        _orderedConstraintNames = new ArrayList<String>();
     }
 
     /**
@@ -47,9 +56,7 @@ public abstract class Filter extends Observable {
      *
      * @return true if the filter is enabled, false otherwise.
      */
-    public boolean isEnabled() {
-        _logger.entering("Filter", "isEnabled");
-
+    public final boolean isEnabled() {
         return _enabledFlag.booleanValue();
     }
 
@@ -59,9 +66,7 @@ public abstract class Filter extends Observable {
      * @return a Boolean object at TRUE if the filter is enabled, FALSE
      * otherwise.
      */
-    public Boolean getEnabled() {
-        _logger.entering("Filter", "getEnabled");
-
+    public final Boolean getEnabled() {
         return _enabledFlag;
     }
 
@@ -70,13 +75,14 @@ public abstract class Filter extends Observable {
      *
      * @param enabledFlag if true enable the filter, disable it otherwise.
      */
-    public void setEnabled(Boolean enabledFlag) {
-        _logger.entering("Filter", "setEnabled");
+    public final void setEnabled(final Boolean enabledFlag) {
+        // avoid recursive loop:
+        if (enabledFlag != _enabledFlag) {
+            _enabledFlag = enabledFlag;
 
-        _enabledFlag = enabledFlag;
-
-        setChanged();
-        notifyObservers();
+            setChanged();
+            notifyObservers();
+        }
     }
 
     /**
@@ -84,9 +90,7 @@ public abstract class Filter extends Observable {
      *
      * @return the number of filter constraint(s).
      */
-    public int getNbOfConstraints() {
-        _logger.entering("Filter", "getNbOfConstraints");
-
+    public final int getNbOfConstraints() {
         return _orderedConstraintNames.size();
     }
 
@@ -96,10 +100,8 @@ public abstract class Filter extends Observable {
      * @param index 
      * @return the filter constraint name.
      */
-    public String getConstraintNameByOrder(int index) {
-        _logger.entering("Filter", "getConstraintNameByOrder");
-
-        return (String) _orderedConstraintNames.elementAt(index);
+    public final String getConstraintNameByOrder(final int index) {
+        return _orderedConstraintNames.get(index);
     }
 
     /**
@@ -108,9 +110,7 @@ public abstract class Filter extends Observable {
      * @param constraintName 
      * @return the filter constraint value.
      */
-    public Object getConstraintByName(String constraintName) {
-        _logger.entering("Filter", "getConstraintByName");
-
+    public final Object getConstraintByName(final String constraintName) {
         return _constraints.get(constraintName);
     }
 
@@ -120,9 +120,7 @@ public abstract class Filter extends Observable {
      * @param constraintName the name of the constraint to be created/updated.
      * @param constraintValue the value of the constraint to be created/updated.
      */
-    public void setConstraint(String constraintName, Object constraintValue) {
-        _logger.entering("Filter", "setConstraint");
-
+    public final void setConstraint(final String constraintName, final Object constraintValue) {
         _constraints.put(constraintName, constraintValue);
         _orderedConstraintNames.add(constraintName);
 
@@ -131,46 +129,57 @@ public abstract class Filter extends Observable {
     }
 
     /**
+     * Prepare the filter execution with the given star list.
+     *
+     * @param starList the list of star to get column information
+     */
+    public final void prepare(final StarList starList) {
+        // Get the 'distance' column Id
+        _distId = starList.getColumnIdByName("dist");
+
+        // Get the preferred distance to detect the science object
+        _prefDistance = Preferences.getInstance().getPreferenceAsDouble(PreferenceKey.QUERY_SCIENCE_DETECTION);
+
+        // call child class prepare():
+        onPrepare(starList);
+    }
+
+    /**
+     * Prepare the filter execution with the given star list.
+     *
+     * @param starList the list of star to get column information
+     */
+    public void onPrepare(final StarList starList) {
+        // to be implemented in child classes
+    }
+
+    /**
      * Return whether the given row should be removed or not.
      *
-     * @param starList the list of stars from which the row may be removed.
      * @param row the star properties to be evaluated.
      *
      * @return true if the given row should be rejected, false otherwise.
      */
-    public boolean shouldRemoveRow(StarList starList, Vector row) {
+    public boolean shouldRemoveRow(final List<StarProperty> row) {
         return true;
     }
 
     /**
      * Return whether the given row is th science object or not.
      *
-     * @param starList the list of stars from which the row must be tested.
      * @param row the star properties to be evaluated.
      *
      * @return true if the given row is the science object, false otherwise.
      */
-    public boolean isScienceObject(StarList starList, Vector row) {
-        boolean isScienceObject = false;
+    public final boolean isScienceObject(final List<StarProperty> row) {
+        if (_distId != -1) {
+            // Get the row's distance star property
+            final Double rowDistance = row.get(_distId).getDoubleValue();
 
-        // Get the 'distance' column Id
-        int distId = starList.getColumnIdByName("dist");
-
-        // Get the row's distance star property
-        StarProperty distanceProperty = (StarProperty) row.elementAt(distId);
-        Double rowDistance = distanceProperty.getDoubleValue();
-
-        // Get the prefered distance to detect the science object
-        Preferences preferences = Preferences.getInstance();
-        Double prefDistance = preferences.getPreferenceAsDouble(
-                PreferenceKey.QUERY_SCIENCE_DETECTION);
-
-        // If the current row distance is close enough to be detected as a science object
-        if (rowDistance < prefDistance) {
-            isScienceObject = true;
+            // If the current row distance is close enough to be detected as a science object
+            return (rowDistance < _prefDistance);
         }
-
-        return isScienceObject;
+        return false;
     }
 
     /**
@@ -178,26 +187,40 @@ public abstract class Filter extends Observable {
      *
      * @param starList the list of star to filter.
      */
-    public void process(StarList starList) {
-        _logger.entering("Filter", "process");
-
+    public void process(final StarList starList) {
         // If the filter is enabled
-        if ((isEnabled() == true)) {
+        if (isEnabled()) {
+            int size = starList.size();
+
+            if (size == 0) {
+                return;
+            }
+
+            final long start = System.nanoTime();
+
+            // Prepare this filter execution:
+            prepare(starList);
+
             // For each row of the star list
             int rowId = 0;
+            List<StarProperty> row;
 
-            while (rowId < starList.size()) {
-                Vector row = ((Vector) starList.elementAt(rowId));
+            while (rowId < size) {
+                row = starList.get(rowId);
 
                 // If the luminosity class was found in the current line
-                if ((shouldRemoveRow(starList, row) == true)
-                        && (isScienceObject(starList, row) == false)) {
+                if (shouldRemoveRow(row) && !isScienceObject(row)) {
                     // Remove the current star row from the star list
                     starList.remove(rowId);
+                    size--;
                 } else {
                     // Otherwise process the next row
                     rowId++;
                 }
+            }
+
+            if (_logger.isLoggable(Level.FINE)) {
+                _logger.fine(getName() + " process done: " + 1e-6d * (System.nanoTime() - start) + " ms.");
             }
         }
     }
@@ -208,11 +231,9 @@ public abstract class Filter extends Observable {
      * @return a String representing the filter internal state.
      */
     @Override
-    public String toString() {
-        _logger.entering("Filter", "toString");
-
+    public final String toString() {
         String filter = "Filter '" + getName() + "' ";
-        filter += (((isEnabled() == true) ? "enabled" : "disabled") + " :");
+        filter += ((isEnabled() ? "enabled" : "disabled") + " :");
         filter += _constraints;
         filter += _orderedConstraintNames;
 
