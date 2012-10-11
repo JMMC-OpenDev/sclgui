@@ -43,12 +43,8 @@
         <jar href="@SHARED@/commons-discovery-0.2.jar" />
         <!-- commons-logging (provided by JMCS) -->
 
-        <!-- CDS SAVOT -->
-        <jar href="@SHARED@/cds.savot.common.jar" />
-        <jar href="@SHARED@/cds.savot.model.jar" />
-        <jar href="@SHARED@/cds.savot.pull.jar" />
-        <jar href="@SHARED@/cds.savot.writer.jar" />
-        <jar href="@SHARED@/kxml2-min.jar" />
+        <!-- CDS SAVOT (embedded) but XmlPullParser API -->
+        <jar href="@SHARED@/xmlpull_1_1_3_1.jar" />
     </resources>
     <application-desc main-class="fr.jmmc.sclgui.SearchCal"/>
 </jnlp>

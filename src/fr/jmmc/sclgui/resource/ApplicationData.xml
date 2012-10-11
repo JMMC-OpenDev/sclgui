@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.4.4b1"/>
-    <compilation date="02/08/2012" compiler="JDK 1.5.0_16"/>
+    <program name="SearchCal" version="4.4.4b2"/>
+    <compilation date="11/10/2012" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://apps.jmmc.fr/~sclws/SearchCal/SearchCal.jnlp</jnlp>
@@ -36,13 +36,13 @@
         <package name="SAVOT"
             description="CDS library to provide simple access to VOTable from Java"
             link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"
-            jars="cds.savot.common.jar cds.savot.model.jar cds.savot.pull.jar cds.savot.writer.jar"/>
+            jars="savot4 beta embedded (embedded)"/>
 
         <!-- CDS SAVOT dependencies -->
         <package name="kXML"
             description="opensource XML pull parser and writer"
             link="http://kxml.sourceforge.net/"
-            jars="kxml2-min.jar"/>
+            jars="kXml 2.3 patched (embedded)"/>
 
         <!-- jMAL dependencies -->
 
@@ -131,6 +131,10 @@
   
     <releasenotes>
         <release version="4.4.4">
+            <prerelease version="4.4.4b2">
+                <change type="CHANGE">Improved global performance when handling large tables (JSDC)</change>
+                <change type="CHANGE">Upgraded SAVOT VOTable library (4.0): improved overall performance</change>
+            </prerelease>
             <prerelease version="4.4.4b1" tag="SC_V4_4_4b1">
                 <change type="BUGFIX">Fixed missing Hot News/Release Notes/FAQ links in Help menu.</change>
             </prerelease>
