@@ -209,7 +209,7 @@ public class SearchPanel extends javax.swing.JFrame {
         final String text = _searchField.getText().trim();
 
         final boolean isRegExp = _regexpCheckBox.isSelected();
-        if (text.length() > 0) {
+        if (text.length() != 0) {
             if (!_searchHelper.search(text, isRegExp, direction)) {
                 _searchField.setBackground(Color.red);
             } else {
@@ -407,7 +407,7 @@ public class SearchPanel extends javax.swing.JFrame {
 
                         // Get current cell string value
                         String currentValue = currentCell.toString();
-                        if (currentValue.length() > 0) {
+                        if (currentValue.length() != 0) {
                             if (_logger.isLoggable(Level.FINE)) {
                                 _logger.fine("Cell value '" + currentValue + "' at row " + currentRow + ", col = " + currentColumn + ".");
                             }

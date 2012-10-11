@@ -329,7 +329,7 @@ public class LegendView extends JPanel {
                 Color newColor = (Color) color;
                 setBackground(newColor);
 
-                if (_isEditable == false) {
+                if (!_isEditable) {
                     setText("<html>&nbsp;<a href='#empty'>" + cellName
                             + "</a></html>");
                     setToolTipText("Click to open CDS page for catalog "
@@ -412,7 +412,7 @@ public class LegendView extends JPanel {
                 _logger.entering("ColorEditor", "actionPerformed");
 
                 if (EDIT.equals(e.getActionCommand())) {
-                    if (_isEditable == true) {
+                    if (_isEditable) {
                         // The user has clicked the cell, so bring up the dialog.
                         _button.setBackground(_currentColor);
                         _colorChooser.setColor(_currentColor);

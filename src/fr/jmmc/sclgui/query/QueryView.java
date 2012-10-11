@@ -489,6 +489,11 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
+        if (instrumentalMagnitudeBand == null) {
+            // GetStar case:
+            instrumentalMagnitudeBand = "";
+            _queryModel.setInstrumentalMagnitudeBand(instrumentalMagnitudeBand);
+        }
 
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
@@ -539,21 +544,21 @@ public final class QueryView extends JPanel implements Observer,
         _radialSizeLabel.setVisible(!brightScenarioFlag);
 
         // If the virtual obervatory is busy
-        if (_vo.isQueryLaunched() == true) {
+        if (_vo.isQueryLaunched()) {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         } else {
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
         // If the query seems complete
-        if (_queryModel.isConsumable() == true) {
+        if (_queryModel.isConsumable()) {
             _vo.enableGetCalAction(true);
         } else {
             _vo.enableGetCalAction(false);
         }
 
         // If the magnitude band is either 'V', 'I', 'J', or 'H'
-        if (instrumentalMagnitudeBand.matches("[V,I,J,H]") == true) {
+        if (instrumentalMagnitudeBand.matches("[V,I,J,H]")) {
             // Enable min & max magnitude textfields
             _minMagnitudeTextfield.setEnabled(true);
             _maxMagnitudeTextfield.setEnabled(true);
@@ -565,7 +570,7 @@ public final class QueryView extends JPanel implements Observer,
             // Select bright scenario
             _brightRadioButton.setSelected(true);
             _queryModel.setQueryBrightScenarioFlag(true);
-        } else if (instrumentalMagnitudeBand.matches("N") == true) {
+        } else if (instrumentalMagnitudeBand.matches("N")) {
             // Disable min & max magnitude textfields
             _minMagnitudeTextfield.setEnabled(false);
             _maxMagnitudeTextfield.setEnabled(false);
@@ -681,7 +686,7 @@ public final class QueryView extends JPanel implements Observer,
         } catch (IllegalArgumentException iae) {
             validationMessages += iae.getMessage() + "\n";
         }
-        if (validationMessages.length() > 0) {
+        if (validationMessages.length() != 0) {
             final String userMessage = validationMessages;
             // report messages to the user:
             MessagePane.showErrorMessage(userMessage);
@@ -716,22 +721,22 @@ public final class QueryView extends JPanel implements Observer,
     public void propertyChange(PropertyChangeEvent e) {
         _logger.entering("QueryView", "propertyChange");
 
-        boolean fileLoadedOk = (_queryModel.canBeEdited() == true);
+        boolean fileLoadedOk = (_queryModel.canBeEdited());
         setEnabledComponents(_instrumentPanel, fileLoadedOk);
         setEnabledComponents(_actionPanel, fileLoadedOk);
 
         // Test if science object panel must be enabled
         boolean instrumentConfigOk = _instrumentalWavelengthTextfield.isEditValid()
-                && (_instrumentalWavelengthTextfield.getText().length() > 0)
-                && (_instrumentalMaxBaselineTextField.isEditValid() == true)
-                && (_instrumentalMaxBaselineTextField.getText().length() > 0)
-                && (_queryModel.canBeEdited() == true);
+                && (_instrumentalWavelengthTextfield.getText().length() != 0)
+                && (_instrumentalMaxBaselineTextField.isEditValid())
+                && (_instrumentalMaxBaselineTextField.getText().length() != 0)
+                && (_queryModel.canBeEdited());
         setEnabledComponents(_scienceObjectPanel, instrumentConfigOk);
 
         // Test if SearchCal parameters panel must be enabled
-        boolean sciencObjectOk = (instrumentConfigOk == true)
-                && (_scienceObjectNameTextfield.getText().length() > 0)
-                && (_queryModel.canBeEdited() == true);
+        boolean sciencObjectOk = (instrumentConfigOk)
+                && (_scienceObjectNameTextfield.getText().length() != 0)
+                && (_queryModel.canBeEdited());
         setEnabledComponents(_searchCalPanel, sciencObjectOk);
 
         repaint();
@@ -750,7 +755,7 @@ public final class QueryView extends JPanel implements Observer,
         _logger.entering("QueryView", "setEnabledComponents");
 
         // If the given component contains sub-components
-        if (component.getComponentCount() > 0) {
+        if (component.getComponentCount() != 0) {
             // Get all the embedded sub-components
             Component[] components = component.getComponents();
 

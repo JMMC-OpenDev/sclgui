@@ -94,7 +94,7 @@ public final class SearchCalServerClient {
         final String proxyHost = System.getProperty(NetworkSettings.PROPERTY_HTTP_PROXY_HOST);
         final String proxyPort = System.getProperty(NetworkSettings.PROPERTY_HTTP_PROXY_PORT);
 
-        if (proxyHost != null && proxyHost.length() > 0) {
+        if (proxyHost != null && proxyHost.length() != 0) {
             // # http.proxyHost
             AxisProperties.setProperty("http.proxyHost", proxyHost);
 

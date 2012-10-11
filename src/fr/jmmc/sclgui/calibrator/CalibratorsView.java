@@ -215,7 +215,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         String title = "Found Calibrators";
         int total = _calibratorsModel.getTotalNumberOfStar();
         title += " (" + total + " sources";
-        if (total > 0) {
+        if (total != 0) {
             int hidden = _calibratorsModel.getHiddenNumberOfStar();
             title += ", " + hidden + " filtered";
         }
@@ -234,7 +234,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _logger.entering("CalibratorsView", "valueChanged");
 
         // If there is any row selected in the table
-        boolean rowSelected = (_calibratorsTable.getSelectedRowCount() > 0);
+        boolean rowSelected = (_calibratorsTable.getSelectedRowCount() != 0);
         // (Dis)Enable the delete menu item
         _deleteAction.setEnabled(rowSelected);
 
@@ -256,7 +256,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
 
         // (Dis)enable Find widgets according to data availability
-        boolean dataAvailable = (_calibratorsTable.getRowCount() > 0);
+        boolean dataAvailable = (_calibratorsTable.getRowCount() != 0);
         _searchPanel.enableMenus(dataAvailable);
 
         update(null, null);
@@ -325,7 +325,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
         int tableAndLegendWidth = totalWidth - dividerWidth;
         int legendWidth = tableAndLegendWidth;
 
-        if (preferencedLegendShouldBeVisible == true) {
+        if (preferencedLegendShouldBeVisible) {
             Component legend = _tableAndLegendPane.getRightComponent();
             int legendMinWidth = (int) legend.getMinimumSize().getWidth();
             legendWidth = tableAndLegendWidth - legendMinWidth;

@@ -330,6 +330,8 @@ public final class VirtualObservatory extends Observable {
             return false; // Exit immediatly
         }
 
+        StatusBar.show("saving file...");
+        
         // save data to file and remember its path
         _calibratorsModel.saveVOTableFile(selectedFile);
         _currentFile = selectedFile;
@@ -502,7 +504,6 @@ public final class VirtualObservatory extends Observable {
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("SaveFileAction", "actionPerformed");
 
-            StatusBar.show("saving file...");
             if (saveCalibratorListToFile()) {
                 StatusBar.show("file succesfully saved.");
             }
@@ -610,7 +611,7 @@ public final class VirtualObservatory extends Observable {
             // Save the current calibrator selection (or all visible ones if none selected) to file
             _calibratorsModel.saveSelectionAsVOTableFile(file);
 
-            final Map<String, String> parameters = new HashMap<String, String>();
+            final Map<String, String> parameters = new HashMap<String, String>(4);
             parameters.put("url", uri.toString());
             return parameters;
         }
@@ -696,7 +697,7 @@ public final class VirtualObservatory extends Observable {
          */
         @Override
         protected void parseResults(final String votable) {
-            if (votable != null && votable.length() > 0) {
+            if (votable != null && votable.length() != 0) {
 
                 // Use invokeLater to avoid concurrency and ensure that
                 // data model is modified and fire events using Swing EDT :

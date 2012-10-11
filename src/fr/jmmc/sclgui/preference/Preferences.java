@@ -177,19 +177,17 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         for (Catalog catalog : Catalog.values()) {
             Color catalogColor = Catalog.getDefaultColor(catalog);
 
-            if (defaultFlag == true) {
-                setDefaultPreference(catalogColorPrefPrefix
-                        + catalog.reference(), i++, catalogColor);
+            if (defaultFlag) {
+                setDefaultPreference(catalogColorPrefPrefix + catalog.reference(), i++, catalogColor);
             } else {
-                setPreference(catalogColorPrefPrefix + catalog.reference(),
-                        i++, catalogColor);
+                setPreference(catalogColorPrefPrefix + catalog.reference(), i++, catalogColor);
             }
         }
 
         // Place confidence indexes color
         i = 0;
 
-        if (defaultFlag == true) {
+        if (defaultFlag) {
             setDefaultPreference("confidence.color.HIGH", i++, "#ECECEC");
             setDefaultPreference("confidence.color.MEDIUM", i++, "#CCCCCC");
             setDefaultPreference("confidence.color.LOW", i++, "#6F6F6F");
@@ -353,7 +351,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         String detailedBrightNViewColumnOrder = getPreference(
                 PreferenceKey.VIEW_DETAILED_BRIGHT_N);
 
-        if (detailedBrightNViewColumnOrder.equals(_detailedBrightN_v3) == true) {
+        if (detailedBrightNViewColumnOrder.equals(_detailedBrightN_v3)) {
             detailedBrightNViewColumnOrder = _detailedBrightN_v4;
             _logger.finer("Re-ordered detailed bright N columns order list.");
         } else {
@@ -365,7 +363,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         String detailedBrightVViewColumnOrder = getPreference(
                 PreferenceKey.VIEW_DETAILED_BRIGHT_V);
 
-        if (detailedBrightVViewColumnOrder.equals(_detailedBrightV_v3) == true) {
+        if (detailedBrightVViewColumnOrder.equals(_detailedBrightV_v3)) {
             detailedBrightVViewColumnOrder = _detailedBrightV_v4;
             _logger.finer("Re-ordered detailed bright V columns order list.");
         } else {
@@ -377,7 +375,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         String detailedBrightKViewColumnOrder = getPreference(
                 PreferenceKey.VIEW_DETAILED_BRIGHT_K);
 
-        if (detailedBrightKViewColumnOrder.equals(_detailedBrightK_v3) == true) {
+        if (detailedBrightKViewColumnOrder.equals(_detailedBrightK_v3)) {
             detailedBrightKViewColumnOrder = _detailedBrightK_v4;
             _logger.finer("Re-ordered detailed bright K columns order list.");
         } else {
@@ -389,7 +387,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         String detailedFaintKViewColumnOrder = getPreference(
                 PreferenceKey.VIEW_DETAILED_FAINT_K);
 
-        if (detailedFaintKViewColumnOrder.equals(_detailedFaintK_v3) == true) {
+        if (detailedFaintKViewColumnOrder.equals(_detailedFaintK_v3)) {
             detailedFaintKViewColumnOrder = _detailedFaintK_v4;
             _logger.finer("Re-ordered detailed faint K columns order list.");
         } else {

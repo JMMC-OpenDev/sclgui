@@ -171,7 +171,7 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
         }
 
         // If the preference is different than the current list
-        if (columns.equals(_shownColumns) == false) {
+        if (!columns.equals(_shownColumns)) {
             _shownColumns = columns;
 
             // Clear the list
@@ -198,7 +198,7 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
 
         // When the user release the mouse button and completes the selection,
         // getValueIsAdjusting() becomes false
-        if (evt.getValueIsAdjusting() == false) {
+        if (!evt.getValueIsAdjusting()) {
             JList list = (JList) evt.getSource();
             int index = list.getSelectedIndex();
             int size = _listModel.size();
