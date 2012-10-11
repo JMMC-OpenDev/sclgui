@@ -3,20 +3,28 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Logger;
 
 /**
  * Vector of star property vector.
+ * note: This structure is required / imposed by javax.swing.table.DefaultTableModel
  */
-public class StarList extends Vector<Vector<StarProperty>> {
+public final class StarList extends Vector<List<StarProperty>> {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(StarList.class.getName());
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1L;
+    /** Store the vis2 column name */
+    public static final String Vis2ColumnName = "vis2";
+    /** Store the SpType column name */
+    public static final String SpTypeColumnName = "SpType";
+    /** Store the deletedFlag column name */
+    private static final String _deletedFlagColumnName = "deletedFlag";
     /* members */
     /** HashMap linking each colum group name to its ID */
     private Map<String, Integer> _fieldIdToColNumber;
@@ -27,7 +35,7 @@ public class StarList extends Vector<Vector<StarProperty>> {
     public StarList() {
         super();
 
-        _fieldIdToColNumber = new HashMap<String, Integer>();
+        _fieldIdToColNumber = Collections.emptyMap();
     }
 
     /**
@@ -69,19 +77,22 @@ public class StarList extends Vector<Vector<StarProperty>> {
     public boolean hasSomeDeletedStars() {
         _logger.entering("StarList", "hasSomeDeletedStars");
 
-        for (int i = 0; i < size(); i++) {
+        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        if (deletedFlagColumnID != -1) {
 
-            final StarProperty deletedFlag = getPropertyAtRowByName(i, "deletedFlag");
-            if (deletedFlag != null) {
-                final boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
+            for (int i = 0, size = size(); i < size; i++) {
+                final StarProperty deletedFlag = getPropertyAtRowByName(i, deletedFlagColumnID);
 
-                if (starShouldBeRemoved) {
-                    _logger.fine("hasSomeDeletedStars = 'true'");
-                    return true;
+                if (deletedFlag != null) {
+                    final boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
+
+                    if (starShouldBeRemoved) {
+                        _logger.fine("hasSomeDeletedStars = 'true'");
+                        return true;
+                    }
                 }
             }
         }
-
         _logger.fine("hasSomeDeletedStars = 'false'");
         return false;
     }
@@ -90,12 +101,12 @@ public class StarList extends Vector<Vector<StarProperty>> {
      * Mark a star as deleted.
      * @param star 
      */
-    public void markAsDeleted(final Vector star) {
+    public void markAsDeleted(final List<StarProperty> star) {
         _logger.entering("StarList", "markAsDeleted");
 
-        final int deletedFlagColumnID = getColumnIdByName("deletedFlag");
+        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
-            final StarProperty deletedFlag = (StarProperty) star.elementAt(deletedFlagColumnID);
+            final StarProperty deletedFlag = star.get(deletedFlagColumnID);
             deletedFlag.setValue(Boolean.TRUE);
         }
     }
@@ -106,17 +117,23 @@ public class StarList extends Vector<Vector<StarProperty>> {
     public void removeAllDeletedStars() {
         _logger.entering("StarList", "removeAllDeletedStars");
 
-        int i = 0;
-        while (i < size()) {
-            final StarProperty deletedFlag = getPropertyAtRowByName(i, "deletedFlag");
-            
-            final boolean starShouldBeRemoved = (deletedFlag != null) ? deletedFlag.getBooleanValue() : true;
+        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        if (deletedFlagColumnID != -1) {
+            int i = 0;
+            int size = size();
 
-            if (starShouldBeRemoved) {
-                remove(i);
-            } else {
-                // Jump to the next only if the current one as not been removed.
-                i++;
+            while (i < size) {
+                final StarProperty deletedFlag = getPropertyAtRowByName(i, deletedFlagColumnID);
+
+                final boolean starShouldBeRemoved = (deletedFlag != null) ? deletedFlag.getBooleanValue() : true;
+
+                if (starShouldBeRemoved) {
+                    remove(i);
+                    size--;
+                } else {
+                    // Jump to the next only if the current one as not been removed.
+                    i++;
+                }
             }
         }
     }
@@ -127,10 +144,14 @@ public class StarList extends Vector<Vector<StarProperty>> {
     public void undeleteAll() {
         _logger.entering("StarList", "undeleteAll");
 
-        for (int i = 0; i < size(); i++) {
-            final StarProperty deletedFlag = getPropertyAtRowByName(i, "deletedFlag");
-            if (deletedFlag != null) {
-                deletedFlag.setValue(Boolean.FALSE);
+        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        if (deletedFlagColumnID != -1) {
+
+            for (int i = 0, size = size(); i < size; i++) {
+                final StarProperty deletedFlag = getPropertyAtRowByName(i, deletedFlagColumnID);
+                if (deletedFlag != null) {
+                    deletedFlag.setValue(Boolean.FALSE);
+                }
             }
         }
     }
@@ -138,18 +159,12 @@ public class StarList extends Vector<Vector<StarProperty>> {
     /**
      * Get StarProperty at row by name.
      * @param row the star identifier
-     * @param name the StarProperty name
+     * @param columnID the StarProperty id
      * @return the sought StarProperty, null otherwise.
      */
-    private StarProperty getPropertyAtRowByName(final int row, final String name) {
-
-        Vector<StarProperty> star = get(row);
+    private StarProperty getPropertyAtRowByName(final int row, final int columnID) {
+        final List<StarProperty> star = get(row);
         if (star == null) {
-            return null;
-        }
-
-        int columnID = getColumnIdByName(name);
-        if (columnID == -1) {
             return null;
         }
 
