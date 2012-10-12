@@ -261,6 +261,8 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, Double.toString(1d * ALX.ARCSEC_IN_DEGREES));
         setDefaultPreference(PreferenceKey.QUERY_MINIMUM_DELTA, "-2.0");
         setDefaultPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, "2.0");
+        
+        setDefaultPreference(PreferenceKey.FILTER_NON_CALIBRATORS, "true");
     }
 
     /**
