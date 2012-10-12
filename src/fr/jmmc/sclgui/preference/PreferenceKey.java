@@ -44,7 +44,9 @@ public enum PreferenceKey {
         QUERY_DIFF_RA("query.queryDiffRASize"),
         QUERY_DIFF_DEC("query.queryDiffDECSize"),
         QUERY_RADIAL_SIZE("query.queryRadialSize"),
-        QUERY_RADIAL_FLAG("query.queryAutoRadius");
+        QUERY_RADIAL_FLAG("query.queryAutoRadius"),
+        
+        FILTER_NON_CALIBRATORS("filter.nonCalibrators");
     
     /** the preferenced value identifying token */
     private final String _key;
