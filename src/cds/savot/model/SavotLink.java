@@ -68,11 +68,11 @@ package cds.savot.model;
  * @author Andre Schaaff
  * @version 4.0 (kickoff 31 May 02)
  */
-public final class SavotLink extends MarkupComment {
+public final class SavotLink extends MarkupComment implements IDSupport {
 
     // content
     private String content = null;
-    // ID attribute
+    // id attribute
     private String id = null;
     // content-role attribute
     private String contentRole = null;
@@ -118,7 +118,7 @@ public final class SavotLink extends MarkupComment {
      * 
      * @param id
      */
-    public void setID(final String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 

@@ -201,9 +201,11 @@ public final class SavotPullEngine implements Markups {
     private SavotFits currentFits = null;
     private SavotStream currentStream = null;
     /**
-     * Hashtable containing object references which have an ID
+     * Map containing object references which have an ID
      * So it is possible to retrieve such object reference
      * Used to resolve ID ref
+     * 
+     * TODO: move such mapping into SavotVOTable (root element)
      */
     private final Map<String, Object> idRefLinks = new HashMap<String, Object>(256);
 
@@ -1037,7 +1039,7 @@ public final class SavotPullEngine implements Markups {
                                                 } else if (attrName.equalsIgnoreCase(ACTION)) {
                                                     currentLink.setAction(attrValue);
                                                 } else if (attrName.equalsIgnoreCase(ID)) {
-                                                    currentLink.setID(attrValue);
+                                                    currentLink.setId(attrValue);
                                                     idRefLinks.put(attrValue, currentLink);
                                                 }
                                             }

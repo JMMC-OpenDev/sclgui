@@ -68,7 +68,7 @@ package cds.savot.model;
  * @author Andre Schaaff
  * @version 4.0 (kickoff 31 May 02)
  */
-public final class SavotInfo extends MarkupComment {
+public final class SavotInfo extends MarkupComment implements IDSupport, NameSupport {
 
     // id attribute
     private String id = null;

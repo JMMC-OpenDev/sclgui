@@ -68,7 +68,7 @@ package cds.savot.model;
  * @author Andre Schaaff
  * @version 4.0 (kickoff 31 May 02)
  */
-public final class SavotVOTable extends MarkupComment {
+public final class SavotVOTable extends MarkupComment implements IDSupport {
 
     // VOTable document header : xmlns, etc.
     private VOTableHead head = null; // LBO: useless !!

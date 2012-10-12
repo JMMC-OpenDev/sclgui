@@ -375,7 +375,7 @@ public final class SavotWriter {
      * @param writer writer implementation to write into
      */
     public void initStream(final Writer writer) {
-        bw = new BufferedWriter(writer, 64 * 1024); // 8K text buffer
+        bw = new BufferedWriter(writer, 64 * 1024); // 64K text buffer
     }
 
     /**
@@ -386,7 +386,7 @@ public final class SavotWriter {
      * @throws IOException useless 
      */
     private OutputStream getOutputStream(final OutputStream outstream, final boolean compressed) throws IOException {
-        final int bufferSize = 64 * 1024; // 8K write buffer
+        final int bufferSize = 64 * 1024; // 64K write buffer
 
         final OutputStream out;
         if (compressed) {

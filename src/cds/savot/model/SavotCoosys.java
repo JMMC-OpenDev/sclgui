@@ -69,7 +69,7 @@ package cds.savot.model;
  * @deprecated since 1.2
  * @version 4.0 (kickoff 31 May 02)
  */
-public final class SavotCoosys extends MarkupComment {
+public final class SavotCoosys extends MarkupComment implements IDSupport {
 
     // ID attribute
     private String id = null;

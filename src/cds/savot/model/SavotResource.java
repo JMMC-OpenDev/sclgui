@@ -68,7 +68,7 @@ package cds.savot.model;
  * @author Andre Schaaff
  * @version 4.0 (kickoff 31 May 02)
  */
-public final class SavotResource extends MarkupComment {
+public final class SavotResource extends MarkupComment implements IDSupport, NameSupport {
 
     // name attribute
     private String name = null;
@@ -96,8 +96,6 @@ public final class SavotResource extends MarkupComment {
     private ResourceSet resources = null;
     // INFO (at End) element set - since VOTable 1.2
     private InfoSet infosAtEnd = null;
-    // Other element set
-    private OtherSet other = null;
 
     /**
      * Constructor
@@ -122,7 +120,6 @@ public final class SavotResource extends MarkupComment {
         tables = null;
         resources = null;
         infosAtEnd = null;
-        other = null;
     }
 
     /**
