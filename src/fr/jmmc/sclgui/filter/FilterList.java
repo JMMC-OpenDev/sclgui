@@ -84,18 +84,20 @@ public final class FilterList extends Filter implements Observer {
     public void process(final StarList starList) {
         // If the filter is enabled
         if (isEnabled()) {
-            if (starList.size() == 0) {
+            final int initialSize = starList.size();
+            if (initialSize == 0) {
                 return;
             }
-            
+
             final long start = System.nanoTime();
-            
+
             // Process each filter of the filter list against the star list:
             for (int filterId = 0, size = _filters.size(); filterId < size; filterId++) {
                 _filters.get(filterId).process(starList);
             }
-            
-            _logger.info(getName() + " process done: " + 1e-6d * (System.nanoTime() - start) + " ms.");
+
+            _logger.info(getName() + " (" + initialSize + " >> " + starList.size() + " stars) processed in "
+                    + 1e-6d * (System.nanoTime() - start) + " ms.");
         }
     }
 

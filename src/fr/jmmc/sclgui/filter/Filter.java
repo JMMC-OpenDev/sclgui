@@ -190,9 +190,9 @@ public abstract class Filter extends Observable {
     public void process(final StarList starList) {
         // If the filter is enabled
         if (isEnabled()) {
-            int size = starList.size();
+            final int initialSize = starList.size();
 
-            if (size == 0) {
+            if (initialSize == 0) {
                 return;
             }
 
@@ -202,6 +202,7 @@ public abstract class Filter extends Observable {
             prepare(starList);
 
             // For each row of the star list
+            int size = initialSize;
             int rowId = 0;
             List<StarProperty> row;
 
@@ -220,7 +221,8 @@ public abstract class Filter extends Observable {
             }
 
             if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine(getName() + " process done: " + 1e-6d * (System.nanoTime() - start) + " ms.");
+                _logger.fine(getName() + " (" + initialSize + " >> " + starList.size() + " stars) processed in "
+                        + 1e-6d * (System.nanoTime() - start) + " ms.");
             }
         }
     }
