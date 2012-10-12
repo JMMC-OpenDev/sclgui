@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Vector;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -44,11 +43,9 @@ public final class FilterView extends JPanel implements Observer {
     /** The filter to represent */
     private Filter _filter = null;
     /** Filter enabling check box */
-    JCheckBox _enabledCheckbox = null;
+    private JCheckBox _enabledCheckbox = null;
     /** Store all the GUI component used to represent the attached filter */
     private HashMap<String, JComponent> _widgets = null;
-    /** Store all the widget in the constraints order */
-    private Vector _orderedWidgets = null;
     /** Widgets panel */
     private JPanel _widgetsPanel = null;
     /** JFormattedTextField formatter for Double constraints */
@@ -61,7 +58,6 @@ public final class FilterView extends JPanel implements Observer {
     public FilterView(Filter filter) {
         // Members initialization
         _widgets = new HashMap<String, JComponent>();
-        _orderedWidgets = new Vector();
         _widgetsPanel = new JPanel();
 
         // Members initialization
@@ -107,6 +103,9 @@ public final class FilterView extends JPanel implements Observer {
         update(_filter, null);
     }
 
+    /**
+     * Add this to filter observer
+     */
     public void init() {
         _filter.addObserver(this);
     }
@@ -122,7 +121,7 @@ public final class FilterView extends JPanel implements Observer {
      * @constraintValue the object holding the constraint value.
      */
     private void addParam(JPanel panel, String constraintName,
-            Object constraintValue) {
+                          Object constraintValue) {
         _logger.entering("FilterView", "addParam");
 
         JLabel label = new JLabel(constraintName + " : ",
@@ -143,7 +142,6 @@ public final class FilterView extends JPanel implements Observer {
             widget.addActionListener(paramListener);
             widget.addFocusListener(paramListener);
             _widgets.put(constraintName, widget);
-            _orderedWidgets.add(widget);
             panel.add(widget);
             add(panel);
         } // Else if the constraint is a String object
@@ -158,7 +156,6 @@ public final class FilterView extends JPanel implements Observer {
             widget.addActionListener(paramListener);
             widget.addFocusListener(paramListener);
             _widgets.put(constraintName, widget);
-            _orderedWidgets.add(widget);
             panel.add(widget);
             add(panel);
         } // Else if the constraint is a Boolean object
@@ -169,7 +166,6 @@ public final class FilterView extends JPanel implements Observer {
             paramListener = new ParamListener(_filter, constraintName, widget);
             widget.addActionListener(paramListener);
             _widgets.put(constraintName, widget);
-            _orderedWidgets.add(widget);
             panel.add(widget);
             add(panel);
         }
