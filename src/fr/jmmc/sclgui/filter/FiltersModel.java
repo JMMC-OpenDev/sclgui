@@ -3,23 +3,24 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.filter;
 
-import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.calibrator.StarList;
+import fr.jmmc.sclgui.query.QueryModel;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
-import java.util.Vector;
 import java.util.logging.Logger;
 
 /**
  * Filters model that can be adopted by a JTable.
  */
-public class FiltersModel {
+public final class FiltersModel {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(FiltersModel.class.getName());
     /** List of filters to handle */
-    private FilterList _filterList = null;
+    private final FilterList _filterList;
     /** Store each filter view */
-    private Vector _filterViews = null;
+    private final List<FilterView> _filterViews;
     /**
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
@@ -34,11 +35,7 @@ public class FiltersModel {
 
         _filterList = new FilterList();
         _filterList.setEnabled(Boolean.TRUE);
-        _filterViews = new Vector();
-
-        // Non Calibrators filter (faceless)
-        FacelessNonCalibratorsFilter facelessNonCalibratorsFilter = new FacelessNonCalibratorsFilter();
-        _filterList.add(facelessNonCalibratorsFilter);
+        _filterViews = new ArrayList<FilterView>(8);
 
         // Distance filter
         DistanceFilter distanceFilter = new DistanceFilter(_queryModel);
@@ -106,12 +103,12 @@ public class FiltersModel {
     }
 
     /**
-     * Return the filter view vector.
+     * Return the filter views.
      *
      * @return the list of filter views.
      */
-    public Vector getFilterViewVector() {
-        _logger.entering("FiltersModel", "getFilterViewVector");
+    public List<FilterView> getFilterViews() {
+        _logger.entering("FiltersModel", "getFilterViews");
 
         return _filterViews;
     }

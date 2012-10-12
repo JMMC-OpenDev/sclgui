@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
-import java.util.Enumeration;
-import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -41,10 +39,7 @@ public class FiltersView extends JPanel implements Printable {
         setBorder(new TitledBorder(lightBorder, "Filters"));
 
         // Add each model filter view to the view panel
-        Vector<FilterView> filterViews = model.getFilterViewVector();
-
-        for (Enumeration<FilterView> e = filterViews.elements(); e.hasMoreElements();) {
-            FilterView filterView = e.nextElement();
+        for (FilterView filterView : model.getFilterViews()) {
             int maxHeight = (int) filterView.getPreferredSize().getHeight();
             int maxWidth = (int) filterView.getMaximumSize().getWidth();
             filterView.setMaximumSize(new Dimension(maxWidth, maxHeight));
