@@ -12,6 +12,10 @@
             <icon href="FileIcon.png"/>
             <description>SearchCal reads and writes SCVOT files</description>
         </association>
+        <association mime-type="application/x-searchcal+votable+xml+gzip" extensions="scvot.gz">
+            <icon href="FileIcon.png"/>
+            <description>SearchCal reads and writes SCVOT Gzip files</description>
+        </association>
         <shortcut>
             <desktop/>
         </shortcut>
@@ -20,7 +24,7 @@
         <all-permissions/>
     </security>
     <resources>
-        <j2se version="1.5+" initial-heap-size="256m" max-heap-size="512m"/>        
+        <j2se version="1.5+" initial-heap-size="256m" max-heap-size="1024m"/>        
 
         <!-- Application module first (main class) -->
         <jar href="jar/sclgui.jar" />
