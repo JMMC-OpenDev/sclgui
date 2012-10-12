@@ -13,6 +13,7 @@ import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -338,12 +339,13 @@ public class QueryModel extends Star implements Observer {
 
         final int nParams = paramSet.getItemCount();
         // Convert the ParamSet in an HashTable on parameters name -> value
-        final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
+        // TODO: put in Savot Param finder by name:
+        final Map<String, String> parameters = new HashMap<String, String>(nParams);
 
         String paramValue;
 
         for (int i = 0; i < nParams; i++) {
-            final SavotParam param = (SavotParam) paramSet.getItemAt(i);
+            final SavotParam param = paramSet.getItemAt(i);
             final String paramName = param.getName();
             paramValue = param.getValue();
 

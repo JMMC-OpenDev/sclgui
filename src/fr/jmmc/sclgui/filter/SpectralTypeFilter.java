@@ -4,11 +4,9 @@
 package fr.jmmc.sclgui.filter;
 
 import fr.jmmc.jmal.ALX;
-
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
