@@ -79,16 +79,22 @@ public final class StarList extends Vector<List<StarProperty>> {
 
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
+            List<StarProperty> star;
+            StarProperty deletedFlag;
+            boolean starShouldBeRemoved;
 
             for (int i = 0, size = size(); i < size; i++) {
-                final StarProperty deletedFlag = getPropertyAtRowByName(i, deletedFlagColumnID);
+                star = get(i);
+                if (star != null) {
+                    deletedFlag = star.get(deletedFlagColumnID);
 
-                if (deletedFlag != null) {
-                    final boolean starShouldBeRemoved = deletedFlag.getBooleanValue();
+                    if (deletedFlag != null) {
+                        starShouldBeRemoved = deletedFlag.getBooleanValue();
 
-                    if (starShouldBeRemoved) {
-                        _logger.fine("hasSomeDeletedStars = 'true'");
-                        return true;
+                        if (starShouldBeRemoved) {
+                            _logger.fine("hasSomeDeletedStars = 'true'");
+                            return true;
+                        }
                     }
                 }
             }
@@ -98,16 +104,22 @@ public final class StarList extends Vector<List<StarProperty>> {
     }
 
     /**
-     * Mark a star as deleted.
-     * @param star 
+     * Mark the given stars as deleted.
+     * @param stars list of stars to mark and rmove from this list 
      */
-    public void markAsDeleted(final List<StarProperty> star) {
+    public void markAsDeleted(final List<List<StarProperty>> stars) {
         _logger.entering("StarList", "markAsDeleted");
 
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
-            final StarProperty deletedFlag = star.get(deletedFlagColumnID);
-            deletedFlag.setValue(Boolean.TRUE);
+            StarProperty deletedFlag;
+
+            for (List<StarProperty> star : stars) {
+                if (star != null) {
+                    deletedFlag = star.get(deletedFlagColumnID);
+                    deletedFlag.setValue(Boolean.TRUE);
+                }
+            }
         }
     }
 
@@ -119,20 +131,23 @@ public final class StarList extends Vector<List<StarProperty>> {
 
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
+            List<StarProperty> star;
             int i = 0;
             int size = size();
+            StarProperty deletedFlag;
 
             while (i < size) {
-                final StarProperty deletedFlag = getPropertyAtRowByName(i, deletedFlagColumnID);
+                star = get(i);
+                if (star != null) {
+                    deletedFlag = star.get(deletedFlagColumnID);
 
-                final boolean starShouldBeRemoved = (deletedFlag != null) ? deletedFlag.getBooleanValue() : true;
-
-                if (starShouldBeRemoved) {
-                    remove(i);
-                    size--;
-                } else {
-                    // Jump to the next only if the current one as not been removed.
-                    i++;
+                    if (deletedFlag == null || deletedFlag.getBooleanValue()) {
+                        remove(i);
+                        size--;
+                    } else {
+                        // Jump to the next only if the current one as not been removed.
+                        i++;
+                    }
                 }
             }
         }
@@ -146,29 +161,20 @@ public final class StarList extends Vector<List<StarProperty>> {
 
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
+            List<StarProperty> star;
+            StarProperty deletedFlag;
 
             for (int i = 0, size = size(); i < size; i++) {
-                final StarProperty deletedFlag = getPropertyAtRowByName(i, deletedFlagColumnID);
-                if (deletedFlag != null) {
-                    deletedFlag.setValue(Boolean.FALSE);
+                star = get(i);
+                if (star != null) {
+                    deletedFlag = star.get(deletedFlagColumnID);
+
+                    if (deletedFlag != null) {
+                        deletedFlag.setValue(Boolean.FALSE);
+                    }
                 }
             }
         }
-    }
-
-    /**
-     * Get StarProperty at row by name.
-     * @param row the star identifier
-     * @param columnID the StarProperty id
-     * @return the sought StarProperty, null otherwise.
-     */
-    private StarProperty getPropertyAtRowByName(final int row, final int columnID) {
-        final List<StarProperty> star = get(row);
-        if (star == null) {
-            return null;
-        }
-
-        return star.get(columnID);
     }
 }
 /*___oOo___*/
