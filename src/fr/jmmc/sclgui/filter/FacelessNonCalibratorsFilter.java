@@ -25,12 +25,6 @@ public final class FacelessNonCalibratorsFilter extends Filter {
      */
     public FacelessNonCalibratorsFilter() {
         super();
-
-        final String sysProp = System.getProperty("FacelessNonCalibratorsFilter", "true");
-
-        // This faceless filter should always be activated
-        // (set once here as no GUI can change it anywhere else)
-        setEnabled(Boolean.valueOf(sysProp));
     }
 
     /**
