@@ -5,13 +5,10 @@ package fr.jmmc.sclgui.calibrator;
 
 import cds.savot.model.FieldSet;
 import cds.savot.model.GroupSet;
-import cds.savot.model.LinkSet;
 import cds.savot.model.ParamSet;
 import cds.savot.model.ResourceSet;
 import cds.savot.model.SavotData;
 import cds.savot.model.SavotField;
-import cds.savot.model.SavotGroup;
-import cds.savot.model.SavotLink;
 import cds.savot.model.SavotParam;
 import cds.savot.model.SavotResource;
 import cds.savot.model.SavotTD;
@@ -23,11 +20,17 @@ import cds.savot.model.TDSet;
 import cds.savot.pull.SavotPullEngine;
 import cds.savot.pull.SavotPullParser;
 import cds.savot.writer.SavotWriter;
+import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.data.ApplicationDataModel;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.jmcs.util.XmlFactory;
 import fr.jmmc.sclgui.SearchCal;
+import fr.jmmc.sclgui.filter.FacelessNonCalibratorsFilter;
+import fr.jmmc.sclgui.filter.Filter;
 import fr.jmmc.sclgui.filter.FiltersModel;
+import fr.jmmc.sclgui.preference.PreferenceKey;
+import fr.jmmc.sclgui.preference.Preferences;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -60,20 +63,26 @@ import javax.xml.transform.TransformerException;
  * It also implements Observer in order to be automatically notified any time
  * one of the filters managed by a registered instance of FiltersModel changes.
  */
-public class CalibratorsModel extends DefaultTableModel implements Observer {
+public final class CalibratorsModel extends DefaultTableModel implements Observer {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1L;
     /** Logger */
     private static final Logger _logger = Logger.getLogger(CalibratorsModel.class.getName());
+    /** parameter SearchCalGuiVersion (string) */
+    public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
+    /** parameter SearchCalServerVersion (string) */
+    public final static String PARAMETER_SCL_SERVER_VERSION = "SearchCalServerVersion";
     /* members */
     /** Savot VOTable structure without data (rows are removed) */
     private SavotVOTable _parsedVOTable = null;
     /** Original VOTable as a star list */
     private final StarList _originalStarList;
-    /** User star list (filtered one included) */
+    /** Only calibrator star list (non calibrator filtered) */
+    private StarList _calibratorStarList;
+    /** User star list (removed-star free but not filtered) */
     private StarList _currentStarList;
-    /** Displayed star list in JTable (filtered and removed-star free) (required Vector type) */
+    /** Displayed star list in JTable (filtered) (required Vector type) */
     private StarList _filteredStarList;
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
@@ -96,11 +105,13 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     /** Flag indicating whether data have changed or not */
     private boolean _dataHaveChanged;
     /** Raw headers */
-    RowHeadersModel _rowHeadersModel = null;
+    final RowHeadersModel _rowHeadersModel;
     /** Selected magnitude band */
     private String _magnitudeBand = "V";
     /** Selected scenario */
     private Boolean _brightScenarioFlag = true;
+    /** filter non calibrators */
+    private final Filter _facelessNonCalibratorsFilter;
 
     /**
      * Constructor.
@@ -111,6 +122,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         _filtersModel = filtersModel;
 
         _originalStarList = new StarList();
+        _calibratorStarList = (StarList) _originalStarList.clone();
         _currentStarList = (StarList) _originalStarList.clone();
         _filteredStarList = (StarList) _originalStarList.clone();
 
@@ -124,12 +136,27 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         _dataHaveChanged = false;
 
         _rowHeadersModel = new RowHeadersModel();
+
+        // Non Calibrators filter (faceless):
+        _facelessNonCalibratorsFilter = new FacelessNonCalibratorsFilter();
+
+        // This faceless filter should always be activated
+        // (set once here as no GUI can change it anywhere else)
+        _facelessNonCalibratorsFilter.setEnabled(Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FILTER_NON_CALIBRATORS));
     }
 
+    /**
+     * Return the total number of stars
+     * @return total number of stars
+     */
     public int getTotalNumberOfStar() {
         return _originalStarList.size();
     }
 
+    /**
+     * Return the number of hidden stars
+     * @return number of hidden stars
+     */
     public int getHiddenNumberOfStar() {
         return (getTotalNumberOfStar() - _filteredStarList.size());
     }
@@ -143,7 +170,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     public void update(Observable o, Object arg) {
         _logger.entering("CalibratorsModel", "update");
 
-        // OPTIMIZE : the clone operation should only be done when the ay filter
+        // OPTIMIZE : the clone operation should only be done when the filter
         // has been deactivated, otherwise currentStarList is sufficient
 
         // Back up the original list for later use (reset, updated filter list)
@@ -343,17 +370,28 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         return _brightScenarioFlag;
     }
 
-    public void parseVOTable(final File file) throws IOException, IllegalArgumentException {
+    /**
+     * Parse the given file as VOTable and update any attached JTable to show its content.
+     *
+     * @param file the votable file to parse as File
+     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
+     */
+    public void parseVOTable(final File file) throws IllegalArgumentException {
         parseVOTable(file, null, file.length());
     }
 
+    /**
+     * Parse the given string as VOTable and update any attached JTable to show its content.
+     *
+     * @param voTable the votable content to parse as String
+     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
+     */
     public void parseVOTable(final String voTable) throws IllegalArgumentException {
         parseVOTable(null, voTable, voTable.length());
     }
 
     /**
-     * Parse a given string as a VOTable and update any attached JTable to show
-     * its content.
+     * Parse a given VOTable and update any attached JTable to show its content.
      *
      * @param file the votable file to parse as File
      * @param content the votable content to parse as String
@@ -381,18 +419,29 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         // start parsing document and get first TR:
         SavotTR tr = parser.getNextTR();
 
-        final ResourceSet resources = parser.getVOTable().getResources();
+        // Get the VOTable
+        final SavotVOTable savotVoTable = parser.getVOTable();
+        final ResourceSet resources = savotVoTable.getResources();
 
-        final SavotResource resource;
+        SavotResource resource = null;
+        SavotTable table = null;
+        GroupSet groupSet = null;
+        FieldSet fieldSet = null;
+
         if (tr != null && resources.getItemCount() == 1) {
+            // SearchCal VOTable must have 1 resource:
             resource = resources.getItemAt(0);
-        } else {
-            // invalid format:
-            resource = null;
+
+            if (resource.getTables().getItemCount() == 1) {
+                // SearchCal resource must have 1 table:
+                table = resource.getTables().getItemAt(0);
+                groupSet = table.getGroups();
+                fieldSet = table.getFields();
+            }
         }
 
-        // check that we found one votable
-        if (resource == null) {
+        // check that the votable has one resource / table containing groups and fields:
+        if (resource == null || table == null || groupSet.getItemCount() == 0 || fieldSet.getItemCount() == 0) {
             _logger.warning("Incorrect VOTable format");
             throw new IllegalArgumentException("Incorrect VOTable format");
         }
@@ -403,63 +452,60 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
         }
 
-        // Get the VOTable
-        final SavotVOTable savotVoTable = parser.getVOTable();
+        // TODO: try also to check PARAMETER_SCL_SERVER_VERSION !
 
-        // Clear all the internal list before new parsing
+        // Clear all internal lists before new parsing:
         _originalStarList.clear();
+        _calibratorStarList.clear();
         _currentStarList.clear();
 
         // Update any attached observer TO FREE MEMORY:
         update(null, null);
 
-        final SavotTable savotTable = resource.getTables().getItemAt(0);
-        final GroupSet groupSet = savotTable.getGroups();
-        final FieldSet fieldSet = savotTable.getFields();
-
         // Retrieve VOTable parameters
-        _paramSet = savotTable.getParams();
+        _paramSet = table.getParams();
 
+        final int nGroups = groupSet.getItemCount();
         /*
          * For each group of the table, put its name and its index in a
          * hashtable, and put its name in a vector for JTable columns title
          * definition.
          */
-        final int nGroups = groupSet.getItemCount();
-
         final Map<String, Integer> groupNameToGroupId = new HashMap<String, Integer>(nGroups);
 
         // reset JTable column meta data:
         _columnNames.clear();
-        _columnNames.ensureCapacity(nGroups);
         _columnURLs.clear();
-        _columnURLs.ensureCapacity(nGroups);
         _columnDescriptions.clear();
-        _columnDescriptions.ensureCapacity(nGroups);
         _columnUnits.clear();
-        _columnUnits.ensureCapacity(nGroups);
         _columnClasses.clear();
+        _columnNames.ensureCapacity(nGroups);
+        _columnURLs.ensureCapacity(nGroups);
+        _columnDescriptions.ensureCapacity(nGroups);
+        _columnUnits.ensureCapacity(nGroups);
         _columnClasses.ensureCapacity(nGroups);
 
+        String groupName;
+        SavotField field;
+        String url;
+        String fieldDataType;
+        Class<?> columnClass;
+
         for (int groupId = 0; groupId < nGroups; groupId++) {
-            final SavotGroup currentGroup = groupSet.getItemAt(groupId);
+            groupName = groupSet.getItemAt(groupId).getName();
 
-            final String groupName = currentGroup.getName();
-
+            _columnNames.add(groupName);
             // Associate the group name with its index as a table column
             groupNameToGroupId.put(groupName, Integer.valueOf(groupId));
-            _columnNames.add(groupName);
 
             // Get back the field type
-            final SavotField field = fieldSet.getItemAt(3 * groupId); // *3 as there is 3 fields per group
+            field = fieldSet.getItemAt(3 * groupId); // x3 as there is 3 fields per group
 
             // Get back the field link
-            final LinkSet linkSet = field.getLinks();
-            String url = "";
+            url = "";
 
-            if (linkSet.getItemCount() != 0) {
-                final SavotLink savotLink = linkSet.getItemAt(0);
-                url = savotLink.getHref();
+            if (field.getLinks().getItemCount() != 0) {
+                url = field.getLinks().getItemAt(0).getHref();
             }
 
             _columnURLs.add(url);
@@ -470,16 +516,16 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             // Get back the field description
             _columnUnits.add(field.getUnit());
 
-            final String fieldType = field.getDataType();
-            if (fieldType != null) {
+            fieldDataType = field.getDataType();
+            if (fieldDataType != null) {
                 // Default class
-                Class<?> columnClass = Object.class;
+                columnClass = Object.class;
 
-                if (fieldType.equals("char")) {
+                if (fieldDataType.equals("char")) {
                     columnClass = String.class;
-                } else if (fieldType.equals("float")) {
+                } else if (fieldDataType.equals("float")) {
                     columnClass = Double.class;
-                } else if (fieldType.equals("boolean")) {
+                } else if (fieldDataType.equals("boolean")) {
                     columnClass = Boolean.class;
                 }
 
@@ -498,7 +544,7 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         final Map<String, String> originValues = new HashMap<String, String>(32);
         final Map<String, String> confidenceValues = new HashMap<String, String>(16);
 
-        final int tableRows = savotTable.getNrowsValue(); // optional
+        final int tableRows = table.getNrowsValue(); // optional
 
         // reserve space:
         if (tableRows != 0) {
@@ -513,18 +559,17 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         TDSet row;
         List<StarProperty> star;
         Object propertyValue;
-        Class<?> columnClass;
         int groupId, mainGroupCellId;
         String value, origin, originValue, confidence, confidenceValue;
         StarProperty starProperty;
 
         final int step = (tableRows > 1000) ? tableRows / 10 : Integer.MAX_VALUE;
-        int nRows = 0;
+        int nRow = 0;
         do {
 
-            if (nRows % step == 0 && nRows != 0) {
+            if (nRow % step == 0 && nRow != 0) {
                 if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("CalibratorsModel.parseVOTable: processing " + nRows + " row / total = " + tableRows);
+                    _logger.info("CalibratorsModel.parseVOTable: processing " + nRow + " row / total = " + tableRows);
                 }
             }
 
@@ -619,33 +664,17 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
             // Store each VOTable row as a list of star properties
             originalStarList.add(star);
 
-            nRows++;
+            nRow++;
 
         } while ((tr = parser.getNextTR()) != null);
 
-        _logger.info("CalibratorsModel.parseVOTable: " + nRows + " rows read in " + 1e-6d * (System.nanoTime() - start) + " ms.");
-
-        if (false) {
-            _logger.info("originValues: " + originValues.size() + ":\n" + originValues);
-            _logger.info("confidenceValues: " + confidenceValues.size() + ":\n" + confidenceValues);
-            /*
-             INFO: originValues: 12:
-             {V/50/catalog=V/50/catalog, B/wds/wds=B/wds/wds, II/225/catalog=II/225/catalog, B/sb9/main=B/sb9/main, I/280=I/280, II/7A/catalog=II/7A/catalog, J/A+A/413/1037/table1=J/A+A/413/1037/table1, computed=computed, II/246/out=II/246/out, II/297/irc=II/297/irc, V/36B/bsc4s=V/36B/bsc4s, I/196/main=I/196/main}
-             INFO: confidenceValues: 2:
-             {HIGH=HIGH, LOW=LOW} 
-             */
-        }
+        _logger.info("CalibratorsModel.parseVOTable: " + nRow + " rows read in " + 1e-6d * (System.nanoTime() - start) + " ms.");
 
         // Keep only VOTable structure (without data):
         _parsedVOTable = savotVoTable;
 
-        // Copy content of originalStarList into currentStarList
-        _currentStarList = (StarList) _originalStarList.clone();
-
-        // Remove all the stars flagged as deleted
-        _currentStarList.removeAllDeletedStars();
-
         // Compute selected magnitude band and scenario
+        // TODO: put in Savot Param finder by name:
         final int nParams = _paramSet.getItemCount();
         final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
 
@@ -662,20 +691,39 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
         _magnitudeBand = parameters.get("band");
 
-        if ((_magnitudeBand != null)
-                && (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") || _magnitudeBand.matches("H"))) {
+        if ((_magnitudeBand != null) && (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") || _magnitudeBand.matches("H"))) {
             _magnitudeBand = "K";
         }
 
         _brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
 
         if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("magnitude band = '" + _magnitudeBand
-                    + "'; bright scenario = '" + _brightScenarioFlag + "'.");
+            _logger.fine("magnitude band = '" + _magnitudeBand + "'; bright scenario = '" + _brightScenarioFlag + "'.");
         }
 
-        // Update any attached observer
-        update(null, null);
+        // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
+        if (parameters.get(PARAMETER_SCL_SERVER_VERSION) == null) {
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_SERVER_VERSION);
+            param.setDataType("char");
+            param.setArraySize("*");
+            param.setValue(resource.getName());
+            _paramSet.addItem(param);
+        }
+        if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
+            final ApplicationDataModel applicationDataModel = App.getSharedApplicationDataModel();
+            final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
+
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_GUI_VERSION);
+            param.setDataType("char");
+            param.setArraySize("*");
+            param.setValue(version);
+            _paramSet.addItem(param);
+        }
+
+        // fire Update:
+        removeDeletedStars();
     }
 
     /**
@@ -820,8 +868,10 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     public boolean saveVOTableFile(final File file, final StarList starList) {
         _logger.entering("CalibratorsModel", "saveVOTableFile");
 
+        final int size = starList.size();
+
         // If null received
-        if (starList.size() <= 0) {
+        if (size <= 0) {
             _logger.warning("Could not process 'null' StarList");
             return false;
         }
@@ -869,6 +919,9 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
 
             // TABLE elements
             final SavotTable table = resource.getTables().getItemAt(0);
+
+            // set TABLE nrows correctly:
+            table.setNrowsValue(size);
 
             // <TABLE>
             wd.writeTableBegin(table);
@@ -1004,26 +1057,48 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
     }
 
     /**
-     * Delete the shown elements according to the given row indexes. The shown
-     * elements are the not filtered elements.
+     * Delete the shown elements according to the given row indexes. 
+     * The shown elements are the not filtered elements.
      *
      * @param indices indices of the row to be removed.
      */
-    public void deleteStars(int[] indices) {
+    public void deleteStars(final int[] indices) {
         _logger.entering("CalibratorsModel", "deleteStars");
 
         // Remove each selected row
-        List<StarProperty> star;
+        final List<List<StarProperty>> stars = new ArrayList<List<StarProperty>>(indices.length);
 
-        for (int i = 0; i < indices.length; i++) {
-            star = _filteredStarList.get(indices[i]);
-            _currentStarList.markAsDeleted(star);
-            _currentStarList.removeElement(star);
+        for (int idx : indices) {
+            stars.add(_filteredStarList.get(idx));
         }
 
-        update(null, null);
+        _originalStarList.markAsDeleted(stars);
+
+        // fire Update:
+        removeDeletedStars();
     }
 
+    /**
+     * Remove all stars previously flagged as deleted.
+     */
+    public void removeDeletedStars() {
+        _logger.entering("CalibratorsModel", "deleteStars");
+        
+        // Copy content of originalStarList into calibratorStarList
+        _calibratorStarList = (StarList) _originalStarList.clone();
+
+        // filter non calibrator stars:
+        _facelessNonCalibratorsFilter.process(_calibratorStarList);
+
+        // Copy content of calibratorStarList into currentStarList
+        _currentStarList = (StarList) _calibratorStarList.clone();
+
+        // Remove all the stars flagged as deleted
+        _currentStarList.removeAllDeletedStars();
+        
+        update(null, null);
+    }
+    
     /**
      * Undelete all stars previously flagged as deleted.
      */
@@ -1033,10 +1108,8 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         // Unflag all previously flagged stars
         _originalStarList.undeleteAll();
 
-        // Copy content of originalStarList into currentStarList
-        _currentStarList = (StarList) _originalStarList.clone();
-
-        update(null, null);
+        // fire Update:
+        removeDeletedStars();
     }
 
     /**
@@ -1132,33 +1205,44 @@ public class CalibratorsModel extends DefaultTableModel implements Observer {
         }
     }
 
-    protected class RowHeadersModel extends DefaultTableModel {
+    /**
+     * Custom row header model to add a column labeled "Index"
+     */
+    protected static class RowHeadersModel extends DefaultTableModel {
 
+        /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Protected constructor
+         */
         RowHeadersModel() {
             // Initialize the model with 0 row and 0 column
             super(0, 0);
 
-            // Add one column labeled "Index"
+            // Add a column labeled "Index"
             addColumn("Index");
         }
 
         @Override
-        public boolean isCellEditable(int row, int column) {
+        public boolean isCellEditable(final int row, final int column) {
             // Return always false as no row header should be editable
             return false;
         }
 
-        public void populate(int nbOfRows) {
+        /**
+         *
+         * @param nbOfRows number of rows
+         */
+        public void populate(final int nbOfRows) {
             _logger.entering("RowHeadersModel", "populate");
 
             // Empty all the current row headers
             dataVector.clear();
 
             // Generate as many row headers as the given number of data rows
-            for (int i = 1; i < (nbOfRows + 1); i++) {
-                addRow(new Object[]{i});
+            for (int i = 0; i < nbOfRows; i++) {
+                addRow(new Object[]{i + 1});
             }
         }
     }
