@@ -4,7 +4,6 @@
 package fr.jmmc.sclgui.filter;
 
 import fr.jmmc.jmal.ALX;
-
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
@@ -28,12 +27,12 @@ public final class LuminosityFilter extends Filter {
     public LuminosityFilter() {
         super();
 
-        setConstraint("I", false);
-        setConstraint("II", false);
-        setConstraint("III", false);
-        setConstraint("IV", false);
-        setConstraint("V", false);
-        setConstraint("VI", false);
+        setConstraint("I", Boolean.FALSE);
+        setConstraint("II", Boolean.FALSE);
+        setConstraint("III", Boolean.FALSE);
+        setConstraint("IV", Boolean.FALSE);
+        setConstraint("V", Boolean.FALSE);
+        setConstraint("VI", Boolean.FALSE);
     }
 
     /**

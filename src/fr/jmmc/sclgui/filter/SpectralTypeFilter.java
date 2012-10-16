@@ -28,13 +28,13 @@ public final class SpectralTypeFilter extends Filter {
     public SpectralTypeFilter() {
         super();
 
-        setConstraint("O", false);
-        setConstraint("B", false);
-        setConstraint("A", false);
-        setConstraint("F", false);
-        setConstraint("G", false);
-        setConstraint("K", false);
-        setConstraint("M", false);
+        setConstraint("O", Boolean.FALSE);
+        setConstraint("B", Boolean.FALSE);
+        setConstraint("A", Boolean.FALSE);
+        setConstraint("F", Boolean.FALSE);
+        setConstraint("G", Boolean.FALSE);
+        setConstraint("K", Boolean.FALSE);
+        setConstraint("M", Boolean.FALSE);
     }
 
     /**
