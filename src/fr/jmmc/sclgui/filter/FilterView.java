@@ -78,7 +78,7 @@ public final class FilterView extends JPanel implements Observer {
         add(new JPanel());
 
         // For each constraint of the associated filter
-        for (int i = 0; i < _filter.getNbOfConstraints(); i++) {
+        for (int i = 0, len = _filter.getNbOfConstraints(); i < len; i++) {
             // Get the constraint name
             String constraintName = _filter.getConstraintNameByOrder(i);
 
@@ -183,13 +183,13 @@ public final class FilterView extends JPanel implements Observer {
         JComponent widget = _widgets.get(constraintName);
 
         // If the constraint is a Double object
-        if (constraintValue.getClass() == java.lang.Double.class) {
+        if (constraintValue.getClass() == Double.class) {
             ((JFormattedTextField) widget).setValue((Double) constraintValue);
         } // Else if the constraint is a String object
-        else if (constraintValue.getClass() == java.lang.String.class) {
+        else if (constraintValue.getClass() == String.class) {
             ((JTextField) widget).setText((String) constraintValue);
         } // Else if the constraint is a Boolean object
-        else if (constraintValue.getClass() == java.lang.Boolean.class) {
+        else if (constraintValue.getClass() == Boolean.class) {
             ((JCheckBox) widget).setSelected(((Boolean) constraintValue).booleanValue());
         }
     }
@@ -204,7 +204,7 @@ public final class FilterView extends JPanel implements Observer {
         _logger.entering("FilterView", "update");
 
         // For each constraint of the associated filter
-        for (int i = 0; i < _filter.getNbOfConstraints(); i++) {
+        for (int i = 0, len = _filter.getNbOfConstraints(); i < len; i++) {
             // Get the constraint name
             String constraintName = _filter.getConstraintNameByOrder(i);
 
