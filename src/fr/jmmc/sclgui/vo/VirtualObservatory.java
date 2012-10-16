@@ -101,6 +101,7 @@ public final class VirtualObservatory extends Observable {
 
         _queryModel = queryModel;
         _calibratorsModel = calibratorsModel;
+        _calibratorsModel.setVirtualObservatory(this);
 
         // File related members
         _currentFile = null;
@@ -331,7 +332,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         StatusBar.show("saving file...");
-        
+
         // save data to file and remember its path
         _calibratorsModel.saveVOTableFile(selectedFile);
         _currentFile = selectedFile;
@@ -400,20 +401,19 @@ public final class VirtualObservatory extends Observable {
                     String errorMsg = null;
                     Exception ex = null;
                     try {
-
                         StatusBar.show("loading file (parsing calibrators)...");
+
                         _calibratorsModel.openFile(_currentFile);
-                        StatusBar.show("loading file (calibrators successfully parsed)...");
 
                     } catch (IOException ioe) {
                         errorMsg = "Could not load the file : " + _currentFile.getAbsolutePath();
                         ex = ioe;
 
                     } catch (IllegalArgumentException iae) {
-                        errorMsg = "Loading aborted:  calibrators parsing error in file : " + _currentFile.getAbsolutePath();
+                        errorMsg = "Loading aborted: calibrators parsing error in file : " + _currentFile.getAbsolutePath();
                         ex = iae;
                     }
-                    
+
                     // Exit if any error occurs 
                     // TODO clean query and table content ?
                     if (ex != null) {
@@ -422,26 +422,9 @@ public final class VirtualObservatory extends Observable {
                         return;
                     }
 
-                    // Loading the file in the query model
-                    StatusBar.show("loading file (parsing query)...");
-                    try {
-
-                        _queryModel.loadParamSet(_calibratorsModel.getParamSet());
-                        StatusBar.show("loading file (query successfully parsed)...");
-                        StatusBar.show("file succesfully loaded.");
-
-                    } catch (NumberFormatException nfe) {
-                        StatusBar.show("loading aborted (query parsing error) !");
-                        MessagePane.showErrorMessage("Could not open file (query parsing error).", ex);
-                        // TODO reset table content ?
-                    }
-
-                    // Enabling the 'Save' menus
-                    enableDataRelatedMenus(true);
+                    // Now that a file has been loaded
+                    _revertToSavedFileAction.setEnabled(true);
                 }
-
-                // Now that a file has been loaded
-                _revertToSavedFileAction.setEnabled(true);
             }
         }
     }
@@ -715,9 +698,6 @@ public final class VirtualObservatory extends Observable {
                             _calibratorsModel.parseVOTable(votable);
 
                             StatusBar.show("searching calibrators... done.");
-
-                            // As data are now loaded
-                            _vo.enableDataRelatedMenus(true);
 
                         } catch (Exception e) {
                             StatusBar.show("calibrator parsing aborted !");

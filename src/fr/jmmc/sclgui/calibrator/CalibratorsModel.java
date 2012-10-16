@@ -22,15 +22,19 @@ import cds.savot.pull.SavotPullParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.ApplicationDataModel;
+import fr.jmmc.jmcs.gui.component.MessagePane;
+import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.jmcs.gui.task.TaskSwingWorker;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.jmcs.util.XmlFactory;
 import fr.jmmc.sclgui.SearchCal;
 import fr.jmmc.sclgui.filter.FacelessNonCalibratorsFilter;
-import fr.jmmc.sclgui.filter.Filter;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
+import fr.jmmc.sclgui.query.QueryModel;
+import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -48,6 +52,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -74,10 +79,18 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /** parameter SearchCalServerVersion (string) */
     public final static String PARAMETER_SCL_SERVER_VERSION = "SearchCalServerVersion";
     /* members */
+    /** Filters */
+    private final FiltersModel _filtersModel;
+    /** Store the current query model in order to allow later update to progress bar */
+    final QueryModel _queryModel;
+    /** Store the main application object used to perform menu activation */
+    VirtualObservatory _vo;
+    /** filter non calibrators */
+    private final FacelessNonCalibratorsFilter _facelessNonCalibratorsFilter;
     /** Savot VOTable structure without data (rows are removed) */
-    private SavotVOTable _parsedVOTable = null;
+    SavotVOTable _parsedVOTable = null;
     /** Original VOTable as a star list */
-    private final StarList _originalStarList;
+    StarList _originalStarList;
     /** Only calibrator star list (non calibrator filtered) */
     private StarList _calibratorStarList;
     /** User star list (removed-star free but not filtered) */
@@ -87,50 +100,43 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
     /** number of columns */
-    private int _nColumns = 0;
+    int _nColumns = 0;
     /** JTable column names (required Vector type) */
-    private final Vector<String> _columnNames;
+    final Vector<String> _columnNames = new Vector<String>();
     /** JTable column URLs */
-    private final ArrayList<String> _columnURLs;
+    final ArrayList<String> _columnURLs = new ArrayList<String>();
     /** JTable column tool-tips */
-    private final ArrayList<String> _columnDescriptions;
+    final ArrayList<String> _columnDescriptions = new ArrayList<String>();
     /** JTable column units */
-    private final ArrayList<String> _columnUnits;
+    final ArrayList<String> _columnUnits = new ArrayList<String>();
     /** Column data types */
-    private final ArrayList<Class<?>> _columnClasses;
+    final ArrayList<Class<?>> _columnClasses = new ArrayList<Class<?>>();
     /** Filters */
-    private final FiltersModel _filtersModel;
-    /** Filters */
-    private ParamSet _paramSet = null;
+    ParamSet _paramSet = null;
     /** Flag indicating whether data have changed or not */
     private boolean _dataHaveChanged;
     /** Raw headers */
     final RowHeadersModel _rowHeadersModel;
     /** Selected magnitude band */
-    private String _magnitudeBand = "V";
+    String _magnitudeBand = "V";
     /** Selected scenario */
-    private Boolean _brightScenarioFlag = true;
-    /** filter non calibrators */
-    private final Filter _facelessNonCalibratorsFilter;
+    Boolean _brightScenarioFlag = true;
 
     /**
      * Constructor.
      *
      * @param filtersModel the filter manager to monitor for changes.
+     * @param queryModel the query model to use its progress bar
      */
-    public CalibratorsModel(final FiltersModel filtersModel) {
+    public CalibratorsModel(final FiltersModel filtersModel, final QueryModel queryModel) {
         _filtersModel = filtersModel;
+        _queryModel = queryModel;
 
+        // create empty star lists:
         _originalStarList = new StarList();
-        _calibratorStarList = (StarList) _originalStarList.clone();
-        _currentStarList = (StarList) _originalStarList.clone();
-        _filteredStarList = (StarList) _originalStarList.clone();
-
-        _columnNames = new Vector<String>();
-        _columnURLs = new ArrayList<String>();
-        _columnDescriptions = new ArrayList<String>();
-        _columnUnits = new ArrayList<String>();
-        _columnClasses = new ArrayList<Class<?>>();
+        _calibratorStarList = new StarList();
+        _currentStarList = new StarList();
+        _filteredStarList = new StarList();
 
         _paramSet = null;
         _dataHaveChanged = false;
@@ -143,6 +149,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // This faceless filter should always be activated
         // (set once here as no GUI can change it anywhere else)
         _facelessNonCalibratorsFilter.setEnabled(Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FILTER_NON_CALIBRATORS));
+    }
+
+    /**
+     * Define the VirtualObservatory instance
+     * @param vo VirtualObservatory instance
+     */
+    public void setVirtualObservatory(VirtualObservatory vo) {
+        this._vo = vo;
     }
 
     /**
@@ -170,14 +184,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public void update(Observable o, Object arg) {
         _logger.entering("CalibratorsModel", "update");
 
-        // OPTIMIZE : the clone operation should only be done when the filter
-        // has been deactivated, otherwise currentStarList is sufficient
-
-        // Back up the original list for later use (reset, updated filter list)
-        _filteredStarList = (StarList) _currentStarList.clone();
-
-        // Filter the displayed stra list
-        _filtersModel.process(_filteredStarList);
+        // Filter the displayed star list
+        _filteredStarList = _filtersModel.process(_currentStarList);
 
         // As a DefaultTableModel instance, set all the JTable needed vectors
         setDataVector(_filteredStarList, _columnNames);
@@ -201,7 +209,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Ask for SAMP export menu enabling if needed
         boolean shouldBeEnabled = (_currentStarList.size() != 0);
-        SearchCal._vo.couldEnableShareCalibratorsThroughSAMPAction(shouldBeEnabled);
+        _vo.couldEnableShareCalibratorsThroughSAMPAction(shouldBeEnabled);
     }
 
     /**
@@ -399,6 +407,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
      */
     private void parseVOTable(final File file, final String content, final long length) throws IllegalArgumentException {
+        _vo.enableDataRelatedMenus(false);
+
         if (file == null && content == null) {
             throw new IllegalArgumentException("Incorrect VOTable input");
         }
@@ -407,7 +417,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             _logger.info("CalibratorsModel.parseVOTable: VOTable size = " + length + " bytes.");
         }
 
-        final long start = System.nanoTime();
+        final long startTime = System.nanoTime();
 
         final SavotPullParser parser;
         if (file != null) {
@@ -462,268 +472,418 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // Update any attached observer TO FREE MEMORY:
         update(null, null);
 
-        // Retrieve VOTable parameters
-        _paramSet = table.getParams();
+        // Create parse votable task worker :
+        // Cancel other tasks and execute this new task :
+        new ParseVoTableSwingWorker(file, this, parser, savotVoTable, tr, startTime).executeTask();
+    }
 
-        final int nGroups = groupSet.getItemCount();
-        /*
-         * For each group of the table, put its name and its index in a
-         * hashtable, and put its name in a vector for JTable columns title
-         * definition.
+    /**
+     * TaskSwingWorker child class to parse the votable to get a starlist
+     */
+    private final static class ParseVoTableSwingWorker extends TaskSwingWorker<StarList> {
+
+        /* members */
+        /** file in file mode or null in remote mode */
+        private final File file;
+        /** calibrators model used for refreshUI callback */
+        private final CalibratorsModel calModel;
+        /** Savot pull parser initialized */
+        private final SavotPullParser parser;
+        /** Savot VOTable partially loaded */
+        private final SavotVOTable savotVoTable;
+        /** first SavotTR tr */
+        private final SavotTR trFirst;
+        /** start time */
+        private final long startTime;
+        /* meta data */
+        /** Param set */
+        private ParamSet paramSet = null;
+        /** JTable column names (required Vector type) */
+        private final Vector<String> columnNames = new Vector<String>();
+        /** JTable column URLs */
+        private final ArrayList<String> columnURLs = new ArrayList<String>();
+        /** JTable column tool-tips */
+        private final ArrayList<String> columnDescriptions = new ArrayList<String>();
+        /** JTable column units */
+        private final ArrayList<String> columnUnits = new ArrayList<String>();
+        /** Column data types */
+        private final ArrayList<Class<?>> columnClasses = new ArrayList<Class<?>>();
+
+        /**
+         * Hidden constructor
+         *
+         * @param file file in file mode or null in remote mode
+         * @param calModel calibrators model
+         * @param parser Savot pull parser initialized
+         * @param savotVoTable Savot VOTable partially loaded
+         * @param trFirst first SavotTR tr
+         * @param startTime start time (nano seconds)
          */
-        final Map<String, Integer> groupNameToGroupId = new HashMap<String, Integer>(nGroups);
-
-        // reset JTable column meta data:
-        _columnNames.clear();
-        _columnURLs.clear();
-        _columnDescriptions.clear();
-        _columnUnits.clear();
-        _columnClasses.clear();
-        _columnNames.ensureCapacity(nGroups);
-        _columnURLs.ensureCapacity(nGroups);
-        _columnDescriptions.ensureCapacity(nGroups);
-        _columnUnits.ensureCapacity(nGroups);
-        _columnClasses.ensureCapacity(nGroups);
-
-        String groupName;
-        SavotField field;
-        String url;
-        String fieldDataType;
-        Class<?> columnClass;
-
-        for (int groupId = 0; groupId < nGroups; groupId++) {
-            groupName = groupSet.getItemAt(groupId).getName();
-
-            _columnNames.add(groupName);
-            // Associate the group name with its index as a table column
-            groupNameToGroupId.put(groupName, Integer.valueOf(groupId));
-
-            // Get back the field type
-            field = fieldSet.getItemAt(3 * groupId); // x3 as there is 3 fields per group
-
-            // Get back the field link
-            url = "";
-
-            if (field.getLinks().getItemCount() != 0) {
-                url = field.getLinks().getItemAt(0).getHref();
-            }
-
-            _columnURLs.add(url);
-
-            // Get back the field description
-            _columnDescriptions.add(field.getDescription());
-
-            // Get back the field description
-            _columnUnits.add(field.getUnit());
-
-            fieldDataType = field.getDataType();
-            if (fieldDataType != null) {
-                // Default class
-                columnClass = Object.class;
-
-                if (fieldDataType.equals("char")) {
-                    columnClass = String.class;
-                } else if (fieldDataType.equals("float")) {
-                    columnClass = Double.class;
-                } else if (fieldDataType.equals("boolean")) {
-                    columnClass = Boolean.class;
-                }
-
-                _columnClasses.add(columnClass);
-            } else {
-                throw new IllegalArgumentException("Invalid VOTable - empty fieldType for " + field.getName());
-            }
+        private ParseVoTableSwingWorker(final File file, final CalibratorsModel calModel,
+                                        final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
+                                        final long startTime) {
+            // get current observation version :
+            super(SearchCalTaskRegistry.TASK_LOAD);
+            this.file = file;
+            this.calModel = calModel;
+            this.parser = parser;
+            this.savotVoTable = savotVoTable;
+            this.trFirst = trFirst;
+            this.startTime = startTime;
         }
 
-        _nColumns = nGroups;
+        /**
+         * Parse the VOTable in background
+         * This code is executed by a Worker thread (Not Swing EDT)
+         * @return star list
+         */
+        @Override
+        public StarList computeInBackground() {
 
-        // Add the group name to group id conversion table to the star list
-        _originalStarList.setHashMap(groupNameToGroupId);
+            /** Get the current thread to check if the task is interrupted */
+            final Thread currentThread = Thread.currentThread();
 
-        // origin and confidence index are enumerations: use shared instance cache to use less memory:
-        final Map<String, String> originValues = new HashMap<String, String>(32);
-        final Map<String, String> confidenceValues = new HashMap<String, String>(16);
+            final long start = System.nanoTime();
 
-        final int tableRows = table.getNrowsValue(); // optional
+            final SavotResource resource = savotVoTable.getResources().getItemAt(0);
+            final SavotTable table = resource.getTables().getItemAt(0);
+            final GroupSet groupSet = table.getGroups();
+            final FieldSet fieldSet = table.getFields();
 
-        // reserve space:
-        if (tableRows != 0) {
-            _originalStarList.ensureCapacity(tableRows);
+            // Retrieve VOTable parameters
+            paramSet = table.getParams();
+
+            final int nGroups = groupSet.getItemCount();
+            /*
+             * For each group of the table, put its name and its index in a
+             * hashtable, and put its name in a vector for JTable columns title
+             * definition.
+             */
+            final Map<String, Integer> groupNameToGroupId = new HashMap<String, Integer>(nGroups);
+
+            // reset JTable column meta data:
+            columnNames.ensureCapacity(nGroups);
+            columnURLs.ensureCapacity(nGroups);
+            columnDescriptions.ensureCapacity(nGroups);
+            columnUnits.ensureCapacity(nGroups);
+            columnClasses.ensureCapacity(nGroups);
+
+            String groupName;
+            SavotField field;
+            String url;
+            String fieldDataType;
+            Class<?> columnClass;
+
+            for (int groupId = 0; groupId < nGroups; groupId++) {
+                groupName = groupSet.getItemAt(groupId).getName();
+
+                columnNames.add(groupName);
+                // Associate the group name with its index as a table column
+                groupNameToGroupId.put(groupName, Integer.valueOf(groupId));
+
+                // Get back the field type
+                field = fieldSet.getItemAt(3 * groupId); // x3 as there is 3 fields per group
+
+                // Get back the field link
+                url = "";
+
+                if (field.getLinks().getItemCount() != 0) {
+                    url = field.getLinks().getItemAt(0).getHref();
+                }
+
+                columnURLs.add(url);
+
+                // Get back the field description
+                columnDescriptions.add(field.getDescription());
+
+                // Get back the field description
+                columnUnits.add(field.getUnit());
+
+                fieldDataType = field.getDataType();
+                if (fieldDataType != null) {
+                    // Default class
+                    columnClass = Object.class;
+
+                    if (fieldDataType.equals("char")) {
+                        columnClass = String.class;
+                    } else if (fieldDataType.equals("float")) {
+                        columnClass = Double.class;
+                    } else if (fieldDataType.equals("boolean")) {
+                        columnClass = Boolean.class;
+                    }
+
+                    columnClasses.add(columnClass);
+                } else {
+                    throw new IllegalArgumentException("Invalid VOTable - empty fieldType for " + field.getName());
+                }
+            }
+
+            // Create a new star list and set the group name to group id conversion table to the star list
+            final StarList starList = new StarList(groupNameToGroupId);
+
+            // origin and confidence index are enumerations: use shared instance cache to use less memory:
+            final Map<String, String> originValues = new HashMap<String, String>(32);
+            final Map<String, String> confidenceValues = new HashMap<String, String>(16);
+
+            final int tableRows = table.getNrowsValue(); // optional
+
+            // reserve space:
+            if (tableRows != 0) {
+                starList.ensureCapacity(tableRows);
+            }
+
+            // local copies for performance:
+            final Class<?>[] colClasses = new Class<?>[nGroups];
+            columnClasses.toArray(colClasses);
+
+            SavotTR tr = trFirst; // consume first TR
+            TDSet row;
+            List<StarProperty> star;
+            Object propertyValue;
+            int groupId, mainGroupCellId;
+            String value, origin, originValue, confidence, confidenceValue;
+            StarProperty starProperty;
+
+            // only use Progress bar for large tables (JSDC):
+            final int step = (tableRows > 5000) ? tableRows / 100 : Integer.MAX_VALUE;
+            int nRow = 0;
+            do {
+
+                if (nRow % step == 0 && nRow != 0) {
+                    // fast interrupt :
+                    if (currentThread.isInterrupted()) {
+                        return null;
+                    }
+                    /*                    
+                     if (_logger.isLoggable(Level.INFO)) {
+                     _logger.info("CalibratorsModel.parseVOTable: processing " + nRow + " row / total = " + tableRows);
+                     }
+                     */
+
+                    // progress bar:
+                    calModel._queryModel.setQueryProgress("loading ...", nRow, tableRows);
+                }
+
+                // Get the data corresponding to the current row
+                row = tr.getTDSet();
+
+                // For each group of the row create a star property of each 3 cells
+                // note: Vector type is required by swing DefaultTableModel:
+                star = new Vector<StarProperty>(nGroups);
+
+                for (groupId = 0; groupId < nGroups; ++groupId) {
+
+                    /*
+                     * The index of first cell of the current group (as there is
+                     * always 3 cells for each group).
+                     */
+                    mainGroupCellId = 3 * groupId;
+
+                    propertyValue = null;
+
+                    // Get the value (always the first group cell)
+                    value = row.getContent(mainGroupCellId);
+
+                    // replace "" by null to use less memory:
+                    if (value.length() != 0) {
+                        // Get column field type:
+                        columnClass = colClasses[groupId];
+
+                        if (columnClass == Double.class) {
+                            try {
+                                propertyValue = Double.valueOf(value);
+                            } catch (NumberFormatException nfe) {
+                                _logger.warning("invalid Double [" + value + "]");
+                            }
+                        } else if (columnClass == String.class) {
+                            propertyValue = value;
+                        } else if (columnClass == Boolean.class) {
+                            try {
+                                propertyValue = Boolean.valueOf(value);
+                            } catch (NumberFormatException nfe) {
+                                _logger.warning("invalid Boolean [" + value + "]");
+                            }
+                        }
+                    }
+
+                    // Store the group origin (always the second group cell)
+                    ++mainGroupCellId;
+                    origin = row.getContent(mainGroupCellId);
+
+                    // replace "" or "-" (blanking value used up to SearchCal release 4.4) 
+                    // by null to use less memory:
+                    if ((origin.length() == 0) || ("-".equals(origin))) {
+                        origin = null;
+                    } else {
+                        originValue = originValues.get(origin);
+                        if (originValue == null) {
+                            originValues.put(origin, origin);
+                        } else {
+                            // use shared instance
+                            origin = originValue;
+                        }
+                    }
+
+                    // Store the group confidence (always the third group cell)
+                    ++mainGroupCellId;
+                    confidence = row.getContent(mainGroupCellId);
+
+                    // replace "" by null to use less memory:
+                    if (confidence.length() == 0) {
+                        confidence = null;
+                    } else {
+                        confidenceValue = confidenceValues.get(confidence);
+                        if (confidenceValue == null) {
+                            confidenceValues.put(confidence, confidence);
+                        } else {
+                            // use shared instance
+                            confidence = confidenceValue;
+                        }
+                    }
+
+                    // _logger.severe("property: " + propertyValue + " - " + origin + "- " + confidence);
+                    /*
+                     * Create a new StarProperty instance from the retrieved value,
+                     * origin and confidence.
+                     */
+                    starProperty = new StarProperty(propertyValue, origin, confidence);
+
+                    // Add the newly created star property to the star property list
+                    star.add(starProperty);
+                }
+
+                // Store each VOTable row as a list of star properties
+                starList.add(star);
+
+                nRow++;
+
+            } while ((tr = parser.getNextTR()) != null);
+
+            _logger.info("CalibratorsModel.parseVOTable: " + nRow + " rows read in " + 1e-6d * (System.nanoTime() - start) + " ms.");
+
+            return starList;
         }
 
-        // local copies for performance:
-        final StarList originalStarList = _originalStarList;
-        final Class<?>[] columnClasses = new Class<?>[nGroups];
-        _columnClasses.toArray(columnClasses);
+        /**
+         * Refresh the GUI using the given star list
+         * This code is executed by the Swing Event Dispatcher thread (EDT)
+         * @param starList parsed StarList
+         */
+        @Override
+        public void refreshUI(final StarList starList) {
 
-        TDSet row;
-        List<StarProperty> star;
-        Object propertyValue;
-        int groupId, mainGroupCellId;
-        String value, origin, originValue, confidence, confidenceValue;
-        StarProperty starProperty;
+            calModel._queryModel.setQueryProgress("", 0, 0);
 
-        final int step = (tableRows > 1000) ? tableRows / 10 : Integer.MAX_VALUE;
-        int nRow = 0;
-        do {
+            // Keep only VOTable structure (without data):
+            calModel._parsedVOTable = savotVoTable;
 
-            if (nRow % step == 0 && nRow != 0) {
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("CalibratorsModel.parseVOTable: processing " + nRow + " row / total = " + tableRows);
+            calModel._columnNames.clear();
+            calModel._columnURLs.clear();
+            calModel._columnDescriptions.clear();
+            calModel._columnUnits.clear();
+            calModel._columnClasses.clear();
+            calModel._columnNames.addAll(columnNames);
+            calModel._columnURLs.addAll(columnURLs);
+            calModel._columnDescriptions.addAll(columnDescriptions);
+            calModel._columnUnits.addAll(columnUnits);
+            calModel._columnClasses.addAll(columnClasses);
+
+            calModel._nColumns = columnNames.size();
+
+            // Compute selected magnitude band and scenario
+            // TODO: put in Savot Param finder by name:
+            final int nParams = paramSet.getItemCount();
+            final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
+
+            for (int i = 0; i < nParams; i++) {
+                final SavotParam param = paramSet.getItemAt(i);
+                final String paramName = param.getName();
+                final String paramValue = param.getValue();
+
+                if (_logger.isLoggable(Level.FINE)) {
+                    _logger.fine(paramName + " = '" + paramValue + "'");
                 }
+                parameters.put(paramName, paramValue);
             }
 
-            // Get the data corresponding to the current row
-            row = tr.getTDSet();
+            calModel._magnitudeBand = parameters.get("band");
 
-            // For each group of the row create a star property of each 3 cells
-            // note: Vector type is required by swing DefaultTableModel:
-            star = new Vector<StarProperty>(nGroups);
-
-            for (groupId = 0; groupId < nGroups; ++groupId) {
-
-                /*
-                 * The index of first cell of the current group (as there is
-                 * always 3 cells for each group).
-                 */
-                mainGroupCellId = 3 * groupId;
-
-                propertyValue = null;
-
-                // Get the value (always the first group cell)
-                value = row.getContent(mainGroupCellId);
-
-                // replace "" by null to use less memory:
-                if (value.length() != 0) {
-                    // Get column field type:
-                    columnClass = columnClasses[groupId];
-
-                    if (columnClass == Double.class) {
-                        try {
-                            propertyValue = Double.valueOf(value);
-                        } catch (NumberFormatException nfe) {
-                            _logger.warning("invalid Double [" + value + "]");
-                        }
-                    } else if (columnClass == String.class) {
-                        propertyValue = value;
-                    } else if (columnClass == Boolean.class) {
-                        try {
-                            propertyValue = Boolean.valueOf(value);
-                        } catch (NumberFormatException nfe) {
-                            _logger.warning("invalid Boolean [" + value + "]");
-                        }
-                    }
-                }
-
-                // Store the group origin (always the second group cell)
-                ++mainGroupCellId;
-                origin = row.getContent(mainGroupCellId);
-
-                // replace "" or "-" (blanking value used up to SearchCal release 4.4) 
-                // by null to use less memory:
-                if ((origin.length() == 0) || ("-".equals(origin))) {
-                    origin = null;
-                } else {
-                    originValue = originValues.get(origin);
-                    if (originValue == null) {
-                        originValues.put(origin, origin);
-                    } else {
-                        // use shared instance
-                        origin = originValue;
-                    }
-                }
-
-                // Store the group confidence (always the third group cell)
-                ++mainGroupCellId;
-                confidence = row.getContent(mainGroupCellId);
-
-                // replace "" by null to use less memory:
-                if (confidence.length() == 0) {
-                    confidence = null;
-                } else {
-                    confidenceValue = confidenceValues.get(confidence);
-                    if (confidenceValue == null) {
-                        confidenceValues.put(confidence, confidence);
-                    } else {
-                        // use shared instance
-                        confidence = confidenceValue;
-                    }
-                }
-
-                // _logger.severe("property: " + propertyValue + " - " + origin + "- " + confidence);
-                /*
-                 * Create a new StarProperty instance from the retrieved value,
-                 * origin and confidence.
-                 */
-                starProperty = new StarProperty(propertyValue, origin, confidence);
-
-                // Add the newly created star property to the star property list
-                star.add(starProperty);
+            if ((calModel._magnitudeBand != null) && (calModel._magnitudeBand.matches("I")
+                    || calModel._magnitudeBand.matches("J") || calModel._magnitudeBand.matches("H"))) {
+                calModel._magnitudeBand = "K";
             }
 
-            // Store each VOTable row as a list of star properties
-            originalStarList.add(star);
-
-            nRow++;
-
-        } while ((tr = parser.getNextTR()) != null);
-
-        _logger.info("CalibratorsModel.parseVOTable: " + nRow + " rows read in " + 1e-6d * (System.nanoTime() - start) + " ms.");
-
-        // Keep only VOTable structure (without data):
-        _parsedVOTable = savotVoTable;
-
-        // Compute selected magnitude band and scenario
-        // TODO: put in Savot Param finder by name:
-        final int nParams = _paramSet.getItemCount();
-        final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
-
-        for (int i = 0; i < nParams; i++) {
-            final SavotParam param = _paramSet.getItemAt(i);
-            final String paramName = param.getName();
-            final String paramValue = param.getValue();
+            calModel._brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
 
             if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine(paramName + " = '" + paramValue + "'");
+                _logger.fine("magnitude band = '" + calModel._magnitudeBand + "'; bright scenario = '" + calModel._brightScenarioFlag + "'.");
             }
-            parameters.put(paramName, paramValue);
+
+            // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
+            if (parameters.get(PARAMETER_SCL_SERVER_VERSION) == null) {
+                final SavotResource resource = savotVoTable.getResources().getItemAt(0);
+
+                final SavotParam param = new SavotParam();
+                param.setName(PARAMETER_SCL_SERVER_VERSION);
+                param.setDataType("char");
+                param.setArraySize("*");
+                param.setValue(resource.getName());
+                paramSet.addItem(param);
+            }
+            if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
+                final ApplicationDataModel applicationDataModel = App.getSharedApplicationDataModel();
+                final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
+
+                final SavotParam param = new SavotParam();
+                param.setName(PARAMETER_SCL_GUI_VERSION);
+                param.setDataType("char");
+                param.setArraySize("*");
+                param.setValue(version);
+                paramSet.addItem(param);
+            }
+
+            calModel._paramSet = paramSet;
+
+            // Copy the star list and add the group name to group id conversion table to the star list
+            calModel._originalStarList = starList;
+
+            // remove non calibrator stars once:
+            calModel.removeNonCalibrators();
+
+            // fire Update:
+            calModel.removeDeletedStars();
+
+            _logger.info("CalibratorsModel.parseVOTable done: " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
+
+            if (file != null) {
+                // Loading the file in the query model
+                StatusBar.show("loading file (parsing query)...");
+                try {
+                    calModel._queryModel.loadParamSet(calModel.getParamSet());
+                    StatusBar.show("loading file (query successfully parsed)...");
+                    StatusBar.show("file succesfully loaded.");
+
+                } catch (NumberFormatException nfe) {
+                    StatusBar.show("loading aborted (query parsing error) !");
+                    MessagePane.showErrorMessage("Could not open file (query parsing error).", nfe);
+                    // TODO reset table content ?
+                }
+            }
+
+            // Enabling the 'Save' menus
+            calModel._vo.enableDataRelatedMenus(true);
         }
 
-        _magnitudeBand = parameters.get("band");
-
-        if ((_magnitudeBand != null) && (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") || _magnitudeBand.matches("H"))) {
-            _magnitudeBand = "K";
+        @Override
+        public void handleException(ExecutionException ee) {
+            if (ee.getCause() instanceof IllegalArgumentException) {
+                final String errorMsg = "Loading aborted: calibrators parsing error " + ((file != null) ? " in file : " + file.getAbsolutePath() : "");
+                StatusBar.show(errorMsg);
+                MessagePane.showErrorMessage(errorMsg, ee.getCause());
+            } else {
+                super.handleException(ee);
+            }
         }
-
-        _brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
-
-        if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("magnitude band = '" + _magnitudeBand + "'; bright scenario = '" + _brightScenarioFlag + "'.");
-        }
-
-        // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
-        if (parameters.get(PARAMETER_SCL_SERVER_VERSION) == null) {
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_SERVER_VERSION);
-            param.setDataType("char");
-            param.setArraySize("*");
-            param.setValue(resource.getName());
-            _paramSet.addItem(param);
-        }
-        if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
-            final ApplicationDataModel applicationDataModel = App.getSharedApplicationDataModel();
-            final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
-
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_GUI_VERSION);
-            param.setDataType("char");
-            param.setArraySize("*");
-            param.setValue(version);
-            _paramSet.addItem(param);
-        }
-
-        // fire Update:
-        removeDeletedStars();
     }
 
     /**
@@ -823,7 +983,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      *
      * @param file output file
      */
-    public void saveSelectionAsVOTableFile(File file) {
+    public void saveSelectionAsVOTableFile(final File file) {
         StarList selectedStarsList;
 
         final int selSize = (_selectedStarIndices != null) ? _selectedStarIndices.length : 0;
@@ -831,14 +991,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // If some calibrators are currently selected
         if (selSize != 0) {
             // Compute a dedicated star list
-            selectedStarsList = new StarList();
+            selectedStarsList = new StarList(_filteredStarList.getFieldIdToColNumberMap());
             selectedStarsList.ensureCapacity(selSize);
 
-            for (int index = 0, selectedIndex; index < selSize; index++) {
-                selectedIndex = _selectedStarIndices[index];
-
+            for (int index = 0; index < selSize; index++) {
                 // Use filtered star list because selection works on filtered list
-                selectedStarsList.add(_filteredStarList.get(selectedIndex));
+                selectedStarsList.add(_filteredStarList.get(_selectedStarIndices[index]));
             }
         } else {
             // Use all visible calibrators if none explicitly selected
@@ -1053,7 +1211,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public boolean hasSomeDeletedStars() {
         _logger.entering("CalibratorsModel", "hasSomeDeletedStars");
 
-        return _originalStarList.hasSomeDeletedStars();
+        return _calibratorStarList.hasSomeDeletedStars();
     }
 
     /**
@@ -1072,6 +1230,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             stars.add(_filteredStarList.get(idx));
         }
 
+        // flag stars
         _originalStarList.markAsDeleted(stars);
 
         // fire Update:
@@ -1079,26 +1238,27 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
-     * Remove all stars previously flagged as deleted.
+     * Remove all non calibrator stars.
      */
-    public void removeDeletedStars() {
-        _logger.entering("CalibratorsModel", "deleteStars");
-        
-        // Copy content of originalStarList into calibratorStarList
-        _calibratorStarList = (StarList) _originalStarList.clone();
+    private void removeNonCalibrators() {
+        _logger.entering("CalibratorsModel", "removeNonCalibrators");
 
         // filter non calibrator stars:
-        _facelessNonCalibratorsFilter.process(_calibratorStarList);
+        _calibratorStarList = _facelessNonCalibratorsFilter.process(_originalStarList);
+    }
 
-        // Copy content of calibratorStarList into currentStarList
-        _currentStarList = (StarList) _calibratorStarList.clone();
+    /**
+     * Remove all stars previously flagged as deleted.
+     */
+    private void removeDeletedStars() {
+        _logger.entering("CalibratorsModel", "removeDeletedStars");
 
         // Remove all the stars flagged as deleted
-        _currentStarList.removeAllDeletedStars();
-        
+        _currentStarList = _calibratorStarList.removeAllDeletedStars();
+
         update(null, null);
     }
-    
+
     /**
      * Undelete all stars previously flagged as deleted.
      */
@@ -1129,7 +1289,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         }
 
         // Update Menu label
-        SearchCal._vo.setShareCalibratorsThroughSAMPActionText(actionMenuText);
+        _vo.setShareCalibratorsThroughSAMPActionText(actionMenuText);
     }
 
     /**
