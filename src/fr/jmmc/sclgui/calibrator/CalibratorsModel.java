@@ -380,6 +380,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Parse the given file as VOTable and update any attached JTable to show its content.
+     * 
+     * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param file the votable file to parse as File
      * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
@@ -390,6 +392,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Parse the given string as VOTable and update any attached JTable to show its content.
+     * 
+     * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param voTable the votable content to parse as String
      * @throws IllegalArgumentException if given votable is not compatible with SearchCal format

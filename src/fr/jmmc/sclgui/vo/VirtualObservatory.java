@@ -286,6 +286,7 @@ public final class VirtualObservatory extends Observable {
         // Parse the query     
         Exception e = null;
         try {
+            // parse VOTable (async):
             _calibratorsModel.parseVOTable(query);
 
             // load default values to reset completely the query model:
@@ -417,6 +418,7 @@ public final class VirtualObservatory extends Observable {
                     // Exit if any error occurs 
                     // TODO clean query and table content ?
                     if (ex != null) {
+                        _currentFile = null;
                         StatusBar.show(errorMsg);
                         MessagePane.showErrorMessage(errorMsg, ex);
                         return;
@@ -447,23 +449,25 @@ public final class VirtualObservatory extends Observable {
         public void actionPerformed(java.awt.event.ActionEvent e) {
             _logger.entering("RevertToSavedFileAction", "actionPerformed");
 
-            // If we can lost current modifications
-            if (canLostModifications()) {
-                // Loading a new file
-                try {
-                    StatusBar.show("re-loading file...");
+            if (_currentFile != null) {
+                // If we can lost current modifications
+                if (canLostModifications()) {
+                    // Loading a new file
+                    try {
+                        StatusBar.show("re-loading file...");
 
-                    _calibratorsModel.openFile(_currentFile);
+                        _calibratorsModel.openFile(_currentFile);
 
-                    StatusBar.show("file succesfully re-loaded.");
-                } catch (IOException ioe) {
-                    String errorMsg = "Could not reload the file : " + _currentFile.getAbsolutePath();
-                    StatusBar.show(errorMsg);
-                    MessagePane.showErrorMessage(errorMsg, ioe);
-                } catch (IllegalArgumentException iae) {
-                    String errorMsg = "ReLoading aborted:  calibrators parsing error in file : " + _currentFile.getAbsolutePath();
-                    StatusBar.show(errorMsg);
-                    MessagePane.showErrorMessage(errorMsg, iae);
+                        StatusBar.show("file succesfully re-loaded.");
+                    } catch (IOException ioe) {
+                        String errorMsg = "Could not reload the file : " + _currentFile.getAbsolutePath();
+                        StatusBar.show(errorMsg);
+                        MessagePane.showErrorMessage(errorMsg, ioe);
+                    } catch (IllegalArgumentException iae) {
+                        String errorMsg = "ReLoading aborted:  calibrators parsing error in file : " + _currentFile.getAbsolutePath();
+                        StatusBar.show(errorMsg);
+                        MessagePane.showErrorMessage(errorMsg, iae);
+                    }
                 }
             }
         }
@@ -694,7 +698,7 @@ public final class VirtualObservatory extends Observable {
                         try {
                             StatusBar.show("parsing calibrators... (please wait, this may take a while)");
 
-                            // Parse the received VOTable
+                            // Parse the received VOTable (async):
                             _calibratorsModel.parseVOTable(votable);
 
                             StatusBar.show("searching calibrators... done.");
