@@ -34,8 +34,10 @@ public class SearchCal extends App {
 
     /** Logger */
     private static final Logger _logger = Logger.getLogger(SearchCal.class.getName());
+    /* members */
     /** Main application object used to perform the optional query received from ASPRO */
-    public static VirtualObservatory _vo = null;
+    /* note: do not set it to null as it is initialized in App.init() by super() ie before class initialization (LBO) */
+    private VirtualObservatory _vo;
     /** Store the optional query received from ASPRO by constructor */
     private String _query = null;
 
@@ -62,7 +64,7 @@ public class SearchCal extends App {
          *    - execution delayed for further initilization;
          *    - without protection against current process killing by its father.
          */
-        super(args, false, false);
+        super(args, true, false);
 
         // Store received query for later execution
         _query = query;
@@ -77,10 +79,11 @@ public class SearchCal extends App {
         // Set default resource
         fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
+        final SearchCal searchCal = this;
+
         // Using invokeAndWait to be in sync with this thread :
         // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
         SwingUtils.invokeAndWaitEDT(new Runnable() {
-
             /**
              * Initializes the swing components with their actions in EDT
              */
@@ -99,13 +102,14 @@ public class SearchCal extends App {
                 FiltersView filtersView = new FiltersView(filtersModel);
 
                 // Create a calibrators model and attach it to a calibrators view
-                CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel);
+                CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
                 CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
                 calibratorsView.init();
 
                 filtersModel.addObserver(calibratorsModel);
 
                 // Link everything up
+                // note: _vo member is defined by App constructor !
                 _vo = new VirtualObservatory(queryModel, calibratorsModel);
 
                 // Attach the query model to its query view
@@ -151,7 +155,6 @@ public class SearchCal extends App {
 
         // Add handler to load query params and launch calibrator search
         new SampMessageHandler(SampCapability.SEARCHCAL_START_QUERY) {
-
             /**
              * Implements message processing
              *
@@ -169,7 +172,6 @@ public class SearchCal extends App {
                 if (query != null) {
 
                     SwingUtils.invokeLaterEDT(new Runnable() {
-
                         /**
                          * Synchronized by EDT
                          */
@@ -194,7 +196,6 @@ public class SearchCal extends App {
     @Override
     protected void execute() {
         SwingUtils.invokeLaterEDT(new Runnable() {
-
             /**
              * Show the application frame using EDT
              */
