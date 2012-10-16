@@ -31,8 +31,6 @@ public class MainWindow extends JFrame {
     private static final Logger _logger = Logger.getLogger(MainWindow.class.getName());
     /** Main panel container, displaying the query and result views */
     private Container _mainPane = null;
-    /** Virtual Observatory */
-    private final VirtualObservatory _vo;
     /** Query view */
     private final QueryView _queryView;
     /** Calibrators view */
@@ -66,7 +64,6 @@ public class MainWindow extends JFrame {
 
         final String classPath = getClass().getName();
 
-        _vo = vo;
         _queryView = queryView;
         _calibratorsView = calibratorsView;
         _filtersView = filtersView;
