@@ -3,10 +3,10 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.filter;
 
-import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.preference.PreferenceKey;
+import fr.jmmc.sclgui.preference.Preferences;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,7 +150,6 @@ public abstract class Filter extends Observable {
      * @param starList the list of star to get column information
      */
     public void onPrepare(final StarList starList) {
-        // to be implemented in child classes
     }
 
     /**
@@ -165,7 +164,7 @@ public abstract class Filter extends Observable {
     }
 
     /**
-     * Return whether the given row is th science object or not.
+     * Return whether the given row is the science object or not.
      *
      * @param row the star properties to be evaluated.
      *
@@ -174,7 +173,7 @@ public abstract class Filter extends Observable {
     public final boolean isScienceObject(final List<StarProperty> row) {
         if (_distId != -1) {
             // Get the row's distance star property
-            final Double rowDistance = row.get(_distId).getDoubleValue();
+            final double rowDistance = row.get(_distId).getDoubleValue();
 
             // If the current row distance is close enough to be detected as a science object
             return (rowDistance < _prefDistance);
@@ -183,48 +182,55 @@ public abstract class Filter extends Observable {
     }
 
     /**
-     * Apply the filter (if enabled) to the given star list.
+     * Apply the filter (if enabled).
+     * 
+     * It is faster to add n times a star than remove n times (arrayCopy ...)
      *
      * @param starList the list of star to filter.
+     * @return filtered star list or given star list if disabled
      */
-    public void process(final StarList starList) {
+    public StarList process(final StarList starList) {
+        final int size = starList.size();
+
+        final StarList outputList;
+
         // If the filter is enabled
-        if (isEnabled()) {
-            final int initialSize = starList.size();
-
-            if (initialSize == 0) {
-                return;
-            }
-
+        if (isEnabled() && size != 0) {
             final long start = System.nanoTime();
+
+            outputList = new StarList(starList.getFieldIdToColNumberMap());
+
+            // ensure max capacity:
+            outputList.ensureCapacity(size);
 
             // Prepare this filter execution:
             prepare(starList);
 
             // For each row of the star list
-            int size = initialSize;
-            int rowId = 0;
-            List<StarProperty> row;
+            List<StarProperty> star;
 
-            while (rowId < size) {
-                row = starList.get(rowId);
+            for (int rowId = 0; rowId < size; rowId++) {
+                star = starList.get(rowId);
 
-                // If the luminosity class was found in the current line
-                if (shouldRemoveRow(row) && !isScienceObject(row)) {
-                    // Remove the current star row from the star list
-                    starList.remove(rowId);
-                    size--;
-                } else {
-                    // Otherwise process the next row
-                    rowId++;
+                if (!(shouldRemoveRow(star) && !isScienceObject(star))) {
+                    outputList.add(star);
                 }
             }
 
+            // trim to size:
+            outputList.trimToSize();
+
             if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine(getName() + " (" + initialSize + " >> " + starList.size() + " stars) processed in "
+                _logger.fine(getName() + " (" + size + " >> " + outputList.size() + " stars) processed in "
                         + 1e-6d * (System.nanoTime() - start) + " ms.");
             }
+
+        } else {
+            // return given star list:
+            outputList = starList;
         }
+
+        return outputList;
     }
 
     /**

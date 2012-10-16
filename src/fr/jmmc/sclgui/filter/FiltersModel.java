@@ -128,11 +128,12 @@ public final class FiltersModel {
      * Apply the filters to the given star list.
      *
      * @param starList the list of star to filter.
+     * @return filtered star list or given star list if filters are disabled
      */
-    public void process(StarList starList) {
+    public StarList process(final StarList starList) {
         _logger.entering("FiltersModel", "process");
 
-        _filterList.process(starList);
+        return _filterList.process(starList);
     }
 }
 /*___oOo___*/

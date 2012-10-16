@@ -34,19 +34,35 @@ public final class StarList extends Vector<List<StarProperty>> {
      */
     public StarList() {
         super();
-
         _fieldIdToColNumber = Collections.emptyMap();
     }
 
     /**
-     * Defines the hash table that links each colum group name to its ID.
-     *
-     * @param fieldIdToColNumber the new hash table.
+     * Constructor with given mapping
+     * 
+     * @param fieldIdToColNumber the new mapping
      */
-    public void setHashMap(final Map<String, Integer> fieldIdToColNumber) {
-        _logger.entering("StarList", "setHashMap");
-
+    public StarList(final Map<String, Integer> fieldIdToColNumber) {
+        super();
         _fieldIdToColNumber = fieldIdToColNumber;
+    }
+
+    /**
+     * Defines the mapping that links each colum group name to its ID.
+     *
+     * @param fieldIdToColNumber the new mapping
+     */
+    public void setFieldIdToColNumberMap(final Map<String, Integer> fieldIdToColNumber) {
+        _fieldIdToColNumber = fieldIdToColNumber;
+    }
+
+    /**
+     * return the mapping that links each colum group name to its ID.
+     *
+     * @return mapping
+     */
+    public Map<String, Integer> getFieldIdToColNumberMap() {
+        return _fieldIdToColNumber;
     }
 
     /**
@@ -83,18 +99,17 @@ public final class StarList extends Vector<List<StarProperty>> {
             StarProperty deletedFlag;
             boolean starShouldBeRemoved;
 
-            for (int i = 0, size = size(); i < size; i++) {
-                star = get(i);
-                if (star != null) {
-                    deletedFlag = star.get(deletedFlagColumnID);
+            for (int rowId = 0, size = size(); rowId < size; rowId++) {
+                star = get(rowId);
 
-                    if (deletedFlag != null) {
-                        starShouldBeRemoved = deletedFlag.getBooleanValue();
+                deletedFlag = star.get(deletedFlagColumnID);
 
-                        if (starShouldBeRemoved) {
-                            _logger.fine("hasSomeDeletedStars = 'true'");
-                            return true;
-                        }
+                if (deletedFlag != null) {
+                    starShouldBeRemoved = deletedFlag.getBooleanValue();
+
+                    if (starShouldBeRemoved) {
+                        _logger.fine("hasSomeDeletedStars = 'true'");
+                        return true;
                     }
                 }
             }
@@ -125,32 +140,45 @@ public final class StarList extends Vector<List<StarProperty>> {
 
     /**
      * Remove all "deleted" flagged stars.
+     * 
+     * It is faster to add n times a star than remove n times (arrayCopy ...)
+     * 
+     * @return new star list without "deleted" stars.
      */
-    public void removeAllDeletedStars() {
+    public StarList removeAllDeletedStars() {
         _logger.entering("StarList", "removeAllDeletedStars");
+
+        final int size = size();
+
+        final StarList outputList = new StarList(getFieldIdToColNumberMap());
+
+        // ensure max capacity:
+        outputList.ensureCapacity(size);
 
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
             List<StarProperty> star;
-            int i = 0;
-            int size = size();
             StarProperty deletedFlag;
 
-            while (i < size) {
-                star = get(i);
-                if (star != null) {
-                    deletedFlag = star.get(deletedFlagColumnID);
+            for (int rowId = 0; rowId < size; rowId++) {
+                star = get(rowId);
 
-                    if (deletedFlag == null || deletedFlag.getBooleanValue()) {
-                        remove(i);
-                        size--;
-                    } else {
-                        // Jump to the next only if the current one as not been removed.
-                        i++;
-                    }
+                deletedFlag = star.get(deletedFlagColumnID);
+
+                if (!(deletedFlag == null || deletedFlag.getBooleanValue())) {
+                    outputList.add(star);
                 }
             }
+
+            // trim to size:
+            outputList.trimToSize();
+
+        } else {
+            // copy given star list:
+            outputList.addAll(this);
         }
+
+        return outputList;
     }
 
     /**
@@ -164,17 +192,33 @@ public final class StarList extends Vector<List<StarProperty>> {
             List<StarProperty> star;
             StarProperty deletedFlag;
 
-            for (int i = 0, size = size(); i < size; i++) {
-                star = get(i);
-                if (star != null) {
-                    deletedFlag = star.get(deletedFlagColumnID);
+            for (int rowId = 0, size = size(); rowId < size; rowId++) {
+                star = get(rowId);
+                deletedFlag = star.get(deletedFlagColumnID);
 
-                    if (deletedFlag != null) {
-                        deletedFlag.setValue(Boolean.FALSE);
-                    }
+                if (deletedFlag != null) {
+                    deletedFlag.setValue(Boolean.FALSE);
                 }
             }
         }
+    }
+
+    /**
+     * Returns a clone of this star list (shallow copy)
+     * 
+     * note: no more used
+     *
+     * @return  a clone of this star list
+     */
+    @Override
+    public StarList clone() {
+
+        // Note: Vector.clone() calls super.clone():
+        // Vector<E> v = (Vector<E>) super.clone();
+        // so internal fields are copied too like _fieldIdToColNumber (same pointer)
+        // that's enough as this mapping must be the same (read-only) for all StarList copies.
+
+        return (StarList) super.clone();
     }
 }
 /*___oOo___*/
