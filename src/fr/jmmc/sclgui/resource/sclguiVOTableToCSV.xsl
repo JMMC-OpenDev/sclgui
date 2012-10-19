@@ -57,7 +57,7 @@ DESCRIPTION
                 <xsl:variable name="row" select="."/>                    
                 <xsl:value-of select="'&#10;'"/>
                 <xsl:for-each select="$indiceNodes">
-                    <xsl:value-of select="$row/VOT11:TD[number($index)]"/>
+                    <xsl:value-of select="$row/VOT11:TD[number(.)]"/>
                     <xsl:value-of select="$fieldSeparator"/>
                 </xsl:for-each>
             </xsl:for-each>

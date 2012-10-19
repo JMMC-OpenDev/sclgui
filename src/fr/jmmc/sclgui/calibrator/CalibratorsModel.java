@@ -1343,10 +1343,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final InputStream sourceStream = new BufferedInputStream(new FileInputStream(tmpFile));
                 final OutputStream resultStream = new BufferedOutputStream(new FileOutputStream(outputFile));
 
+                final long startTime = System.nanoTime();
+                
                 // Apply the xsl file to the source file and write the result to
                 // the output file
                 // use an XSLT to transform the XML document to an HTML representation :
                 XmlFactory.transform(sourceStream, xsltFile, resultStream);
+                
+                _logger.info("applyXSLTranformationOnCurrentVOTable done: " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
             }
 
         } catch (FileNotFoundException fnfe) {
@@ -1363,9 +1367,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 _logger.log(Level.SEVERE, "One error occured while applying XSL file '" + xsltFile
                         + "', on line '" + locator.getLineNumber() + "' and column '" + locator.getColumnNumber() + "'");
             }
-        } catch (IllegalStateException ise) {
-            // An error occurred in the XSL file
-            _logger.log(Level.SEVERE, "An error occured in the XSL file '" + xsltFile + "'", ise);
         }
     }
 
