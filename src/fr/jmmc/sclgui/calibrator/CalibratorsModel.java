@@ -196,7 +196,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // Ask all the attached JTable views to update
         fireTableDataChanged();
 
-        // If the update was launched from TableSorter(just for a GUI refresh)
+        // If the update was launched from TableSorter (just for a GUI refresh)
         if (arg != null) {
             if (TableSorter.class == arg.getClass()) {
                 // Don't consider it as a data modification
@@ -204,8 +204,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             }
         }
 
-        // Remember that data have changed
-        _dataHaveChanged = true;
+        // Remember that data have changed (unless change went from us)
+        if (arg != this) {
+            _dataHaveChanged = true;
+        }
 
         // Ask for SAMP export menu enabling if needed
         boolean shouldBeEnabled = (_currentStarList.size() != 0);
@@ -217,7 +219,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      *
      * @return true if inner data have changed, false otherwise.
      */
-    public boolean dataHaveChanged() {
+    public boolean haveDataChanged() {
         _logger.entering("CalibratorsModel", "dataHaveChanged");
 
         return _dataHaveChanged;
@@ -383,8 +385,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * 
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
-     * @param file the votable file to parse as File
-     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
+     * @param file the VOTable file to parse as File
+     * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final File file) throws IllegalArgumentException {
         parseVOTable(file, null, file.length());
@@ -395,8 +397,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * 
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
-     * @param voTable the votable content to parse as String
-     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
+     * @param voTable the VOTable content to parse as String
+     * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final String voTable) throws IllegalArgumentException {
         parseVOTable(null, voTable, voTable.length());
@@ -405,10 +407,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /**
      * Parse a given VOTable and update any attached JTable to show its content.
      *
-     * @param file the votable file to parse as File
-     * @param content the votable content to parse as String
-     * @param length votable size in bytes
-     * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
+     * @param file the VOTable file to parse as File
+     * @param content the VOTable content to parse as String
+     * @param length VOTable size in bytes
+     *
+     * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     private void parseVOTable(final File file, final String content, final long length) throws IllegalArgumentException {
         _vo.enableDataRelatedMenus(false);
@@ -474,7 +477,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _currentStarList.clear();
 
         // Update any attached observer TO FREE MEMORY:
-        update(null, null);
+        update(null, this);
 
         // Create parse votable task worker :
         // Cancel other tasks and execute this new task :
@@ -482,7 +485,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
-     * TaskSwingWorker child class to parse the votable to get a starlist
+     * TaskSwingWorker child class to parse the VOTable to get a StarList
      */
     private final static class ParseVoTableSwingWorker extends TaskSwingWorker<StarList> {
 
@@ -491,16 +494,16 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         private final File file;
         /** calibrators model used for refreshUI callback */
         private final CalibratorsModel calModel;
-        /** Savot pull parser initialized */
+        /** SAVOT pull parser initialized */
         private final SavotPullParser parser;
-        /** Savot VOTable partially loaded */
+        /** SAVOT VOTable partially loaded */
         private final SavotVOTable savotVoTable;
         /** first SavotTR tr */
         private final SavotTR trFirst;
         /** start time */
         private final long startTime;
         /* meta data */
-        /** Param set */
+        /** Parameter set */
         private ParamSet paramSet = null;
         /** JTable column names (required Vector type) */
         private final Vector<String> columnNames = new Vector<String>();
@@ -518,14 +521,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          *
          * @param file file in file mode or null in remote mode
          * @param calModel calibrators model
-         * @param parser Savot pull parser initialized
-         * @param savotVoTable Savot VOTable partially loaded
+         * @param parser SAVOT pull parser initialized
+         * @param savotVoTable SAVOT VOTable partially loaded
          * @param trFirst first SavotTR tr
          * @param startTime start time (nano seconds)
          */
         private ParseVoTableSwingWorker(final File file, final CalibratorsModel calModel,
-                                        final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
-                                        final long startTime) {
+                final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
+                final long startTime) {
             // get current observation version :
             super(SearchCalTaskRegistry.TASK_LOAD);
             this.file = file;
@@ -855,7 +858,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             calModel.removeNonCalibrators();
 
             // fire Update:
-            calModel.removeDeletedStars();
+            calModel.removeDeletedStars(true);
 
             _logger.info("CalibratorsModel.parseVOTable done: " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
 
@@ -1025,7 +1028,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      *
      * @param file the file to be written.
      * @param starList starList to save.
-     * @return true if successfull
+     * @return true if successful
      */
     public boolean saveVOTableFile(final File file, final StarList starList) {
         _logger.entering("CalibratorsModel", "saveVOTableFile");
@@ -1238,7 +1241,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _originalStarList.markAsDeleted(stars);
 
         // fire Update:
-        removeDeletedStars();
+        removeDeletedStars(false);
     }
 
     /**
@@ -1254,13 +1257,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /**
      * Remove all stars previously flagged as deleted.
      */
-    private void removeDeletedStars() {
+    private void removeDeletedStars(boolean silently) {
         _logger.entering("CalibratorsModel", "removeDeletedStars");
 
         // Remove all the stars flagged as deleted
         _currentStarList = _calibratorStarList.removeAllDeletedStars();
 
-        update(null, null);
+        update(null, (silently == true ? this : null));
     }
 
     /**
@@ -1273,7 +1276,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _originalStarList.undeleteAll();
 
         // fire Update:
-        removeDeletedStars();
+        removeDeletedStars(false);
     }
 
     /**
@@ -1344,12 +1347,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final OutputStream resultStream = new BufferedOutputStream(new FileOutputStream(outputFile));
 
                 final long startTime = System.nanoTime();
-                
+
                 // Apply the xsl file to the source file and write the result to
                 // the output file
                 // use an XSLT to transform the XML document to an HTML representation :
                 XmlFactory.transform(sourceStream, xsltFile, resultStream);
-                
+
                 _logger.info("applyXSLTranformationOnCurrentVOTable done: " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
             }
 
