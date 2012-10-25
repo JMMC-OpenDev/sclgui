@@ -232,38 +232,37 @@ public final class VirtualObservatory extends Observable {
     public boolean canLostModifications() {
         _logger.entering("VirtualObservatory", "canLostModifications");
 
+        // If there is no data change to save
+        if (!_calibratorsModel.haveDataChanged()) {
+            return true;
+        }
+
         boolean canLostModifications = false;
 
-        // If there is no data to save
-        if (!_calibratorsModel.dataHaveChanged()) {
-            canLostModifications = true;
-        } else {
+        // If the data are NOT saved, handle it before loosing any results !!!
+        // Ask the user if he wants to save modifications
+        final ConfirmSaveChanges result = MessagePane.showConfirmSaveChangesBeforeClosing();
 
-            // If the data are NOT saved, handle it before loosing any results !!!
-            // Ask the user if he wants to save modifications
-            final ConfirmSaveChanges result = MessagePane.showConfirmSaveChangesBeforeClosing();
+        // Handle user choice
+        switch (result) {
+            // If the user clicked the "Save" button
+            case Save:
+                // Save the current data if no cancel occured
+                canLostModifications = saveCalibratorListToFile();
+                break;
 
-            // Handle user choice
-            switch (result) {
-                // If the user clicked the "Save" button
-                case Save:
-                    // Save the current data if no cancel occured
-                    canLostModifications = saveCalibratorListToFile();
-                    break;
+            // If the user clicked the "Don't Save" button
+            case Ignore:
+                // Exit
+                canLostModifications = true;
+                break;
 
-                // If the user clicked the "Don't Save" button
-                case Ignore:
-                    // Exit
-                    canLostModifications = true;
-                    break;
-
-                // If the user clicked the "Cancel" button or pressed 'esc' key
-                case Cancel:
-                default: // Any other case
-                    // Cancel the exit
-                    canLostModifications = false;
-                    break;
-            }
+            // If the user clicked the "Cancel" button or pressed 'esc' key
+            case Cancel:
+            default: // Any other case
+                // Cancel the exit
+                canLostModifications = false;
+                break;
         }
 
         return canLostModifications;
