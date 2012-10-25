@@ -10,7 +10,7 @@
     </company>
 
     <program name="SearchCal" version="4.4.4b4"/>
-    <compilation date="16/10/2012" compiler="JDK 1.5.0_16"/>
+    <compilation date="25/10/2012" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://apps.jmmc.fr/~sclws/SearchCal/SearchCal.jnlp</jnlp>
@@ -132,20 +132,21 @@
     <releasenotes>
         <release version="4.4.4">
             <prerelease version="4.4.4b4">
-                <change type="CHANGE">Update the progress bar while loading large tables (JSDC).</change>
-                <change type="CHANGE">Optimized filter processing (use add instead of remove).</change>
+                <change type="BUGFIX">Fixed data change detection for user confirmation before loosing changes.</change>
+                <change type="CHANGE">Update the progress bar while loading large dataset (JSDC).</change>
+                <change type="DEVELOPER">Optimized filter processing (use add instead of remove).</change>
             </prerelease>
             <prerelease version="4.4.4b3">
-                <change type="CHANGE">Enhanced performance of the CSV transformation.</change>
+                <change type="CHANGE">Enhanced performance of the CSV export.</change>
                 <change type="CHANGE">Optimized filter processing.</change>
                 <change type="CHANGE">Enhanced performance when using the Delete action.</change>
-                <change type="CHANGE">Added VOTable PARAM to provide Search Server and GUI versions.</change>
-                <change type="CHANGE">Fixed TABLE nrows attribute when saving a calibrator list.</change>
+                <change type="DEVELOPER">Added VOTable PARAM to embed server and GUI version numbers.</change>
+                <change type="DEVELOPER">Fixed TABLE nrows attribute when saving a calibrator list.</change>
             </prerelease>
             <prerelease version="4.4.4b2">
-                <change type="CHANGE">Enabled Gzip compression by default when saving a calibrator list (scvot.gz).</change>
-                <change type="CHANGE">Improved global performance when handling large tables (JSDC).</change>
-                <change type="CHANGE">Upgraded SAVOT VOTable library (4.0): improved overall performance and gzip compression support.</change>
+                <change type="FEATURE">Enabled GZip compression by default when saving a calibrator list (scvot.gz).</change>
+                <change type="CHANGE">Improved global performance when handling large dataset (JSDC).</change>
+                <change type="DEVELOPER">Upgraded SAVOT VOTable library (4.0) with improved overall performance and GZip compression support.</change>
             </prerelease>
             <prerelease version="4.4.4b1" tag="SC_V4_4_4b1">
                 <change type="BUGFIX">Fixed missing Hot News/Release Notes/FAQ links in Help menu.</change>
