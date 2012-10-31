@@ -3,7 +3,6 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.vo;
 
-import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -283,32 +282,19 @@ public final class VirtualObservatory extends Observable {
         StatusBar.show("parsing query...");
 
         // Parse the query     
-        Exception e = null;
         try {
-            // parse VOTable (async):
-            _calibratorsModel.parseVOTable(query);
-
-            // load default values to reset completely the query model:
-            _queryModel.loadDefaultValues();
-            // load given parameters (some may be missing)
-            _queryModel.loadParamSet(_calibratorsModel.getParamSet());
-
-        } catch (NumberFormatException nfe) {
-            e = nfe;
+            // parse VOTable and start query (async):
+            _calibratorsModel.parseVOTable(query, true);
         } catch (IllegalArgumentException iae) {
-            e = iae;
-        } catch (PreferencesException pe) {
-            e = pe;
-        } finally {
-            if (e != null) {
-                StatusBar.show("calibrator search aborted (could not parse query) !");
-                MessagePane.showErrorMessage("Could not parse query.", e);
-                // TODO reset or restore model ?                
-                return;
-            }
+            StatusBar.show("calibrator search aborted (could not parse query) !");
+            MessagePane.showErrorMessage("Could not parse query.", iae);
         }
-        // Launch the request
-        StatusBar.show("Lauching search...");
+    }
+
+    /**
+     * Invokes the GetCal action
+     */
+    public void executeGetCal() {
         _getCalAction.actionPerformed(null);
     }
 
@@ -698,7 +684,7 @@ public final class VirtualObservatory extends Observable {
                             StatusBar.show("parsing calibrators... (please wait, this may take a while)");
 
                             // Parse the received VOTable (async):
-                            _calibratorsModel.parseVOTable(votable);
+                            _calibratorsModel.parseVOTable(votable, false);
 
                             StatusBar.show("searching calibrators... done.");
 

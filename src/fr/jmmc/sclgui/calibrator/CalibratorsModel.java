@@ -22,6 +22,7 @@ import cds.savot.pull.SavotPullParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.ApplicationDataModel;
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.task.TaskSwingWorker;
@@ -389,7 +390,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final File file) throws IllegalArgumentException {
-        parseVOTable(file, null, file.length());
+        parseVOTable(file, null, file.length(), false);
     }
 
     /**
@@ -398,10 +399,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param voTable the VOTable content to parse as String
+     * @param startQuery true to start query after parsing votable
+     * 
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
-    public void parseVOTable(final String voTable) throws IllegalArgumentException {
-        parseVOTable(null, voTable, voTable.length());
+    public void parseVOTable(final String voTable, final boolean startQuery) throws IllegalArgumentException {
+        parseVOTable(null, voTable, voTable.length(), startQuery);
     }
 
     /**
@@ -410,10 +413,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param file the VOTable file to parse as File
      * @param content the VOTable content to parse as String
      * @param length VOTable size in bytes
+     * @param startQuery true to start query after parsing votable
      *
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
-    private void parseVOTable(final File file, final String content, final long length) throws IllegalArgumentException {
+    private void parseVOTable(final File file, final String content, final long length, final boolean startQuery) throws IllegalArgumentException {
         _vo.enableDataRelatedMenus(false);
 
         if (file == null && content == null) {
@@ -433,8 +437,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             parser = new SavotPullParser(new StringReader(content), SavotPullEngine.ROWREAD);
         }
 
-        // start parsing document and get first TR:
-        SavotTR tr = parser.getNextTR();
+        // start parsing document and get first TR if data are present:
+        final SavotTR tr = parser.getNextTR();
 
         // Get the VOTable
         final SavotVOTable savotVoTable = parser.getVOTable();
@@ -442,23 +446,19 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         SavotResource resource = null;
         SavotTable table = null;
-        GroupSet groupSet = null;
-        FieldSet fieldSet = null;
 
-        if (tr != null && resources.getItemCount() == 1) {
+        if (resources.getItemCount() == 1) {
             // SearchCal VOTable must have 1 resource:
             resource = resources.getItemAt(0);
 
             if (resource.getTables().getItemCount() == 1) {
                 // SearchCal resource must have 1 table:
                 table = resource.getTables().getItemAt(0);
-                groupSet = table.getGroups();
-                fieldSet = table.getFields();
             }
         }
 
         // check that the votable has one resource / table containing groups and fields:
-        if (resource == null || table == null || groupSet.getItemCount() == 0 || fieldSet.getItemCount() == 0) {
+        if (resource == null || table == null) {
             _logger.warning("Incorrect VOTable format");
             throw new IllegalArgumentException("Incorrect VOTable format");
         }
@@ -481,7 +481,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Create parse votable task worker :
         // Cancel other tasks and execute this new task :
-        new ParseVoTableSwingWorker(file, this, parser, savotVoTable, tr, startTime).executeTask();
+        new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime).executeTask();
     }
 
     /**
@@ -492,6 +492,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         /* members */
         /** file in file mode or null in remote mode */
         private final File file;
+        /** true to start query after parsing votable */
+        private final boolean startQuery;
         /** calibrators model used for refreshUI callback */
         private final CalibratorsModel calModel;
         /** SAVOT pull parser initialized */
@@ -520,18 +522,20 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          * Hidden constructor
          *
          * @param file file in file mode or null in remote mode
+         * @param startQuery true to start query after parsing votable
          * @param calModel calibrators model
          * @param parser SAVOT pull parser initialized
          * @param savotVoTable SAVOT VOTable partially loaded
          * @param trFirst first SavotTR tr
          * @param startTime start time (nano seconds)
          */
-        private ParseVoTableSwingWorker(final File file, final CalibratorsModel calModel,
-                final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
-                final long startTime) {
+        private ParseVoTableSwingWorker(final File file, final boolean startQuery, final CalibratorsModel calModel,
+                                        final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
+                                        final long startTime) {
             // get current observation version :
             super(SearchCalTaskRegistry.TASK_LOAD);
             this.file = file;
+            this.startQuery = startQuery;
             this.calModel = calModel;
             this.parser = parser;
             this.savotVoTable = savotVoTable;
@@ -643,129 +647,133 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             final Class<?>[] colClasses = new Class<?>[nGroups];
             columnClasses.toArray(colClasses);
 
-            SavotTR tr = trFirst; // consume first TR
-            TDSet row;
-            List<StarProperty> star;
-            Object propertyValue;
-            int groupId, mainGroupCellId;
-            String value, origin, originValue, confidence, confidenceValue;
-            StarProperty starProperty;
-
-            // only use Progress bar for large tables (JSDC):
-            final int step = (tableRows > 5000) ? tableRows / 100 : Integer.MAX_VALUE;
             int nRow = 0;
-            do {
 
-                if (nRow % step == 0 && nRow != 0) {
-                    // fast interrupt :
-                    if (currentThread.isInterrupted()) {
-                        return null;
+            if (this.trFirst != null) {
+                SavotTR tr = trFirst; // consume first TR
+                TDSet row;
+                List<StarProperty> star;
+                Object propertyValue;
+                int groupId, mainGroupCellId;
+                String value, origin, originValue, confidence, confidenceValue;
+                StarProperty starProperty;
+
+                // only use Progress bar for large tables (JSDC):
+                final int step = (tableRows > 5000) ? tableRows / 100 : Integer.MAX_VALUE;
+
+                // Iterate on rows:
+                do {
+
+                    if (nRow % step == 0 && nRow != 0) {
+                        // fast interrupt :
+                        if (currentThread.isInterrupted()) {
+                            return null;
+                        }
+                        /*                    
+                         if (_logger.isLoggable(Level.INFO)) {
+                         _logger.info("CalibratorsModel.parseVOTable: processing " + nRow + " row / total = " + tableRows);
+                         }
+                         */
+
+                        // progress bar:
+                        calModel._queryModel.setQueryProgress("loading ...", nRow, tableRows);
                     }
-                    /*                    
-                     if (_logger.isLoggable(Level.INFO)) {
-                     _logger.info("CalibratorsModel.parseVOTable: processing " + nRow + " row / total = " + tableRows);
-                     }
-                     */
 
-                    // progress bar:
-                    calModel._queryModel.setQueryProgress("loading ...", nRow, tableRows);
-                }
+                    // Get the data corresponding to the current row
+                    row = tr.getTDSet();
 
-                // Get the data corresponding to the current row
-                row = tr.getTDSet();
+                    // For each group of the row create a star property of each 3 cells
+                    // note: Vector type is required by swing DefaultTableModel:
+                    star = new Vector<StarProperty>(nGroups);
 
-                // For each group of the row create a star property of each 3 cells
-                // note: Vector type is required by swing DefaultTableModel:
-                star = new Vector<StarProperty>(nGroups);
+                    for (groupId = 0; groupId < nGroups; ++groupId) {
 
-                for (groupId = 0; groupId < nGroups; ++groupId) {
+                        /*
+                         * The index of first cell of the current group (as there is
+                         * always 3 cells for each group).
+                         */
+                        mainGroupCellId = 3 * groupId;
 
-                    /*
-                     * The index of first cell of the current group (as there is
-                     * always 3 cells for each group).
-                     */
-                    mainGroupCellId = 3 * groupId;
+                        propertyValue = null;
 
-                    propertyValue = null;
+                        // Get the value (always the first group cell)
+                        value = row.getContent(mainGroupCellId);
 
-                    // Get the value (always the first group cell)
-                    value = row.getContent(mainGroupCellId);
+                        // replace "" by null to use less memory:
+                        if (value.length() != 0) {
+                            // Get column field type:
+                            columnClass = colClasses[groupId];
 
-                    // replace "" by null to use less memory:
-                    if (value.length() != 0) {
-                        // Get column field type:
-                        columnClass = colClasses[groupId];
-
-                        if (columnClass == Double.class) {
-                            try {
-                                propertyValue = Double.valueOf(value);
-                            } catch (NumberFormatException nfe) {
-                                _logger.warning("invalid Double [" + value + "]");
+                            if (columnClass == Double.class) {
+                                try {
+                                    propertyValue = Double.valueOf(value);
+                                } catch (NumberFormatException nfe) {
+                                    _logger.warning("invalid Double [" + value + "]");
+                                }
+                            } else if (columnClass == String.class) {
+                                propertyValue = value;
+                            } else if (columnClass == Boolean.class) {
+                                try {
+                                    propertyValue = Boolean.valueOf(value);
+                                } catch (NumberFormatException nfe) {
+                                    _logger.warning("invalid Boolean [" + value + "]");
+                                }
                             }
-                        } else if (columnClass == String.class) {
-                            propertyValue = value;
-                        } else if (columnClass == Boolean.class) {
-                            try {
-                                propertyValue = Boolean.valueOf(value);
-                            } catch (NumberFormatException nfe) {
-                                _logger.warning("invalid Boolean [" + value + "]");
+                        }
+
+                        // Store the group origin (always the second group cell)
+                        ++mainGroupCellId;
+                        origin = row.getContent(mainGroupCellId);
+
+                        // replace "" or "-" (blanking value used up to SearchCal release 4.4) 
+                        // by null to use less memory:
+                        if ((origin.length() == 0) || ("-".equals(origin))) {
+                            origin = null;
+                        } else {
+                            originValue = originValues.get(origin);
+                            if (originValue == null) {
+                                originValues.put(origin, origin);
+                            } else {
+                                // use shared instance
+                                origin = originValue;
                             }
                         }
-                    }
 
-                    // Store the group origin (always the second group cell)
-                    ++mainGroupCellId;
-                    origin = row.getContent(mainGroupCellId);
+                        // Store the group confidence (always the third group cell)
+                        ++mainGroupCellId;
+                        confidence = row.getContent(mainGroupCellId);
 
-                    // replace "" or "-" (blanking value used up to SearchCal release 4.4) 
-                    // by null to use less memory:
-                    if ((origin.length() == 0) || ("-".equals(origin))) {
-                        origin = null;
-                    } else {
-                        originValue = originValues.get(origin);
-                        if (originValue == null) {
-                            originValues.put(origin, origin);
+                        // replace "" by null to use less memory:
+                        if (confidence.length() == 0) {
+                            confidence = null;
                         } else {
-                            // use shared instance
-                            origin = originValue;
+                            confidenceValue = confidenceValues.get(confidence);
+                            if (confidenceValue == null) {
+                                confidenceValues.put(confidence, confidence);
+                            } else {
+                                // use shared instance
+                                confidence = confidenceValue;
+                            }
                         }
+
+                        // _logger.severe("property: " + propertyValue + " - " + origin + "- " + confidence);
+                        /*
+                         * Create a new StarProperty instance from the retrieved value,
+                         * origin and confidence.
+                         */
+                        starProperty = new StarProperty(propertyValue, origin, confidence);
+
+                        // Add the newly created star property to the star property list
+                        star.add(starProperty);
                     }
 
-                    // Store the group confidence (always the third group cell)
-                    ++mainGroupCellId;
-                    confidence = row.getContent(mainGroupCellId);
+                    // Store each VOTable row as a list of star properties
+                    starList.add(star);
 
-                    // replace "" by null to use less memory:
-                    if (confidence.length() == 0) {
-                        confidence = null;
-                    } else {
-                        confidenceValue = confidenceValues.get(confidence);
-                        if (confidenceValue == null) {
-                            confidenceValues.put(confidence, confidence);
-                        } else {
-                            // use shared instance
-                            confidence = confidenceValue;
-                        }
-                    }
+                    nRow++;
 
-                    // _logger.severe("property: " + propertyValue + " - " + origin + "- " + confidence);
-                    /*
-                     * Create a new StarProperty instance from the retrieved value,
-                     * origin and confidence.
-                     */
-                    starProperty = new StarProperty(propertyValue, origin, confidence);
-
-                    // Add the newly created star property to the star property list
-                    star.add(starProperty);
-                }
-
-                // Store each VOTable row as a list of star properties
-                starList.add(star);
-
-                nRow++;
-
-            } while ((tr = parser.getNextTR()) != null);
-
+                } while ((tr = parser.getNextTR()) != null);
+            }
             _logger.info("CalibratorsModel.parseVOTable: " + nRow + " rows read in " + 1e-6d * (System.nanoTime() - start) + " ms.");
 
             return starList;
@@ -875,6 +883,33 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     MessagePane.showErrorMessage("Could not open file (query parsing error).", nfe);
                     // TODO reset table content ?
                 }
+            } else if (startQuery) {
+
+                Exception e = null;
+                try {
+                    // load default values to reset completely the query model:
+                    calModel._queryModel.loadDefaultValues();
+                    // load given parameters (some may be missing)
+                    calModel._queryModel.loadParamSet(calModel.getParamSet());
+
+                } catch (NumberFormatException nfe) {
+                    e = nfe;
+                } catch (IllegalArgumentException iae) {
+                    e = iae;
+                } catch (PreferencesException pe) {
+                    e = pe;
+                } finally {
+                    if (e != null) {
+                        StatusBar.show("calibrator search aborted (could not parse query) !");
+                        MessagePane.showErrorMessage("Could not parse query.", e);
+                        // TODO reset or restore model ?                
+                        return;
+                    }
+                }
+                // Launch the request
+                StatusBar.show("Launching search...");
+
+                calModel._vo.executeGetCal();
             }
 
             // Enabling the 'Save' menus
