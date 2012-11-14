@@ -12,10 +12,10 @@ import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.axis.transport.http.AbortableCommonsHTTPSender;
 import org.apache.axis.transport.http.HttpMethodThreadMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Get calibrator list as a raw VOTable from JMMC web service.
@@ -25,7 +25,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(AbstractGetCalAction.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(AbstractGetCalAction.class.getName());
     /* members */
     /** http query thread */
     private GetCalThread _getCalThread = null;
@@ -113,8 +113,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
      */
     @Override
     public final void actionPerformed(final ActionEvent ae) {
-        _logger.entering("GetCalAction", "actionPerformed");
-
         // Launch a new thread only if no other one has been launched yet
         if (!isQueryLaunched()) {
             // Query is starting
@@ -125,8 +123,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             // Get the query from the GUI
             final String query = getQueryAsMCSString();
 
-            if (_logger.isLoggable(Level.INFO)) {
-                _logger.info("Query = '" + query + "'.");
+            if (_logger.isInfoEnabled()) {
+                _logger.info("Query = '{}'.", query);
             }
 
             // Launch the query in the background in order to keed GUI updated
@@ -144,13 +142,13 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             // If the GetCal thread has already been launched
             if (_getCalThread != null) {
                 // Kill it
-                _logger.fine("Killing GetCal thread ... ");
+                _logger.debug("Killing GetCal thread ... ");
 
                 // indicate that the user cancelled the query:
                 _getCalThread.cancel(true);
                 _getCalThread = null;
 
-                _logger.fine("GetCal thread killed.");
+                _logger.debug("GetCal thread killed.");
             }
 
             // Query is finished
@@ -209,8 +207,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
         @Override
         public void run() {
-            _logger.entering("GetCalThread", "run");
-
             // current state used to report proper message if an exception is caught:
             QueryState currentState = QueryState.OpenSession;
             try {
@@ -224,8 +220,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 // this WS call can block if connection attempt fails :
                 _id = _sclws.getCalOpenSession();
 
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("JMMC Connection ID = '" + _id + "'.");
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("JMMC Connection ID = '" + _id + "'.");
                 }
 
                 showStatus("searching calibrators... (connection established)");
@@ -296,8 +292,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                         nbOfCatalogs = Integer.valueOf(0);
                     }
 
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("Status = '" + currentCatalogName
+                    if (_logger.isDebugEnabled()) {
+                        _logger.debug("Status = '" + currentCatalogName
                                 + "' - " + catalogIndex + "/" + nbOfCatalogs
                                 + " (status = '" + requestStatus + "').");
                     }
@@ -345,7 +341,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
                         // check if null ie query terminated properly (no join):
                         if (result != null) {
-                            _logger.log(Level.FINE, "Silenced error (invalid server id): ", re);
+                            _logger.debug("Silenced error (invalid server id): {}", _id, re);
 
                             hasResult = true;
 
@@ -360,8 +356,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     handleException(re, currentState);
                 }
             } finally {
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.log(Level.INFO, getName() + " thread.run done.");
+                if (_logger.isInfoEnabled()) {
+                    _logger.info("{} thread.run done.", getName());
                 }
                 // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                 // in AbortableCommonsHTTPSender#relaseConnection() :
@@ -381,7 +377,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             // Handle error when no manual cancel
             if (isUserCancel() || isCancelled()) {
                 // already handled:
-                _logger.log(Level.FINE, "Silenced error (cancellation) : ", e);
+                _logger.debug("Silenced error (cancellation) : ", e);
 
                 return;
             }
@@ -428,15 +424,13 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
          * @param userCancel flag to indicate if the user canceled requests
          */
         private void cancel(final boolean userCancel) {
-            _logger.entering("GetCalThread", "cancel");
-
             /* avoid multiple cancel calls and indicate to threads to halt at the next
              * opportunity. */
             if (_cancel.compareAndSet(false, true)) {
                 _userCancel = userCancel;
 
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("cancel: " + userCancel);
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("cancel: " + userCancel);
                 }
 
                 // First Cancel the request:
@@ -458,7 +452,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 if (_queryResultThread != null) {
                     // interrupt it:
 
-                    _logger.fine("Killing QueryResult thread ... ");
+                    _logger.debug("Killing QueryResult thread ... ");
 
                     // interrupt the QueryResult thread:
 
@@ -472,7 +466,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // Close HTTP connection:
                     AbortableCommonsHTTPSender.abort(_queryResultThread);
 
-                    _logger.fine("QueryResult thread killed.");
+                    _logger.debug("QueryResult thread killed.");
                 }
 
                 // interrupt this thread:
@@ -487,9 +481,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 // Close HTTP connection:
                 AbortableCommonsHTTPSender.abort(this);
 
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("cancel done.");
-                }
+                _logger.debug("cancel done.");
             }
         }
 
@@ -542,8 +534,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
              */
             @Override
             public void run() {
-                _logger.entering("QueryResultThread", "run");
-
                 try {
                     showStatus("searching calibrators... (sending query)");
 
@@ -558,8 +548,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // this WS call can block if connection attempt fails :
                     _result = _sclws.getCalSearchCal(_id, _query);
 
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.info(getName() + " duration = " + 1e-9d * (System.nanoTime() - start) + " s.");
+                    if (_logger.isInfoEnabled()) {
+                        _logger.info("{} duration = {} s.", getName(), (1e-9d * (System.nanoTime() - start)));
                     }
 
                     showStatus("searching calibrators... (result received)");
@@ -568,8 +558,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // server or http failure
                     handleException(re, QueryState.QuerySearchCal);
                 } finally {
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.log(Level.INFO, getName() + " thread.run done.");
+                    if (_logger.isInfoEnabled()) {
+                        _logger.info("{} thread.run done.", getName());
                     }
                     // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                     // in AbortableCommonsHTTPSender#relaseConnection() :
@@ -582,8 +572,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
              * @return result or null if interrupted or canceled
              */
             private String getResult() {
-                _logger.entering("QueryResultThread", "getResult");
-
                 return _result;
             }
         }
@@ -617,8 +605,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
              */
             @Override
             public void run() {
-                _logger.entering("CancelQueryThread", "run");
-
                 try {
 
                     // Ask for query cancellation:
@@ -626,8 +612,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // 2- remove id from active identifiers
                     // note: next calls using this id will fail.
 
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.log(Level.INFO, getName() + " cancel session with id = " + _id);
+                    if (_logger.isInfoEnabled()) {
+                        _logger.info("{} cancel session with id = {}", getName(), _id);
                     }
 
                     // this WS call can block if connection attempt fails :
@@ -635,13 +621,11 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
                 } catch (RemoteException re) {
                     // do not report this failure to the user, only log the exception:
-                    if (_logger.isLoggable(Level.WARNING)) {
-                        _logger.log(Level.WARNING, "cancel request failed : ", re);
-                    }
+                    _logger.warn("cancel request failed : ", re);
 
                 } finally {
-                    if (_logger.isLoggable(Level.INFO)) {
-                        _logger.log(Level.INFO, getName() + " thread.run done.");
+                    if (_logger.isInfoEnabled()) {
+                        _logger.info("{} thread.run done.", getName());
                     }
                     // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                     // in AbortableCommonsHTTPSender#relaseConnection() :

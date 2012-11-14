@@ -8,7 +8,8 @@ import fr.jmmc.sclgui.query.QueryModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Filters model that can be adopted by a JTable.
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 public final class FiltersModel {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(FiltersModel.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(FiltersModel.class.getName());
     /** List of filters to handle */
     private final FilterList _filterList;
     /** Store each filter view */
@@ -108,8 +109,6 @@ public final class FiltersModel {
      * @return the list of filter views.
      */
     public List<FilterView> getFilterViews() {
-        _logger.entering("FiltersModel", "getFilterViews");
-
         return _filterViews;
     }
 
@@ -119,8 +118,6 @@ public final class FiltersModel {
      * @param o the observer to register.
      */
     public void addObserver(Observer o) {
-        _logger.entering("FiltersModel", "addObserver");
-
         _filterList.addObserver(o);
     }
 
@@ -131,8 +128,6 @@ public final class FiltersModel {
      * @return filtered star list or given star list if filters are disabled
      */
     public StarList process(final StarList starList) {
-        _logger.entering("FiltersModel", "process");
-
         return _filterList.process(starList);
     }
 }

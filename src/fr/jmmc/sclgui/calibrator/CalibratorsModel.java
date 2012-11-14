@@ -54,11 +54,11 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.transform.SourceLocator;
 import javax.xml.transform.TransformerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Calibrators model.
@@ -74,7 +74,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1L;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(CalibratorsModel.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
     /** parameter SearchCalGuiVersion (string) */
     public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
     /** parameter SearchCalServerVersion (string) */
@@ -183,8 +183,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      */
     @Override
     public void update(Observable o, Object arg) {
-        _logger.entering("CalibratorsModel", "update");
-
         // Filter the displayed star list
         _filteredStarList = _filtersModel.process(_currentStarList);
 
@@ -221,8 +219,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return true if inner data have changed, false otherwise.
      */
     public boolean haveDataChanged() {
-        _logger.entering("CalibratorsModel", "dataHaveChanged");
-
         return _dataHaveChanged;
     }
 
@@ -364,8 +360,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return the current magnitude band.
      */
     public String getMagnitudeBand() {
-        _logger.entering("CalibratorsModel", "getMagnitudeBand");
-
         return _magnitudeBand;
     }
 
@@ -376,8 +370,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * the faint ones.
      */
     public Boolean getBrightScenarioFlag() {
-        _logger.entering("CalibratorsModel", "getBrightScenarioFlag");
-
         return _brightScenarioFlag;
     }
 
@@ -424,8 +416,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             throw new IllegalArgumentException("Incorrect VOTable input");
         }
 
-        if (_logger.isLoggable(Level.INFO)) {
-            _logger.info("CalibratorsModel.parseVOTable: VOTable size = " + length + " bytes.");
+        if (_logger.isInfoEnabled()) {
+            _logger.info("CalibratorsModel.parseVOTable: VOTable size = {} bytes.", length);
         }
 
         final long startTime = System.nanoTime();
@@ -459,13 +451,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // check that the votable has one resource / table containing groups and fields:
         if (resource == null || table == null) {
-            _logger.warning("Incorrect VOTable format");
+            _logger.warn("Incorrect VOTable format");
             throw new IllegalArgumentException("Incorrect VOTable format");
         }
 
         // check that the votable corresponds to the SearchCal VOTable format:
         if (!resource.getName().startsWith("SearchCal")) {
-            _logger.warning("Ressource should be 'SearchCal' but is : " + resource.getName());
+            _logger.warn("Ressource should be 'SearchCal' but is : {}", resource.getName());
             throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
         }
 
@@ -657,6 +649,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 int groupId, mainGroupCellId;
                 String value, origin, originValue, confidence, confidenceValue;
                 StarProperty starProperty;
+                boolean isSet;
 
                 // only use Progress bar for large tables (JSDC):
                 final int step = (tableRows > 5000) ? tableRows / 100 : Integer.MAX_VALUE;
@@ -669,11 +662,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         if (currentThread.isInterrupted()) {
                             return null;
                         }
-                        /*                    
-                         if (_logger.isLoggable(Level.INFO)) {
-                         _logger.info("CalibratorsModel.parseVOTable: processing " + nRow + " row / total = " + tableRows);
-                         }
-                         */
 
                         // progress bar:
                         calModel._queryModel.setQueryProgress("loading ...", nRow, tableRows);
@@ -695,12 +683,15 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         mainGroupCellId = 3 * groupId;
 
                         propertyValue = null;
+                        isSet = false;
 
                         // Get the value (always the first group cell)
                         value = row.getContent(mainGroupCellId);
 
                         // replace "" by null to use less memory:
                         if (value.length() != 0) {
+                            isSet = true;
+
                             // Get column field type:
                             columnClass = colClasses[groupId];
 
@@ -708,7 +699,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                 try {
                                     propertyValue = Double.valueOf(value);
                                 } catch (NumberFormatException nfe) {
-                                    _logger.warning("invalid Double [" + value + "]");
+                                    _logger.warn("invalid Double [{}]", value);
                                 }
                             } else if (columnClass == String.class) {
                                 propertyValue = value;
@@ -716,7 +707,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                 try {
                                     propertyValue = Boolean.valueOf(value);
                                 } catch (NumberFormatException nfe) {
-                                    _logger.warning("invalid Boolean [" + value + "]");
+                                    _logger.warn("invalid Boolean [{}]", value);
                                 }
                             }
                         }
@@ -730,6 +721,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         if ((origin.length() == 0) || ("-".equals(origin))) {
                             origin = null;
                         } else {
+                            isSet = true;
+
                             originValue = originValues.get(origin);
                             if (originValue == null) {
                                 originValues.put(origin, origin);
@@ -747,6 +740,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         if (confidence.length() == 0) {
                             confidence = null;
                         } else {
+                            isSet = true;
+
                             confidenceValue = confidenceValues.get(confidence);
                             if (confidenceValue == null) {
                                 confidenceValues.put(confidence, confidence);
@@ -756,12 +751,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             }
                         }
 
-                        // _logger.severe("property: " + propertyValue + " - " + origin + "- " + confidence);
                         /*
                          * Create a new StarProperty instance from the retrieved value,
                          * origin and confidence.
                          */
-                        starProperty = new StarProperty(propertyValue, origin, confidence);
+                        starProperty = (isSet) ? new StarProperty(propertyValue, origin, confidence) : StarProperty.EMPTY_STAR_PROPERTY;
 
                         // Add the newly created star property to the star property list
                         star.add(starProperty);
@@ -774,7 +768,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                 } while ((tr = parser.getNextTR()) != null);
             }
-            _logger.info("CalibratorsModel.parseVOTable: " + nRow + " rows read in " + 1e-6d * (System.nanoTime() - start) + " ms.");
+            if (_logger.isInfoEnabled()) {
+                _logger.info("CalibratorsModel.parseVOTable: {} rows read in {} ms.", nRow, 1e-6d * (System.nanoTime() - start));
+            }
 
             return starList;
         }
@@ -815,8 +811,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final String paramName = param.getName();
                 final String paramValue = param.getValue();
 
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine(paramName + " = '" + paramValue + "'");
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug(paramName + " = '" + paramValue + "'");
                 }
                 parameters.put(paramName, paramValue);
             }
@@ -830,8 +826,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             calModel._brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
 
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine("magnitude band = '" + calModel._magnitudeBand + "'; bright scenario = '" + calModel._brightScenarioFlag + "'.");
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("magnitude band = '" + calModel._magnitudeBand + "'; bright scenario = '" + calModel._brightScenarioFlag + "'.");
             }
 
             // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
@@ -868,7 +864,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // fire Update:
             calModel.removeDeletedStars(true);
 
-            _logger.info("CalibratorsModel.parseVOTable done: " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
+            if (_logger.isInfoEnabled()) {
+                _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
+            }
 
             if (file != null) {
                 // Loading the file in the query model
@@ -934,8 +932,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return a ParamSet.
      */
     public ParamSet getParamSet() {
-        _logger.entering("CalibratorsModel", "getParamSet");
-
         return _paramSet;
     }
 
@@ -955,7 +951,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             }
         }
 
-        _logger.severe("Could get StarProperty at row '" + row + "' and column '" + column + "'.");
+        _logger.error("Could get StarProperty at row '{}' and column '{}'.", row, column);
         return null;
     }
 
@@ -970,7 +966,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         final List<StarProperty> star = (row >= 0 && row < _filteredStarList.size()) ? _filteredStarList.get(row) : null;
 
         if (star == null) {
-            _logger.severe("Could get Star at row '" + row + "'.");
+            _logger.error("Could get Star at row '{}'.", row);
         }
 
         return star;
@@ -1008,8 +1004,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
      */
     public void openFile(final File file) throws IOException, IllegalArgumentException {
-        _logger.entering("CalibratorsModel", "openFile");
-
         if (file.isFile()) {
             if (!file.exists()) {
                 throw new FileNotFoundException("File '" + file.getAbsolutePath() + "'does not exist.");
@@ -1066,25 +1060,25 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return true if successful
      */
     public boolean saveVOTableFile(final File file, final StarList starList) {
-        _logger.entering("CalibratorsModel", "saveVOTableFile");
-
         final int size = starList.size();
 
         // If null received
         if (size <= 0) {
-            _logger.warning("Could not process 'null' StarList");
+            _logger.warn("Could not process 'null' StarList");
             return false;
         }
 
         // If no Votable already loaded to be used as a template for columns descriptions
         if (_parsedVOTable == null) {
-            _logger.warning("Could not generate metadata template");
+            _logger.warn("Could not generate metadata template");
             return false;
         }
 
         final String filename = file.getAbsolutePath();
 
-        _logger.info("Saving the starlist as votable into file: " + filename);
+        if (_logger.isInfoEnabled()) {
+            _logger.info("Saving the starlist as votable into file: {}", filename);
+        }
 
         boolean ok = false;
 
@@ -1236,10 +1230,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             ok = true;
 
         } catch (IOException ioe) {
-            _logger.log(Level.SEVERE, "Unable to save the starlist as votable into file: " + filename, ioe);
+            _logger.error("Unable to save the starlist as votable into file: " + filename, ioe);
         } finally {
             if (ok) {
-                _logger.info("CalibratorsModel.saveVOTableFile: file saved in " + 1e-6d * (System.nanoTime() - start) + " ms.");
+                if (_logger.isInfoEnabled()) {
+                    _logger.info("CalibratorsModel.saveVOTableFile: file saved in {} ms.", 1e-6d * (System.nanoTime() - start));
+                }
             }
         }
         return ok;
@@ -1251,8 +1247,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return true if the list contains some stars flagged, false otherwise.
      */
     public boolean hasSomeDeletedStars() {
-        _logger.entering("CalibratorsModel", "hasSomeDeletedStars");
-
         return _calibratorStarList.hasSomeDeletedStars();
     }
 
@@ -1263,8 +1257,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param indices indices of the row to be removed.
      */
     public void deleteStars(final int[] indices) {
-        _logger.entering("CalibratorsModel", "deleteStars");
-
         // Remove each selected row
         final List<List<StarProperty>> stars = new ArrayList<List<StarProperty>>(indices.length);
 
@@ -1283,8 +1275,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * Remove all non calibrator stars.
      */
     private void removeNonCalibrators() {
-        _logger.entering("CalibratorsModel", "removeNonCalibrators");
-
         // filter non calibrator stars:
         _calibratorStarList = _facelessNonCalibratorsFilter.process(_originalStarList);
     }
@@ -1293,8 +1283,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * Remove all stars previously flagged as deleted.
      */
     private void removeDeletedStars(boolean silently) {
-        _logger.entering("CalibratorsModel", "removeDeletedStars");
-
         // Remove all the stars flagged as deleted
         _currentStarList = _calibratorStarList.removeAllDeletedStars();
 
@@ -1305,8 +1293,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * Undelete all stars previously flagged as deleted.
      */
     public void undeleteStars() {
-        _logger.entering("CalibratorsModel", "undeleteStars");
-
         // Unflag all previously flagged stars
         _originalStarList.undeleteAll();
 
@@ -1340,8 +1326,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param out the converted file
      */
     public void exportCurrentVOTableToCSV(File out) {
-        _logger.entering("CalibratorsModel", "exportCurrentVOTableToCSV");
-
         applyXSLTranformationOnCurrentVOTable(out, "sclguiVOTableToCSV.xsl");
     }
 
@@ -1351,8 +1335,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param out the converted file
      */
     public void exportCurrentVOTableToHTML(File out) {
-        _logger.entering("CalibratorsModel", "exportCurrentVOTableToHTML");
-
         applyXSLTranformationOnCurrentVOTable(out, "sclguiVOTableToHTML.xsl");
     }
 
@@ -1363,12 +1345,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param xslFileName the XSL file containing the transformation to be applied
      */
     private void applyXSLTranformationOnCurrentVOTable(final File outputFile, final String xslFileName) {
-        _logger.entering("CalibratorsModel", "applyXSLTranformationOnCurrentVOTable");
-
         final String xsltFile = SearchCal.getSharedInstance().getPathFromResourceFilename(xslFileName);
 
         if (xsltFile == null) {
-            _logger.severe("Could not load XSL file '" + xslFileName + "'.");
+            _logger.error("Could not load XSL file '{}'.", xslFileName);
 
             return;
         }
@@ -1388,21 +1368,23 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 // use an XSLT to transform the XML document to an HTML representation :
                 XmlFactory.transform(sourceStream, xsltFile, resultStream);
 
-                _logger.info("applyXSLTranformationOnCurrentVOTable done: " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
+                if (_logger.isInfoEnabled()) {
+                    _logger.info("applyXSLTranformationOnCurrentVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
+                }
             }
 
         } catch (FileNotFoundException fnfe) {
-            _logger.log(Level.SEVERE, "File not found", fnfe);
+            _logger.error("File not found", fnfe);
         } catch (IllegalArgumentException iae) {
             // An error occurred in the XSL file
-            _logger.log(Level.SEVERE, "An error occured during XSLT transformation '" + xsltFile + "'", iae);
+            _logger.error("An error occured during XSLT transformation '" + xsltFile + "'", iae);
 
             if (iae.getCause() instanceof TransformerException) {
                 // An error occurred while applying the XSL file
                 // Get location of error in input file
                 final SourceLocator locator = ((TransformerException) iae.getCause()).getLocator();
 
-                _logger.log(Level.SEVERE, "One error occured while applying XSL file '" + xsltFile
+                _logger.error("One error occured while applying XSL file '" + xsltFile
                         + "', on line '" + locator.getLineNumber() + "' and column '" + locator.getColumnNumber() + "'");
             }
         }
@@ -1438,8 +1420,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          * @param nbOfRows number of rows
          */
         public void populate(final int nbOfRows) {
-            _logger.entering("RowHeadersModel", "populate");
-
             // Empty all the current row headers
             dataVector.clear();
 

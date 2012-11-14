@@ -3,10 +3,8 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.preference;
 
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
-import fr.jmmc.sclgui.preference.PreferenceKey;
-import fr.jmmc.sclgui.preference.Preferences;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Observable;
@@ -19,16 +17,18 @@ import javax.swing.JRadioButton;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This Panel is dedicated to manage help behavior configuration.
  */
-public class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
+public final class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(HelpPreferencesView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(HelpPreferencesView.class.getName());
     /** Data model */
     private Preferences _preferences;
     /** Tooltip enabling checkbox */
@@ -118,8 +118,6 @@ public class HelpPreferencesView extends JPanel implements Observer, ChangeListe
      */
     @Override
     public void update(Observable o, Object arg) {
-        _logger.entering("HelpPreferencesView", "update");
-
         // Adjust view and behaviour according preferences entries
         boolean b = _preferences.getPreferenceAsBoolean(PreferenceKey.SHOW_TOOLTIPS_FLAG);
         _enableToolTipCheckBox.setSelected(b);
@@ -132,17 +130,14 @@ public class HelpPreferencesView extends JPanel implements Observer, ChangeListe
      */
     @Override
     public void stateChanged(ChangeEvent ev) {
-        _logger.entering("HelpPreferencesView", "stateChanged");
-
         Object source = ev.getSource();
 
         try {
             if (source.equals(_enableToolTipCheckBox)) {
-                _preferences.setPreference(PreferenceKey.SHOW_TOOLTIPS_FLAG,
-                        _enableToolTipCheckBox.isSelected());
+                _preferences.setPreference(PreferenceKey.SHOW_TOOLTIPS_FLAG, _enableToolTipCheckBox.isSelected());
             }
-        } catch (Exception ex) {
-            _logger.warning("Could not set preference : " + ex);
+        } catch (PreferencesException pe) {
+            _logger.warn("Could not set preference : ", pe);
         }
     }
 }

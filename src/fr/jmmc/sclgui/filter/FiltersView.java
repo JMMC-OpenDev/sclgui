@@ -15,16 +15,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic filters view.
  */
-public class FiltersView extends JPanel implements Printable {
+public final class FiltersView extends JPanel implements Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(FiltersView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(FiltersView.class.getName());
 
     /**
      * Constructor.
@@ -59,10 +61,7 @@ public class FiltersView extends JPanel implements Printable {
      * @sa java.awt.print
      */
     @Override
-    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
-            throws PrinterException {
-        _logger.entering("FiltersView", "print");
-
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 

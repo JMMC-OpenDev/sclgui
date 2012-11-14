@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -39,6 +37,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TableSorter is a decorator for TableModels; adding sorting
@@ -91,15 +91,12 @@ import javax.swing.table.TableModel;
  * @author Parwinder Sekhon
  * @version 2.0 02/27/04
  */
-////////////////////////////////////////////////////////////////////////////////
-public class TableSorter extends AbstractTableModel implements Observer ////////////////////////////////////////////////////////////////////////////////
-// public class TableSorter extends AbstractTableModel
-{
+public final class TableSorter extends AbstractTableModel implements Observer {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(TableSorter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(TableSorter.class.getName());
     /**
      * DOCUMENT ME!
      */
@@ -585,8 +582,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
      * Automatically called whenever the observed model changed
      */
     public void computeColumnsIndirectionArray() {
-        _logger.entering("TableSorter", "computeColumnsIndirectionArray");
-
         final String scenario;
 
         // Get the scenario
@@ -611,8 +606,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         }
 
         // Compute the corresponding preference path
-        if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("Selected view = '"
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Selected view = '"
                     + ((selectedView != null) ? selectedView : "RAW") + "'.");
         }
 
@@ -623,14 +618,14 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             prefColumns = _preferences.getPreference(selectedView);
 
             if (prefColumns == null) {
-                _logger.severe("No preference found for [" + selectedView + "]");
+                _logger.error("No preference found for [{}]", selectedView);
             }
         }
 
         // Either simple or detailed views
         if (prefColumns != null) {
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine("Columns (preferences) = " + prefColumns);
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Columns (preferences) = " + prefColumns);
             }
             // Get the selected ordered column name table
             String[] columnStrings = prefColumns.trim().split(" ");
@@ -649,10 +644,10 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
 
                     // If no column Id was found for the given column name
                     if (columnId < 0) {
-                        _logger.warning("No column called '" + columnName + "'.");
+                        _logger.warn("No column called '{}'.", columnName);
                     } else {
-                        if (_logger.isLoggable(Level.FINE)) {
-                            _logger.fine("_viewIndex[" + i + "] = '" + columnId + "' -> '" + columnName + "'.");
+                        if (_logger.isDebugEnabled()) {
+                            _logger.debug("_viewIndex[" + i + "] = '" + columnId + "' -> '" + columnName + "'.");
                         }
                     }
                 }
@@ -695,8 +690,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
      * Automatically called whenever the observed model changed
      */
     public void update(Observable o, Object arg) {
-        _logger.entering("TableSorter", "update");
-
         computeColumnsIndirectionArray();
 
         _calibratorsModel.update(null, this);
@@ -1008,10 +1001,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         public Component getTableCellRendererComponent(JTable table,
                                                        Object value, boolean isSelected, boolean hasFocus, int row,
                                                        int column) {
-            // _logger.entering("TableCellColors", "getTableCellRendererComponent");
-            // _logger.fine("getTableCellRendererComponent(" + row +
-            //  "," + column + ")");
-
             // Set default renderer to the component
             super.getTableCellRendererComponent(table, value, isSelected,
                     hasFocus, row, column);
@@ -1029,7 +1018,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // This code is reached when model / _viewIndex array / or table size mismatch
                 // exact reason is not yet defined
                 // @todo track source of mismatch
-                _logger.log(Level.WARNING, "Error searching in the table model while trying to render cell at column "
+                _logger.warn("Error searching in the table model while trying to render cell at column "
                         + column + " table.getColumnCount()=" + table.getColumnCount()
                         + " _viewIndex.length=" + _viewIndex.length, ex);
                 return this;
@@ -1115,8 +1104,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 // Put the corresponding row font in bold
                 setFont(cellFont.deriveFont(cellFont.getStyle() | Font.BOLD));
 
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("Put row['" + row
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("Put row['" + row
                             + "'] in BOLD : (rowDistance = '" + rowDistance
                             + "') < (prefDistance = '" + _prefDistance + "').");
                 }
@@ -1148,8 +1137,6 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
          * Automatically called whenever color preferences change.
          */
         public void update(Observable o, Object arg) {
-            _logger.entering("TableCellColors", "update");
-
             // React to preferences changes
             if (o.equals(_preferences)) {
                 // Get science object detection distance
@@ -1168,7 +1155,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         Color catalogColor = _preferences.getPreferenceAsColor(entry);
                         _colorForOrigin.put(catalogName, catalogColor);
                     } catch (PreferencesException pe) {
-                        _logger.log(Level.WARNING, "Could not get catalog color from preference : ", pe);
+                        _logger.warn("Could not get catalog color from preference : ", pe);
                     }
                 }
 
@@ -1185,7 +1172,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                         Color confidenceColor = _preferences.getPreferenceAsColor(entry);
                         _colorForConfidence.put(confidenceName, confidenceColor);
                     } catch (PreferencesException pe) {
-                        _logger.log(Level.WARNING, "Could not get confidence color from preference : ", pe);
+                        _logger.warn("Could not get confidence color from preference : ", pe);
                     }
                 }
             }
@@ -1216,8 +1203,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
                 return null; // Exit
             }
 
-            if (_logger.isLoggable(Level.FINEST)) {
-                _logger.finest("getTableCellEditorComponent(" + row + "," + column
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("getTableCellEditorComponent(" + row + "," + column
                         + ") = '" + value + "' <==> Model[" + modelRow + ","
                         + modelColumn + "] = '" + cellValue + "'.");
             }
@@ -1225,8 +1212,8 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
             if (calModel.hasURL(modelColumn)) {
                 final String url = calModel.getURL(modelColumn, _starProperty.getStringValue());
 
-                if (_logger.isLoggable(Level.FINER)) {
-                    _logger.finer("User clicked on column '"
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("User clicked on column '"
                             + calModel.getColumnNameById(modelColumn)
                             + "' in the CalibratorView, will open '" + url
                             + "' in default browser.");
@@ -1244,8 +1231,7 @@ public class TableSorter extends AbstractTableModel implements Observer ////////
         // It must return the new value to be stored in the cell.
         public Object getCellEditorValue() {
             // Should not be called
-            _logger.severe(
-                    "TableCellColorsEditor.getCellEditorValue() should have not been called.");
+            _logger.error("TableCellColorsEditor.getCellEditorValue() should have not been called.");
 
             return _starProperty;
         }

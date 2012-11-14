@@ -6,7 +6,8 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Visibiliy accuracy filter.
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 public final class VisibilityAccuracyFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(VisibilityAccuracyFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(VisibilityAccuracyFilter.class.getName());
     /** Store the visibility accuracy constraint name */
     private final static String _visibilityAccuracyConstraintName = "vis2Err/vis2 (%)";
     /* members */
@@ -42,8 +43,6 @@ public final class VisibilityAccuracyFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("VisibilityAccuracyFilter", "getName");
-
         return "Reject Visibility Accuracy above (or unknown) :";
     }
 
@@ -53,9 +52,6 @@ public final class VisibilityAccuracyFilter extends Filter {
      * @return the visibility accuracy allowed by this filter.
      */
     private double getAllowedVisibilityAccurancy() {
-        _logger.entering("VisibilityAccuracyFilter",
-                "getAllowedVisibiliyAccurancy");
-
         Double d = (Double) getConstraintByName(_visibilityAccuracyConstraintName);
 
         return d.doubleValue() / 100d;

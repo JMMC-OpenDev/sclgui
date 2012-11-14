@@ -21,19 +21,19 @@ import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.query.QueryView;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.util.LinkedHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import org.astrogrid.samp.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SearchCal application launcher
  * @author sylvain lafrasse
  */
-public class SearchCal extends App {
+public final class SearchCal extends App {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(SearchCal.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(SearchCal.class.getName());
     /* members */
     /** Main application object used to perform the optional query received from ASPRO */
     /* note: do not set it to null as it is initialized in App.init() by super() ie before class initialization (LBO) */
@@ -164,8 +164,8 @@ public class SearchCal extends App {
              */
             @Override
             protected void processMessage(final String senderId, final Message message) {
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
                 }
 
                 final String query = (String) message.getParam("query");
@@ -201,7 +201,7 @@ public class SearchCal extends App {
              */
             @Override
             public void run() {
-                _logger.fine("SearchCal.ready : handler called.");
+                _logger.debug("SearchCal.ready : handler called.");
 
                 getFrame().setVisible(true);
 

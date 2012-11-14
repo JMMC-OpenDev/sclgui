@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic filter.
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public abstract class Filter extends Observable {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(Filter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(Filter.class.getName());
     /* members */
     /** Enabled flag */
     private Boolean _enabledFlag = null;
@@ -220,8 +220,8 @@ public abstract class Filter extends Observable {
             // trim to size:
             outputList.trimToSize();
 
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine(getName() + " (" + size + " >> " + outputList.size() + " stars) processed in "
+            if (_logger.isDebugEnabled()) {
+                _logger.debug(getName() + " (" + size + " >> " + outputList.size() + " stars) processed in "
                         + 1e-6d * (System.nanoTime() - start) + " ms.");
             }
 

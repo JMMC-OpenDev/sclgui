@@ -6,7 +6,8 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Visibility filter.
@@ -14,7 +15,7 @@ import java.util.logging.Level;
 public final class VisibilityFilter extends Filter {
 
     /** Logger */
-    private static final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger(VisibilityFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(VisibilityFilter.class.getName());
     /** Store the visibility constraint name */
     private static final String _visibilityConstraintName = "vis2";
     /* members */
@@ -41,8 +42,6 @@ public final class VisibilityFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("VisibilityFilter", "getName");
-
         return "Reject Visiblity below :";
     }
 
@@ -52,8 +51,6 @@ public final class VisibilityFilter extends Filter {
      * @return the visibility allowed by this filter.
      */
     private double getAllowedVisibility() {
-        _logger.entering("VisibilityFilter", "getAllowedVisibility");
-
         Double d = (Double) getConstraintByName(_visibilityConstraintName);
 
         return d.doubleValue();
@@ -89,7 +86,7 @@ public final class VisibilityFilter extends Filter {
 
             // If the visibility is undefined
             if (!vis2Cell.hasValue()) {
-                _logger.fine("No vis2 - Line removed.");
+                _logger.debug("No vis2 - Line removed.");
 
                 // This row should be removed
                 return true;
@@ -97,8 +94,8 @@ public final class VisibilityFilter extends Filter {
 
             // If the visibility is less than 0.5
             if (vis2Cell.getDoubleValue() < _allowedVis) {
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("vis2 < " + _allowedVis + " - Line removed.");
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("vis2 < " + _allowedVis + " - Line removed.");
                 }
 
                 // This row should be removed

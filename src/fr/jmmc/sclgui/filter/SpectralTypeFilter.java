@@ -7,8 +7,8 @@ import fr.jmmc.jmal.ALX;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  SpectralTypeFilter filter.
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public final class SpectralTypeFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(SpectralTypeFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(SpectralTypeFilter.class.getName());
     /* members */
     /* filter execution variables */
     /** the 'SpType' column ID */
@@ -44,8 +44,6 @@ public final class SpectralTypeFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("SpectralTypeFilter", "getName");
-
         return "Reject Spectral Types (and unknowns) :";
     }
 
@@ -77,15 +75,15 @@ public final class SpectralTypeFilter extends Filter {
             // If spectral type was found in the current line
             if (cell.hasValue()) {
                 String rawSpectralType = cell.getStringValue();
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("rawSpectralType = '" + rawSpectralType + "'.");
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("rawSpectralType = '" + rawSpectralType + "'.");
                 }
 
                 // Get back the spectral types found in the given spectral type
                 final List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
 
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("foundSpectralTypes = '" + foundSpectralTypes + "'.");
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("foundSpectralTypes = '" + foundSpectralTypes + "'.");
                 }
 
                 // For each spectral type found
@@ -93,14 +91,14 @@ public final class SpectralTypeFilter extends Filter {
                     // Get the spectral type check box boolean state
                     Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
-                    if (_logger.isLoggable(Level.FINE)) {
-                        _logger.fine("spectralTypeName = '" + spectralTypeName + "'.");
-                        _logger.fine("spectralTypeCheckBoxState = '" + spectralTypeCheckBoxState + "'.");
+                    if (_logger.isDebugEnabled()) {
+                        _logger.debug("spectralTypeName = '" + spectralTypeName + "'.");
+                        _logger.debug("spectralTypeCheckBoxState = '" + spectralTypeCheckBoxState + "'.");
                     }
 
                     // If the current spectral type is not handled (eg R, N ,S, ...)
                     if (spectralTypeCheckBoxState == null) {
-                        _logger.fine("spType not handled -> skipped.");
+                        _logger.debug("spType not handled -> skipped.");
 
                         // Skip it
                         continue;
@@ -108,7 +106,7 @@ public final class SpectralTypeFilter extends Filter {
 
                     // If the current spectral type checkbox is checked
                     if (spectralTypeCheckBoxState.booleanValue()) {
-                        _logger.fine("Line removed.\n");
+                        _logger.debug("Line removed.\n");
 
                         // This line must be removed
                         return true;
@@ -116,16 +114,16 @@ public final class SpectralTypeFilter extends Filter {
                 }
             } else // If the spectral type is undefined
             {
-                _logger.fine("Undefined Spectral Type.\n");
+                _logger.debug("Undefined Spectral Type.\n");
 
                 // This line must be removed
                 return true;
             }
         } else {
-            _logger.warning("Unknown Spectral Type Column Name = '" + StarList.SpTypeColumnName + "'.");
+            _logger.warn("Unknown Spectral Type Column Name = '{}'.", StarList.SpTypeColumnName);
         }
 
-        _logger.fine("Line kept.\n");
+        _logger.debug("Line kept.\n");
 
         // Otherwise the current star row from the star list should be kept
         return false;

@@ -7,7 +7,8 @@ import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.query.QueryModel;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Magnitude filter.
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 public final class MagnitudeFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(MagnitudeFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(MagnitudeFilter.class.getName());
     /** Store the magnitude constraint name below */
     private final static String _belowMagnitudeConstraintName = "below";
     /** Store the magnitude constraint name above */
@@ -56,8 +57,6 @@ public final class MagnitudeFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("MagnitudeFilter", "getName");
-
         return "Reject stars with magnitude :";
     }
 
@@ -65,8 +64,6 @@ public final class MagnitudeFilter extends Filter {
      * @return the user defined minimum magnitude.
      */
     private double getLowerLimitAllowedMagnitude() {
-        _logger.entering("MagnitudeFilter", "getLowerLimitAllowedMagnitude");
-
         Double magnitude = (Double) getConstraintByName(_belowMagnitudeConstraintName);
 
         return magnitude.doubleValue();
@@ -76,8 +73,6 @@ public final class MagnitudeFilter extends Filter {
      * @return the user defined maximum magnitude.
      */
     private double getUpperLimitAllowedMagnitude() {
-        _logger.entering("MagnitudeFilter", "getUpperLimitAllowedMagnitude");
-
         Double magnitude = (Double) getConstraintByName(_aboveMagnitudeConstraintName);
 
         return magnitude.doubleValue();

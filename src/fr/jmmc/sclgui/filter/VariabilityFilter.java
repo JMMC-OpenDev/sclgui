@@ -6,7 +6,8 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Variability filter.
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 public final class VariabilityFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(VariabilityFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(VariabilityFilter.class.getName());
     /** Store the variability flag 1 column name */
     private static final String VarFlag1ColumnName = "VarFlag1";
     /** Store the variability flag 2 column name */
@@ -44,8 +45,6 @@ public final class VariabilityFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("VariabilityFilter", "getName");
-
         return "Reject Variability";
     }
 

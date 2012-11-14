@@ -8,7 +8,8 @@ import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.query.QueryModel;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Distance filter.
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 public final class DistanceFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(DistanceFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(DistanceFilter.class.getName());
     /** Store the RA delta constraint name */
     private final static String _deltaRAConstraintName = "Maximum RA Separation (mn)";
     /** Store the DEC delta constraint name */
@@ -68,8 +69,6 @@ public final class DistanceFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("DistanceFilter", "getName");
-
         return "Reject stars farther than :";
     }
 
@@ -77,8 +76,6 @@ public final class DistanceFilter extends Filter {
      * Retrieve the science object RA and DEC values.
      */
     private void retrieveScienceObjectCoordinates() {
-        _logger.entering("DistanceFilter", "retrieveScienceObjectCoordinates");
-
         // Get the science object 'RA' and 'DEC' properties
         _scienceObjectRA = ALX.parseRA(_queryModel.getScienceObjectRA());
         _scienceObjectDEC = ALX.parseDEC(_queryModel.getScienceObjectDEC());
@@ -88,8 +85,6 @@ public final class DistanceFilter extends Filter {
      * Retrieve the user defined delta RA and delta DEC.
      */
     private void retrieveDeltas() {
-        _logger.entering("DistanceFilter", "retrieveDeltas");
-
         final Double ra = (Double) getConstraintByName(_deltaRAConstraintName);
         _deltaRA = ALX.minutes2degrees(ra.doubleValue());
 

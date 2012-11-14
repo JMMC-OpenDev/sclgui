@@ -32,8 +32,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -51,6 +49,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Query view.
@@ -61,7 +61,7 @@ public final class QueryView extends JPanel implements Observer,
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(QueryView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(QueryView.class.getName());
     /** MVC associated model */
     private QueryModel _queryModel = null;
     /** Associated virtual observatory */
@@ -456,8 +456,8 @@ public final class QueryView extends JPanel implements Observer,
      */
     @Override
     public void update(final Observable o, final Object arg) {
-        if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("QueryView.update: arg = " + arg);
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("QueryView.update: arg = " + arg);
         }
 
         // handle query progress notifications:
@@ -611,8 +611,6 @@ public final class QueryView extends JPanel implements Observer,
      */
     @Override
     public void focusLost(FocusEvent fe) {
-        _logger.entering("QueryView", "focusLost");
-
         // Store new data
         storeValues(fe);
     }
@@ -623,8 +621,6 @@ public final class QueryView extends JPanel implements Observer,
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
-        _logger.entering("QueryView", "actionPerformed");
-
         // Store new data
         storeValues(ae);
     }
@@ -638,8 +634,8 @@ public final class QueryView extends JPanel implements Observer,
         // Get back the widget
         final Object source = ae.getSource();
 
-        if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("QueryView.storeValues: source = " + source);
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("QueryView.storeValues: source = " + source);
         }
 
         // If the widget is a JFormattedTextField
@@ -649,7 +645,7 @@ public final class QueryView extends JPanel implements Observer,
                 // Convert and commit the new value:
                 textField.commitEdit();
             } catch (ParseException pe) {
-                _logger.log(Level.INFO, "Could not handle input: " + textField.getText(), pe);
+                _logger.info("Could not handle input: {}", textField.getText(), pe);
             }
         }
 
@@ -708,8 +704,8 @@ public final class QueryView extends JPanel implements Observer,
         // Refresh the whole view
         _queryModel.notifyObservers();
 
-        if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("query = " + _queryModel.getQueryAsMCSString());
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("query = " + _queryModel.getQueryAsMCSString());
         }
     }
 
@@ -719,8 +715,6 @@ public final class QueryView extends JPanel implements Observer,
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        _logger.entering("QueryView", "propertyChange");
-
         boolean fileLoadedOk = (_queryModel.canBeEdited());
         setEnabledComponents(_instrumentPanel, fileLoadedOk);
         setEnabledComponents(_actionPanel, fileLoadedOk);
@@ -752,8 +746,6 @@ public final class QueryView extends JPanel implements Observer,
      * @TODO place it under common mcs area
      */
     public static void setEnabledComponents(JComponent component, boolean flag) {
-        _logger.entering("QueryView", "setEnabledComponents");
-
         // If the given component contains sub-components
         if (component.getComponentCount() != 0) {
             // Get all the embedded sub-components
@@ -786,10 +778,7 @@ public final class QueryView extends JPanel implements Observer,
      * @sa java.awt.print
      */
     @Override
-    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
-            throws PrinterException {
-        _logger.entering("QueryView", "print");
-
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
@@ -819,8 +808,6 @@ public final class QueryView extends JPanel implements Observer,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("QueryView", "actionPerformed");
-
             StatusBar.show("bright scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(true);
             _queryModel.notifyObservers();
@@ -837,8 +824,6 @@ public final class QueryView extends JPanel implements Observer,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("FaintQueryAction", "actionPerformed");
-
             StatusBar.show("faint scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(false);
             _queryModel.notifyObservers();
@@ -855,8 +840,6 @@ public final class QueryView extends JPanel implements Observer,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("AutoManualRadiusAction", "actionPerformed");
-
             _queryModel.setQueryAutoRadiusFlag(_autoRadiusRadioButton.isSelected());
         }
     }
@@ -871,8 +854,6 @@ public final class QueryView extends JPanel implements Observer,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("ResetValuesAction", "actionPerformed");
-
             _queryModel.reset();
         }
     }
@@ -887,12 +868,10 @@ public final class QueryView extends JPanel implements Observer,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("LoadDefaultValuesAction", "actionPerformed");
-
             try {
                 _queryModel.loadDefaultValues();
-            } catch (Exception ex) {
-                _logger.log(Level.SEVERE, "LoadDefaultValuesAction error : ", ex);
+            } catch (Exception pe) {
+                _logger.error("LoadDefaultValuesAction error : ", pe);
             }
         }
     }
@@ -907,12 +886,10 @@ public final class QueryView extends JPanel implements Observer,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("SaveValuesAction", "actionPerformed");
-
             try {
                 _queryModel.saveDefaultValues();
-            } catch (Exception ex) {
-                _logger.log(Level.SEVERE, "SaveValuesAction error : ", ex);
+            } catch (IllegalStateException ise) {
+                _logger.error("SaveValuesAction error : ", ise);
             }
         }
     }

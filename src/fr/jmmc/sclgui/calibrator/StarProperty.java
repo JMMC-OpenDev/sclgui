@@ -7,8 +7,10 @@ package fr.jmmc.sclgui.calibrator;
  * Star property.
  */
 public final class StarProperty implements Comparable<StarProperty> {
-    /* members */
 
+    /** shared empty star property to reduce memory footprint */
+    public final static StarProperty EMPTY_STAR_PROPERTY = new StarProperty(null, null, null);
+    /* members */
     /** Value */
     private Object _value;
     /** Origin */

@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.preference;
 
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.AlternateRawColorCellRenderer;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import java.awt.BorderLayout;
@@ -14,8 +15,6 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -29,16 +28,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This Panel is dedicated to manage one ordered list of columns.
  */
-public class ColumnsPreferencesView extends JPanel implements Observer, ActionListener, ListSelectionListener {
+public final class ColumnsPreferencesView extends JPanel implements Observer, ActionListener, ListSelectionListener {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(ColumnsPreferencesView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(ColumnsPreferencesView.class.getName());
     /** Data model */
     private Preferences _preferences = null;
     /** The name of preference that must be managed as ordered columns. */
@@ -157,14 +158,12 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
      */
     @Override
     public void update(Observable o, Object arg) {
-        _logger.entering("ColumnsPreferencesView", "update");
-
         // Fill list with ordered columns if _actualWord is not equal
         String columns = _preferences.getPreference(_preferencePath);
 
         if (columns == null) {
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine(_preferencePath + " not found into preferences");
+            if (_logger.isDebugEnabled()) {
+                _logger.debug(_preferencePath + " not found into preferences");
             }
 
             return;
@@ -194,8 +193,6 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
      */
     @Override
     public void valueChanged(ListSelectionEvent evt) {
-        _logger.entering("ColumnsPreferencesView", "valueChanged");
-
         // When the user release the mouse button and completes the selection,
         // getValueIsAdjusting() becomes false
         if (!evt.getValueIsAdjusting()) {
@@ -205,7 +202,7 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
 
             // If no item is selected
             if (index == -1) {
-                _logger.fine("Buttons DISABLED (no selection).");
+                _logger.debug("Buttons DISABLED (no selection).");
                 _moveUpButton.setEnabled(false);
                 _moveDownButton.setEnabled(false);
 
@@ -215,26 +212,22 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
             // If the first item is selected
             if (index == 0) {
                 // Disable the 'Up' button.
-                _logger.fine(
-                        "'Up' Button DISABLED (the first item IS selected).");
+                _logger.debug("'Up' Button DISABLED (the first item IS selected).");
                 _moveUpButton.setEnabled(false);
             } else {
                 // Enable the 'Up' button.
-                _logger.fine(
-                        "'Up' Button ENABLED (the first item is NOT selected).");
+                _logger.debug("'Up' Button ENABLED (the first item is NOT selected).");
                 _moveUpButton.setEnabled(true);
             }
 
             // If the last item is selected
             if (index == (size - 1)) {
                 // Disable the 'Down' button.
-                _logger.fine(
-                        "'Down' Button DISABLED (the last item IS selected).");
+                _logger.debug("'Down' Button DISABLED (the last item IS selected).");
                 _moveDownButton.setEnabled(false);
             } else {
                 // Enable the 'Down' button.
-                _logger.fine(
-                        "'Down' Button ENABLED (the last item is NOT selected).");
+                _logger.debug("'Down' Button ENABLED (the last item is NOT selected).");
                 _moveDownButton.setEnabled(true);
             }
         }
@@ -247,8 +240,6 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
-        _logger.entering("ColumnsPreferencesView", "actionPerformed");
-
         // If the ComboBox was used
         if (evt.getSource().equals(_columnsSetCombobox)) {
             // Get the the newly selected column set preference path
@@ -275,7 +266,7 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
             // If current and future selection indexes are out of range
             if ((currentSelection == -1)
                     || (futureSelection >= _listModel.size())) {
-                _logger.fine("Assertion failed : selection out of range.");
+                _logger.debug("Assertion failed : selection out of range.");
 
                 return;
             }
@@ -298,7 +289,7 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
 
             // If current and future selection indexes are out of range
             if ((currentSelection == -1) || (futureSelection < 0)) {
-                _logger.fine("Assertion failed : selection out of range.");
+                _logger.debug("Assertion failed : selection out of range.");
 
                 return;
             }
@@ -321,15 +312,13 @@ public class ColumnsPreferencesView extends JPanel implements Observer, ActionLi
         // Save the new order in preference
         try {
             _preferences.setPreference(_preferencePath, sb.toString());
-        } catch (Exception ex) {
-            _logger.warning("Could not set '" + _preferencePath
-                    + "' preference : " + ex);
+        } catch (PreferencesException pe) {
+            _logger.warn("Could not set '{}'' preference : ", _preferencePath, pe);
         }
 
         final int selection = futureSelection;
-        
-        SwingUtils.invokeLaterEDT(new Runnable() {
 
+        SwingUtils.invokeLaterEDT(new Runnable() {
             @Override
             public void run() {
                 /*

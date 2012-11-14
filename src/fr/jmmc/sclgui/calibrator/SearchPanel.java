@@ -6,11 +6,11 @@ package fr.jmmc.sclgui.calibrator;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.util.WindowUtils;
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Search Panel
@@ -20,10 +20,12 @@ import javax.swing.JTable;
  * TODO : get search token from dedicated pasteboard (Mac!, Windows?, Linux...).
  * TODO : Handle case-sensitive searches.
  */
-public class SearchPanel extends javax.swing.JFrame {
+public final class SearchPanel extends javax.swing.JFrame {
 
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(SearchPanel.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(SearchPanel.class.getName());
     // Action stuff
     /** Find action */
     public FindAction _findAction;
@@ -164,13 +166,13 @@ public class SearchPanel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            _logger.error(null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            _logger.error(null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            _logger.error(null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            _logger.error(null, ex);
         }
         //</editor-fold>
 
@@ -231,7 +233,6 @@ public class SearchPanel extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("FindAction", "actionPerformed");
             setVisible(true);
         }
     }
@@ -249,7 +250,6 @@ public class SearchPanel extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("FindNextAction", "actionPerformed");
             doSearch(SEARCH_DIRECTION.NEXT);
         }
     }
@@ -267,7 +267,6 @@ public class SearchPanel extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("FindPreviousAction", "actionPerformed");
             doSearch(SEARCH_DIRECTION.PREVIOUS);
         }
     }
@@ -326,7 +325,7 @@ public class SearchPanel extends javax.swing.JFrame {
          *
          * @return true if something found, false otherwise.
          */
-        protected boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION givenDirection) {
+        boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION givenDirection) {
 
             // If the SearchField is empty or undefined
             boolean foundFlag = false;
@@ -342,8 +341,8 @@ public class SearchPanel extends javax.swing.JFrame {
                 _searchValue = searchValue; // Backup new search token
             }
 
-            if (_logger.isLoggable(Level.INFO)) {
-                _logger.info("Searching value '" + searchValue + "' in '" + currentDirection + "' direction.");
+            if (_logger.isInfoEnabled()) {
+                _logger.info("Searching value '{}' in '{}' direction.", searchValue, currentDirection);
             }
 
             // Convert search token to standard regexp if not yet in this syntax
@@ -354,8 +353,8 @@ public class SearchPanel extends javax.swing.JFrame {
                 regexp = convertToRegExp(searchValue); // Otherwise convert simple syntax to regexp
             }
 
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine("Searched RegExp = '" + regexp + "'.");
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Searched RegExp = '" + regexp + "'.");
             }
 
             // Use tableSorter to process only currently visible rows and columns
@@ -378,8 +377,8 @@ public class SearchPanel extends javax.swing.JFrame {
 
             // Use previously found row/column if available
             if (_lastFoundRow != UNDEFINED_INDEX && _lastFoundColumn != UNDEFINED_INDEX) {
-                if (_logger.isLoggable(Level.FINE)) {
-                    _logger.fine("Current row = " + _lastFoundRow + ", col = " + _lastFoundColumn);
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("Current row = " + _lastFoundRow + ", col = " + _lastFoundColumn);
                 }
                 currentRow = _lastFoundRow;
                 currentColumn = _lastFoundColumn + directionalIncrement; // Skip current cell (i.e last one found) anyway !
@@ -408,8 +407,8 @@ public class SearchPanel extends javax.swing.JFrame {
                         // Get current cell string value
                         String currentValue = currentCell.toString();
                         if (currentValue.length() != 0) {
-                            if (_logger.isLoggable(Level.FINE)) {
-                                _logger.fine("Cell value '" + currentValue + "' at row " + currentRow + ", col = " + currentColumn + ".");
+                            if (_logger.isDebugEnabled()) {
+                                _logger.debug("Cell value '" + currentValue + "' at row " + currentRow + ", col = " + currentColumn + ".");
                             }
 
                             // Do current value matches searched regexp ?
@@ -430,12 +429,12 @@ public class SearchPanel extends javax.swing.JFrame {
             }
 
             if (foundValue == null) {
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("Searched value '" + foundValue + "' not found.");
+                if (_logger.isInfoEnabled()) {
+                    _logger.info("Searched value '{}' not found.", foundValue);
                 }
             } else {
-                if (_logger.isLoggable(Level.INFO)) {
-                    _logger.info("Found value '" + foundValue + "' at row " + foundRow + ", col = " + foundColumn + ".");
+                if (_logger.isInfoEnabled()) {
+                    _logger.info("Found value '{}' at row {}, col = {}.", foundValue, foundRow, foundColumn);
                 }
 
                 // Clear previous selection and set new selection
@@ -452,7 +451,9 @@ public class SearchPanel extends javax.swing.JFrame {
                 foundFlag = true;
             }
 
-            _logger.info("QuickSearchHelper.search() done in " + 1e-6d * (System.nanoTime() - startTime) + " ms.");
+            if (_logger.isInfoEnabled()) {
+                _logger.info("QuickSearchHelper.search() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
+            }
             return foundFlag;
         }
 
@@ -488,7 +489,7 @@ public class SearchPanel extends javax.swing.JFrame {
          */
         private void replace(final StringBuilder sb, final String source, final String destination) {
 
-            for (int from = 0, position = -1; from != -1;) {
+            for (int from = 0, position; from != -1;) {
                 position = sb.indexOf(source, from);
 
                 if (position != -1) {

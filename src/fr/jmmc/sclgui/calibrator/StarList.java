@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Vector of star property vector.
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 public final class StarList extends Vector<List<StarProperty>> {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(StarList.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(StarList.class.getName());
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1L;
     /** Store the vis2 column name */
@@ -91,8 +92,6 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @return true if the list contains some stars flagged, false otherwise.
      */
     public boolean hasSomeDeletedStars() {
-        _logger.entering("StarList", "hasSomeDeletedStars");
-
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
             List<StarProperty> star;
@@ -108,13 +107,13 @@ public final class StarList extends Vector<List<StarProperty>> {
                     starShouldBeRemoved = deletedFlag.getBooleanValue();
 
                     if (starShouldBeRemoved) {
-                        _logger.fine("hasSomeDeletedStars = 'true'");
+                        _logger.debug("hasSomeDeletedStars = 'true'");
                         return true;
                     }
                 }
             }
         }
-        _logger.fine("hasSomeDeletedStars = 'false'");
+        _logger.debug("hasSomeDeletedStars = 'false'");
         return false;
     }
 
@@ -123,8 +122,6 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @param stars list of stars to mark and rmove from this list 
      */
     public void markAsDeleted(final List<List<StarProperty>> stars) {
-        _logger.entering("StarList", "markAsDeleted");
-
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
             StarProperty deletedFlag;
@@ -146,8 +143,6 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @return new star list without "deleted" stars.
      */
     public StarList removeAllDeletedStars() {
-        _logger.entering("StarList", "removeAllDeletedStars");
-
         final int size = size();
 
         final StarList outputList = new StarList(getFieldIdToColNumberMap());
@@ -185,8 +180,6 @@ public final class StarList extends Vector<List<StarProperty>> {
      * Mark all stars as NOT deleted.
      */
     public void undeleteAll() {
-        _logger.entering("StarList", "undeleteAll");
-
         final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
         if (deletedFlagColumnID != -1) {
             List<StarProperty> star;

@@ -3,9 +3,8 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
-
+import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -21,7 +20,6 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -37,6 +35,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.JTableHeader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Calibrators view.
@@ -50,13 +50,13 @@ import javax.swing.table.JTableHeader;
  * It implements Observer in order to automatically update any time the
  * application preferences change.
  */
-public class CalibratorsView extends JPanel implements TableModelListener,
+public final class CalibratorsView extends JPanel implements TableModelListener,
         ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(CalibratorsView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(CalibratorsView.class.getName());
     /** Show Legend action */
     //public static ShowLegendAction _showLegendAction;
     public static RegisteredPreferencedBooleanAction _showLegendAction = null;
@@ -219,10 +219,9 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        _logger.entering("CalibratorsView", "valueChanged");
-
         // If there is any row selected in the table
         boolean rowSelected = (_calibratorsTable.getSelectedRowCount() != 0);
+        
         // (Dis)Enable the delete menu item
         _deleteAction.setEnabled(rowSelected);
 
@@ -236,8 +235,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     @Override
     public void tableChanged(TableModelEvent e) {
-        _logger.entering("CalibratorsView", "tableChanged");
-
         updateBorderTitle();
 
         // Enable/disable the Undelete menu item
@@ -257,8 +254,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      */
     @Override
     public void update(Observable o, Object arg) {
-        _logger.entering("CalibratorsView", "update");
-
         // If preference colors have changed, repaint tables
         _calibratorsTable.repaint();
         _calibratorsIdTable.repaint();
@@ -276,10 +271,7 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      * @sa java.awt.print
      */
     @Override
-    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
-            throws PrinterException {
-        _logger.entering("CalibratorsView", "print");
-
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
         Graphics2D g2d = (Graphics2D) graphics;
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
@@ -303,8 +295,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
      * Tell GUI to show or hide legend panel
      */
     public void showLegend() {
-        _logger.entering("CalibratorsView", "showLegend");
-
         boolean preferencedLegendShouldBeVisible = _preferences.getPreferenceAsBoolean(
                 PreferenceKey.SHOW_LEGEND_FLAG);
 
@@ -334,8 +324,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("DeleteAction", "actionPerformed");
-
             _calibratorsModel.deleteStars(_calibratorsTable.getSelectedRows());
         }
     }
@@ -352,8 +340,6 @@ public class CalibratorsView extends JPanel implements TableModelListener,
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("UndeleteAction", "actionPerformed");
-
             _calibratorsModel.undeleteStars();
         }
     }

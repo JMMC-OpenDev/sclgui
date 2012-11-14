@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Action;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle JMMC WebServices interactions and file input/output.
@@ -35,7 +35,7 @@ import javax.swing.Action;
 public final class VirtualObservatory extends Observable {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(VirtualObservatory.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(VirtualObservatory.class.getName());
     /** Query model */
     private final QueryModel _queryModel;
     /** Data model to which the result should be passed */
@@ -127,26 +127,26 @@ public final class VirtualObservatory extends Observable {
          Double ra = SampUtils.decodeFloat((String) msg.getParam("ra"));
          if (ra == null)
          {
-         _logger.warning("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
+         _logger.warn("Could not read RA value from SAMP:" + this.handledMType() + ": ra = '" + ra + "'.");
          return null;
          }
          String raHMS = ALX.toHMS(ra);
          if (raHMS == null)
          {
-         _logger.warning("Could not convert RA degree value '" + ra + "' to HMS.");
+         _logger.warn("Could not convert RA degree value '" + ra + "' to HMS.");
          return null;
          }
         
          Double dec = SampUtils.decodeFloat((String) msg.getParam("dec"));
          if (dec == null)
          {
-         _logger.warning("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
+         _logger.warn("Could not read DEC value from SAMP:" + this.handledMType() + ": dec = '" + dec + "'.");
          return null;
          }
          String decDMS = ALX.toDMS(dec);
          if (decDMS == null)
          {
-         _logger.warning("Could not convert DEC degree value '" + dec + "' to DMS.");
+         _logger.warn("Could not convert DEC degree value '" + dec + "' to DMS.");
          return null;
          }
          _queryModel.setScienceObjectRA(raHMS);
@@ -157,7 +157,7 @@ public final class VirtualObservatory extends Observable {
          }
          };
          } catch (Exception ex) {
-         _logger.log(Level.SEVERE, "failure : ", e);
+         _logger.error( "failure : ", e);
          }
          */
         // WebService related members
@@ -170,8 +170,6 @@ public final class VirtualObservatory extends Observable {
      * @return true if the query is already launched, false otherwise.
      */
     public boolean isQueryLaunched() {
-        _logger.entering("VirtualObservatory", "isQueryLaunched");
-
         return _queryIsLaunched.get();
     }
 
@@ -181,8 +179,6 @@ public final class VirtualObservatory extends Observable {
      * @param running true to enable all menus, false otherwise.
      */
     public void setQueryLaunchedState(final boolean running) {
-        _logger.entering("VirtualObservatory", "setQueryLaunchedState");
-
         final Runnable task = new Runnable() {
             @Override
             public void run() {
@@ -215,8 +211,6 @@ public final class VirtualObservatory extends Observable {
      * @param flag true to enable all menus, false otherwise.
      */
     public void enableDataRelatedMenus(final boolean flag) {
-        _logger.entering("VirtualObservatory", "enableSaveMenus");
-
         _saveFileAction.setEnabled(flag);
         _saveFileAsAction.setEnabled(flag);
         _exportToCSVFileAction.setEnabled(flag);
@@ -229,8 +223,6 @@ public final class VirtualObservatory extends Observable {
      * @return true if the modifications can be ignored, false otherwise.
      */
     public boolean canLostModifications() {
-        _logger.entering("VirtualObservatory", "canLostModifications");
-
         // If there is no data change to save
         if (!_calibratorsModel.haveDataChanged()) {
             return true;
@@ -273,10 +265,8 @@ public final class VirtualObservatory extends Observable {
      * @param query the query parameters as an empty QuerySearchCal VOTable.
      */
     public void executeQuery(final String query) {
-        _logger.entering("VirtualObservatory", "executeQuery");
-
-        if (_logger.isLoggable(Level.FINE)) {
-            _logger.fine("Received query = " + query);
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Received query = " + query);
         }
 
         StatusBar.show("parsing query...");
@@ -346,7 +336,7 @@ public final class VirtualObservatory extends Observable {
         } else if (mimeType == MimeType.HTML) {
             _calibratorsModel.exportCurrentVOTableToHTML(selectedFile);
         } else {
-            _logger.warning("Unknown export mime type '" + mimeTypeName + "'.");
+            _logger.warn("Unknown export mime type '{}'.", mimeTypeName);
         }
 
         StatusBar.show("calibrator list exported to " + mimeTypeName + " file.");
@@ -368,8 +358,6 @@ public final class VirtualObservatory extends Observable {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("OpenFileAction", "actionPerformed");
-
             // If we can lost current modifications
             if (canLostModifications()) {
                 // If the action was automatically triggered from App launch
@@ -432,8 +420,6 @@ public final class VirtualObservatory extends Observable {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("RevertToSavedFileAction", "actionPerformed");
-
             if (_currentFile != null) {
                 // If we can lost current modifications
                 if (canLostModifications()) {
@@ -474,8 +460,6 @@ public final class VirtualObservatory extends Observable {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("SaveFileAction", "actionPerformed");
-
             if (saveCalibratorListToFile()) {
                 StatusBar.show("file succesfully saved.");
             }
@@ -498,8 +482,6 @@ public final class VirtualObservatory extends Observable {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("SaveFileAsAction", "actionPerformed");
-
             _currentFile = null; // reset previously remembered file (if any)
             StatusBar.show("saving file as...");
             if (saveCalibratorListToFile()) {
@@ -524,7 +506,6 @@ public final class VirtualObservatory extends Observable {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("ExportToCSVFileAction", "actionPerformed");
             exportToFileFormat(MimeType.CSV);
         }
     }
@@ -545,7 +526,6 @@ public final class VirtualObservatory extends Observable {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
-            _logger.entering("ExportToHTMLFileAction", "actionPerformed");
             exportToFileFormat(MimeType.HTML);
         }
     }
@@ -571,9 +551,7 @@ public final class VirtualObservatory extends Observable {
             } catch (IOException ex) {
                 StatusBar.show("Could not share calibrators through SAMP.");
 
-                if (_logger.isLoggable(Level.WARNING)) {
-                    _logger.warning("Could not save calibrator list to temp file '" + file + "'.");
-                }
+                _logger.warn("Could not save calibrator list to temp file '{}'.", file);
                 return null;
             }
 
@@ -688,15 +666,15 @@ public final class VirtualObservatory extends Observable {
 
                             StatusBar.show("searching calibrators... done.");
 
-                        } catch (Exception e) {
+                        } catch (IllegalArgumentException iae) {
                             StatusBar.show("calibrator parsing aborted !");
-                            MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", e);
+                            MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", iae);
                         }
                     }
                 }); // EDT Task          
 
             } else {
-                _logger.fine("No calibrators found.");
+                _logger.debug("No calibrators found.");
                 StatusBar.show("no calibrators found.");
             }
         }

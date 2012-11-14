@@ -3,23 +3,21 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.preference;
 
-import fr.jmmc.jmcs.data.preference.PreferencesException;
-import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmal.ALX;
-
+import fr.jmmc.jmal.Catalog;
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import java.awt.Color;
-
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a preference dedicated to the java SearchCal Client.
  */
-public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
+public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(Preferences.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(Preferences.class.getName());
     /** Singleton instance */
     private static Preferences _instance = null;
     /** Detailed bright N columns order list, as of default in preference version 3 */
@@ -63,8 +61,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      */
     @Override
     protected String getPreferenceFilename() {
-        _logger.entering("Preferences", "getPreferenceFilename");
-
         return "fr.jmmc.searchcal.properties";
     }
 
@@ -73,8 +69,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        _logger.entering("Preferences", "getPreferencesVersionNumber");
-
         return 15;
     }
 
@@ -88,11 +82,9 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      */
     @Override
     protected boolean updatePreferencesVersion(int loadedVersionNumber) {
-        _logger.entering("Preferences", "updatePreferencesVersion");
-
-        _logger.info("Upgrading preference file from version '"
-                + loadedVersionNumber + "' to version '" + (loadedVersionNumber + 1)
-                + "'.");
+        if (_logger.isInfoEnabled()) {
+            _logger.info("Upgrading preference file from version '{}' to version '{}'.", loadedVersionNumber, loadedVersionNumber + 1);
+        }
 
         switch (loadedVersionNumber) {
             // Wrong column identifiers in the the simple and detailed bright N columns order list
@@ -168,8 +160,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @param defaultFlag If true sets values to defaults preferences, otherwise in current preferences.
      * @throws PreferencesException  
      */
-    protected void setLegendColorsAndOrders(boolean defaultFlag)
-            throws PreferencesException {
+    protected void setLegendColorsAndOrders(boolean defaultFlag) throws PreferencesException {
         // Place catalog origin colors
         String catalogColorPrefPrefix = "catalog.color.";
         int i = 0;
@@ -201,8 +192,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
     /** Set preferences default values */
     @Override
     protected void setDefaultPreferences() throws PreferencesException {
-        _logger.entering("Preferences", "setDefaultPreferences");
-
         // Define legend colors and order for default preferences
         setLegendColorsAndOrders(true);
 
@@ -261,7 +250,7 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         setDefaultPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, Double.toString(1d * ALX.ARCSEC_IN_DEGREES));
         setDefaultPreference(PreferenceKey.QUERY_MINIMUM_DELTA, "-2.0");
         setDefaultPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, "2.0");
-        
+
         setDefaultPreference(PreferenceKey.FILTER_NON_CALIBRATORS, "true");
     }
 
@@ -285,8 +274,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion1ToVersion2() {
-        _logger.entering("Preferences", "updateFromVersion1ToVersion2");
-
         boolean status = true;
         status &= replaceTokenInPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N,
                 "e_diam_vk", "e_dia12 F12");
@@ -305,8 +292,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion2ToVersion3() {
-        _logger.entering("Preferences", "updateFromVersion2ToVersion3");
-
         boolean status = true;
 
         // Insert "SBC9" after "MultFlag" in each detailed columns order list
@@ -330,12 +315,12 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion3ToVersion4() {
-        _logger.entering("Preferences", "updateFromVersion3ToVersion4");
-
         String preferenceToRemove = "catalog.color.J/A+A/386/492/charm";
         removePreference(preferenceToRemove);
 
-        _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Removed '" + preferenceToRemove + "' preference.");
+        }
 
         // Commit change to file
         return true;
@@ -347,18 +332,15 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion4ToVersion5() {
-        _logger.entering("Preferences", "updateFromVersion4ToVersion5");
-
         // Updating detailed bright N columns order list if not changed by user
         String detailedBrightNViewColumnOrder = getPreference(
                 PreferenceKey.VIEW_DETAILED_BRIGHT_N);
 
         if (detailedBrightNViewColumnOrder.equals(_detailedBrightN_v3)) {
             detailedBrightNViewColumnOrder = _detailedBrightN_v4;
-            _logger.finer("Re-ordered detailed bright N columns order list.");
+            _logger.debug("Re-ordered detailed bright N columns order list.");
         } else {
-            _logger.finer(
-                    "Leaved customized detailed bright N columns order list unchanged.");
+            _logger.debug("Leaved customized detailed bright N columns order list unchanged.");
         }
 
         // Updating detailed bright V columns order list if not changed by user
@@ -367,10 +349,9 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         if (detailedBrightVViewColumnOrder.equals(_detailedBrightV_v3)) {
             detailedBrightVViewColumnOrder = _detailedBrightV_v4;
-            _logger.finer("Re-ordered detailed bright V columns order list.");
+            _logger.debug("Re-ordered detailed bright V columns order list.");
         } else {
-            _logger.finer(
-                    "Leaved customized detailed bright V columns order list unchanged.");
+            _logger.debug("Leaved customized detailed bright V columns order list unchanged.");
         }
 
         // Updating detailed bright K columns order list if not changed by user
@@ -379,10 +360,9 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         if (detailedBrightKViewColumnOrder.equals(_detailedBrightK_v3)) {
             detailedBrightKViewColumnOrder = _detailedBrightK_v4;
-            _logger.finer("Re-ordered detailed bright K columns order list.");
+            _logger.debug("Re-ordered detailed bright K columns order list.");
         } else {
-            _logger.finer(
-                    "Leaved customized detailed bright K columns order list unchanged.");
+            _logger.debug("Leaved customized detailed bright K columns order list unchanged.");
         }
 
         // Updating detailed faint K columns order list if not changed by user
@@ -391,24 +371,19 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
 
         if (detailedFaintKViewColumnOrder.equals(_detailedFaintK_v3)) {
             detailedFaintKViewColumnOrder = _detailedFaintK_v4;
-            _logger.finer("Re-ordered detailed faint K columns order list.");
+            _logger.debug("Re-ordered detailed faint K columns order list.");
         } else {
-            _logger.finer(
-                    "Leaved customized detailed faint K columns order list unchanged.");
+            _logger.debug("Leaved customized detailed faint K columns order list unchanged.");
         }
 
         // Store updated column order
         try {
-            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
-                    detailedBrightNViewColumnOrder);
-            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_V,
-                    detailedBrightVViewColumnOrder);
-            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_K,
-                    detailedBrightKViewColumnOrder);
-            setPreference(PreferenceKey.VIEW_DETAILED_FAINT_K,
-                    detailedFaintKViewColumnOrder);
-        } catch (Exception ex) {
-            _logger.log(Level.WARNING, "Could not store updated preference:", ex);
+            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N, detailedBrightNViewColumnOrder);
+            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_V, detailedBrightVViewColumnOrder);
+            setPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_K, detailedBrightKViewColumnOrder);
+            setPreference(PreferenceKey.VIEW_DETAILED_FAINT_K, detailedFaintKViewColumnOrder);
+        } catch (PreferencesException pe) {
+            _logger.warn("Could not store updated preference:", pe);
 
             return false;
         }
@@ -423,8 +398,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion5ToVersion6() {
-        _logger.entering("Preferences", "updateFromVersion5ToVersion6");
-
         return replaceTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 "VarFlag3", "VFlag");
     }
@@ -435,24 +408,20 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion6ToVersion7() {
-        _logger.entering("Preferences", "updateFromVersion6ToVersion7");
-
         Object preferencePath = PreferenceKey.QUERY_SCIENCE_DETECTION;
         String previousValue = getPreference(preferencePath);
         String newValue = Double.toString(1d * ALX.ARCSEC_IN_DEGREES);
 
-        if (_logger.isLoggable(Level.FINER)) {
-            _logger.finer("Replaced '" + previousValue + "' with '" + newValue
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Replaced '" + previousValue + "' with '" + newValue
                     + "' in '" + preferencePath + "'.");
         }
 
         // Store the updated column order
         try {
             setPreference(preferencePath, newValue);
-        } catch (Exception ex) {
-            _logger.log(Level.WARNING,
-                    "Could not store updated preference in '" + preferencePath
-                    + "' : ", ex);
+        } catch (PreferencesException pe) {
+            _logger.warn("Could not store updated preference in '{}' : ", preferencePath, pe);
 
             return false;
         }
@@ -467,8 +436,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion7ToVersion8() {
-        _logger.entering("Preferences", "updateFromVersion7ToVersion8");
-
         String preferenceToRemove = "view.details.show";
 
         boolean previousState = getPreferenceAsBoolean(preferenceToRemove);
@@ -476,8 +443,8 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         // Remove old preference
         removePreference(preferenceToRemove);
 
-        if (_logger.isLoggable(Level.FINER)) {
-            _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Removed '" + preferenceToRemove + "' preference.");
         }
 
         // Store the new preferences with respect to previous state
@@ -485,10 +452,8 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             setPreference(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, (!previousState));
             setPreference(PreferenceKey.VERBOSITY_DETAILED_FLAG, previousState);
             setPreference(PreferenceKey.VERBOSITY_FULL_FLAG, "false");
-        } catch (Exception ex) {
-            _logger.log(Level.WARNING,
-                    "Could not store updated preference for 'view.result.verbosity.*' : ",
-                    ex);
+        } catch (PreferencesException pe) {
+            _logger.warn("Could not store updated preference for 'view.result.verbosity.*' : ", pe);
 
             return false;
         }
@@ -507,8 +472,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion8ToVersion9() {
-        _logger.entering("Preferences", "updateFromVersion8ToVersion9");
-
         boolean status = true;
 
         // Add UD_x to simple and detailed views
@@ -552,10 +515,9 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
         // Update legend colors and order
         try {
             setLegendColorsAndOrders(false);
-            _logger.finest("Updated legend colors and order.");
-        } catch (Exception ex) {
-            _logger.log(Level.WARNING,
-                    "Could updated legend colors and order:", ex);
+            _logger.debug("Updated legend colors and order.");
+        } catch (PreferencesException pe) {
+            _logger.warn("Could updated legend colors and order:", pe);
 
             return false;
         }
@@ -570,8 +532,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion9ToVersion10() {
-        _logger.entering("Preferences", "updateFromVersion9ToVersion10");
-
         boolean status = true;
 
         // Insert sep1 and sep2 after WDS for all detailed views but bright N
@@ -595,8 +555,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion10ToVersion11() {
-        _logger.entering("Preferences", "updateFromVersion10ToVersion11");
-
         return replaceTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N,
                 "VFlag", "BinFlag");
     }
@@ -607,8 +565,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion11ToVersion12() {
-        _logger.entering("Preferences", "updateFromVersion11ToVersion12");
-
         String[] oldNames = {"view.result.verbosity.detailled", "view.columns.detailled.bright.N", "view.columns.detailled.bright.V", "view.columns.detailled.bright.K", "view.columns.detailled.faint.K"};
         Object[] newNames = {PreferenceKey.VERBOSITY_DETAILED_FLAG, PreferenceKey.VIEW_DETAILED_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_K, PreferenceKey.VIEW_DETAILED_FAINT_K};
         for (int i = 0; i < oldNames.length; i++) {
@@ -621,8 +577,8 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
             String newName = newNames[i].toString();
             try {
                 setPreference(newName, value);
-            } catch (Exception ex) {
-                _logger.log(Level.WARNING, "Could not store updated preference in '" + newName + "' : ", ex);
+            } catch (PreferencesException pe) {
+                _logger.warn("Could not store updated preference in '{}' : ", newName, pe);
                 return false;
             }
 
@@ -640,8 +596,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion12ToVersion13() {
-        _logger.entering("Preferences", "updateFromVersion12ToVersion13");
-
         boolean status = true;
         String[] deprecatedColumns = {"Jflag ", "Kflag ", "e_LD ", "LD ", "e_UD ", "UD ", "color ", "Meth ", "lambda ", "photflux ", "units ", "vis2Flag "};
         Object[] viewNames = {PreferenceKey.VIEW_DETAILED_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_K, PreferenceKey.VIEW_DETAILED_FAINT_K};
@@ -669,12 +623,12 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion13ToVersion14() {
-        _logger.entering("Preferences", "updateFromVersion13ToVersion14");
-
         String preferenceToRemove = "catalog.color.J/A+A/431/773/charm2";
         removePreference(preferenceToRemove);
 
-        _logger.finer("Removed '" + preferenceToRemove + "' preference.");
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("Removed '" + preferenceToRemove + "' preference.");
+        }
 
         // Commit change to file
         return true;
@@ -686,8 +640,6 @@ public class Preferences extends fr.jmmc.jmcs.data.preference.Preferences {
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion14ToVersion15() {
-        _logger.entering("Preferences", "updateFromVersion14ToVersion15");
-
         boolean status = true;
         String[] deprecatedColumns = {" L ", " M "};
         Object[] viewNames = {PreferenceKey.VIEW_DETAILED_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_K};

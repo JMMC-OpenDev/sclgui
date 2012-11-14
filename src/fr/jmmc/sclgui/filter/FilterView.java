@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -28,6 +27,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic filter view.
@@ -39,7 +40,7 @@ public final class FilterView extends JPanel implements Observer {
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(FilterView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(FilterView.class.getName());
     /** The filter to represent */
     private Filter _filter = null;
     /** Filter enabling check box */
@@ -120,12 +121,8 @@ public final class FilterView extends JPanel implements Observer {
      * label).
      * @constraintValue the object holding the constraint value.
      */
-    private void addParam(JPanel panel, String constraintName,
-                          Object constraintValue) {
-        _logger.entering("FilterView", "addParam");
-
-        JLabel label = new JLabel(constraintName + " : ",
-                JLabel.TRAILING);
+    private void addParam(JPanel panel, String constraintName, Object constraintValue) {
+        JLabel label = new JLabel(constraintName + " : ", JLabel.TRAILING);
         ParamListener paramListener;
 
         // If the constraint is a Double object
@@ -178,8 +175,6 @@ public final class FilterView extends JPanel implements Observer {
      * @param constraintValue the new constraint value.
      */
     private void setParam(String constraintName, Object constraintValue) {
-        _logger.entering("FilterView", "setParam");
-
         JComponent widget = _widgets.get(constraintName);
 
         // If the constraint is a Double object
@@ -201,8 +196,6 @@ public final class FilterView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        _logger.entering("FilterView", "update");
-
         // For each constraint of the associated filter
         for (int i = 0, len = _filter.getNbOfConstraints(); i < len; i++) {
             // Get the constraint name
@@ -229,7 +222,7 @@ public final class FilterView extends JPanel implements Observer {
 class ParamListener implements ActionListener, FocusListener {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(ParamListener.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(ParamListener.class.getName());
     /** The filter to update */
     private Filter _filter = null;
     /** the constraint to handle */
@@ -268,8 +261,6 @@ class ParamListener implements ActionListener, FocusListener {
      */
     @Override
     public void focusLost(FocusEvent e) {
-        _logger.entering("ParamListener", "focusLost");
-
         // Store new data
         storeValues(e);
     }
@@ -280,8 +271,6 @@ class ParamListener implements ActionListener, FocusListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        _logger.entering("ParamListener", "actionPerformed");
-
         // Store new data
         storeValues(e);
     }
@@ -291,8 +280,6 @@ class ParamListener implements ActionListener, FocusListener {
      * @param e 
      */
     public void storeValues(AWTEvent e) {
-        _logger.entering("ParamListener", "storeValues");
-
         // If there is no constraint name
         if (_constraintName == null) {
             // Enable or disable the whole filter
@@ -310,7 +297,7 @@ class ParamListener implements ActionListener, FocusListener {
                     // Convert and commit the new value (focus lost)
                     ((JFormattedTextField) _widget).commitEdit();
                 } catch (ParseException pe) {
-                    _logger.severe("Could not handle input");
+                    _logger.warn("Could not handle input: ", pe);
                 }
 
                 Double doubleValue = (Double) ((JFormattedTextField) _widget).getValue();

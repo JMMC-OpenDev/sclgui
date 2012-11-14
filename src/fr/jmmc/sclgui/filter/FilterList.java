@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Filter list.
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public final class FilterList extends Filter implements Observer {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(FilterList.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(FilterList.class.getName());
     /** Filter list */
     private List<Filter> _filters = null;
 
@@ -36,8 +36,6 @@ public final class FilterList extends Filter implements Observer {
      */
     @Override
     public String getName() {
-        _logger.entering("FilterList", "getName");
-
         return "Filter List";
     }
 
@@ -47,8 +45,6 @@ public final class FilterList extends Filter implements Observer {
      * @param filter the filter to be added to the list of filter.
      */
     public void add(Filter filter) {
-        _logger.entering("FilterList", "add");
-
         _filters.add(filter);
         filter.addObserver(this);
     }
@@ -59,8 +55,6 @@ public final class FilterList extends Filter implements Observer {
      * @return the number of filters in the filter list.
      */
     public int size() {
-        _logger.entering("FilterList", "size");
-
         return _filters.size();
     }
 
@@ -71,8 +65,6 @@ public final class FilterList extends Filter implements Observer {
      * @return filter at the given index
      */
     public Filter get(int index) {
-        _logger.entering("FilterList", "get");
-
         return _filters.get(index);
     }
 
@@ -105,9 +97,8 @@ public final class FilterList extends Filter implements Observer {
 
             outputList = workList;
 
-            if (_logger.isLoggable(Level.INFO)) {
-                _logger.info(getName() + " (" + listSize + " >> " + outputList.size() + " stars) processed in "
-                        + 1e-6d * (System.nanoTime() - start) + " ms.");
+            if (_logger.isInfoEnabled()) {
+                _logger.info("{} ({} >> {} stars) processed in {} ms.", getName(), listSize, outputList.size(), 1e-6d * (System.nanoTime() - start));
             }
 
         } else {
@@ -127,8 +118,6 @@ public final class FilterList extends Filter implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        _logger.entering("FilterList", "update");
-
         setChanged();
         notifyObservers();
     }

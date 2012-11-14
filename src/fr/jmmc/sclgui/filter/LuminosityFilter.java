@@ -7,7 +7,8 @@ import fr.jmmc.jmal.ALX;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  LuminosityFilter filter.
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 public final class LuminosityFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(LuminosityFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(LuminosityFilter.class.getName());
     /* members */
     /* filter execution variables */
     /** the 'SpType' column ID */
@@ -42,8 +43,6 @@ public final class LuminosityFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("LuminosityFilter", "getName");
-
         return "Reject Luminosity Classes (and unknowns) :";
     }
 

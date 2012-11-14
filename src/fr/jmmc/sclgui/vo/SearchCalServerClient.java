@@ -12,14 +12,14 @@ import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;
 import java.net.URL;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.rpc.ServiceException;
 import org.apache.axis.AxisProperties;
 import org.apache.axis.client.Call;
 import org.apache.axis.components.net.DefaultCommonsHTTPClientProperties;
 import org.apache.axis.configuration.EngineConfigurationFactoryDefault;
 import org.apache.axis.transport.http.HTTPConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class provides configuration and access to the SearchCal Web Service using apache Axis 1.4
@@ -28,7 +28,7 @@ import org.apache.axis.transport.http.HTTPConstants;
 public final class SearchCalServerClient {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(SearchCalServerClient.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(SearchCalServerClient.class.getName());
     /** singleton */
     private static SearchCalServerClient _instance;
 
@@ -107,8 +107,8 @@ public final class SearchCalServerClient {
             // # http.nonProxyHosts
         }
 
-        if (_logger.isLoggable(Level.INFO)) {
-            _logger.info("Axis properties:\n" + Preferences.dumpProperties(AxisProperties.getProperties()));
+        if (_logger.isInfoEnabled()) {
+            _logger.info("Axis properties:\n{}", Preferences.dumpProperties(AxisProperties.getProperties()));
         }
 
         // Note: default retryhandler = 3 retry.
@@ -134,8 +134,8 @@ public final class SearchCalServerClient {
             // TODO : externalize SearchCal server URL:
             final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclwsProxy.php";
 
-            if (_logger.isLoggable(Level.INFO)) {
-                _logger.info("SearchCal server URL: " + proxyScriptURL);
+            if (_logger.isInfoEnabled()) {
+                _logger.info("SearchCal server URL: {}", proxyScriptURL);
             }
 
             // Re-route network traffic at specified address on standard 80 port
@@ -167,8 +167,8 @@ public final class SearchCalServerClient {
             // Create the web service client
             final SclwsPortType sclws = locator.getsclws(_sclwsURL);
 
-            if (_logger.isLoggable(Level.FINE)) {
-                _logger.fine("Connected to '" + locator.getsclwsAddress() + "'.");
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Connected to '" + locator.getsclwsAddress() + "'.");
             }
 
             // set the stub timeout to 0 (to inherit values from Httpclient parameters):

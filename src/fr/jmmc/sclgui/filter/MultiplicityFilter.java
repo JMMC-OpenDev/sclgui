@@ -6,7 +6,8 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Multiplicity filter.
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 public final class MultiplicityFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(MultiplicityFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(MultiplicityFilter.class.getName());
     /** Store column names of each multiplicity column to consider */
     private static final String[] MultiplicityColumnNames = {
         "MultFlag", "BinFlag", "SBC9"
@@ -44,8 +45,6 @@ public final class MultiplicityFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("MultiplicityFilter", "getName");
-
         // TODO: enable the filter somewhere else not in getName() !
         setEnabled(Boolean.TRUE);
 

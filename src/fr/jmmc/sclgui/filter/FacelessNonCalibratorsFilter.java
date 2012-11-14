@@ -6,7 +6,8 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reject stars that are not calibrators (no visibility).
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 public final class FacelessNonCalibratorsFilter extends Filter {
 
     /** Logger */
-    private static final Logger _logger = Logger.getLogger(FacelessNonCalibratorsFilter.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(FacelessNonCalibratorsFilter.class.getName());
     /* members */
     /* filter execution variables */
     /** the 'visibility' column ID */
@@ -34,8 +35,6 @@ public final class FacelessNonCalibratorsFilter extends Filter {
      */
     @Override
     public String getName() {
-        _logger.entering("FacelessNonCalibratorsFilter", "getName");
-
         return "Faceless Non-Calibrators Filter";
     }
 
@@ -66,7 +65,7 @@ public final class FacelessNonCalibratorsFilter extends Filter {
 
             // If the visibility is undefined
             if (!vis2Cell.hasValue()) {
-                _logger.fine("No vis2 - Line removed.");
+                _logger.debug("No vis2 - Line removed.");
 
                 // This row should be removed
                 return true;
