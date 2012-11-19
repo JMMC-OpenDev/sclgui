@@ -41,8 +41,6 @@ public final class MainWindow extends JFrame {
     public final CalibratorsView _calibratorsView;
     /** Filters view */
     public final FiltersView _filtersView;
-    /** Status bar */
-    private final StatusBar _statusBar;
     /** Page Setup... action */
     public final PageSetupAction _pageSetupAction;
     /** Print... action */
@@ -57,7 +55,6 @@ public final class MainWindow extends JFrame {
      * @param vo
      * @param queryView
      * @param calibratorsView 
-     * @param preferencesView 
      * @param filtersView
      * @param statusBar  
      */
@@ -71,12 +68,9 @@ public final class MainWindow extends JFrame {
         _queryView = queryView;
         _calibratorsView = calibratorsView;
         _filtersView = filtersView;
-        _statusBar = statusBar;
 
         _pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
         _printAction = new PrintAction(classPath, "_printAction");
-
-        setTitle("SearchCal");
 
         _mainPane = getContentPane();
         _mainPane.setLayout(new BorderLayout());
