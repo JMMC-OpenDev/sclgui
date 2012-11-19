@@ -20,6 +20,8 @@ import cds.savot.model.TDSet;
 import cds.savot.pull.SavotPullEngine;
 import cds.savot.pull.SavotPullParser;
 import cds.savot.writer.SavotWriter;
+import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.ApplicationDataModel;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
@@ -72,9 +74,13 @@ import org.slf4j.LoggerFactory;
 public final class CalibratorsModel extends DefaultTableModel implements Observer {
 
     /** default serial UID for Serializable interface */
-    private static final long serialVersionUID = 1L;
+    private final static long serialVersionUID = 1L;
     /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
+    private final static Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
+    /** table size threshold to load them asynchronously */
+    private final static int LOAD_TABLE_ASYNC_THRESHOLD = 5000;
+    /** number of extra properties (dynamically added and computed in the GUI) */
+    private final static int N_EXTRA_PROPERTIES = 4;
     /** parameter SearchCalGuiVersion (string) */
     public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
     /** parameter SearchCalServerVersion (string) */
@@ -82,7 +88,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /* members */
     /** Filters */
     private final FiltersModel _filtersModel;
-    /** Store the current query model in order to allow later update to progress bar */
+    /** Store the current query model in order to allow later update to progress bar and parse query parameters */
     final QueryModel _queryModel;
     /** Store the main application object used to perform menu activation */
     VirtualObservatory _vo;
@@ -98,20 +104,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private StarList _currentStarList;
     /** Displayed star list in JTable (filtered) (required Vector type) */
     private StarList _filteredStarList;
+    /** (cached) star list meta data */
+    StarListMeta _starListMeta;
+    /** (cached) number of star properties */
+    int _nProperties;
+    /** (cached) number of stars in filtered star list */
+    int _nFilteredStars;
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
-    /** number of columns */
-    int _nColumns = 0;
-    /** JTable column names (required Vector type) */
-    final Vector<String> _columnNames = new Vector<String>();
-    /** JTable column URLs */
-    final ArrayList<String> _columnURLs = new ArrayList<String>();
-    /** JTable column tool-tips */
-    final ArrayList<String> _columnDescriptions = new ArrayList<String>();
-    /** JTable column units */
-    final ArrayList<String> _columnUnits = new ArrayList<String>();
-    /** Column data types */
-    final ArrayList<Class<?>> _columnClasses = new ArrayList<Class<?>>();
     /** Filters */
     ParamSet _paramSet = null;
     /** Flag indicating whether data have changed or not */
@@ -134,10 +134,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _queryModel = queryModel;
 
         // create empty star lists:
-        _originalStarList = new StarList();
-        _calibratorStarList = new StarList();
-        _currentStarList = new StarList();
-        _filteredStarList = new StarList();
+        setOriginalStarList(StarList.EMPTY_LIST);
+        _calibratorStarList = StarList.EMPTY_LIST;
+        _currentStarList = StarList.EMPTY_LIST;
+        setFilteredStarList(StarList.EMPTY_LIST);
 
         _paramSet = null;
         _dataHaveChanged = false;
@@ -173,7 +173,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return number of hidden stars
      */
     public int getHiddenNumberOfStar() {
-        return (getTotalNumberOfStar() - _filteredStarList.size());
+        return (getTotalNumberOfStar() - _nFilteredStars);
     }
 
     /**
@@ -182,15 +182,19 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @sa java.util.Observer
      */
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(final Observable o, final Object arg) {
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("update: o {} with arg = {}", o, arg);
+        }
+
         // Filter the displayed star list
-        _filteredStarList = _filtersModel.process(_currentStarList);
+        setFilteredStarList(_filtersModel.process(_currentStarList));
 
         // As a DefaultTableModel instance, set all the JTable needed vectors
-        setDataVector(_filteredStarList, _columnNames);
+        setDataVector(_filteredStarList, _starListMeta.getPropertyNames());
 
         // Generate as many raw headers as data raws
-        _rowHeadersModel.populate(_filteredStarList.size());
+        _rowHeadersModel.populate(_nFilteredStars);
 
         // Ask all the attached JTable views to update
         fireTableDataChanged();
@@ -208,9 +212,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             _dataHaveChanged = true;
         }
 
-        // Ask for SAMP export menu enabling if needed
-        boolean shouldBeEnabled = (_currentStarList.size() != 0);
-        _vo.couldEnableShareCalibratorsThroughSAMPAction(shouldBeEnabled);
+        // Diff tool:
+        if (_vo != null) {
+            // Ask for SAMP export menu enabling if needed
+            _vo.couldEnableShareCalibratorsThroughSAMPAction(_nFilteredStars != 0);
+        }
     }
 
     /**
@@ -254,6 +260,46 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
+     * Protected setter for original star list and update also star list meta data (cached)
+     * @param starList star list to set
+     */
+    private void setOriginalStarList(final StarList starList) {
+        _originalStarList = starList;
+        _starListMeta = starList.getMetaData();
+        _nProperties = _starListMeta.getPropertyCount();
+    }
+
+    /**
+     * Protected setter for filtered star list and cache its size
+     * @param starList star list to set
+     */
+    private void setFilteredStarList(final StarList starList) {
+        _filteredStarList = starList;
+        _nFilteredStars = starList.size();
+    }
+
+    /**
+     * Give back the column ID from its name.
+     *
+     * @param groupName name of the column's group we are looking for the ID.
+     *
+     * @return the column ID, or -1 if nothing found.
+     */
+    public int getColumnIdByName(final String groupName) {
+        return _starListMeta.getColumnIdByName(groupName);
+    }
+
+    /**
+     * Give back the column name from its ID.
+     *
+     * @param groupId 
+     * @return name of the column's ID.
+     */
+    public String getColumnNameById(final int groupId) {
+        return _starListMeta.getPropertyName(groupId);
+    }
+
+    /**
      * Called when a column class is needed by the attached view.
      *
      * @param column
@@ -262,11 +308,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      */
     @Override
     public Class<?> getColumnClass(final int column) {
-        if (column >= 0 && column < _nColumns) {
-            return _columnClasses.get(column);
-        }
-
-        return null;
+        return _starListMeta.getPropertyClass(column);
     }
 
     /**
@@ -277,10 +319,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return the specified column header tooltip.
      */
     public String getHeaderTooltipForColumn(final int column) {
-        if (column >= 0 && column < _nColumns) {
-            return _columnDescriptions.get(column);
-        }
-        return "";
+        return _starListMeta.getPropertyDescription(column);
     }
 
     /**
@@ -291,10 +330,16 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return the specified column header tooltip.
      */
     public String getHeaderUnitForColumn(final int column) {
-        if (column >= 0 && column < _nColumns) {
-            return _columnUnits.get(column);
-        }
-        return "";
+        return _starListMeta.getPropertyUnit(column);
+    }
+
+    /**
+     * Return the URL defined for the given column or "" if undefined
+     * @param column
+     * @return URL defined for the given column or "" if undefined
+     */
+    private String getColumnURL(final int column) {
+        return _starListMeta.getPropertyUrl(column);
     }
 
     /**
@@ -339,19 +384,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         }
 
         return true;
-    }
-
-    /**
-     * Return the URL defined for the given column or "" if undefined
-     * @param column
-     * @return URL defined for the given column or "" if undefined
-     */
-    private String getColumnURL(final int column) {
-        if (column >= 0 && column < _nColumns) {
-            return _columnURLs.get(column);
-        }
-        return "";
-
     }
 
     /**
@@ -410,7 +442,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     private void parseVOTable(final File file, final String content, final long length, final boolean startQuery) throws IllegalArgumentException {
-        _vo.enableDataRelatedMenus(false);
+        // Diff tool:
+        if (_vo != null) {
+            _vo.enableDataRelatedMenus(false);
+        }
 
         if (file == null && content == null) {
             throw new IllegalArgumentException("Incorrect VOTable input");
@@ -472,8 +507,15 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         update(null, this);
 
         // Create parse votable task worker :
-        // Cancel other tasks and execute this new task :
-        new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime).executeTask();
+        final ParseVoTableSwingWorker loadWorker = new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime);
+
+        if (table.getNrowsValue() > LOAD_TABLE_ASYNC_THRESHOLD) {
+            // Cancel other tasks and execute this new task in background:
+            loadWorker.executeTask();
+        } else {
+            // Execute the worker using EDT:
+            loadWorker.executeTaskInEDT();
+        }
     }
 
     /**
@@ -488,27 +530,19 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         private final boolean startQuery;
         /** calibrators model used for refreshUI callback */
         private final CalibratorsModel calModel;
+        /** Store the current query model in order to allow later update to progress bar and parse query parameters */
+        private final QueryModel queryModel;
         /** SAVOT pull parser initialized */
         private final SavotPullParser parser;
-        /** SAVOT VOTable partially loaded */
-        private final SavotVOTable savotVoTable;
         /** first SavotTR tr */
         private final SavotTR trFirst;
         /** start time */
         private final long startTime;
         /* meta data */
+        /** SAVOT VOTable partially loaded */
+        private final SavotVOTable savotVoTable;
         /** Parameter set */
         private ParamSet paramSet = null;
-        /** JTable column names (required Vector type) */
-        private final Vector<String> columnNames = new Vector<String>();
-        /** JTable column URLs */
-        private final ArrayList<String> columnURLs = new ArrayList<String>();
-        /** JTable column tool-tips */
-        private final ArrayList<String> columnDescriptions = new ArrayList<String>();
-        /** JTable column units */
-        private final ArrayList<String> columnUnits = new ArrayList<String>();
-        /** Column data types */
-        private final ArrayList<Class<?>> columnClasses = new ArrayList<Class<?>>();
 
         /**
          * Hidden constructor
@@ -529,6 +563,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             this.file = file;
             this.startQuery = startQuery;
             this.calModel = calModel;
+            this.queryModel = calModel._queryModel;
             this.parser = parser;
             this.savotVoTable = savotVoTable;
             this.trFirst = trFirst;
@@ -550,57 +585,34 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             final SavotResource resource = savotVoTable.getResources().getItemAt(0);
             final SavotTable table = resource.getTables().getItemAt(0);
-            final GroupSet groupSet = table.getGroups();
-            final FieldSet fieldSet = table.getFields();
+
+            final int tableRows = table.getNrowsValue(); // optional
 
             // Retrieve VOTable parameters
             paramSet = table.getParams();
 
+            final GroupSet groupSet = table.getGroups();
+            final FieldSet fieldSet = table.getFields();
+
             final int nGroups = groupSet.getItemCount();
-            /*
-             * For each group of the table, put its name and its index in a
-             * hashtable, and put its name in a vector for JTable columns title
-             * definition.
-             */
-            final Map<String, Integer> groupNameToGroupId = new HashMap<String, Integer>(nGroups);
 
-            // reset JTable column meta data:
-            columnNames.ensureCapacity(nGroups);
-            columnURLs.ensureCapacity(nGroups);
-            columnDescriptions.ensureCapacity(nGroups);
-            columnUnits.ensureCapacity(nGroups);
-            columnClasses.ensureCapacity(nGroups);
+            // number of properties to size collections properly:
+            final int nProperties = nGroups + N_EXTRA_PROPERTIES;
 
-            String groupName;
+            // Create a new star list meta data:
+            final StarListMeta starListMeta = new StarListMeta(nProperties);
+            // Create a new star list:
+            final StarList starList = new StarList(starListMeta);
+
+            StarPropertyMeta starPropertyMeta;
             SavotField field;
             String url;
             String fieldDataType;
             Class<?> columnClass;
 
             for (int groupId = 0; groupId < nGroups; groupId++) {
-                groupName = groupSet.getItemAt(groupId).getName();
-
-                columnNames.add(groupName);
-                // Associate the group name with its index as a table column
-                groupNameToGroupId.put(groupName, Integer.valueOf(groupId));
-
                 // Get back the field type
                 field = fieldSet.getItemAt(3 * groupId); // x3 as there is 3 fields per group
-
-                // Get back the field link
-                url = "";
-
-                if (field.getLinks().getItemCount() != 0) {
-                    url = field.getLinks().getItemAt(0).getHref();
-                }
-
-                columnURLs.add(url);
-
-                // Get back the field description
-                columnDescriptions.add(field.getDescription());
-
-                // Get back the field description
-                columnUnits.add(field.getUnit());
 
                 fieldDataType = field.getDataType();
                 if (fieldDataType != null) {
@@ -614,21 +626,27 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     } else if (fieldDataType.equals("boolean")) {
                         columnClass = Boolean.class;
                     }
-
-                    columnClasses.add(columnClass);
                 } else {
                     throw new IllegalArgumentException("Invalid VOTable - empty fieldType for " + field.getName());
                 }
-            }
 
-            // Create a new star list and set the group name to group id conversion table to the star list
-            final StarList starList = new StarList(groupNameToGroupId);
+                // Get back the field link
+                if (field.getLinks().getItemCount() != 0) {
+                    url = field.getLinks().getItemAt(0).getHref();
+                } else {
+                    url = "";
+                }
+
+                // Define star property meta data:
+                starPropertyMeta = new StarPropertyMeta(groupSet.getItemAt(groupId).getName(), columnClass, field.getDescription(), field.getUnit(), url);
+
+                // Add it to the star list meta data:
+                starListMeta.addPropertyMeta(starPropertyMeta);
+            }
 
             // origin and confidence index are enumerations: use shared instance cache to use less memory:
             final Map<String, String> originValues = new HashMap<String, String>(32);
             final Map<String, String> confidenceValues = new HashMap<String, String>(16);
-
-            final int tableRows = table.getNrowsValue(); // optional
 
             // reserve space:
             if (tableRows != 0) {
@@ -636,8 +654,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             }
 
             // local copies for performance:
-            final Class<?>[] colClasses = new Class<?>[nGroups];
-            columnClasses.toArray(colClasses);
+            final Class<?>[] colClasses = starListMeta.getPropertyClasses();
 
             int nRow = 0;
 
@@ -650,9 +667,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 String value, origin, originValue, confidence, confidenceValue;
                 StarProperty starProperty;
                 boolean isSet;
+                Catalog catalog;
 
                 // only use Progress bar for large tables (JSDC):
-                final int step = (tableRows > 5000) ? tableRows / 100 : Integer.MAX_VALUE;
+                final int step = (tableRows > LOAD_TABLE_ASYNC_THRESHOLD) ? tableRows / 100 : Integer.MAX_VALUE;
 
                 // Iterate on rows:
                 do {
@@ -664,7 +682,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         }
 
                         // progress bar:
-                        calModel._queryModel.setQueryProgress("loading ...", nRow, tableRows);
+                        queryModel.setQueryProgress("loading ...", nRow, tableRows);
                     }
 
                     // Get the data corresponding to the current row
@@ -672,7 +690,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                     // For each group of the row create a star property of each 3 cells
                     // note: Vector type is required by swing DefaultTableModel:
-                    star = new Vector<StarProperty>(nGroups);
+                    star = new Vector<StarProperty>(nProperties);
 
                     for (groupId = 0; groupId < nGroups; ++groupId) {
 
@@ -709,6 +727,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                 } catch (NumberFormatException nfe) {
                                     _logger.warn("invalid Boolean [{}]", value);
                                 }
+                            } else {
+                                isSet = false;
+                                _logger.warn("unsupported data type [{}]", columnClass);
                             }
                         }
 
@@ -725,7 +746,20 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                             originValue = originValues.get(origin);
                             if (originValue == null) {
-                                originValues.put(origin, origin);
+                                if (!"computed".equals(origin)) {
+                                    // Resolve possible alias ie fix catalog name:
+                                    catalog = Catalog.catalogFromReference(origin);
+                                    if (catalog != null) {
+                                        origin = catalog.reference();
+                                    } else {
+                                        _logger.warn("Unable to resolve catalog for origin = '{}'", origin);
+                                        origin = null;
+                                    }
+                                }
+                                if (origin != null) {
+                                    // cache resolved origin:
+                                    originValues.put(origin, origin);
+                                }
                             } else {
                                 // use shared instance
                                 origin = originValue;
@@ -744,6 +778,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                             confidenceValue = confidenceValues.get(confidence);
                             if (confidenceValue == null) {
+                                // use interned string:
+                                confidence = confidence.intern();
                                 confidenceValues.put(confidence, confidence);
                             } else {
                                 // use shared instance
@@ -783,96 +819,22 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         @Override
         public void refreshUI(final StarList starList) {
 
-            calModel._queryModel.setQueryProgress("", 0, 0);
-
-            // Keep only VOTable structure (without data):
-            calModel._parsedVOTable = savotVoTable;
-
-            calModel._columnNames.clear();
-            calModel._columnURLs.clear();
-            calModel._columnDescriptions.clear();
-            calModel._columnUnits.clear();
-            calModel._columnClasses.clear();
-            calModel._columnNames.addAll(columnNames);
-            calModel._columnURLs.addAll(columnURLs);
-            calModel._columnDescriptions.addAll(columnDescriptions);
-            calModel._columnUnits.addAll(columnUnits);
-            calModel._columnClasses.addAll(columnClasses);
-
-            calModel._nColumns = columnNames.size();
-
-            // Compute selected magnitude band and scenario
-            // TODO: put in Savot Param finder by name:
-            final int nParams = paramSet.getItemCount();
-            final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
-
-            for (int i = 0; i < nParams; i++) {
-                final SavotParam param = paramSet.getItemAt(i);
-                final String paramName = param.getName();
-                final String paramValue = param.getValue();
-
-                if (_logger.isDebugEnabled()) {
-                    _logger.debug(paramName + " = '" + paramValue + "'");
-                }
-                parameters.put(paramName, paramValue);
-            }
-
-            calModel._magnitudeBand = parameters.get("band");
-
-            if ((calModel._magnitudeBand != null) && (calModel._magnitudeBand.matches("I")
-                    || calModel._magnitudeBand.matches("J") || calModel._magnitudeBand.matches("H"))) {
-                calModel._magnitudeBand = "K";
-            }
-
-            calModel._brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("magnitude band = '" + calModel._magnitudeBand + "'; bright scenario = '" + calModel._brightScenarioFlag + "'.");
-            }
-
-            // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
-            if (parameters.get(PARAMETER_SCL_SERVER_VERSION) == null) {
-                final SavotResource resource = savotVoTable.getResources().getItemAt(0);
-
-                final SavotParam param = new SavotParam();
-                param.setName(PARAMETER_SCL_SERVER_VERSION);
-                param.setDataType("char");
-                param.setArraySize("*");
-                param.setValue(resource.getName());
-                paramSet.addItem(param);
-            }
-            if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
-                final ApplicationDataModel applicationDataModel = App.getSharedApplicationDataModel();
-                final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
-
-                final SavotParam param = new SavotParam();
-                param.setName(PARAMETER_SCL_GUI_VERSION);
-                param.setDataType("char");
-                param.setArraySize("*");
-                param.setValue(version);
-                paramSet.addItem(param);
-            }
-
-            calModel._paramSet = paramSet;
-
-            // Copy the star list and add the group name to group id conversion table to the star list
-            calModel._originalStarList = starList;
-
-            // remove non calibrator stars once:
-            calModel.removeNonCalibrators();
-
-            // fire Update:
-            calModel.removeDeletedStars(true);
+            // update calibrators model:
+            calModel.updateModelFromVOTable(savotVoTable, paramSet, starList);
 
             if (_logger.isInfoEnabled()) {
                 _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
             }
 
+            // reset progress bar:
+            queryModel.setQueryProgress("", 0, 0);
+
+            // TODO: Perform such actions using callbacks ASAP
             if (file != null) {
                 // Loading the file in the query model
                 StatusBar.show("loading file (parsing query)...");
                 try {
-                    calModel._queryModel.loadParamSet(calModel.getParamSet());
+                    queryModel.loadParamSet(calModel.getParamSet());
                     StatusBar.show("loading file (query successfully parsed)...");
                     StatusBar.show("file succesfully loaded.");
 
@@ -886,9 +848,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 Exception e = null;
                 try {
                     // load default values to reset completely the query model:
-                    calModel._queryModel.loadDefaultValues();
+                    queryModel.loadDefaultValues();
                     // load given parameters (some may be missing)
-                    calModel._queryModel.loadParamSet(calModel.getParamSet());
+                    queryModel.loadParamSet(calModel.getParamSet());
 
                 } catch (NumberFormatException nfe) {
                     e = nfe;
@@ -907,11 +869,17 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 // Launch the request
                 StatusBar.show("Launching search...");
 
-                calModel._vo.executeGetCal();
+                // Diff tool:
+                if (calModel._vo != null) {
+                    calModel._vo.executeGetCal();
+                }
             }
 
-            // Enabling the 'Save' menus
-            calModel._vo.enableDataRelatedMenus(true);
+            // Diff tool:
+            if (calModel._vo != null) {
+                // Enabling the 'Save' menus
+                calModel._vo.enableDataRelatedMenus(true);
+            }
         }
 
         @Override
@@ -922,6 +890,156 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 MessagePane.showErrorMessage(errorMsg, ee.getCause());
             } else {
                 super.handleException(ee);
+            }
+        }
+    }
+
+    /**
+     * Update this calibrators model from parsed VOTable
+     * @param savotVoTable  parsed SAVOT VOTable 
+     * @param starList parsed StarList
+     * @param paramSet parameter set
+     */
+    void updateModelFromVOTable(final SavotVOTable savotVoTable, final ParamSet paramSet, final StarList starList) {
+        // Keep only VOTable structure (without data):
+        _parsedVOTable = savotVoTable;
+
+        // Compute selected magnitude band and scenario
+        // TODO: put in Savot Param finder by name:
+        final int nParams = paramSet.getItemCount();
+        final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
+
+        for (int i = 0; i < nParams; i++) {
+            final SavotParam param = paramSet.getItemAt(i);
+            final String paramName = param.getName();
+            final String paramValue = param.getValue();
+
+            if (_logger.isDebugEnabled()) {
+                _logger.debug(paramName + " = '" + paramValue + "'");
+            }
+            parameters.put(paramName, paramValue);
+        }
+
+        _magnitudeBand = parameters.get("band");
+
+        if ((_magnitudeBand != null) && (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") || _magnitudeBand.matches("H"))) {
+            _magnitudeBand = "K";
+        }
+
+        _brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
+
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("magnitude band = '" + _magnitudeBand + "'; bright scenario = '" + _brightScenarioFlag + "'.");
+        }
+
+        // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
+        if (parameters.get(PARAMETER_SCL_SERVER_VERSION) == null) {
+            final SavotResource resource = savotVoTable.getResources().getItemAt(0);
+
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_SERVER_VERSION);
+            param.setDataType("char");
+            param.setArraySize("*");
+            param.setValue(resource.getName());
+            paramSet.addItem(param);
+        }
+        if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
+            final ApplicationDataModel applicationDataModel = App.getSharedApplicationDataModel();
+            final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
+
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_GUI_VERSION);
+            param.setDataType("char");
+            param.setArraySize("*");
+            param.setValue(version);
+            paramSet.addItem(param);
+        }
+
+        _paramSet = paramSet;
+
+        // Process star list:
+        postProcess(starList);
+
+        // Update the star list:
+        setOriginalStarList(starList);
+
+        // remove non calibrator stars once:
+        removeNonCalibrators();
+
+        // fire Update:
+        removeDeletedStars(true);
+    }
+
+    /**
+     * Post process the given star list to add dynamic properties
+     * @param starList star list to process
+     */
+    void postProcess(final StarList starList) {
+        if (!starList.isEmpty()) {
+
+            final StarListMeta starListMeta = starList.getMetaData();
+
+            // Add custom properties:
+
+            // Add RA (deg) property:
+            if (starListMeta.getColumnIdByName("RAdeg") == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta("RAdeg", Double.class, "Right Ascension - J2000", "deg", ""));
+
+                // Get the ID of the column contaning 'RA' star properties
+                final int raId = starList.getColumnIdByName("RAJ2000");
+
+                if (raId != -1) {
+                    for (List<StarProperty> star : starList) {
+
+                        // Get the current star RA value
+                        final StarProperty cell = star.get(raId);
+
+                        if (cell.hasValue()) {
+                            final String raString = cell.getStringValue();
+                            final double currentRA = ALX.parseRA(raString);
+
+                            // add RADeg value:
+                            star.add(new StarProperty(Double.valueOf(currentRA),
+                                    cell.hasOrigin() ? cell.getOrigin() : null,
+                                    cell.hasConfidence() ? cell.getConfidence() : null));
+                        }
+                    }
+                }
+            }
+
+            // Add DEC (deg) property:
+            if (starListMeta.getColumnIdByName("DEdeg") == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta("DEdeg", Double.class, "Declination - J2000", "deg", ""));
+
+                // Get the ID of the column contaning 'DEC' star properties
+                final int decId = starList.getColumnIdByName("DEJ2000");
+
+                if (decId != -1) {
+                    for (List<StarProperty> star : starList) {
+
+                        // Get the current star DEC value
+                        final StarProperty cell = star.get(decId);
+
+                        if (cell.hasValue()) {
+                            final String decString = cell.getStringValue();
+                            final double currentDEC = ALX.parseDEC(decString);
+
+                            // add RADeg value:
+                            star.add(new StarProperty(Double.valueOf(currentDEC),
+                                    cell.hasOrigin() ? cell.getOrigin() : null,
+                                    cell.hasConfidence() ? cell.getConfidence() : null));
+                        }
+                    }
+                }
+            }
+
+            // First star:
+            final Vector<StarProperty> first = (Vector<StarProperty>) starList.get(0);
+
+            _logger.info("{} Star Properties.", first.size());
+
+            if (first.size() != first.capacity()) {
+                _logger.warn("Incorrect Property capacity: {} != {} ", first.size(), first.capacity());
             }
         }
     }
@@ -946,12 +1064,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public StarProperty getStarProperty(final int row, final int column) {
         final List<StarProperty> star = getStar(row);
         if (star != null) {
-            if (column >= 0 && column < _nColumns) {
+            if (column >= 0 && column < _nProperties) {
                 return star.get(column);
             }
         }
 
         _logger.error("Could get StarProperty at row '{}' and column '{}'.", row, column);
+
         return null;
     }
 
@@ -963,37 +1082,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return the Star corresponding to the given index.
      */
     public List<StarProperty> getStar(final int row) {
-        final List<StarProperty> star = (row >= 0 && row < _filteredStarList.size()) ? _filteredStarList.get(row) : null;
+        final List<StarProperty> star = (row >= 0 && row < _nFilteredStars) ? _filteredStarList.get(row) : null;
 
         if (star == null) {
             _logger.error("Could get Star at row '{}'.", row);
         }
 
         return star;
-    }
-
-    /**
-     * Give back the column ID from its name.
-     *
-     * @param groupName name of the column's group we are looking for the ID.
-     *
-     * @return the column ID, or -1 if nothing found.
-     */
-    public int getColumnIdByName(final String groupName) {
-        return _originalStarList.getColumnIdByName(groupName);
-    }
-
-    /**
-     * Give back the column name from its ID.
-     *
-     * @param groupId 
-     * @return name of the column's ID.
-     */
-    public String getColumnNameById(final int groupId) {
-        if (groupId >= 0 && groupId < _nColumns) {
-            return _columnNames.get(groupId);
-        }
-        return "";
     }
 
     /**
@@ -1027,7 +1122,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // If some calibrators are currently selected
         if (selSize != 0) {
             // Compute a dedicated star list
-            selectedStarsList = new StarList(_filteredStarList.getFieldIdToColNumberMap());
+            selectedStarsList = new StarList(_starListMeta);
             selectedStarsList.ensureCapacity(selSize);
 
             for (int index = 0; index < selSize; index++) {
@@ -1281,6 +1376,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Remove all stars previously flagged as deleted.
+     * 
+     * @param silently true to ignore that data have changed
      */
     private void removeDeletedStars(boolean silently) {
         // Remove all the stars flagged as deleted
@@ -1308,16 +1405,19 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public void setSelectedStars(int[] selectedStarIndices) {
         _selectedStarIndices = selectedStarIndices;
 
-        // Set SAMP action text according to current selection
-        String actionMenuText = "Send All Calibrators to...";
+        // Diff tool:
+        if (_vo != null) {
+            // Set SAMP action text according to current selection
+            String actionMenuText = "Send All Calibrators to...";
 
-        if ((_selectedStarIndices != null) && (_selectedStarIndices.length != 0)) {
-            // When some calibrators selected
-            actionMenuText = "Send Selected Calibrators to...";
+            if ((_selectedStarIndices != null) && (_selectedStarIndices.length != 0)) {
+                // When some calibrators selected
+                actionMenuText = "Send Selected Calibrators to...";
+            }
+
+            // Update Menu label
+            _vo.setShareCalibratorsThroughSAMPActionText(actionMenuText);
         }
-
-        // Update Menu label
-        _vo.setShareCalibratorsThroughSAMPActionText(actionMenuText);
     }
 
     /**
@@ -1425,7 +1525,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // Generate as many row headers as the given number of data rows
             for (int i = 0; i < nbOfRows; i++) {
-                addRow(new Object[]{i + 1});
+                final Vector<Integer> row = new Vector<Integer>(1);
+                row.add(Integer.valueOf(i + 1));
+                addRow(row);
             }
         }
     }
