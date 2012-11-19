@@ -3,9 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +16,8 @@ public final class StarList extends Vector<List<StarProperty>> {
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(StarList.class.getName());
+    /** Empty Star List instance */
+    public static final StarList EMPTY_LIST = new StarList();
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1L;
     /** Store the vis2 column name */
@@ -27,43 +27,33 @@ public final class StarList extends Vector<List<StarProperty>> {
     /** Store the deletedFlag column name */
     private static final String _deletedFlagColumnName = "deletedFlag";
     /* members */
-    /** HashMap linking each colum group name to its ID */
-    private Map<String, Integer> _fieldIdToColNumber;
+    /** star list meta data */
+    private final StarListMeta _metaData;
 
     /**
-     * Default constructor
+     * Empty star list Constructor
      */
-    public StarList() {
+    StarList() {
         super();
-        _fieldIdToColNumber = Collections.emptyMap();
+        _metaData = new StarListMeta();
     }
 
     /**
-     * Constructor with given mapping
+     * Constructor with given star list meta data
      * 
-     * @param fieldIdToColNumber the new mapping
+     * @param meta star list meta data
      */
-    public StarList(final Map<String, Integer> fieldIdToColNumber) {
+    public StarList(final StarListMeta meta) {
         super();
-        _fieldIdToColNumber = fieldIdToColNumber;
+        _metaData = meta;
     }
 
     /**
-     * Defines the mapping that links each colum group name to its ID.
-     *
-     * @param fieldIdToColNumber the new mapping
+     * Return the star list meta data
+     * @return star list meta data
      */
-    public void setFieldIdToColNumberMap(final Map<String, Integer> fieldIdToColNumber) {
-        _fieldIdToColNumber = fieldIdToColNumber;
-    }
-
-    /**
-     * return the mapping that links each colum group name to its ID.
-     *
-     * @return mapping
-     */
-    public Map<String, Integer> getFieldIdToColNumberMap() {
-        return _fieldIdToColNumber;
+    public StarListMeta getMetaData() {
+        return _metaData;
     }
 
     /**
@@ -74,16 +64,15 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @return the column ID, or -1 if nothing found.
      */
     public int getColumnIdByName(final String groupName) {
-        int columnId = -1;
+        return _metaData.getColumnIdByName(groupName);
+    }
 
-        if (groupName != null) {
-            final Integer foundIndex = _fieldIdToColNumber.get(groupName);
-
-            if (foundIndex != null) {
-                columnId = foundIndex.intValue();
-            }
-        }
-        return columnId;
+    /**
+     * Return the column ID of the deletedFlag column
+     * @return column ID of the deletedFlag column
+     */
+    private int getDeletedFlagColumnID() {
+        return getColumnIdByName(_deletedFlagColumnName);
     }
 
     /**
@@ -92,7 +81,7 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @return true if the list contains some stars flagged, false otherwise.
      */
     public boolean hasSomeDeletedStars() {
-        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        final int deletedFlagColumnID = getDeletedFlagColumnID();
         if (deletedFlagColumnID != -1) {
             List<StarProperty> star;
             StarProperty deletedFlag;
@@ -122,7 +111,7 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @param stars list of stars to mark and rmove from this list 
      */
     public void markAsDeleted(final List<List<StarProperty>> stars) {
-        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        final int deletedFlagColumnID = getDeletedFlagColumnID();
         if (deletedFlagColumnID != -1) {
             StarProperty deletedFlag;
 
@@ -145,12 +134,12 @@ public final class StarList extends Vector<List<StarProperty>> {
     public StarList removeAllDeletedStars() {
         final int size = size();
 
-        final StarList outputList = new StarList(getFieldIdToColNumberMap());
+        final StarList outputList = new StarList(_metaData);
 
         // ensure max capacity:
         outputList.ensureCapacity(size);
 
-        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        final int deletedFlagColumnID = getDeletedFlagColumnID();
         if (deletedFlagColumnID != -1) {
             List<StarProperty> star;
             StarProperty deletedFlag;
@@ -180,7 +169,7 @@ public final class StarList extends Vector<List<StarProperty>> {
      * Mark all stars as NOT deleted.
      */
     public void undeleteAll() {
-        final int deletedFlagColumnID = getColumnIdByName(_deletedFlagColumnName);
+        final int deletedFlagColumnID = getDeletedFlagColumnID();
         if (deletedFlagColumnID != -1) {
             List<StarProperty> star;
             StarProperty deletedFlag;
@@ -199,19 +188,15 @@ public final class StarList extends Vector<List<StarProperty>> {
     /**
      * Returns a clone of this star list (shallow copy)
      * 
-     * note: no more used
+     * note: no more used so an illegal state exception is thrown
      *
      * @return  a clone of this star list
+     * 
+     * @throws IllegalStateException as it is not implemented.
      */
     @Override
-    public StarList clone() {
-
-        // Note: Vector.clone() calls super.clone():
-        // Vector<E> v = (Vector<E>) super.clone();
-        // so internal fields are copied too like _fieldIdToColNumber (same pointer)
-        // that's enough as this mapping must be the same (read-only) for all StarList copies.
-
-        return (StarList) super.clone();
+    public StarList clone() throws IllegalStateException {
+        throw new IllegalStateException("StarList.clone() is not implemented !");
     }
 }
 /*___oOo___*/
