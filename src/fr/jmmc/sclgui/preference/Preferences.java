@@ -18,6 +18,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(Preferences.class.getName());
+    /** prefix for catalog color preferences */
+    public final static String PREFIX_CATALOG_COLOR = "catalog.color.";
+    /** prefix for confidence color preferences */
+    public final static String PREFIX_CONFIDENCE_COLOR = "confidence.color.";
     /** Singleton instance */
     private static Preferences _instance = null;
     /** Detailed bright N columns order list, as of default in preference version 3 */
@@ -160,18 +164,17 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      * @param defaultFlag If true sets values to defaults preferences, otherwise in current preferences.
      * @throws PreferencesException  
      */
-    protected void setLegendColorsAndOrders(boolean defaultFlag) throws PreferencesException {
+    void setLegendColorsAndOrders(boolean defaultFlag) throws PreferencesException {
         // Place catalog origin colors
-        String catalogColorPrefPrefix = "catalog.color.";
         int i = 0;
 
         for (Catalog catalog : Catalog.values()) {
             Color catalogColor = Catalog.getDefaultColor(catalog);
 
             if (defaultFlag) {
-                setDefaultPreference(catalogColorPrefPrefix + catalog.reference(), i++, catalogColor);
+                setDefaultPreference(PREFIX_CATALOG_COLOR + catalog.reference(), i++, catalogColor);
             } else {
-                setPreference(catalogColorPrefPrefix + catalog.reference(), i++, catalogColor);
+                setPreference(PREFIX_CATALOG_COLOR + catalog.reference(), i++, catalogColor);
             }
         }
 
@@ -179,13 +182,13 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         i = 0;
 
         if (defaultFlag) {
-            setDefaultPreference("confidence.color.HIGH", i++, "#ECECEC");
-            setDefaultPreference("confidence.color.MEDIUM", i++, "#CCCCCC");
-            setDefaultPreference("confidence.color.LOW", i++, "#6F6F6F");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + "HIGH", i++, "#ECECEC");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + "MEDIUM", i++, "#CCCCCC");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + "LOW", i++, "#6F6F6F");
         } else {
-            setPreference("confidence.color.HIGH", i++, "#ECECEC");
-            setPreference("confidence.color.MEDIUM", i++, "#CCCCCC");
-            setPreference("confidence.color.LOW", i++, "#6F6F6F");
+            setPreference(PREFIX_CONFIDENCE_COLOR + "HIGH", i++, "#ECECEC");
+            setPreference(PREFIX_CONFIDENCE_COLOR + "MEDIUM", i++, "#CCCCCC");
+            setPreference(PREFIX_CONFIDENCE_COLOR + "LOW", i++, "#6F6F6F");
         }
     }
 
@@ -315,7 +318,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion3ToVersion4() {
-        String preferenceToRemove = "catalog.color.J/A+A/386/492/charm";
+        String preferenceToRemove = Preferences.PREFIX_CATALOG_COLOR + "J/A+A/386/492/charm";
         removePreference(preferenceToRemove);
 
         if (_logger.isDebugEnabled()) {
@@ -623,7 +626,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      * @return true if fine and should write to file, false otherwise.
      */
     private boolean updateFromVersion13ToVersion14() {
-        String preferenceToRemove = "catalog.color.J/A+A/431/773/charm2";
+        String preferenceToRemove = Preferences.PREFIX_CATALOG_COLOR + "J/A+A/431/773/charm2";
         removePreference(preferenceToRemove);
 
         if (_logger.isDebugEnabled()) {
