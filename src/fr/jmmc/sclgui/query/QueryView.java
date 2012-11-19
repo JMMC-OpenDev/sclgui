@@ -378,9 +378,13 @@ public final class QueryView extends JPanel implements Observer,
         _actionPanel.add(_progressBar);
         // Fixed space
         _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
-        // Search Button
-        _searchButton = new JButton(_vo._getCalAction);
-        _actionPanel.add(_searchButton);
+
+        // disable Search Action (Diff tool):
+        if (_vo != null) {
+            // Search Button
+            _searchButton = new JButton(_vo._getCalAction);
+            _actionPanel.add(_searchButton);
+        }
         // Fixed space
         _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
 
@@ -439,7 +443,11 @@ public final class QueryView extends JPanel implements Observer,
 
         // Start listening to any updates of the monitored objects
         _queryModel.addObserver(this);
-        _vo.addObserver(this);
+
+        // vo is null in Diff tool:
+        if (_vo != null) {
+            _vo.addObserver(this);
+        }
 
         // Refresh the GUI with the model values and reset progress bar:
         update(null, null);
@@ -544,17 +552,20 @@ public final class QueryView extends JPanel implements Observer,
         _radialSizeLabel.setVisible(!brightScenarioFlag);
 
         // If the virtual obervatory is busy
-        if (_vo.isQueryLaunched()) {
+        if (_vo != null && _vo.isQueryLaunched()) {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         } else {
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
 
-        // If the query seems complete
-        if (_queryModel.isConsumable()) {
-            _vo.enableGetCalAction(true);
-        } else {
-            _vo.enableGetCalAction(false);
+        // vo is null in Diff tool:
+        if (_vo != null) {
+            // If the query seems complete
+            if (_queryModel.isConsumable()) {
+                _vo.enableGetCalAction(true);
+            } else {
+                _vo.enableGetCalAction(false);
+            }
         }
 
         // If the magnitude band is either 'V', 'I', 'J', or 'H'
