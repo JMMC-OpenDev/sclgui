@@ -75,11 +75,9 @@ public final class SearchCal extends App {
 
     /** Initialize application objects */
     @Override
-    protected void init(String[] args) {
+    protected void init() {
         // Set default resource
         fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
-
-        final SearchCal searchCal = this;
 
         // Using invokeAndWait to be in sync with this thread :
         // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
@@ -91,19 +89,20 @@ public final class SearchCal extends App {
             public void run() {
 
                 // Get preferences
-                Preferences preferences = Preferences.getInstance();
+                final Preferences preferences = Preferences.getInstance();
 
                 // Create a query model
-                QueryModel queryModel = new QueryModel();
+                final QueryModel queryModel = new QueryModel();
                 queryModel.init();
 
                 // Create filters
-                FiltersModel filtersModel = new FiltersModel(queryModel);
-                FiltersView filtersView = new FiltersView(filtersModel);
+                final FiltersModel filtersModel = new FiltersModel(queryModel);
+                final FiltersView filtersView = new FiltersView(filtersModel);
 
                 // Create a calibrators model and attach it to a calibrators view
-                CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
-                CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
+                final CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
+                
+                final CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
                 calibratorsView.init();
 
                 filtersModel.addObserver(calibratorsModel);
@@ -113,32 +112,32 @@ public final class SearchCal extends App {
                 _vo = new VirtualObservatory(queryModel, calibratorsModel);
 
                 // Attach the query model to its query view
-                QueryView queryView = new QueryView(queryModel, _vo);
+                final QueryView queryView = new QueryView(queryModel, _vo);
                 queryView.init();
 
                 // Retrieve application preferences and attach them to their view
                 // (This instance must be instanciated after dependencies)
-                LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
+                final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
                 // Add the columns preferences pane
-                ColumnsPreferencesView columnsView = new ColumnsPreferencesView("view.columns");
+                final ColumnsPreferencesView columnsView = new ColumnsPreferencesView("view.columns");
                 columnsView.init();
                 panels.put("Columns Order", columnsView);
                 // Add the catalog preferences pane
-                JPanel catalogView = new LegendView(true);
+                final JPanel catalogView = new LegendView(true);
                 panels.put("Legend Colors", catalogView);
                 // Add the help preferences pane
-                HelpPreferencesView helpView = new HelpPreferencesView();
+                final HelpPreferencesView helpView = new HelpPreferencesView();
                 helpView.init();
                 panels.put("Help Settings", helpView);
-                PreferencesView preferencesView = new PreferencesView(preferences, panels);
+                final PreferencesView preferencesView = new PreferencesView(preferences, panels);
                 preferencesView.init();
 
-                StatusBar statusBar = new StatusBar();
+                final StatusBar statusBar = new StatusBar();
                 // Show the user the app is been initialized
                 StatusBar.show("application initialization...");
 
                 // Build the main window
-                MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
+                final MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
                 App.setFrame(window);
 
                 // Triggers all preferences observers notification to finnish GUI setup.
