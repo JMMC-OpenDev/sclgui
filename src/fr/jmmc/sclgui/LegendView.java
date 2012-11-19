@@ -157,34 +157,32 @@ public final class LegendView extends JPanel {
         @Override
         public void update(Observable o, Object arg) {
             // Fill with preferences entries
-            Enumeration e = _preferences.getPreferences(_colorPreferencePrefix);
-            Vector colors = new Vector();
-            Vector references = new Vector();
-            Vector names = new Vector();
-            Vector descriptions = new Vector();
+            final Vector<Color> colors = new Vector<Color>();
+            final Vector<String> references = new Vector<String>();
+            final Vector<String> names = new Vector<String>();
+            final Vector<String> descriptions = new Vector<String>();
+
+            final Enumeration<String> e = _preferences.getPreferences(_colorPreferencePrefix);
 
             while (e.hasMoreElements()) {
-                String entry = (String) e.nextElement();
+                String entry = e.nextElement();
 
                 // Use dedicated pref. name if available, pref. reference otherwise
                 String preferenceReference = entry.substring(_colorPreferencePrefix.length());
-                references.add(preferenceReference);
-
                 String title = Catalog.titleFromReference(preferenceReference);
-                names.add(title);
-
                 String description = Catalog.descriptionFromReference(preferenceReference);
-                descriptions.add(description);
 
                 // Get color from preferences, white otherwise
                 Color c;
-
                 try {
                     c = _preferences.getPreferenceAsColor(entry);
                 } catch (Exception pe) {
                     c = Color.white;
                 }
 
+                references.add(preferenceReference);
+                names.add(title);
+                descriptions.add(description);
                 colors.add(c);
             }
 
@@ -202,13 +200,7 @@ public final class LegendView extends JPanel {
             // Repaint table 
             if (_table != null) {
                 _table.repaint();
-                /* set size according bigest component
-                 TableColumn tableColumn = _table.getColumnModel().getColumn(0);
-                 TableCellRenderer renderer = _table.getTableCellRenderer();
-                 int max=0;
-                 for (int i=0; i < _table.getRowCount()){
-                 }
-                 */
+
                 initColumnSizes(_table);
                 revalidate();
             }
