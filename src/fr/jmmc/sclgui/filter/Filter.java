@@ -173,10 +173,12 @@ public abstract class Filter extends Observable {
     public final boolean isScienceObject(final List<StarProperty> row) {
         if (_distId != -1) {
             // Get the row's distance star property
-            final double rowDistance = row.get(_distId).getDoubleValue();
+            final StarProperty cell = row.get(_distId);
 
-            // If the current row distance is close enough to be detected as a science object
-            return (rowDistance < _prefDistance);
+            if (cell.hasValue()) {
+                // If the current row distance is close enough to be detected as a science object
+                return (cell.getDoubleValue() < _prefDistance);
+            }
         }
         return false;
     }
@@ -198,7 +200,7 @@ public abstract class Filter extends Observable {
         if (isEnabled() && size != 0) {
             final long start = System.nanoTime();
 
-            outputList = new StarList(starList.getFieldIdToColNumberMap());
+            outputList = new StarList(starList.getMetaData());
 
             // ensure max capacity:
             outputList.ensureCapacity(size);
