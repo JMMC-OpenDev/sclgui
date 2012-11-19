@@ -82,10 +82,10 @@ public final class VisibilityFilter extends Filter {
         // If the desired column names exists
         if (_vis2Id != -1) {
             // Get the cell of the desired column
-            final StarProperty vis2Cell = row.get(_vis2Id);
+            final StarProperty cell = row.get(_vis2Id);
 
             // If the visibility is undefined
-            if (!vis2Cell.hasValue()) {
+            if (!cell.hasValue()) {
                 _logger.debug("No vis2 - Line removed.");
 
                 // This row should be removed
@@ -93,7 +93,7 @@ public final class VisibilityFilter extends Filter {
             }
 
             // If the visibility is less than 0.5
-            if (vis2Cell.getDoubleValue() < _allowedVis) {
+            if (cell.getDoubleValue() < _allowedVis) {
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("vis2 < " + _allowedVis + " - Line removed.");
                 }
