@@ -16,12 +16,6 @@ public final class MultiplicityFilter extends Filter {
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(MultiplicityFilter.class.getName());
-    /** Store column names of each multiplicity column to consider */
-    private static final String[] MultiplicityColumnNames = {
-        "MultFlag", "BinFlag", "SBC9"
-    };
-    /** Store column names of each orbit separation column to consider */
-    private static final String[] OrbitSeparationColumnNames = {"sep1", "sep2"};
     /** In arcseconds. Any orbit separation below should reject */
     private static final double _orbitSeparationLimit = 2d;
     /* members */
@@ -59,13 +53,13 @@ public final class MultiplicityFilter extends Filter {
     @Override
     public void onPrepare(final StarList starList) {
         int i = 0;
-        for (String columnName : MultiplicityColumnNames) {
+        for (String columnName : StarList.MultiplicityColumnNames) {
             // Get the id of the current column name
             _multiplicityIDs[i++] = starList.getColumnIdByName(columnName);
         }
 
         i = 0;
-        for (String columnName : OrbitSeparationColumnNames) {
+        for (String columnName : StarList.OrbitSeparationColumnNames) {
             // Get the id of the current column name
             _orbitSeparationIds[i++] = starList.getColumnIdByName(columnName);
         }

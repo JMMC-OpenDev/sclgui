@@ -103,7 +103,6 @@ public final class SearchCal extends App {
                 final CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
                 
                 final CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
-                calibratorsView.init();
 
                 filtersModel.addObserver(calibratorsModel);
 

@@ -10,6 +10,14 @@ public final class StarProperty implements Comparable<StarProperty> {
 
     /** shared empty star property to reduce memory footprint */
     public final static StarProperty EMPTY_STAR_PROPERTY = new StarProperty(null, null, null);
+    /** Origin - computed */
+    public final static String ORIGIN_COMPUTED = "computed";
+    /** Confidence - HIGH */
+    public final static String CONFIDENCE_HIGH = "HIGH";
+    /** Confidence - MEDIUM */
+    public final static String CONFIDENCE_MEDIUM = "MEDIUM";
+    /** Confidence - LOW */
+    public final static String CONFIDENCE_LOW = "LOW";
     /* members */
     /** Value */
     private Object _value;
@@ -17,6 +25,14 @@ public final class StarProperty implements Comparable<StarProperty> {
     private final String _origin;
     /** Confidence */
     private final String _confidence;
+
+    /**
+     * Custom constructor defining origin = "computed" and confidence to HIGH
+     * @param value the new star property value.
+     */
+    public StarProperty(final Object value) {
+        this(value, ORIGIN_COMPUTED, CONFIDENCE_HIGH);
+    }
 
     /**
      * Fully parameter-ed constructor.
@@ -51,6 +67,18 @@ public final class StarProperty implements Comparable<StarProperty> {
     /**
      * Get the value of the star property as a String object.
      *
+     * @return a String object representing the star property value or null if undefined
+     */
+    public String getString() {
+        if (_value == null) {
+            return null;
+        }
+        return _value.toString();
+    }
+
+    /**
+     * Get the value of the star property as a String object.
+     *
      * @return a String object representing the star property value.
      */
     public String getStringValue() {
@@ -58,6 +86,42 @@ public final class StarProperty implements Comparable<StarProperty> {
             return "";
         }
         return _value.toString();
+    }
+
+    /**
+     * Get the value of the star property as an Integer object.
+     *
+     * @return an Integer object representing the star property value.
+     */
+    public Integer getInteger() {
+        if (_value instanceof Integer) {
+            return (Integer) _value;
+        }
+        return null;
+    }
+
+    /**
+     * Get the value of the star property as an Integer object.
+     *
+     * @return an Integer object representing the star property value.
+     */
+    public int getIntegerValue() {
+        if (_value instanceof Double) {
+            return ((Integer) _value).intValue();
+        }
+        return Integer.MIN_VALUE;
+    }
+
+    /**
+     * Get the value of the star property as a Double object.
+     *
+     * @return a Double object representing the star property value.
+     */
+    public Double getDouble() {
+        if (_value instanceof Double) {
+            return (Double) _value;
+        }
+        return null;
     }
 
     /**
@@ -69,7 +133,19 @@ public final class StarProperty implements Comparable<StarProperty> {
         if (_value instanceof Double) {
             return ((Double) _value).doubleValue();
         }
-        return Double.parseDouble(_value.toString());
+        return Double.NaN;
+    }
+
+    /**
+     * Get the value of the star property as a Boolean object.
+     *
+     * @return a Boolean object representing the star property value.
+     */
+    public Boolean getBoolean() {
+        if (_value instanceof Boolean) {
+            return ((Boolean) _value);
+        }
+        return null;
     }
 
     /**
@@ -81,7 +157,7 @@ public final class StarProperty implements Comparable<StarProperty> {
         if (_value instanceof Boolean) {
             return ((Boolean) _value).booleanValue();
         }
-        return Boolean.parseBoolean(_value.toString());
+        return false;
     }
 
     /**
@@ -155,6 +231,11 @@ public final class StarProperty implements Comparable<StarProperty> {
     @SuppressWarnings("unchecked")
     public int compareTo(final StarProperty o) {
         return ((Comparable) _value).compareTo((Comparable) o);
+    }
+
+    @Override
+    public String toString() {
+        return "StarProperty{" + "_value=" + _value + ", _origin=" + _origin + ", _confidence=" + _confidence + '}';
     }
 }
 /*___oOo___*/

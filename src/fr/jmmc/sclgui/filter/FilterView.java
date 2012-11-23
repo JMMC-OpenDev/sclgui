@@ -112,6 +112,14 @@ public final class FilterView extends JPanel implements Observer {
     }
 
     /**
+     * Return the enabled check box
+     * @return enabled check box
+     */
+    public JCheckBox getEnabledCheckbox() {
+        return _enabledCheckbox;
+    }
+
+    /**
      * Add a constraint to the filter.
      *
      * @param panel 
@@ -214,102 +222,102 @@ public final class FilterView extends JPanel implements Observer {
          QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
          */
     }
-}
-
-/**
- * Handle any event coming from a given parameter widget.
- */
-class ParamListener implements ActionListener, FocusListener {
-
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(ParamListener.class.getName());
-    /** The filter to update */
-    private Filter _filter = null;
-    /** the constraint to handle */
-    private String _constraintName = null;
-    /** The GUI component to display the constraint */
-    private JComponent _widget = null;
 
     /**
-     * Constructor.
-     *
-     * @param filter the filter to update.
-     * @param constraintName the name of the constraint to handle, or null for
-     * the whole filter enabling checkbox.
-     * @param widget The GUI component to display the constraint.
+     * Handle any event coming from a given parameter widget.
      */
-    ParamListener(Filter filter, String constraintName, JComponent widget) {
-        _filter = filter;
-        _constraintName = constraintName;
-        _widget = widget;
-    }
+    private static class ParamListener implements ActionListener, FocusListener {
 
-    /**
-     * Called when the focus enters a widget.
-     * @param e 
-     */
-    @Override
-    public void focusGained(FocusEvent e) {
-        // Does nothing (not needed)
-    }
+        /** Logger */
+        private static final Logger _logger = LoggerFactory.getLogger(ParamListener.class.getName());
+        /** The filter to update */
+        private Filter _filter = null;
+        /** the constraint to handle */
+        private String _constraintName = null;
+        /** The GUI component to display the constraint */
+        private JComponent _widget = null;
 
-    /**
-     * Called when the focus leaves a widget.
-     *
-     * Used to validate and store TextFields data when tabbing between them.
-     * @param e 
-     */
-    @Override
-    public void focusLost(FocusEvent e) {
-        // Store new data
-        storeValues(e);
-    }
+        /**
+         * Constructor.
+         *
+         * @param filter the filter to update.
+         * @param constraintName the name of the constraint to handle, or null for
+         * the whole filter enabling checkbox.
+         * @param widget The GUI component to display the constraint.
+         */
+        ParamListener(final Filter filter, final String constraintName, final JComponent widget) {
+            _filter = filter;
+            _constraintName = constraintName;
+            _widget = widget;
+        }
 
-    /**
-     * Called when a widget triggered an action.
-     * @param e 
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Store new data
-        storeValues(e);
-    }
+        /**
+         * Called when the focus enters a widget.
+         * @param e 
+         */
+        @Override
+        public void focusGained(FocusEvent e) {
+            // Does nothing (not needed)
+        }
 
-    /**
-     * Store form values in the model.
-     * @param e 
-     */
-    public void storeValues(AWTEvent e) {
-        // If there is no constraint name
-        if (_constraintName == null) {
-            // Enable or disable the whole filter
-            Boolean checkBoxState = Boolean.valueOf(((JCheckBox) _widget).isSelected());
-            _filter.setEnabled(checkBoxState);
-        } else // If a constraint name was given
-        {
-            // Get the corresponding constraint value
-            Object constraintValue = _filter.getConstraintByName(_constraintName);
+        /**
+         * Called when the focus leaves a widget.
+         *
+         * Used to validate and store TextFields data when tabbing between them.
+         * @param fe 
+         */
+        @Override
+        public void focusLost(FocusEvent fe) {
+            // Store new data
+            storeValues(fe);
+        }
 
-            // Refresh its value from the corresponding widget
-            // If the constraint is a Double object
-            if (constraintValue.getClass() == java.lang.Double.class) {
-                try {
-                    // Convert and commit the new value (focus lost)
-                    ((JFormattedTextField) _widget).commitEdit();
-                } catch (ParseException pe) {
-                    _logger.warn("Could not handle input: ", pe);
+        /**
+         * Called when a widget triggered an action.
+         * @param ae 
+         */
+        @Override
+        public void actionPerformed(final ActionEvent ae) {
+            // Store new data
+            storeValues(ae);
+        }
+
+        /**
+         * Store form values in the model.
+         * @param e 
+         */
+        public void storeValues(final AWTEvent e) {
+            // If there is no constraint name
+            if (_constraintName == null) {
+                // Enable or disable the whole filter
+                Boolean checkBoxState = Boolean.valueOf(((JCheckBox) _widget).isSelected());
+                _filter.setEnabled(checkBoxState);
+            } else // If a constraint name was given
+            {
+                // Get the corresponding constraint value
+                Object constraintValue = _filter.getConstraintByName(_constraintName);
+
+                // Refresh its value from the corresponding widget
+                // If the constraint is a Double object
+                if (constraintValue.getClass() == java.lang.Double.class) {
+                    try {
+                        // Convert and commit the new value (focus lost)
+                        ((JFormattedTextField) _widget).commitEdit();
+                    } catch (ParseException pe) {
+                        _logger.warn("Could not handle input: ", pe);
+                    }
+
+                    Double doubleValue = (Double) ((JFormattedTextField) _widget).getValue();
+                    _filter.setConstraint(_constraintName, doubleValue);
+                } // Else if the constraint is a String object
+                else if (constraintValue.getClass() == java.lang.String.class) {
+                    String stringValue = ((JTextField) _widget).getText();
+                    _filter.setConstraint(_constraintName, stringValue);
+                } // Else if the constraint is a Boolean object
+                else if (constraintValue.getClass() == java.lang.Boolean.class) {
+                    Boolean booleanValue = ((JCheckBox) _widget).isSelected();
+                    _filter.setConstraint(_constraintName, booleanValue);
                 }
-
-                Double doubleValue = (Double) ((JFormattedTextField) _widget).getValue();
-                _filter.setConstraint(_constraintName, doubleValue);
-            } // Else if the constraint is a String object
-            else if (constraintValue.getClass() == java.lang.String.class) {
-                String stringValue = ((JTextField) _widget).getText();
-                _filter.setConstraint(_constraintName, stringValue);
-            } // Else if the constraint is a Boolean object
-            else if (constraintValue.getClass() == java.lang.Boolean.class) {
-                Boolean booleanValue = ((JCheckBox) _widget).isSelected();
-                _filter.setConstraint(_constraintName, booleanValue);
             }
         }
     }

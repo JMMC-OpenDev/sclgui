@@ -16,14 +16,8 @@ public final class VariabilityFilter extends Filter {
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(VariabilityFilter.class.getName());
-    /** Store the variability flag 1 column name */
-    private static final String VarFlag1ColumnName = "VarFlag1";
-    /** Store the variability flag 2 column name */
-    private static final String VarFlag2ColumnName = "VarFlag2";
-    /** Store the variability flag 3 column name */
-    private static final String VarFlag3ColumnName = "VarFlag3";
     /** Set columns name whose rows should be removed if cell is not empty */
-    private static final String[] VarFlagColumns = new String[]{VarFlag1ColumnName, VarFlag2ColumnName};
+    private static final String[] VarFlagColumns = new String[]{StarList.VarFlag1ColumnName, StarList.VarFlag2ColumnName};
     /* members */
     /* filter execution variables */
     /** the VarFlag1 and VarFlag2 column Ids */
@@ -62,7 +56,7 @@ public final class VariabilityFilter extends Filter {
         }
 
         // Get the ID of the column contaning 'varFlag3' star property
-        _varFlag3Id = starList.getColumnIdByName(VarFlag3ColumnName);
+        _varFlag3Id = starList.getColumnIdByName(StarList.VarFlag3ColumnName);
     }
 
     /**

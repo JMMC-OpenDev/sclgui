@@ -100,8 +100,10 @@ public final class DistanceFilter extends Filter {
     @Override
     public void onPrepare(final StarList starList) {
         // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
-        _raId = starList.getColumnIdByName("RAJ2000");
-        _decId = starList.getColumnIdByName("DEJ2000");
+        
+        // TODO: use directly dynamic columns RAdeg / DEdeg
+        _raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
+        _decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
 
         // Get back query and filter values
         retrieveScienceObjectCoordinates();

@@ -15,6 +15,8 @@ public final class StarPropertyMeta {
     private final Class<?> _classType;
     /** property description */
     private final String _description;
+    /** property ucd (1.0) */
+    private final String _ucd;
     /** optional property unit */
     private final String _unit;
     /** optional link URL */
@@ -25,13 +27,15 @@ public final class StarPropertyMeta {
      * @param name property name
      * @param classType property data type as Class
      * @param description property description
+     * @param ucd property ucd
      * @param unit optional property unit
      * @param url optional link URL
      */
-    StarPropertyMeta(final String name, final Class<?> classType, final String description, final String unit, final String url) {
+    StarPropertyMeta(final String name, final Class<?> classType, final String description, final String ucd, final String unit, final String url) {
         this._name = name;
         this._classType = classType;
         this._description = description;
+        this._ucd = ucd;
         this._unit = unit;
         this._url = url;
     }
@@ -61,6 +65,14 @@ public final class StarPropertyMeta {
     }
 
     /**
+     * Return the property ucd (1.0)
+     * @return property ucd
+     */
+    public String getUcd() {
+        return _ucd;
+    }
+
+    /**
      * Return the optional property unit
      * @return optional property unit
      */
@@ -74,6 +86,11 @@ public final class StarPropertyMeta {
      */
     public String getUrl() {
         return _url;
+    }
+
+    @Override
+    public String toString() {
+        return _name + "[" + _classType.getSimpleName() + "][" + _unit + "][" + _description + ']';
     }
 }
 /*___oOo___*/

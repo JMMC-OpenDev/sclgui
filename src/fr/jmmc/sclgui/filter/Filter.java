@@ -135,7 +135,7 @@ public abstract class Filter extends Observable {
      */
     public final void prepare(final StarList starList) {
         // Get the 'distance' column Id
-        _distId = starList.getColumnIdByName("dist");
+        _distId = starList.getColumnIdByName(StarList.DistColumnName);
 
         // Get the preferred distance to detect the science object
         _prefDistance = Preferences.getInstance().getPreferenceAsDouble(PreferenceKey.QUERY_SCIENCE_DETECTION);

@@ -6,6 +6,7 @@ package fr.jmmc.sclgui.calibrator;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.util.WindowUtils;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTable;
@@ -26,31 +27,26 @@ public final class SearchPanel extends javax.swing.JFrame {
     private static final long serialVersionUID = 1;
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(SearchPanel.class.getName());
-    // Action stuff
+    /* members */
+    /* Action stuff */
     /** Find action */
-    public FindAction _findAction;
+    private FindAction _findAction;
     /** Find Next action */
-    public FindNextAction _findNextAction;
+    private FindNextAction _findNextAction;
     /** Find Previous action */
-    public FindPreviousAction _findPreviousAction;
+    private FindPreviousAction _findPreviousAction;
     // Search Controler stuff
     /** Search and select algorithm */
     private QuickSearchHelper _searchHelper;
-    /** The calibrators table */
-    private JTable _calibratorsTable;
-    /** The calibrator table sorter */
-    private TableSorter _tableSorter;
 
     /** Creates new form SearchPanel */
-    public SearchPanel(TableSorter tableSorter, JTable calibratorsTable) {
+    public SearchPanel() {
         super("Find");
 
         setupActions();
 
         initComponents();
 
-        _calibratorsTable = calibratorsTable;
-        _tableSorter = tableSorter;
         _searchHelper = new QuickSearchHelper();
 
         WindowUtils.centerOnMainScreen(this);
@@ -59,7 +55,8 @@ public final class SearchPanel extends javax.swing.JFrame {
 
     /** Create required actions */
     private void setupActions() {
-        String classPath = getClass().getName();
+        final String classPath = SearchPanel.class.getName();
+
         _findAction = new FindAction(classPath, "_findAction");
         _findNextAction = new FindNextAction(classPath, "_findNextAction");
         _findPreviousAction = new FindPreviousAction(classPath, "_findPreviousAction");
@@ -93,7 +90,7 @@ public final class SearchPanel extends javax.swing.JFrame {
         jPanel1.add(_findLabel, new java.awt.GridBagConstraints());
 
         _searchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 _searchFieldActionPerformed(evt);
             }
         });
@@ -112,7 +109,7 @@ public final class SearchPanel extends javax.swing.JFrame {
         _previousButton.setAction(_findPreviousAction);
         _previousButton.setText("Previous");
         _previousButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 _previousButtonActionPerformed(evt);
             }
         });
@@ -179,7 +176,7 @@ public final class SearchPanel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchPanel(null, null).setVisible(true);
+                new SearchPanel().setVisible(true);
             }
         });
     }
@@ -226,13 +223,18 @@ public final class SearchPanel extends javax.swing.JFrame {
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        FindAction(String classPath, String fieldName) {
+        /**
+         * Protected constructor
+         * @param classPath
+         * @param fieldName 
+         */
+        FindAction(final String classPath, final String fieldName) {
             super(classPath, fieldName);
             setEnabled(false); // Will be (dis)enabled dynamically on CalibratorView::tableChanged()
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             setVisible(true);
         }
     }
@@ -243,13 +245,18 @@ public final class SearchPanel extends javax.swing.JFrame {
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        FindNextAction(String classPath, String fieldName) {
+        /**
+         * Protected constructor
+         * @param classPath
+         * @param fieldName 
+         */
+        FindNextAction(final String classPath, final String fieldName) {
             super(classPath, fieldName);
             setEnabled(false); // Will be (dis)enabled dynamically on CalibratorView::tableChanged()
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             doSearch(SEARCH_DIRECTION.NEXT);
         }
     }
@@ -260,13 +267,18 @@ public final class SearchPanel extends javax.swing.JFrame {
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
+        /**
+         * Protected constructor
+         * @param classPath
+         * @param fieldName 
+         */
         FindPreviousAction(String classPath, String fieldName) {
             super(classPath, fieldName);
             setEnabled(false); // Will be (dis)enabled dynamically on CalibratorView::tableChanged()
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             doSearch(SEARCH_DIRECTION.PREVIOUS);
         }
     }
@@ -299,10 +311,12 @@ public final class SearchPanel extends javax.swing.JFrame {
         /* members */
         /** current found row index related to table view (visible rows) */
         private int _lastFoundRow;
-        /** current found column index related to table view (visible columns)*/
+        /** current found column index related to table view (visible columns) */
         private int _lastFoundColumn;
         /** current search value */
         private String _searchValue;
+        /** current calibrators view */
+        private CalibratorsView _currentView;
 
         /** Protected constructor */
         protected QuickSearchHelper() {
@@ -314,6 +328,7 @@ public final class SearchPanel extends javax.swing.JFrame {
             _lastFoundRow = UNDEFINED_INDEX;
             _lastFoundColumn = UNDEFINED_INDEX;
             _searchValue = null;
+            _currentView = null;
         }
 
         /**
@@ -327,18 +342,24 @@ public final class SearchPanel extends javax.swing.JFrame {
          */
         boolean search(final String searchValue, final boolean isRegExp, final SEARCH_DIRECTION givenDirection) {
 
+            final boolean isLogDebug = _logger.isDebugEnabled();
+
             // If the SearchField is empty or undefined
             boolean foundFlag = false;
             if (searchValue == null || searchValue.length() < 1) {
                 return foundFlag;
             }
+            // Get current view:
+            final CalibratorsView currentView = CalibratorsView.getCurrentView();
 
-            // If the search token changed or a search reset was requested
+            // If the search token or view changed or a search reset was requested:
             SEARCH_DIRECTION currentDirection = givenDirection;
-            if (!searchValue.equals(_searchValue) || (currentDirection == SEARCH_DIRECTION.UNDEFINED)) {
+
+            if (currentView != _currentView || !searchValue.equals(_searchValue) || (currentDirection == SEARCH_DIRECTION.UNDEFINED)) {
                 reset(); // Reset search context
                 currentDirection = SEARCH_DIRECTION.NEXT; // Use NEXT direction by default
                 _searchValue = searchValue; // Backup new search token
+                _currentView = currentView; // Backup new view
             }
 
             if (_logger.isInfoEnabled()) {
@@ -353,9 +374,12 @@ public final class SearchPanel extends javax.swing.JFrame {
                 regexp = convertToRegExp(searchValue); // Otherwise convert simple syntax to regexp
             }
 
-            if (_logger.isDebugEnabled()) {
+            if (isLogDebug) {
                 _logger.debug("Searched RegExp = '" + regexp + "'.");
             }
+
+            // Use table sorter to traverse visible cells:
+            final TableSorter _tableSorter = currentView._tableSorter;
 
             // Use tableSorter to process only currently visible rows and columns
             final int nbOfRows = _tableSorter.getRowCount();
@@ -377,7 +401,7 @@ public final class SearchPanel extends javax.swing.JFrame {
 
             // Use previously found row/column if available
             if (_lastFoundRow != UNDEFINED_INDEX && _lastFoundColumn != UNDEFINED_INDEX) {
-                if (_logger.isDebugEnabled()) {
+                if (isLogDebug) {
                     _logger.debug("Current row = " + _lastFoundRow + ", col = " + _lastFoundColumn);
                 }
                 currentRow = _lastFoundRow;
@@ -395,24 +419,32 @@ public final class SearchPanel extends javax.swing.JFrame {
             boolean searchDone = false;
             int foundRow = UNDEFINED_INDEX;
             int foundColumn = UNDEFINED_INDEX;
+
+            Object currentCell;
+            String currentValue;
+            Matcher matcher;
+
+            // Traverse all visible rows
             for (; currentRow >= 0 && currentRow < nbOfRows && !searchDone; currentRow += directionalIncrement) {
 
                 // Traverse visible columns
                 for (; currentColumn >= 0 && currentColumn < nbOfColumns; currentColumn += directionalIncrement) {
 
                     // Get current cell object
-                    Object currentCell = _tableSorter.getValueAt(currentRow, currentColumn);
-                    if (currentCell != null) {
+                    currentCell = _tableSorter.getValueAt(currentRow, currentColumn);
 
+                    if (currentCell != null) {
                         // Get current cell string value
-                        String currentValue = currentCell.toString();
+                        currentValue = currentCell.toString();
+
                         if (currentValue.length() != 0) {
-                            if (_logger.isDebugEnabled()) {
+                            if (isLogDebug) {
                                 _logger.debug("Cell value '" + currentValue + "' at row " + currentRow + ", col = " + currentColumn + ".");
                             }
 
                             // Do current value matches searched regexp ?
-                            Matcher matcher = pattern.matcher(currentValue);
+                            matcher = pattern.matcher(currentValue);
+
                             if (matcher.matches()) {
                                 foundValue = currentValue;
                                 searchDone = true;
@@ -437,17 +469,13 @@ public final class SearchPanel extends javax.swing.JFrame {
                     _logger.info("Found value '{}' at row {}, col = {}.", foundValue, foundRow, foundColumn);
                 }
 
-                // Clear previous selection and set new selection
-                _calibratorsTable.changeSelection(foundRow, foundColumn, false, false);
-                _calibratorsTable.changeSelection(foundRow, foundColumn, true, true);
-
-                // Move view to show found cell
-                _calibratorsTable.scrollRectToVisible(_calibratorsTable.getCellRect(foundRow, foundColumn, true));
-                _calibratorsTable.requestFocus();
+                // select the found cell:
+                currentView.selectTableCell(foundRow, foundColumn);
 
                 // Memorize state for 'NEXT/PREVIOUS' purpose
                 _lastFoundRow = foundRow;
                 _lastFoundColumn = foundColumn;
+
                 foundFlag = true;
             }
 

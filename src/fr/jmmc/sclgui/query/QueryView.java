@@ -722,6 +722,9 @@ public final class QueryView extends JPanel implements Observer,
 
     /**
      * Called when a field's "value" property changes.
+     * 
+     * TODO: clarify its use case(s)
+     * 
      * @param e 
      */
     @Override
@@ -739,10 +742,10 @@ public final class QueryView extends JPanel implements Observer,
         setEnabledComponents(_scienceObjectPanel, instrumentConfigOk);
 
         // Test if SearchCal parameters panel must be enabled
-        boolean sciencObjectOk = (instrumentConfigOk)
+        boolean scienceObjectOk = (instrumentConfigOk)
                 && (_scienceObjectNameTextfield.getText().length() != 0)
                 && (_queryModel.canBeEdited());
-        setEnabledComponents(_searchCalPanel, sciencObjectOk);
+        setEnabledComponents(_searchCalPanel, scienceObjectOk);
 
         repaint();
     }
@@ -818,7 +821,7 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             StatusBar.show("bright scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(true);
             _queryModel.notifyObservers();
@@ -834,7 +837,7 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             StatusBar.show("faint scenario selected.");
             _queryModel.setQueryBrightScenarioFlag(false);
             _queryModel.notifyObservers();
@@ -850,7 +853,7 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             _queryModel.setQueryAutoRadiusFlag(_autoRadiusRadioButton.isSelected());
         }
     }
@@ -864,7 +867,7 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             _queryModel.reset();
         }
     }
@@ -878,7 +881,7 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             try {
                 _queryModel.loadDefaultValues();
             } catch (Exception pe) {
@@ -896,7 +899,7 @@ public final class QueryView extends JPanel implements Observer,
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             try {
                 _queryModel.saveDefaultValues();
             } catch (IllegalStateException ise) {

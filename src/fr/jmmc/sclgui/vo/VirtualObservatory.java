@@ -3,21 +3,20 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.vo;
 
-import fr.jmmc.sclgui.calibrator.CalibratorsModel;
-import fr.jmmc.sclgui.query.QueryModel;
-import fr.jmmc.jmcs.gui.component.MessagePane;
-import fr.jmmc.jmcs.gui.component.MessagePane.ConfirmSaveChanges;
-
-import fr.jmmc.jmcs.gui.component.StatusBar;
-
-import fr.jmmc.jmcs.gui.util.SwingUtils;
-import fr.jmmc.jmcs.network.interop.SampCapability;
-import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.FileChooser;
+import fr.jmmc.jmcs.gui.component.MessagePane;
+import fr.jmmc.jmcs.gui.component.MessagePane.ConfirmSaveChanges;
+import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
+import fr.jmmc.jmcs.network.interop.SampCapability;
+import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
 import fr.jmmc.jmcs.util.MimeType;
 import fr.jmmc.sclgui.SearchCal;
+import fr.jmmc.sclgui.calibrator.CalibratorsModel;
+import fr.jmmc.sclgui.query.QueryModel;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -45,19 +44,19 @@ public final class VirtualObservatory extends Observable {
     /** Store whether the Query has be launched or not */
     private final AtomicBoolean _queryIsLaunched;
     /** Open file... action */
-    public final OpenFileAction _openFileAction;
+    private final OpenFileAction _openFileAction;
     /** Save file... action */
-    public final SaveFileAction _saveFileAction;
+    private final SaveFileAction _saveFileAction;
     /** Save file as... action */
-    public final SaveFileAsAction _saveFileAsAction;
+    private final SaveFileAsAction _saveFileAsAction;
     /** Revet to Saved File action */
-    public final RevertToSavedFileAction _revertToSavedFileAction;
+    private final RevertToSavedFileAction _revertToSavedFileAction;
     /** Export to CSV File action */
-    public final ExportToCSVFileAction _exportToCSVFileAction;
+    private final ExportToCSVFileAction _exportToCSVFileAction;
     /** Export to HTML File action */
-    public final ExportToHTMLFileAction _exportToHTMLFileAction;
+    private final ExportToHTMLFileAction _exportToHTMLFileAction;
     /** Export to SAMP action */
-    public final ShareCalibratorsThroughSAMPAction _shareCalibratorsThroughSAMPAction;
+    private final ShareCalibratorsThroughSAMPAction _shareCalibratorsThroughSAMPAction;
     /** Get Cal action */
     public final GetCalAction _getCalAction;
 
@@ -104,14 +103,15 @@ public final class VirtualObservatory extends Observable {
 
         // File related members
         _currentFile = null;
+
+        // actions:
         _openFileAction = new OpenFileAction(classPath, "_openFileAction");
         _saveFileAction = new SaveFileAction(classPath, "_saveFileAction");
         _saveFileAsAction = new SaveFileAsAction(classPath, "_saveFileAsAction");
         _revertToSavedFileAction = new RevertToSavedFileAction(classPath, "_revertToSavedFileAction");
         _exportToCSVFileAction = new ExportToCSVFileAction(classPath, "_exportToCSVFileAction");
         _exportToHTMLFileAction = new ExportToHTMLFileAction(classPath, "_exportToHTMLFileAction");
-        _shareCalibratorsThroughSAMPAction = new ShareCalibratorsThroughSAMPAction(classPath,
-                "_shareCalibratorsThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
+        _shareCalibratorsThroughSAMPAction = new ShareCalibratorsThroughSAMPAction(classPath, "_shareCalibratorsThroughSAMPAction", SampCapability.LOAD_VO_TABLE);
 
         // Query related members
         _getCalAction = new GetCalAction(this, classPath, "_getCalAction");
@@ -357,7 +357,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             // If we can lost current modifications
             if (canLostModifications()) {
                 // If the action was automatically triggered from App launch
@@ -419,7 +419,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (_currentFile != null) {
                 // If we can lost current modifications
                 if (canLostModifications()) {
@@ -459,7 +459,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (saveCalibratorListToFile()) {
                 StatusBar.show("file succesfully saved.");
             }
@@ -481,7 +481,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             _currentFile = null; // reset previously remembered file (if any)
             StatusBar.show("saving file as...");
             if (saveCalibratorListToFile()) {
@@ -505,7 +505,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             exportToFileFormat(MimeType.CSV);
         }
     }
@@ -525,7 +525,7 @@ public final class VirtualObservatory extends Observable {
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             exportToFileFormat(MimeType.HTML);
         }
     }

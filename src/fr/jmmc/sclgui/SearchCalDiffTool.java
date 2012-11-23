@@ -4,31 +4,42 @@
 package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
+import fr.jmmc.jmcs.util.ObjectUtils;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
+import fr.jmmc.sclgui.calibrator.DiffCalibratorsModel;
+import fr.jmmc.sclgui.calibrator.StarList;
+import fr.jmmc.sclgui.filter.FilterView;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.sclgui.preference.ColumnsPreferencesView;
 import fr.jmmc.sclgui.preference.HelpPreferencesView;
+import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.query.QueryView;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,10 +59,11 @@ public final class SearchCalDiffTool extends App {
     /** argument 'right' */
     public final static String ARG_RIGHT = "right";
     /* members */
-    /** calibrators model of first file to diff */
-    private CalibratorsModel calibratorsModelA;
-    /** calibrators model of second file to diff */
-    private CalibratorsModel calibratorsModelB;
+    CalibratorsView calibratorsViewLeft;
+    CalibratorsView calibratorsViewRight;
+    CalibratorsView calibratorsViewDiff;
+    /** diff model */
+    DiffCalibratorsModel diffModel;
 
     /**
      * Launch the SearchCalDiffTool
@@ -94,6 +106,8 @@ public final class SearchCalDiffTool extends App {
         // Set default resource
         fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
+        final SearchCalDiffTool diffTool = this;
+
         // Using invokeAndWait to be in sync with this thread :
         // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
         SwingUtils.invokeAndWaitEDT(new Runnable() {
@@ -106,31 +120,54 @@ public final class SearchCalDiffTool extends App {
                 // Get preferences
                 final Preferences preferences = Preferences.getInstance();
 
+                // Disable non calibrator filter (show all stars):
+                try {
+                    preferences.setPreference(PreferenceKey.FILTER_NON_CALIBRATORS, Boolean.FALSE);
+
+                    preferences.setPreference(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, Boolean.FALSE);
+                    preferences.setPreference(PreferenceKey.VERBOSITY_DETAILED_FLAG, Boolean.TRUE);
+                    preferences.setPreference(PreferenceKey.VERBOSITY_FULL_FLAG, Boolean.FALSE);
+
+                } catch (PreferencesException pe) {
+                    _logger.warn("setPreference failed: ", pe);
+                }
+
                 // Create a query model
                 final QueryModel queryModel = new QueryModel();
                 queryModel.init();
 
                 // Create filters
-                FiltersModel filtersModel = new FiltersModel(queryModel);
-                FiltersView filtersView = new FiltersView(filtersModel);
+                final FiltersModel filtersModel = new FiltersModel(queryModel);
 
-                calibratorsModelA = new CalibratorsModel(filtersModel, queryModel);
-                final CalibratorsView calibratorsViewA = new CalibratorsView(calibratorsModelA);
-                calibratorsViewA.init();
+                // Disable all filters at startup:
+                for (FilterView filterView : filtersModel.getFilterViews()) {
+                    if (filterView.getEnabledCheckbox().isSelected()) {
+                        // trick to fire actionPerformed():
+                        filterView.getEnabledCheckbox().doClick();
+                    }
+                }
 
-                calibratorsModelB = new CalibratorsModel(filtersModel, queryModel);
-                final CalibratorsView calibratorsViewB = new CalibratorsView(calibratorsModelB);
-                calibratorsViewB.init();
+                final FiltersView filtersView = new FiltersView(filtersModel);
 
-                filtersModel.addObserver(calibratorsModelA);
-                filtersModel.addObserver(calibratorsModelB);
+                final CalibratorsModel calibratorsModelLeft = new CalibratorsModel(filtersModel, queryModel); // query model represents the reference file
+                final CalibratorsView calibratorsViewLeft = new CalibratorsView(calibratorsModelLeft);
+
+                final CalibratorsModel calibratorsModelRight = new CalibratorsModel(filtersModel, null); // query model is null 
+                final CalibratorsView calibratorsViewRight = new CalibratorsView(calibratorsModelRight);
+
+                final CalibratorsModel calibratorsModelDiff = new CalibratorsModel(filtersModel, null); // query model is null 
+                final CalibratorsView calibratorsViewDiff = new CalibratorsView(calibratorsModelDiff);
+
+                filtersModel.addObserver(calibratorsModelLeft);
+                filtersModel.addObserver(calibratorsModelRight);
+                filtersModel.addObserver(calibratorsModelDiff);
 
                 // Link everything up
                 // note: _vo member is defined by App constructor !
                 // note: only used to instanciate actions !
-                final VirtualObservatory vo = new VirtualObservatory(queryModel, calibratorsModelA);
+                final VirtualObservatory vo = new VirtualObservatory(queryModel, calibratorsModelLeft);
                 // free reference to disable any action:
-                calibratorsModelA.setVirtualObservatory(null);
+                calibratorsModelLeft.setVirtualObservatory(null);
 
                 // Attach the query model to its query view
                 final QueryView queryView = new QueryView(queryModel, null); // vo is null to disable start query action
@@ -162,26 +199,149 @@ public final class SearchCalDiffTool extends App {
                 StatusBar.show("application initialization...");
 
                 // Build the main window
-                final DiffWindow window = new DiffWindow(vo, queryView, calibratorsViewA, calibratorsViewB, filtersView, statusBar);
+                final DiffWindow window = new DiffWindow(vo, queryView, calibratorsViewLeft, calibratorsViewRight,
+                        calibratorsViewDiff, filtersView, statusBar);
                 App.setFrame(window);
 
                 // Triggers all preferences observers notification to finnish GUI setup.
                 preferences.triggerObserversNotification();
 
                 final Map<String, String> args = getCommandLineArguments();
-                if (args != null) {
-                    if (args.get(ARG_DIFF) != null && args.get(ARG_LEFT) != null && args.get(ARG_RIGHT) != null) {
-                        _logger.warn("args: {}", args);
 
-                        final File fileA = new File(args.get(ARG_LEFT));
-                        final File fileB = new File(args.get(ARG_RIGHT));
+                if (args != null && args.get(ARG_DIFF) != null && args.get(ARG_LEFT) != null && args.get(ARG_RIGHT) != null) {
 
-                        calibratorsModelA.parseVOTable(fileA);
-                        calibratorsModelB.parseVOTable(fileB);
+                    final File fileLeft = new File(args.get(ARG_LEFT));
+                    final File fileRight = new File(args.get(ARG_RIGHT));
+
+                    diffTool.diffModel = new DiffCalibratorsModel(calibratorsModelLeft, calibratorsModelRight, calibratorsModelDiff);
+
+                    diffTool.diffModel.diff(fileLeft, fileRight);
+
+                    diffTool.calibratorsViewLeft = calibratorsViewLeft;
+                    diffTool.calibratorsViewRight = calibratorsViewRight;
+                    diffTool.calibratorsViewDiff = calibratorsViewDiff;
+
+                    // add table selection listeners:
+                    final SyncSelectionHandler sshLeft = new SyncSelectionHandler(calibratorsViewLeft);
+                    calibratorsViewLeft.addColumnSelectionListener(sshLeft);
+                    calibratorsViewLeft.addRowSelectionListener(sshLeft);
+
+                    final SyncSelectionHandler sshRight = new SyncSelectionHandler(calibratorsViewRight);
+                    calibratorsViewRight.addColumnSelectionListener(sshRight);
+                    calibratorsViewRight.addRowSelectionListener(sshRight);
+
+                    final SyncSelectionHandler sshDiff = new SyncSelectionHandler(calibratorsViewDiff);
+                    calibratorsViewDiff.addColumnSelectionListener(sshDiff);
+                    calibratorsViewDiff.addRowSelectionListener(sshDiff);
+                }
+
+                // finally disable query view:
+                queryView.propertyChange(null);
+            }
+        });
+    }
+    private boolean ignoreSelectionEvent = false;
+
+    private void synchronizeSelection(final CalibratorsView source) {
+        if (ignoreSelectionEvent) {
+            return;
+        }
+
+        // Performance timer
+        final long startTime = System.nanoTime();
+        try {
+            ignoreSelectionEvent = true;
+
+            // TODO: fix column mapping (ordering changed):
+            final int selectedColumn = source.getSelectedProperty();
+            final int[] selectedIndices = source.getSelectedStarIndices();
+
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("selectedColumn: {}", selectedColumn);
+                _logger.debug("selectedIndices: {}", Arrays.toString(selectedIndices));
+            }
+
+            final int modeGetIdx;
+            final int modeUseRowIdx;
+            final CalibratorsView viewRowIdx;
+            final int modeUseOtherRowIdx;
+            final CalibratorsView viewOtherRowIdx;
+            String matchRowIdx = StarList.RowIdxColumnName;
+            String matchOtherRowIdx = StarList.RowIdxColumnName;
+
+            if (source == calibratorsViewLeft) {
+                modeGetIdx = -1; // rowIdx read from left
+                // applied to diff:
+                modeUseRowIdx = 2;
+                viewRowIdx = calibratorsViewDiff;
+
+                // applied to right
+                modeUseOtherRowIdx = 1;
+                viewOtherRowIdx = calibratorsViewRight;
+
+            } else if (source == calibratorsViewRight) {
+                modeGetIdx = 1; // rowIdx read from right
+                // applied to diff:
+                matchRowIdx = StarList.OtherRowIdxColumnName;
+                modeUseRowIdx = 2;
+                viewRowIdx = calibratorsViewDiff;
+
+                // applied to left
+                modeUseOtherRowIdx = -1;
+                viewOtherRowIdx = calibratorsViewLeft;
+
+            } else if (source == calibratorsViewDiff) {
+                modeGetIdx = 2; // rowIdx read from diff
+                // applied to left:
+                modeUseRowIdx = -1;
+                viewRowIdx = calibratorsViewLeft;
+
+                // applied to right
+                modeUseOtherRowIdx = 1;
+                viewOtherRowIdx = calibratorsViewRight;
+            } else {
+                return;
+            }
+
+            // Get rowIdx values:
+            final List<Integer> rowIdxValues = diffModel.getFilteredRows(selectedIndices, modeGetIdx, StarList.RowIdxColumnName);
+
+            if (rowIdxValues != null) {
+                // diff:
+                final List<Integer> matchIdx = diffModel.findMatchingFilteredRows(rowIdxValues, modeUseRowIdx, matchRowIdx);
+
+                if (matchIdx == null || matchIdx.isEmpty()) {
+                    viewRowIdx.clearTableSelection();
+                } else {
+                    for (Integer idx : matchIdx) {
+                        viewRowIdx.selectTableCell(idx.intValue(), selectedColumn, false);
                     }
                 }
             }
-        });
+
+            // Get otherRowIdx values:
+            final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, modeGetIdx, StarList.OtherRowIdxColumnName);
+
+            if (otherIdxValues != null) {
+                // right:
+                final List<Integer> matchIdx = diffModel.findMatchingFilteredRows(otherIdxValues, modeUseOtherRowIdx, matchOtherRowIdx);
+
+                if (matchIdx == null || matchIdx.isEmpty()) {
+                    viewOtherRowIdx.clearTableSelection();
+                } else {
+                    for (Integer idx : matchIdx) {
+                        viewOtherRowIdx.selectTableCell(idx.intValue(), selectedColumn, false);
+                    }
+                }
+            }
+
+        } finally {
+            ignoreSelectionEvent = false;
+
+            if (_logger.isInfoEnabled()) {
+                _logger.info("synchronizeSelection() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
+            }
+        }
     }
 
     /** Execute application body */
@@ -213,6 +373,22 @@ public final class SearchCalDiffTool extends App {
         new SearchCalDiffTool(args);
     }
 
+    private class SyncSelectionHandler implements ListSelectionListener {
+
+        /** source of events */
+        private final CalibratorsView source;
+
+        public SyncSelectionHandler(final CalibratorsView source) {
+            this.source = source;
+        }
+
+        public void valueChanged(final ListSelectionEvent lse) {
+            if (!lse.getValueIsAdjusting()) {
+                synchronizeSelection(source);
+            }
+        }
+    }
+
     /**
      * Diff window. This class is at one central point and play the mediator role.
      */
@@ -220,55 +396,47 @@ public final class SearchCalDiffTool extends App {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
-        /** Logger */
-        private static final Logger _logger = LoggerFactory.getLogger(DiffWindow.class.getName());
-        /** Main panel container, displaying the query and result views */
-        private Container _mainPane = null;
-        /** Query view */
-        private final QueryView _queryView;
-        /** Calibrators view for File A */
-        public final CalibratorsView _calibratorsViewA;
-        /** Calibrators view for File B */
-        public final CalibratorsView _calibratorsViewB;
-        /** Filters view */
-        public final FiltersView _filtersView;
-        /** Page Setup... action */
-        public final PageSetupAction _pageSetupAction;
-        /** Print... action */
-        public final PrintAction _printAction;
 
         /**
          * Constructor.
          * @param vo
          * @param queryView
-         * @param calibratorsViewA 
-         * @param calibratorsViewB 
+         * @param calibratorsViewLeft 
+         * @param calibratorsViewRight 
+         * @param calibratorsViewDiff 
          * @param filtersView
          * @param statusBar  
          */
         DiffWindow(final VirtualObservatory vo, final QueryView queryView,
-                   final CalibratorsView calibratorsViewA, final CalibratorsView calibratorsViewB, final FiltersView filtersView,
-                   final StatusBar statusBar) {
+                   final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
+                   final CalibratorsView calibratorsViewDiff,
+                   final FiltersView filtersView, final StatusBar statusBar) {
             super("SearchCal Diff tool");
 
-            _queryView = queryView;
-            _calibratorsViewA = calibratorsViewA;
-            _calibratorsViewB = calibratorsViewB;
-            _filtersView = filtersView;
-
+            // Use MainWindow class path for registered actions:
             final String classPath = MainWindow.class.getName();
 
-            _pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
-            _printAction = new PrintAction(classPath, "_printAction");
+            final PageSetupAction pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
+            final PrintAction printAction = new PrintAction(classPath, "_printAction");
 
-            _mainPane = getContentPane();
-            _mainPane.setLayout(new BorderLayout());
+            final Container mainPane = getContentPane();
+            mainPane.setLayout(new BorderLayout());
 
             // Create a first top-bottom split pane for calibrators and filters
-            JSplitPane diffPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, _calibratorsViewA, _calibratorsViewB);
-            // Give priority to calibrators view
-            diffPane.setResizeWeight(0.5);
+            final JSplitPane filePane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, calibratorsViewLeft, calibratorsViewRight);
+            // Give priority to both calibrators view
+            filePane.setResizeWeight(0.5);
 
+            // Set the split pane to continuously resize the child components
+            // which the divider is dragged
+            filePane.setContinuousLayout(true);
+            // Allows the user to conveniently move the divider to either end with a single click
+            filePane.setOneTouchExpandable(true);
+
+            // Create a first top-bottom split pane for calibrators and filters
+            final JSplitPane diffPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, filePane, calibratorsViewDiff);
+            // Give priority to calibrators view
+            diffPane.setResizeWeight(0.66);
             // Set the split pane to continuously resize the child components
             // which the divider is dragged
             diffPane.setContinuousLayout(true);
@@ -276,9 +444,9 @@ public final class SearchCalDiffTool extends App {
             diffPane.setOneTouchExpandable(true);
 
             // Create a first top-bottom split pane for calibrators and filters
-            JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diffPane, _filtersView);
+            final JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diffPane, filtersView);
             // Give priority to calibrators view
-            resultPane.setResizeWeight(1.0);
+//            resultPane.setResizeWeight(1.0);
 
             // Set the split pane to continuously resize the child components
             // which the divider is dragged
@@ -287,16 +455,23 @@ public final class SearchCalDiffTool extends App {
             resultPane.setOneTouchExpandable(true);
 
             // Create a second top-bottom split pane
-            JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, _queryView, resultPane);
+            final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, queryView, resultPane);
             // Set the split pane to continuously resize the child components
             // which the divider is dragged
             splitPane.setContinuousLayout(true);
             // Allows the user to conveniently move the divider to either end with a single click
             splitPane.setOneTouchExpandable(true);
-            _mainPane.add(splitPane, BorderLayout.CENTER);
+
+            mainPane.add(splitPane, BorderLayout.CENTER);
 
             // Add the Status bar
-            _mainPane.add(statusBar, BorderLayout.SOUTH);
+            mainPane.add(statusBar, BorderLayout.SOUTH);
+
+            // do pack components:
+            pack();
+
+            // hide filters view:
+            resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
 
             // Show the user the app is ready to be used
             StatusBar.show("application ready.");
@@ -323,16 +498,17 @@ public final class SearchCalDiffTool extends App {
             private static final long serialVersionUID = 1;
 
             /**
-             * Private empty action
-             * @param classPath
-             * @param fieldName 
+             * Fake Page setup action constructor
+             * @param classPath the path of the class containing the field pointing to
+             * the action, in the form returned by 'getClass().getName();'.
+             * @param fieldName the name of the field pointing to the action.
              */
             PageSetupAction(String classPath, String fieldName) {
                 super(classPath, fieldName);
             }
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 // disabled
             }
         }
@@ -345,17 +521,18 @@ public final class SearchCalDiffTool extends App {
             /** default serial UID for Serializable interface */
             private static final long serialVersionUID = 1;
 
-            /** 
-             * Private empty action
-             * @param classPath
-             * @param fieldName 
+            /**
+             * Fake Print action constructor
+             * @param classPath the path of the class containing the field pointing to
+             * the action, in the form returned by 'getClass().getName();'.
+             * @param fieldName the name of the field pointing to the action.
              */
             PrintAction(String classPath, String fieldName) {
                 super(classPath, fieldName);
             }
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 // disabled
             }
         }

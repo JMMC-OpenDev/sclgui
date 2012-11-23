@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import org.ivoa.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,8 @@ public final class StarListMeta {
     private int _nProperties = 0;
     /** List of star property meta data */
     private final List<StarPropertyMeta> _propertyMetaList;
-    /** Map linking each colum group name to its ID */
-    private final Map<String, Integer> _fieldIdToColNumber;
+    /** Map linking each property name to its index */
+    private final Map<String, Integer> _mapPropertyIndexByName;
 
     /**
      * Protected constructor for empty meta data
@@ -33,7 +34,7 @@ public final class StarListMeta {
     StarListMeta() {
         super();
         _propertyMetaList = Collections.emptyList();
-        _fieldIdToColNumber = Collections.emptyMap();
+        _mapPropertyIndexByName = Collections.emptyMap();
     }
 
     /**
@@ -43,7 +44,7 @@ public final class StarListMeta {
     StarListMeta(final int capacity) {
         super();
         _propertyMetaList = new ArrayList<StarPropertyMeta>(capacity);
-        _fieldIdToColNumber = new HashMap<String, Integer>(capacity);
+        _mapPropertyIndexByName = new HashMap<String, Integer>(capacity);
     }
 
     /**
@@ -58,7 +59,7 @@ public final class StarListMeta {
         }
 
         // Associate the group name with its index as a table column
-        final Integer oldIndex = _fieldIdToColNumber.put(propertyMeta.getName(), Integer.valueOf(_nProperties));
+        final Integer oldIndex = _mapPropertyIndexByName.put(propertyMeta.getName(), Integer.valueOf(_nProperties));
 
         if (oldIndex != null) {
             _logger.warn("Duplicate column [{}]found at indexes {} - {}", propertyMeta.getName(), oldIndex, Integer.valueOf(_nProperties));
@@ -109,28 +110,42 @@ public final class StarListMeta {
      */
     // TODO: rename
     public Map<String, Integer> getFieldIdToColNumberMap() {
-        return _fieldIdToColNumber;
+        return _mapPropertyIndexByName;
     }
 
     /**
-     * Give back the column ID from its name.
+     * Give back the property index from its name.
      *
-     * @param groupName name of the column's group we are looking for the ID.
+     * @param propertyName name of the column's group we are looking for the ID.
      *
      * @return the column ID, or -1 if nothing found.
      */
     // TODO: rename
-    public int getColumnIdByName(final String groupName) {
+    public int getPropertyIndexByName(final String propertyName) {
         int columnId = -1;
 
-        if (groupName != null) {
-            final Integer foundIndex = _fieldIdToColNumber.get(groupName);
+        if (propertyName != null) {
+            final Integer foundIndex = _mapPropertyIndexByName.get(propertyName);
 
             if (foundIndex != null) {
                 columnId = foundIndex.intValue();
             }
         }
         return columnId;
+    }
+
+    /**
+     * Return the property meta at the given index
+     *
+     * @param index property index
+     *
+     * @return property meta or null if index is out of bounds
+     */
+    public StarPropertyMeta getPropertyMeta(final int index) {
+        if (index >= 0 && index < _nProperties) {
+            return _propertyMetaList.get(index);
+        }
+        return null;
     }
 
     /**
@@ -141,8 +156,9 @@ public final class StarListMeta {
      * @return property name or "" if index is out of bounds
      */
     public String getPropertyName(final int index) {
-        if (index >= 0 && index < _nProperties) {
-            return _propertyMetaList.get(index).getName();
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getName();
         }
         return "";
     }
@@ -155,8 +171,9 @@ public final class StarListMeta {
      * @return property data type as Class or null if index is out of bounds
      */
     public Class<?> getPropertyClass(final int index) {
-        if (index >= 0 && index < _nProperties) {
-            return _propertyMetaList.get(index).getClassType();
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getClassType();
         }
 
         return null;
@@ -170,8 +187,24 @@ public final class StarListMeta {
      * @return property description or "" if index is out of bounds
      */
     public String getPropertyDescription(final int index) {
-        if (index >= 0 && index < _nProperties) {
-            return _propertyMetaList.get(index).getDescription();
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getDescription();
+        }
+        return "";
+    }
+
+    /**
+     * Return the property ucd (1.0) of the property at the given index
+     *
+     * @param index property index
+     *
+     * @return property ucd (1.0) or "" if index is out of bounds
+     */
+    public String getPropertyUcd(final int index) {
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getUcd();
         }
         return "";
     }
@@ -184,8 +217,9 @@ public final class StarListMeta {
      * @return property unit or "" if index is out of bounds
      */
     public String getPropertyUnit(final int index) {
-        if (index >= 0 && index < _nProperties) {
-            return _propertyMetaList.get(index).getUnit();
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getUnit();
         }
         return "";
     }
@@ -196,10 +230,16 @@ public final class StarListMeta {
      * @return property url or "" if undefined
      */
     public String getPropertyUrl(final int index) {
-        if (index >= 0 && index < _nProperties) {
-            return _propertyMetaList.get(index).getUrl();
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getUrl();
         }
         return "";
+    }
+
+    @Override
+    public String toString() {
+        return "StarListMeta[" + _nProperties + "]\n" + CollectionUtils.toString(_propertyMetaList, "\n    ", "{\n    ", "\n}");
     }
 }
 /*___oOo___*/

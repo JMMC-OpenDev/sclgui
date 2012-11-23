@@ -4,8 +4,8 @@
 package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.jmal.Catalog;
-import fr.jmmc.jmcs.util.MCSExceptionHandler;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.util.MCSExceptionHandler;
 import fr.jmmc.sclgui.vo.VirtualObservatory.QueryState;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import java.awt.event.ActionEvent;

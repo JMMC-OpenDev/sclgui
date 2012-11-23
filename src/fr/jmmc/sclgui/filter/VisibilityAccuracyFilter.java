@@ -68,7 +68,7 @@ public final class VisibilityAccuracyFilter extends Filter {
         _vis2Id = starList.getColumnIdByName(StarList.Vis2ColumnName);
 
         // Get the ID of the column contaning 'visibilityErr' star property
-        _vis2errId = starList.getColumnIdByName("vis2Err");
+        _vis2errId = starList.getColumnIdByName(StarList.Vis2ErrColumnName);
 
         // Get the maximum visibility accuracy allowed:
         _allowedAccuracyVis = getAllowedVisibilityAccurancy();

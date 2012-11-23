@@ -12,6 +12,7 @@ import fr.jmmc.sclgui.query.QueryView;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.print.Book;
@@ -34,7 +35,7 @@ public final class MainWindow extends JFrame {
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(MainWindow.class.getName());
     /** Main panel container, displaying the query and result views */
-    private Container _mainPane = null;
+    private final Container _mainPane;
     /** Query view */
     private final QueryView _queryView;
     /** Calibrators view */
@@ -139,12 +140,18 @@ public final class MainWindow extends JFrame {
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
+        /**
+         * Page setup action constructor
+         * @param classPath the path of the class containing the field pointing to
+         * the action, in the form returned by 'getClass().getName();'.
+         * @param fieldName the name of the field pointing to the action.
+         */
         PageSetupAction(String classPath, String fieldName) {
             super(classPath, fieldName);
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             // Check Printing if not yet done
             initPrinting();
 
@@ -161,12 +168,18 @@ public final class MainWindow extends JFrame {
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
+        /**
+         * Print action constructor
+         * @param classPath the path of the class containing the field pointing to
+         * the action, in the form returned by 'getClass().getName();'.
+         * @param fieldName the name of the field pointing to the action.
+         */
         PrintAction(String classPath, String fieldName) {
             super(classPath, fieldName);
         }
 
         @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             // Check Printing and landscape initialisation
             initPrinting();
 

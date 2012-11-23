@@ -20,12 +20,39 @@ public final class StarList extends Vector<List<StarProperty>> {
     public static final StarList EMPTY_LIST = new StarList();
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1L;
-    /** Store the vis2 column name */
-    public static final String Vis2ColumnName = "vis2";
+    /** Store the dist column name */
+    public static final String DistColumnName = "dist";
+    /** Store column names of each multiplicity column to consider */
+    public static final String[] MultiplicityColumnNames = {"MultFlag", "BinFlag", "SBC9"};
+    /** Store column names of each orbit separation column to consider */
+    public static final String[] OrbitSeparationColumnNames = {"sep1", "sep2"};
+    /** Store the RAJ2000 column name */
+    public static final String RAJ2000ColumnName = "RAJ2000";
+    /** Store the RAJ2000 column name */
+    public static final String DEJ2000ColumnName = "DEJ2000";
     /** Store the SpType column name */
     public static final String SpTypeColumnName = "SpType";
+    /** Store the variability flag 1 column name */
+    public static final String VarFlag1ColumnName = "VarFlag1";
+    /** Store the variability flag 2 column name */
+    public static final String VarFlag2ColumnName = "VarFlag2";
+    /** Store the variability flag 3 column name */
+    public static final String VarFlag3ColumnName = "VarFlag3";
+    /** Store the vis2 column name */
+    public static final String Vis2ColumnName = "vis2";
+    /** Store the vis2Err column name */
+    public static final String Vis2ErrColumnName = "vis2Err";
     /** Store the deletedFlag column name */
-    private static final String _deletedFlagColumnName = "deletedFlag";
+    public static final String DeletedFlagColumnName = "deletedFlag";
+    /* dynamic columns */
+    /** Store the RAdeg column name */
+    public static final String RADegColumnName = "RAdeg";
+    /** Store the DEdeg column name */
+    public static final String DEDegColumnName = "DEdeg";
+    /** Store the rowIdx column name */
+    public static final String RowIdxColumnName = "rowIdx";
+    /** Store the rowIdx column name */
+    public static final String OtherRowIdxColumnName = "otherRowIdx";
     /* members */
     /** star list meta data */
     private final StarListMeta _metaData;
@@ -64,15 +91,15 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @return the column ID, or -1 if nothing found.
      */
     public int getColumnIdByName(final String groupName) {
-        return _metaData.getColumnIdByName(groupName);
+        return _metaData.getPropertyIndexByName(groupName);
     }
 
     /**
      * Return the column ID of the deletedFlag column
      * @return column ID of the deletedFlag column
      */
-    private int getDeletedFlagColumnID() {
-        return getColumnIdByName(_deletedFlagColumnName);
+    public int getDeletedFlagColumnID() {
+        return getColumnIdByName(DeletedFlagColumnName);
     }
 
     /**

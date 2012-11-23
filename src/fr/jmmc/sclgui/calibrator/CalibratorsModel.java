@@ -28,6 +28,7 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.task.TaskSwingWorker;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.jmcs.util.XmlFactory;
@@ -88,9 +89,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /* members */
     /** Filters */
     private final FiltersModel _filtersModel;
-    /** Store the current query model in order to allow later update to progress bar and parse query parameters */
+    /** Store the current query model in order to allow later update to progress bar and parse query parameters (may be null) */
     final QueryModel _queryModel;
-    /** Store the main application object used to perform menu activation */
+    /** Store the main application object used to perform menu activation (may be null) */
     VirtualObservatory _vo;
     /** filter non calibrators */
     private final FacelessNonCalibratorsFilter _facelessNonCalibratorsFilter;
@@ -260,7 +261,15 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
-     * Protected setter for original star list and update also star list meta data (cached)
+     * Return the original star list (diff tool only)
+     * @return original star list
+     */
+    StarList getOriginalStarList() {
+        return _originalStarList;
+    }
+
+    /**
+     * Public setter for original star list and update also star list meta data (cached)
      * @param starList star list to set
      */
     private void setOriginalStarList(final StarList starList) {
@@ -269,6 +278,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _nProperties = _starListMeta.getPropertyCount();
     }
 
+    /**
+     * Return the filtered star list (diff tool only)
+     * @return filtered star list
+     */
+    StarList getFilteredStarList() {
+        return _filteredStarList;
+    }
+    
     /**
      * Protected setter for filtered star list and cache its size
      * @param starList star list to set
@@ -286,7 +303,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return the column ID, or -1 if nothing found.
      */
     public int getColumnIdByName(final String groupName) {
-        return _starListMeta.getColumnIdByName(groupName);
+        return _starListMeta.getPropertyIndexByName(groupName);
     }
 
     /**
@@ -411,10 +428,25 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param file the VOTable file to parse as File
+     * 
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final File file) throws IllegalArgumentException {
-        parseVOTable(file, null, file.length(), false);
+        parseVOTable(file, null, file.length(), false, true);
+    }
+
+    /**
+     * Parse the given file as VOTable and update any attached JTable to show its content.
+     * 
+     * Note: this action uses a SwingWorker to parse the VOTable in background (async)
+     *
+     * @param file the VOTable file to parse as File
+     * @param async true to use asynchronous parsing (in background); false to use EDT (synchronous)
+     * 
+     * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
+     */
+    public void parseVOTable(final File file, final boolean async) throws IllegalArgumentException {
+        parseVOTable(file, null, file.length(), false, async);
     }
 
     /**
@@ -428,7 +460,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final String voTable, final boolean startQuery) throws IllegalArgumentException {
-        parseVOTable(null, voTable, voTable.length(), startQuery);
+        parseVOTable(null, voTable, voTable.length(), startQuery, false);
     }
 
     /**
@@ -438,10 +470,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param content the VOTable content to parse as String
      * @param length VOTable size in bytes
      * @param startQuery true to start query after parsing votable
+     * @param async true to use asynchronous parsing (in background); false to use EDT (synchronous)
      *
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
-    private void parseVOTable(final File file, final String content, final long length, final boolean startQuery) throws IllegalArgumentException {
+    private void parseVOTable(final File file, final String content, final long length,
+                              final boolean startQuery, final boolean async) throws IllegalArgumentException {
         // Diff tool:
         if (_vo != null) {
             _vo.enableDataRelatedMenus(false);
@@ -509,7 +543,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // Create parse votable task worker :
         final ParseVoTableSwingWorker loadWorker = new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime);
 
-        if (table.getNrowsValue() > LOAD_TABLE_ASYNC_THRESHOLD) {
+        if (async && table.getNrowsValue() > LOAD_TABLE_ASYNC_THRESHOLD) {
             // Cancel other tasks and execute this new task in background:
             loadWorker.executeTask();
         } else {
@@ -581,6 +615,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             /** Get the current thread to check if the task is interrupted */
             final Thread currentThread = Thread.currentThread();
 
+            final boolean async = !SwingUtils.isEDT();
+
             final long start = System.nanoTime();
 
             final SavotResource resource = savotVoTable.getResources().getItemAt(0);
@@ -638,7 +674,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 }
 
                 // Define star property meta data:
-                starPropertyMeta = new StarPropertyMeta(groupSet.getItemAt(groupId).getName(), columnClass, field.getDescription(), field.getUnit(), url);
+                starPropertyMeta = new StarPropertyMeta(groupSet.getItemAt(groupId).getName(), columnClass,
+                        field.getDescription(), field.getUcd(), field.getUnit(), url);
 
                 // Add it to the star list meta data:
                 starListMeta.addPropertyMeta(starPropertyMeta);
@@ -670,19 +707,22 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 Catalog catalog;
 
                 // only use Progress bar for large tables (JSDC):
-                final int step = (tableRows > LOAD_TABLE_ASYNC_THRESHOLD) ? tableRows / 100 : Integer.MAX_VALUE;
+                final int step = (async && tableRows > LOAD_TABLE_ASYNC_THRESHOLD) ? tableRows / 100 : Integer.MAX_VALUE;
 
                 // Iterate on rows:
                 do {
 
-                    if (nRow % step == 0 && nRow != 0) {
+                    if (async && (nRow % step == 0) && (nRow != 0)) {
                         // fast interrupt :
                         if (currentThread.isInterrupted()) {
                             return null;
                         }
 
-                        // progress bar:
-                        queryModel.setQueryProgress("loading ...", nRow, tableRows);
+                        // query model may be null in SearchCal Diff tool:
+                        if (queryModel != null) {
+                            // progress bar:
+                            queryModel.setQueryProgress("loading ...", nRow, tableRows);
+                        }
                     }
 
                     // Get the data corresponding to the current row
@@ -746,7 +786,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                             originValue = originValues.get(origin);
                             if (originValue == null) {
-                                if (!"computed".equals(origin)) {
+                                if (!StarProperty.ORIGIN_COMPUTED.equals(origin)) {
                                     // Resolve possible alias ie fix catalog name:
                                     catalog = Catalog.catalogFromReference(origin);
                                     if (catalog != null) {
@@ -788,8 +828,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         }
 
                         /*
-                         * Create a new StarProperty instance from the retrieved value,
-                         * origin and confidence.
+                         * Create a new StarProperty instance from the retrieved value, origin and confidence.
                          */
                         starProperty = (isSet) ? new StarProperty(propertyValue, origin, confidence) : StarProperty.EMPTY_STAR_PROPERTY;
 
@@ -804,6 +843,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                 } while ((tr = parser.getNextTR()) != null);
             }
+
             if (_logger.isInfoEnabled()) {
                 _logger.info("CalibratorsModel.parseVOTable: {} rows read in {} ms.", nRow, 1e-6d * (System.nanoTime() - start));
             }
@@ -826,52 +866,61 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
             }
 
-            // reset progress bar:
-            queryModel.setQueryProgress("", 0, 0);
+            // query model may be null in SearchCal Diff tool:
+            if (queryModel != null) {
+                // reset progress bar:
+                queryModel.setQueryProgress("", 0, 0);
+            }
 
             // TODO: Perform such actions using callbacks ASAP
             if (file != null) {
-                // Loading the file in the query model
-                StatusBar.show("loading file (parsing query)...");
-                try {
-                    queryModel.loadParamSet(calModel.getParamSet());
-                    StatusBar.show("loading file (query successfully parsed)...");
-                    StatusBar.show("file succesfully loaded.");
+                // query model may be null in SearchCal Diff tool:
+                if (queryModel != null) {
+                    // Loading the file in the query model
+                    StatusBar.show("loading file (parsing query)...");
+                    try {
+                        queryModel.loadParamSet(calModel.getParamSet());
+                        StatusBar.show("loading file (query successfully parsed)...");
+                        StatusBar.show("file succesfully loaded.");
 
-                } catch (NumberFormatException nfe) {
-                    StatusBar.show("loading aborted (query parsing error) !");
-                    MessagePane.showErrorMessage("Could not open file (query parsing error).", nfe);
-                    // TODO reset table content ?
-                }
-            } else if (startQuery) {
-
-                Exception e = null;
-                try {
-                    // load default values to reset completely the query model:
-                    queryModel.loadDefaultValues();
-                    // load given parameters (some may be missing)
-                    queryModel.loadParamSet(calModel.getParamSet());
-
-                } catch (NumberFormatException nfe) {
-                    e = nfe;
-                } catch (IllegalArgumentException iae) {
-                    e = iae;
-                } catch (PreferencesException pe) {
-                    e = pe;
-                } finally {
-                    if (e != null) {
-                        StatusBar.show("calibrator search aborted (could not parse query) !");
-                        MessagePane.showErrorMessage("Could not parse query.", e);
-                        // TODO reset or restore model ?                
-                        return;
+                    } catch (NumberFormatException nfe) {
+                        StatusBar.show("loading aborted (query parsing error) !");
+                        MessagePane.showErrorMessage("Could not open file (query parsing error).", nfe);
+                        // TODO reset table content ?
                     }
                 }
-                // Launch the request
-                StatusBar.show("Launching search...");
+            } else if (startQuery) {
+                // query model may be null in SearchCal Diff tool:
+                if (queryModel != null) {
 
-                // Diff tool:
-                if (calModel._vo != null) {
-                    calModel._vo.executeGetCal();
+                    Exception e = null;
+                    try {
+                        // load default values to reset completely the query model:
+                        queryModel.loadDefaultValues();
+                        // load given parameters (some may be missing)
+                        queryModel.loadParamSet(calModel.getParamSet());
+
+                    } catch (NumberFormatException nfe) {
+                        e = nfe;
+                    } catch (IllegalArgumentException iae) {
+                        e = iae;
+                    } catch (PreferencesException pe) {
+                        e = pe;
+                    } finally {
+                        if (e != null) {
+                            StatusBar.show("calibrator search aborted (could not parse query) !");
+                            MessagePane.showErrorMessage("Could not parse query.", e);
+                            // TODO reset or restore model ?                
+                            return;
+                        }
+                    }
+                    // Launch the request
+                    StatusBar.show("Launching search...");
+
+                    // Diff tool:
+                    if (calModel._vo != null) {
+                        calModel._vo.executeGetCal();
+                    }
                 }
             }
 
@@ -960,6 +1009,15 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // Process star list:
         postProcess(starList);
 
+        // apply filters and fire Update:
+        updateModel(starList);
+    }
+
+    /**
+     * Update this calibrators model, apply filters and fire update
+     * @param starList parsed StarList
+     */
+    void updateModel(final StarList starList) {
         // Update the star list:
         setOriginalStarList(starList);
 
@@ -975,19 +1033,17 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param starList star list to process
      */
     void postProcess(final StarList starList) {
-        if (!starList.isEmpty()) {
+        final StarListMeta starListMeta = starList.getMetaData();
 
-            final StarListMeta starListMeta = starList.getMetaData();
+        // Add custom properties:
 
-            // Add custom properties:
+        // Add RA (deg) property:
+        if (starListMeta.getPropertyIndexByName(StarList.RADegColumnName) == -1) {
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, Double.class, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
 
-            // Add RA (deg) property:
-            if (starListMeta.getColumnIdByName("RAdeg") == -1) {
-                starListMeta.addPropertyMeta(new StarPropertyMeta("RAdeg", Double.class, "Right Ascension - J2000", "deg", ""));
-
+            if (!starList.isEmpty()) {
                 // Get the ID of the column contaning 'RA' star properties
-                final int raId = starList.getColumnIdByName("RAJ2000");
-
+                final int raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
                 if (raId != -1) {
                     for (List<StarProperty> star : starList) {
 
@@ -1006,14 +1062,15 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
                 }
             }
+        }
 
-            // Add DEC (deg) property:
-            if (starListMeta.getColumnIdByName("DEdeg") == -1) {
-                starListMeta.addPropertyMeta(new StarPropertyMeta("DEdeg", Double.class, "Declination - J2000", "deg", ""));
+        // Add DEC (deg) property:
+        if (starListMeta.getPropertyIndexByName(StarList.DEDegColumnName) == -1) {
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, Double.class, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
 
+            if (!starList.isEmpty()) {
                 // Get the ID of the column contaning 'DEC' star properties
-                final int decId = starList.getColumnIdByName("DEJ2000");
-
+                final int decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
                 if (decId != -1) {
                     for (List<StarProperty> star : starList) {
 
@@ -1032,13 +1089,28 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
                 }
             }
+        }
 
+        // Add row index property:
+        if (starListMeta.getPropertyIndexByName(StarList.RowIdxColumnName) == -1) {
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, Integer.class, "row index", "ID_NUMBER", "", ""));
+
+            if (!starList.isEmpty()) {
+                int i = 0;
+                for (List<StarProperty> star : starList) {
+                    // add rowIdx value:
+                    star.add(new StarProperty(Integer.valueOf(++i)));
+                }
+            }
+        }
+
+        if (!starList.isEmpty()) {
             // First star:
             final Vector<StarProperty> first = (Vector<StarProperty>) starList.get(0);
 
             _logger.info("{} Star Properties.", first.size());
 
-            if (first.size() != first.capacity()) {
+            if (first.size() > first.capacity()) {
                 _logger.warn("Incorrect Property capacity: {} != {} ", first.size(), first.capacity());
             }
         }
@@ -1099,12 +1171,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given votable is not compatible with SearchCal format
      */
     public void openFile(final File file) throws IOException, IllegalArgumentException {
-        if (file.isFile()) {
-            if (!file.exists()) {
-                throw new FileNotFoundException("File '" + file.getAbsolutePath() + "'does not exist.");
-            }
-            parseVOTable(file);
+        if (!file.isFile() || !file.exists()) {
+            throw new FileNotFoundException("File '" + file.getAbsolutePath() + "'does not exist.");
         }
+        parseVOTable(file);
     }
 
     /**
@@ -1181,9 +1251,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         try {
             final SavotVOTable votable = _parsedVOTable;
 
-            // shared empty TD instance
-            final SavotTD emptyTD = new SavotTD();
-
             // Use SavotWriter TR / TR:
             final SavotWriter wd = new SavotWriter();
             // do not encode 
@@ -1239,59 +1306,61 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     // <TABLEDATA>
                     wd.writeTableDataBegin();
 
-                    SavotTD[] cacheTD = null;
+                    // Get only server properties not dynamic ones:
+                    final int nGroups = table.getGroups().getItemCount();
+                    final int nProps = 3 * nGroups;
+
+                    final SavotTD[] cacheTD = new SavotTD[nProps];
+
+                    int i, c;
+                    for (c = 0; c < nProps; c++) {
+                        cacheTD[c] = new SavotTD();
+                    }
+
+                    // shared empty TD instance
+                    final SavotTD emptyTD = new SavotTD();
+
                     final SavotTR tr = new SavotTR();
-                    TDSet tdSet = null;
+                    final TDSet tdSet = tr.getTDSet(nProps);
+
                     SavotTD valueTd;
                     SavotTD originTd;
                     SavotTD confidenceTd;
-
-                    int nProps, c;
+                    StarProperty property;
 
                     // And create one row per star entry
-                    for (List<StarProperty> star : starList) {
+                    for (final List<StarProperty> star : starList) {
 
                         tr.clear(); // recycle TR instance (also TDSet)
-
-                        if (cacheTD == null) {
-                            nProps = 3 * star.size();
-
-                            tdSet = tr.getTDSet(nProps);
-
-                            cacheTD = new SavotTD[nProps];
-
-                            for (c = 0; c < nProps; c++) {
-                                cacheTD[c] = new SavotTD();
-                            }
-                        }
-
                         c = 0;
 
-                        for (StarProperty prop : star) {
+                        // Get only server properties not dynamic ones:
+                        for (i = 0; i < nGroups; i++) {
+                            property = star.get(i);
 
                             // value:
-                            if (prop.hasValue()) {
+                            if (property.hasValue()) {
                                 valueTd = cacheTD[c];
                                 // convert double / boolean to string:
-                                valueTd.setContent(prop.getStringValue());
+                                valueTd.setContent(property.getStringValue());
                             } else {
                                 valueTd = emptyTD;
                             }
                             tdSet.addItem(valueTd);
 
                             // origin:
-                            if (prop.hasOrigin()) {
+                            if (property.hasOrigin()) {
                                 originTd = cacheTD[c + 1];
-                                originTd.setContent(prop.getOrigin());
+                                originTd.setContent(property.getOrigin());
                             } else {
                                 originTd = emptyTD;
                             }
                             tdSet.addItem(originTd);
 
                             // confidence index:
-                            if (prop.hasConfidence()) {
+                            if (property.hasConfidence()) {
                                 confidenceTd = cacheTD[c + 2];
-                                confidenceTd.setContent(prop.getConfidence());
+                                confidenceTd.setContent(property.getConfidence());
                             } else {
                                 confidenceTd = emptyTD;
                             }
