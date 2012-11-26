@@ -4,6 +4,7 @@
 package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
+import fr.jmmc.jmcs.gui.action.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.FileChooser;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -314,6 +315,7 @@ public final class VirtualObservatory extends Observable {
         _currentFile = selectedFile;
 
         // Now that a file has been saved
+        RecentFilesManager.addFile(_currentFile);
         _revertToSavedFileAction.setEnabled(true);
 
         return true;
@@ -398,6 +400,7 @@ public final class VirtualObservatory extends Observable {
                     }
 
                     // Now that a file has been loaded
+                    RecentFilesManager.addFile(_currentFile);
                     _revertToSavedFileAction.setEnabled(true);
                 }
             }

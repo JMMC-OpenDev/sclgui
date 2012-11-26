@@ -132,13 +132,14 @@
     <releasenotes>
         <release version="4.4.4">
             <prerelease version="4.4.4b4">
-                <change type="CHANGE">Use a jpg icon instead of the png previous one to work arround a known bug onto macos/java7.</change>
-                <change type="CHANGE">Changed rules to compute mean diameter: require 3 diameters (Bright) or 4 (Faint).</change>
+                <change type="FEATURE">Added an 'Open Recent' menu.</change>
+                <change type="DEVELOPER">Use a JPEG icon instead of the PNG previous one to work arround a known bug onto Mac OS X / Java7.</change>
+                <change type="CHANGE">Changed rules to compute mean diameter to require 3 diameters (Bright) or 4 (Faint).</change>
                 <change type="CHANGE">Check color index validity of polynomial coefficients before computing angular diameters.</change>
                 <change type="CHANGE">Always compute galactic coordinates i.e. do not retrieve them from CDS (2MASS or HIPPARCOS).</change>
-                <change type="CHANGE">Fixed crossmatchs near celestian poles.</change>
+                <change type="BUGFIX">Fixed crossmatchs near celestian poles.</change>
                 <change type="CHANGE">Check 2MASS quality flag (Qflg) to discard invalid J, H or K magnitudes (U or X cases; A to E are considered valid).</change>
-                <change type="CHANGE">Fixed 2MASS query in bright scenario to get also UNSO optical sources (opt=[TU]) as done in faint scenario.</change>
+                <change type="CHANGE">Fixed 2MASS query in bright scenario to get also USNO optical sources (opt=[TU]) as done in faint scenario.</change>
             </prerelease>
             <prerelease version="4.4.4b4">
                 <change type="BUGFIX">Fixed data change detection for user confirmation before loosing changes.</change>
