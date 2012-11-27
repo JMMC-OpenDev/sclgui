@@ -10,7 +10,6 @@ import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
-import fr.jmmc.jmcs.util.ObjectUtils;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.calibrator.DiffCalibratorsModel;
@@ -59,8 +58,11 @@ public final class SearchCalDiffTool extends App {
     /** argument 'right' */
     public final static String ARG_RIGHT = "right";
     /* members */
+    /** CalibratorsView left */
     CalibratorsView calibratorsViewLeft;
+    /** CalibratorsView right */
     CalibratorsView calibratorsViewRight;
+    /** CalibratorsView diff */
     CalibratorsView calibratorsViewDiff;
     /** diff model */
     DiffCalibratorsModel diffModel;
@@ -131,6 +133,9 @@ public final class SearchCalDiffTool extends App {
                 } catch (PreferencesException pe) {
                     _logger.warn("setPreference failed: ", pe);
                 }
+
+                // Enable multi views:
+                System.setProperty(CalibratorsView.MODE_MULTI_VIEW, "true");
 
                 // Create a query model
                 final QueryModel queryModel = new QueryModel();
@@ -240,11 +245,28 @@ public final class SearchCalDiffTool extends App {
             }
         });
     }
+    /** flag to avoid synchronizeSelection reentrance while updating JTable selections */
     private boolean ignoreSelectionEvent = false;
 
+    /**
+     * Synchronize selected stars amond CalibratorsViews
+     * @param source CalibratorsView source
+     */
     private void synchronizeSelection(final CalibratorsView source) {
         if (ignoreSelectionEvent) {
             return;
+        }
+
+        final int[] selectedIndices = source.getSelectedStarIndices();
+        if (selectedIndices.length == 0) {
+            return;
+        }
+        // TODO: fix column mapping (ordering changed):
+        final int selectedColumn = source.getSelectedProperty();
+
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("selectedColumn: {}", selectedColumn);
+            _logger.debug("selectedIndices: {}", Arrays.toString(selectedIndices));
         }
 
         // Performance timer
@@ -252,94 +274,52 @@ public final class SearchCalDiffTool extends App {
         try {
             ignoreSelectionEvent = true;
 
-            // TODO: fix column mapping (ordering changed):
-            final int selectedColumn = source.getSelectedProperty();
-            final int[] selectedIndices = source.getSelectedStarIndices();
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("selectedColumn: {}", selectedColumn);
-                _logger.debug("selectedIndices: {}", Arrays.toString(selectedIndices));
-            }
-
-            final int modeGetIdx;
-            final int modeUseRowIdx;
-            final CalibratorsView viewRowIdx;
-            final int modeUseOtherRowIdx;
-            final CalibratorsView viewOtherRowIdx;
-            String matchRowIdx = StarList.RowIdxColumnName;
-            String matchOtherRowIdx = StarList.RowIdxColumnName;
-
             if (source == calibratorsViewLeft) {
-                modeGetIdx = -1; // rowIdx read from left
-                // applied to diff:
-                modeUseRowIdx = 2;
-                viewRowIdx = calibratorsViewDiff;
+                // Get rowIdx values:
+                final List<Integer> rowIdxValues = diffModel.getFilteredRows(selectedIndices, -1, StarList.RowIdxColumnName); // left
+                selectRows(calibratorsViewDiff, diffModel.findMatchingFilteredRows(rowIdxValues, 2), selectedColumn); // diff
 
-                // applied to right
-                modeUseOtherRowIdx = 1;
-                viewOtherRowIdx = calibratorsViewRight;
+                // Get otherRowIdx values:
+                final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, -1, StarList.OtherRowIdxColumnName); // left
+                selectRows(calibratorsViewRight, diffModel.findMatchingFilteredRows(otherIdxValues, 1), selectedColumn); // right
 
             } else if (source == calibratorsViewRight) {
-                modeGetIdx = 1; // rowIdx read from right
-                // applied to diff:
-                matchRowIdx = StarList.OtherRowIdxColumnName;
-                modeUseRowIdx = 2;
-                viewRowIdx = calibratorsViewDiff;
-
-                // applied to left
-                modeUseOtherRowIdx = -1;
-                viewOtherRowIdx = calibratorsViewLeft;
+                // Get otherRowIdx values:
+                final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, 1, StarList.OtherRowIdxColumnName); // right
+                selectRows(calibratorsViewLeft, diffModel.findMatchingFilteredRows(otherIdxValues, -1), selectedColumn); // left
+                selectRows(calibratorsViewDiff, diffModel.findMatchingFilteredRows(otherIdxValues, 2), selectedColumn); // diff
 
             } else if (source == calibratorsViewDiff) {
-                modeGetIdx = 2; // rowIdx read from diff
-                // applied to left:
-                modeUseRowIdx = -1;
-                viewRowIdx = calibratorsViewLeft;
+                // Get rowIdx values:
+                final List<Integer> rowIdxValues = diffModel.getFilteredRows(selectedIndices, 2, StarList.RowIdxColumnName); // diff
+                selectRows(calibratorsViewLeft, diffModel.findMatchingFilteredRows(rowIdxValues, -1), selectedColumn); // left
 
-                // applied to right
-                modeUseOtherRowIdx = 1;
-                viewOtherRowIdx = calibratorsViewRight;
-            } else {
-                return;
-            }
-
-            // Get rowIdx values:
-            final List<Integer> rowIdxValues = diffModel.getFilteredRows(selectedIndices, modeGetIdx, StarList.RowIdxColumnName);
-
-            if (rowIdxValues != null) {
-                // diff:
-                final List<Integer> matchIdx = diffModel.findMatchingFilteredRows(rowIdxValues, modeUseRowIdx, matchRowIdx);
-
-                if (matchIdx == null || matchIdx.isEmpty()) {
-                    viewRowIdx.clearTableSelection();
-                } else {
-                    for (Integer idx : matchIdx) {
-                        viewRowIdx.selectTableCell(idx.intValue(), selectedColumn, false);
-                    }
-                }
-            }
-
-            // Get otherRowIdx values:
-            final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, modeGetIdx, StarList.OtherRowIdxColumnName);
-
-            if (otherIdxValues != null) {
-                // right:
-                final List<Integer> matchIdx = diffModel.findMatchingFilteredRows(otherIdxValues, modeUseOtherRowIdx, matchOtherRowIdx);
-
-                if (matchIdx == null || matchIdx.isEmpty()) {
-                    viewOtherRowIdx.clearTableSelection();
-                } else {
-                    for (Integer idx : matchIdx) {
-                        viewOtherRowIdx.selectTableCell(idx.intValue(), selectedColumn, false);
-                    }
-                }
+                // Get otherRowIdx values:
+                final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, 2, StarList.OtherRowIdxColumnName); // diff
+                selectRows(calibratorsViewRight, diffModel.findMatchingFilteredRows(otherIdxValues, 1), selectedColumn); // right
             }
 
         } finally {
             ignoreSelectionEvent = false;
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("synchronizeSelection() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("synchronizeSelection() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
+            }
+        }
+    }
+
+    /**
+     * Select the given row indexes and column in the given calibrators view 
+     * @param calibratorsView calibrators view
+     * @param rowIndexes row indexes
+     * @param selectedColumn column index
+     */
+    private void selectRows(final CalibratorsView calibratorsView, final List<Integer> rowIndexes, final int selectedColumn) {
+        if (rowIndexes == null || rowIndexes.isEmpty()) {
+            calibratorsView.clearTableSelection();
+        } else {
+            for (Integer idx : rowIndexes) {
+                calibratorsView.selectTableCell(idx.intValue(), selectedColumn, true, false);
             }
         }
     }
@@ -354,6 +334,11 @@ public final class SearchCalDiffTool extends App {
             @Override
             public void run() {
                 _logger.debug("SearchCalDiff.ready : handler called.");
+
+                // hide filters view:
+                final DiffWindow window = (DiffWindow) App.getFrame();
+                final JSplitPane resultPane = window.resultPane;
+                resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
 
                 getFrame().setVisible(true);
             }
@@ -373,15 +358,26 @@ public final class SearchCalDiffTool extends App {
         new SearchCalDiffTool(args);
     }
 
+    /**
+     * ListSelectionListener implementation to synchronize CalibratorsView selections
+     */
     private class SyncSelectionHandler implements ListSelectionListener {
 
-        /** source of events */
+        /** CalibratorsView source */
         private final CalibratorsView source;
 
-        public SyncSelectionHandler(final CalibratorsView source) {
+        /**
+         * Protected constructor
+         * @param source CalibratorsView source
+         */
+        SyncSelectionHandler(final CalibratorsView source) {
             this.source = source;
         }
 
+        /**
+         * Process list selection event
+         * @param lse list selection event 
+         */
         public void valueChanged(final ListSelectionEvent lse) {
             if (!lse.getValueIsAdjusting()) {
                 synchronizeSelection(source);
@@ -395,7 +391,9 @@ public final class SearchCalDiffTool extends App {
     private static final class DiffWindow extends JFrame {
 
         /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
+        private static final long serialVersionUID = 1L;
+        /** result pane */
+        final JSplitPane resultPane;
 
         /**
          * Constructor.
@@ -444,7 +442,7 @@ public final class SearchCalDiffTool extends App {
             diffPane.setOneTouchExpandable(true);
 
             // Create a first top-bottom split pane for calibrators and filters
-            final JSplitPane resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diffPane, filtersView);
+            resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diffPane, filtersView);
             // Give priority to calibrators view
 //            resultPane.setResizeWeight(1.0);
 
@@ -466,12 +464,6 @@ public final class SearchCalDiffTool extends App {
 
             // Add the Status bar
             mainPane.add(statusBar, BorderLayout.SOUTH);
-
-            // do pack components:
-            pack();
-
-            // hide filters view:
-            resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
 
             // Show the user the app is ready to be used
             StatusBar.show("application ready.");
