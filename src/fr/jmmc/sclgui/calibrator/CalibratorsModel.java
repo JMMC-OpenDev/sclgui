@@ -30,6 +30,7 @@ import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.task.TaskSwingWorker;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.util.FileUtils;
+import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.jmcs.util.XmlFactory;
 import fr.jmmc.sclgui.SearchCal;
@@ -57,6 +58,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.transform.SourceLocator;
 import javax.xml.transform.TransformerException;
@@ -86,6 +88,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
     /** parameter SearchCalServerVersion (string) */
     public final static String PARAMETER_SCL_SERVER_VERSION = "SearchCalServerVersion";
+    /** url token replace regexp */
+    private final Pattern patternURL_REPLACE_TOKEN = Pattern.compile("[${].+[}]");
     /* members */
     /** Filters */
     private final FiltersModel _filtersModel;
@@ -105,12 +109,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private StarList _currentStarList;
     /** Displayed star list in JTable (filtered) (required Vector type) */
     private StarList _filteredStarList;
+    /** (cached) number of stars in filtered star list */
+    int _nFilteredStars;
+    /** optional rowIdx / index map */
+    private Map<Integer, Integer> _filteredStarIndexMap = null;
     /** (cached) star list meta data */
     StarListMeta _starListMeta;
     /** (cached) number of star properties */
     int _nProperties;
-    /** (cached) number of stars in filtered star list */
-    int _nFilteredStars;
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
     /** Filters */
@@ -167,6 +173,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      */
     public int getTotalNumberOfStar() {
         return _originalStarList.size();
+    }
+
+    /**
+     * Return the number of displayed stars
+     * @return number of displayed stars
+     */
+    public int getNumberOfDisplayedStar() {
+        return _nFilteredStars;
     }
 
     /**
@@ -285,7 +299,38 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     StarList getFilteredStarList() {
         return _filteredStarList;
     }
-    
+
+    /**
+     * Return the rowIdx / index map (diff tool only) lazily initialized
+     * @return rowIdx / index map
+     */
+    Map<Integer, Integer> getFilteredStarIndexMap() {
+        if (_filteredStarIndexMap == null) {
+            final int size = _nFilteredStars;
+            final Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>(size);
+
+            if (size != 0) {
+                final StarList starList = _filteredStarList;
+                final int rowIdxIdx = starList.getColumnIdByName(StarList.RowIdxColumnName);
+
+                if (rowIdxIdx != -1) {
+                    Integer rowIdx;
+
+                    for (int i = 0; i < size; i++) {
+                        rowIdx = starList.get(i).get(rowIdxIdx).getInteger();
+
+                        if (rowIdx != null) {
+                            indexMap.put(rowIdx, NumberUtils.valueOf(i));
+                        }
+                    }
+
+                }
+            }
+            _filteredStarIndexMap = indexMap;
+        }
+        return _filteredStarIndexMap;
+    }
+
     /**
      * Protected setter for filtered star list and cache its size
      * @param starList star list to set
@@ -293,6 +338,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private void setFilteredStarList(final StarList starList) {
         _filteredStarList = starList;
         _nFilteredStars = starList.size();
+
+        // clear lazy filter index map:
+        _filteredStarIndexMap = null;
     }
 
     /**
@@ -377,7 +425,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         final String encodedValue = UrlUtils.encode(value);
 
         // Forge the URL by replacing any '${...}' token with the current value
-        return url.replaceAll("[${].+[}]", encodedValue);
+        return patternURL_REPLACE_TOKEN.matcher(url).replaceAll(encodedValue);
     }
 
     /**
@@ -388,19 +436,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      */
     public boolean hasURL(final int column) {
         final String url = getColumnURL(column);
-        if (url.length() == 0) {
-            return false;
-        }
 
-        // If more than, or less than 1 '${...}' token in the URL
-        final String[] array = url.split("[$]");
-
-        if (array.length != 2) {
-            // Discard this URL
-            return false;
-        }
-
-        return true;
+        return (url.length() != 0);
     }
 
     /**
@@ -910,7 +947,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         if (e != null) {
                             StatusBar.show("calibrator search aborted (could not parse query) !");
                             MessagePane.showErrorMessage("Could not parse query.", e);
-                            // TODO reset or restore model ?                
                             return;
                         }
                     }
@@ -1042,7 +1078,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, Double.class, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
 
             if (!starList.isEmpty()) {
-                // Get the ID of the column contaning 'RA' star properties
+                // Get the ID of the column containing 'RA' star properties
                 final int raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
                 if (raId != -1) {
                     for (List<StarProperty> star : starList) {
@@ -1069,7 +1105,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, Double.class, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
 
             if (!starList.isEmpty()) {
-                // Get the ID of the column contaning 'DEC' star properties
+                // Get the ID of the column containing 'DEC' star properties
                 final int decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
                 if (decId != -1) {
                     for (List<StarProperty> star : starList) {
@@ -1099,7 +1135,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 int i = 0;
                 for (List<StarProperty> star : starList) {
                     // add rowIdx value:
-                    star.add(new StarProperty(Integer.valueOf(++i)));
+                    star.add(new StarProperty(NumberUtils.valueOf(++i)));
                 }
             }
         }
@@ -1471,7 +1507,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * This method should only be called by calibratorView.
      * @param selectedStarIndices selected indices of the calibrator view table.
      */
-    public void setSelectedStars(int[] selectedStarIndices) {
+    public void setSelectedStars(final int[] selectedStarIndices) {
         _selectedStarIndices = selectedStarIndices;
 
         // Diff tool:
@@ -1487,6 +1523,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Update Menu label
             _vo.setShareCalibratorsThroughSAMPActionText(actionMenuText);
         }
+    }
+
+    /**
+     * Return the number of selected stars
+     * @return number of selected stars
+     */
+    public int getNumberOfSelectedStars() {
+        return (_selectedStarIndices != null) ? _selectedStarIndices.length : 0;
     }
 
     /**
@@ -1595,7 +1639,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Generate as many row headers as the given number of data rows
             for (int i = 0; i < nbOfRows; i++) {
                 final Vector<Integer> row = new Vector<Integer>(1);
-                row.add(Integer.valueOf(i + 1));
+                row.add(NumberUtils.valueOf(i + 1));
                 addRow(row);
             }
         }
