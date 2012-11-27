@@ -50,110 +50,97 @@ public final class DiffCalibratorsModel {
         this.calibratorsModelDiff = calibratorsModelDiff;
     }
 
-    public List<Integer> getFilteredRows(final int[] selectedIndices, final int mode, final String property) {
-        final CalibratorsModel calModel;
+    /**
+     * Return the calibrators model of the given mode
+     * @param mode -1 (left), 1 (right), 2 (diff)
+     * @return calibrators model
+     */
+    private CalibratorsModel getCalibratorsModel(final int mode) {
         switch (mode) {
             default:
                 return null;
             case 1:
-                calModel = calibratorsModelRight;
-                break;
+                return calibratorsModelRight;
             case -1:
-                calModel = calibratorsModelLeft;
-                break;
+                return calibratorsModelLeft;
             case 2:
-                calModel = calibratorsModelDiff;
-                break;
+                return calibratorsModelDiff;
         }
-
-        final StarList filteredStarList = calModel.getFilteredStarList();
-
-        final int colIdx = filteredStarList.getColumnIdByName(property);
-
-        if (colIdx != -1) {
-            final int len = selectedIndices.length;
-
-            final List<Integer> rowIndexes = new ArrayList<Integer>(len);
-
-            Integer idx;
-            List<StarProperty> star;
-
-            for (int i = 0; i < len; i++) {
-                star = filteredStarList.get(selectedIndices[i]);
-
-                idx = star.get(colIdx).getInteger();
-
-                if (idx != null) {
-                    rowIndexes.add(idx);
-                }
-            }
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("rowIndexes: {}", rowIndexes);
-            }
-
-            return rowIndexes;
-        }
-
-        return null;
     }
 
-    public List<Integer> findMatchingFilteredRows(final List<Integer> rowIdxValues, final int mode, final String property) {
-        final CalibratorsModel calModel;
-        switch (mode) {
-            default:
-                return null;
-            case 1:
-                calModel = calibratorsModelRight;
-                break;
-            case -1:
-                calModel = calibratorsModelLeft;
-                break;
-            case 2:
-                calModel = calibratorsModelDiff;
-                break;
+    /**
+     * Find rowIdx or otherRowIdx values (see given property) in the given calibrators model
+     * @param selectedIndices selected filtered star indices
+     * @param mode -1 (left), 1 (right), 2 (diff)
+     * @param property rowIdx or otherRowIdx
+     * @return rowIdx or otherRowIdx values or null
+     */
+    public List<Integer> getFilteredRows(final int[] selectedIndices, final int mode, final String property) {
+        if (selectedIndices == null) {
+            return null;
         }
+        final CalibratorsModel calModel = getCalibratorsModel(mode);
+        if (calModel != null) {
+            final StarList filteredStarList = calModel.getFilteredStarList();
 
-        final StarList filteredStarList = calModel.getFilteredStarList();
+            final int colIdx = filteredStarList.getColumnIdByName(property);
 
-        final int colIdx = filteredStarList.getColumnIdByName(property);
+            if (colIdx != -1) {
+                final int len = selectedIndices.length;
+                final List<Integer> rowIndexes = new ArrayList<Integer>(len);
+                Integer idx;
 
-        if (colIdx != -1) {
-            final List<Integer> matchIndexes = new ArrayList<Integer>(rowIdxValues.size());
+                for (int i = 0; i < len; i++) {
+                    idx = filteredStarList.get(selectedIndices[i]).get(colIdx).getInteger();
 
-            final int size = filteredStarList.size();
-
-            List<StarProperty> star;
-            Integer idx, found;
-
-            for (Integer rowIdx : rowIdxValues) {
-
-                found = null;
-
-                // TODO: performance: Could use sort of index [rowIdx => int]
-                for (int i = 0; i < size; i++) {
-                    star = filteredStarList.get(i);
-
-                    idx = star.get(colIdx).getInteger();
-
-                    if (rowIdx.equals(idx)) {
-                        found = Integer.valueOf(i);
-                        break;
+                    if (idx != null) {
+                        rowIndexes.add(idx);
                     }
                 }
 
-                if (found != null) {
-                    matchIndexes.add(found);
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("rowIndexes: {}", rowIndexes);
+                }
+                if (!rowIndexes.isEmpty()) {
+                    return rowIndexes;
                 }
             }
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("matchIndexes: {}", matchIndexes);
-            }
-
-            return matchIndexes;
         }
+        return null;
+    }
 
+    /**
+     * Find row indexes corresponding to rowIdx values in the given calibrators model
+     * @param rowIdxValues row idx values
+     * @param mode -1 (left), 1 (right), 2 (diff)
+     * @return row indexes or null
+     */
+    public List<Integer> findMatchingFilteredRows(final List<Integer> rowIdxValues, final int mode) {
+        if (rowIdxValues == null) {
+            return null;
+        }
+        final CalibratorsModel calModel = getCalibratorsModel(mode);
+        if (calModel != null) {
+            final Map<Integer, Integer> indexMap = calModel.getFilteredStarIndexMap();
+
+            if (indexMap != null) {
+                final List<Integer> matchIndexes = new ArrayList<Integer>(rowIdxValues.size());
+                Integer found;
+
+                for (Integer rowIdx : rowIdxValues) {
+                    found = indexMap.get(rowIdx);
+
+                    if (found != null) {
+                        matchIndexes.add(found);
+                    }
+                }
+
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("matchIndexes: {}", matchIndexes);
+                }
+                return matchIndexes;
+            }
+        }
         return null;
     }
 
@@ -217,6 +204,13 @@ public final class DiffCalibratorsModel {
 
         _logger.info("-------------------------------------------------------------------------------");
 
+        // update models because otherRowIdx property added:
+        calibratorsModelLeft.updateModel(starListLeft);
+        calibratorsModelRight.updateModel(starListRight);
+
+        // display computed diff model:
+        calibratorsModelDiff.updateModel(diffStarList);
+
         // Update views / GUI:
         String propName;
         final StringBuilder sb = new StringBuilder(1024);
@@ -244,14 +238,7 @@ public final class DiffCalibratorsModel {
         } catch (PreferencesException pe) {
             _logger.warn("setPreference exception:", pe);
         }
-
-        // update models because otherRowIdx property added:
-        calibratorsModelLeft.updateModel(starListLeft);
-        calibratorsModelRight.updateModel(starListRight);
-
-        // display computed diff model:
-        calibratorsModelDiff.updateModel(diffStarList);
-
+        
         _logger.info("-------------------------------------------------------------------------------");
     }
 
@@ -667,12 +654,22 @@ public final class DiffCalibratorsModel {
         return 2;
     }
 
+    /**
+     * Double Difference values
+     */
     private static class DoubleDiff {
         /* members */
 
+        /** absolute difference */
         double diff;
+        /** relative difference (left) */
         double relDiff;
 
+        /**
+         * Define the absolute and relative difference 
+         * @param diff absolute difference
+         * @param relDiff relative difference
+         */
         void set(final double diff, final double relDiff) {
             this.diff = diff;
             this.relDiff = relDiff;
