@@ -88,7 +88,7 @@ public final class MagnitudeFilter extends Filter {
         // Get the query magnitude band
         final String magnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
 
-        // Get the id of the column contaning the good magnitude
+        // Get the id of the column containing the good magnitude
         _magnitudeId = starList.getColumnIdByName(magnitudeBand);
 
         // Get the magnitude range allowed

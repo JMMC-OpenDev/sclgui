@@ -55,7 +55,7 @@ public final class VariabilityFilter extends Filter {
             _varFlagIds[i++] = starList.getColumnIdByName(columnName);
         }
 
-        // Get the ID of the column contaning 'varFlag3' star property
+        // Get the ID of the column containing 'varFlag3' star property
         _varFlag3Id = starList.getColumnIdByName(StarList.VarFlag3ColumnName);
     }
 

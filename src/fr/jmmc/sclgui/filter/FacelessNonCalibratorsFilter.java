@@ -45,7 +45,7 @@ public final class FacelessNonCalibratorsFilter extends Filter {
      */
     @Override
     public void onPrepare(final StarList starList) {
-        // Get the ID of the column contaning 'visibility' star property
+        // Get the ID of the column containing 'visibility' star property
         _vis2Id = starList.getColumnIdByName(StarList.Vis2ColumnName);
     }
 

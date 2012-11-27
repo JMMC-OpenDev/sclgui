@@ -54,7 +54,7 @@ public final class SpectralTypeFilter extends Filter {
      */
     @Override
     public void onPrepare(final StarList starList) {
-        // Get the ID of the column contaning 'SpType' star property
+        // Get the ID of the column containing 'SpType' star property
         _rawSpectralTypeID = starList.getColumnIdByName(StarList.SpTypeColumnName);
     }
 
