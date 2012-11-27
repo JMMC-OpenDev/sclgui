@@ -56,6 +56,8 @@ public final class StarList extends Vector<List<StarProperty>> {
     /* members */
     /** star list meta data */
     private final StarListMeta _metaData;
+    /** cached flag indicating if this star list has some deleted stars */
+    private boolean _hasDeletedStars = false;
 
     /**
      * Empty star list Constructor
@@ -108,29 +110,7 @@ public final class StarList extends Vector<List<StarProperty>> {
      * @return true if the list contains some stars flagged, false otherwise.
      */
     public boolean hasSomeDeletedStars() {
-        final int deletedFlagColumnID = getDeletedFlagColumnID();
-        if (deletedFlagColumnID != -1) {
-            List<StarProperty> star;
-            StarProperty deletedFlag;
-            boolean starShouldBeRemoved;
-
-            for (int rowId = 0, size = size(); rowId < size; rowId++) {
-                star = get(rowId);
-
-                deletedFlag = star.get(deletedFlagColumnID);
-
-                if (deletedFlag != null) {
-                    starShouldBeRemoved = deletedFlag.getBooleanValue();
-
-                    if (starShouldBeRemoved) {
-                        _logger.debug("hasSomeDeletedStars = 'true'");
-                        return true;
-                    }
-                }
-            }
-        }
-        _logger.debug("hasSomeDeletedStars = 'false'");
-        return false;
+        return _hasDeletedStars;
     }
 
     /**
@@ -162,9 +142,10 @@ public final class StarList extends Vector<List<StarProperty>> {
         final int size = size();
 
         final StarList outputList = new StarList(_metaData);
-
         // ensure max capacity:
         outputList.ensureCapacity(size);
+
+        boolean deleted = false;
 
         final int deletedFlagColumnID = getDeletedFlagColumnID();
         if (deletedFlagColumnID != -1) {
@@ -176,7 +157,9 @@ public final class StarList extends Vector<List<StarProperty>> {
 
                 deletedFlag = star.get(deletedFlagColumnID);
 
-                if (!(deletedFlag == null || deletedFlag.getBooleanValue())) {
+                if (deletedFlag == null || deletedFlag.getBooleanValue()) {
+                    deleted = true;
+                } else {
                     outputList.add(star);
                 }
             }
@@ -188,6 +171,10 @@ public final class StarList extends Vector<List<StarProperty>> {
             // copy given star list:
             outputList.addAll(this);
         }
+
+        _logger.info("_hasDeletedStars: {}", deleted);
+
+        _hasDeletedStars = deleted;
 
         return outputList;
     }
