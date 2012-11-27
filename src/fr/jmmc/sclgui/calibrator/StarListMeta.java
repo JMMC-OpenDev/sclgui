@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
+import fr.jmmc.jmcs.util.NumberUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,10 +60,10 @@ public final class StarListMeta {
         }
 
         // Associate the group name with its index as a table column
-        final Integer oldIndex = _mapPropertyIndexByName.put(propertyMeta.getName(), Integer.valueOf(_nProperties));
+        final Integer oldIndex = _mapPropertyIndexByName.put(propertyMeta.getName(), NumberUtils.valueOf(_nProperties));
 
         if (oldIndex != null) {
-            _logger.warn("Duplicate column [{}]found at indexes {} - {}", propertyMeta.getName(), oldIndex, Integer.valueOf(_nProperties));
+            _logger.warn("Duplicate column [{}]found at indexes {} - {}", propertyMeta.getName(), oldIndex, _nProperties);
         }
 
         // increment then:
@@ -104,23 +105,12 @@ public final class StarListMeta {
     }
 
     /**
-     * Return the mapping that links each colum group name to its ID.
-     *
-     * @return mapping
-     */
-    // TODO: rename
-    public Map<String, Integer> getFieldIdToColNumberMap() {
-        return _mapPropertyIndexByName;
-    }
-
-    /**
      * Give back the property index from its name.
      *
      * @param propertyName name of the column's group we are looking for the ID.
      *
      * @return the column ID, or -1 if nothing found.
      */
-    // TODO: rename
     public int getPropertyIndexByName(final String propertyName) {
         int columnId = -1;
 
