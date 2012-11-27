@@ -217,7 +217,7 @@ public final class LegendView extends JPanel {
             int cellWidth = 0;
             column = table.getColumnModel().getColumn(0);
 
-            for (int row = 0; row < table.getRowCount(); row++) {
+            for (int row = 0, size = table.getRowCount(); row < size; row++) {
                 comp = table.getDefaultRenderer(model.getColumnClass(0)).getTableCellRendererComponent(table,
                         _data[row][COLOR], false, false, row, 0);
 
