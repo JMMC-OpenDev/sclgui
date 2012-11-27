@@ -58,8 +58,12 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     private static final long serialVersionUID = 1;
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(CalibratorsView.class.getName());
+    /** System property to enable multi view support (focus) */
+    public static final String MODE_MULTI_VIEW = "CalibratorsView.multiViews";
     /** The monitored application preferences */
     private final static Preferences _preferences = Preferences.getInstance();
+    /** flag indicating to use multi views */
+    private static boolean _multiView = false;
     /** current active view */
     private static volatile CalibratorsView _currentView = null;
     /* shared actions */
@@ -106,6 +110,9 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
 
             // Search Panel
             _searchPanel = new SearchPanel();
+
+            // Check if the multi view mode is defined at startup:
+            _multiView = "true".equalsIgnoreCase(System.getProperty(CalibratorsView.MODE_MULTI_VIEW, "false"));
         }
     }
 
@@ -216,43 +223,29 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
             }
         });
 
-        final CalibratorsView view = this;
+        if (_multiView) {
+            final CalibratorsView view = this;
 
-        final MouseAdapter mouseOver = new MouseAdapter() {
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void mouseClicked(final MouseEvent me) {
-                // _logger.info("mouseClicked: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
-                setCurrentView(view);
-            }
+            final MouseAdapter mouseOver = new MouseAdapter() {
+                @Override
+                public void mouseClicked(final MouseEvent me) {
+                    // _logger.info("mouseClicked: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
+                    setCurrentView(view);
+                }
 
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void mouseReleased(final MouseEvent me) {
-                // _logger.info("mouseReleased: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
-                setCurrentView(view);
-            }
+                @Override
+                public void mouseReleased(final MouseEvent me) {
+                    // _logger.info("mouseReleased: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
+                    setCurrentView(view);
+                }
+            };
 
-            /**
-             * Called when the mouse enters this view: update the current view
-             * @param me mouse event
-             */
-            @Override
-            public void mouseEntered(final MouseEvent me) {
-                // _logger.info("mouseEntered: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
-//                setCurrentView(view);
-            }
-        };
-
-        // Add this mouse adapter to panel and its child components (JTables)
-        // to get properly mouse events:
-        addMouseListener(mouseOver);
-        rowHeader.addMouseListener(mouseOver);
-        _calibratorsTable.addMouseListener(mouseOver);
+            // Add this mouse adapter to panel and its child components (JTables)
+            // to get properly mouse events:
+            addMouseListener(mouseOver);
+            rowHeader.addMouseListener(mouseOver);
+            _calibratorsTable.addMouseListener(mouseOver);
+        }
 
         init();
     }
@@ -294,9 +287,9 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         }
         sb.append(')');
 
-        final Color color = (getCurrentView() == this) ? Color.BLUE : Color.GRAY;
+        final Color color = (_multiView && getCurrentView() == this) ? Color.BLUE : Color.GRAY;
 
-        setBorder(new TitledBorder(BorderFactory.createLineBorder(color, 1), sb.toString()));
+        setBorder(new TitledBorder(BorderFactory.createLineBorder(color), sb.toString()));
     }
 
     /**
@@ -307,10 +300,12 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      */
     @Override
     public void valueChanged(final ListSelectionEvent lse) {
-        refreshActionState();
+        if (!lse.getValueIsAdjusting()) {
+            // Update model with current selection
+            _calibratorsModel.setSelectedStars(getSelectedStarIndices());
 
-        // Update model with current selection
-        _calibratorsModel.setSelectedStars(getSelectedStarIndices());
+            refreshActionState();
+        }
     }
 
     /**
@@ -330,16 +325,20 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      * Refresh the action state (enabled / disabled)
      */
     private void refreshActionState() {
-        // TODO: disable delete / undelete actions in SearchCalDiff mode:
+        if (_multiView) {
+            // disable delete / undelete actions in SearchCal Diff tool:
+            _deleteAction.setEnabled(false);
+            _undeleteAction.setEnabled(false);
+        } else {
+            // (Dis)Enable the delete menu item
+            _deleteAction.setEnabled(_calibratorsModel.getNumberOfSelectedStars() != 0);
 
-        // (Dis)Enable the delete menu item
-        _deleteAction.setEnabled(_calibratorsTable.getSelectedRowCount() != 0);
-
-        // Enable/disable the Undelete menu item
-        _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
+            // Enable/disable the Undelete menu item
+            _undeleteAction.setEnabled(_calibratorsModel.hasSomeDeletedStars());
+        }
 
         // (Dis)enable Find widgets according to data availability
-        _searchPanel.enableMenus(_calibratorsTable.getRowCount() != 0);
+        _searchPanel.enableMenus(_calibratorsModel.getNumberOfDisplayedStar() != 0);
     }
 
     /**
@@ -432,7 +431,6 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     public void addColumnSelectionListener(final ListSelectionListener listener) {
-        // TODO: deal with model property ?
         _calibratorsTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
     }
 
@@ -441,7 +439,6 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      * @param listener row selection listener
      */
     public void addRowSelectionListener(final ListSelectionListener listener) {
-        // TODO: deal with model rows ?
         _calibratorsTable.getSelectionModel().addListSelectionListener(listener);
     }
 
@@ -458,16 +455,18 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      * @param column colum index
      */
     public void selectTableCell(final int row, final int column) {
-        selectTableCell(row, column, true);
+        selectTableCell(row, column, false, true);
     }
 
     /**
      * Select the table cell at the given row and column index
-     * @param row row index
+     * @param rowIndex row index
      * @param column colum index
+     * @param isModelIndex true if model index; false if view index
      * @param requestFocus true to request focus
      */
-    public void selectTableCell(final int row, final int column, final boolean requestFocus) {
+    public void selectTableCell(final int rowIndex, final int column, final boolean isModelIndex, final boolean requestFocus) {
+        final int row = (isModelIndex) ? _tableSorter.viewIndex(rowIndex) : rowIndex;
         // Clear previous selection and set new selection
         _calibratorsTable.changeSelection(row, column, false, false);
         _calibratorsTable.changeSelection(row, column, true, true);
