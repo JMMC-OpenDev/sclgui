@@ -30,9 +30,9 @@ public final class DistanceFilter extends Filter {
      */
     private QueryModel _queryModel;
     /* filter execution variables */
-    /** the 'RA' column ID */
+    /** the 'RA' (deg) column ID */
     private int _raId = -1;
-    /** the 'DEC' column ID */
+    /** the 'DEC' (deg) column ID */
     private int _decId = -1;
     /** Store the science object RA value (in degrees) */
     private double _scienceObjectRA;
@@ -99,11 +99,9 @@ public final class DistanceFilter extends Filter {
      */
     @Override
     public void onPrepare(final StarList starList) {
-        // Get the IDs of the columns contaning 'RA' & 'DEC' star properties
-        
-        // TODO: use directly dynamic columns RAdeg / DEdeg
-        _raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
-        _decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
+        // Get the IDs of the DYNAMIC columns containing 'RA' & 'DEC' (degrees) star properties
+        _raId = starList.getColumnIdByName(StarList.RADegColumnName);
+        _decId = starList.getColumnIdByName(StarList.DEDegColumnName);
 
         // Get back query and filter values
         retrieveScienceObjectCoordinates();
@@ -130,23 +128,22 @@ public final class DistanceFilter extends Filter {
             // If the 2 values were found in the current line
             if (raCell.hasValue() && decCell.hasValue()) {
 
-                // TODO: use RA/DEC columns in degrees here:
+                // Get RA cell value in degrees:
+                final double currentRA = raCell.getDoubleValue();
 
-                // Convert RA cell value
-                final String raString = raCell.getStringValue();
-                final double currentRA = ALX.parseRA(raString);
+                // Get DEC cell value in degrees:
+                final double currentDEC = decCell.getDoubleValue();
 
-                // Convert DEC cell value
-                final String decString = decCell.getStringValue();
-                final double currentDEC = ALX.parseDEC(decString);
-
-                // Compute separation between science object & the current star
-                final double raSeparation = Math.abs(_scienceObjectRA - currentRA);
+                // Compute separation between science object and the current star:
+                // use distance computation to correct RA arround poles (by cos(dec)) : 
+                // TODO: use a correct distance ?
+                
+                final double raSeparation = ALX.computeDistanceInDegrees(_scienceObjectRA, _scienceObjectDEC, currentRA, _scienceObjectDEC);
                 final double decSeparation = Math.abs(_scienceObjectDEC - currentDEC);
 
                 // If the current star is out of range
                 if ((raSeparation > _deltaRA) || (decSeparation > _deltaDEC)) {
-                    // TODO: use correct distance computation ?
+                    // TODO: use correct distance computation ? because it will be false close to poles
                     // The current star row should be removed
                     return true;
                 }
