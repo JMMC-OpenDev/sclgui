@@ -172,7 +172,7 @@ public final class StarList extends Vector<List<StarProperty>> {
             outputList.addAll(this);
         }
 
-        _logger.info("_hasDeletedStars: {}", deleted);
+        _logger.debug("_hasDeletedStars: {}", deleted);
 
         _hasDeletedStars = deleted;
 

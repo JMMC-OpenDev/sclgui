@@ -913,8 +913,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         public Component getTableCellRendererComponent(JTable table,
                                                        Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
-            final Component c = tableCellRenderer.getTableCellRendererComponent(table,
-                    value, isSelected, hasFocus, row, column);
+            final Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
             if (c instanceof JLabel) {
                 JLabel l = (JLabel) c;
@@ -1069,7 +1068,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 } else if (starProperty.hasValue()) {
                     // If something bad happened, write text in red !
                     foregroundColor = Color.RED;
-                    tooltip = "!!! BUG (no origin nor confidence) !!!";
+                    tooltip = "(no origin nor confidence)";
 
                 } else {
                     // If the property has no origin nor confidence: it is empty
@@ -1079,7 +1078,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
             if (backgroundColor == null) {
                 // Diff tool case:
-                backgroundColor = Color.RED;
+                backgroundColor = Color.ORANGE;
             }
 
             // Set tooltip (if any)
