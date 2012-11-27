@@ -492,6 +492,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         return modelToView;
     }
 
+    public int viewIndex(final int modelIndex) {
+        return getModelToView()[modelIndex];
+    }
+
     // TableModel interface methods
     /**
      * DOCUMENT ME!
@@ -968,21 +972,30 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      *
      * @warning: No trace log implemented as this is often called (performance).
      */
-    private final class TableCellColors extends DefaultTableCellRenderer
-            implements Observer {
+    private final class TableCellColors extends DefaultTableCellRenderer implements Observer {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
+        /* members */
+        /** preferences */
+        private final Preferences _preferences;
+        /** color map for origins */
         private HashMap<String, Color> _colorForOrigin;
+        /** color map for confidence indexes */
         private HashMap<String, Color> _colorForConfidence;
-        private Preferences _preferences;
-        // Get the prefered distance to detect the science object
+        /** Get the prefered distance to detect the science object */
         private Double _prefDistance = 0.0;
+        /** derived italic font */
+        private Font _derivedItalicFont = null;
+        /** derived bold font */
+        private Font _derivedBoldFont = null;
+        /** orange border for selected cell */
+        private final Border _orangeBorder = BorderFactory.createLineBorder(Color.ORANGE, 2);
 
         /**
          * TableCellColors  -  Constructor
          */
-        public TableCellColors() {
+        TableCellColors() {
             super();
 
             // Store the application preferences and register against it
@@ -1001,9 +1014,9 @@ public final class TableSorter extends AbstractTableModel implements Observer {
          * @return Component
          */
         @Override
-        public Component getTableCellRendererComponent(JTable table,
-                                                       Object value, boolean isSelected, boolean hasFocus, int row,
-                                                       int column) {
+        public Component getTableCellRendererComponent(final JTable table, final Object value,
+                                                       final boolean isSelected, final boolean hasFocus,
+                                                       final int row, final int column) {
             // Set default renderer to the component
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -1028,7 +1041,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             String tooltip = null;
             Color foregroundColor = Color.BLACK;
             Color backgroundColor = Color.WHITE;
-            final Font cellFont = getFont();
 
             final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
             if (starProperty != null) {
@@ -1040,19 +1052,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
                     final Catalog catalog = Catalog.catalogFromReference(origin);
 
-                    final String originDescription = "Catalog origin: " + ((catalog != null) ? catalog : origin); // Diff tool
+                    // Only use catalog origin as tooltip
+                    tooltip = "Catalog origin: " + ((catalog != null) ? catalog : origin); // Diff tool
 
-                    // If tooltip already contains an explanation about clickable cells
-                    // TODO: clarify this as tooltip var is null !!!
-                    if (tooltip != null) {
-                        // Add catalog origin to it
-                        tooltip += originDescription;
-                    } else {
-                        // Only use catalog origin as tooltip
-                        tooltip = originDescription;
-                    }
-
-                    // Get origin color and set it as cell backgroung color
+                    // Get origin color and set it as cell background color
                     backgroundColor = _colorForOrigin.get(origin);
 
                 } else if (starProperty.hasConfidence()) {
@@ -1060,7 +1063,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                     final String confidence = starProperty.getConfidence();
                     tooltip = "Computed value (confidence index: " + confidence + ")";
 
-                    // Get confidence color and set it as cell backgroung color
+                    // Get confidence color and set it as cell background color
                     backgroundColor = _colorForConfidence.get(confidence);
 
                 } else if (starProperty.hasValue()) {
@@ -1080,42 +1083,50 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             }
 
             // Set tooltip (if any)
-            if (tooltip != null) {
-                setToolTipText(tooltip);
-            } else {
-                setToolTipText(null);
-            }
+            setToolTipText(tooltip);
 
             // Do not change color if cell is located on a selected row
             if (table.isRowSelected(row)) {
                 // Except if it is the selected cell itself (to highlight found tokens)
                 if (table.isColumnSelected(column)) {
-                    final Border border = BorderFactory.createLineBorder(Color.ORANGE, 2);
-                    setBorder(border);
+                    setBorder(_orangeBorder);
                     setBackground(Color.YELLOW);
                     setForeground(Color.BLACK);
-                    setFont(cellFont.deriveFont(cellFont.getStyle() | Font.ITALIC));
+
+                    // Put the corresponding row font in italic:
+                    if (_derivedItalicFont == null) {
+                        // cache derived Font:
+                        final Font cellFont = getFont();
+                        _derivedItalicFont = cellFont.deriveFont(cellFont.getStyle() | Font.ITALIC);
+                    }
+                    setFont(_derivedItalicFont);
                 }
 
                 return this;
             }
 
-            final int distId = calModel.getColumnIdByName("dist");
+            final int distId = calModel.getColumnIdByName(StarList.DistColumnName);
+            if (distId != -1) {
+                // If the current row distance is close enough to be detected as a science object
+                // @note SCIENCE_DISTANCE_CHECK : The same is used in ASPRO for science object star detection and removal.
+                final StarProperty distanceProperty = calModel.getStarProperty(modelRow, distId);
 
-            // If the current row distance is close enough to be detected as a science object
-            // @note SCIENCE_DISTANCE_CHECK : The same is used in ASPRO for science object star detection and removal.
-            final StarProperty distanceProperty = calModel.getStarProperty(modelRow, distId);
+                if (distanceProperty != null) {
+                    final double rowDistance = distanceProperty.getDoubleValue();
+                    if (rowDistance < _prefDistance) {
+                        // Put the corresponding row font in bold:
+                        if (_derivedBoldFont == null) {
+                            // cache derived Font:
+                            final Font cellFont = getFont();
+                            _derivedBoldFont = cellFont.deriveFont(cellFont.getStyle() | Font.BOLD);
+                        }
+                        setFont(_derivedBoldFont);
 
-            if (distanceProperty != null) {
-                final double rowDistance = distanceProperty.getDoubleValue();
-                if (rowDistance < _prefDistance) {
-                    // Put the corresponding row font in bold
-                    setFont(cellFont.deriveFont(cellFont.getStyle() | Font.BOLD));
-
-                    if (_logger.isDebugEnabled()) {
-                        _logger.debug("Put row['" + row
-                                + "'] in BOLD : (rowDistance = '" + rowDistance
-                                + "') < (prefDistance = '" + _prefDistance + "').");
+                        if (_logger.isDebugEnabled()) {
+                            _logger.debug("Put row['" + row
+                                    + "'] in BOLD : (rowDistance = '" + rowDistance
+                                    + "') < (prefDistance = '" + _prefDistance + "').");
+                        }
                     }
                 }
             }
@@ -1136,6 +1147,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 setBackground(backgroundColor);
                 setBorder(noFocusBorder);
             }
+
             // Return the component
             return this;
         }
@@ -1143,7 +1155,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         /**
          * Automatically called whenever color preferences change.
          */
-        public void update(Observable o, Object arg) {
+        public void update(final Observable o, final Object arg) {
             // React to preferences changes
             if (o.equals(_preferences)) {
                 // Get science object detection distance
@@ -1190,19 +1202,19 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
-        private StarProperty _starProperty = null;
 
         // This method is called when a cell value is edited by the user.
-        public Component getTableCellEditorComponent(JTable table,
-                                                     Object value, boolean isSelected, int row, int column) {
+        public Component getTableCellEditorComponent(final JTable table, final Object value, final boolean isSelected,
+                                                     final int row, final int column) {
 
             // Retrieve clicked cell informations
             final int modelRow = modelIndex(row);
             final int modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
             final CalibratorsModel calModel = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
-            _starProperty = calModel.getStarProperty(modelRow, modelColumn);
 
-            final String cellValue = (_starProperty != null) ? _starProperty.getString() : null;
+            final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
+
+            final String cellValue = (starProperty != null) ? starProperty.getString() : null;
 
             // If the cell is empty
             if (cellValue == null) {
@@ -1216,7 +1228,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             }
 
             if (calModel.hasURL(modelColumn)) {
-                final String url = calModel.getURL(modelColumn, _starProperty.getStringValue());
+                final String url = calModel.getURL(modelColumn, cellValue);
 
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("User clicked on column '"
@@ -1239,7 +1251,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             // Should not be called
             _logger.error("TableCellColorsEditor.getCellEditorValue() should have not been called.");
 
-            return _starProperty;
+            return null;
         }
     }
 ////////////////////////////////////////////////////////////////////////////
