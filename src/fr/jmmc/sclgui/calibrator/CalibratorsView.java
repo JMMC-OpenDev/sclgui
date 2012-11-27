@@ -5,6 +5,7 @@ package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
+import fr.jmmc.jmcs.gui.util.AutofitTableColumns;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -60,6 +61,8 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     private static final Logger _logger = LoggerFactory.getLogger(CalibratorsView.class.getName());
     /** System property to enable multi view support (focus) */
     public static final String MODE_MULTI_VIEW = "CalibratorsView.multiViews";
+    /** flag indicating to autofit table columns */
+    public static final boolean _autoFitsColumns = false;
     /** The monitored application preferences */
     private final static Preferences _preferences = Preferences.getInstance();
     /** flag indicating to use multi views */
@@ -167,13 +170,13 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
 
         // Table initialization
         _calibratorsTable = new JTable();
+        _calibratorsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        _calibratorsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // Configure table sorting
         _tableSorter = new TableSorter(_calibratorsModel, _calibratorsTable.getTableHeader());
 
         _calibratorsTable.setModel(_tableSorter);
-        _calibratorsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        _calibratorsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // Place tables into scrollPane
         final JScrollPane scrollPane = new JScrollPane(_calibratorsTable);
@@ -317,6 +320,19 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         updateBorderTitle();
 
         refreshActionState();
+
+        if (_autoFitsColumns) {
+            // TODO: optimize multiple calls !!
+
+            // If DataTableChanged event:
+            if (e.getLastRow() == Integer.MAX_VALUE) {
+                final long startTime = System.nanoTime();
+
+                AutofitTableColumns.autoResizeTable(_calibratorsTable);
+
+                _logger.info("AutofitTableColumns.autoResizeTable: done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
+            }
+        }
 
         update(null, null);
     }
