@@ -37,7 +37,12 @@ public final class StarPropertyMeta {
         this._description = description;
         this._ucd = ucd;
         this._unit = unit;
-        this._url = url;
+
+        // If more than, or less than 1 '${...}' token in the URL
+        final String[] array = url.split("[$]");
+
+        // Discard this URL
+        this._url = (array.length == 2) ? url : "";
     }
 
     /**
