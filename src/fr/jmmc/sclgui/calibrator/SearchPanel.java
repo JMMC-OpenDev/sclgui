@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +89,7 @@ public final class SearchPanel extends javax.swing.JFrame {
         jPanel1.add(_findLabel, new java.awt.GridBagConstraints());
 
         _searchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _searchFieldActionPerformed(evt);
             }
         });
@@ -108,11 +107,6 @@ public final class SearchPanel extends javax.swing.JFrame {
 
         _previousButton.setAction(_findPreviousAction);
         _previousButton.setText("Previous");
-        _previousButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                _previousButtonActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -137,10 +131,6 @@ public final class SearchPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void _previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__previousButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event__previousButtonActionPerformed
 
     private void _searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__searchFieldActionPerformed
         doSearch(SEARCH_DIRECTION.UNDEFINED);
