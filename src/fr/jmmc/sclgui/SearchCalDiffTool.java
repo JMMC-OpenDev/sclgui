@@ -14,6 +14,7 @@ import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.calibrator.DiffCalibratorsModel;
 import fr.jmmc.sclgui.calibrator.StarList;
+import fr.jmmc.sclgui.calibrator.TableSorter;
 import fr.jmmc.sclgui.filter.FilterView;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.filter.FiltersView;
@@ -136,6 +137,9 @@ public final class SearchCalDiffTool extends App {
 
                 // Enable multi views:
                 System.setProperty(CalibratorsView.MODE_MULTI_VIEW, "true");
+
+                // Disable distance check in cell renderer:
+                System.setProperty(TableSorter.DISABLE_DISTANCE_RENDERER, "true");
 
                 // Create a query model
                 final QueryModel queryModel = new QueryModel();
