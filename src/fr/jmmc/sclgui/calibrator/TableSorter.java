@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -97,6 +98,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     private static final long serialVersionUID = 1;
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(TableSorter.class.getName());
+    /** System property to disable distance check in renderer */
+    public static final String DISABLE_DISTANCE_RENDERER = "TableSorter.renderer.disable.distance";
+    /** flag indicating to enable renderer distance check */
+    private final static boolean _cellRendererUseDistance = !("true".equalsIgnoreCase(System.getProperty(TableSorter.DISABLE_DISTANCE_RENDERER, "false")));
     /**
      * DOCUMENT ME!
      */
@@ -129,6 +134,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             return o1.toString().compareTo(o2.toString());
         }
     };
+
+    /* members */
     /**
      * DOCUMENT ME!
      */
@@ -152,7 +159,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     /**
      * DOCUMENT ME!
      */
-    private TableModelListener tableModelListener;
+    TableModelListener tableModelListener;
     /**
      * DOCUMENT ME!
      */
@@ -257,15 +264,9 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * @param tableModel DOCUMENT ME!
      */
     public void setTableModel(TableModel tableModel) {
-        if (this.tableModel != null) {
-            this.tableModel.removeTableModelListener(tableModelListener);
-        }
-
         this.tableModel = tableModel;
 
-        if (this.tableModel != null) {
-            this.tableModel.addTableModelListener(tableModelListener);
-        }
+        // Multiple table model listeners => ordering side effects !!!
 
         clearSortingState();
         fireTableStructureChanged();
@@ -530,7 +531,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * @return DOCUMENT ME!
      */
     @Override
-    public String getColumnName(int column) {
+    public String getColumnName(final int column) {
         return tableModel.getColumnName(_viewIndex[column]);
     }
 
@@ -542,7 +543,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * @return DOCUMENT ME!
      */
     @Override
-    public Class<?> getColumnClass(int column) {
+    public Class<?> getColumnClass(final int column) {
         return tableModel.getColumnClass(_viewIndex[column]);
     }
 
@@ -555,8 +556,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * @return DOCUMENT ME!
      */
     @Override
-    public boolean isCellEditable(int row, int column) {
-        return tableModel.isCellEditable(modelIndex(row), column);
+    public boolean isCellEditable(final int row, final int column) {
+        return tableModel.isCellEditable(modelIndex(row), _viewIndex[column]);
     }
 
     /**
@@ -748,6 +749,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     private final class TableModelHandler implements TableModelListener {
 
         public void tableChanged(TableModelEvent e) {
+
             ////////////////////////////////////////////////////////////////////////
             computeColumnsIndirectionArray();
 
@@ -906,12 +908,13 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         final TableCellRenderer tableCellRenderer;
 
-        public SortableHeaderRenderer(TableCellRenderer tableCellRenderer) {
+        public SortableHeaderRenderer(final TableCellRenderer tableCellRenderer) {
             this.tableCellRenderer = tableCellRenderer;
         }
 
-        public Component getTableCellRendererComponent(JTable table,
-                                                       Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(final JTable table, final Object value,
+                                                       final boolean isSelected, final boolean hasFocus,
+                                                       final int row, final int column) {
 
             final Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -990,6 +993,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         private Font _derivedBoldFont = null;
         /** orange border for selected cell */
         private final Border _orangeBorder = BorderFactory.createLineBorder(Color.ORANGE, 2);
+        /** Double formatter */
+        private final NumberFormat formatter = NumberFormat.getInstance();
 
         /**
          * TableCellColors  -  Constructor
@@ -1077,12 +1082,17 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             }
 
             if (backgroundColor == null) {
-                // Diff tool case:
+                // Diff tool case: origin or confidence not found in color maps:
                 backgroundColor = Color.ORANGE;
             }
 
             // Set tooltip (if any)
             setToolTipText(tooltip);
+
+            // Fix number format:
+            if (value instanceof Double) {
+                setText(formatter.format(value));
+            }
 
             // Do not change color if cell is located on a selected row
             if (table.isRowSelected(row)) {
@@ -1104,39 +1114,37 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 return this;
             }
 
-            final int distId = calModel.getColumnIdByName(StarList.DistColumnName);
-            if (distId != -1) {
-                // If the current row distance is close enough to be detected as a science object
-                // @note SCIENCE_DISTANCE_CHECK : The same is used in ASPRO for science object star detection and removal.
-                final StarProperty distanceProperty = calModel.getStarProperty(modelRow, distId);
+            if (_cellRendererUseDistance) {
+                final int distId = calModel.getColumnIdByName(StarList.DistColumnName);
+                if (distId != -1) {
+                    // If the current row distance is close enough to be detected as a science object
+                    // @note SCIENCE_DISTANCE_CHECK : The same is used in ASPRO for science object star detection and removal.
+                    final StarProperty distanceProperty = calModel.getStarProperty(modelRow, distId);
 
-                if (distanceProperty != null) {
-                    final double rowDistance = distanceProperty.getDoubleValue();
-                    if (rowDistance < _prefDistance) {
-                        // Put the corresponding row font in bold:
-                        if (_derivedBoldFont == null) {
-                            // cache derived Font:
-                            final Font cellFont = getFont();
-                            _derivedBoldFont = cellFont.deriveFont(cellFont.getStyle() | Font.BOLD);
-                        }
-                        setFont(_derivedBoldFont);
+                    if (distanceProperty != null) {
+                        final double rowDistance = distanceProperty.getDoubleValue();
+                        if (rowDistance < _prefDistance) {
+                            // Put the corresponding row font in bold:
+                            if (_derivedBoldFont == null) {
+                                // cache derived Font:
+                                final Font cellFont = getFont();
+                                _derivedBoldFont = cellFont.deriveFont(cellFont.getStyle() | Font.BOLD);
+                            }
+                            setFont(_derivedBoldFont);
 
-                        if (_logger.isDebugEnabled()) {
-                            _logger.debug("Put row['" + row
-                                    + "'] in BOLD : (rowDistance = '" + rowDistance
-                                    + "') < (prefDistance = '" + _prefDistance + "').");
+                            if (_logger.isDebugEnabled()) {
+                                _logger.debug("Put row['" + row
+                                        + "'] in BOLD : (rowDistance = '" + rowDistance
+                                        + "') < (prefDistance = '" + _prefDistance + "').");
+                            }
                         }
                     }
                 }
             }
 
             // Compose catalog URL
-            if (starProperty != null && calModel.hasURL(modelColumn)) {
-                final String cellValue = starProperty.getString();
-
-                if (cellValue != null) {
-                    setText("<html><a href='#empty'>" + cellValue + "</a></html>");
-                }
+            if (value != null && starProperty != null && calModel.hasURL(modelColumn)) {
+                setText("<html><a href='#empty'>" + value + "</a></html>");
             }
 
             // If cell is not selected and not focused 
