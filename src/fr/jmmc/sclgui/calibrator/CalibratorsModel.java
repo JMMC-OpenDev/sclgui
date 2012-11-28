@@ -129,6 +129,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     String _magnitudeBand = "V";
     /** Selected scenario */
     Boolean _brightScenarioFlag = true;
+    /** flag to enable/disable update events (ie multiple calls) */
+    private boolean _autoUpdateEvent = true;
 
     /**
      * Constructor.
@@ -198,40 +200,77 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      */
     @Override
     public void update(final Observable o, final Object arg) {
-        if (_logger.isDebugEnabled()) {
-            _logger.debug("update: o {} with arg = {}", o, arg);
-        }
+        if (this._autoUpdateEvent) {
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("update: o {} with arg = {}", o, arg);
+            }
 
-        // Filter the displayed star list
-        setFilteredStarList(_filtersModel.process(_currentStarList));
+            // Filter the displayed star list
+            setFilteredStarList(_filtersModel.process(_currentStarList));
 
-        // As a DefaultTableModel instance, set all the JTable needed vectors
-        setDataVector(_filteredStarList, _starListMeta.getPropertyNames());
+            // As a DefaultTableModel instance, set all the JTable needed vectors
+            // it calls fireTableStructureChanged()
+            setDataVector(_filteredStarList, _starListMeta.getPropertyNames());
 
-        // Generate as many raw headers as data raws
-        _rowHeadersModel.populate(_nFilteredStars);
+            // Generate as many raw headers as data raws
+            _rowHeadersModel.populate(_nFilteredStars);
 
-        // Ask all the attached JTable views to update
-        fireTableDataChanged();
+            // Ask all the attached JTable views to update
+            fireTableDataChanged();
 
-        // If the update was launched from TableSorter (just for a GUI refresh)
-        if (arg != null) {
-            if (TableSorter.class == arg.getClass()) {
-                // Don't consider it as a data modification
-                return;
+            // If the update was launched from TableSorter (just for a GUI refresh)
+            if (arg != null) {
+                if (TableSorter.class == arg.getClass()) {
+                    // Don't consider it as a data modification
+                    return;
+                }
+            }
+
+            // Remember that data have changed (unless change went from us)
+            if (arg != this) {
+                _dataHaveChanged = true;
+            }
+
+            // Diff tool:
+            if (_vo != null) {
+                // Ask for SAMP export menu enabling if needed
+                _vo.couldEnableShareCalibratorsThroughSAMPAction(_nFilteredStars != 0);
             }
         }
+    }
 
-        // Remember that data have changed (unless change went from us)
-        if (arg != this) {
-            _dataHaveChanged = true;
+    /**
+     * Enable / Disable the automatic update of the observation when any swing component changes.
+     * Return its previous value.
+     *
+     * Typical use is as following :
+     * // disable the automatic update observation :
+     * final boolean prevAutoUpdateObservation = this.setAutoUpdateObservation(false);
+     * try {
+     *   // operations ...
+     *
+     * } finally {
+     *   // restore the automatic update observation :
+     *   this.setAutoUpdateObservation(prevAutoUpdateObservation);
+     * }
+     *
+     * @param value new value
+     * @return previous value
+     */
+    public boolean setAutoUpdate(final boolean value) {
+        // first backup the state of the automatic update :
+        final boolean previous = this._autoUpdateEvent;
+
+        // then change its state :
+        this._autoUpdateEvent = value;
+
+        if (value) {
+            // force an update now:
+            update(null, null);
         }
 
-        // Diff tool:
-        if (_vo != null) {
-            // Ask for SAMP export menu enabling if needed
-            _vo.couldEnableShareCalibratorsThroughSAMPAction(_nFilteredStars != 0);
-        }
+        // return previous state :
+        return previous;
     }
 
     /**
@@ -254,9 +293,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return false
      */
     @Override
-    public boolean isCellEditable(int row, int column) {
+    public boolean isCellEditable(final int row, final int column) {
         // Fake editor in order to handle clickable cell to open page in browser (in TableSorter)
-        return true;
+        return hasURL(column);
     }
 
     /**
