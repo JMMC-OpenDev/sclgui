@@ -62,7 +62,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     /** System property to enable multi view support (focus) */
     public static final String MODE_MULTI_VIEW = "CalibratorsView.multiViews";
     /** flag indicating to autofit table columns */
-    public static final boolean _autoFitsColumns = false;
+    public static final boolean _autoFitsColumns = true;
     /** The monitored application preferences */
     private final static Preferences _preferences = Preferences.getInstance();
     /** flag indicating to use multi views */
@@ -317,18 +317,20 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      */
     @Override
     public void tableChanged(final TableModelEvent e) {
+        // First: fire this event to table sorter (indirection array + custom renderer / editors):
+        _tableSorter.tableModelListener.tableChanged(e);
+
         updateBorderTitle();
 
         refreshActionState();
 
         if (_autoFitsColumns) {
-            // TODO: optimize multiple calls !!
-
             // If DataTableChanged event:
-            if (e.getLastRow() == Integer.MAX_VALUE) {
+            if (e.getLastRow() == Integer.MAX_VALUE && _calibratorsTable.getRowCount() != 0) {
                 final long startTime = System.nanoTime();
 
-                AutofitTableColumns.autoResizeTable(_calibratorsTable);
+                // use cell values not renderer values (html code):
+                AutofitTableColumns.autoResizeTable(_calibratorsTable, true);
 
                 _logger.info("AutofitTableColumns.autoResizeTable: done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
             }
