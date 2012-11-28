@@ -153,92 +153,103 @@ public final class DiffCalibratorsModel {
         _logger.info("-------------------------------------------------------------------------------");
         _logger.warn("diff: fileLeft= '{}' - fileRight= '{}'", fileLeft, fileRight);
 
-        calibratorsModelLeft.parseVOTable(fileLeft, false); // sync
-
-        calibratorsModelRight.parseVOTable(fileRight, false); // sync
-
-        _logger.info("-------------------------------------------------------------------------------");
-
-        _logger.warn("Left  : scenario {}", calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint");
-        _logger.warn("Left  : band {}", calibratorsModelLeft._magnitudeBand);
-
-        _logger.warn("Right : scenario {}", calibratorsModelRight._brightScenarioFlag ? "bright" : "faint");
-        _logger.warn("Right : band {}", calibratorsModelRight._magnitudeBand);
-
-        // Fix band and scenario:
-        if (calibratorsModelRight._brightScenarioFlag != calibratorsModelLeft._brightScenarioFlag) {
-            calibratorsModelRight._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
-        }
-        if (!calibratorsModelRight._magnitudeBand.equals(calibratorsModelLeft._magnitudeBand)) {
-            calibratorsModelRight._magnitudeBand = calibratorsModelLeft._magnitudeBand;
-        }
-
-        // TODO: compare also paramSet (query params)
-
-        // Get Star lists:
-        final StarList starListLeft = calibratorsModelLeft.getOriginalStarList();
-        final StarList starListRight = calibratorsModelRight.getOriginalStarList();
-
-        _logger.info("-------------------------------------------------------------------------------");
-
-        // compare stars and compute otherRowIdx property on both lists:
-        final int matchs = crossMatchRaDec(starListLeft, starListRight);
-
-        _logger.info("-------------------------------------------------------------------------------");
-
-        // compare star list meta data:
-        final StarListMeta diffStarListMetaData = processStarListMeta(starListLeft.getMetaData(), starListRight.getMetaData());
-
-        // create a new diff star list (common properties only):
-        final StarList diffStarList = new StarList(diffStarListMetaData);
-        if (matchs > 0) {
-            // prepare list:
-            diffStarList.ensureCapacity(matchs);
-        }
-
-        compare(starListLeft, starListRight, diffStarList);
-
-        // Define band and scenario to fix JTable display:
-        calibratorsModelDiff._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
-        calibratorsModelDiff._magnitudeBand = calibratorsModelLeft._magnitudeBand;
-
-        _logger.info("-------------------------------------------------------------------------------");
-
-        // update models because otherRowIdx property added:
-        calibratorsModelLeft.updateModel(starListLeft);
-        calibratorsModelRight.updateModel(starListRight);
-
-        // display computed diff model:
-        calibratorsModelDiff.updateModel(diffStarList);
-
-        // Update views / GUI:
-        String propName;
-        final StringBuilder sb = new StringBuilder(1024);
-        for (int i = 0, count = diffStarListMetaData.getPropertyCount(); i < count; i++) {
-            propName = diffStarListMetaData.getPropertyName(i);
-
-            if (propName.equals(StarList.RADegColumnName)
-                    || propName.equals(StarList.DEDegColumnName)
-                    || propName.equals(StarList.RowIdxColumnName)
-                    || propName.equals(StarList.OtherRowIdxColumnName)) {
-                // skip
-                continue;
-            }
-            sb.append(propName).append(' ');
-        }
-        sb.insert(0, "rowIdx otherRowIdx RAdeg DEdeg ");
-
-        final String detailedProperties = sb.toString();
-
+        // disable auto update:
+        calibratorsModelLeft.setAutoUpdate(false);
+        calibratorsModelRight.setAutoUpdate(false);
+        calibratorsModelDiff.setAutoUpdate(false);
         try {
-            final String prefKey = "view.columns.detailed." + (calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
-                    + '.' + calibratorsModelLeft._magnitudeBand;
 
-            Preferences.getInstance().setPreference(prefKey, detailedProperties);
-        } catch (PreferencesException pe) {
-            _logger.warn("setPreference exception:", pe);
+            calibratorsModelLeft.parseVOTable(fileLeft, false); // sync
+
+            calibratorsModelRight.parseVOTable(fileRight, false); // sync
+
+            _logger.info("-------------------------------------------------------------------------------");
+
+            _logger.warn("Left  : scenario {}", calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint");
+            _logger.warn("Left  : band {}", calibratorsModelLeft._magnitudeBand);
+
+            _logger.warn("Right : scenario {}", calibratorsModelRight._brightScenarioFlag ? "bright" : "faint");
+            _logger.warn("Right : band {}", calibratorsModelRight._magnitudeBand);
+
+            // Fix band and scenario:
+            if (calibratorsModelRight._brightScenarioFlag != calibratorsModelLeft._brightScenarioFlag) {
+                calibratorsModelRight._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
+            }
+            if (!calibratorsModelRight._magnitudeBand.equals(calibratorsModelLeft._magnitudeBand)) {
+                calibratorsModelRight._magnitudeBand = calibratorsModelLeft._magnitudeBand;
+            }
+
+            // TODO: compare also paramSet (query params)
+
+            // Get Star lists:
+            final StarList starListLeft = calibratorsModelLeft.getOriginalStarList();
+            final StarList starListRight = calibratorsModelRight.getOriginalStarList();
+
+            _logger.info("-------------------------------------------------------------------------------");
+
+            // compare stars and compute otherRowIdx property on both lists:
+            final int matchs = crossMatchRaDec(starListLeft, starListRight);
+
+            _logger.info("-------------------------------------------------------------------------------");
+
+            // compare star list meta data:
+            final StarListMeta diffStarListMetaData = processStarListMeta(starListLeft.getMetaData(), starListRight.getMetaData());
+
+            // create a new diff star list (common properties only):
+            final StarList diffStarList = new StarList(diffStarListMetaData);
+            if (matchs > 0) {
+                // prepare list:
+                diffStarList.ensureCapacity(matchs);
+            }
+
+            compare(starListLeft, starListRight, diffStarList);
+
+            // Define band and scenario to fix JTable display:
+            calibratorsModelDiff._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
+            calibratorsModelDiff._magnitudeBand = calibratorsModelLeft._magnitudeBand;
+
+            _logger.info("-------------------------------------------------------------------------------");
+
+            // update models because otherRowIdx property added:
+            calibratorsModelLeft.updateModel(starListLeft);
+            calibratorsModelRight.updateModel(starListRight);
+
+            // display computed diff model:
+            calibratorsModelDiff.updateModel(diffStarList);
+
+            // Update views / GUI:
+            String propName;
+            final StringBuilder sb = new StringBuilder(1024);
+            for (int i = 0, count = diffStarListMetaData.getPropertyCount(); i < count; i++) {
+                propName = diffStarListMetaData.getPropertyName(i);
+
+                if (propName.equals(StarList.RADegColumnName)
+                        || propName.equals(StarList.DEDegColumnName)
+                        || propName.equals(StarList.RowIdxColumnName)
+                        || propName.equals(StarList.OtherRowIdxColumnName)) {
+                    // skip
+                    continue;
+                }
+                sb.append(propName).append(' ');
+            }
+            sb.insert(0, "rowIdx otherRowIdx RAdeg DEdeg ");
+
+            final String detailedProperties = sb.toString();
+
+            try {
+                final String prefKey = "view.columns.detailed." + (calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
+                        + '.' + calibratorsModelLeft._magnitudeBand;
+
+                Preferences.getInstance().setPreference(prefKey, detailedProperties);
+            } catch (PreferencesException pe) {
+                _logger.warn("setPreference exception:", pe);
+            }
+        } finally {
+            calibratorsModelLeft.setAutoUpdate(true);
+            calibratorsModelRight.setAutoUpdate(true);
+            calibratorsModelDiff.setAutoUpdate(true);
         }
-        
+
         _logger.info("-------------------------------------------------------------------------------");
     }
 
