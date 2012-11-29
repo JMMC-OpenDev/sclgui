@@ -217,14 +217,14 @@ public final class StarListMeta {
     /**
      * Return the optional property url of the property at the given index
      * @param index
-     * @return property url or "" if undefined
+     * @return property url or null if undefined
      */
     public String getPropertyUrl(final int index) {
         final StarPropertyMeta propertyMeta = getPropertyMeta(index);
         if (propertyMeta != null) {
             return propertyMeta.getUrl();
         }
-        return "";
+        return null;
     }
 
     @Override
