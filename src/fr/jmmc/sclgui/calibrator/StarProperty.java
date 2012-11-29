@@ -70,10 +70,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a String object representing the star property value or null if undefined
      */
     public String getString() {
-        if (_value == null) {
-            return null;
-        }
-        return _value.toString();
+        return (_value == null) ? null : _value.toString();
     }
 
     /**
@@ -82,10 +79,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a String object representing the star property value.
      */
     public String getStringValue() {
-        if (_value == null) {
-            return "";
-        }
-        return _value.toString();
+        return (_value == null) ? "" : _value.toString();
     }
 
     /**
@@ -94,10 +88,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return an Integer object representing the star property value.
      */
     public Integer getInteger() {
-        if (_value instanceof Integer) {
-            return (Integer) _value;
-        }
-        return null;
+        return (_value instanceof Integer) ? (Integer) _value : null;
     }
 
     /**
@@ -106,10 +97,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return an Integer object representing the star property value.
      */
     public int getIntegerValue() {
-        if (_value instanceof Double) {
-            return ((Integer) _value).intValue();
-        }
-        return Integer.MIN_VALUE;
+        return (_value instanceof Integer) ? ((Integer) _value).intValue() : Integer.MIN_VALUE;
     }
 
     /**
@@ -118,10 +106,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a Double object representing the star property value.
      */
     public Double getDouble() {
-        if (_value instanceof Double) {
-            return (Double) _value;
-        }
-        return null;
+        return (_value instanceof Double) ? (Double) _value : null;
     }
 
     /**
@@ -130,10 +115,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a Double object representing the star property value.
      */
     public double getDoubleValue() {
-        if (_value instanceof Double) {
-            return ((Double) _value).doubleValue();
-        }
-        return Double.NaN;
+        return (_value instanceof Double) ? ((Double) _value).doubleValue() : Double.NaN;
     }
 
     /**
@@ -142,10 +124,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a Boolean object representing the star property value.
      */
     public Boolean getBoolean() {
-        if (_value instanceof Boolean) {
-            return ((Boolean) _value);
-        }
-        return null;
+        return (_value instanceof Boolean) ? (Boolean) _value : null;
     }
 
     /**
@@ -154,10 +133,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a Boolean object representing the star property value.
      */
     public boolean getBooleanValue() {
-        if (_value instanceof Boolean) {
-            return ((Boolean) _value).booleanValue();
-        }
-        return false;
+        return (_value instanceof Boolean) ? ((Boolean) _value).booleanValue() : false;
     }
 
     /**
@@ -175,10 +151,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a String object representing the star property origin.
      */
     public String getOrigin() {
-        if (_origin == null) {
-            return "";
-        }
-        return _origin;
+        return (_origin == null) ? "" : _origin;
     }
 
     /**
@@ -187,15 +160,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return true if a confidence index is set, false otherwise.
      */
     public boolean hasOrigin() {
-        if (_confidence != null) {
-            return false;
-        }
-
-        if (_origin != null) {
-            return true;
-        }
-
-        return false;
+        return (_confidence != null) ? false : (_origin != null);
     }
 
     /**
@@ -204,10 +169,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return a String object representing the star property confidence index.
      */
     public String getConfidence() {
-        if (_confidence == null) {
-            return "";
-        }
-        return _confidence;
+        return (_confidence == null) ? "" : _confidence;
     }
 
     /**
