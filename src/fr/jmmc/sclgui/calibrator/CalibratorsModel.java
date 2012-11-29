@@ -83,7 +83,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /** table size threshold to load them asynchronously */
     private final static int LOAD_TABLE_ASYNC_THRESHOLD = 5000;
     /** number of extra properties (dynamically added and computed in the GUI) */
-    private final static int N_EXTRA_PROPERTIES = 4;
+    private final static int N_EXTRA_PROPERTIES = 8;
     /** parameter SearchCalGuiVersion (string) */
     public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
     /** parameter SearchCalServerVersion (string) */
