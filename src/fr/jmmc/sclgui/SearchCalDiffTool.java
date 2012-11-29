@@ -265,11 +265,11 @@ public final class SearchCalDiffTool extends App {
         if (selectedIndices.length == 0) {
             return;
         }
-        // TODO: fix column mapping (ordering changed):
-        final int selectedColumn = source.getSelectedProperty();
+
+        final String selectedColumnName = source.getSelectedPropertyName();
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("selectedColumn: {}", selectedColumn);
+            _logger.debug("selectedColumnName: {}", selectedColumnName);
             _logger.debug("selectedIndices: {}", Arrays.toString(selectedIndices));
         }
 
@@ -281,26 +281,33 @@ public final class SearchCalDiffTool extends App {
             if (source == calibratorsViewLeft) {
                 // Get rowIdx values:
                 final List<Integer> rowIdxValues = diffModel.getFilteredRows(selectedIndices, -1, StarList.RowIdxColumnName); // left
-                selectRows(calibratorsViewDiff, diffModel.findMatchingFilteredRows(rowIdxValues, 2), selectedColumn); // diff
+                selectRows(calibratorsViewDiff, diffModel.findMatchingFilteredRows(rowIdxValues, 2),
+                        calibratorsViewDiff.getViewIndexFromColumnName(selectedColumnName)); // diff
 
                 // Get otherRowIdx values:
                 final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, -1, StarList.OtherRowIdxColumnName); // left
-                selectRows(calibratorsViewRight, diffModel.findMatchingFilteredRows(otherIdxValues, 1), selectedColumn); // right
+                selectRows(calibratorsViewRight, diffModel.findMatchingFilteredRows(otherIdxValues, 1),
+                        calibratorsViewRight.getViewIndexFromColumnName(selectedColumnName)); // right
 
             } else if (source == calibratorsViewRight) {
                 // Get otherRowIdx values:
                 final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, 1, StarList.OtherRowIdxColumnName); // right
-                selectRows(calibratorsViewLeft, diffModel.findMatchingFilteredRows(otherIdxValues, -1), selectedColumn); // left
-                selectRows(calibratorsViewDiff, diffModel.findMatchingFilteredRows(otherIdxValues, 2), selectedColumn); // diff
+                selectRows(calibratorsViewLeft, diffModel.findMatchingFilteredRows(otherIdxValues, -1),
+                        calibratorsViewLeft.getViewIndexFromColumnName(selectedColumnName)); // left
+
+                selectRows(calibratorsViewDiff, diffModel.findMatchingFilteredRows(otherIdxValues, 2),
+                        calibratorsViewDiff.getViewIndexFromColumnName(selectedColumnName)); // diff
 
             } else if (source == calibratorsViewDiff) {
                 // Get rowIdx values:
                 final List<Integer> rowIdxValues = diffModel.getFilteredRows(selectedIndices, 2, StarList.RowIdxColumnName); // diff
-                selectRows(calibratorsViewLeft, diffModel.findMatchingFilteredRows(rowIdxValues, -1), selectedColumn); // left
+                selectRows(calibratorsViewLeft, diffModel.findMatchingFilteredRows(rowIdxValues, -1),
+                        calibratorsViewLeft.getViewIndexFromColumnName(selectedColumnName)); // left
 
                 // Get otherRowIdx values:
                 final List<Integer> otherIdxValues = diffModel.getFilteredRows(selectedIndices, 2, StarList.OtherRowIdxColumnName); // diff
-                selectRows(calibratorsViewRight, diffModel.findMatchingFilteredRows(otherIdxValues, 1), selectedColumn); // right
+                selectRows(calibratorsViewRight, diffModel.findMatchingFilteredRows(otherIdxValues, 1),
+                        calibratorsViewRight.getViewIndexFromColumnName(selectedColumnName)); // right
             }
 
         } finally {
