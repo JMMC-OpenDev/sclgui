@@ -53,6 +53,13 @@ public final class StarList extends Vector<List<StarProperty>> {
     public static final String RowIdxColumnName = "rowIdx";
     /** Store the rowIdx column name */
     public static final String OtherRowIdxColumnName = "otherRowIdx";
+    /* diff only */
+    /** Store the left column name */
+    public static final String LeftColumnName = "left";
+    /** Store the right column name */
+    public static final String RightColumnName = "right";
+    /** Store the diff column name */
+    public static final String DiffColumnName = "diff";
     /* members */
     /** star list meta data */
     private final StarListMeta _metaData;
