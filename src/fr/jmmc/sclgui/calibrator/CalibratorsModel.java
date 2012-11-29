@@ -456,7 +456,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public String getURL(final int column, final String value) {
         final String url = getColumnURL(column);
 
-        if (url.length() == 0) {
+        if (url == null) {
             return null;
         }
 
@@ -476,7 +476,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public boolean hasURL(final int column) {
         final String url = getColumnURL(column);
 
-        return (url.length() != 0);
+        return (url != null);
     }
 
     /**

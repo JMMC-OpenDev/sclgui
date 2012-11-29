@@ -42,7 +42,7 @@ public final class StarPropertyMeta {
         final String[] array = url.split("[$]");
 
         // Discard this URL
-        this._url = (array.length == 2) ? url : "";
+        this._url = (array.length == 2) ? url : null;
     }
 
     /**
