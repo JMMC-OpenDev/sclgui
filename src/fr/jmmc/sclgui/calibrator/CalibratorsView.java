@@ -440,14 +440,27 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     /** 
-     * Returns the selected column index in the calibrator table .
+     * Returns the selected column name in the calibrator table.
      * 
-     * @return the column index
+     * @return the column name
      */
-    public int getSelectedProperty() {
-        return _calibratorsTable.getSelectedColumn();
+    public String getSelectedPropertyName() {
+        return _tableSorter.getColumnName(_calibratorsTable.convertColumnIndexToModel(_calibratorsTable.getSelectedColumn()));
     }
 
+    /**
+     * Find the column index in the table (view) corresponding to the given column name
+     * @param columnName column name
+     * @return column index or -1 if not found
+     */
+    public int getViewIndexFromColumnName(final String columnName) {
+        return _tableSorter.findColumnViewIndex(_calibratorsModel.getColumnIdByName(columnName));
+    }
+
+    /**
+     * Add column selection listener
+     * @param listener column selection listener
+     */
     public void addColumnSelectionListener(final ListSelectionListener listener) {
         _calibratorsTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
     }
@@ -485,12 +498,13 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      */
     public void selectTableCell(final int rowIndex, final int column, final boolean isModelIndex, final boolean requestFocus) {
         final int row = (isModelIndex) ? _tableSorter.viewIndex(rowIndex) : rowIndex;
+        final int col = (column == -1) ? 0 : column; // use first column if the given column is incorrect
         // Clear previous selection and set new selection
-        _calibratorsTable.changeSelection(row, column, false, false);
-        _calibratorsTable.changeSelection(row, column, true, true);
+        _calibratorsTable.changeSelection(row, col, false, false);
+        _calibratorsTable.changeSelection(row, col, true, true);
 
         // Move view to show found cell
-        _calibratorsTable.scrollRectToVisible(_calibratorsTable.getCellRect(row, column, true));
+        _calibratorsTable.scrollRectToVisible(_calibratorsTable.getCellRect(row, col, true));
 
         if (requestFocus) {
             _calibratorsTable.requestFocus();
