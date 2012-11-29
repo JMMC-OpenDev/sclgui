@@ -3,6 +3,7 @@ package fr.jmmc.sclgui.calibrator;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.network.BrowserLauncher;
+import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Color;
@@ -12,7 +13,6 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -972,39 +972,47 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     /**
      * Used to display colorized cells.
      *
-     * @warning: No trace log implemented as this is often called (performance).
+     * @warning: No trace log implemented as this is very often called (performance).
      */
-    private final class TableCellColors extends DefaultTableCellRenderer implements Observer {
+    private final class TableCellColors extends DefaultTableCellRenderer {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
         /* members */
-        /** preferences */
-        private final Preferences _preferences;
-        /** color map for origins */
-        private HashMap<String, Color> _colorForOrigin;
-        /** color map for confidence indexes */
-        private HashMap<String, Color> _colorForConfidence;
-        /** Get the prefered distance to detect the science object */
-        private Double _prefDistance = 0.0;
         /** derived italic font */
         private Font _derivedItalicFont = null;
         /** derived bold font */
         private Font _derivedBoldFont = null;
         /** orange border for selected cell */
         private final Border _orangeBorder = BorderFactory.createLineBorder(Color.ORANGE, 2);
-        /** Double formatter */
-        private final NumberFormat formatter = NumberFormat.getInstance();
 
         /**
          * TableCellColors  -  Constructor
          */
         TableCellColors() {
             super();
+        }
 
-            // Store the application preferences and register against it
-            _preferences = Preferences.getInstance();
-            _preferences.addObserver(this);
+        /**
+         * Sets the <code>String</code> object for the cell being rendered to
+         * <code>value</code>.
+         *
+         * @param value  the string value for this cell; if value is
+         *          <code>null</code> it sets the text value to an empty string
+         * @see JLabel#setText
+         *
+         */
+        @Override
+        protected void setValue(final Object value) {
+            String text = "";
+            if (value != null) {
+                if (value instanceof Double) {
+                    text = NumberUtils.format(((Double) value).doubleValue());
+                } else {
+                    text = value.toString();
+                }
+            }
+            setText(text);
         }
 
         /**
@@ -1027,13 +1035,13 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             final int modelColumn;
             try {
                 modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
-            } catch (ArrayIndexOutOfBoundsException ex) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 // This code is reached when model / _viewIndex array / or table size mismatch
                 // exact reason is not yet defined
                 // @todo track source of mismatch
                 _logger.warn("Error searching in the table model while trying to render cell at column "
                         + column + " table.getColumnCount()=" + table.getColumnCount()
-                        + " _viewIndex.length=" + _viewIndex.length, ex);
+                        + " _viewIndex.length=" + _viewIndex.length, e);
                 return this;
             }
 
@@ -1046,13 +1054,15 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             Color foregroundColor = Color.BLACK;
             Color backgroundColor = Color.WHITE;
 
+            String origin = null;
+            String confidence = null;
+
             final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
             if (starProperty != null) {
-
                 // Set Background Color corresponding to the Catalog Origin Color or confidence index
                 if (starProperty.hasOrigin()) {
                     // Get origin and set it as tooltip
-                    final String origin = starProperty.getOrigin();
+                    origin = starProperty.getOrigin();
 
                     final Catalog catalog = Catalog.catalogFromReference(origin);
 
@@ -1060,15 +1070,15 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                     tooltip = "Catalog origin: " + ((catalog != null) ? catalog : origin); // Diff tool
 
                     // Get origin color and set it as cell background color
-                    backgroundColor = _colorForOrigin.get(origin);
+                    backgroundColor = TableCellColorsPreferenceListener.instance._colorForOrigin.get(origin);
 
                 } else if (starProperty.hasConfidence()) {
                     // Get confidence and set it as tooltip
-                    final String confidence = starProperty.getConfidence();
+                    confidence = starProperty.getConfidence();
                     tooltip = "Computed value (confidence index: " + confidence + ")";
 
                     // Get confidence color and set it as cell background color
-                    backgroundColor = _colorForConfidence.get(confidence);
+                    backgroundColor = TableCellColorsPreferenceListener.instance._colorForConfidence.get(confidence);
 
                 } else if (starProperty.hasValue()) {
                     // If something bad happened, write text in red !
@@ -1083,16 +1093,22 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
             if (backgroundColor == null) {
                 // Diff tool case: origin or confidence not found in color maps:
-                backgroundColor = Color.ORANGE;
+                confidence = (origin != null) ? origin : (confidence != null) ? confidence : null;
+                if (confidence != null) {
+                    if (confidence.startsWith("DIFF")) {
+                        backgroundColor = Color.ORANGE;
+                    } else if (confidence.startsWith("LEFT")) {
+                        backgroundColor = Color.GREEN;
+                    } else if (confidence.startsWith("RIGHT")) {
+                        backgroundColor = Color.PINK;
+                    }
+                } else {
+                    backgroundColor = Color.RED;
+                }
             }
 
             // Set tooltip (if any)
             setToolTipText(tooltip);
-
-            // Fix number format:
-            if (value instanceof Double) {
-                setText(formatter.format(value));
-            }
 
             // Do not change color if cell is located on a selected row
             if (table.isRowSelected(row)) {
@@ -1122,8 +1138,9 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                     final StarProperty distanceProperty = calModel.getStarProperty(modelRow, distId);
 
                     if (distanceProperty != null) {
+                        final double prefDistance = TableCellColorsPreferenceListener.instance._prefDistance;
                         final double rowDistance = distanceProperty.getDoubleValue();
-                        if (rowDistance < _prefDistance) {
+                        if (rowDistance < prefDistance) {
                             // Put the corresponding row font in bold:
                             if (_derivedBoldFont == null) {
                                 // cache derived Font:
@@ -1135,7 +1152,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                             if (_logger.isDebugEnabled()) {
                                 _logger.debug("Put row['" + row
                                         + "'] in BOLD : (rowDistance = '" + rowDistance
-                                        + "') < (prefDistance = '" + _prefDistance + "').");
+                                        + "') < (prefDistance = '" + prefDistance + "').");
                             }
                         }
                     }
@@ -1157,6 +1174,36 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
             // Return the component
             return this;
+        }
+    }
+
+    /**
+     * Preference listener for the TableCellColors renderer instances
+     */
+    final static class TableCellColorsPreferenceListener implements Observer {
+
+        /** singleton */
+        static final TableCellColorsPreferenceListener instance = new TableCellColorsPreferenceListener();
+        /* members */
+        /** preferences */
+        private final Preferences _preferences;
+        /** color map for origins */
+        HashMap<String, Color> _colorForOrigin;
+        /** color map for confidence indexes */
+        HashMap<String, Color> _colorForConfidence;
+        /** Get the prefered distance to detect the science object */
+        double _prefDistance = 0.0d;
+
+        /**
+         * Private constructor (registers to Preference changes)
+         */
+        private TableCellColorsPreferenceListener() {
+            // Store the application preferences and register against it
+            _preferences = Preferences.getInstance();
+            _preferences.addObserver(this);
+
+            // force initializing values:
+            update(_preferences, null);
         }
 
         /**

@@ -218,32 +218,8 @@ public final class DiffCalibratorsModel {
             calibratorsModelDiff.updateModel(diffStarList);
 
             // Update views / GUI:
-            String propName;
-            final StringBuilder sb = new StringBuilder(1024);
-            for (int i = 0, count = diffStarListMetaData.getPropertyCount(); i < count; i++) {
-                propName = diffStarListMetaData.getPropertyName(i);
+            updateDetailedViewPreference(diffStarListMetaData);
 
-                if (propName.equals(StarList.RADegColumnName)
-                        || propName.equals(StarList.DEDegColumnName)
-                        || propName.equals(StarList.RowIdxColumnName)
-                        || propName.equals(StarList.OtherRowIdxColumnName)) {
-                    // skip
-                    continue;
-                }
-                sb.append(propName).append(' ');
-            }
-            sb.insert(0, "rowIdx otherRowIdx RAdeg DEdeg ");
-
-            final String detailedProperties = sb.toString();
-
-            try {
-                final String prefKey = "view.columns.detailed." + (calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
-                        + '.' + calibratorsModelLeft._magnitudeBand;
-
-                Preferences.getInstance().setPreference(prefKey, detailedProperties);
-            } catch (PreferencesException pe) {
-                _logger.warn("setPreference exception:", pe);
-            }
         } finally {
             calibratorsModelLeft.setAutoUpdate(true);
             calibratorsModelRight.setAutoUpdate(true);
@@ -251,6 +227,37 @@ public final class DiffCalibratorsModel {
         }
 
         _logger.info("-------------------------------------------------------------------------------");
+    }
+
+    private void updateDetailedViewPreference(final StarListMeta diffStarListMetaData) {
+        String propName;
+        final StringBuilder sb = new StringBuilder(1024);
+        for (int i = 0, count = diffStarListMetaData.getPropertyCount(); i < count; i++) {
+            propName = diffStarListMetaData.getPropertyName(i);
+
+            if (propName.equals(StarList.RAJ2000ColumnName)
+                    || propName.equals(StarList.DEJ2000ColumnName)
+                    || propName.equals(StarList.RowIdxColumnName)
+                    || propName.equals(StarList.OtherRowIdxColumnName)
+                    || propName.equals(StarList.DistColumnName)) {
+                // skip
+                continue;
+            }
+
+            sb.append(propName).append(' ');
+        }
+        sb.insert(0, "rowIdx otherRowIdx dist RAJ2000 DEJ2000 ");
+
+        final String detailedProperties = sb.toString();
+
+        try {
+            final String prefKey = "view.columns.detailed." + (calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
+                    + '.' + calibratorsModelLeft._magnitudeBand;
+
+            Preferences.getInstance().setPreference(prefKey, detailedProperties);
+        } catch (PreferencesException pe) {
+            _logger.warn("setPreference exception:", pe);
+        }
     }
 
     /**
@@ -360,6 +367,7 @@ public final class DiffCalibratorsModel {
                     starPropertyRight = starRight.get(mapIdxRight[i]);
 
                     propertyValue = null;
+                    res = 0;
 
                     if (i == deletedFlagColumnID) {
                         // always create a new editable Star property:
@@ -373,7 +381,6 @@ public final class DiffCalibratorsModel {
                         if (classType == Double.class) {
                             dblLeft = starPropertyLeft.getDouble();
                             dblRight = starPropertyRight.getDouble();
-
                             res = compareDouble(dblLeft, dblRight, dblDiff);
                             switch (res) {
                                 case 0:
@@ -407,9 +414,7 @@ public final class DiffCalibratorsModel {
                         } else if (classType == String.class) {
                             strLeft = starPropertyLeft.getString();
                             strRight = starPropertyRight.getString();
-
                             res = compareObject(strLeft, strRight);
-
                             switch (res) {
                                 case 0:
                                 default:
@@ -436,9 +441,7 @@ public final class DiffCalibratorsModel {
                         } else if (classType == Boolean.class) {
                             boolLeft = starPropertyLeft.getBoolean();
                             boolRight = starPropertyRight.getBoolean();
-
                             res = compareObject(boolLeft, boolRight);
-
                             switch (res) {
                                 case 0:
                                 default:
@@ -486,6 +489,23 @@ public final class DiffCalibratorsModel {
                         isSet = true;
                         diffOrigins++;
                         mapIdxDiffOrigins[i]++;
+                    }
+
+                    if (origin != null) {
+                        switch (res) {
+                            case 0:
+                            default:
+                                break;
+                            case -1:
+                                origin = "RIGHT: " + origin;
+                                break;
+                            case 1:
+                                origin = "LEFT: " + origin;
+                                break;
+                            case 2:
+                                origin = "DIFF: " + origin;
+                                break;
+                        }
 
                         originValue = originValues.get(origin);
                         if (originValue == null) {
@@ -510,6 +530,23 @@ public final class DiffCalibratorsModel {
                         isSet = true;
                         diffConfidences++;
                         mapIdxDiffConfidences[i]++;
+                    }
+
+                    if (confidence != null) {
+                        switch (res) {
+                            case 0:
+                            default:
+                                break;
+                            case -1:
+                                confidence = "RIGHT: " + confidence;
+                                break;
+                            case 1:
+                                confidence = "LEFT: " + confidence;
+                                break;
+                            case 2:
+                                confidence = "DIFF: " + confidence;
+                                break;
+                        }
 
                         confidenceValue = confidenceValues.get(confidence);
                         if (confidenceValue == null) {
@@ -546,11 +583,13 @@ public final class DiffCalibratorsModel {
         }
 
         if (_logger.isInfoEnabled()) {
-            _logger.info("compare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
+            _logger.info("\ncompare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
                     matchs, onlyLeft, onlyRight, diffValues, diffOrigins, diffConfidences, 1e-6d * (System.nanoTime() - start));
 
             _logger.info("-------------------------------------------------------------------------------");
             _logger.info("compare: diff properties with left/right only:");
+
+            final StringBuilder sb = new StringBuilder(16 * 1024);
             int diffProperties = 0;
             for (int i = 0; i < diffCount; i++) {
                 if (mapIdxOnlyLeft[i] != 0 || mapIdxOnlyRight[i] != 0 || mapIdxDiffValues[i] != 0
@@ -561,24 +600,32 @@ public final class DiffCalibratorsModel {
 
                     if (mapIdxDiffSumValues[i] != 0d) {
                         if (mapIdxRelDiffSumValues[i] != 0d) {
-                            _logger.info("diff [{}]: {} left only, {} right only, {} values - {} origins - {} confidences - sum: {}, mean: {} - rel sum: {}, mean: {} [{} values]",
-                                    propMeta.getName(), mapIdxOnlyLeft[i], mapIdxOnlyRight[i], mapIdxDiffValues[i], mapIdxDiffOrigins[i], mapIdxDiffConfidences[i],
-                                    df3.format(mapIdxDiffSumValues[i]), df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]),
-                                    df3.format(mapIdxRelDiffSumValues[i]), df3.format(mapIdxRelDiffSumValues[i] / mapIdxRelDiffValues[i]), mapIdxRelDiffValues[i]);
+                            sb.append("diff [").append(propMeta.getName()).append("]: ").append(mapIdxOnlyLeft[i]).append(" left only, ");
+                            sb.append(mapIdxOnlyRight[i]).append(" right only, ").append(mapIdxDiffValues[i]).append(" values - ");
+                            sb.append(mapIdxDiffOrigins[i]).append(" origins - ").append(mapIdxDiffConfidences[i]).append(" confidences - sum: ");
+                            sb.append(df3.format(mapIdxDiffSumValues[i])).append(", mean: ").append(df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]));
+                            sb.append(" - rel sum: ").append(df3.format(mapIdxRelDiffSumValues[i]));
+                            sb.append(", mean: ").append(df3.format(mapIdxRelDiffSumValues[i] / mapIdxRelDiffValues[i]));
+                            sb.append(" [").append(mapIdxRelDiffValues[i]).append(" values]");
                         } else {
-                            _logger.info("diff [{}]: {} left only, {} right only, {} values - {} origins - {} confidences - sum: {}, mean: {}",
-                                    propMeta.getName(), mapIdxOnlyLeft[i], mapIdxOnlyRight[i], mapIdxDiffValues[i], mapIdxDiffOrigins[i], mapIdxDiffConfidences[i],
-                                    df3.format(mapIdxDiffSumValues[i]), df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]));
+                            sb.append("diff [").append(propMeta.getName()).append("]: ").append(mapIdxOnlyLeft[i]).append(" left only, ");
+                            sb.append(mapIdxOnlyRight[i]).append(" right only, ").append(mapIdxDiffValues[i]).append(" values - ");
+                            sb.append(mapIdxDiffOrigins[i]).append(" origins - ").append(mapIdxDiffConfidences[i]).append(" confidences - sum: ");
+                            sb.append(df3.format(mapIdxDiffSumValues[i])).append(", mean: ").append(df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]));
                         }
                     } else {
-                        _logger.info("diff [{}]: {} left only, {} right only, {} values - {} origins - {} confidences",
-                                propMeta.getName(), mapIdxOnlyLeft[i], mapIdxOnlyRight[i], mapIdxDiffValues[i], mapIdxDiffOrigins[i], mapIdxDiffConfidences[i]);
+                        sb.append("diff [").append(propMeta.getName()).append("]: ").append(mapIdxOnlyLeft[i]).append(" left only, ");
+                        sb.append(mapIdxOnlyRight[i]).append(" right only, ").append(mapIdxDiffValues[i]).append(" values - ");
+                        sb.append(mapIdxDiffOrigins[i]).append(" origins - ").append(mapIdxDiffConfidences[i]).append(" confidences");
                     }
+                    sb.append("\n");
                 }
             }
-            _logger.info("compare: {} diff properties", diffProperties);
+            _logger.info("\n{}\ncompare: {} diff properties", sb.toString(), diffProperties);
+
             _logger.info("-------------------------------------------------------------------------------");
             _logger.info("compare: diff properties with diff only:");
+            sb.setLength(0);
             diffProperties = 0;
             for (int i = 0; i < diffCount; i++) {
                 if (mapIdxDiffValues[i] != 0) {
@@ -588,22 +635,25 @@ public final class DiffCalibratorsModel {
 
                     if (mapIdxDiffSumValues[i] != 0d) {
                         if (mapIdxRelDiffSumValues[i] != 0d) {
-                            _logger.info("diff [{}]: {} values - {} origins - {} confidences - sum: {}, mean: {} - rel sum: {}, mean: {} [{} values]",
-                                    propMeta.getName(), mapIdxDiffValues[i], mapIdxDiffOrigins[i], mapIdxDiffConfidences[i],
-                                    df3.format(mapIdxDiffSumValues[i]), df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]),
-                                    df3.format(mapIdxRelDiffSumValues[i]), df3.format(mapIdxRelDiffSumValues[i] / mapIdxRelDiffValues[i]), mapIdxRelDiffValues[i]);
+                            sb.append("diff [").append(propMeta.getName()).append("]: ").append(mapIdxDiffValues[i]).append(" values - ");
+                            sb.append(mapIdxDiffOrigins[i]).append(" origins - ").append(mapIdxDiffConfidences[i]).append(" confidences - sum: ");
+                            sb.append(df3.format(mapIdxDiffSumValues[i])).append(", mean: ").append(df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]));
+                            sb.append(" - rel sum: ").append(df3.format(mapIdxRelDiffSumValues[i]));
+                            sb.append(", mean: ").append(df3.format(mapIdxRelDiffSumValues[i] / mapIdxRelDiffValues[i]));
+                            sb.append(" [").append(mapIdxRelDiffValues[i]).append(" values]");
                         } else {
-                            _logger.info("diff [{}]: {} values - {} origins - {} confidences - sum: {}, mean: {}",
-                                    propMeta.getName(), mapIdxDiffValues[i], mapIdxDiffOrigins[i], mapIdxDiffConfidences[i],
-                                    df3.format(mapIdxDiffSumValues[i]), df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]));
+                            sb.append("diff [").append(propMeta.getName()).append("]: ").append(mapIdxDiffValues[i]).append(" values - ");
+                            sb.append(mapIdxDiffOrigins[i]).append(" origins - ").append(mapIdxDiffConfidences[i]).append(" confidences - sum: ");
+                            sb.append(df3.format(mapIdxDiffSumValues[i])).append(", mean: ").append(df3.format(mapIdxDiffSumValues[i] / mapIdxDiffValues[i]));
                         }
                     } else {
-                        _logger.info("diff [{}]: {} values - {} origins - {} confidences",
-                                propMeta.getName(), mapIdxDiffValues[i], mapIdxDiffOrigins[i], mapIdxDiffConfidences[i]);
+                        sb.append("diff [").append(propMeta.getName()).append("]: ").append(mapIdxDiffValues[i]).append(" values - ");
+                        sb.append(mapIdxDiffOrigins[i]).append(" origins - ").append(mapIdxDiffConfidences[i]).append(" confidences");
                     }
+                    sb.append("\n");
                 }
             }
-            _logger.info("compare: {} diff properties", diffProperties);
+            _logger.info("\n{}\ncompare: {} diff properties", sb.toString(), diffProperties);
         }
 
         return diffValues;
@@ -663,6 +713,8 @@ public final class DiffCalibratorsModel {
             dblDiff.set(diff, diff / left);
         }
         return 2;
+
+
     }
 
     /**
@@ -763,11 +815,9 @@ public final class DiffCalibratorsModel {
 
         final int nPropLeft = starListMetaLeft.getPropertyCount();
         final int nPropRight = starListMetaRight.getPropertyCount();
-
         final int rowIdxIdxLeft = starListLeft.getColumnIdByName(StarList.RowIdxColumnName);
         final int raDegIdxLeft = starListLeft.getColumnIdByName(StarList.RADegColumnName);
         final int decDegIdxLeft = starListLeft.getColumnIdByName(StarList.DEDegColumnName);
-
         final int rowIdxIdxRight = starListRight.getColumnIdByName(StarList.RowIdxColumnName);
         final int raDegIdxRight = starListRight.getColumnIdByName(StarList.RADegColumnName);
         final int decDegIdxRight = starListRight.getColumnIdByName(StarList.DEDegColumnName);
