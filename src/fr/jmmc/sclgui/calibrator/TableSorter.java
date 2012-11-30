@@ -605,36 +605,46 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * Automatically called whenever the observed model changed
      */
     public void computeColumnsIndirectionArray() {
-        // Get the scenario
-        final String scenario = (_calibratorsModel.getBrightScenarioFlag()) ? "bright" : "faint";
-
-        // Get the magnitude band
-        final String magnitude = _calibratorsModel.getMagnitudeBand();
-
-        // Get the detailed/simple view flag state
-        final String selectedView;
-        if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG))) {
-            selectedView = "view.columns.simple." + scenario + "." + magnitude;
-        } else if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
-            selectedView = "view.columns.detailed." + scenario + "." + magnitude;
-        } else {
-            selectedView = null;
-        }
-
-        // Compute the corresponding preference path
-        if (_logger.isDebugEnabled()) {
-            _logger.debug("Selected view = '{}'.", ((selectedView != null) ? selectedView : "RAW"));
-        }
+        // Get custom view in model:
+        final String customView = _calibratorsModel._customPropertyView;
 
         final String prefColumns;
-        if (selectedView == null) {
-            prefColumns = null;
-        } else {
-            prefColumns = _preferences.getPreference(selectedView);
 
-            if (prefColumns == null) {
-                _logger.error("No preference found for [{}]", selectedView);
+        if (customView == null) {
+            // Get the scenario
+            final String scenario = (_calibratorsModel.getBrightScenarioFlag()) ? "bright" : "faint";
+
+            // Get the magnitude band
+            final String magnitude = _calibratorsModel.getMagnitudeBand();
+
+            // Get the detailed/simple view flag state
+            final String selectedView;
+            if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG))) {
+                selectedView = "view.columns.simple." + scenario + "." + magnitude;
+            } else if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
+                selectedView = "view.columns.detailed." + scenario + "." + magnitude;
+            } else {
+                selectedView = null;
             }
+
+            // Compute the corresponding preference path
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("Selected view = '{}'.", ((selectedView != null) ? selectedView : "RAW"));
+            }
+
+            if (selectedView == null) {
+                prefColumns = null;
+            } else {
+                prefColumns = _preferences.getPreference(selectedView);
+
+                if (prefColumns == null) {
+                    _logger.error("No preference found for [{}]", selectedView);
+                }
+            }
+
+        } else {
+            // diff tool case:
+            prefColumns = customView;
         }
 
         // Get column count in the model:
@@ -1034,6 +1044,9 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             // Set default renderer to the component
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
+            // always use right alignment:
+            setHorizontalAlignment(JLabel.RIGHT);
+
             final int modelColumn;
             try {
                 modelColumn = _viewIndex[table.convertColumnIndexToModel(column)];
@@ -1103,6 +1116,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                         backgroundColor = Color.GREEN;
                     } else if (confidence.startsWith("RIGHT")) {
                         backgroundColor = Color.PINK;
+                    } else if (confidence.startsWith("SKIP")) {
+                        backgroundColor = Color.GRAY;
+                    } else if (confidence.startsWith("LESS")) {
+                        backgroundColor = Color.LIGHT_GRAY;
                     }
                 } else {
                     backgroundColor = Color.RED;
