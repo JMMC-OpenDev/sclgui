@@ -129,6 +129,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     String _magnitudeBand = "V";
     /** Selected scenario */
     Boolean _brightScenarioFlag = true;
+    /** custom view = star property names (diff tool) */
+    String _customPropertyView = null;
     /** flag to enable/disable update events (ie multiple calls) */
     private boolean _autoUpdateEvent = true;
 
