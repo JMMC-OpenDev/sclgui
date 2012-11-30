@@ -5,9 +5,11 @@ package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
+import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.regex.Pattern;
 import org.ivoa.util.timer.StatLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +30,77 @@ public final class DiffCalibratorsModel {
 
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(DiffCalibratorsModel.class.getName());
+    /** hard coded preference for ignored properties */
+    public final static String IGNORE_PROPERTIES = "pmRa pmDec GLAT GLON sep1 sep2 SpType";
+    /** hard coded preference for ignored properties */
+    public final static Map<String, Double> THRESHOLD_PROPERTIES = new HashMap<String, Double>(8);
+    /** default key */
+    public final static String THRESHOLD_DEFAULT = "_default_";
+
+    static {
+        // note: Use String patterns to match multiple properties:
+
+        // Johnson magnitudes (0.05 mag) :
+        addThreshold("B", 5e-2d);
+        addThreshold("V", 5e-2d);
+        addThreshold("R", 5e-2d);
+        addThreshold("I", 5e-2d);
+        addThreshold("J", 5e-2d);
+        addThreshold("H", 5e-2d);
+        addThreshold("K", 5e-2d);
+        addThreshold("L", 5e-2d);
+        addThreshold("M", 5e-2d);
+        addThreshold("N", 5e-2d);
+
+        // Photographic magnitudes:
+        addThreshold(".phg", 1e-1d);    // 0.1 mag
+        // Cousin magnitudes:
+        addThreshold(".cous", 5e-2d);   // 0.05 mag
+
+        // Jy: (see http://www.stsci.edu/hst/nicmos/tools/conversion_help.html)
+        // TODO: find correct values representing 0.1 mag in the band:
+        addThreshold("S09", 1e-2d);       // 0.01 Jy ?
+        addThreshold("S18", 1e-2d);       // 0.01 Jy ?
+        addThreshold("F12", 1e-2d);       // 0.01 Jy ?
+
+        // diameters:
+        // use relative diff:
+        addThreshold("UD_.", 1e-1d);      // 0.1 mas
+        addThreshold("diam_.*", 1e-1d);   // 0.1 mas
+        addThreshold("e_diam_.*", 5e-2d); // 5%
+
+        // vis2:
+        addThreshold("vis2", 1e-2d);      // 1%
+
+        addThreshold(THRESHOLD_DEFAULT, 1e-3d + 1e-6d);
+    }
+
+    /**
+     * Return the threshold for the given property name
+     * @param name property name to match
+     * @return threshold
+     */
+    private static double findThreshold(final String name) {
+        for (Map.Entry<String, Double> entry : THRESHOLD_PROPERTIES.entrySet()) {
+            if (Pattern.matches(entry.getKey(), name)) {
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("regexp '{}' matched by {}", entry.getKey(), name);
+                }
+                return entry.getValue().doubleValue();
+            }
+        }
+
+        return THRESHOLD_PROPERTIES.get(THRESHOLD_DEFAULT).doubleValue();
+    }
+
+    /**
+     * Add threshold for the given String matcher
+     * @param matcher string matcher
+     * @param threshold value
+     */
+    private static void addThreshold(final String matcher, final double threshold) {
+        THRESHOLD_PROPERTIES.put(matcher, threshold);
+    }
     /* members */
     /** calibrators model of first file to compare (reference) */
     private final CalibratorsModel calibratorsModelLeft;
@@ -205,7 +279,8 @@ public final class DiffCalibratorsModel {
                 }
             }
 
-            compare(starListLeft, starListRight, diffStarList);
+            // TODO: use command line argument or preference:
+            final String diffProps = compare(starListLeft, starListRight, diffStarList, IGNORE_PROPERTIES);
 
             // Define band and scenario to fix JTable display:
             calibratorsModelDiff._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
@@ -221,7 +296,7 @@ public final class DiffCalibratorsModel {
             calibratorsModelDiff.updateModel(diffStarList);
 
             // Update views / GUI:
-            updateDetailedViewPreference(diffStarList.getMetaData());
+            updateDetailedViewPreference(diffStarList.getMetaData(), diffProps);
 
         } finally {
             calibratorsModelLeft.setAutoUpdate(true);
@@ -235,8 +310,9 @@ public final class DiffCalibratorsModel {
     /**
      * Update the view.columns.detailed.<bright|faint>.<band> preference
      * @param diffStarListMetaData 
+     * @param diffProps
      */
-    private void updateDetailedViewPreference(final StarListMeta diffStarListMetaData) {
+    private void updateDetailedViewPreference(final StarListMeta diffStarListMetaData, final String diffProps) {
         String propName;
         final StringBuilder sb = new StringBuilder(1024);
         for (int i = 0, count = diffStarListMetaData.getPropertyCount(); i < count; i++) {
@@ -268,6 +344,76 @@ public final class DiffCalibratorsModel {
         } catch (PreferencesException pe) {
             _logger.warn("setPreference exception:", pe);
         }
+
+        // TODO: refine custom view:
+        if (false) {
+            // Hack diff view:
+            calibratorsModelDiff._customPropertyView = "rowIdx otherRowIdx left right diff " + diffProps;
+        }
+    }
+
+    /**
+     * Compute the comparison mask as interger array
+     * @param diffStarListMetaData diff star list meta data
+     * @param diffCount index of the last compared property
+     * @param ignorePropertyNames ignore property names as String array
+     * @return comparison mask as interger array
+     */
+    private boolean[] computeCompareMask(final StarListMeta diffStarListMetaData, final int diffCount, final List<String> ignorePropertyNames) {
+        final boolean[] compareMask = new boolean[diffCount];
+
+        _logger.info("Ignore star properties:\n{}", ignorePropertyNames);
+
+        final int ignoreLength = (ignorePropertyNames != null) ? ignorePropertyNames.size() : 0;
+
+        // Use list to keep only valid columns:
+        final List<Integer> ignoreIndex = new ArrayList<Integer>(ignoreLength);
+
+        if (ignoreLength != 0) {
+            String propName;
+            int propIdx;
+
+            for (int i = 0, len = ignoreLength; i < len; i++) {
+                propName = ignorePropertyNames.get(i);
+
+                if (propName != null) {
+                    // Get each property index from its name:
+                    propIdx = diffStarListMetaData.getPropertyIndexByName(propName);
+
+                    // If no column Id was found for the given column name
+                    if (propIdx != -1) {
+                        ignoreIndex.add(NumberUtils.valueOf(propIdx));
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < diffCount; i++) {
+            compareMask[i] = (!ignoreIndex.contains(NumberUtils.valueOf(i)));
+        }
+        return compareMask;
+    }
+
+    /**
+     * Prepare the ignored star property list
+     * @param ignoreProperties optional string containing star property names
+     * @return ignored star property list
+     */
+    private List<String> prepareIgnoreProperties(final String ignoreProperties) {
+        final List<String> ignorePropertyNames = new ArrayList<String>(10);
+
+        // always ignore RA/DEC coordinates (crossmatch done elsewhere):
+        ignorePropertyNames.add(StarList.RAJ2000ColumnName);
+        ignorePropertyNames.add(StarList.DEJ2000ColumnName);
+
+        ignorePropertyNames.add(StarList.RADegColumnName);
+        ignorePropertyNames.add(StarList.DEDegColumnName);
+
+        if (ignoreProperties != null) {
+            final String[] propertyNames = ignoreProperties.split(" ");
+            ignorePropertyNames.addAll(Arrays.asList(propertyNames));
+        }
+        return ignorePropertyNames;
     }
 
     /**
@@ -275,9 +421,10 @@ public final class DiffCalibratorsModel {
      * @param starListLeft first star list
      * @param starListRight second star list
      * @param diffStarList output list (diff)
-     * @return 0
+     * @param ignoreProperties property names to ignore in star comparison separated by ' '
+     * @return String containing property names where important differences are present
      */
-    private int compare(final StarList starListLeft, final StarList starListRight, final StarList diffStarList) {
+    private String compare(final StarList starListLeft, final StarList starListRight, final StarList diffStarList, final String ignoreProperties) {
 
         final boolean isLogDebug = _logger.isDebugEnabled();
 
@@ -287,22 +434,25 @@ public final class DiffCalibratorsModel {
         final StarListMeta starListMetaRight = starListRight.getMetaData();
         final StarListMeta diffStarListMetaData = diffStarList.getMetaData();
 
-        final int propCount = diffStarListMetaData.getPropertyCount();
-        // TODO: use a preference to define columns to ignore (property mask)
-        // ignore rowIdx / otherRowIdx properties
-        final int diffCount = diffStarListMetaData.getPropertyIndexByName(StarList.RowIdxColumnName);
-
         // prepare star properties:
         diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.LeftColumnName, Integer.class, "left only count", "ID_MAIN:1", "", ""));
         diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.RightColumnName, Integer.class, "right only count", "ID_MAIN:2", "", ""));
         diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.DiffColumnName, Integer.class, "diff count", "ID_MAIN:3", "", ""));
 
-        // Idea: add rank property ?
+        // total number of properties in diff stars:
+        final int propCount = diffStarListMetaData.getPropertyCount();
 
+        // Compare anyway all properties except rowIdx, otherRowIdx and next dynamic properties:
+        final int diffCount = diffStarListMetaData.getPropertyIndexByName(StarList.RowIdxColumnName);
+
+        final boolean[] propMask = computeCompareMask(diffStarListMetaData, diffCount, prepareIgnoreProperties(ignoreProperties));
 
         // star property mapping:
         final int[] mapIdxLeft = new int[diffCount];
         final int[] mapIdxRight = new int[diffCount];
+
+        // star property threshold mapping:
+        final double[] mapIdxThreshold = new double[diffCount];
 
         // global statistics:
         int matchs = 0;
@@ -311,6 +461,8 @@ public final class DiffCalibratorsModel {
         int diffValues = 0;
         int diffOrigins = 0;
         int diffConfidences = 0;
+
+        int nStarDiff = 0;
 
         // statistics per property:
         final int[] mapIdxOnlyLeft = new int[diffCount];
@@ -323,11 +475,14 @@ public final class DiffCalibratorsModel {
         final StatLong[] mapIdxStats = new StatLong[diffCount];
         final StatLong[] mapIdxRelStats = new StatLong[diffCount];
 
+        String propName;
         for (int i = 0; i < diffCount; i++) {
-            final String propName = diffStarListMetaData.getPropertyName(i);
+            propName = diffStarListMetaData.getPropertyName(i);
 
             mapIdxLeft[i] = starListMetaLeft.getPropertyIndexByName(propName);
             mapIdxRight[i] = starListMetaRight.getPropertyIndexByName(propName);
+
+            mapIdxThreshold[i] = findThreshold(propName);
 
             mapIdxOnlyLeft[i] = 0;
             mapIdxOnlyRight[i] = 0;
@@ -351,7 +506,7 @@ public final class DiffCalibratorsModel {
         final Map<String, String> confidenceValues = new HashMap<String, String>(16);
 
         StarProperty starPropertyLeftRowIdx, starPropertyRightRowIdx;
-        Integer leftRowIdx, rightRowIdx;
+        Integer rightRowIdx;
         StarPropertyMeta propMeta;
         Class<?> classType;
         List<StarProperty> starRight;
@@ -370,6 +525,7 @@ public final class DiffCalibratorsModel {
         Boolean boolLeft, boolRight;
 
         int left, right, diff;
+        boolean lessTh;
 
         // for all stars in star list left:
         for (List<StarProperty> starLeft : starListLeft) {
@@ -390,18 +546,16 @@ public final class DiffCalibratorsModel {
                 diff = 0;
 
                 for (int i = 0; i < diffCount; i++) {
-
-                    // TODO: use property mask (here):
-
                     propMeta = diffStarListMetaData.getPropertyMeta(i);
                     starPropertyLeft = starLeft.get(mapIdxLeft[i]);
                     starPropertyRight = starRight.get(mapIdxRight[i]);
 
                     propertyValue = null;
                     res = 0;
+                    lessTh = false;
 
                     if (i == deletedFlagColumnID) {
-                        // always create a new editable Star property:
+                        // always create a new modifiable Star property for the deleted flag column:
                         propertyValue = Boolean.FALSE;
                         isSet = true;
                     } else {
@@ -412,99 +566,109 @@ public final class DiffCalibratorsModel {
                         if (classType == Double.class) {
                             dblLeft = starPropertyLeft.getDouble();
                             dblRight = starPropertyRight.getDouble();
+
                             res = compareDouble(dblLeft, dblRight, dblDiff);
+
                             switch (res) {
-                                case 0:
                                 default:
                                     break;
                                 case -1:
-                                    right++;
-                                    mapIdxOnlyRight[i]++;
-
                                     propertyValue = dblRight;
                                     break;
                                 case 1:
-                                    left++;
-                                    mapIdxOnlyLeft[i]++;
-
                                     propertyValue = dblLeft;
                                     break;
                                 case 2:
-                                    diff++;
-                                    mapIdxDiffValues[i]++;
-
-                                    // absolute diff:
-                                    mapIdxStats[i].add(Math.abs(dblDiff.diff));
                                     propertyValue = Double.valueOf(dblDiff.diff);
 
-                                    if (!Double.isNaN(dblDiff.relDiff)) {
-                                        // relative diff:
-                                        mapIdxRelStats[i].add(Math.abs(dblDiff.relDiff));
+                                    if (propMask[i]) {
+                                        if (Math.abs(dblDiff.diff) < mapIdxThreshold[i]) {
+                                            lessTh = true;
+                                            if (isLogDebug) {
+                                                _logger.debug("{} = {} less than threshold [{}]", propMeta.getName(), NumberUtils.format(dblDiff.diff), mapIdxThreshold[i]);
+                                            }
+                                            break;
+                                        }
+
+                                        // absolute diff:
+                                        mapIdxStats[i].add(Math.abs(dblDiff.diff));
+
+                                        if (!Double.isNaN(dblDiff.relDiff)) {
+                                            // relative diff:
+                                            mapIdxRelStats[i].add(Math.abs(dblDiff.relDiff));
+                                        }
                                     }
                                     break;
                             }
                         } else if (classType == String.class) {
                             strLeft = starPropertyLeft.getString();
                             strRight = starPropertyRight.getString();
+
                             res = compareObject(strLeft, strRight);
+
                             switch (res) {
-                                case 0:
                                 default:
                                     break;
                                 case -1:
-                                    right++;
-                                    mapIdxOnlyRight[i]++;
-
                                     propertyValue = "~ | " + strRight;
                                     break;
                                 case 1:
-                                    left++;
-                                    mapIdxOnlyLeft[i]++;
-
                                     propertyValue = strLeft + " | ~";
                                     break;
                                 case 2:
-                                    diff++;
-                                    mapIdxDiffValues[i]++;
-
                                     propertyValue = strLeft + " | " + strRight;
                                     break;
                             }
                         } else if (classType == Boolean.class) {
                             boolLeft = starPropertyLeft.getBoolean();
                             boolRight = starPropertyRight.getBoolean();
+
                             res = compareObject(boolLeft, boolRight);
+
                             switch (res) {
-                                case 0:
                                 default:
                                     break;
                                 case -1:
-                                    right++;
-                                    mapIdxOnlyRight[i]++;
-
                                     propertyValue = boolRight;
                                     break;
                                 case 1:
-                                    left++;
-                                    mapIdxOnlyLeft[i]++;
-
                                     propertyValue = boolLeft;
                                     break;
                                 case 2:
-                                    diff++;
-                                    mapIdxDiffValues[i]++;
-
                                     propertyValue = Boolean.FALSE;
                                     break;
                             }
                         } else {
                             _logger.warn("unsupported data type [{}]", classType);
                         }
+
                         if (propertyValue == null) {
                             isSet = false;
-                            matchs++;
+
+                            if (propMask[i]) {
+                                matchs++;
+                            }
                         } else {
                             isSet = true;
+
+                            if (propMask[i] && !lessTh) {
+                                switch (res) {
+                                    default:
+                                        break;
+                                    case -1:
+                                        right++;
+                                        mapIdxOnlyRight[i]++;
+                                        break;
+                                    case 1:
+                                        left++;
+                                        mapIdxOnlyLeft[i]++;
+                                        break;
+                                    case 2:
+                                        diff++;
+                                        mapIdxDiffValues[i]++;
+                                        break;
+                                }
+                            }
                         }
                     }
 
@@ -519,13 +683,15 @@ public final class DiffCalibratorsModel {
                         origin = ((strLeft.length() != 0) ? strLeft : "~") + " | " + ((strRight.length() != 0) ? strRight : "~");
 
                         isSet = true;
-                        diffOrigins++;
-                        mapIdxDiffOrigins[i]++;
+
+                        if (propMask[i]) {
+                            diffOrigins++;
+                            mapIdxDiffOrigins[i]++;
+                        }
                     }
 
                     if (origin != null) {
                         switch (res) {
-                            case 0:
                             default:
                                 break;
                             case -1:
@@ -537,6 +703,11 @@ public final class DiffCalibratorsModel {
                             case 2:
                                 origin = "DIFF: " + origin;
                                 break;
+                        }
+                        if (!propMask[i]) {
+                            origin = "SKIP " + origin;
+                        } else if (lessTh) {
+                            origin = "LESS " + origin;
                         }
 
                         originValue = originValues.get(origin);
@@ -560,13 +731,15 @@ public final class DiffCalibratorsModel {
                         confidence = ((strLeft.length() != 0) ? strLeft : "~") + " | " + ((strRight.length() != 0) ? strRight : "~");
 
                         isSet = true;
-                        diffConfidences++;
-                        mapIdxDiffConfidences[i]++;
+
+                        if (propMask[i]) {
+                            diffConfidences++;
+                            mapIdxDiffConfidences[i]++;
+                        }
                     }
 
                     if (confidence != null) {
                         switch (res) {
-                            case 0:
                             default:
                                 break;
                             case -1:
@@ -578,6 +751,11 @@ public final class DiffCalibratorsModel {
                             case 2:
                                 confidence = "DIFF: " + confidence;
                                 break;
+                        }
+                        if (!propMask[i]) {
+                            confidence = "SKIP " + confidence;
+                        } else if (lessTh) {
+                            confidence = "LESS " + confidence;
                         }
 
                         confidenceValue = confidenceValues.get(confidence);
@@ -621,6 +799,10 @@ public final class DiffCalibratorsModel {
                 onlyRight += right;
                 onlyLeft += left;
                 diffValues += diff;
+
+                if (diff != 0) {
+                    nStarDiff++;
+                }
             }
         }
 
@@ -628,13 +810,14 @@ public final class DiffCalibratorsModel {
             _logger.info("\ncompare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
                     matchs, onlyLeft, onlyRight, diffValues, diffOrigins, diffConfidences, 1e-6d * (System.nanoTime() - start));
 
+            _logger.info("\ncompare: {} different stars among {} crossmatching stars", nStarDiff, diffStarList.size());
+
             _logger.info("------------------------------------------------------------");
 
             final boolean full = false;
 
             final StringBuilder sb = new StringBuilder(16 * 1024);
             int diffProperties = 0;
-            String propName;
 
             for (int i = 0; i < diffCount; i++) {
 
@@ -659,11 +842,13 @@ public final class DiffCalibratorsModel {
                     sb.append("\n");
                 }
             }
-            _logger.info("compare: diff properties with left/right only:\n{} {}diff properties", sb.toString(), diffProperties);
+            _logger.info("compare: diff properties with left/right only:\n{} {} diff properties", sb.toString(), diffProperties);
 
             _logger.info("------------------------------------------------------------");
             sb.setLength(0);
             diffProperties = 0;
+
+            final StringBuilder sbProp = new StringBuilder(256);
 
             for (int i = 0; i < diffCount; i++) {
 
@@ -671,6 +856,8 @@ public final class DiffCalibratorsModel {
                     diffProperties++;
 
                     propName = diffStarListMetaData.getPropertyName(i);
+
+                    sbProp.append(propName).append(' ');
 
                     sb.append('[').append(propName).append("]:\t");
 
@@ -689,10 +876,11 @@ public final class DiffCalibratorsModel {
                 }
             }
             _logger.info("compare: diff properties with diff only:\n{} {} diff properties", sb.toString(), diffProperties);
+
+            return sbProp.toString();
         }
 
-        // TODO: return the number of stars having major differences:
-        return diffValues;
+        return null;
     }
 
     /**
