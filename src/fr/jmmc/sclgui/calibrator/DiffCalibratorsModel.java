@@ -102,12 +102,16 @@ public final class DiffCalibratorsModel {
         THRESHOLD_PROPERTIES.put(matcher, threshold);
     }
     /* members */
+    /** file on left side */
+    private File _fileLeft = null;
+    /** file on right side */
+    private File _fileRight = null;
     /** calibrators model of first file to compare (reference) */
-    private final CalibratorsModel calibratorsModelLeft;
+    private final CalibratorsModel _calibratorsModelLeft;
     /** calibrators model of second file to compare */
-    private final CalibratorsModel calibratorsModelRight;
+    private final CalibratorsModel _calibratorsModelRight;
     /** calibrators model of the differences */
-    private final CalibratorsModel calibratorsModelDiff;
+    private final CalibratorsModel _calibratorsModelDiff;
 
     /**
      * Public constructor
@@ -116,9 +120,19 @@ public final class DiffCalibratorsModel {
      * @param calibratorsModelDiff 
      */
     public DiffCalibratorsModel(final CalibratorsModel calibratorsModelLeft, final CalibratorsModel calibratorsModelRight, final CalibratorsModel calibratorsModelDiff) {
-        this.calibratorsModelLeft = calibratorsModelLeft;
-        this.calibratorsModelRight = calibratorsModelRight;
-        this.calibratorsModelDiff = calibratorsModelDiff;
+        this._calibratorsModelLeft = calibratorsModelLeft;
+        this._calibratorsModelRight = calibratorsModelRight;
+        this._calibratorsModelDiff = calibratorsModelDiff;
+    }
+
+    /** @return file on left side */
+    public File getFileLeft() {
+        return _fileLeft;
+    }
+
+    /** @return file on right side */
+    public File getFileRight() {
+        return _fileRight;
     }
 
     /**
@@ -131,11 +145,11 @@ public final class DiffCalibratorsModel {
             default:
                 return null;
             case 1:
-                return calibratorsModelRight;
+                return _calibratorsModelRight;
             case -1:
-                return calibratorsModelLeft;
+                return _calibratorsModelLeft;
             case 2:
-                return calibratorsModelDiff;
+                return _calibratorsModelDiff;
         }
     }
 
@@ -222,40 +236,42 @@ public final class DiffCalibratorsModel {
      */
     public void diff(final File fileLeft, final File fileRight) {
         _logger.info("------------------------------------------------------------");
-
-        _logger.warn("diff: fileLeft= '{}' - fileRight= '{}'", fileLeft, fileRight);
+        _logger.info("diff: fileLeft= '{}' - fileRight= '{}'", fileLeft, fileRight);
 
         // disable auto update:
-        calibratorsModelLeft.setAutoUpdate(false);
-        calibratorsModelRight.setAutoUpdate(false);
-        calibratorsModelDiff.setAutoUpdate(false);
+        _calibratorsModelLeft.setAutoUpdate(false);
+        _calibratorsModelRight.setAutoUpdate(false);
+        _calibratorsModelDiff.setAutoUpdate(false);
         try {
 
-            calibratorsModelLeft.parseVOTable(fileLeft, false); // sync
+            _calibratorsModelLeft.parseVOTable(fileLeft, false); // sync
 
-            calibratorsModelRight.parseVOTable(fileRight, false); // sync
+            _calibratorsModelRight.parseVOTable(fileRight, false); // sync
+
+            _fileLeft = fileLeft;
+            _fileRight = fileRight;
 
             _logger.info("------------------------------------------------------------");
 
-            _logger.warn("Left  : scenario {}", calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint");
-            _logger.warn("Left  : band {}", calibratorsModelLeft._magnitudeBand);
+            _logger.info("Left  : scenario {}", _calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint");
+            _logger.info("Left  : band {}", _calibratorsModelLeft._magnitudeBand);
 
-            _logger.warn("Right : scenario {}", calibratorsModelRight._brightScenarioFlag ? "bright" : "faint");
-            _logger.warn("Right : band {}", calibratorsModelRight._magnitudeBand);
+            _logger.info("Right : scenario {}", _calibratorsModelRight._brightScenarioFlag ? "bright" : "faint");
+            _logger.info("Right : band {}", _calibratorsModelRight._magnitudeBand);
 
             // Fix band and scenario:
-            if (calibratorsModelRight._brightScenarioFlag != calibratorsModelLeft._brightScenarioFlag) {
-                calibratorsModelRight._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
+            if (_calibratorsModelRight._brightScenarioFlag != _calibratorsModelLeft._brightScenarioFlag) {
+                _calibratorsModelRight._brightScenarioFlag = _calibratorsModelLeft._brightScenarioFlag;
             }
-            if (!calibratorsModelRight._magnitudeBand.equals(calibratorsModelLeft._magnitudeBand)) {
-                calibratorsModelRight._magnitudeBand = calibratorsModelLeft._magnitudeBand;
+            if (!_calibratorsModelRight._magnitudeBand.equals(_calibratorsModelLeft._magnitudeBand)) {
+                _calibratorsModelRight._magnitudeBand = _calibratorsModelLeft._magnitudeBand;
             }
 
             // TODO: compare also paramSet (query params)
 
             // Get Star lists:
-            final StarList starListLeft = calibratorsModelLeft.getOriginalStarList();
-            final StarList starListRight = calibratorsModelRight.getOriginalStarList();
+            final StarList starListLeft = _calibratorsModelLeft.getOriginalStarList();
+            final StarList starListRight = _calibratorsModelRight.getOriginalStarList();
 
             _logger.info("------------------------------------------------------------");
 
@@ -283,25 +299,25 @@ public final class DiffCalibratorsModel {
             final String diffProps = compare(starListLeft, starListRight, diffStarList, IGNORE_PROPERTIES);
 
             // Define band and scenario to fix JTable display:
-            calibratorsModelDiff._brightScenarioFlag = calibratorsModelLeft._brightScenarioFlag;
-            calibratorsModelDiff._magnitudeBand = calibratorsModelLeft._magnitudeBand;
+            _calibratorsModelDiff._brightScenarioFlag = _calibratorsModelLeft._brightScenarioFlag;
+            _calibratorsModelDiff._magnitudeBand = _calibratorsModelLeft._magnitudeBand;
 
             _logger.info("------------------------------------------------------------");
 
             // update models because otherRowIdx property added:
-            calibratorsModelLeft.updateModel(starListLeft);
-            calibratorsModelRight.updateModel(starListRight);
+            _calibratorsModelLeft.updateModel(starListLeft);
+            _calibratorsModelRight.updateModel(starListRight);
 
             // display computed diff model:
-            calibratorsModelDiff.updateModel(diffStarList);
+            _calibratorsModelDiff.updateModel(diffStarList);
 
             // Update views / GUI:
             updateDetailedViewPreference(diffStarList.getMetaData(), diffProps);
 
         } finally {
-            calibratorsModelLeft.setAutoUpdate(true);
-            calibratorsModelRight.setAutoUpdate(true);
-            calibratorsModelDiff.setAutoUpdate(true);
+            _calibratorsModelLeft.setAutoUpdate(true);
+            _calibratorsModelRight.setAutoUpdate(true);
+            _calibratorsModelDiff.setAutoUpdate(true);
         }
 
         _logger.info("------------------------------------------------------------");
@@ -337,8 +353,8 @@ public final class DiffCalibratorsModel {
         final String detailedProperties = sb.toString();
 
         try {
-            final String prefKey = "view.columns.detailed." + (calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
-                    + '.' + calibratorsModelLeft._magnitudeBand;
+            final String prefKey = "view.columns.detailed." + (_calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
+                    + '.' + _calibratorsModelLeft._magnitudeBand;
 
             Preferences.getInstance().setPreference(prefKey, detailedProperties);
         } catch (PreferencesException pe) {
@@ -348,7 +364,7 @@ public final class DiffCalibratorsModel {
         // TODO: refine custom view:
         if (false) {
             // Hack diff view:
-            calibratorsModelDiff._customPropertyView = "rowIdx otherRowIdx left right diff " + diffProps;
+            _calibratorsModelDiff._customPropertyView = "rowIdx otherRowIdx left right diff " + diffProps;
         }
     }
 

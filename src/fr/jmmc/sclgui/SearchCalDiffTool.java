@@ -6,6 +6,8 @@ package fr.jmmc.sclgui;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.PreferencesView;
+import fr.jmmc.jmcs.gui.action.ActionRegistrar;
+import fr.jmmc.jmcs.gui.action.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingSettings;
@@ -59,6 +61,7 @@ public final class SearchCalDiffTool extends App {
     /** argument 'right' */
     public final static String ARG_RIGHT = "right";
     /* members */
+    /* note: do not set these members to null as it is initialized in App.init() by super() ie before class initialization (LBO) */
     /** CalibratorsView left */
     CalibratorsView calibratorsViewLeft;
     /** CalibratorsView right */
@@ -119,6 +122,8 @@ public final class SearchCalDiffTool extends App {
              */
             @Override
             public void run() {
+                // Disable Open Recent files in diff tool:
+                RecentFilesManager.setEnabled(false);
 
                 // Get preferences
                 final Preferences preferences = Preferences.getInstance();
@@ -215,34 +220,34 @@ public final class SearchCalDiffTool extends App {
                 // Triggers all preferences observers notification to finnish GUI setup.
                 preferences.triggerObserversNotification();
 
+                // Overwrite the Open action:
+                new OpenDiffFilesAction(VirtualObservatory.class.getName(), "_openFileAction");
+
+                // create diff model:
+                diffTool.diffModel = new DiffCalibratorsModel(calibratorsModelLeft, calibratorsModelRight, calibratorsModelDiff);
+
                 final Map<String, String> args = getCommandLineArguments();
 
                 if (args != null && args.get(ARG_DIFF) != null && args.get(ARG_LEFT) != null && args.get(ARG_RIGHT) != null) {
-
-                    final File fileLeft = new File(args.get(ARG_LEFT));
-                    final File fileRight = new File(args.get(ARG_RIGHT));
-
-                    diffTool.diffModel = new DiffCalibratorsModel(calibratorsModelLeft, calibratorsModelRight, calibratorsModelDiff);
-
-                    diffTool.diffModel.diff(fileLeft, fileRight);
-
-                    diffTool.calibratorsViewLeft = calibratorsViewLeft;
-                    diffTool.calibratorsViewRight = calibratorsViewRight;
-                    diffTool.calibratorsViewDiff = calibratorsViewDiff;
-
-                    // add table selection listeners:
-                    final SyncSelectionHandler sshLeft = new SyncSelectionHandler(calibratorsViewLeft);
-                    calibratorsViewLeft.addColumnSelectionListener(sshLeft);
-                    calibratorsViewLeft.addRowSelectionListener(sshLeft);
-
-                    final SyncSelectionHandler sshRight = new SyncSelectionHandler(calibratorsViewRight);
-                    calibratorsViewRight.addColumnSelectionListener(sshRight);
-                    calibratorsViewRight.addRowSelectionListener(sshRight);
-
-                    final SyncSelectionHandler sshDiff = new SyncSelectionHandler(calibratorsViewDiff);
-                    calibratorsViewDiff.addColumnSelectionListener(sshDiff);
-                    calibratorsViewDiff.addRowSelectionListener(sshDiff);
+                    diffTool.diffModel.diff(new File(args.get(ARG_LEFT)), new File(args.get(ARG_RIGHT)));
                 }
+
+                diffTool.calibratorsViewLeft = calibratorsViewLeft;
+                diffTool.calibratorsViewRight = calibratorsViewRight;
+                diffTool.calibratorsViewDiff = calibratorsViewDiff;
+
+                // add table selection listeners:
+                final SyncSelectionHandler sshLeft = new SyncSelectionHandler(calibratorsViewLeft);
+                calibratorsViewLeft.addColumnSelectionListener(sshLeft);
+                calibratorsViewLeft.addRowSelectionListener(sshLeft);
+
+                final SyncSelectionHandler sshRight = new SyncSelectionHandler(calibratorsViewRight);
+                calibratorsViewRight.addColumnSelectionListener(sshRight);
+                calibratorsViewRight.addRowSelectionListener(sshRight);
+
+                final SyncSelectionHandler sshDiff = new SyncSelectionHandler(calibratorsViewDiff);
+                calibratorsViewDiff.addColumnSelectionListener(sshDiff);
+                calibratorsViewDiff.addRowSelectionListener(sshDiff);
 
                 // finally disable query view:
                 queryView.propertyChange(null);
@@ -392,6 +397,49 @@ public final class SearchCalDiffTool extends App {
         public void valueChanged(final ListSelectionEvent lse) {
             if (!lse.getValueIsAdjusting()) {
                 synchronizeSelection(source);
+            }
+        }
+    }
+
+    /**
+     * Custom Open action to diff files.
+     */
+    protected class OpenDiffFilesAction extends RegisteredAction {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        /**
+         * Protected constructor
+         * @param classPath
+         * @param fieldName 
+         */
+        OpenDiffFilesAction(final String classPath, final String fieldName) {
+            super(classPath, fieldName);
+
+            flagAsOpenAction();
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent ae) {
+            File fileLeft, fileRight;
+
+            // If the action was automatically triggered from App launch
+            if (ae.getSource() == ActionRegistrar.getInstance()) {
+                fileLeft = new File(ae.getActionCommand());
+                fileRight = null;
+            } else {
+                fileLeft = diffModel.getFileLeft();
+                fileRight = diffModel.getFileRight();
+            }
+
+            final File[] files = DiffOpenPanel.showDialog(fileLeft, fileRight);
+
+            if (files != null) {
+                fileLeft = files[0];
+                fileRight = files[1];
+
+                diffModel.diff(fileLeft, fileRight);
             }
         }
     }
