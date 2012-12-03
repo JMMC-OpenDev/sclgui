@@ -93,8 +93,7 @@ public final class VirtualObservatory extends Observable {
      * @param queryModel
      * @param calibratorsModel
      */
-    public VirtualObservatory(QueryModel queryModel, CalibratorsModel calibratorsModel) {
-        String classPath = getClass().getName();
+    public VirtualObservatory(final QueryModel queryModel, final CalibratorsModel calibratorsModel) {
 
         _queryIsLaunched = new AtomicBoolean(false);
 
@@ -106,6 +105,7 @@ public final class VirtualObservatory extends Observable {
         _currentFile = null;
 
         // actions:
+        final String classPath = getClass().getName();
         _openFileAction = new OpenFileAction(classPath, "_openFileAction");
         _saveFileAction = new SaveFileAction(classPath, "_saveFileAction");
         _saveFileAsAction = new SaveFileAsAction(classPath, "_saveFileAsAction");
