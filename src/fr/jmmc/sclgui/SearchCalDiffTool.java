@@ -272,6 +272,10 @@ public final class SearchCalDiffTool extends App {
         }
 
         final String selectedColumnName = source.getSelectedPropertyName();
+        if (selectedColumnName == null) {
+            // column drag ie sort
+            return;
+        }
 
         if (_logger.isDebugEnabled()) {
             _logger.debug("selectedColumnName: {}", selectedColumnName);

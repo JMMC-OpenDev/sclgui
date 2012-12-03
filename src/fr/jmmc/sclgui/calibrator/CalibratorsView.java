@@ -442,10 +442,14 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     /** 
      * Returns the selected column name in the calibrator table.
      * 
-     * @return the column name
+     * @return the column name or null if the column can not be found
      */
     public String getSelectedPropertyName() {
-        return _tableSorter.getColumnName(_calibratorsTable.convertColumnIndexToModel(_calibratorsTable.getSelectedColumn()));
+        final int viewIndex = _calibratorsTable.convertColumnIndexToModel(_calibratorsTable.getSelectedColumn());
+        if (viewIndex != -1) {
+            return _tableSorter.getColumnName(viewIndex);
+        }
+        return null;
     }
 
     /**
@@ -454,7 +458,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      * @return column index or -1 if not found
      */
     public int getViewIndexFromColumnName(final String columnName) {
-        return _tableSorter.findColumnViewIndex(_calibratorsModel.getColumnIdByName(columnName));
+        return _calibratorsTable.convertColumnIndexToView(_tableSorter.findColumnViewIndex(_calibratorsModel.getColumnIdByName(columnName)));
     }
 
     /**
