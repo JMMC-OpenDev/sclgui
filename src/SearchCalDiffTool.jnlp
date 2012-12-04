@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<jnlp spec="1.0+" codebase="@GENERATED@" href="@GENERATED@">
+    <information>
+        <title>SearchCal Diff tool</title>
+        <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
+        <homepage href="http://www.jmmc.fr/searchcal"/>
+        <description kind="tooltip">SearchCal diff tool</description>
+        <description kind="short">Search Calibrators Diff tool</description>
+        <icon href="AppIcon.jpg"/>
+        <offline-allowed/> 
+        <shortcut>
+            <desktop/>
+        </shortcut>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.5+" initial-heap-size="256m" max-heap-size="1024m"/>        
+
+        <!-- Application module first (main class) -->
+        <jar href="jar/sclgui.jar" />
+
+        <!-- JMMC modules -->
+        <jar href="jar/jmcs.jar" />
+        <jar href="jar/jmal.jar" />
+        <jar href="jar/sclgui-doc.jar" />
+
+        <!-- JMMC libs -->
+        <extension href="../JmcsLibs/JmcsLibs.jnlp"/>
+        <extension href="../JmalLibs/JmalLibs.jnlp"/>
+        
+        <!-- Axis 1.4 (SOAP) -->
+        <jar href="@SHARED@/axis.jar" />
+        <!-- saaj provides SoapException for java 1.5 -->
+        <jar href="@SHARED@/saaj.jar" />
+        <jar href="@SHARED@/jaxrpc.jar" />
+        <jar href="@SHARED@/wsdl4j-1.5.1.jar" />
+        <jar href="@SHARED@/commons-discovery-0.2.jar" />
+        <!-- commons-logging (provided by JMCS) -->
+
+        <!-- CDS SAVOT (embedded) but XmlPullParser API -->
+        <jar href="@SHARED@/xmlpull_1_1_3_1.jar" />
+    </resources>
+    <application-desc main-class="fr.jmmc.sclgui.SearchCalDiffTool"/>
+</jnlp>

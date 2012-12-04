@@ -107,7 +107,8 @@ sclgui_EXTRAS   = jmmc-app-logback.xml \
 #
 # Java programs
 # ---------------------------------
-JAVA_EXECUTABLES = SearchCal
+JAVA_EXECUTABLES = SearchCal \
+                   SearchCalDiffTool
 
 #
 # other Jar Files
@@ -116,7 +117,11 @@ JAVA_JAR =
 
 #
 # <brief description of SearchCalibrators java program>
-SearchCal_CLASS = fr.jmmc.sclgui.SearchCal \
+SearchCal_CLASS = fr.jmmc.sclgui.SearchCal
+
+#
+# <brief description of SearchCalibrators Diff tool java program>
+SearchCalDiffTool_CLASS = fr.jmmc.sclgui.SearchCalDiffTool
 
 #
 # Command Definition Files (CDF)
@@ -175,6 +180,7 @@ man   : do_man
 install : ../lib/sclgui-doc.jar install_all
 	@echo "......jnlps:"
 	jmcsDeployJnlp SearchCal.jnlp    
+	jmcsDeployJnlp SearchCalDiffTool.jnlp    
 	@echo " . . . installation done"
 
 #
