@@ -135,9 +135,9 @@ public final class QueryModel extends Star implements Observer {
                     Preferences.getInstance().resetToDefaultPreferences();
                     try {
                         loadDefaultValues();
-                    } catch (PreferencesException ex) {
-                        _logger.error("Could not load factory default values : ", ex);
-                        throw new IllegalStateException("Incompatible Factory Preferences found", ex);
+                    } catch (PreferencesException pe2) {
+                        _logger.error("Could not load factory default values : ", pe2);
+                        throw new IllegalStateException("Incompatible Factory Preferences found", pe2);
                     }
                     break;
             }
@@ -342,7 +342,7 @@ public final class QueryModel extends Star implements Observer {
             paramValue = param.getValue();
 
             if (_logger.isDebugEnabled()) {
-                _logger.debug(paramName + " = '" + paramValue + "'");
+                _logger.debug("{} = '{}'", paramName, paramValue);
             }
             parameters.put(paramName, paramValue);
         }
@@ -550,7 +550,7 @@ public final class QueryModel extends Star implements Observer {
         query.append("-noScienceStar false");
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("query = '" + query + "'.");
+            _logger.debug("query = '{}'.", query);
         }
 
         return query.toString();

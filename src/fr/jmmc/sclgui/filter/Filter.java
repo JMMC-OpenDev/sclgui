@@ -223,8 +223,7 @@ public abstract class Filter extends Observable {
             outputList.trimToSize();
 
             if (_logger.isDebugEnabled()) {
-                _logger.debug(getName() + " (" + size + " >> " + outputList.size() + " stars) processed in "
-                        + 1e-6d * (System.nanoTime() - start) + " ms.");
+                _logger.debug("{} ({} >> {} stars) processed in {} ms.", getName(), size, outputList.size(), 1e-6d * (System.nanoTime() - start));
             }
 
         } else {

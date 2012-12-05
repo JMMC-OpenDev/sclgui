@@ -95,7 +95,7 @@ public final class VisibilityFilter extends Filter {
             // If the visibility is less than 0.5
             if (cell.getDoubleValue() < _allowedVis) {
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("vis2 < " + _allowedVis + " - Line removed.");
+                    _logger.debug("vis2 < {} - Line removed.", _allowedVis);
                 }
 
                 // This row should be removed

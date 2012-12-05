@@ -346,9 +346,7 @@ public final class LegendView extends JPanel {
                 }
 
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("RGB color for cell '" + cellName + "' = [R"
-                            + newColor.getRed() + ", G" + newColor.getGreen() + ", B"
-                            + newColor.getBlue() + "].");
+                    _logger.debug("RGB color for cell '{}' = [R{}, G{}, B{}].", cellName, newColor.getRed(), newColor.getGreen(), newColor.getBlue());
                 }
 
                 return this;
@@ -412,10 +410,7 @@ public final class LegendView extends JPanel {
                         }
 
                         if (_logger.isDebugEnabled()) {
-                            _logger.debug("User clicked on catalog '"
-                                    + _catalogReference
-                                    + "' in the LegendView, will open '" + url
-                                    + "' in default browser.");
+                            _logger.debug("User clicked on catalog '{}' in the LegendView, will open '{}' in default browser.", _catalogReference, url);
                         }
                         BrowserLauncher.openURL(url);
                     }

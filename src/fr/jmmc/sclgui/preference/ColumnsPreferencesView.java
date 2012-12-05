@@ -163,7 +163,7 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
 
         if (columns == null) {
             if (_logger.isDebugEnabled()) {
-                _logger.debug(_preferencePath + " not found into preferences");
+                _logger.debug("{} not found into preferences", _preferencePath);
             }
 
             return;

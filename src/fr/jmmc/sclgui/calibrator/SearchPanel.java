@@ -152,14 +152,8 @@ public final class SearchPanel extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            _logger.error(null, ex);
-        } catch (InstantiationException ex) {
-            _logger.error(null, ex);
-        } catch (IllegalAccessException ex) {
-            _logger.error(null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            _logger.error(null, ex);
+        } catch (Exception e) { // main
+            _logger.error("failure", e);
         }
         //</editor-fold>
 
@@ -352,9 +346,7 @@ public final class SearchPanel extends javax.swing.JFrame {
                 _currentView = currentView; // Backup new view
             }
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("Searching value '{}' in '{}' direction.", searchValue, currentDirection);
-            }
+            _logger.info("Searching value '{}' in '{}' direction.", searchValue, currentDirection);
 
             // Convert search token to standard regexp if not yet in this syntax
             final String regexp;
@@ -365,7 +357,7 @@ public final class SearchPanel extends javax.swing.JFrame {
             }
 
             if (isLogDebug) {
-                _logger.debug("Searched RegExp = '" + regexp + "'.");
+                _logger.debug("Searched RegExp = '{}'.", regexp);
             }
 
             // Use table sorter to traverse visible cells:
@@ -392,7 +384,7 @@ public final class SearchPanel extends javax.swing.JFrame {
             // Use previously found row/column if available
             if (_lastFoundRow != UNDEFINED_INDEX && _lastFoundColumn != UNDEFINED_INDEX) {
                 if (isLogDebug) {
-                    _logger.debug("Current row = " + _lastFoundRow + ", col = " + _lastFoundColumn);
+                    _logger.debug("Current row = {}, col = {}", _lastFoundRow, _lastFoundColumn);
                 }
                 currentRow = _lastFoundRow;
                 currentColumn = _lastFoundColumn + directionalIncrement; // Skip current cell (i.e last one found) anyway !
@@ -429,7 +421,7 @@ public final class SearchPanel extends javax.swing.JFrame {
 
                         if (currentValue.length() != 0) {
                             if (isLogDebug) {
-                                _logger.debug("Cell value '" + currentValue + "' at row " + currentRow + ", col = " + currentColumn + ".");
+                                _logger.debug("Cell value '{}' at row {}, col = {}.", currentValue, currentRow, currentColumn);
                             }
 
                             // Do current value matches searched regexp ?
@@ -451,13 +443,9 @@ public final class SearchPanel extends javax.swing.JFrame {
             }
 
             if (foundValue == null) {
-                if (_logger.isInfoEnabled()) {
-                    _logger.info("Searched value '{}' not found.", foundValue);
-                }
+                _logger.info("Searched value '{}' not found.", foundValue);
             } else {
-                if (_logger.isInfoEnabled()) {
-                    _logger.info("Found value '{}' at row {}, col = {}.", foundValue, foundRow, foundColumn);
-                }
+                _logger.info("Found value '{}' at row {}, col = {}.", foundValue, foundRow, foundColumn);
 
                 // select the found cell:
                 currentView.selectTableCell(foundRow, foundColumn);
@@ -469,9 +457,8 @@ public final class SearchPanel extends javax.swing.JFrame {
                 foundFlag = true;
             }
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("QuickSearchHelper.search() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
-            }
+            _logger.info("QuickSearchHelper.search() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
+
             return foundFlag;
         }
 

@@ -23,6 +23,12 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     public final static String PREFIX_CATALOG_COLOR = "catalog.color.";
     /** prefix for confidence color preferences */
     public final static String PREFIX_CONFIDENCE_COLOR = "confidence.color.";
+    /** prefix for view columns in synthetic mode */
+    public final static String PREFIX_VIEW_COLUMNS = "view.columns";
+    /** prefix for view columns in synthetic mode */
+    public final static String PREFIX_VIEW_COLUMNS_SIMPLE = PREFIX_VIEW_COLUMNS + ".simple.";
+    /** prefix for view columns in detailed mode */
+    public final static String PREFIX_VIEW_COLUMNS_DETAILED = PREFIX_VIEW_COLUMNS + ".detailed.";
     /** Singleton instance */
     private static Preferences _instance = null;
     /** Detailed bright N columns order list, as of default in preference version 3 */
@@ -87,9 +93,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected boolean updatePreferencesVersion(int loadedVersionNumber) {
-        if (_logger.isInfoEnabled()) {
-            _logger.info("Upgrading preference file from version '{}' to version '{}'.", loadedVersionNumber, loadedVersionNumber + 1);
-        }
+        _logger.info("Upgrading preference file from version '{}' to version '{}'.", loadedVersionNumber, loadedVersionNumber + 1);
 
         switch (loadedVersionNumber) {
             // Wrong column identifiers in the the simple and detailed bright N columns order list
@@ -303,10 +307,8 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
         for (String viewName : viewList) {
             // Get the current columns order list content
-            String completePreferencePath = "view.columns.detailed."
-                    + viewName;
-            status &= replaceTokenInPreference(completePreferencePath,
-                    "MultFlag", "MultFlag SBC9");
+            String completePreferencePath = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + viewName;
+            status &= replaceTokenInPreference(completePreferencePath, "MultFlag", "MultFlag SBC9");
         }
 
         // Commit change to file if everything went fine
@@ -323,7 +325,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         removePreference(preferenceToRemove);
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("Removed '" + preferenceToRemove + "' preference.");
+            _logger.debug("Removed '{}' preference.", preferenceToRemove);
         }
 
         // Commit change to file
@@ -448,7 +450,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         removePreference(preferenceToRemove);
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("Removed '" + preferenceToRemove + "' preference.");
+            _logger.debug("Removed '{}' preference.", preferenceToRemove);
         }
 
         // Store the new preferences with respect to previous state
@@ -504,12 +506,9 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
         for (String viewName : viewList) {
             // Get the current columns order list content
-            String completePreferencePath = "view.columns.detailed."
-                    + viewName;
-            status &= replaceTokenInPreference(completePreferencePath, "SBC9",
-                    "SBC9 WDS");
-            status &= replaceTokenInPreference(completePreferencePath,
-                    "pmDec pmRa", "pmRa pmDec");
+            String completePreferencePath = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + viewName;
+            status &= replaceTokenInPreference(completePreferencePath, "SBC9", "SBC9 WDS");
+            status &= replaceTokenInPreference(completePreferencePath, "pmDec pmRa", "pmRa pmDec");
         }
 
         // Fix variability flag in detailed bright N view
@@ -543,10 +542,8 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
         for (String viewName : viewList) {
             // Get the current columns order list content
-            String completePreferencePath = "view.columns.detailed."
-                    + viewName;
-            status &= replaceTokenInPreference(completePreferencePath, "WDS",
-                    "WDS sep1 sep2");
+            String completePreferencePath = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + viewName;
+            status &= replaceTokenInPreference(completePreferencePath, "WDS", "WDS sep1 sep2");
         }
 
         // Commit change to file if everything went fine
@@ -631,7 +628,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         removePreference(preferenceToRemove);
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("Removed '" + preferenceToRemove + "' preference.");
+            _logger.debug("Removed '{}' preference.", preferenceToRemove);
         }
 
         // Commit change to file

@@ -70,30 +70,30 @@ public final class SpectralTypeFilter extends Filter {
         // If the desired column name exists
         if (_rawSpectralTypeID != -1) {
             // Get the spectral type from the row
-            StarProperty cell = row.get(_rawSpectralTypeID);
+            final StarProperty cell = row.get(_rawSpectralTypeID);
 
             // If spectral type was found in the current line
             if (cell.hasValue()) {
-                String rawSpectralType = cell.getStringValue();
+                final String rawSpectralType = cell.getStringValue();
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("rawSpectralType = '" + rawSpectralType + "'.");
+                    _logger.debug("rawSpectralType = '{}'.", rawSpectralType);
                 }
 
                 // Get back the spectral types found in the given spectral type
                 final List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
 
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("foundSpectralTypes = '" + foundSpectralTypes + "'.");
+                    _logger.debug("foundSpectralTypes = '{}'.", foundSpectralTypes);
                 }
 
                 // For each spectral type found
                 for (String spectralTypeName : foundSpectralTypes) {
                     // Get the spectral type check box boolean state
-                    Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
+                    final Boolean spectralTypeCheckBoxState = (Boolean) getConstraintByName(spectralTypeName);
 
                     if (_logger.isDebugEnabled()) {
-                        _logger.debug("spectralTypeName = '" + spectralTypeName + "'.");
-                        _logger.debug("spectralTypeCheckBoxState = '" + spectralTypeCheckBoxState + "'.");
+                        _logger.debug("spectralTypeName = '{}'.", spectralTypeName);
+                        _logger.debug("spectralTypeCheckBoxState = '{}'.", spectralTypeCheckBoxState);
                     }
 
                     // If the current spectral type is not handled (eg R, N ,S, ...)

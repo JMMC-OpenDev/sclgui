@@ -123,9 +123,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             // Get the query from the GUI
             final String query = getQueryAsMCSString();
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("Query = '{}'.", query);
-            }
+            _logger.info("Query = '{}'.", query);
 
             // Launch the query in the background in order to keed GUI updated
             _getCalThread = new GetCalThread(_queryCounter.incrementAndGet(), query);
@@ -221,7 +219,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 _id = _sclws.getCalOpenSession();
 
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("JMMC Connection ID = '" + _id + "'.");
+                    _logger.debug("JMMC Connection ID = '{}'.", _id);
                 }
 
                 showStatus("searching calibrators... (connection established)");
@@ -293,9 +291,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     }
 
                     if (_logger.isDebugEnabled()) {
-                        _logger.debug("Status = '" + currentCatalogName
-                                + "' - " + catalogIndex + "/" + nbOfCatalogs
-                                + " (status = '" + requestStatus + "').");
+                        _logger.debug("Status = '{}' - {}/{} (status = '{}').", currentCatalogName, catalogIndex, nbOfCatalogs, requestStatus);
                     }
 
                 } while (requestStatus == 1);
@@ -356,9 +352,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     handleException(re, currentState);
                 }
             } finally {
-                if (_logger.isInfoEnabled()) {
-                    _logger.info("{} thread.run done.", getName());
-                }
+                _logger.info("{} thread.run done.", getName());
+
                 // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                 // in AbortableCommonsHTTPSender#relaseConnection() :
                 HttpMethodThreadMap.get().remove(getName());
@@ -430,13 +425,12 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 _userCancel = userCancel;
 
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("cancel: " + userCancel);
+                    _logger.debug("cancel: {}", userCancel);
                 }
 
                 // First Cancel the request:
-// Disabled cancel query because it crashes the SearchCal Server !
-/*
-                
+                // Disabled cancel query because it crashes the SearchCal Server !
+                /*
                  if (_id != null) {
                  // Launch the cancel query thread to free resources on the server side:
                  final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
@@ -548,9 +542,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // this WS call can block if connection attempt fails :
                     _result = _sclws.getCalSearchCal(_id, _query);
 
-                    if (_logger.isInfoEnabled()) {
-                        _logger.info("{} duration = {} s.", getName(), (1e-9d * (System.nanoTime() - start)));
-                    }
+                    _logger.info("{} duration = {} s.", getName(), (1e-9d * (System.nanoTime() - start)));
 
                     showStatus("searching calibrators... (result received)");
 
@@ -558,9 +550,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // server or http failure
                     handleException(re, QueryState.QuerySearchCal);
                 } finally {
-                    if (_logger.isInfoEnabled()) {
-                        _logger.info("{} thread.run done.", getName());
-                    }
+                    _logger.info("{} thread.run done.", getName());
+
                     // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                     // in AbortableCommonsHTTPSender#relaseConnection() :
                     HttpMethodThreadMap.get().remove(getName());
@@ -605,16 +596,13 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
              */
             @Override
             public void run() {
+                _logger.info("{} cancel session with id = {}", getName(), _id);
                 try {
 
                     // Ask for query cancellation:
                     // 1- free resources on the server side
                     // 2- remove id from active identifiers
                     // note: next calls using this id will fail.
-
-                    if (_logger.isInfoEnabled()) {
-                        _logger.info("{} cancel session with id = {}", getName(), _id);
-                    }
 
                     // this WS call can block if connection attempt fails :
                     _sclws.getCalCancelSession(_id);
@@ -624,9 +612,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     _logger.warn("cancel request failed : ", re);
 
                 } finally {
-                    if (_logger.isInfoEnabled()) {
-                        _logger.info("{} thread.run done.", getName());
-                    }
+                    _logger.info("{} thread.run done.", getName());
+
                     // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                     // in AbortableCommonsHTTPSender#relaseConnection() :
                     HttpMethodThreadMap.get().remove(getName());

@@ -129,8 +129,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     String _magnitudeBand = "V";
     /** Selected scenario */
     Boolean _brightScenarioFlag = true;
-    /** custom view = star property names (diff tool) */
-    String _customPropertyView = null;
     /** flag to enable/disable update events (ie multiple calls) */
     private boolean _autoUpdateEvent = true;
 
@@ -204,7 +202,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public void update(final Observable o, final Object arg) {
         if (this._autoUpdateEvent) {
             if (_logger.isDebugEnabled()) {
-                _logger.debug("update: o {} with arg = {}", o, arg);
+                _logger.debug("update: {} with arg = {}", o, arg);
             }
 
             // Filter the displayed star list
@@ -563,9 +561,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             throw new IllegalArgumentException("Incorrect VOTable input");
         }
 
-        if (_logger.isInfoEnabled()) {
-            _logger.info("CalibratorsModel.parseVOTable: VOTable size = {} bytes.", length);
-        }
+        _logger.info("CalibratorsModel.parseVOTable: VOTable size = {} bytes.", length);
 
         final long startTime = System.nanoTime();
 
@@ -922,9 +918,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 } while ((tr = parser.getNextTR()) != null);
             }
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("CalibratorsModel.parseVOTable: {} rows read in {} ms.", nRow, 1e-6d * (System.nanoTime() - start));
-            }
+            _logger.info("CalibratorsModel.parseVOTable: {} rows read in {} ms.", nRow, 1e-6d * (System.nanoTime() - start));
 
             return starList;
         }
@@ -940,9 +934,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // update calibrators model:
             calModel.updateModelFromVOTable(savotVoTable, paramSet, starList);
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
-            }
+            _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
 
             // query model may be null in SearchCal Diff tool:
             if (queryModel != null) {
@@ -1041,7 +1033,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             final String paramValue = param.getValue();
 
             if (_logger.isDebugEnabled()) {
-                _logger.debug(paramName + " = '" + paramValue + "'");
+                _logger.debug("{} = '{}'", paramName, paramValue);
             }
             parameters.put(paramName, paramValue);
         }
@@ -1055,7 +1047,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("magnitude band = '" + _magnitudeBand + "'; bright scenario = '" + _brightScenarioFlag + "'.");
+            _logger.debug("magnitude band = '{}'; bright scenario = '{}'.", _magnitudeBand, _brightScenarioFlag);
         }
 
         // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
@@ -1318,9 +1310,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         final String filename = file.getAbsolutePath();
 
-        if (_logger.isInfoEnabled()) {
-            _logger.info("Saving the starlist as votable into file: {}", filename);
-        }
+        _logger.info("Saving the starlist as votable into file: {}", filename);
 
         boolean ok = false;
 
@@ -1471,12 +1461,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             ok = true;
 
         } catch (IOException ioe) {
-            _logger.error("Unable to save the starlist as votable into file: " + filename, ioe);
+            _logger.error("Unable to save the starlist as votable into file: {}", filename, ioe);
         } finally {
             if (ok) {
-                if (_logger.isInfoEnabled()) {
-                    _logger.info("CalibratorsModel.saveVOTableFile: file saved in {} ms.", 1e-6d * (System.nanoTime() - start));
-                }
+                _logger.info("CalibratorsModel.saveVOTableFile: file saved in {} ms.", 1e-6d * (System.nanoTime() - start));
             }
         }
         return ok;
@@ -1622,24 +1610,21 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 // use an XSLT to transform the XML document to an HTML representation :
                 XmlFactory.transform(sourceStream, xsltFile, resultStream);
 
-                if (_logger.isInfoEnabled()) {
-                    _logger.info("applyXSLTranformationOnCurrentVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
-                }
+                _logger.info("applyXSLTranformationOnCurrentVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
             }
 
         } catch (FileNotFoundException fnfe) {
             _logger.error("File not found", fnfe);
         } catch (IllegalArgumentException iae) {
             // An error occurred in the XSL file
-            _logger.error("An error occured during XSLT transformation '" + xsltFile + "'", iae);
+            _logger.error("An error occured during XSLT transformation '{}'", xsltFile, iae);
 
             if (iae.getCause() instanceof TransformerException) {
                 // An error occurred while applying the XSL file
                 // Get location of error in input file
                 final SourceLocator locator = ((TransformerException) iae.getCause()).getLocator();
 
-                _logger.error("One error occured while applying XSL file '" + xsltFile
-                        + "', on line '" + locator.getLineNumber() + "' and column '" + locator.getColumnNumber() + "'");
+                _logger.error("One error occured while applying XSL file '{}', on line '{}' and column '{}'", xsltFile, locator.getLineNumber(), locator.getColumnNumber());
             }
         }
     }

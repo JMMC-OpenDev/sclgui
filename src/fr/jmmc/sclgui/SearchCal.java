@@ -101,7 +101,7 @@ public final class SearchCal extends App {
 
                 // Create a calibrators model and attach it to a calibrators view
                 final CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
-                
+
                 final CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
 
                 filtersModel.addObserver(calibratorsModel);
@@ -118,7 +118,7 @@ public final class SearchCal extends App {
                 // (This instance must be instanciated after dependencies)
                 final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
                 // Add the columns preferences pane
-                final ColumnsPreferencesView columnsView = new ColumnsPreferencesView("view.columns");
+                final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
                 columnsView.init();
                 panels.put("Columns Order", columnsView);
                 // Add the catalog preferences pane
@@ -163,7 +163,7 @@ public final class SearchCal extends App {
             @Override
             protected void processMessage(final String senderId, final Message message) {
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("\tReceived '" + this.handledMType() + "' message from '" + senderId + "' : '" + message + "'.");
+                    _logger.debug("\tReceived '{}' message from '{}' : '{}'.", this.handledMType(), senderId, message);
                 }
 
                 final String query = (String) message.getParam("query");

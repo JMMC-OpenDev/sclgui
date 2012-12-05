@@ -4,8 +4,8 @@
 package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.jmcs.App;
-import fr.jmmc.jmcs.network.NetworkSettings;
 import fr.jmmc.jmcs.data.preference.Preferences;
+import fr.jmmc.jmcs.network.NetworkSettings;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
@@ -107,9 +107,7 @@ public final class SearchCalServerClient {
             // # http.nonProxyHosts
         }
 
-        if (_logger.isInfoEnabled()) {
-            _logger.info("Axis properties:\n{}", Preferences.dumpProperties(AxisProperties.getProperties()));
-        }
+        _logger.info("Axis properties:\n{}", Preferences.dumpProperties(AxisProperties.getProperties()));
 
         // Note: default retryhandler = 3 retry.
     }
@@ -134,9 +132,7 @@ public final class SearchCalServerClient {
             // TODO : externalize SearchCal server URL:
             final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclwsProxy.php";
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("SearchCal server URL: {}", proxyScriptURL);
-            }
+            _logger.info("SearchCal server URL: {}", proxyScriptURL);
 
             // Re-route network traffic at specified address on standard 80 port
             // (e.g to overcome tightly filtered TCP outputs on public WiFi)
@@ -168,7 +164,7 @@ public final class SearchCalServerClient {
             final SclwsPortType sclws = locator.getsclws(_sclwsURL);
 
             if (_logger.isDebugEnabled()) {
-                _logger.debug("Connected to '" + locator.getsclwsAddress() + "'.");
+                _logger.debug("Connected to '{}'.", locator.getsclwsAddress());
             }
 
             // set the stub timeout to 0 (to inherit values from Httpclient parameters):

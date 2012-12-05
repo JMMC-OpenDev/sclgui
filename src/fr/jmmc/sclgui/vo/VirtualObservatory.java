@@ -267,7 +267,7 @@ public final class VirtualObservatory extends Observable {
      */
     public void executeQuery(final String query) {
         if (_logger.isDebugEnabled()) {
-            _logger.debug("Received query = " + query);
+            _logger.debug("Received query = {}", query);
         }
 
         StatusBar.show("parsing query...");
@@ -347,24 +347,24 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to open files.
      */
-    protected class OpenFileAction extends RegisteredAction {
+    protected final class OpenFileAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        OpenFileAction(String classPath, String fieldName) {
+        OpenFileAction(final String classPath, final String fieldName) {
             super(classPath, fieldName);
 
             flagAsOpenAction();
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent ae) {
             // If we can lost current modifications
             if (canLostModifications()) {
                 // If the action was automatically triggered from App launch
-                if (e.getSource() == ActionRegistrar.getInstance()) {
-                    _currentFile = new File(e.getActionCommand());
+                if (ae.getSource() == ActionRegistrar.getInstance()) {
+                    _currentFile = new File(ae.getActionCommand());
                 } else {
                     _currentFile = FileChooser.showOpenFileChooser("Open a calibrator list from file...", null, MimeType.SEARCHCAL_CALIBRATORLIST, null);
                 }
@@ -375,7 +375,7 @@ public final class VirtualObservatory extends Observable {
 
                     // Loading the file in the calibrators model
                     String errorMsg = null;
-                    Exception ex = null;
+                    Exception e = null;
                     try {
                         StatusBar.show("loading file (parsing calibrators)...");
 
@@ -383,19 +383,19 @@ public final class VirtualObservatory extends Observable {
 
                     } catch (IOException ioe) {
                         errorMsg = "Could not load the file : " + _currentFile.getAbsolutePath();
-                        ex = ioe;
+                        e = ioe;
 
                     } catch (IllegalArgumentException iae) {
                         errorMsg = "Loading aborted: calibrators parsing error in file : " + _currentFile.getAbsolutePath();
-                        ex = iae;
+                        e = iae;
                     }
 
                     // Exit if any error occurs 
                     // TODO clean query and table content ?
-                    if (ex != null) {
+                    if (e != null) {
                         _currentFile = null;
                         StatusBar.show(errorMsg);
-                        MessagePane.showErrorMessage(errorMsg, ex);
+                        MessagePane.showErrorMessage(errorMsg, e);
                         return;
                     }
 
@@ -410,7 +410,7 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to revert the current state to the last saved state.
      */
-    protected class RevertToSavedFileAction extends RegisteredAction {
+    protected final class RevertToSavedFileAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
@@ -450,7 +450,7 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to save in a file (in a new one if needed).
      */
-    protected class SaveFileAction extends RegisteredAction {
+    protected final class SaveFileAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
@@ -472,7 +472,7 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to save in a new files.
      */
-    protected class SaveFileAsAction extends RegisteredAction {
+    protected final class SaveFileAsAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
@@ -496,7 +496,7 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to export current data to a CSV formatted file.
      */
-    protected class ExportToCSVFileAction extends RegisteredAction {
+    protected final class ExportToCSVFileAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
@@ -516,7 +516,7 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to export current data to a HTML formatted file.
      */
-    protected class ExportToHTMLFileAction extends RegisteredAction {
+    protected final class ExportToHTMLFileAction extends RegisteredAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
@@ -536,12 +536,12 @@ public final class VirtualObservatory extends Observable {
     /**
      * Called to export current data as local VOTable to another SAMP application.
      */
-    protected class ShareCalibratorsThroughSAMPAction extends SampCapabilityAction {
+    protected final class ShareCalibratorsThroughSAMPAction extends SampCapabilityAction {
 
         /** default serial UID for Serializable interface */
         private static final long serialVersionUID = 1;
 
-        ShareCalibratorsThroughSAMPAction(String classPath, String fieldName, SampCapability capability) {
+        ShareCalibratorsThroughSAMPAction(final String classPath, final String fieldName, final SampCapability capability) {
             super(classPath, fieldName, capability);
             couldBeEnabled(false);
         }
@@ -551,7 +551,7 @@ public final class VirtualObservatory extends Observable {
             File file = null;
             try {
                 file = File.createTempFile(SearchCal.getSharedApplicationDataModel().getProgramName(), "scvot");
-            } catch (IOException ex) {
+            } catch (IOException ioe) {
                 StatusBar.show("Could not share calibrators through SAMP.");
 
                 _logger.warn("Could not save calibrator list to temp file '{}'.", file);

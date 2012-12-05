@@ -5,10 +5,10 @@ package fr.jmmc.sclgui.query;
 
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverWidget;
-import fr.jmmc.jmcs.gui.component.MessagePane;
-import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.action.MCSAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.gui.component.MessagePane;
+import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.AWTEvent;
 import java.awt.Component;
@@ -465,7 +465,7 @@ public final class QueryView extends JPanel implements Observer,
     @Override
     public void update(final Observable o, final Object arg) {
         if (_logger.isDebugEnabled()) {
-            _logger.debug("QueryView.update: arg = " + arg);
+            _logger.debug("QueryView.update: arg = {}", arg);
         }
 
         // handle query progress notifications:
@@ -646,7 +646,7 @@ public final class QueryView extends JPanel implements Observer,
         final Object source = ae.getSource();
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("QueryView.storeValues: source = " + source);
+            _logger.debug("QueryView.storeValues: source = {}", source);
         }
 
         // If the widget is a JFormattedTextField
@@ -716,7 +716,7 @@ public final class QueryView extends JPanel implements Observer,
         _queryModel.notifyObservers();
 
         if (_logger.isDebugEnabled()) {
-            _logger.debug("query = " + _queryModel.getQueryAsMCSString());
+            _logger.debug("query = {}", _queryModel.getQueryAsMCSString());
         }
     }
 

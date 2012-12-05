@@ -232,13 +232,11 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
             final MouseAdapter mouseOver = new MouseAdapter() {
                 @Override
                 public void mouseClicked(final MouseEvent me) {
-                    // _logger.info("mouseClicked: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
                     setCurrentView(view);
                 }
 
                 @Override
                 public void mouseReleased(final MouseEvent me) {
-                    // _logger.info("mouseReleased: source: {}", ObjectUtils.getObjectInfo(me.getSource()));
                     setCurrentView(view);
                 }
             };
@@ -445,9 +443,9 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
      * @return the column name or null if the column can not be found
      */
     public String getSelectedPropertyName() {
-        final int viewIndex = _calibratorsTable.convertColumnIndexToModel(_calibratorsTable.getSelectedColumn());
-        if (viewIndex != -1) {
-            return _tableSorter.getColumnName(viewIndex);
+        final int colIndex = _calibratorsTable.convertColumnIndexToModel(_calibratorsTable.getSelectedColumn());
+        if (colIndex != -1) {
+            return _tableSorter.getColumnName(colIndex);
         }
         return null;
     }

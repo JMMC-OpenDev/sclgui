@@ -97,9 +97,7 @@ public final class FilterList extends Filter implements Observer {
 
             outputList = workList;
 
-            if (_logger.isInfoEnabled()) {
-                _logger.info("{} ({} >> {} stars) processed in {} ms.", getName(), listSize, outputList.size(), 1e-6d * (System.nanoTime() - start));
-            }
+            _logger.info("{} ({} >> {} stars) processed in {} ms.", getName(), listSize, outputList.size(), 1e-6d * (System.nanoTime() - start));
 
         } else {
             // return given star list:
