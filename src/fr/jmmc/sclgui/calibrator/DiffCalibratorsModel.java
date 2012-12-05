@@ -31,13 +31,22 @@ public final class DiffCalibratorsModel {
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(DiffCalibratorsModel.class.getName());
     /** hard coded preference for ignored properties */
-    public final static String IGNORE_PROPERTIES = "pmRa pmDec GLAT GLON sep1 sep2 SpType";
+    public final static String IGNORE_PROPERTIES;
     /** hard coded preference for ignored properties */
-    public final static Map<String, Double> THRESHOLD_PROPERTIES = new HashMap<String, Double>(8);
+    private final static Map<String, Threshold> THRESHOLD_PROPERTIES = new HashMap<String, Threshold>(32);
     /** default key */
     public final static String THRESHOLD_DEFAULT = "_default_";
 
     static {
+        // Ignore properties (Dec 2012):
+        // pmRa/Dec because HIP2
+        // GLAT/GLON computed now
+        // WDS sep1/sep2 may change in CDS
+        // SpType may change ?
+        // Bphg Rphg (wrong columns in 2MASS)
+        // Icous no more filled by JB
+        IGNORE_PROPERTIES = "pmRa pmDec GLAT GLON sep1 sep2 SpType Bphg Rphg Teff_SpType logg_SpType";
+
         // note: Use String patterns to match multiple properties:
 
         // Johnson magnitudes (0.05 mag) :
@@ -52,10 +61,11 @@ public final class DiffCalibratorsModel {
         addThreshold("M", 5e-2d);
         addThreshold("N", 5e-2d);
 
-        // Photographic magnitudes:
-        addThreshold(".phg", 1e-1d);    // 0.1 mag
-        // Cousin magnitudes:
-        addThreshold(".cous", 5e-2d);   // 0.05 mag
+        // Photographic magnitudes (0.05 mag) :
+        addThreshold(".phg", 5e-2d);
+
+        // Cousin magnitudes (0.05 mag) :
+        addThreshold(".cous", 5e-2d);
 
         // Jy: (see http://www.stsci.edu/hst/nicmos/tools/conversion_help.html)
         // TODO: find correct values representing 0.1 mag in the band:
@@ -65,32 +75,32 @@ public final class DiffCalibratorsModel {
 
         // diameters:
         // use relative diff:
-        addThreshold("UD_.", 1e-1d);      // 0.1 mas
-        addThreshold("diam_.*", 1e-1d);   // 0.1 mas
-        addThreshold("e_diam_.*", 5e-2d); // 5%
+        addThreshold("UD_.", 1e-2d, false);     // 1%
+        addThreshold("diam_.*", 1e-2d, false);  // 1%
+        addThreshold("e_diam_.*", 5e-2d);       // 5%
 
         // vis2:
-        addThreshold("vis2", 1e-2d);      // 1%
+        addThreshold("vis2", 1e-2d);    // 1%
 
-        addThreshold(THRESHOLD_DEFAULT, 1e-3d + 1e-6d);
+        addThreshold(THRESHOLD_DEFAULT, 1e-3d + 1e-6d); // 1/1000
     }
 
     /**
      * Return the threshold for the given property name
      * @param name property name to match
-     * @return threshold
+     * @return threshold or null
      */
-    private static double findThreshold(final String name) {
-        for (Map.Entry<String, Double> entry : THRESHOLD_PROPERTIES.entrySet()) {
+    private static Threshold findThreshold(final String name) {
+        for (Map.Entry<String, Threshold> entry : THRESHOLD_PROPERTIES.entrySet()) {
             if (Pattern.matches(entry.getKey(), name)) {
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("regexp '{}' matched by {}", entry.getKey(), name);
                 }
-                return entry.getValue().doubleValue();
+                return entry.getValue();
             }
         }
 
-        return THRESHOLD_PROPERTIES.get(THRESHOLD_DEFAULT).doubleValue();
+        return THRESHOLD_PROPERTIES.get(THRESHOLD_DEFAULT);
     }
 
     /**
@@ -99,7 +109,17 @@ public final class DiffCalibratorsModel {
      * @param threshold value
      */
     private static void addThreshold(final String matcher, final double threshold) {
-        THRESHOLD_PROPERTIES.put(matcher, threshold);
+        addThreshold(matcher, threshold, true);
+    }
+
+    /**
+     * Add threshold for the given String matcher
+     * @param matcher string matcher
+     * @param threshold value
+     * @param isAbsolute true means absolute threshold; false a relative threshold
+     */
+    private static void addThreshold(final String matcher, final double threshold, final boolean isAbsolute) {
+        THRESHOLD_PROPERTIES.put(matcher, new Threshold(threshold, isAbsolute));
     }
     /* members */
     /** file on left side */
@@ -326,7 +346,7 @@ public final class DiffCalibratorsModel {
     /**
      * Update the view.columns.detailed.<bright|faint>.<band> preference
      * @param diffStarListMetaData 
-     * @param diffProps
+     * @param diffProps unused arg (only diff properties)
      */
     private void updateDetailedViewPreference(final StarListMeta diffStarListMetaData, final String diffProps) {
         String propName;
@@ -353,18 +373,12 @@ public final class DiffCalibratorsModel {
         final String detailedProperties = sb.toString();
 
         try {
-            final String prefKey = "view.columns.detailed." + (_calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
+            final String prefKey = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + (_calibratorsModelLeft._brightScenarioFlag ? "bright" : "faint")
                     + '.' + _calibratorsModelLeft._magnitudeBand;
 
             Preferences.getInstance().setPreference(prefKey, detailedProperties);
         } catch (PreferencesException pe) {
             _logger.warn("setPreference exception:", pe);
-        }
-
-        // TODO: refine custom view:
-        if (false) {
-            // Hack diff view:
-            _calibratorsModelDiff._customPropertyView = "rowIdx otherRowIdx left right diff " + diffProps;
         }
     }
 
@@ -468,7 +482,7 @@ public final class DiffCalibratorsModel {
         final int[] mapIdxRight = new int[diffCount];
 
         // star property threshold mapping:
-        final double[] mapIdxThreshold = new double[diffCount];
+        final Threshold[] mapIdxThreshold = new Threshold[diffCount];
 
         // global statistics:
         int matchs = 0;
@@ -539,6 +553,7 @@ public final class DiffCalibratorsModel {
         Double dblLeft, dblRight;
         String strLeft, strRight;
         Boolean boolLeft, boolRight;
+        Threshold th;
 
         int left, right, diff;
         boolean lessTh;
@@ -598,12 +613,26 @@ public final class DiffCalibratorsModel {
                                     propertyValue = Double.valueOf(dblDiff.diff);
 
                                     if (propMask[i]) {
-                                        if (Math.abs(dblDiff.diff) < mapIdxThreshold[i]) {
-                                            lessTh = true;
-                                            if (isLogDebug) {
-                                                _logger.debug("{} = {} less than threshold [{}]", propMeta.getName(), NumberUtils.format(dblDiff.diff), mapIdxThreshold[i]);
+                                        th = mapIdxThreshold[i];
+
+                                        if (th.isAbsolute) {
+                                            // absolute diff:
+                                            if (Math.abs(dblDiff.diff) < th.threshold) {
+                                                lessTh = true;
+                                                if (isLogDebug) {
+                                                    _logger.debug("{} = {} less than threshold [{}]", propMeta.getName(), NumberUtils.format(dblDiff.diff), th.threshold);
+                                                }
+                                                break;
                                             }
-                                            break;
+                                        } else {
+                                            // relative diff:
+                                            if (!Double.isNaN(dblDiff.relDiff) && Math.abs(dblDiff.relDiff) < th.threshold) {
+                                                lessTh = true;
+                                                if (isLogDebug) {
+                                                    _logger.debug("{} = {} less than threshold [{}]", propMeta.getName(), NumberUtils.format(dblDiff.relDiff), th.threshold);
+                                                }
+                                                break;
+                                            }
                                         }
 
                                         // absolute diff:
@@ -823,10 +852,10 @@ public final class DiffCalibratorsModel {
         }
 
         if (_logger.isInfoEnabled()) {
-            _logger.info("\ncompare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
+            _logger.info("compare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
                     matchs, onlyLeft, onlyRight, diffValues, diffOrigins, diffConfidences, 1e-6d * (System.nanoTime() - start));
 
-            _logger.info("\ncompare: {} different stars among {} crossmatching stars", nStarDiff, diffStarList.size());
+            _logger.info("compare: {} different stars among {} crossmatching stars", nStarDiff, diffStarList.size());
 
             _logger.info("------------------------------------------------------------");
 
@@ -1256,5 +1285,26 @@ public final class DiffCalibratorsModel {
             return decIndex;
         }
         return null;
+    }
+
+    /**
+     * Threshold configuration
+     */
+    private final static class Threshold {
+
+        /** threshold value */
+        final double threshold;
+        /** true means absolute threshold; false a relative threshold */
+        final boolean isAbsolute;
+
+        /**
+         * Protected constructor
+         * @param threshold threshold value
+         * @param isAbsolute true means absolute threshold; false a relative threshold
+         */
+        Threshold(final Double threshold, final boolean isAbsolute) {
+            this.threshold = threshold;
+            this.isAbsolute = isAbsolute;
+        }
     }
 }
