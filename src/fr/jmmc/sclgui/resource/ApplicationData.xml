@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.4.4b4"/>
-    <compilation date="25/10/2012" compiler="JDK 1.5.0_16"/>
+    <program name="SearchCal" version="4.5.0b1"/>
+    <compilation date="04/12/2012" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://apps.jmmc.fr/~sclws/SearchCal/SearchCal.jnlp</jnlp>
@@ -130,24 +130,40 @@
     </menubar>
   
     <releasenotes>
+        <release version="4.5.0">
+            <prerelease version="4.5.0b1">
+                <change type="CHANGE">Enhanced crossmatch algorithm to use proper motions (ASCC, HIP2 or USNO) when querying and matching other catalogs (2MASS, Denis, AKARI).</change>
+                <change type="CHANGE">Added query to HIP2 'Hipparcos, the New Reduction (van Leeuwen, 2007)' to get more accurate star properties (Ra/Dec, proper motion, parallax).</change>
+                <change type="CHANGE">Modified Bright K and Faint K scenarios to use only one primary request (ASCC and 2MASS respectively) and other catalogs as secondary requests 
+                  to be use the enhanced crossmatch algorithm (proper motion handling).</change>
+                <change type="CHANGE">Added duplicated stars filter on the ASCC catalog (distance less than 10 arcsec) in bright scenarios.</change>
+                <change type="CHANGE">Modified Bright K scenario to use a larger constraint on V band: Kmaxi + 4 (to get more giant stars).</change>
+                <change type="CHANGE">Modified rule to determine the mean diameter OK: require 3 diameters (BVK in bright and JHK in faint).</change>
+                <change type="CHANGE">Compute all possible diameters in both bright and faint scenarios.</change>
+                <change type="CHANGE">Check the validity domain of each color index before computing is corresponding angular diameter.</change>
+                <change type="CHANGE">Fixed interstellar absorption (av) correction on K and V magnitudes in faint scenario.</change>
+                <change type="CHANGE">Always compute galactic coordinates i.e. do not retrieve them anymore from catalogs (2MASS or HIPPARCOS).</change>
+                <change type="CHANGE">Check 2MASS quality flag (Qflg) to discard invalid J, H or K magnitudes ('U' or 'X' cases only; 'A' to 'E' are still considered valid).</change>
+                <change type="CHANGE">Fixed 2MASS query in bright scenario to get also USNO optical sources (opt=[TU]) as done in faint scenario.</change>
+                <change type="BUGFIX">Fixed crossmatchs near celestian poles in the distance filter.</change>
+            </prerelease>
+        </release>
         <release version="4.4.4">
             <prerelease version="4.4.4b4">
                 <change type="FEATURE">Added an 'Open Recent' menu.</change>
+                <change type="FEATURE">Added an 'Open Recent' menu.</change>
+                <change type="CHANGE">Added HIP2 catalog into legend.</change>
+                <change type="FEATURE">Improved JTable look and feel: auto size columns, number formatter and right alignment.</change>
+                <change type="DEVELOPER">Improved performance on JTable cell renderer.</change>
                 <change type="DEVELOPER">Use a JPEG icon instead of the PNG previous one to work arround a known bug onto Mac OS X / Java7.</change>
-                <change type="CHANGE">Changed rules to compute mean diameter to require 3 diameters (Bright) or 4 (Faint).</change>
-                <change type="CHANGE">Check color index validity of polynomial coefficients before computing angular diameters.</change>
-                <change type="CHANGE">Always compute galactic coordinates i.e. do not retrieve them from CDS (2MASS or HIPPARCOS).</change>
-                <change type="BUGFIX">Fixed crossmatchs near celestian poles.</change>
-                <change type="CHANGE">Check 2MASS quality flag (Qflg) to discard invalid J, H or K magnitudes (U or X cases; A to E are considered valid).</change>
-                <change type="CHANGE">Fixed 2MASS query in bright scenario to get also USNO optical sources (opt=[TU]) as done in faint scenario.</change>
             </prerelease>
             <prerelease version="4.4.4b4">
                 <change type="BUGFIX">Fixed data change detection for user confirmation before loosing changes.</change>
-                <change type="CHANGE">Update the progress bar while loading large dataset (JSDC).</change>
+                <change type="CHANGE">Update the progress bar while loading a large calibrator list (JSDC catalog) in background.</change>
                 <change type="DEVELOPER">Optimized filter processing (use add instead of remove).</change>
             </prerelease>
             <prerelease version="4.4.4b3">
-                <change type="CHANGE">Enhanced performance of the CSV export.</change>
+                <change type="CHANGE">Enhanced performance of the HTML and CSV export.</change>
                 <change type="CHANGE">Optimized filter processing.</change>
                 <change type="CHANGE">Enhanced performance when using the Delete action.</change>
                 <change type="DEVELOPER">Added VOTable PARAM to embed server and GUI version numbers.</change>
@@ -155,7 +171,7 @@
             </prerelease>
             <prerelease version="4.4.4b2">
                 <change type="FEATURE">Enabled GZip compression by default when saving a calibrator list (scvot.gz).</change>
-                <change type="CHANGE">Improved global performance when handling large dataset (JSDC).</change>
+                <change type="CHANGE">Improved global performance when handling large dataset (JSDC catalog).</change>
                 <change type="DEVELOPER">Upgraded SAVOT VOTable library (4.0) with improved overall performance and GZip compression support.</change>
             </prerelease>
             <prerelease version="4.4.4b1" tag="SC_V4_4_4b1">
