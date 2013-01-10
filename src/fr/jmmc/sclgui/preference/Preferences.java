@@ -90,7 +90,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        return 16;
+        return 17;
     }
 
     /**
@@ -170,6 +170,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             // Removed Vphg and replace I by Icous in all views
             case 15:
                 return updateFromVersion15ToVersion16();
+
+            // Added server URL preference
+            case 16:
+                return updateFromVersion16ToVersion17();
 
             // By default, triggers default values load.
             default:
@@ -270,6 +274,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         setDefaultPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, "2.0");
 
         setDefaultPreference(PreferenceKey.FILTER_NON_CALIBRATORS, "true");
+        setDefaultPreference(PreferenceKey.SERVER_URL_ADDRESS, "");
     }
 
     /**
@@ -696,5 +701,14 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
         // Commit all changes if and only if everything went fine.
         return status;
+    }
+
+    /**
+     * Correction : added server URL address.
+     *
+     * @return always true to force Preference file write to disk with the new empty value as default.
+     */
+    private boolean updateFromVersion16ToVersion17() {
+        return true; // To effectively save Preference file with the new empty value as default
     }
 }

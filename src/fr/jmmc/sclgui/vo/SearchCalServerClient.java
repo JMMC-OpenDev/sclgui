@@ -4,9 +4,10 @@
 package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.jmcs.App;
-import fr.jmmc.jmcs.data.preference.Preferences;
 import fr.jmmc.jmcs.network.NetworkSettings;
 import fr.jmmc.jmcs.util.UrlUtils;
+import fr.jmmc.sclgui.preference.PreferenceKey;
+import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;
@@ -31,13 +32,24 @@ public final class SearchCalServerClient {
     private static final Logger _logger = LoggerFactory.getLogger(SearchCalServerClient.class.getName());
     /** singleton */
     private static SearchCalServerClient _instance;
+    // Constants
+    /** Default server URL */
+    private static final String DEFAULT_SERVER_URL = "http://apps.jmmc.fr";
+    /** Official release path */
+    private static final String OFFICIAL_SERVER_PATH = "/~sclws/";
+    /** Beta release path */
+    private static final String BETA_SERVER_PATH = "/~betaswmgr/";
+    /** Development release path */
+    private static final String ALPHA_SERVER_PATH = "/~lafrasse/";
+    /** Server proxy script */
+    private static final String DEFAULT_PROXY_SCRIPT = "sclwsProxy.php";
 
     /* members */
     /** shared service locator */
     private SclwsLocator _sclwsLocator = null;
     /** shared service URL */
     private URL _sclwsURL = null;
-    /** http headers (no chunk encoding transfer to support proxies) */
+    /** HTTP headers (no chunk encoding transfer to support proxies) */
     private Hashtable<String, String> _httpHeaders = null;
 
     /**
@@ -113,7 +125,7 @@ public final class SearchCalServerClient {
     }
 
     /**
-     * Return the SearchCal web service locator (lazily instanciated once)
+     * Return the SearchCal web service locator (lazily instanced once)
      * @return SclwsLocator
      */
     private SclwsLocator getSclwsLocator() {
@@ -121,16 +133,18 @@ public final class SearchCalServerClient {
 
             final SclwsLocator locator = new SclwsLocator();
 
-            // Decipher which proxy script to use according to app version status (release, beta or alpha)
-            String userName = "sclws"; // official release homedir      
-            if (App.isBetaVersion()) {
-                userName = "betaswmgr"; // beta release homedir
-            } else if (App.isAlphaVersion()) {
-                userName = "lafrasse"; // dev release homedir
+            // Retrieve prefered SearchCal server URL (if any)
+            String proxyScriptURL = Preferences.getInstance().getPreference(PreferenceKey.SERVER_URL_ADDRESS);
+            if (proxyScriptURL.isEmpty()) { // If none found
+                // Decipher which proxy script to use according to app version status (release, beta or alpha)
+                String serverPath = OFFICIAL_SERVER_PATH;
+                if (App.isBetaVersion()) {
+                    serverPath = BETA_SERVER_PATH;
+                } else if (App.isAlphaVersion()) {
+                    serverPath = ALPHA_SERVER_PATH;
+                }
+                proxyScriptURL = DEFAULT_SERVER_URL + serverPath + DEFAULT_PROXY_SCRIPT;
             }
-
-            // TODO : externalize SearchCal server URL:
-            final String proxyScriptURL = "http://apps.jmmc.fr/~" + userName + "/sclwsProxy.php";
 
             _logger.info("SearchCal server URL: {}", proxyScriptURL);
 

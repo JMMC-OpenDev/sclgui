@@ -11,6 +11,7 @@ public enum PreferenceKey {
 
         SHOW_TOOLTIPS_FLAG("help.tooltips.show"),
         SHOW_LEGEND_FLAG("view.legend.show"),
+        SERVER_URL_ADDRESS("server.url.address"),
 
         VERBOSITY_SYNTHETIC_FLAG("view.result.verbosity.synthetic"),
         VERBOSITY_DETAILED_FLAG("view.result.verbosity.detailed"),
