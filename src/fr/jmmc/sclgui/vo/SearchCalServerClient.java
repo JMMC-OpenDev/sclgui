@@ -5,6 +5,7 @@ package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.network.NetworkSettings;
+import fr.jmmc.jmcs.util.StringUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -135,7 +136,8 @@ public final class SearchCalServerClient {
 
             // Retrieve prefered SearchCal server URL (if any)
             String proxyScriptURL = Preferences.getInstance().getPreference(PreferenceKey.SERVER_URL_ADDRESS);
-            if (proxyScriptURL.isEmpty()) { // If none found
+            if (StringUtils.isTrimmedEmpty(proxyScriptURL)) { 
+                // If none found
                 // Decipher which proxy script to use according to app version status (release, beta or alpha)
                 String serverPath = OFFICIAL_SERVER_PATH;
                 if (App.isBetaVersion()) {
