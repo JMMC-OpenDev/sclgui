@@ -5,7 +5,7 @@ package fr.jmmc.sclgui.query;
 
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverWidget;
-import fr.jmmc.jmcs.gui.action.MCSAction;
+import fr.jmmc.jmcs.gui.action.ResourcedAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
@@ -812,7 +812,7 @@ public final class QueryView extends JPanel implements Observer,
         return (Printable.PAGE_EXISTS);
     }
 
-    protected class BrightQueryAction extends MCSAction {
+    protected class BrightQueryAction extends ResourcedAction {
 
         private static final long serialVersionUID = 1L;
 
@@ -828,7 +828,7 @@ public final class QueryView extends JPanel implements Observer,
         }
     }
 
-    protected class FaintQueryAction extends MCSAction {
+    protected class FaintQueryAction extends ResourcedAction {
 
         private static final long serialVersionUID = 1L;
 
@@ -844,7 +844,7 @@ public final class QueryView extends JPanel implements Observer,
         }
     }
 
-    protected class AutoManualRadiusAction extends MCSAction {
+    protected class AutoManualRadiusAction extends ResourcedAction {
 
         private static final long serialVersionUID = 1L;
 
