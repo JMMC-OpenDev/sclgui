@@ -10,7 +10,7 @@
     </company>
 
     <program name="SearchCal" version="4.5b1"/>
-    <compilation date="04/12/2012" compiler="JDK 1.5.0_16"/>
+    <compilation date="16/01/2013" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://apps.jmmc.fr/~sclws/SearchCal/SearchCal.jnlp</jnlp>
@@ -132,6 +132,9 @@
     <releasenotes>
         <release version="4.5">
             <prerelease version="4.5b1">
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/411">Check compatibility of square visibilities with/without interstellar absportion in faint scenario 
+                  i.e. reject stars when vis2 are incompatible (DIAM_FLAG=NOK)</change>
+                <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/410">Display computed Icous magnitude instead of I (johnson) in GUI.</change>
                 <change type="CHANGE">Enhanced cross-match algorithm to use proper motions (ASCC, HIP2 or USNO) when querying and matching other catalogs (2MASS, Denis, AKARI).</change>
                 <change type="CHANGE">Added query to HIP2 'Hipparcos, the New Reduction (van Leeuwen, 2007)' to get more accurate star properties (Ra/Dec, proper motion, parallax).</change>
                 <change type="DEVELOPER">Modified Bright K and Faint K scenarii to use only one primary request (ASCC and 2MASS respectively) and other catalogs as secondary requests (proper motion handling).</change>
