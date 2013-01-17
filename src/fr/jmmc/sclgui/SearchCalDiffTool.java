@@ -7,7 +7,7 @@ import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
-import fr.jmmc.jmcs.gui.action.RecentFilesManager;
+import fr.jmmc.jmcs.util.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingSettings;
