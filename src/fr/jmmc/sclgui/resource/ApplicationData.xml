@@ -177,7 +177,8 @@
                 <change type="BUGFIX">Fixed missing Hot News/Release Notes/FAQ links in Help menu.</change>
             </prerelease>
         </release>
-        <release version="4.4.3">
+
+        <release version="4.4.3"><pubDate>Tue, 18 Sep 2012 09:06:31 GMT</pubDate>
             <prerelease version="4.4.3b3" tag="SC_V4_4_3b3">
                 <change type="CHANGE">Removed deprecated I-band querying.</change>                
                 <change type="BUGFIX">Fixed compatibility for java 1.5.</change>
@@ -195,19 +196,19 @@
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/337">Fixed minor concurrency issue when the query status fails with an Invalid server id error but the query was successfully performed.</change>
             </prerelease>
         </release>
-        <release version="4.4.2">
+        <release version="4.4.2"><pubDate>Tue, 12 Jun 2012 18:20:03 GMT</pubDate>
             <prerelease version="4.4.2b1" tag="SC_V4_4_2b1">
                 <change type="FEATURE">Added an easy way to choose SIMBAD mirrors from star search field.</change>
                 <change type="CHANGE">Enhanced file choosers behavior.</change>
                 <change type="FEATURE">Added keyboard shortcuts to close Preferences window.</change>
             </prerelease>
         </release>
-        <release version="4.4.1">
+        <release version="4.4.1"><pubDate>Mon, 30 Jan 2012 15:43:00 GMT</pubDate>
             <prerelease version="4.4.1b1" tag="SC_V4_4_1b1">
                 <change type="FEATURE">Added a new 'Find' capability.</change>
             </prerelease>
         </release>
-        <release version="4.4">
+        <release version="4.4"><pubDate>Wed, 07 Dec 2011 17:40:32 GMT</pubDate>
             <prerelease version="4.4b2" tag="SC_V4_4b2">
                 <change type="BUGFIX">Fixed FAINT crossmatch radius from 10 (!) to 1 arcsecond.</change>
                 <change type="CHANGE">Enhanced VOTable output efficiency.</change>
@@ -234,13 +235,13 @@
                 <change type="CHANGE">Updated polynomial coefficients (FAINT) to compute uniform diameters.</change>
             </prerelease>
         </release>
-        <release version="4.3.2">
+        <release version="4.3.2"><pubDate>Wed, 15 Jun 2011 10:16:22 GMT</pubDate>
             <prerelease version="4.3.2b1" tag="SC_V4_3_2b1">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/160">Fixed memory leaks causing heap fill-up with big queries.</change>
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/172">Fixed null pointer exception requesting full column display.</change>
             </prerelease>          
         </release>
-        <release version="4.3.1">
+        <release version="4.3.1"><pubDate>Tue, 31 May 2011 16:44:44 GMT</pubDate>
             <prerelease version="4.3.1b2" tag="SC_V4_3_1b2">
                 <change type="CHANGE">Feedback report user's e-mail address is now remembered and shared accross all JMMC application.</change>
                 <change type="CHANGE">User's query settings are now automatically provided (to developpers only) in feedback reports.</change>
@@ -256,7 +257,7 @@
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/71">Fixed concurrency issues with Swing EDT.</change>
             </prerelease>
         </release>
-        <release version="4.3">
+        <release version="4.3"><pubDate>Tue, 15 Mar 2011 16:47:28 GMT</pubDate>
             <prerelease version="4.3b5" tag="SC_V4_3_b5">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/47">Significantly increased performance on UD diameters computation to circumvent a timeout during large queries.</change>
                 <change type="BUGFIX">Fixed a querying crash when science object magnitude is missing.</change>
@@ -280,7 +281,7 @@
                 <change type="FEATURE">Added support for SAMP calibrator export and query launch.</change>
             </prerelease>
         </release>
-        <release version="4.2">
+        <release version="4.2"><pubDate>Thu, 23 Sep 2010 17:51:24 GMT</pubDate>
             <prerelease version="4.2b7" tag="SC_V4_2_b7">
                 <change type="BUGFIX" id="1283847571">Fixed Min. and Max. Magnitude textfields to automatically follow Science Object Magnitude changes.</change>
             </prerelease>
@@ -310,7 +311,7 @@
                 <change type="BUGFIX">Hardened CDS Simbad science star resolution mecanisms while failing.</change>
             </prerelease>
         </release>
-        <release version="4.1.2">
+        <release version="4.1.2"><pubDate>Thu, 10 Dec 2009 14:46:56 GMT</pubDate>
             <prerelease version="4.1.2b1" tag="SC_V4_1_2_b1">
                 <change type="CHANGE">Updated acknowledgment to include involved laboratory's names.</change>
                 <change type="BUGFIX" id="1255675722">Fixed unit conversion problem while filtering stars on RA separation.</change>
@@ -337,7 +338,7 @@
                 <change type="BUGFIX" id="1259360028">Corrected Spectral Type filter to ignore 'SB' as 'S' and 'B' spectral type tokens.</change>
             </prerelease>
         </release>
-        <release version="4.1.1">
+        <release version="4.1.1"><pubDate>Fri, 28 Aug 2009 13:58:27 GMT</pubDate>
             <prerelease version="4.1.1b1" tag="SC_V4_1_1_b1">
                 <change type="BUGFIX">Corrected a bug that prevented I, J and H bands to be used.</change>
             </prerelease>
@@ -348,7 +349,7 @@
                 <change type="BUGFIX">Changed 'VarFlag3' column for 'VFlag' column in the detailled bright N column set.</change>
             </prerelease>
         </release>
-        <release version="4.1">
+        <release version="4.1"><pubDate>Wed, 13 May 2009 14:45:42 GMT</pubDate>
             <prerelease version="4.1b1" tag="SC_V4_1_b1">
                 <change type="FEATURE">Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).</change>
             </prerelease>
@@ -368,7 +369,7 @@
                 <change type="FEATURE">Added a Help menu item to open SearchCal hot news RSS feed.</change>
             </prerelease>
         </release>
-        <release version="4.0.1">
+        <release version="4.0.1"><pubDate>Wed, 13 May 2009 14:45:42 GMT</pubDate>
             <prerelease version="4.0.1b1" tag="SC_V4_0_1b1">
                 <change type="FEATURE">Added a new application icon.</change>
                 <change type="BUGFIX" id="searchcal/16" url="http://jmmc.fr/gnats?cmd=view%20audit-trail&amp;database=JMMC-SW&amp;pr=16">Corrected diameter columns in simple bright view for N band.</change>
@@ -383,7 +384,7 @@
                 <change type="BUGFIX" url="http://forums.sun.com/thread.jspa?messageID=10522645">Workaround a known Java 1.5.0_16 bug that prevented the load of user manual.</change>
             </prerelease>
         </release>
-        <release version="4.0">
+        <release version="4.0"><pubDate>Mon, 27 Oct 2008 16:46:27 GMT</pubDate>
             <prerelease version="4.0" tag="SC_V4_0">
                 <change>Complete rewrite of our client as a full-featured desktop-class Java application.</change>
                 <change>Our server is now wrapped and available as a VO-compliant webservice.</change>
