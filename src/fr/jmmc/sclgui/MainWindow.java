@@ -5,6 +5,7 @@ package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.gui.action.internal.InternalActionFactory;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.filter.FiltersView;
@@ -110,8 +111,8 @@ public final class MainWindow extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
-                // callback on exit :
-                App.quitAction().actionPerformed(null);
+                // Callback on exit
+                App.quit();
             }
         });
     }

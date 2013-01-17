@@ -9,6 +9,7 @@ import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.util.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.gui.action.internal.InternalActionFactory;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
@@ -480,9 +481,9 @@ public final class SearchCalDiffTool extends App {
          * @param statusBar  
          */
         DiffWindow(final VirtualObservatory vo, final QueryView queryView,
-                   final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
-                   final CalibratorsView calibratorsViewDiff,
-                   final FiltersView filtersView, final StatusBar statusBar) {
+                final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
+                final CalibratorsView calibratorsViewDiff,
+                final FiltersView filtersView, final StatusBar statusBar) {
             super("SearchCal Diff tool");
 
             // Use MainWindow class path for registered actions:
@@ -550,7 +551,7 @@ public final class SearchCalDiffTool extends App {
                 @Override
                 public void windowClosing(final WindowEvent e) {
                     // callback on exit :
-                    App.quitAction().actionPerformed(null);
+                    App.quit();
                 }
             });
         }
