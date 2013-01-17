@@ -1,0 +1,1441 @@
+unknown -    alx - Info  - 2013-01-16T15:45:58.595563 - alxAngularDiameter.c:91 - Loading /home/users/bourgesl/INTROOT/config/alxAngDiamPolynomial.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.595837 - alxCorrectedMagnitude.c:139 - Loading /home/users/bourgesl/INTROOT/config/alxExtinctionRatioTable.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.595928 - alxCorrectedMagnitude.c:414 - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForDwarfStar.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.596187 - alxCorrectedMagnitude.c:414 - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForGiantStar.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.596514 - alxCorrectedMagnitude.c:414 - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForSuperGiantStar.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.596747 - alxCorrectedMagnitude.c:1609 - Loading /home/users/bourgesl/INTROOT/config/alxAkariBlackBodyCorrectionTable.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.596974 - alxCorrectedMagnitude.c:1879 - Loading /home/users/bourgesl/INTROOT/config/alxTableTeffLogg.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.597264 - alxCorrectedMagnitude.c:2099 - Loading /home/users/bourgesl/INTROOT/config/alxTableUDCoefficientCorrection.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.599670 - alxInterstellarAbsorption.c:95 - Loading /home/users/bourgesl/INTROOT/config/alxIntAbsPolynomial.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:45:58.599838 - alxResearchArea.c:97 - Loading /home/users/bourgesl/INTROOT/config/alxStarPopulationInKBand.cfg ...
+unknown -   vobs - Quiet - 2013-01-16T15:45:58.600640 - vobsREMOTE_CATALOG.cpp:107 - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
+sclsvrServer -    alx - Test  - Sky coordinates (in degrees) : RA = 77.9 - DEC = -45.0
+sclsvrServer -    alx - Test  - Magnitude range = [5.0..8.0]
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.359945 / -0.785719 radians - -36.004 / 250.529 degrees
+sclsvrServer -    alx - Test  - Magnitude [5.0 - 8.0], range used => [5.5 - 8.0]
+sclsvrServer -    alx - Test  - Number of estimated stars into 1 degree solid angle circle = 21
+sclsvrServer -    alx - Test  - Nb of star for this sky area = 21
+sclsvrServer -    alx - Test  - Sky research area size = 1.87 (deg)
+sclsvrServer -    alx - Test  - Sky research radius = 46.29 (arcmin)
+sclsvrServer - sclsvr - Test  - Sky research radius = 46.29(arcmin)
+sclsvrServer -   vobs - Info  - Execute: start
+sclsvrServer -   vobs - Test  - Execute: Step 1 - inputList [NONE]
+sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting II/246/out ...
+sclsvrServer -   vobs - Test  - Search: Cone search area = 47 arcmin
+sclsvrServer -   vobs - Test  - Search: Magnitude K range = 5.00..8.00
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=077.919083-45.018403&-c.rm=47&Kmag=5.00..8.00&-out=2MASS&-out=JD&-out=opt&-out=Qflg&-out=Jmag&-out=Hmag&-out=Kmag&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - Parsing XML document (5524 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (19 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter '2MASS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'jd' [TIME_DATE] found for parameter 'JD' (UCD = 'TIME_DATE')
+sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'opt' (UCD = 'ID_CATALOG')
+sclsvrServer -   vobs - Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'Qflg' (UCD = 'CODE_QUALITY')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD = 'PHOT_JHN_H')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Execute: Step 1 - number of returned stars = 19
+sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [19 stars]
+sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - FilterDuplicates: filter search radius = 10.0 arcsec
+sclsvrServer -   vobs - Test  - FilterDuplicates: done = 19 unique stars / 0 duplicates found : 0 different stars.
+sclsvrServer -   vobs - Test  - Execute: Step 1 - outputList [Check]
+sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing CLEAR_MERGE action with 19 stars
+sclsvrServer -   vobs - Test  - Execute: Step 1 - CLEAR outputList [Check]
+sclsvrServer -   vobs - Test  - Merge: list [Check][0 stars] with criteria << input list [Temporary][19 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Check] catalog id: 'NO CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+sclsvrServer -   vobs - Test  - Merge:  work list [Check] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: done = 19 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 1 - after CLEAR_MERGE, 19 stars
+sclsvrServer -   vobs - Test  - Execute: resultList [Primary]
+sclsvrServer -   vobs - Info  - Execute: done = 19 star(s) found.
+sclsvrServer -   vobs - Test  - Property Usage [UNDEF]
+sclsvrServer -   vobs - Test  - Property 'CODE_QUALITY' [Qflag] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'ID_2MASS' [2MASS] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'ID_CATALOG' [opt] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_H' [H] (mag) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_J' [J] (mag) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_K' [K] (mag) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_DEC_MAIN' [DEJ2000] (d:m:s) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_RA_MAIN' [RAJ2000] (h:m:s) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'TIME_DATE' [jd] (d) used by: II/246/out	
+sclsvrServer - sclsvr - Test  - New Sky research radius = 65.47(arcmin)
+sclsvrServer -   vobs - Test  - Search: start
+sclsvrServer -   vobs - Info  - Execute: start
+sclsvrServer -   vobs - Test  - Execute: Step 1 - inputList [NONE]
+sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting II/246/out ...
+sclsvrServer -   vobs - Test  - Search: Cone search area = 66 arcmin
+sclsvrServer -   vobs - Test  - Search: Magnitude K range = 5.00..8.00
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=077.919083-45.018403&-c.rm=66&Kmag=5.00..8.00&-out=2MASS&-out=JD&-out=opt&-out=Qflg&-out=Jmag&-out=Hmag&-out=Kmag&opt=%5bTU%5d&Qflg=AAA'
+sclsvrServer -   vobs - Test  - Parsing XML document (6616 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (32 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter '2MASS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'jd' [TIME_DATE] found for parameter 'JD' (UCD = 'TIME_DATE')
+sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'opt' (UCD = 'ID_CATALOG')
+sclsvrServer -   vobs - Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'Qflg' (UCD = 'CODE_QUALITY')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD = 'PHOT_JHN_H')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Execute: Step 1 - number of returned stars = 32
+sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [32 stars]
+sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - FilterDuplicates: filter search radius = 10.0 arcsec
+sclsvrServer -   vobs - Test  - FilterDuplicates: done = 32 unique stars / 0 duplicates found : 0 different stars.
+sclsvrServer -   vobs - Test  - Execute: Step 1 - outputList [Primary]
+sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing CLEAR_MERGE action with 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 1 - CLEAR outputList [Primary]
+sclsvrServer -   vobs - Test  - Merge: list [Primary][0 stars] with criteria << input list [Temporary][32 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Primary] catalog id: 'NO CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+sclsvrServer -   vobs - Test  - Merge:  work list [Primary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 1 - after CLEAR_MERGE, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 2 - inputList [Primary]
+sclsvrServer -   vobs - Test  - Execute: Step 2 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 2 - Performing CLEAR_MERGE action with 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 2 - CLEAR outputList [S1]
+sclsvrServer -   vobs - Test  - Merge: list [S1][0 stars] with criteria << input list [Temporary][32 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'NO CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 2 - after CLEAR_MERGE, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 2 - apply FILTER 'Opt = T filter'
+sclsvrServer -   vobs - Test  - Execute: Step 2 - after FILTER 'Opt = T filter', star list size = 31
+sclsvrServer -   vobs - Test  - Execute: Step 3 - inputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 3 - Consulting I/280 ...
+sclsvrServer -   vobs - Test  - Execute: Step 3 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'I/280'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 18.7 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=18.7&-out.add=_1&-file=-c&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=e_RAJ2000&-out=e_DEJ2000&-out=pmRA&-out=pmDE&-out=e_pmRA&-out=e_pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.918604-45.018089&+077.837300-44.956592&+077.995142-45.249328&+077.610483-44.924350&+078.016625-44.673364&+077.456288-44.874181&+077.717100-44.584175&+077.679587-44.571831&+077.443533-45.400636&+078.307363-45.516561&+077.067475-44.817761&+077.064363-44.819378&+077.131379-45.404492&+076.929346-45.078942&+078.974142-44.957869&+077.452483-45.714442&+077.415762-44.335472&+076.858058-44.821647&+076.909954-45.573489&+078.630883-45.791244&+076.783950-45.478936&+078.114212-44.100128&+077.816113-45.966225&+078.967388-44.412678&+077.577108-44.083014&+078.756550-44.252008&+076.982629-44.243003&+077.930071-43.980611&+076.474329-44.778853&+079.112700-45.685908&+077.870288-43.946775&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (47610 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (34 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'DM' [ID_DM] found for parameter 'DM' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'TYC1' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'TYC2' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'TYC3' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RAJ2000' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DEJ2000' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD = 'POS_PARLX_TRIG')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SpType' (UCD = 'SPECT_TYPE_MK')
+sclsvrServer -   vobs - Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD = 'PHOT_JHN_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD = 'PHOT_JHN_V')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'v1' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'v2' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'v3' (UCD = 'VAR_CLASS')
+sclsvrServer -   vobs - Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'd5' (UCD = 'CODE_MULT_FLAG')
+sclsvrServer -   vobs - Test  - Execute: Step 3 - number of returned stars = 34
+sclsvrServer -   vobs - Test  - Execute: Step 3 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 3 - Performing UPDATE_ONLY action with 34 stars
+sclsvrServer -   vobs - Test  - Merge: list [S1][31 stars] with criteria << input list [Temporary][34 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'I/280'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: precess reference star with candidate stars
+sclsvrServer -   vobs - Test  - Merge: precess using JD in epoch range [1997.430 2001.130]
+sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
+sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 30 found / 30 updated / 4 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Criteria 'RA/DEC' mismatch 4 times
+sclsvrServer -   vobs - Test  - Merge: Property 'HD' [ID_HD] updated 22 times
+sclsvrServer -   vobs - Test  - Merge: Property 'HIP' [ID_HIP] updated 9 times
+sclsvrServer -   vobs - Test  - Merge: Property 'DM' [ID_DM] updated 27 times
+sclsvrServer -   vobs - Test  - Merge: Property 'TYC1' [ID_TYC1] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'TYC2' [ID_TYC2] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'TYC3' [ID_TYC3] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'RAJ2000' [POS_EQ_RA_MAIN] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'DEJ2000' [POS_EQ_DEC_MAIN] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmRa' [POS_EQ_PMRA] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmDec' [POS_EQ_PMDEC] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'plx' [POS_PARLX_TRIG] updated 28 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] updated 28 times
+sclsvrServer -   vobs - Test  - Merge: Property 'SpType' [SPECT_TYPE_MK] updated 29 times
+sclsvrServer -   vobs - Test  - Merge: Property 'VarFlag1' [CODE_VARIAB_V1] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'VarFlag2' [CODE_VARIAB_V2] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'VarFlag3' [VAR_CLASS] updated 2 times
+sclsvrServer -   vobs - Test  - Merge: Property 'B' [PHOT_JHN_B] updated 30 times
+sclsvrServer -   vobs - Test  - Merge: Property 'V' [PHOT_JHN_V] updated 30 times
+sclsvrServer -   vobs - Test  - Execute: Step 3 - after UPDATE_ONLY, 31 stars
+sclsvrServer -   vobs - Test  - Execute: Step 4 - inputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 4 - Consulting I/311/hip2 ...
+sclsvrServer -   vobs - Test  - Execute: Step 4 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'I/311/hip2'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/311/hip2&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=HIP&-out=e_RArad&-out=e_DErad&-out=pmRA&-out=pmDE&-out=e_pmRA&-out=e_pmDE&-out=Plx&-out=e_Plx&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.918604-45.018089&+077.837374-44.956516&+077.995109-45.249361&+077.610457-44.924371&+078.016605-44.673386&+077.456318-44.874171&+077.717047-44.584317&+077.679254-44.572226&+077.443491-45.400668&+078.307337-45.516583&+077.067405-44.817987&+077.064316-44.819603&+077.131570-45.404305&+076.929328-45.078913&+078.974130-44.957889&+077.452523-45.714483&+077.415654-44.335721&+076.858008-44.821720&+076.909913-45.573570&+078.630877-45.791260&+076.784007-45.478959&+078.114216-44.100120&+077.816139-45.966198&+078.967322-44.412681&+077.576993-44.083010&+078.756457-44.251934&+076.982567-44.242994&+077.930056-43.980638&+076.474406-44.778859&+079.112623-45.685878&+077.870251-43.946753&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (26285 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/311/hip2':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RArad' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DErad' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD = 'POS_PARLX_TRIG')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Execute: Step 4 - number of returned stars = 9
+sclsvrServer -   vobs - Test  - Execute: Step 4 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 4 - Performing UPDATE_ONLY action with 9 stars
+sclsvrServer -   vobs - Test  - Merge: list [S1][31 stars] with criteria << input list [Temporary][9 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'I/311/hip2'
+sclsvrServer -   vobs - Warn  - Merge: overwrite RA/DEC property: true
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 9 found / 9 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'RAJ2000' [POS_EQ_RA_MAIN] updated 9 times
+sclsvrServer -   vobs - Test  - Merge: Property 'DEJ2000' [POS_EQ_DEC_MAIN] updated 9 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] updated 9 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] updated 9 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmRa' [POS_EQ_PMRA] updated 9 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmDec' [POS_EQ_PMDEC] updated 9 times
+sclsvrServer -   vobs - Test  - Execute: Step 4 - after UPDATE_ONLY, 31 stars
+sclsvrServer -   vobs - Test  - Execute: Step 5 - inputList [Primary]
+sclsvrServer -   vobs - Test  - Execute: Step 5 - outputList [S2]
+sclsvrServer -   vobs - Test  - Execute: Step 5 - Performing CLEAR_MERGE action with 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 5 - CLEAR outputList [S2]
+sclsvrServer -   vobs - Test  - Merge: list [S2][0 stars] with criteria << input list [Temporary][32 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S2] catalog id: 'NO CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+sclsvrServer -   vobs - Test  - Merge:  work list [S2] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: done = 32 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 5 - after CLEAR_MERGE, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 5 - apply FILTER 'Opt = U filter'
+sclsvrServer -   vobs - Test  - Execute: Step 5 - after FILTER 'Opt = U filter', star list size = 1
+sclsvrServer -   vobs - Test  - Execute: Step 6 - inputList [S2]
+sclsvrServer -   vobs - Test  - Execute: Step 6 - Consulting I/284 ...
+sclsvrServer -   vobs - Test  - Execute: Step 6 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'I/284'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 2.0 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/284&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=2.0&-out.add=_1&-file=-c&-out=e_RAJ2000&-out=e_DEJ2000&-out=pmRA&-out=pmDE&-out=e_pmRA&-out=e_pmDE&-out=Imag&-out=B1mag&-out=B2mag&-out=R1mag&-out=R2mag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.184808-45.502175&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (5122 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/284':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RAJ2000' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DEJ2000' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'Iphg' [PHOT_PHG_I] found for parameter 'Imag' (UCD = 'PHOT_PHG_I')
+sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'B1mag' (UCD = 'PHOT_PHG_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'B2mag' (UCD = 'PHOT_PHG_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'R1mag' (UCD = 'PHOT_PHG_R')
+sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'R2mag' (UCD = 'PHOT_PHG_R')
+sclsvrServer -   vobs - Test  - Execute: Step 6 - number of returned stars = 1
+sclsvrServer -   vobs - Test  - Execute: Step 6 - outputList [S2]
+sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing UPDATE_ONLY action with 1 stars
+sclsvrServer -   vobs - Test  - Merge: list [S2][1 stars] with criteria << input list [Temporary][1 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S2] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'I/284'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: precess reference star with candidate stars
+sclsvrServer -   vobs - Test  - Merge: precess using JD in epoch range [1997.430 2001.130]
+sclsvrServer -   vobs - Test  - Merge:  work list [S2] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'RAJ2000' [POS_EQ_RA_MAIN] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'DEJ2000' [POS_EQ_DEC_MAIN] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmRa' [POS_EQ_PMRA] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmDec' [POS_EQ_PMDEC] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'Rphg' [PHOT_PHG_R] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'Iphg' [PHOT_PHG_I] updated 1 times
+sclsvrServer -   vobs - Test  - Execute: Step 6 - after UPDATE_ONLY, 1 stars
+sclsvrServer -   vobs - Test  - Execute: Step 7 - inputList [S2]
+sclsvrServer -   vobs - Test  - Execute: Step 7 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 7 - Performing MERGE action with 1 stars
+sclsvrServer -   vobs - Test  - Merge: list [S1][31 stars] with criteria << input list [Temporary][1 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 1 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 7 - after MERGE, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 8 - inputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 8 - Consulting B/denis ...
+sclsvrServer -   vobs - Test  - Execute: Step 8 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'B/denis'
+sclsvrServer -   vobs - Test  - Search: Box search area = 4.0/4.3 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/denis&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=4.0/4.3&-out.add=_1&-file=-c&-out=DENIS&-out=ObsJD&-out=A2RAdeg&-out=A2DEdeg&-out=Imag&-out=Iflg&-out=Bmag&-out=Rmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.918604-45.018089&+077.837305-44.956571&+077.995127-45.249364&+077.610477-44.924350&+078.016641-44.673354&+077.456284-44.874182&+077.717064-44.584189&+077.679549-44.571831&+077.443532-45.400613&+078.307330-45.516546&+077.067474-44.817784&+077.064387-44.819389&+077.131397-45.404433&+076.929347-45.078916&+078.974155-44.957889&+077.452551-45.714481&+077.415717-44.335513&+076.858031-44.821695&+076.909938-45.573542&+078.630893-45.791263&+076.784005-45.478968&+078.114228-44.100127&+077.816171-45.966210&+078.967332-44.412673&+077.577032-44.083009&+078.756547-44.251960&+076.982641-44.243017&+077.930084-43.980629&+076.474401-44.778868&+079.112651-45.685910&+077.870320-43.946755&+077.184370-45.502208&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (35955 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (39 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/denis':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DENIS' [ID_DENIS] found for parameter 'DENIS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'jd' [TIME_DATE] found for parameter 'ObsJD' (UCD = 'TIME_DATE')
+sclsvrServer -   vobs - Test  - Extract: Property 'A2RAdeg' [POS_EQ_RA_OTHER] found for parameter 'A2RAdeg' (UCD = 'POS_EQ_RA_OTHER')
+sclsvrServer -   vobs - Test  - Extract: Property 'A2DEdeg' [POS_EQ_DEC_OTHER] found for parameter 'A2DEdeg' (UCD = 'POS_EQ_DEC_OTHER')
+sclsvrServer -   vobs - Test  - Extract: Property 'Icous' [PHOT_COUS_I] found for parameter 'Imag' (UCD = 'PHOT_COUS_I')
+sclsvrServer -   vobs - Test  - Extract: Property 'Iflag' [CODE_MISC_I] found for parameter 'Iflg' (UCD = 'CODE_MISC')
+sclsvrServer -   vobs - Test  - Extract: Property 'Bphg' [PHOT_PHG_B] found for parameter 'Bmag' (UCD = 'PHOT_PHG_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'Rphg' [PHOT_PHG_R] found for parameter 'Rmag' (UCD = 'PHOT_PHG_R')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051140.5-450105' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051120.9-445723' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051158.8-451457' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051158.8-451457' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051026.4-445527' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051203.9-444024' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051203.9-444024' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051052.0-443503' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051043.0-443418' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050946.4-452402' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051313.7-453059' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050816.1-444903' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050815.4-444909' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050831.5-452416' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051553.7-445728' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051553.7-445728' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050939.7-442007' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050939.7-442007' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050725.8-444918' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051431.4-454728' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050708.1-452844' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051227.3-440600' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051115.8-455758' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051115.8-455758' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051552.1-442445' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051552.1-442445' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051018.4-440458' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051501.5-441507' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051501.5-441506' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050755.8-441435' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051143.1-435850' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050553.7-444644' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050553.7-444644' - discard I Cousin magnitude (saturated or clouds - Iflg = '1004')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051627.0-454109' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051627.0-454108' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J051128.8-435648' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050844.3-453007' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Star 'DENIS J050844.3-453007' - discard I Cousin magnitude (saturated or clouds - Iflg = '4')
+sclsvrServer -   vobs - Test  - Execute: Step 8 - number of returned stars = 39
+sclsvrServer -   vobs - Test  - Execute: Step 8 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 8 - Performing UPDATE_ONLY action with 39 stars
+sclsvrServer -   vobs - Test  - Merge: list [S1][32 stars] with criteria << input list [Temporary][39 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'B/denis'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: precess candidate stars with reference star
+sclsvrServer -   vobs - Test  - Merge: precess using JD in epoch range [1995.500 2002.500]
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.114212826 arcsec : 'DENIS J051158.8-451457' (RA = 77.995117, DEC = -45.249333): POS_EQ_RA_MAIN = 05 11 58.828	POS_EQ_DEC_MAIN = -45 14 57.60	ID_TARGET = 077.995129-45.249364	ID_DENIS = J051158.8-451457	POS_EQ_RA_OTHER = 77.994963	POS_EQ_DEC_OTHER = -45.249364	PHOT_PHG_B = 12	PHOT_PHG_R = 10.3	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.223093826 arcsec : 'DENIS J051158.8-451457' (RA = 77.995041, DEC = -45.249369): POS_EQ_RA_MAIN = 05 11 58.810	POS_EQ_DEC_MAIN = -45 14 57.73	ID_TARGET = 077.995129-45.249364	ID_DENIS = J051158.8-451457	POS_EQ_RA_OTHER = 77.994962	POS_EQ_DEC_OTHER = -45.249364	PHOT_PHG_B = 12	PHOT_PHG_R = 10.3	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.067113889 arcsec : 'DENIS J051203.9-444024' (RA = 78.016629, DEC = -44.673364): POS_EQ_RA_MAIN = 05 12 03.991	POS_EQ_DEC_MAIN = -44 40 24.11	ID_TARGET = 078.016646-44.673350	ID_DENIS = J051203.9-444024	POS_EQ_RA_OTHER = 78.016699	POS_EQ_DEC_OTHER = -44.673364	PHOT_PHG_B = 11.2	PHOT_PHG_R = 8.9	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.181169046 arcsec : 'DENIS J051203.9-444024' (RA = 78.016634, DEC = -44.673400): POS_EQ_RA_MAIN = 05 12 03.992	POS_EQ_DEC_MAIN = -44 40 24.24	ID_TARGET = 078.016646-44.673350	ID_DENIS = J051203.9-444024	POS_EQ_RA_OTHER = 78.016700	POS_EQ_DEC_OTHER = -44.673364	PHOT_PHG_B = 11.2	PHOT_PHG_R = 8.9	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.064839093 arcsec : 'DENIS J051553.7-445728' (RA = 78.974133, DEC = -44.957886): POS_EQ_RA_MAIN = 05 15 53.792	POS_EQ_DEC_MAIN = -44 57 28.39	ID_TARGET = 078.974158-44.957889	ID_DENIS = J051553.7-445728	POS_EQ_RA_OTHER = 78.974100	POS_EQ_DEC_OTHER = -44.957912	PHOT_PHG_B = 11.7	PHOT_PHG_R = 10	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.507913616 arcsec : 'DENIS J051553.7-445728' (RA = 78.973997, DEC = -44.957972): POS_EQ_RA_MAIN = 05 15 53.757	POS_EQ_DEC_MAIN = -44 57 28.70	ID_TARGET = 078.974158-44.957889	ID_DENIS = J051553.7-445728	POS_EQ_RA_OTHER = 78.974100	POS_EQ_DEC_OTHER = -44.957912	PHOT_PHG_B = 11.7	PHOT_PHG_R = 10	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.308808496 arcsec : 'DENIS J050939.7-442007' (RA = 77.415614, DEC = -44.335454): POS_EQ_RA_MAIN = 05 09 39.744	POS_EQ_DEC_MAIN = -44 20 07.80	ID_TARGET = 077.415725-44.335486	ID_DENIS = J050939.7-442007	POS_EQ_RA_OTHER = 77.415716	POS_EQ_DEC_OTHER = -44.335484	PHOT_PHG_R = 7.5	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.319791833 arcsec : 'DENIS J050939.7-442007' (RA = 77.415601, DEC = -44.335479): POS_EQ_RA_MAIN = 05 09 39.741	POS_EQ_DEC_MAIN = -44 20 07.89	ID_TARGET = 077.415725-44.335486	ID_DENIS = J050939.7-442007	POS_EQ_RA_OTHER = 77.415718	POS_EQ_DEC_OTHER = -44.335484	PHOT_PHG_R = 7.5	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.188396291 arcsec : 'DENIS J051115.8-455758' (RA = 77.816215, DEC = -45.966255): POS_EQ_RA_MAIN = 05 11 15.890	POS_EQ_DEC_MAIN = -45 57 58.51	ID_TARGET = 077.816175-45.966211	ID_DENIS = J051115.8-455758	POS_EQ_RA_OTHER = 77.816178	POS_EQ_DEC_OTHER = -45.966220	PHOT_PHG_R = 10.1	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.262286041 arcsec : 'DENIS J051115.8-455758' (RA = 77.816163, DEC = -45.966283): POS_EQ_RA_MAIN = 05 11 15.879	POS_EQ_DEC_MAIN = -45 57 58.62	ID_TARGET = 077.816175-45.966211	ID_DENIS = J051115.8-455758	POS_EQ_RA_OTHER = 77.816178	POS_EQ_DEC_OTHER = -45.966220	PHOT_PHG_R = 10.1	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.082706335 arcsec : 'DENIS J051552.1-442445' (RA = 78.967325, DEC = -44.412650): POS_EQ_RA_MAIN = 05 15 52.158	POS_EQ_DEC_MAIN = -44 24 45.54	ID_TARGET = 078.967333-44.412672	ID_DENIS = J051552.1-442445	POS_EQ_RA_OTHER = 78.967260	POS_EQ_DEC_OTHER = -44.412673	PHOT_PHG_B = 11.3	PHOT_PHG_R = 9.4	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.397638536 arcsec : 'DENIS J051552.1-442445' (RA = 78.967179, DEC = -44.412678): POS_EQ_RA_MAIN = 05 15 52.122	POS_EQ_DEC_MAIN = -44 24 45.65	ID_TARGET = 078.967333-44.412672	ID_DENIS = J051552.1-442445	POS_EQ_RA_OTHER = 78.967259	POS_EQ_DEC_OTHER = -44.412673	PHOT_PHG_B = 11.3	PHOT_PHG_R = 9.4	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.255280796 arcsec : 'DENIS J051501.5-441507' (RA = 78.756588, DEC = -44.252032): POS_EQ_RA_MAIN = 05 15 01.578	POS_EQ_DEC_MAIN = -44 15 07.30	ID_TARGET = 078.756558-44.251964	ID_DENIS = J051501.5-441507	POS_EQ_RA_OTHER = 78.756250	POS_EQ_DEC_OTHER = -44.251975	PHOT_PHG_B = 11.5	PHOT_PHG_R = 9.8	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.405487664 arcsec : 'DENIS J051501.5-441506' (RA = 78.756481, DEC = -44.251866): POS_EQ_RA_MAIN = 05 15 01.547	POS_EQ_DEC_MAIN = -44 15 06.68	ID_TARGET = 078.756558-44.251964	ID_DENIS = J051501.5-441506	POS_EQ_RA_OTHER = 78.756250	POS_EQ_DEC_OTHER = -44.251975	PHOT_PHG_B = 11.5	PHOT_PHG_R = 9.8	
+sclsvrServer -   vobs - Test  - process subList size = 3 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [3 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.832648214 arcsec : 'DENIS J050553.8-444644' (RA = 76.474542, DEC = -44.779078): POS_EQ_RA_MAIN = 05 05 53.890	POS_EQ_DEC_MAIN = -44 46 44.68	ID_TARGET = 076.474400-44.778869	ID_DENIS = J050553.8-444644	POS_EQ_RA_OTHER = 76.474345	POS_EQ_DEC_OTHER = -44.778762	PHOT_PHG_B = 11.6	PHOT_PHG_R = 11.4	
+sclsvrServer -   vobs - Test  - Star    2: sep = 1.104013624 arcsec : 'DENIS J050553.7-444644' (RA = 76.474127, DEC = -44.779107): POS_EQ_RA_MAIN = 05 05 53.791	POS_EQ_DEC_MAIN = -44 46 44.77	ID_TARGET = 076.474400-44.778869	ID_DENIS = J050553.7-444644	POS_EQ_RA_OTHER = 76.474345	POS_EQ_DEC_OTHER = -44.778762	PHOT_PHG_B = 11.6	PHOT_PHG_R = 11.4	
+sclsvrServer -   vobs - Test  - Star    3: sep = 1.117582984 arcsec : 'DENIS J050553.7-444644' (RA = 76.474119, DEC = -44.779107): POS_EQ_RA_MAIN = 05 05 53.789	POS_EQ_DEC_MAIN = -44 46 44.77	ID_TARGET = 076.474400-44.778869	ID_DENIS = J050553.7-444644	POS_EQ_RA_OTHER = 76.474345	POS_EQ_DEC_OTHER = -44.778762	PHOT_PHG_B = 11.6	PHOT_PHG_R = 11.4	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.237073103 arcsec : 'DENIS J051627.0-454109' (RA = 79.112733, DEC = -45.685950): POS_EQ_RA_MAIN = 05 16 27.056	POS_EQ_DEC_MAIN = -45 41 09.42	ID_TARGET = 079.112654-45.685914	ID_DENIS = J051627.0-454109	POS_EQ_RA_OTHER = 79.112598	POS_EQ_DEC_OTHER = -45.685895	PHOT_PHG_B = 11.3	PHOT_PHG_R = 9.1	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.406454129 arcsec : 'DENIS J051627.0-454108' (RA = 79.112710, DEC = -45.685808): POS_EQ_RA_MAIN = 05 16 27.047	POS_EQ_DEC_MAIN = -45 41 08.85	ID_TARGET = 079.112654-45.685914	ID_DENIS = J051627.0-454108	POS_EQ_RA_OTHER = 79.112598	POS_EQ_DEC_OTHER = -45.685895	PHOT_PHG_B = 11.3	PHOT_PHG_R = 9.1	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.924241488 arcsec : 'DENIS J050844.3-453007' (RA = 77.184746, DEC = -45.502148): POS_EQ_RA_MAIN = 05 08 44.332	POS_EQ_DEC_MAIN = -45 30 07.78	ID_TARGET = 077.184388-45.502200	ID_DENIS = J050844.3-453007	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.956145955 arcsec : 'DENIS J050844.3-453007' (RA = 77.184766, DEC = -45.502217): POS_EQ_RA_MAIN = 05 08 44.347	POS_EQ_DEC_MAIN = -45 30 07.96	ID_TARGET = 077.184388-45.502200	ID_DENIS = J050844.3-453007	
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 28 found / 28 updated / 11 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+sclsvrServer -   vobs - Test  - Merge: Property 'DENIS' [ID_DENIS] updated 28 times
+sclsvrServer -   vobs - Test  - Merge: Property 'A2RAdeg' [POS_EQ_RA_OTHER] updated 25 times
+sclsvrServer -   vobs - Test  - Merge: Property 'A2DEdeg' [POS_EQ_DEC_OTHER] updated 25 times
+sclsvrServer -   vobs - Test  - Merge: Property 'Bphg' [PHOT_PHG_B] updated 17 times
+sclsvrServer -   vobs - Test  - Merge: Property 'Rphg' [PHOT_PHG_R] updated 25 times
+sclsvrServer -   vobs - Test  - Execute: Step 8 - after UPDATE_ONLY, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 9 - inputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 9 - Consulting B/sb9/main ...
+sclsvrServer -   vobs - Test  - Execute: Step 9 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'B/sb9/main'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.918604-45.018089&+077.837296-44.956578&+077.995129-45.249364&+077.610479-44.924347&+078.016646-44.673350&+077.456279-44.874183&+077.717067-44.584172&+077.679587-44.571781&+077.443538-45.400606&+078.307329-45.516542&+077.067483-44.817758&+077.064396-44.819361&+077.131375-45.404450&+076.929350-45.078917&+078.974158-44.957889&+077.452554-45.714481&+077.415725-44.335486&+076.858033-44.821692&+076.909942-45.573539&+078.630896-45.791264&+076.784004-45.478969&+078.114229-44.100128&+077.816175-45.966211&+078.967333-44.412672&+077.577038-44.083008&+078.756558-44.251964&+076.982650-44.243019&+077.930087-43.980628&+076.474400-44.778869&+079.112654-45.685914&+077.870329-43.946756&+077.184388-45.502200&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (19043 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - Execute: Step 9 - number of returned stars = 0
+sclsvrServer -   vobs - Test  - Execute: Step 9 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 9 - Performing UPDATE_ONLY action with 0 stars
+sclsvrServer -   vobs - Test  - Execute: Step 9 - after UPDATE_ONLY, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 10 - inputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 10 - Consulting B/wds/wds ...
+sclsvrServer -   vobs - Test  - Execute: Step 10 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'B/wds/wds'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-c.rs=1.6&-out.add=_1&-file=-c&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.918604-45.018089&+077.837296-44.956578&+077.995129-45.249364&+077.610479-44.924347&+078.016646-44.673350&+077.456279-44.874183&+077.717067-44.584172&+077.679587-44.571781&+077.443538-45.400606&+078.307329-45.516542&+077.067483-44.817758&+077.064396-44.819361&+077.131375-45.404450&+076.929350-45.078917&+078.974158-44.957889&+077.452554-45.714481&+077.415725-44.335486&+076.858033-44.821692&+076.909942-45.573539&+078.630896-45.791264&+076.784004-45.478969&+078.114229-44.100128&+077.816175-45.966211&+078.967333-44.412672&+077.577038-44.083008&+078.756558-44.251964&+076.982650-44.243019&+077.930087-43.980628&+076.474400-44.778869&+079.112654-45.685914&+077.870329-43.946756&+077.184388-45.502200&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (20107 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'WDS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'sep1' (UCD = 'ORBIT_SEPARATION')
+sclsvrServer -   vobs - Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'sep2' (UCD = 'ORBIT_SEPARATION')
+sclsvrServer -   vobs - Test  - Execute: Step 10 - number of returned stars = 1
+sclsvrServer -   vobs - Test  - Execute: Step 10 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 10 - Performing UPDATE_ONLY action with 1 stars
+sclsvrServer -   vobs - Test  - Merge: list [S1][32 stars] with criteria << input list [Temporary][1 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'B/wds/wds'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'WDS' [ID_WDS] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] updated 1 times
+sclsvrServer -   vobs - Test  - Execute: Step 10 - after UPDATE_ONLY, 32 stars
+sclsvrServer -   vobs - Test  - Execute: Step 11 - inputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 11 - Consulting II/297/irc ...
+sclsvrServer -   vobs - Test  - Execute: Step 11 - Optimized ConeSearchRadius = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'II/297/irc'
+sclsvrServer -   vobs - Test  - Search: Box search area = 7.2/7.3 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=7.2/7.3&-out.add=_1&-file=-c&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&077.918604-45.018089&+077.837233-44.956627&+077.995146-45.249366&+077.610497-44.924328&+078.016678-44.673321&+077.456248-44.874193&+077.717083-44.584056&+077.679855-44.571425&+077.443576-45.400554&+078.307323-45.516509&+077.067546-44.817576&+077.064460-44.819168&+077.131219-45.404566&+076.929368-45.078920&+078.974181-44.957889&+077.452579-45.714478&+077.415782-44.335297&+076.858053-44.821668&+076.909965-45.573515&+078.630912-45.791267&+076.784002-45.478978&+078.114240-44.100134&+077.816204-45.966222&+078.967342-44.412665&+077.577073-44.083007&+078.756639-44.251988&+076.982716-44.243040&+077.930113-43.980620&+076.474396-44.778877&+079.112679-45.685943&+077.870392-43.946757&+077.184510-45.502146&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (28502 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (22 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'AKARI' [ID_AKARI] found for parameter 'objID' (UCD = 'ID_NUMBER')
+sclsvrServer -   vobs - Test  - Extract: Property 'S09' [PHOT_FLUX_IR_9] found for parameter 'S09' (UCD = 'PHOT_FLUX_IR_9')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] found for parameter 'e_S09' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'S18' (UCD = 'PHOT_FLUX_IR_25')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'e_S18' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Execute: Step 11 - number of returned stars = 22
+sclsvrServer -   vobs - Test  - Execute: Step 11 - outputList [S1]
+sclsvrServer -   vobs - Test  - Execute: Step 11 - Performing UPDATE_ONLY action with 22 stars
+sclsvrServer -   vobs - Test  - Merge: list [S1][32 stars] with criteria << input list [Temporary][22 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/297/irc'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: precess candidate stars with reference star
+sclsvrServer -   vobs - Test  - Merge: precess using JD in epoch range [2006.333 2007.667]
+sclsvrServer -   vobs - Test  - Merge:  work list [S1] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 22 found / 22 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'AKARI' [ID_AKARI] updated 22 times
+sclsvrServer -   vobs - Test  - Merge: Property 'S09' [PHOT_FLUX_IR_9] updated 22 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] updated 22 times
+sclsvrServer -   vobs - Test  - Execute: Step 11 - after UPDATE_ONLY, 32 stars
+sclsvrServer -   vobs - Test  - Execute: resultList [GetCal]
+sclsvrServer -   vobs - Info  - Execute: done = 32 star(s) found.
+sclsvrServer -   vobs - Test  - Property Usage [FAINT_K]
+sclsvrServer -   vobs - Test  - Property 'CODE_MISC_I' [Iflag] (-) used by: B/denis	
+sclsvrServer -   vobs - Test  - Property 'CODE_MULT_FLAG' [MultFlag] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'CODE_QUALITY' [Qflag] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'CODE_VARIAB_V1' [VarFlag1] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'CODE_VARIAB_V2' [VarFlag2] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_2MASS' [2MASS] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'ID_AKARI' [AKARI] (-) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'ID_CATALOG' [opt] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'ID_DENIS' [DENIS] (-) used by: B/denis	
+sclsvrServer -   vobs - Test  - Property 'ID_DM' [DM] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_HD' [HD] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_HIP' [HIP] (-) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'ID_TARGET' [TARGET_ID] (deg) used by: I/280	I/311/hip2	I/284	B/denis	B/wds/wds	II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'ID_TYC1' [TYC1] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_TYC2' [TYC2] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_TYC3' [TYC3] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_WDS' [WDS] (-) used by: B/wds/wds	
+sclsvrServer -   vobs - Test  - Property 'ORBIT_SEPARATION_SEP1' [sep1] (arcsec) used by: B/wds/wds	
+sclsvrServer -   vobs - Test  - Property 'ORBIT_SEPARATION_SEP2' [sep2] (arcsec) used by: B/wds/wds	
+sclsvrServer -   vobs - Test  - Property 'PHOT_COUS_I' [Icous] (mag) used by: B/denis	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_18' [S18] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_18_ERROR' [e_S18] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_9' [S09] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_9_ERROR' [e_S09] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_B' [B] (mag) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_H' [H] (mag) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_J' [J] (mag) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_K' [K] (mag) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_V' [V] (mag) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'PHOT_PHG_B' [Bphg] (mag) used by: I/284	B/denis	
+sclsvrServer -   vobs - Test  - Property 'PHOT_PHG_I' [Iphg] (mag) used by: I/284	
+sclsvrServer -   vobs - Test  - Property 'PHOT_PHG_R' [Rphg] (mag) used by: I/284	B/denis	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_DEC_ERROR' [e_DEJ2000] (mas) used by: I/280	I/311/hip2	I/284	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_DEC_MAIN' [DEJ2000] (d:m:s) used by: II/246/out	I/280	I/311/hip2	I/284	B/denis	B/wds/wds	II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_DEC_OTHER' [A2DEdeg] (d:m:s) used by: B/denis	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMDEC' [pmDec] (mas/yr) used by: I/280	I/311/hip2	I/284	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMDEC_ERROR' [e_pmDec] (mas/yr) used by: I/280	I/311/hip2	I/284	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMRA' [pmRa] (mas/yr) used by: I/280	I/311/hip2	I/284	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMRA_ERROR' [e_pmRA] (mas/yr) used by: I/280	I/311/hip2	I/284	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_RA_ERROR' [e_RAJ2000] (mas) used by: I/280	I/311/hip2	I/284	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_RA_MAIN' [RAJ2000] (h:m:s) used by: II/246/out	I/280	I/311/hip2	I/284	B/denis	B/wds/wds	II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_RA_OTHER' [A2RAdeg] (h:m:s) used by: B/denis	
+sclsvrServer -   vobs - Test  - Property 'POS_PARLX_TRIG' [plx] (mas) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_PARLX_TRIG_ERROR' [e_Plx] (-) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'SPECT_TYPE_MK' [SpType] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'TIME_DATE' [jd] (d) used by: II/246/out	B/denis	
+sclsvrServer -   vobs - Test  - Property 'VAR_CLASS' [VarFlag3] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Search: done = Number of stars found : 32
+sclsvrServer - sclsvr - Test  - Complete: start [32 stars]
+sclsvrServer - sclsvr - Test  - ----- Complete: star '2MASS 05114046-4501051'
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (SpType unknown).
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.359936 / -0.785714 radians - -36.004 / 250.528 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 5.816, H = 5.306, K = 5.073
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 5.821, H = 5.316, K = 5.049
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 0.000 (NO), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 5.816 (HIGH), H = 5.306 (HIGH), K = 5.073 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 0.000 (NO), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 5.816 (HIGH), H = 5.306 (HIGH), K = 5.073 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=0.000, V=0.000, R=0.000, I=0.000, J=5.816, H=5.306, K=5.073
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.510428 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.743371 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.000(0.000), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.608(0.081)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (1 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star '2MASS 05114046-4501051' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33908'
+sclsvrServer - sclsvr - Test  - parallax 3.50(14.18) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.358517 / -0.784640 radians - -36.057 / 250.447 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.113200; computed fnu_12 = 0.056737, fnu_18 = 0.026054
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.088801
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.689, H = 7.157, K = 7.098
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.685, H = 7.163, K = 7.074
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.256 (HIGH), V = 9.324 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.689 (HIGH), H = 7.157 (HIGH), K = 7.098 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.256 (HIGH), V = 9.324 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.689 (HIGH), H = 7.157 (HIGH), K = 7.098 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.256, V=9.324, R=0.000, I=0.000, J=7.689, H=7.157, K=7.098
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.531455 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.179(0.014), VR=0.000(0.000), VK=0.188(0.013), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.188(0.015), HK=0.170(0.023)
+sclsvrServer -    alx - Test  - Mean diameter = 0.182(0.036) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.188 (0.015) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997779 (0.000364), 0.995563 (0.000726)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.256 (HIGH), V = 9.324 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.689 (HIGH), H = 7.157 (HIGH), K = 7.098 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.288 (HIGH), V = 6.324 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.857 (HIGH), H = 6.645 (HIGH), K = 6.750 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.288, V=6.324, R=0.000, I=0.000, J=6.857, H=6.645, K=6.750
+sclsvrServer -    alx - Test  - Color index HK out of validity domain: -0.100000 < -0.105062 < 0.240000
+sclsvrServer -    alx - Test  - Diameters BV=0.157(0.013), VR=0.000(0.000), VK=0.103(0.007), IJ=0.000(0.000), IK=0.000(0.000), JH=0.204(0.020), JK=0.165(0.014), HK=0.000(0.000)
+sclsvrServer -    alx - Test  - Mean diameter = 0.157(0.031) - isValid = 0 - NO - from 3 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 33908' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273499'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' - Our spectral type = 'K2.0' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.361272 / -0.789750 radians - -35.966 / 250.818 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.105200; computed fnu_12 = 0.052595, fnu_18 = 0.024121
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.171120
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.171, H = 7.399, K = 7.152
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.191, H = 7.409, K = 7.128
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 12.885 (HIGH), V = 11.347 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.171 (HIGH), H = 7.399 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.885 (HIGH), V = 11.347 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.171 (HIGH), H = 7.399 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=12.885, V=11.347, R=0.000, I=0.000, J=8.171, H=7.399, K=7.152
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.538000 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.772351 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 1.018939 < 0.650000
+sclsvrServer -    alx - Test  - Color index HK out of validity domain: -0.100000 < 0.246589 < 0.240000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.223(0.015), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.000(0.000)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (1 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273499' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273495'
+sclsvrServer - sclsvr - Test  - parallax -15.68(29.00) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' - Our spectral type = 'K5.0' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K5' - Our spectral type = 'K5.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.354558 / -0.784078 radians - -36.215 / 250.394 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.113300; computed fnu_12 = 0.057418, fnu_18 = 0.026518
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.075853
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.876, H = 7.241, K = 7.038
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.886, H = 7.250, K = 7.014
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.595 (HIGH), V = 10.133 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.876 (HIGH), H = 7.241 (HIGH), K = 7.038 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.595 (HIGH), V = 10.133 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.876 (HIGH), H = 7.241 (HIGH), K = 7.038 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=11.595, V=10.133, R=0.000, I=0.000, J=7.876, H=7.241, K=7.038
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.462000 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.635339 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.838068 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.209(0.014), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.241(0.032)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273495' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4401921'
+sclsvrServer - sclsvr - Test  - parallax 16.88(15.30) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' - Our spectral type = 'K2.0' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K2' - Our spectral type = 'K2.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.361647 / -0.779697 radians - -35.909 / 250.110 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.087520; computed fnu_12 = 0.044063, fnu_18 = 0.020280
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.363288
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.778, H = 7.277, K = 7.144
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.777, H = 7.284, K = 7.120
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.637 (HIGH), V = 9.586 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.778 (HIGH), H = 7.277 (HIGH), K = 7.144 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.637 (HIGH), V = 9.586 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.778 (HIGH), H = 7.277 (HIGH), K = 7.144 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.637, V=9.586, R=0.000, I=0.000, J=7.778, H=7.277, K=7.144
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.501916 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.189(0.015), VR=0.000(0.000), VK=0.187(0.013), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.189(0.016), HK=0.206(0.027)
+sclsvrServer -    alx - Test  - Mean diameter = 0.194(0.039) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.189 (0.016) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997751 (0.000369), 0.995507 (0.000735)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.637 (HIGH), V = 9.586 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.778 (HIGH), H = 7.277 (HIGH), K = 7.144 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.669 (HIGH), V = 6.586 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.946 (HIGH), H = 6.764 (HIGH), K = 6.796 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.669, V=6.586, R=0.000, I=0.000, J=6.946, H=6.764, K=6.796
+sclsvrServer -    alx - Test  - Diameters BV=0.181(0.014), VR=0.000(0.000), VK=0.114(0.008), IJ=0.000(0.000), IK=0.000(0.000), JH=0.190(0.018), JK=0.169(0.014), HK=0.123(0.016)
+sclsvrServer -    alx - Test  - Mean diameter = 0.149(0.030) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4401921' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33681'
+sclsvrServer - sclsvr - Test  - parallax 10.50(4.50) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'F0 V' - Our spectral type = 'F0.0V' : Code = 'F', Sub-type Quantity = '0.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351867 / -0.783202 radians - -36.320 / 250.323 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.075850; computed fnu_12 = 0.037049, fnu_18 = 0.016769
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.551539
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.474, H = 7.358, K = 7.348
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.444, H = 7.362, K = 7.324
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 8.267 (HIGH), V = 7.986 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.474 (HIGH), H = 7.358 (HIGH), K = 7.348 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.267 (HIGH), V = 7.986 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.474 (HIGH), H = 7.358 (HIGH), K = 7.348 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=8.267, V=7.986, R=0.000, I=0.000, J=7.474, H=7.358, K=7.348
+sclsvrServer -    alx - Test  - Diameters BV=0.133(0.011), VR=0.000(0.000), VK=0.130(0.009), IJ=0.000(0.000), IK=0.000(0.000), JH=0.136(0.013), JK=0.128(0.010), HK=0.122(0.016)
+sclsvrServer -    alx - Test  - Mean diameter = 0.129(0.026) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.128 (0.010) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998972 (0.000169), 0.997944 (0.000337)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 8.267 (HIGH), V = 7.986 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.474 (HIGH), H = 7.358 (HIGH), K = 7.348 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.299 (HIGH), V = 4.986 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.642 (HIGH), H = 6.845 (HIGH), K = 7.000 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=4.299, V=4.986, R=0.000, I=0.000, J=6.642, H=6.845, K=7.000
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < -0.686742 < 1.300000
+sclsvrServer -    alx - Test  - Color index VK out of validity domain: -1.100000 < -2.060094 < 7.000000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < -0.203154 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < -0.357924 < 0.650000
+sclsvrServer -    alx - Test  - Color index HK out of validity domain: -0.100000 < -0.154769 < 0.240000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.000(0.000), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.000(0.000)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (0 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 33681' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33823'
+sclsvrServer - sclsvr - Test  - parallax 2.38(0.81) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' - Our spectral type = 'G8.0III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.356419 / -0.778141 radians - -36.115 / 249.980 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.200300; computed fnu_12 = 0.100184, fnu_18 = 0.045956
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.471483
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 6.848, H = 6.320, K = 6.238
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 6.845, H = 6.326, K = 6.214
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 9.605 (HIGH), V = 8.569 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.848 (HIGH), H = 6.320 (HIGH), K = 6.238 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.605 (HIGH), V = 8.569 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.848 (HIGH), H = 6.320 (HIGH), K = 6.238 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=9.605, V=8.569, R=0.000, I=0.000, J=6.848, H=6.320, K=6.238
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.527977 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.296(0.024), VR=0.000(0.000), VK=0.281(0.019), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.283(0.023), HK=0.273(0.036)
+sclsvrServer -    alx - Test  - Mean diameter = 0.279(0.056) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.283 (0.023) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.994985 (0.000821), 0.989995 (0.001634)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 9.605 (HIGH), V = 8.569 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.848 (HIGH), H = 6.320 (HIGH), K = 6.238 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.637 (HIGH), V = 5.569 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.016 (HIGH), H = 5.807 (HIGH), K = 5.890 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=5.637, V=5.569, R=0.000, I=0.000, J=6.016, H=5.807, K=5.890
+sclsvrServer -    alx - Test  - Diameters BV=0.280(0.022), VR=0.000(0.000), VK=0.163(0.011), IJ=0.000(0.000), IK=0.000(0.000), JH=0.299(0.029), JK=0.250(0.021), HK=0.124(0.017)
+sclsvrServer -    alx - Test  - Mean diameter = 0.209(0.042) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 33823' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33811'
+sclsvrServer - sclsvr - Test  - parallax 17.72(0.81) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G8IV/V' - Our spectral type = 'G8.0IV/V' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'IV/V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.355765 / -0.777924 radians - -36.141 / 249.962 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.093580; computed fnu_12 = 0.046505, fnu_18 = 0.021257
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.304722
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.455, H = 7.126, K = 7.069
+sclsvrServer -    alx - Test  - GLon/dist/Av = 249.962 / 0.056 / 0.031
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 9.468 (HIGH), V = 8.694 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.455 (HIGH), H = 7.126 (HIGH), K = 7.069 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.427 (HIGH), V = 8.663 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.447 (HIGH), H = 7.120 (HIGH), K = 7.065 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.03
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.427 (HIGH), V = 8.663 (HIGH), R = 8.058 (HIGH), I = 7.958 (HIGH), J = 7.447 (HIGH), H = 7.120 (HIGH), K = 7.065 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.468, V = 8.694, R = 8.081, I = 7.974, J = 7.534, H = 7.126, K = 7.069, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.440, H = 7.131, K = 7.045
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 9.468 (HIGH), V = 8.694 (HIGH), R = 8.081 (HIGH), I = 7.974 (HIGH), J = 7.455 (HIGH), H = 7.126 (HIGH), K = 7.069 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.427 (HIGH), V = 8.663 (HIGH), R = 8.058 (HIGH), I = 7.958 (HIGH), J = 7.447 (HIGH), H = 7.120 (HIGH), K = 7.065 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.03
+sclsvrServer -    alx - Test  - Compute diameters with B=9.427, V=8.663, R=8.058, I=7.958, J=7.447, H=7.120, K=7.065
+sclsvrServer -    alx - Test  - Diameters BV=0.191(0.015), VR=0.205(0.020), VK=0.178(0.012), IJ=0.169(0.013), IK=0.169(0.010), JH=0.172(0.017), JK=0.171(0.014), HK=0.169(0.023)
+sclsvrServer -    alx - Test  - Mean diameter = 0.172(0.034) - isValid = 1 - HIGH - from 6 diameters
+sclsvrServer -    alx - Test  - Diam = 0.171 (0.014) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998159 (0.000302), 0.996321 (0.000602)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.178233', Teff = '5310.000000', LogG = '4.428000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.162451, B = 0.163810, V = 0.166107, R = 0.168370, I = 0.170117, J = 0.172316, H = 0.173539, K = 0.174228, L = 0.175902, N = 0.177191
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33682'
+sclsvrServer - sclsvr - Test  - parallax 1.46(0.79) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K1/K2III' - Our spectral type = 'K1.5III' : Code = 'K', Sub-type Quantity = '1.50', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351645 / -0.792390 radians - -36.363 / 250.974 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.386800; computed fnu_12 = 0.194545, fnu_18 = 0.089496
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.750923
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 6.330, H = 5.667, K = 5.532
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 6.338, H = 5.675, K = 5.508
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 9.788 (HIGH), V = 8.517 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.330 (HIGH), H = 5.667 (HIGH), K = 5.532 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.788 (HIGH), V = 8.517 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.330 (HIGH), H = 5.667 (HIGH), K = 5.532 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=9.788, V=8.517, R=0.000, I=0.000, J=6.330, H=5.667, K=5.532
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.662818 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.798295 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.438(0.035), VR=0.000(0.000), VK=0.414(0.029), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.436(0.058)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 33682' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4501858'
+sclsvrServer - sclsvr - Test  - parallax 1.20(12.89) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.366721 / -0.794414 radians - -35.766 / 251.165 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.127500; computed fnu_12 = 0.063905, fnu_18 = 0.029345
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.959642
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.469, H = 6.939, K = 6.809
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.469, H = 6.946, K = 6.785
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.402 (HIGH), V = 9.324 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.469 (HIGH), H = 6.939 (HIGH), K = 6.809 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.402 (HIGH), V = 9.324 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.469 (HIGH), H = 6.939 (HIGH), K = 6.809 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.402, V=9.324, R=0.000, I=0.000, J=7.469, H=6.939, K=6.809
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.530408 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.660038 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.223(0.018), VR=0.000(0.000), VK=0.220(0.015), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.239(0.032)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4501858' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273417'
+sclsvrServer - sclsvr - Test  - parallax 22.38(17.20) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' - Our spectral type = 'G5.0' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'G5' - Our spectral type = 'G5.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.345081 / -0.782217 radians - -36.592 / 250.230 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.252, H = 7.869, K = 7.785
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.241, H = 7.875, K = 7.761
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.411 (HIGH), V = 9.619 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.252 (HIGH), H = 7.869 (HIGH), K = 7.785 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.411 (HIGH), V = 9.619 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.252 (HIGH), H = 7.869 (HIGH), K = 7.785 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.411, V=9.619, R=0.000, I=0.000, J=8.252, H=7.869, K=7.785
+sclsvrServer -    alx - Test  - Diameters BV=0.128(0.010), VR=0.000(0.000), VK=0.131(0.009), IJ=0.000(0.000), IK=0.000(0.000), JH=0.125(0.012), JK=0.128(0.011), HK=0.135(0.018)
+sclsvrServer -    alx - Test  - Mean diameter = 0.130(0.026) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.128 (0.011) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998969 (0.000169), 0.997939 (0.000338)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.411 (HIGH), V = 9.619 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.252 (HIGH), H = 7.869 (HIGH), K = 7.785 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.443 (HIGH), V = 6.619 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.420 (HIGH), H = 7.356 (HIGH), K = 7.437 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.443, V=6.619, R=0.000, I=0.000, J=7.420, H=7.356, K=7.437
+sclsvrServer -    alx - Test  - Diameters BV=0.093(0.007), VR=0.000(0.000), VK=0.062(0.004), IJ=0.000(0.000), IK=0.000(0.000), JH=0.126(0.012), JK=0.101(0.008), HK=0.062(0.008)
+sclsvrServer -    alx - Test  - Mean diameter = 0.088(0.018) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273417' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273417'
+sclsvrServer - sclsvr - Test  - parallax 89.08(25.60) is not valid...
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (SpType unknown).
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.345027 / -0.782245 radians - -36.594 / 250.232 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.235, H = 7.805, K = 7.671
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.230, H = 7.812, K = 7.647
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.991 (HIGH), V = 10.149 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.235 (HIGH), H = 7.805 (HIGH), K = 7.671 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.991 (HIGH), V = 10.149 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.235 (HIGH), H = 7.805 (HIGH), K = 7.671 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.991, V=10.149, R=0.000, I=0.000, J=8.235, H=7.805, K=7.671
+sclsvrServer -    alx - Test  - Diameters BV=0.108(0.009), VR=0.000(0.000), VK=0.147(0.010), IJ=0.000(0.000), IK=0.000(0.000), JH=0.132(0.013), JK=0.142(0.012), HK=0.162(0.022)
+sclsvrServer -    alx - Test  - Mean diameter = 0.146(0.029) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.142 (0.012) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998730 (0.000208), 0.997461 (0.000416)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.991 (HIGH), V = 10.149 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.235 (HIGH), H = 7.805 (HIGH), K = 7.671 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.023 (HIGH), V = 7.149 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.403 (HIGH), H = 7.292 (HIGH), K = 7.323 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=7.023, V=7.149, R=0.000, I=0.000, J=7.403, H=7.292, K=7.323
+sclsvrServer -    alx - Test  - Diameters BV=0.085(0.007), VR=0.000(0.000), VK=0.092(0.006), IJ=0.000(0.000), IK=0.000(0.000), JH=0.139(0.013), JK=0.123(0.010), HK=0.097(0.013)
+sclsvrServer -    alx - Test  - Mean diameter = 0.113(0.023) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273417' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4501828'
+sclsvrServer - sclsvr - Test  - parallax -3.58(14.60) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' - Our spectral type = 'G5.0' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'G5' - Our spectral type = 'G5.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.346196 / -0.792457 radians - -36.582 / 250.963 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.241, H = 7.953, K = 7.831
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.227, H = 7.960, K = 7.807
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.380 (HIGH), V = 9.562 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.241 (HIGH), H = 7.953 (HIGH), K = 7.831 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.380 (HIGH), V = 9.562 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.241 (HIGH), H = 7.953 (HIGH), K = 7.831 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.380, V=9.562, R=0.000, I=0.000, J=8.241, H=7.953, K=7.831
+sclsvrServer -    alx - Test  - Diameters BV=0.136(0.011), VR=0.000(0.000), VK=0.127(0.009), IJ=0.000(0.000), IK=0.000(0.000), JH=0.116(0.011), JK=0.122(0.010), HK=0.147(0.019)
+sclsvrServer -    alx - Test  - Mean diameter = 0.128(0.026) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.122 (0.010) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.999065 (0.000153), 0.998130 (0.000306)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.380 (HIGH), V = 9.562 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.241 (HIGH), H = 7.953 (HIGH), K = 7.831 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.412 (HIGH), V = 6.562 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.409 (HIGH), H = 7.440 (HIGH), K = 7.483 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.412, V=6.562, R=0.000, I=0.000, J=7.409, H=7.440, K=7.483
+sclsvrServer -    alx - Test  - Diameters BV=0.104(0.008), VR=0.000(0.000), VK=0.061(0.004), IJ=0.000(0.000), IK=0.000(0.000), JH=0.093(0.009), JK=0.086(0.007), HK=0.083(0.011)
+sclsvrServer -    alx - Test  - Mean diameter = 0.081(0.016) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4501828' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273420'
+sclsvrServer - sclsvr - Test  - parallax -4.40(25.00) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(I)' : updated Luminosity Class = 'I'
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.342670 / -0.786776 radians - -36.705 / 250.548 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.098520; computed fnu_12 = 0.049464, fnu_18 = 0.022734
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.237756
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.149, H = 7.609, K = 7.517
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.147, H = 7.615, K = 7.493
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.072 (HIGH), V = 9.899 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.149 (HIGH), H = 7.609 (HIGH), K = 7.517 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.072 (HIGH), V = 9.899 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.149 (HIGH), H = 7.609 (HIGH), K = 7.517 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=11.072, V=9.899, R=0.000, I=0.000, J=8.149, H=7.609, K=7.517
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.540011 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.198(0.016), VR=0.000(0.000), VK=0.157(0.011), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.159(0.013), HK=0.156(0.021)
+sclsvrServer -    alx - Test  - Mean diameter = 0.157(0.031) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.159 (0.013) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998410 (0.000261), 0.996823 (0.000520)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.072 (HIGH), V = 9.899 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.149 (HIGH), H = 7.609 (HIGH), K = 7.517 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.104 (HIGH), V = 6.899 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.316 (HIGH), H = 7.096 (HIGH), K = 7.169 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=7.104, V=6.899, R=0.000, I=0.000, J=7.316, H=7.096, K=7.169
+sclsvrServer -    alx - Test  - Diameters BV=0.195(0.016), VR=0.000(0.000), VK=0.093(0.006), IJ=0.000(0.000), IK=0.000(0.000), JH=0.166(0.016), JK=0.142(0.012), HK=0.076(0.010)
+sclsvrServer -    alx - Test  - Mean diameter = 0.119(0.024) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273420' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273580'
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K7' - Our spectral type = 'K7.0' : Code = 'K', Sub-type Quantity = '7.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K7' - Our spectral type = 'K7.0(I)' : updated Luminosity Class = 'I'
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.378359 / -0.784663 radians - -35.255 / 250.525 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.094840; computed fnu_12 = 0.048431, fnu_18 = 0.022478
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.260670
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.224, H = 7.426, K = 7.207
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.244, H = 7.436, K = 7.183
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 12.545 (HIGH), V = 10.819 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.224 (HIGH), H = 7.426 (HIGH), K = 7.207 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 12.545 (HIGH), V = 10.819 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.224 (HIGH), H = 7.426 (HIGH), K = 7.207 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=12.545, V=10.819, R=0.000, I=0.000, J=8.224, H=7.426, K=7.207
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.726000 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.797747 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 1.017045 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.204(0.014), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.226(0.030)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273580' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273509'
+sclsvrServer - sclsvr - Test  - parallax 19.20(36.59) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K2' - Our spectral type = 'K2.0' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K2' - Our spectral type = 'K2.0(I)' : updated Luminosity Class = 'I'
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351802 / -0.797868 radians - -36.375 / 251.364 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.117700; computed fnu_12 = 0.059345, fnu_18 = 0.027334
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.040007
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.085, H = 7.298, K = 7.178
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.099, H = 7.305, K = 7.154
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.954 (HIGH), V = 10.565 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.085 (HIGH), H = 7.298 (HIGH), K = 7.178 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.954 (HIGH), V = 10.565 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.085 (HIGH), H = 7.298 (HIGH), K = 7.178 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=11.954, V=10.565, R=0.000, I=0.000, J=8.085, H=7.298, K=7.178
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.389000 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.787314 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.907197 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.202(0.014), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.197(0.026)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273509' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33649'
+sclsvrServer - sclsvr - Test  - parallax 16.35(0.60) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'F5V' - Our spectral type = 'F5.0V' : Code = 'F', Sub-type Quantity = '5.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.351159 / -0.773800 radians - -36.312 / 249.653 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.159900; computed fnu_12 = 0.078459, fnu_18 = 0.035602
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.736873
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 6.672, H = 6.494, K = 6.414
+sclsvrServer -    alx - Test  - GLon/dist/Av = 249.653 / 0.061 / 0.033
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 7.985 (HIGH), V = 7.478 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.672 (HIGH), H = 6.494 (HIGH), K = 6.414 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.941 (HIGH), V = 7.445 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.662 (HIGH), H = 6.488 (HIGH), K = 6.410 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.03
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 7.941 (HIGH), V = 7.445 (HIGH), R = 7.053 (HIGH), I = 6.984 (HIGH), J = 6.662 (HIGH), H = 6.488 (HIGH), K = 6.410 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.985, V = 7.478, R = 7.077, I = 7.000, J = 6.755, H = 6.494, K = 6.414, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 6.649, H = 6.500, K = 6.390
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 7.985 (HIGH), V = 7.478 (HIGH), R = 7.077 (HIGH), I = 7.000 (HIGH), J = 6.672 (HIGH), H = 6.494 (HIGH), K = 6.414 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.941 (HIGH), V = 7.445 (HIGH), R = 7.053 (HIGH), I = 6.984 (HIGH), J = 6.662 (HIGH), H = 6.488 (HIGH), K = 6.410 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.03
+sclsvrServer -    alx - Test  - Compute diameters with B=7.941, V=7.445, R=7.053, I=6.984, J=6.662, H=6.488, K=6.410
+sclsvrServer -    alx - Test  - Diameters BV=0.233(0.019), VR=0.229(0.022), VK=0.220(0.015), IJ=0.203(0.016), IK=0.209(0.013), JH=0.214(0.021), JK=0.216(0.018), HK=0.249(0.033)
+sclsvrServer -    alx - Test  - Mean diameter = 0.219(0.044) - isValid = 1 - HIGH - from 6 diameters
+sclsvrServer -    alx - Test  - Diam = 0.216 (0.018) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997056 (0.000482), 0.994121 (0.000962)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.220320', Teff = '6650.000000', LogG = '4.278000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.206581, B = 0.206634, V = 0.209062, R = 0.211324, I = 0.212944, J = 0.215107, H = 0.216277, K = 0.216787, L = 0.218185, N = 0.219327
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33331'
+sclsvrServer - sclsvr - Test  - parallax 3.14(0.56) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'B5III' - Our spectral type = 'B5.0III' : Code = 'B', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.341426 / -0.782286 radians - -36.740 / 250.224 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.074840; computed fnu_12 = 0.035839, fnu_18 = 0.016028
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.587587
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.096, H = 7.131, K = 7.163
+sclsvrServer -    alx - Test  - GLon/dist/Av = 250.224 / 0.318 / 0.098
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 6.816 (HIGH), V = 6.901 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.096 (HIGH), H = 7.131 (HIGH), K = 7.163 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.687 (HIGH), V = 6.803 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.069 (HIGH), H = 7.114 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.10
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 6.687 (HIGH), V = 6.803 (HIGH), R = 6.853 (HIGH), I = 6.879 (HIGH), J = 7.069 (HIGH), H = 7.114 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.816, V = 6.901, R = 6.926, I = 6.929, J = 7.340, H = 7.131, K = 7.163, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.055, H = 7.134, K = 7.139
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 6.816 (HIGH), V = 6.901 (HIGH), R = 6.926 (HIGH), I = 6.929 (HIGH), J = 7.096 (HIGH), H = 7.131 (HIGH), K = 7.163 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.687 (HIGH), V = 6.803 (HIGH), R = 6.853 (HIGH), I = 6.879 (HIGH), J = 7.069 (HIGH), H = 7.114 (HIGH), K = 7.152 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.10
+sclsvrServer -    alx - Test  - Compute diameters with B=6.687, V=6.803, R=6.853, I=6.879, J=7.069, H=7.114, K=7.152
+sclsvrServer -    alx - Test  - Diameters BV=0.102(0.008), VR=0.103(0.010), VK=0.089(0.006), IJ=0.108(0.008), IK=0.108(0.006), JH=0.101(0.010), JK=0.098(0.008), HK=0.100(0.013)
+sclsvrServer -    alx - Test  - Mean diameter = 0.101(0.020) - isValid = 1 - HIGH - from 6 diameters
+sclsvrServer -    alx - Test  - Diam = 0.098 (0.008) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.999402 (0.000098), 0.998804 (0.000196)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.089429', Teff = '14000.000000', LogG = '3.428000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.086376, B = 0.086129, V = 0.086642, R = 0.087237, I = 0.087708, J = 0.088198, H = 0.088463, K = 0.088628, L = 0.089001, N = 0.089187
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HIP 23853'
+sclsvrServer - sclsvr - Test  - parallax 1.35(0.81) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(I)' : updated Luminosity Class = 'I'
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.342332 / -0.795408 radians - -36.746 / 251.163 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.296100; computed fnu_12 = 0.148663, fnu_18 = 0.068327
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.042971
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 6.651, H = 5.990, K = 5.856
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 6.658, H = 5.997, K = 5.832
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.109 (HIGH), V = 8.838 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.651 (HIGH), H = 5.990 (HIGH), K = 5.856 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.109 (HIGH), V = 8.838 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.651 (HIGH), H = 5.990 (HIGH), K = 5.856 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.109, V=8.838, R=0.000, I=0.000, J=6.651, H=5.990, K=5.856
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.660979 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.794508 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.378(0.030), VR=0.000(0.000), VK=0.356(0.025), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.374(0.050)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HIP 23853' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 34346'
+sclsvrServer - sclsvr - Test  - parallax 4.36(0.80) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'A9V' - Our spectral type = 'A9.0V' : Code = 'A', Sub-type Quantity = '9.00', Luminosity Class = 'V', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.372368 / -0.799208 radians - -35.559 / 251.522 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.157, H = 7.998, K = 7.964
+sclsvrServer -    alx - Test  - GLon/dist/Av = 251.522 / 0.229 / 0.091
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 9.029 (HIGH), V = 8.697 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.157 (HIGH), H = 7.998 (HIGH), K = 7.964 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.909 (HIGH), V = 8.606 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.132 (HIGH), H = 7.983 (HIGH), K = 7.953 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.09
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.909 (HIGH), V = 8.606 (HIGH), R = 8.318 (HIGH), I = 8.429 (HIGH), J = 8.132 (HIGH), H = 7.983 (HIGH), K = 7.953 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.029, V = 8.697, R = 8.386, I = 8.475, J = 8.384, H = 7.998, K = 7.964, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.131, H = 8.003, K = 7.940
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 9.029 (HIGH), V = 8.697 (HIGH), R = 8.386 (HIGH), I = 8.475 (HIGH), J = 8.157 (HIGH), H = 7.998 (HIGH), K = 7.964 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.909 (HIGH), V = 8.606 (HIGH), R = 8.318 (HIGH), I = 8.429 (HIGH), J = 8.132 (HIGH), H = 7.983 (HIGH), K = 7.953 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.09
+sclsvrServer -    alx - Test  - Compute diameters with B=8.909, V=8.606, R=8.318, I=8.429, J=8.132, H=7.983, K=7.953
+sclsvrServer -    alx - Test  - Diameters BV=0.103(0.008), VR=0.107(0.010), VK=0.098(0.007), IJ=0.101(0.008), IK=0.099(0.006), JH=0.105(0.010), JK=0.101(0.008), HK=0.101(0.013)
+sclsvrServer -    alx - Test  - Mean diameter = 0.101(0.020) - isValid = 1 - HIGH - from 6 diameters
+sclsvrServer -    alx - Test  - Diam = 0.101 (0.008) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.999356 (0.000106), 0.998712 (0.000211)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.098459', Teff = '7350.000000', LogG = '4.278000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.093010, B = 0.092761, V = 0.093684, R = 0.094691, I = 0.095408, J = 0.096320, H = 0.096818, K = 0.097004, L = 0.097584, N = 0.098035
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4501817'
+sclsvrServer - sclsvr - Test  - parallax -7.69(12.50) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.340134 / -0.793758 radians - -36.829 / 251.040 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.066510; computed fnu_12 = 0.033336, fnu_18 = 0.015308
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.666200
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.790, H = 7.363, K = 7.270
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.782, H = 7.369, K = 7.246
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.281 (HIGH), V = 9.286 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.790 (HIGH), H = 7.363 (HIGH), K = 7.270 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.281 (HIGH), V = 9.286 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.790 (HIGH), H = 7.363 (HIGH), K = 7.270 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.281, V=9.286, R=0.000, I=0.000, J=7.790, H=7.363, K=7.270
+sclsvrServer -    alx - Test  - Diameters BV=0.200(0.016), VR=0.000(0.000), VK=0.170(0.012), IJ=0.000(0.000), IK=0.000(0.000), JH=0.162(0.016), JK=0.167(0.014), HK=0.175(0.023)
+sclsvrServer -    alx - Test  - Mean diameter = 0.168(0.034) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.167 (0.014) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998251 (0.000287), 0.996505 (0.000572)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.281 (HIGH), V = 9.286 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.790 (HIGH), H = 7.363 (HIGH), K = 7.270 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.313 (HIGH), V = 6.286 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.958 (HIGH), H = 6.850 (HIGH), K = 6.922 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.313, V=6.286, R=0.000, I=0.000, J=6.958, H=6.850, K=6.922
+sclsvrServer -    alx - Test  - Diameters BV=0.185(0.015), VR=0.000(0.000), VK=0.084(0.006), IJ=0.000(0.000), IK=0.000(0.000), JH=0.170(0.016), JK=0.140(0.011), HK=0.085(0.011)
+sclsvrServer -    alx - Test  - Mean diameter = 0.120(0.024) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4501817' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273471'
+sclsvrServer - sclsvr - Test  - parallax -56.20(38.40) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K5' - Our spectral type = 'K5.0' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - Type of star = DWARF (by default as no Luminosity Class provided)
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.363350 / -0.769692 radians - -35.794 / 249.412 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.641, H = 8.017, K = 7.942
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.643, H = 8.023, K = 7.918
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.793 (HIGH), V = 10.777 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.641 (HIGH), H = 8.017 (HIGH), K = 7.942 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.793 (HIGH), V = 10.777 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.641 (HIGH), H = 8.017 (HIGH), K = 7.942 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=11.793, V=10.777, R=0.000, I=0.000, J=8.641, H=8.017, K=7.942
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.623815 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.698864 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.104(0.008), VR=0.000(0.000), VK=0.134(0.009), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.122(0.016)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273471' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4601721'
+sclsvrServer - sclsvr - Test  - parallax -9.10(16.10) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.358148 / -0.802262 radians - -36.136 / 251.693 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.353, H = 7.879, K = 7.761
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.349, H = 7.886, K = 7.737
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.913 (HIGH), V = 9.937 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.353 (HIGH), H = 7.879 (HIGH), K = 7.761 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.913 (HIGH), V = 9.937 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.353 (HIGH), H = 7.879 (HIGH), K = 7.761 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.913, V=9.937, R=0.000, I=0.000, J=8.353, H=7.879, K=7.761
+sclsvrServer -    alx - Test  - Diameters BV=0.144(0.012), VR=0.000(0.000), VK=0.138(0.009), IJ=0.000(0.000), IK=0.000(0.000), JH=0.132(0.013), JK=0.139(0.011), HK=0.150(0.020)
+sclsvrServer -    alx - Test  - Mean diameter = 0.140(0.028) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.139 (0.011) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998792 (0.000198), 0.997586 (0.000396)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.913 (HIGH), V = 9.937 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.353 (HIGH), H = 7.879 (HIGH), K = 7.761 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.945 (HIGH), V = 6.937 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.521 (HIGH), H = 7.366 (HIGH), K = 7.413 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.945, V=6.937, R=0.000, I=0.000, J=7.521, H=7.366, K=7.413
+sclsvrServer -    alx - Test  - Diameters BV=0.131(0.011), VR=0.000(0.000), VK=0.073(0.005), IJ=0.000(0.000), IK=0.000(0.000), JH=0.141(0.013), JK=0.122(0.010), HK=0.084(0.011)
+sclsvrServer -    alx - Test  - Mean diameter = 0.105(0.021) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4601721' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273570'
+sclsvrServer - sclsvr - Test  - parallax 3.20(19.00) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.378240 / -0.775147 radians - -35.212 / 249.860 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.205, H = 7.715, K = 7.594
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.202, H = 7.722, K = 7.570
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.977 (HIGH), V = 9.920 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.205 (HIGH), H = 7.715 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.977 (HIGH), V = 9.920 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.205 (HIGH), H = 7.715 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.977, V=9.920, R=0.000, I=0.000, J=8.205, H=7.715, K=7.594
+sclsvrServer -    alx - Test  - Diameters BV=0.164(0.013), VR=0.000(0.000), VK=0.151(0.010), IJ=0.000(0.000), IK=0.000(0.000), JH=0.144(0.014), JK=0.151(0.012), HK=0.163(0.022)
+sclsvrServer -    alx - Test  - Mean diameter = 0.152(0.030) - isValid = 1 - HIGH - from 4 diameters
+sclsvrServer -    alx - Test  - Diam = 0.151 (0.012) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998558 (0.000236), 0.997118 (0.000472)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.977 (HIGH), V = 9.920 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.205 (HIGH), H = 7.715 (HIGH), K = 7.594 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.009 (HIGH), V = 6.920 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.373 (HIGH), H = 7.202 (HIGH), K = 7.246 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=7.009, V=6.920, R=0.000, I=0.000, J=7.373, H=7.202, K=7.246
+sclsvrServer -    alx - Test  - Diameters BV=0.157(0.013), VR=0.000(0.000), VK=0.087(0.006), IJ=0.000(0.000), IK=0.000(0.000), JH=0.154(0.015), JK=0.134(0.011), HK=0.092(0.012)
+sclsvrServer -    alx - Test  - Mean diameter = 0.117(0.023) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273570' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4401903'
+sclsvrServer - sclsvr - Test  - parallax -9.80(10.50) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.353975 / -0.769394 radians - -36.177 / 249.352 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.112600; computed fnu_12 = 0.056437, fnu_18 = 0.025916
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.094571
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.442, H = 6.939, K = 6.839
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.439, H = 6.946, K = 6.815
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.159 (HIGH), V = 9.088 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.442 (HIGH), H = 6.939 (HIGH), K = 6.839 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.159 (HIGH), V = 9.088 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.442 (HIGH), H = 6.939 (HIGH), K = 6.839 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.159, V=9.088, R=0.000, I=0.000, J=7.442, H=6.939, K=6.839
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.502830 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.246(0.020), VR=0.000(0.000), VK=0.212(0.015), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.213(0.018), HK=0.219(0.029)
+sclsvrServer -    alx - Test  - Mean diameter = 0.215(0.043) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.213 (0.018) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.997138 (0.000469), 0.994285 (0.000935)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.159 (HIGH), V = 9.088 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.442 (HIGH), H = 6.939 (HIGH), K = 6.839 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.191 (HIGH), V = 6.088 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.610 (HIGH), H = 6.426 (HIGH), K = 6.491 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.191, V=6.088, R=0.000, I=0.000, J=6.610, H=6.426, K=6.491
+sclsvrServer -    alx - Test  - Diameters BV=0.236(0.019), VR=0.000(0.000), VK=0.117(0.008), IJ=0.000(0.000), IK=0.000(0.000), JH=0.221(0.021), JK=0.189(0.015), HK=0.111(0.015)
+sclsvrServer -    alx - Test  - Mean diameter = 0.160(0.032) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4401903' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273560'
+sclsvrServer - sclsvr - Test  - parallax -0.50(25.29) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.374561 / -0.772342 radians - -35.348 / 249.647 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.641, H = 8.083, K = 7.991
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.640, H = 8.089, K = 7.967
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.420 (HIGH), V = 10.354 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.641 (HIGH), H = 8.083 (HIGH), K = 7.991 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 11.420 (HIGH), V = 10.354 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.641 (HIGH), H = 8.083 (HIGH), K = 7.991 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=11.420, V=10.354, R=0.000, I=0.000, J=8.641, H=8.083, K=7.991
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.558003 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.136(0.011), VR=0.000(0.000), VK=0.126(0.009), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.129(0.011), HK=0.125(0.017)
+sclsvrServer -    alx - Test  - Mean diameter = 0.127(0.025) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.129 (0.011) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998948 (0.000173), 0.997896 (0.000345)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 11.420 (HIGH), V = 10.354 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.641 (HIGH), H = 8.083 (HIGH), K = 7.991 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.452 (HIGH), V = 7.354 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.808 (HIGH), H = 7.570 (HIGH), K = 7.643 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=7.452, V=7.354, R=0.000, I=0.000, J=7.808, H=7.570, K=7.643
+sclsvrServer -    alx - Test  - Diameters BV=0.131(0.010), VR=0.000(0.000), VK=0.074(0.005), IJ=0.000(0.000), IK=0.000(0.000), JH=0.135(0.013), JK=0.116(0.009), HK=0.061(0.008)
+sclsvrServer -    alx - Test  - Mean diameter = 0.096(0.019) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273560' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'DM -4401877'
+sclsvrServer - sclsvr - Test  - parallax 32.00(14.80) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G5' - Our spectral type = 'G5.0' : Code = 'G', Sub-type Quantity = '5.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'G5' - Our spectral type = 'G5.0(I)' : updated Luminosity Class = 'I'
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.343601 / -0.772186 radians - -36.614 / 249.511 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.107600; computed fnu_12 = 0.053718, fnu_18 = 0.024619
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 7.148181
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.632, H = 7.058, K = 6.932
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.634, H = 7.065, K = 6.908
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.604 (HIGH), V = 9.486 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.632 (HIGH), H = 7.058 (HIGH), K = 6.932 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.604 (HIGH), V = 9.486 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.632 (HIGH), H = 7.058 (HIGH), K = 6.932 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.604, V=9.486, R=0.000, I=0.000, J=7.632, H=7.058, K=6.932
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.574080 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.699811 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.220(0.018), VR=0.000(0.000), VK=0.209(0.014), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.224(0.030)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'DM -4401877' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273182'
+sclsvrServer - sclsvr - Test  - parallax 27.60(16.10) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(III)' : updated Luminosity Class = 'III'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.360137 / -0.767607 radians - -35.916 / 249.251 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no 9 mu or 18 mu flux available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.052, H = 7.520, K = 7.451
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.049, H = 7.526, K = 7.427
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.750 (HIGH), V = 9.755 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.052 (HIGH), H = 7.520 (HIGH), K = 7.451 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.750 (HIGH), V = 9.755 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.052 (HIGH), H = 7.520 (HIGH), K = 7.451 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.750, V=9.755, R=0.000, I=0.000, J=8.052, H=7.520, K=7.451
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.532125 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.161(0.013), VR=0.000(0.000), VK=0.161(0.011), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.161(0.013), HK=0.150(0.020)
+sclsvrServer -    alx - Test  - Mean diameter = 0.157(0.031) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 0.161 (0.013) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.998375 (0.000266), 0.996752 (0.000532)
+sclsvrServer - sclsvr - Test  - Computing diameter with absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.750 (HIGH), V = 9.755 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 8.052 (HIGH), H = 7.520 (HIGH), K = 7.451 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.782 (HIGH), V = 6.755 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.220 (HIGH), H = 7.007 (HIGH), K = 7.103 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=3.00
+sclsvrServer -    alx - Test  - Compute diameters with B=6.782, V=6.755, R=0.000, I=0.000, J=7.220, H=7.007, K=7.103
+sclsvrServer -    alx - Test  - Diameters BV=0.149(0.012), VR=0.000(0.000), VK=0.092(0.006), IJ=0.000(0.000), IK=0.000(0.000), JH=0.173(0.017), JK=0.142(0.012), HK=0.063(0.008)
+sclsvrServer -    alx - Test  - Mean diameter = 0.117(0.023) - isValid = 0 - NO - from 4 diameters
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273182' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33115'
+sclsvrServer - sclsvr - Test  - parallax 3.49(0.66) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' - Our spectral type = 'G8.0III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.334730 / -0.781539 radians - -37.010 / 250.151 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.412400; computed fnu_12 = 0.206269, fnu_18 = 0.094619
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 5.687389
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 5.980, H = 5.578, K = 5.438
+sclsvrServer -    alx - Test  - GLon/dist/Av = 250.151 / 0.287 / 0.092
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 8.519 (HIGH), V = 7.556 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 5.980 (HIGH), H = 5.578 (HIGH), K = 5.438 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.398 (HIGH), V = 7.464 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 5.954 (HIGH), H = 5.563 (HIGH), K = 5.427 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.09
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 8.398 (HIGH), V = 7.464 (HIGH), R = 6.719 (HIGH), I = 6.649 (HIGH), J = 5.954 (HIGH), H = 5.563 (HIGH), K = 5.427 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 8.519, V = 7.556, R = 6.788, I = 6.696, J = 6.209, H = 5.578, K = 5.438, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 5.973, H = 5.586, K = 5.414
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 8.519 (HIGH), V = 7.556 (HIGH), R = 6.788 (HIGH), I = 6.696 (HIGH), J = 5.980 (HIGH), H = 5.578 (HIGH), K = 5.438 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 8.398 (HIGH), V = 7.464 (HIGH), R = 6.719 (HIGH), I = 6.649 (HIGH), J = 5.954 (HIGH), H = 5.563 (HIGH), K = 5.427 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.09
+sclsvrServer -    alx - Test  - Compute diameters with B=8.398, V=7.464, R=6.719, I=6.649, J=5.954, H=5.563, K=5.427
+sclsvrServer -    alx - Test  - Diameters BV=0.422(0.034), VR=0.470(0.046), VK=0.398(0.027), IJ=0.393(0.030), IK=0.394(0.024), JH=0.363(0.035), JK=0.391(0.032), HK=0.457(0.061)
+sclsvrServer -    alx - Test  - Mean diameter = 0.399(0.080) - isValid = 1 - HIGH - from 6 diameters
+sclsvrServer -    alx - Test  - Diam = 0.391 (0.032) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.990406 (0.001568), 0.980903 (0.003107)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.397593', Teff = '4800.000000', LogG = '2.228000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.358287, B = 0.361972, V = 0.367808, R = 0.373465, I = 0.377883, J = 0.383228, H = 0.386173, K = 0.388050, L = 0.392026, N = 0.394984
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 273669'
+sclsvrServer - sclsvr - Test  - parallax -19.20(19.10) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0' - Our spectral type = 'K0.0' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = '', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = DWARF
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - alxCorrectSpectralType: spectral type = 'K0' - Our spectral type = 'K0.0(I)' : updated Luminosity Class = 'I'
+sclsvrServer -    alx - Test  - Type of star = SUPER GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.380776 / -0.797370 radians - -35.216 / 251.423 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.134700; computed fnu_12 = 0.067629, fnu_18 = 0.031083
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.898148
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 7.496, H = 6.832, K = 6.680
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 7.505, H = 6.840, K = 6.656
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 10.963 (HIGH), V = 9.666 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.496 (HIGH), H = 6.832 (HIGH), K = 6.680 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 10.963 (HIGH), V = 9.666 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 7.496 (HIGH), H = 6.832 (HIGH), K = 6.680 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=10.963, V=9.666, R=0.000, I=0.000, J=7.496, H=6.832, K=6.680
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.664241 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.816288 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.269(0.022), VR=0.000(0.000), VK=0.244(0.017), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.265(0.035)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star 'HD 273669' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 33921'
+sclsvrServer - sclsvr - Test  - parallax 4.32(0.73) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' - Our spectral type = 'K0.0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.359094 / -0.767016 radians - -35.956 / 249.205 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 0.276000; computed fnu_12 = 0.138335, fnu_18 = 0.063524
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 6.121145
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 6.478, H = 5.943, K = 5.865
+sclsvrServer -    alx - Test  - GLon/dist/Av = 249.205 / 0.231 / 0.089
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 9.315 (HIGH), V = 8.232 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.478 (HIGH), H = 5.943 (HIGH), K = 5.865 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.197 (HIGH), V = 8.143 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 6.453 (HIGH), H = 5.928 (HIGH), K = 5.855 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.09
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (faint): B = 9.197 (HIGH), V = 8.143 (HIGH), R = 7.339 (HIGH), I = 7.226 (HIGH), J = 6.453 (HIGH), H = 5.928 (HIGH), K = 5.855 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 9.315, V = 8.232, R = 7.406, I = 7.271, J = 6.700, H = 5.943, K = 5.865, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 6.475, H = 5.949, K = 5.841
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 9.315 (HIGH), V = 8.232 (HIGH), R = 7.406 (HIGH), I = 7.271 (HIGH), J = 6.478 (HIGH), H = 5.943 (HIGH), K = 5.865 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 9.197 (HIGH), V = 8.143 (HIGH), R = 7.339 (HIGH), I = 7.226 (HIGH), J = 6.453 (HIGH), H = 5.928 (HIGH), K = 5.855 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.09
+sclsvrServer -    alx - Test  - Compute diameters with B=9.197, V=8.143, R=7.339, I=7.226, J=6.453, H=5.928, K=5.855
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.525255 < 0.500000
+sclsvrServer -    alx - Test  - Diameters BV=0.370(0.030), VR=0.384(0.037), VK=0.334(0.023), IJ=0.332(0.026), IK=0.337(0.020), JH=0.000(0.000), JK=0.335(0.027), HK=0.316(0.042)
+sclsvrServer -    alx - Test  - Mean diameter = 0.331(0.066) - isValid = 1 - HIGH - from 5 diameters
+sclsvrServer -    alx - Test  - Diam = 0.335 (0.027) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.992967 (0.001151), 0.985984 (0.002285)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '0.334426', Teff = '4660.000000', LogG = '2.078000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 0.301364, B = 0.304464, V = 0.309372, R = 0.314131, I = 0.317847, J = 0.322342, H = 0.324820, K = 0.326399, L = 0.329743, N = 0.332231
+sclsvrServer - sclsvr - Test  - ----- Complete: star '2MASS 05084435-4530078'
+sclsvrServer - sclsvr - Test  - Spectral Type - Skipping (no SpType available).
+sclsvrServer - sclsvr - Test  - Teff and LogG - Skipping (SpType unknown).
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = 1.347122 / -0.794163 radians - -36.550 / 251.087 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: Skipping (no Teff available).
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 8.672, H = 7.984, K = 7.752
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 8.686, H = 7.994, K = 7.728
+sclsvrServer - sclsvr - Test  - Computing diameter without absorption...
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 0.000 (NO), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 8.672 (HIGH), H = 7.984 (HIGH), K = 7.752 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 0.000 (NO), V = 0.000 (NO), R = 0.000 (NO), I = 0.000 (NO), J = 8.672 (HIGH), H = 7.984 (HIGH), K = 7.752 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=0.000, V=0.000, R=0.000, I=0.000, J=8.672, H=7.984, K=7.752
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.687539 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.919508 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=0.000(0.000), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=0.177(0.024)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (1 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown JK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - star '2MASS 05084435-4530078' - visibilities computed with/without interstellar absorption are not compatible
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer -   vobs - Info  - Sort: start
+sclsvrServer -   vobs - Info  - Sort: done.
+sclsvrServer - sclsvr - Test  - Complete(): done [32 stars]
+sclsvrServer -   vobs - Test  - GetVotable: size = 215032 bytes / capacity = 229592 bytes
