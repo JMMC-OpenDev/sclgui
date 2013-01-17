@@ -1,0 +1,724 @@
+ Helgrind, a thread error detector
+ Copyright (C) 2007-2009, and GNU GPL'd, by OpenWorks LLP et al.
+ Using Valgrind-3.5.0 and LibVEX; rerun with -h for copyright info
+ Command: sclwsServer -l 0 -v 3
+ Parent PID: 10778
+ 
+ 
+ Valgrind options:
+    -v
+    --num-callers=12
+    --suppressions=./custom_suppressions.txt
+    --tool=helgrind
+    --read-var-info=yes
+    --log-file=./vg_threadcheck.log
+ Contents of /proc/version:
+   Linux version 2.6.32-7-pve (root@oahu) (gcc version 4.3.2 (Debian 4.3.2-1.1) ) #1 SMP Mon Feb 13 07:33:21 CET 2012
+ Arch and hwcaps: AMD64, amd64-sse3-cx16
+ Page sizes: currently 4096, max supported 4096
+ Valgrind library directory: /usr/lib64/valgrind
+ Reading syms from /home/users/bourgesl/dev/SCALIB/DEVELOPMENT/sclws/bin/sclwsServer (0x400000)
+ warning: addVar: unknown size (cliHandler)
+ Reading syms from /lib64/ld-2.5.so (0x4000000)
+ Reading syms from /usr/lib64/valgrind/helgrind-amd64-linux (0x38000000)
+    object doesn't have a dynamic symbol table
+ Reading suppressions file: ./custom_suppressions.txt
+ Reading suppressions file: /usr/lib64/valgrind/default.supp
+ Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so (0x4a1d000)
+ Reading syms from /usr/lib64/valgrind/vgpreload_helgrind-amd64-linux.so (0x4c1e000)
+ REDIR: 0x4014370 (index) redirected to 0x4c24c8b (index)
+ REDIR: 0x4014520 (strcmp) redirected to 0x4c24d98 (strcmp)
+ REDIR: 0x4014550 (strlen) redirected to 0x4c24cf9 (strlen)
+ Reading syms from /usr/lib64/libgdome.so.0.8.1 (0x4e29000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libm-2.5.so (0x5067000)
+ Reading syms from /usr/lib64/libxml2.so.2.6.26 (0x52ea000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libglib-2.0.so.0.1200.3 (0x5627000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libpthread-2.5.so (0x58c5000)
+ Reading syms from /usr/lib64/libstdc++.so.6.0.8 (0x5ae0000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libuuid.so.1.2 (0x5de0000)
+    object doesn't have a symbol table
+ Reading syms from /home/users/bourgesl/dev/SCALIB/DEVELOPMENT/sclws/lib/libsclws.so (0x5fe4000)
+ warning: addVar: unknown size (dynBuf)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsclsvr.so (0x61fe000)
+ warning: addVar: unknown size (star)
+ warning: addVar: unknown size (star)
+ warning: addVar: unknown size (properties)
+ warning: addVar: unknown size (propIsRaDec)
+ warning: addVar: unknown size (propIsWaveLength)
+ warning: addVar: unknown size (propIsFlux)
+ warning: addVar: unknown size (cData)
+ warning: addVar: unknown size (calibrator)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libvobs.so (0x642b000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libalx.so (0x6672000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsimcli.so (0x68a0000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libthrd.so (0x6aa8000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmcs.so (0x6cac000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liblog.so (0x6eae000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/liberr.so (0x70b2000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisc.so (0x72b8000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libtimlog.so (0x74c0000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libfnd.so (0x76c2000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmisco.so (0x78c4000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libenv.so (0x7acb000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libcmd.so (0x7cd0000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libmsg.so (0x7ede000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libsdb.so (0x80ee000)
+ Reading syms from /home/users/bourgesl/INTROOT/lib/libevh.so (0x82f1000)
+ Reading syms from /home/MCS/DEVELOPMENT/lib/libgwt.so (0x850d000)
+ Reading syms from /lib64/libgcc_s-4.1.2-20080825.so.1 (0x8736000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/libc-2.5.so (0x8944000)
+ Reading syms from /lib64/libdl-2.5.so (0x8c9b000)
+ Reading syms from /usr/lib64/libz.so.1.2.3 (0x8e9f000)
+    object doesn't have a symbol table
+ Reading syms from /lib64/librt-2.5.so (0x90b3000)
+ REDIR: 0x89c00f0 (memcpy) redirected to 0x4c24e3c (memcpy)
+ REDIR: 0x89bd2d0 (index) redirected to 0x4c24bc9 (index)
+ REDIR: 0x89bda00 (strlen) redirected to 0x4c24cbb (strlen)
+ REDIR: 0x89b8890 (calloc) redirected to 0x4c20942 (calloc)
+ REDIR: 0x5b9d1c0 (operator new(unsigned long)) redirected to 0x4c21e9a (operator new(unsigned long))
+ REDIR: 0x5b9bf50 (operator delete(void*)) redirected to 0x4c20f6c (operator delete(void*))
+ REDIR: 0x89b5a40 (mallopt) redirected to 0x4c20440 (mallopt)
+ REDIR: 0x58cdca0 (pthread_mutex_lock) redirected to 0x4c226c2 (pthread_mutex_lock)
+ REDIR: 0x89bd4c0 (strcpy) redirected to 0x4c24d18 (strcpy)
+ REDIR: 0x58cf020 (pthread_mutex_unlock) redirected to 0x4c22b66 (pthread_mutex_unlock)
+ REDIR: 0x89b8c70 (malloc) redirected to 0x4c2164a (malloc)
+ REDIR: 0x58cd5b0 (pthread_mutex_init) redirected to 0x4c25ff1 (pthread_mutex_init)
+ REDIR: 0xffffffffff600000 (???) redirected to 0x3802e3b3 (vgPlain_amd64_linux_REDIR_FOR_vgettimeofday)
+ REDIR: 0x89b6720 (free) redirected to 0x4c2125a (free)
+ REDIR: 0x89bd480 (strcmp) redirected to 0x4c24d46 (strcmp)
+ REDIR: 0x58cb9a0 (pthread_create@@GLIBC_2.2.5) redirected to 0x4c262a5 (pthread_create@*)
+ REDIR: 0x89b5420 (malloc_trim) redirected to 0x4c2044b (malloc_trim)
+ REDIR: 0x89b5000 (malloc_stats) redirected to 0x4c20456 (malloc_stats)
+ REDIR: 0x58cca10 (pthread_join) redirected to 0x4c22431 (pthread_join)
+ REDIR: 0x89b9190 (realloc) redirected to 0x4c216fb (realloc)
+ REDIR: 0x58cd740 (pthread_mutex_destroy) redirected to 0x4c2257a (pthread_mutex_destroy)
+ REDIR: 0x5b9d2f0 (operator new[](unsigned long)) redirected to 0x4c21af6 (operator new[](unsigned long))
+ REDIR: 0x5b9bf90 (operator delete[](void*)) redirected to 0x4c20be8 (operator delete[](void*))
+ Thread #8 was created
+    at 0x8A17F2E: clone (in /lib64/libc-2.5.so)
+    by 0x58CBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
+    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
+    by 0x404BB4: main (sclwsServer.cpp:788)
+ 
+ Thread #6 was created
+    at 0x8A17F2E: clone (in /lib64/libc-2.5.so)
+    by 0x58CBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
+    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
+    by 0x404BB4: main (sclwsServer.cpp:788)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD38C7: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:107)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+    by 0x8A17F6C: clone (in /lib64/libc-2.5.so)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD601E: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1393)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9951: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:677)
+    by 0x7CD9DC0: cmdPARAM::SetDefaultValue(std::string) (cmdPARAM.cpp:456)
+    by 0x7CD611F: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1403)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9617: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:602)
+    by 0x7CD9F6D: cmdPARAM::SetUserValue(std::string) (cmdPARAM.cpp:322)
+    by 0x7CD4B3F: cmdCOMMAND::ParseTupleParam(std::string) (cmdCOMMAND.cpp:1727)
+    by 0x7CD4E86: cmdCOMMAND::ParseParams() (cmdCOMMAND.cpp:1625)
+    by 0x7CD3926: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:120)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9951: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:677)
+    by 0x7CD9F6D: cmdPARAM::SetUserValue(std::string) (cmdPARAM.cpp:322)
+    by 0x7CD4B3F: cmdCOMMAND::ParseTupleParam(std::string) (cmdCOMMAND.cpp:1727)
+    by 0x7CD4E86: cmdCOMMAND::ParseParams() (cmdCOMMAND.cpp:1625)
+    by 0x7CD3926: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:120)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD93FE: cmdPARAM::HasDefaultValue() (cmdPARAM.cpp:339)
+    by 0x7CD458D: cmdCOMMAND::CheckParams() (cmdCOMMAND.cpp:1753)
+    by 0x7CD3967: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:127)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9617: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:602)
+    by 0x7CD9F6D: cmdPARAM::SetUserValue(std::string) (cmdPARAM.cpp:322)
+    by 0x6216AB5: sclsvrREQUEST::SetSearchBand(char const*) (sclsvrREQUEST.cpp:295)
+    by 0x62173EC: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:219)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Thread #13 was created
+    at 0x8A17F2E: clone (in /lib64/libc-2.5.so)
+    by 0x58CBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
+    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
+    by 0x404BB4: main (sclwsServer.cpp:788)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #13
+    at 0x5B7C23B: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x5B7CB44: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x5B7CD5E: std::string::append(char const*, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x7CD3B82: cmdCOMMAND::CmdGetNodeContent(_GdomeElement*, std::string, std::string&, mcsLOGICAL) (basic_string.h:822)
+    by 0x7CD530F: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1206)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+  This conflicts with a previous write of size 8 by thread #8
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #13
+    at 0x7CD60EE: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1401)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+  This conflicts with a previous write of size 8 by thread #8
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Thread #47 was created
+    at 0x8A17F2E: clone (in /lib64/libc-2.5.so)
+    by 0x58CBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
+    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
+    by 0x404BB4: main (sclwsServer.cpp:788)
+ 
+ Thread #51 was created
+    at 0x8A17F2E: clone (in /lib64/libc-2.5.so)
+    by 0x58CBD87: pthread_create@@GLIBC_2.2.5 (in /lib64/libpthread-2.5.so)
+    by 0x4C26206: pthread_create_WRK (hg_intercepts.c:229)
+    by 0x4C262AD: pthread_create@* (hg_intercepts.c:256)
+    by 0x404BB4: main (sclwsServer.cpp:788)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #47
+    at 0x645C79C: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:591)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+    by 0x8A17F6C: clone (in /lib64/libc-2.5.so)
+  This conflicts with a previous write of size 8 by thread #51
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #51
+    at 0x5B7CB28: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x621BB30: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:369)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+    by 0x8A17F6C: clone (in /lib64/libc-2.5.so)
+  This conflicts with a previous write of size 8 by thread #47
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #51
+    at 0x5B7CF81: std::string::append(std::string const&) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x7CD8180: cmdCOMMAND::AppendParamsToVOTable(std::string&) (cmdCOMMAND.cpp:382)
+    by 0x62161B1: sclsvrREQUEST::AppendParamsToVOTable(std::string&) (sclsvrREQUEST.cpp:520)
+    by 0x621BB40: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:370)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+  This conflicts with a previous write of size 8 by thread #47
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ ERROR SUMMARY: 28 errors from 12 contexts (suppressed: 7846780 from 3166)
+ 
+ 1 errors in context 1 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #51
+    at 0x5B7CF81: std::string::append(std::string const&) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x7CD8180: cmdCOMMAND::AppendParamsToVOTable(std::string&) (cmdCOMMAND.cpp:382)
+    by 0x62161B1: sclsvrREQUEST::AppendParamsToVOTable(std::string&) (sclsvrREQUEST.cpp:520)
+    by 0x621BB40: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:370)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+  This conflicts with a previous write of size 8 by thread #47
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 1 errors in context 2 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9617: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:602)
+    by 0x7CD9F6D: cmdPARAM::SetUserValue(std::string) (cmdPARAM.cpp:322)
+    by 0x6216AB5: sclsvrREQUEST::SetSearchBand(char const*) (sclsvrREQUEST.cpp:295)
+    by 0x62173EC: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:219)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 1 errors in context 3 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD93FE: cmdPARAM::HasDefaultValue() (cmdPARAM.cpp:339)
+    by 0x7CD458D: cmdCOMMAND::CheckParams() (cmdCOMMAND.cpp:1753)
+    by 0x7CD3967: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:127)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 1 errors in context 4 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9951: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:677)
+    by 0x7CD9F6D: cmdPARAM::SetUserValue(std::string) (cmdPARAM.cpp:322)
+    by 0x7CD4B3F: cmdCOMMAND::ParseTupleParam(std::string) (cmdCOMMAND.cpp:1727)
+    by 0x7CD4E86: cmdCOMMAND::ParseParams() (cmdCOMMAND.cpp:1625)
+    by 0x7CD3926: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:120)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 1 errors in context 5 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9951: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:677)
+    by 0x7CD9DC0: cmdPARAM::SetDefaultValue(std::string) (cmdPARAM.cpp:456)
+    by 0x7CD611F: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1403)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 1 errors in context 6 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD601E: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1393)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 2 errors in context 7 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #47
+    at 0x645C79C: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:591)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+    by 0x8A17F6C: clone (in /lib64/libc-2.5.so)
+  This conflicts with a previous write of size 8 by thread #51
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 2 errors in context 8 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #13
+    at 0x5B7C23B: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x5B7CB44: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x5B7CD5E: std::string::append(char const*, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x7CD3B82: cmdCOMMAND::CmdGetNodeContent(_GdomeElement*, std::string, std::string&, mcsLOGICAL) (basic_string.h:822)
+    by 0x7CD530F: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1206)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+  This conflicts with a previous write of size 8 by thread #8
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 3 errors in context 9 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #13
+    at 0x7CD60EE: cmdCOMMAND::ParseCdfForParam(_GdomeElement*) (cmdCOMMAND.cpp:1401)
+    by 0x7CD33A4: cmdCOMMAND::ParseCdfForParameters(_GdomeElement*) (cmdCOMMAND.cpp:1147)
+    by 0x7CD3788: cmdCOMMAND::ParseCdf() (cmdCOMMAND.cpp:957)
+    by 0x7CD38E5: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:113)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+  This conflicts with a previous write of size 8 by thread #8
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 4 errors in context 10 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD38C7: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:107)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+    by 0x8A17F6C: clone (in /lib64/libc-2.5.so)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 4 errors in context 11 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #51
+    at 0x5B7CB28: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x621BB30: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:369)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+    by 0x404E3D: sclwsJobHandler(void*) (sclwsServer.cpp:447)
+    by 0x4C26330: mythread_wrapper (hg_intercepts.c:201)
+    by 0x58CB73C: start_thread (in /lib64/libpthread-2.5.so)
+    by 0x8A17F6C: clone (in /lib64/libc-2.5.so)
+  This conflicts with a previous write of size 8 by thread #47
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ 7 errors in context 12 of 12:
+ Possible data race during read of size 8 at 0x5dcfe00 by thread #8
+    at 0x7CD9617: cmdPARAM::CheckValueRange(std::string) (cmdPARAM.cpp:602)
+    by 0x7CD9F6D: cmdPARAM::SetUserValue(std::string) (cmdPARAM.cpp:322)
+    by 0x7CD4B3F: cmdCOMMAND::ParseTupleParam(std::string) (cmdCOMMAND.cpp:1727)
+    by 0x7CD4E86: cmdCOMMAND::ParseParams() (cmdCOMMAND.cpp:1625)
+    by 0x7CD3926: cmdCOMMAND::Parse(std::string) (cmdCOMMAND.cpp:120)
+    by 0x6216EC5: sclsvrREQUEST::Parse(char const*) (sclsvrREQUEST.cpp:88)
+    by 0x621B4C2: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:181)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+    by 0x5FF8411: soap_serve(soap*) (soapServer.cpp:49)
+  This conflicts with a previous write of size 8 by thread #6
+    at 0x5B7D156: std::string::_M_mutate(unsigned long, unsigned long, unsigned long) (in /usr/lib64/libstdc++.so.6.0.8)
+    by 0x645C7B0: vobsSCENARIO::Execute(vobsSTAR_LIST&) (basic_string.h:664)
+    by 0x645A7B7: vobsVIRTUAL_OBSERVATORY::Search(vobsSCENARIO*, vobsSTAR_LIST&) (vobsVIRTUAL_OBSERVATORY.cpp:111)
+    by 0x621B776: sclsvrSERVER::ProcessGetCalCmd(char const*, miscoDYN_BUF*, msgMESSAGE*) (sclsvrGetCalCB.cpp:311)
+    by 0x621B227: sclsvrSERVER::GetCal(char const*, miscoDYN_BUF*) (sclsvrGetCalCB.cpp:148)
+    by 0x5FEE28E: ns__GetCalSearchCal(soap*, char*, char*, char**) (sclwsWS.cpp:521)
+    by 0x5FF80CF: soap_serve_ns__GetCalSearchCal(soap*) (soapServer.cpp:147)
+    by 0x5FF832A: soap_serve_request(soap*) (soapServer.cpp:79)
+ 
+ 
+ used_suppression:  41552 helgrind-glibc2X-005
+ used_suppression: 7794480 helgrind-glibc2X-004
+ used_suppression:     29 std_basic_string__ignore
+ used_suppression:     12 std_string_M_replace_safe__ignore
+ used_suppression:      3 std_string_assign__ignore
+ used_suppression:    191 helgrind-glibc2X-112
+ used_suppression:     48 std_string_append__ignore
+ used_suppression:    703 helgrind-glibc2X-102
+ used_suppression:   9762 helgrind-glibc2X-101
+ 
+ ERROR SUMMARY: 28 errors from 12 contexts (suppressed: 7846780 from 3166)
