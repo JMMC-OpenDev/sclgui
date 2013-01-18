@@ -10,7 +10,6 @@ import java.awt.Frame;
 import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JList;
-import org.apache.commons.lang.SystemUtils;
 import org.fest.assertions.Fail;
 import org.fest.swing.annotation.GUITest;
 import org.fest.swing.core.GenericTypeMatcher;
