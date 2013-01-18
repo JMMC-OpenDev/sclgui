@@ -44,9 +44,9 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
     private Preferences _preferences = null;
     /** The name of preference that must be managed as ordered columns. */
     private String _preferencePath = null;
-    /** The widget that dispaly the list of columns */
+    /** The widget that display the list of columns */
     private JList _columnList = null;
-    /** The model associated to the widget that dispaly the list of columns */
+    /** The model associated to the widget that display the list of columns */
     private DefaultListModel _listModel = null;
     /** The actual shown list of columns */
     private String _shownColumns = "";
@@ -54,7 +54,7 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
     JComboBox _columnsSetCombobox = null;
     /** The column sets combo box model */
     private DefaultComboBoxModel _columsSetModel = null;
-    /** The column sets combo box names to path correspondance table */
+    /** The column sets combo box names to path matching table */
     private HashMap<String, String> _columnSetNameToPathHashtable = null;
     /** Move up Button */
     private JButton _moveUpButton = null;
