@@ -4,6 +4,7 @@
 package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
@@ -384,10 +385,7 @@ public final class SearchCalDiffTool extends App {
      */
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public static void main(final String[] args) {
-        // init swing application for science
-        SwingSettings.setup();
-
-        new SearchCalDiffTool(args);
+        Bootstrapper.launch(new SearchCalDiffTool(args));
     }
 
     /**
@@ -542,18 +540,6 @@ public final class SearchCalDiffTool extends App {
 
             // Show the user the app is ready to be used
             StatusBar.show("application ready.");
-
-            // previous adapter manages the windowClosing(event) :
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-            // Properly quit the application when main window close button is clicked
-            addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(final WindowEvent e) {
-                    // callback on exit :
-                    App.quit();
-                }
-            });
         }
 
         /**

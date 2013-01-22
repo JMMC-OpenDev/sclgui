@@ -4,9 +4,9 @@
 package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.component.StatusBar;
-import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampMessageHandler;
@@ -223,12 +223,8 @@ public final class SearchCal extends App {
      *
      * @param args command line arguments (open file ...)
      */
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public static void main(final String[] args) {
-        // init swing application for science
-        SwingSettings.setup();
-
-        new SearchCal(args);
+        Bootstrapper.launch(new SearchCal(args));
     }
 }
 /*___oOo___*/

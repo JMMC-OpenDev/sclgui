@@ -5,7 +5,6 @@ package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
-import fr.jmmc.jmcs.gui.action.internal.InternalActionFactory;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.filter.FiltersView;
@@ -14,8 +13,6 @@ import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -44,9 +41,9 @@ public final class MainWindow extends JFrame {
     /** Filters view */
     public final FiltersView _filtersView;
     /** Page Setup... action */
-    public final PageSetupAction _pageSetupAction;
+    public final RegisteredAction _pageSetupAction;
     /** Print... action */
-    public final PrintAction _printAction;
+    public final RegisteredAction _printAction;
     /** Printer job */
     private PrinterJob _printJob = null;
     /** PAge format */
@@ -102,25 +99,12 @@ public final class MainWindow extends JFrame {
 
         // Show the user the app is ready to be used
         StatusBar.show("application ready.");
-
-
-        // previous adapter manages the windowClosing(event) :
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        // Properly quit the application when main window close button is clicked
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                // Callback on exit
-                App.quit();
-            }
-        });
     }
 
     /**
-     * Called during action execution to check that global variables are properly inited.
-     * Do no perform this printing init during programm init because
-     * one broken printing system can throw long timeout and freeze the application.
+     * Called during action execution to check that global variables are properly initialized.
+     * @warning Do not perform this printing initialization during program initialization,
+     * because a broken printing system can cause long timeout and freeze the application.
      */
     private void initPrinting() {
         if (_printJob == null) {
