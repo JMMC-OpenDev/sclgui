@@ -31,9 +31,9 @@ import fr.jmmc.jmcs.gui.task.TaskSwingWorker;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.NumberUtils;
+import fr.jmmc.jmcs.util.ResourceUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.jmcs.util.XmlFactory;
-import fr.jmmc.sclgui.SearchCal;
 import fr.jmmc.sclgui.filter.FacelessNonCalibratorsFilter;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.preference.PreferenceKey;
@@ -551,7 +551,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     private void parseVOTable(final File file, final String content, final long length,
-                              final boolean startQuery, final boolean async) throws IllegalArgumentException {
+            final boolean startQuery, final boolean async) throws IllegalArgumentException {
         // Diff tool:
         if (_vo != null) {
             _vo.enableDataRelatedMenus(false);
@@ -664,8 +664,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          * @param startTime start time (nano seconds)
          */
         private ParseVoTableSwingWorker(final File file, final boolean startQuery, final CalibratorsModel calModel,
-                                        final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
-                                        final long startTime) {
+                final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
+                final long startTime) {
             // get current observation version :
             super(SearchCalTaskRegistry.TASK_LOAD);
             this.file = file;
@@ -1587,7 +1587,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param xslFileName the XSL file containing the transformation to be applied
      */
     private void applyXSLTranformationOnCurrentVOTable(final File outputFile, final String xslFileName) {
-        final String xsltFile = SearchCal.getSharedInstance().getPathFromResourceFilename(xslFileName);
+        final String xsltFile = ResourceUtils.getPathFromResourceFilename(xslFileName);
 
         if (xsltFile == null) {
             _logger.error("Could not load XSL file '{}'.", xslFileName);
