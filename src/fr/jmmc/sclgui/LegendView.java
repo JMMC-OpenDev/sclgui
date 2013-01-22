@@ -118,7 +118,7 @@ public final class LegendView extends JPanel {
          * @param isEditable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
          */
         ColorPreferencesView(Preferences preferences, String prefix,
-                             String header, boolean isEditable) {
+                String header, boolean isEditable) {
             // Register to catalog preferences
             _colorPreferencePrefix = prefix + ".color.";
             _preferences = preferences;
@@ -305,8 +305,8 @@ public final class LegendView extends JPanel {
 
             @Override
             public Component getTableCellRendererComponent(JTable table,
-                                                           Object color, boolean isSelected, boolean hasFocus, int row,
-                                                           int column) {
+                    Object color, boolean isSelected, boolean hasFocus, int row,
+                    int column) {
 
                 String cellReference = (String) _data[row][REFERENCE];
                 String cellName = (String) _data[row][TITLE];
@@ -354,7 +354,7 @@ public final class LegendView extends JPanel {
         }
 
         class ColorEditor extends AbstractCellEditor implements TableCellEditor,
-                                                                ActionListener {
+                ActionListener {
 
             /** default serial UID for Serializable interface */
             private static final long serialVersionUID = 1;
@@ -402,10 +402,10 @@ public final class LegendView extends JPanel {
                         _colorChooser.setColor(_currentColor);
                         _dialog.setVisible(true);
                     } else {
-                        String url = ResourceUtils.getResource("catalog.url." + _catalogReference, true);
+                        String url = ResourceUtils.getResourceProperty("catalog.url." + _catalogReference, true);
 
                         if (url == null) {
-                            url = ResourceUtils.getResource("catalog.url.header")
+                            url = ResourceUtils.getResourceProperty("catalog.url.header")
                                     + _catalogReference;
                         }
 
@@ -432,7 +432,7 @@ public final class LegendView extends JPanel {
             // Implement the one method defined by TableCellEditor.
             @Override
             public Component getTableCellEditorComponent(JTable table,
-                                                         Object value, boolean isSelected, int row, int column) {
+                    Object value, boolean isSelected, int row, int column) {
 
                 _currentColor = (Color) value;
                 _catalogReference = (String) _data[row][REFERENCE];
