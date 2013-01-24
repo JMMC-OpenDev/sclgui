@@ -214,7 +214,7 @@ public final class SearchCal extends App {
 
     /** Handle operations before closing application */
     @Override
-    public boolean shouldFinish() {
+    public boolean canBeTerminatedNow() {
         return _vo.canLostModifications();
     }
 
