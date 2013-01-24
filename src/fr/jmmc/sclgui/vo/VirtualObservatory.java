@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.vo;
 
+import fr.jmmc.jmcs.data.ApplicationDescription;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.util.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
@@ -550,7 +551,7 @@ public final class VirtualObservatory extends Observable {
         public Map<?, ?> composeMessage() {
             File file = null;
             try {
-                file = File.createTempFile(SearchCal.getSharedApplicationDataModel().getProgramName(), "scvot");
+                file = File.createTempFile(ApplicationDescription.getInstance().getProgramName(), "scvot");
             } catch (IOException ioe) {
                 StatusBar.show("Could not share calibrators through SAMP.");
 

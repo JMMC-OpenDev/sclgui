@@ -23,7 +23,7 @@ import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.App;
-import fr.jmmc.jmcs.data.ApplicationDataModel;
+import fr.jmmc.jmcs.data.ApplicationDescription;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
@@ -1062,7 +1062,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             paramSet.addItem(param);
         }
         if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
-            final ApplicationDataModel applicationDataModel = App.getSharedApplicationDataModel();
+            final ApplicationDescription applicationDataModel = ApplicationDescription.getInstance();
             final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
 
             final SavotParam param = new SavotParam();
