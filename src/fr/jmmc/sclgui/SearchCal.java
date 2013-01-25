@@ -27,8 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SearchCal application launcher
- * @author sylvain lafrasse
+ * SearchCal application launcher.
+ * @author Sylvain LAFRASSE.
  */
 public final class SearchCal extends App {
 
@@ -36,10 +36,11 @@ public final class SearchCal extends App {
     private static final Logger _logger = LoggerFactory.getLogger(SearchCal.class.getName());
     /* members */
     /** Main application object used to perform the optional query received from ASPRO */
-    /* note: do not set it to null as it is initialized in App.init() by super() ie before class initialization (LBO) */
-    private VirtualObservatory _vo;
+    /* note: do not set it to null as it is initialized in App.setupGui() by super() ie before class initialization (LBO) */
+    private VirtualObservatory _vo = null;
     /** Store the optional query received from ASPRO by constructor */
     private String _query = null;
+    private Preferences _preferences = null;
 
     /**
      * Launch the SearchCal application.
@@ -53,31 +54,18 @@ public final class SearchCal extends App {
         super(args);
     }
 
-    /**
-     * Launch the SearchCal application, plus automatically perform the given query if any.
-     *
-     * @param args command-line options.
-     * @param query an XML formatted string containing an SCLSVR-like query.
-     */
-    public SearchCal(String[] args, String query) {
-        /* Launch application initialization with:
-         *    - execution delayed for further initilization;
-         *    - without protection against current process killing by its father.
-         */
-        super(args, true, false);
+    @Override
+    protected void initServices() {
+        // Set default resource
+        fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
 
-        // Store received query for later execution
-        _query = query;
-
-        // Perform received query if any
-        run();
+        // Get preferences
+        _preferences = Preferences.getInstance();
     }
 
     /** Initialize application objects */
     @Override
-    protected void init() {
-        // Set default resource
-        fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
+    protected void setupGui() {
 
         // Using invokeAndWait to be in sync with this thread :
         // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
@@ -87,9 +75,6 @@ public final class SearchCal extends App {
              */
             @Override
             public void run() {
-
-                // Get preferences
-                final Preferences preferences = Preferences.getInstance();
 
                 // Create a query model
                 final QueryModel queryModel = new QueryModel();
@@ -128,7 +113,7 @@ public final class SearchCal extends App {
                 final HelpPreferencesView helpView = new HelpPreferencesView();
                 helpView.init();
                 panels.put("Help Settings", helpView);
-                final PreferencesView preferencesView = new PreferencesView(preferences, panels);
+                final PreferencesView preferencesView = new PreferencesView(_preferences, panels);
                 preferencesView.init();
 
                 final StatusBar statusBar = new StatusBar();
@@ -140,7 +125,7 @@ public final class SearchCal extends App {
                 App.setFrame(window);
 
                 // Triggers all preferences observers notification to finnish GUI setup.
-                preferences.triggerObserversNotification();
+                _preferences.triggerObserversNotification();
             }
         });
     }

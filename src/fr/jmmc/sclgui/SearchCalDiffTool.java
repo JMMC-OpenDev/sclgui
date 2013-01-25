@@ -8,12 +8,10 @@ import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
-import fr.jmmc.jmcs.util.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
-import fr.jmmc.jmcs.gui.action.internal.InternalActionFactory;
 import fr.jmmc.jmcs.gui.component.StatusBar;
-import fr.jmmc.jmcs.gui.util.SwingSettings;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
+import fr.jmmc.jmcs.util.RecentFilesManager;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.calibrator.DiffCalibratorsModel;
@@ -32,8 +30,6 @@ import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -63,17 +59,19 @@ public final class SearchCalDiffTool extends App {
     /** argument 'right' */
     public final static String ARG_RIGHT = "right";
     /* members */
-    /* note: do not set these members to null as it is initialized in App.init() by super() ie before class initialization (LBO) */
+    /* note: do not set these members to null as it is initialized in App.setupGui() by super() ie before class initialization (LBO) */
     /** CalibratorsView left */
-    CalibratorsView _calibratorsViewLeft;
+    private CalibratorsView _calibratorsViewLeft;
     /** CalibratorsView right */
-    CalibratorsView _calibratorsViewRight;
+    private CalibratorsView _calibratorsViewRight;
     /** CalibratorsView diff */
-    CalibratorsView _calibratorsViewDiff;
+    private CalibratorsView _calibratorsViewDiff;
     /** query view */
-    QueryView _queryView;
+    private QueryView _queryView;
     /** diff model */
-    DiffCalibratorsModel _diffModel;
+    private DiffCalibratorsModel _diffModel;
+    /** flag to avoid synchronizeSelection reentrance while updating JTable selections */
+    private boolean _ignoreSelectionEvent = false;
 
     /**
      * Launch the SearchCalDiffTool
@@ -108,13 +106,14 @@ public final class SearchCalDiffTool extends App {
         System.out.println("|-----------------------------------------------------------------------|");
     }
 
-    /** 
-     * Initialize application objects 
-     */
     @Override
-    protected void init() {
+    protected void initServices() {
         // Set default resource
         fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
+    }
+
+    @Override
+    protected void setupGui() {
 
         // Using invokeAndWait to be in sync with this thread :
         // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
@@ -187,7 +186,7 @@ public final class SearchCalDiffTool extends App {
                 calibratorsModelLeft.setVirtualObservatory(null);
 
                 // Attach the query model to its query view
-                _queryView = new QueryView(queryModel, null); // vo is null to disable start query action
+                _queryView = new QueryView(queryModel, null); // vo is null to disable ___internalStart query action
                 _queryView.init();
 
                 // Retrieve application preferences and attach them to their view
@@ -254,15 +253,34 @@ public final class SearchCalDiffTool extends App {
             }
         });
     }
-    /** flag to avoid synchronizeSelection reentrance while updating JTable selections */
-    private boolean ignoreSelectionEvent = false;
+
+    /** Execute application body */
+    @Override
+    protected void execute() {
+        SwingUtils.invokeLaterEDT(new Runnable() {
+            /**
+             * Show the application frame using EDT
+             */
+            @Override
+            public void run() {
+                _logger.debug("SearchCalDiff.ready : handler called.");
+
+                // hide filters view:
+                final DiffWindow window = (DiffWindow) App.getFrame();
+                final JSplitPane resultPane = window.resultPane;
+                resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
+
+                getFrame().setVisible(true);
+            }
+        });
+    }
 
     /**
-     * Synchronize selected stars amond CalibratorsViews
+     * Synchronize selected stars among CalibratorsViews
      * @param source CalibratorsView source
      */
     private void synchronizeSelection(final CalibratorsView source) {
-        if (ignoreSelectionEvent) {
+        if (_ignoreSelectionEvent) {
             return;
         }
 
@@ -285,7 +303,7 @@ public final class SearchCalDiffTool extends App {
         // Performance timer
         final long startTime = System.nanoTime();
         try {
-            ignoreSelectionEvent = true;
+            _ignoreSelectionEvent = true;
 
             if (source == _calibratorsViewLeft) {
                 // Get rowIdx values:
@@ -320,7 +338,7 @@ public final class SearchCalDiffTool extends App {
             }
 
         } finally {
-            ignoreSelectionEvent = false;
+            _ignoreSelectionEvent = false;
 
             if (_logger.isDebugEnabled()) {
                 _logger.debug("synchronizeSelection() done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
@@ -344,27 +362,6 @@ public final class SearchCalDiffTool extends App {
         }
     }
 
-    /** Execute application body */
-    @Override
-    protected void execute() {
-        SwingUtils.invokeLaterEDT(new Runnable() {
-            /**
-             * Show the application frame using EDT
-             */
-            @Override
-            public void run() {
-                _logger.debug("SearchCalDiff.ready : handler called.");
-
-                // hide filters view:
-                final DiffWindow window = (DiffWindow) App.getFrame();
-                final JSplitPane resultPane = window.resultPane;
-                resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
-
-                getFrame().setVisible(true);
-            }
-        });
-    }
-
     /**
      * Compare the two given files
      * @param fileLeft first file to compare (reference)
@@ -376,16 +373,6 @@ public final class SearchCalDiffTool extends App {
 
         // finally disable query view:
         _queryView.propertyChange(null);
-    }
-
-    /**
-     * Main entry point
-     *
-     * @param args command line arguments (open file ...)
-     */
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
-    public static void main(final String[] args) {
-        Bootstrapper.launch(new SearchCalDiffTool(args));
     }
 
     /**
@@ -589,6 +576,15 @@ public final class SearchCalDiffTool extends App {
                 // disabled
             }
         }
+    }
+
+    /**
+     * Main entry point
+     *
+     * @param args command line arguments (open file ...)
+     */
+    public static void main(final String[] args) {
+        Bootstrapper.launch(new SearchCalDiffTool(args));
     }
 }
 /*___oOo___*/
