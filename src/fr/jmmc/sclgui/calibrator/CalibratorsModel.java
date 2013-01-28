@@ -1061,9 +1061,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             paramSet.addItem(param);
         }
         if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
-            final ApplicationDescription applicationDataModel = ApplicationDescription.getInstance();
-            final String version = applicationDataModel.getProgramName() + " v" + applicationDataModel.getProgramVersion();
-
+            final String version = ApplicationDescription.getInstance().getProgramNameWithVersion();
             final SavotParam param = new SavotParam();
             param.setName(PARAMETER_SCL_GUI_VERSION);
             param.setDataType("char");
