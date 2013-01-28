@@ -584,7 +584,7 @@ public final class SearchCalDiffTool extends App {
      * @param args command line arguments (open file ...)
      */
     public static void main(final String[] args) {
-        Bootstrapper.launch(new SearchCalDiffTool(args));
+        Bootstrapper.launchApp(new SearchCalDiffTool(args));
     }
 }
 /*___oOo___*/

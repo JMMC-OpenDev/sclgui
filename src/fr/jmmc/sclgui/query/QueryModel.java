@@ -8,8 +8,8 @@ import cds.savot.model.SavotParam;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.App;
+import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
-import fr.jmmc.jmcs.gui.action.internal.InternalActionFactory;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -124,7 +124,7 @@ public final class QueryModel extends Star implements Observer {
                 case 1: // Quit
                     SwingUtils.invokeLaterEDT(new Runnable() {
                         public void run() {
-                            App.quit();
+                            Bootstrapper.stopApp(-1);
                         }
                     });
                     break;

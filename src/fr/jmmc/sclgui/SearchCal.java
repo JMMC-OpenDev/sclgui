@@ -209,7 +209,7 @@ public final class SearchCal extends App {
      * @param args command line arguments (open file ...)
      */
     public static void main(final String[] args) {
-        Bootstrapper.launch(new SearchCal(args));
+        Bootstrapper.launchApp(new SearchCal(args));
     }
 }
 /*___oOo___*/
