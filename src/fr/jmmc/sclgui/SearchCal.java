@@ -203,6 +203,13 @@ public final class SearchCal extends App {
         return _vo.canLostModifications();
     }
 
+    @Override
+    protected void cleanup() {
+        _vo = null;
+        _query = null;
+        _preferences = null;
+    }
+
     /**
      * Main entry point
      *

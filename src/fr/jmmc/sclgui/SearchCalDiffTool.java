@@ -375,6 +375,15 @@ public final class SearchCalDiffTool extends App {
         _queryView.propertyChange(null);
     }
 
+    @Override
+    protected void cleanup() {
+        _calibratorsViewLeft = null;
+        _calibratorsViewRight = null;
+        _calibratorsViewDiff = null;
+        _queryView = null;
+        _diffModel = null;
+    }
+
     /**
      * ListSelectionListener implementation to synchronize CalibratorsView selections
      */
