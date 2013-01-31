@@ -58,7 +58,7 @@ public final class SearchCalDiffTool extends App {
     public final static String ARG_LEFT = "left";
     /** argument 'right' */
     public final static String ARG_RIGHT = "right";
-    /* members */
+    // Members
     /* note: do not set these members to null as it is initialized in App.setupGui() by super() ie before class initialization (LBO) */
     /** CalibratorsView left */
     private CalibratorsView _calibratorsViewLeft;
@@ -89,21 +89,17 @@ public final class SearchCalDiffTool extends App {
      * Add diff custom command line argument(s)
      */
     @Override
-    protected void addCustomCommandLineArguments() {
+    protected void defineCustomCommandLineArgumentsAndHelp() {
         addCustomCommandLineArgument(ARG_DIFF, false);
         addCustomCommandLineArgument(ARG_LEFT, true);
         addCustomCommandLineArgument(ARG_RIGHT, true);
-    }
 
-    /** 
-     * Add diff custom command line argument help 
-     */
-    @Override
-    protected void showCustomArgumentsHelp() {
-        System.out.println("| [-diff]                      Enable comparison mode (diff)            |");
-        System.out.println("| [-left]                      First file to compare (reference)        |");
-        System.out.println("| [-right]                     Second file to compare                   |");
-        System.out.println("|-----------------------------------------------------------------------|");
+        String help = "";
+        help += "| [-diff]                      Enable comparison mode (diff)                   |";
+        help += "| [-left]                      First file to compare (reference)               |";
+        help += "| [-right]                     Second file to compare                          |";
+        help += "|------------------------------------------------------------------------------|";
+        addCustomArgumentsHelp(help);
     }
 
     @Override
@@ -229,7 +225,6 @@ public final class SearchCalDiffTool extends App {
                 _diffModel = new DiffCalibratorsModel(calibratorsModelLeft, calibratorsModelRight, calibratorsModelDiff);
 
                 final Map<String, String> args = getCommandLineArguments();
-
                 if (args != null && args.get(ARG_DIFF) != null && args.get(ARG_LEFT) != null && args.get(ARG_RIGHT) != null) {
                     diff(new File(args.get(ARG_LEFT)), new File(args.get(ARG_RIGHT)));
                 }
@@ -404,6 +399,7 @@ public final class SearchCalDiffTool extends App {
          * Process list selection event
          * @param lse list selection event 
          */
+        @Override
         public void valueChanged(final ListSelectionEvent lse) {
             if (!lse.getValueIsAdjusting()) {
                 synchronizeSelection(source);
