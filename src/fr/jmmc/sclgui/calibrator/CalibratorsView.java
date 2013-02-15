@@ -5,6 +5,7 @@ package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
+import fr.jmmc.jmcs.gui.component.SearchPanel;
 import fr.jmmc.jmcs.gui.util.AutofitTableColumns;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.preference.PreferenceKey;
@@ -53,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * application preferences change.
  */
 public final class CalibratorsView extends JPanel implements TableModelListener,
-                                                             ListSelectionListener, Observer, Printable {
+        ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -112,7 +113,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
             _fullResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath, "_fullResultsVerbosityAction", "Full", _preferences, PreferenceKey.VERBOSITY_FULL_FLAG);
 
             // Search Panel
-            _searchPanel = new SearchPanel();
+            _searchPanel = new SearchPanel(new CalibratorSearchPanelDelegate());
 
             // Check if the multi view mode is defined at startup:
             _multiView = "true".equalsIgnoreCase(System.getProperty(CalibratorsView.MODE_MULTI_VIEW, "false"));
