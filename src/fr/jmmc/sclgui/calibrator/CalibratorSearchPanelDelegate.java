@@ -25,7 +25,7 @@ public class CalibratorSearchPanelDelegate implements SearchPanelDelegate {
     /** current calibrators view */
     private CalibratorsView _currentView;
     /** current search value (regexp pattern) */
-    private Pattern _pattern;
+    private String _pattern;
     /** current found row index related to table view (visible rows) */
     private int _lastFoundRow;
     /** current found column index related to table view (visible columns) */
@@ -55,14 +55,17 @@ public class CalibratorSearchPanelDelegate implements SearchPanelDelegate {
         // If the search token or view changed or a search reset was requested:
         SEARCH_DIRECTION currentDirection = givenDirection;
 
-        if (currentView != _currentView || !pattern.equals(_pattern) || (currentDirection == SEARCH_DIRECTION.UNDEFINED)) {
+        // Get regexp from compiled Pattern:
+        final String regexp = pattern.toString();
+        
+        if (currentView != _currentView || !regexp.equals(_pattern) || (currentDirection == SEARCH_DIRECTION.UNDEFINED)) {
             reset(); // Reset search context
             currentDirection = SearchPanel.SEARCH_DIRECTION.NEXT; // Use NEXT direction by default
-            _pattern = pattern; // Backup new search token
+            _pattern = regexp; // Backup new search token
             _currentView = currentView; // Backup new view
         }
 
-        _logger.info("Searching pattern '{}' in '{}' direction.", pattern, currentDirection);
+        _logger.info("Searching pattern '{}' in '{}' direction.", regexp, currentDirection);
 
         // Use table sorter to traverse visible cells:
         final TableSorter _tableSorter = currentView._tableSorter;
