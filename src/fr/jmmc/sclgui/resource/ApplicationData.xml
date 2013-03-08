@@ -9,7 +9,7 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.5b1"/>
+    <program name="SearchCal" version="4.5b2"/>
     <compilation date="16/01/2013" compiler="JDK 1.5.0_16"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -131,6 +131,9 @@
   
     <releasenotes>
         <release version="4.5">
+            <prerelease version="4.5b2">
+                <change type="CHANGE" url="http://trac.jmmc.fr/jmmc-sw/ticket/343">Added support for J,H band for faint mode</change>
+            </prerelease>
             <prerelease version="4.5b1">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/411">Check compatibility of square visibilities with/without interstellar absportion in faint scenario 
                   i.e. reject stars when vis2 are incompatible (DIAM_FLAG=NOK)</change>
