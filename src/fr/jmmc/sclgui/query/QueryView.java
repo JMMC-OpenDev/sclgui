@@ -5,8 +5,8 @@ package fr.jmmc.sclgui.query;
 
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverWidget;
-import fr.jmmc.jmcs.gui.action.ResourcedAction;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.gui.action.ResourcedAction;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * Query view.
  */
 public final class QueryView extends JPanel implements Observer,
-                                                       PropertyChangeListener, ActionListener, FocusListener, Printable {
+        PropertyChangeListener, ActionListener, FocusListener, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -503,6 +503,12 @@ public final class QueryView extends JPanel implements Observer,
             _queryModel.setInstrumentalMagnitudeBand(instrumentalMagnitudeBand);
         }
 
+        // N band flag true for N, false else
+        final boolean nBand = instrumentalMagnitudeBand.matches("N");
+        // This flag is true for bands present in bright and faint scenarii (cf sclsvrGetCalCB.cpp)
+        final boolean brightOrFaintBand = !instrumentalMagnitudeBand.matches("[V,N]");
+
+
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
         _instrumentalWavelengthLabel.setText("Wavelength (" + instrumentalMagnitudeBand + ") [µm] : ");
@@ -520,11 +526,14 @@ public final class QueryView extends JPanel implements Observer,
         _scienceObjectMagnitudeLabel.setText(magnitudeWithBand);
         _scienceObjectMagnitudeTextfield.setValue(_queryModel.getScienceObjectMagnitude());
 
-        // SearchCal parameters
+        // SearchCal parameters (N band does not support bounds on magnitude)
         _minMagnitudeLabel.setText("Min. " + magnitudeWithBand);
         _minMagnitudeTextfield.setValue(_queryModel.getQueryMinMagnitude());
+        _minMagnitudeTextfield.setEnabled(!nBand);
         _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
+        _maxMagnitudeTextfield.setEnabled(!nBand);
+
 
         // Search box size handling
         _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASizeInMinutes());
@@ -539,8 +548,15 @@ public final class QueryView extends JPanel implements Observer,
 
         // Bright/faint scenarii handling
         boolean brightScenarioFlag = _queryModel.getQueryBrightScenarioFlag();
+        if (!brightScenarioFlag && !brightOrFaintBand) {
+            _logger.warn("Force moving back to bright because '{}' band is not available in faint case", magnitudeWithBand);
+            brightScenarioFlag = true;
+            _queryModel.setQueryBrightScenarioFlag(brightScenarioFlag);
+        }
         _brightRadioButton.setSelected(brightScenarioFlag);
+        _brightRadioButton.setEnabled(brightOrFaintBand);
         _faintRadioButton.setSelected(!brightScenarioFlag);
+        _faintRadioButton.setEnabled(brightOrFaintBand);
         _diffRASizeTextfield.setVisible(brightScenarioFlag);
         _diffRASizeLabel.setVisible(brightScenarioFlag);
         _diffDECSizeTextfield.setVisible(brightScenarioFlag);
@@ -566,41 +582,6 @@ public final class QueryView extends JPanel implements Observer,
             } else {
                 _vo.enableGetCalAction(false);
             }
-        }
-
-        // If the magnitude band is either 'V', 'I', 'J', or 'H'
-        if (instrumentalMagnitudeBand.matches("[V,I,J,H]")) {
-            // Enable min & max magnitude textfields
-            _minMagnitudeTextfield.setEnabled(true);
-            _maxMagnitudeTextfield.setEnabled(true);
-
-            // Disable bright/faint buttons
-            _brightRadioButton.setEnabled(false);
-            _faintRadioButton.setEnabled(false);
-
-            // Select bright scenario
-            _brightRadioButton.setSelected(true);
-            _queryModel.setQueryBrightScenarioFlag(true);
-        } else if (instrumentalMagnitudeBand.matches("N")) {
-            // Disable min & max magnitude textfields
-            _minMagnitudeTextfield.setEnabled(false);
-            _maxMagnitudeTextfield.setEnabled(false);
-
-            // Disable bright/faint buttons
-            _brightRadioButton.setEnabled(false);
-            _faintRadioButton.setEnabled(false);
-
-            // Select bright scenario
-            _brightRadioButton.setSelected(true);
-            _queryModel.setQueryBrightScenarioFlag(true);
-        } else {
-            // Enable min & max magnitude textfields
-            _minMagnitudeTextfield.setEnabled(true);
-            _maxMagnitudeTextfield.setEnabled(true);
-
-            // Enable bright/faint buttons
-            _brightRadioButton.setEnabled(true);
-            _faintRadioButton.setEnabled(true);
         }
     }
 
