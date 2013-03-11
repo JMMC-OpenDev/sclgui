@@ -132,11 +132,10 @@
     <releasenotes>
         <release version="4.5">
             <prerelease version="4.5b2">
-                <change type="CHANGE" url="http://trac.jmmc.fr/jmmc-sw/ticket/343">Added support for J,H band for faint mode</change>
+                <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/343">Added support for J and H bands in faint mode.</change>
             </prerelease>
             <prerelease version="4.5b1">
-                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/411">Check compatibility of square visibilities with/without interstellar absportion in faint scenario 
-                  i.e. reject stars when vis2 are incompatible (DIAM_FLAG=NOK)</change>
+                <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/411">Check compatibility of square visibilities with/without interstellar absportion in faint scenario (i.e. reject stars when vis2 are incompatible : DIAM_FLAG = NOK).</change>
                 <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/410">Display computed Icous magnitude instead of I (johnson) in GUI.</change>
                 <change type="CHANGE">Enhanced cross-match algorithm to use proper motions (ASCC, HIP2 or USNO) when querying and matching other catalogs (2MASS, Denis, AKARI).</change>
                 <change type="CHANGE">Added query to HIP2 'Hipparcos, the New Reduction (van Leeuwen, 2007)' to get more accurate star properties (Ra/Dec, proper motion, parallax).</change>
