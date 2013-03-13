@@ -1584,8 +1584,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param xslFileName the XSL file containing the transformation to be applied
      */
     private void applyXSLTranformationOnCurrentVOTable(final File outputFile, final String xslFileName) {
-        final String xsltFile = ResourceUtils.getPathFromResourceFilename(xslFileName);
 
+        final String xsltFile = ResourceUtils.getPathFromResourceFilename(xslFileName);
         if (xsltFile == null) {
             _logger.error("Could not load XSL file '{}'.", xslFileName);
 

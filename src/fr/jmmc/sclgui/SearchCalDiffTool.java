@@ -105,7 +105,7 @@ public final class SearchCalDiffTool extends App {
     @Override
     protected void initServices() {
         // Set default resource
-        fr.jmmc.jmcs.util.ResourceUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
+        fr.jmmc.jmcs.util.PropertyUtils.setResourceName("fr/jmmc/sclgui/resource/Resources");
     }
 
     @Override

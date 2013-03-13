@@ -6,7 +6,7 @@ package fr.jmmc.sclgui;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.network.BrowserLauncher;
-import fr.jmmc.jmcs.util.ResourceUtils;
+import fr.jmmc.jmcs.util.PropertyUtils;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -402,11 +402,9 @@ public final class LegendView extends JPanel {
                         _colorChooser.setColor(_currentColor);
                         _dialog.setVisible(true);
                     } else {
-                        String url = ResourceUtils.getResourceProperty("catalog.url." + _catalogReference, true);
-
+                        String url = PropertyUtils.getResourceProperty("catalog.url." + _catalogReference, true);
                         if (url == null) {
-                            url = ResourceUtils.getResourceProperty("catalog.url.header")
-                                    + _catalogReference;
+                            url = PropertyUtils.getResourceProperty("catalog.url.header") + _catalogReference;
                         }
 
                         if (_logger.isDebugEnabled()) {
