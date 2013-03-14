@@ -32,7 +32,7 @@ import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.jmcs.util.ResourceUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
-import fr.jmmc.jmcs.util.XmlFactory;
+import fr.jmmc.jmcs.util.XslTransform;
 import fr.jmmc.sclgui.filter.FacelessNonCalibratorsFilter;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.preference.PreferenceKey;
@@ -1605,7 +1605,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 // Apply the xsl file to the source file and write the result to
                 // the output file
                 // use an XSLT to transform the XML document to an HTML representation :
-                XmlFactory.transform(sourceStream, xsltFile, resultStream);
+                XslTransform.transform(sourceStream, xsltFile, resultStream);
 
                 _logger.info("applyXSLTranformationOnCurrentVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
             }
