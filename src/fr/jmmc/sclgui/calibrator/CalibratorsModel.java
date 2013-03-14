@@ -22,7 +22,7 @@ import cds.savot.pull.SavotPullParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.Catalog;
-import fr.jmmc.jmcs.data.ApplicationDescription;
+import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
