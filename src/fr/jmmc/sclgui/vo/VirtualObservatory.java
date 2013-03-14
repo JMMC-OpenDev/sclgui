@@ -3,9 +3,9 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.vo;
 
+import fr.jmmc.jmcs.data.MimeType;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
-import fr.jmmc.jmcs.util.RecentFilesManager;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.FileChooser;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -14,8 +14,7 @@ import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampCapabilityAction;
-import fr.jmmc.jmcs.data.MimeType;
-import fr.jmmc.sclgui.SearchCal;
+import fr.jmmc.jmcs.service.RecentFilesManager;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.query.QueryModel;
 import java.awt.event.ActionEvent;
