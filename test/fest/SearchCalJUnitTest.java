@@ -26,8 +26,8 @@ import org.fest.swing.fixture.JTextComponentFixture;
 import org.fest.swing.timing.Condition;
 import static org.fest.swing.timing.Pause.*;
 import org.fest.swing.timing.Timeout;
-import org.ivoa.util.timer.TimerFactory;
-import org.ivoa.util.timer.TimerFactory.UNIT;
+import fr.jmmc.jmcs.util.timer.TimerFactory;
+import fr.jmmc.jmcs.util.timer.TimerFactory.UNIT;
 import org.junit.Ignore;
 import org.junit.Test;
 

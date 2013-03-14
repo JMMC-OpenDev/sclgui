@@ -18,7 +18,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
 import java.util.regex.Pattern;
-import org.ivoa.util.timer.StatLong;
+import fr.jmmc.jmcs.util.timer.StatLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1202,11 +1202,11 @@ public final class DiffCalibratorsModel {
      * @return 
      */
     private static List<StarProperty> GetStarMatchingCriteria(final double raRef, final double decRef,
-                                                              final double criteriaPos,
-                                                              final int raDegIdx, final int decDegIdx,
-                                                              final TreeMap<Double, List<StarProperty>> starIndex,
-                                                              final TreeMap<Double, List<StarProperty>> distMap,
-                                                              final boolean isLogDebug) {
+            final double criteriaPos,
+            final int raDegIdx, final int decDegIdx,
+            final TreeMap<Double, List<StarProperty>> starIndex,
+            final TreeMap<Double, List<StarProperty>> distMap,
+            final boolean isLogDebug) {
         // GetStarMatchingCriteria:
         distMap.clear();
         List<StarProperty> starFound = null;
@@ -1264,7 +1264,7 @@ public final class DiffCalibratorsModel {
      * @return 
      */
     private static TreeMap<Double, List<StarProperty>> createStarDecIndex(final StarList starList, final int decDegId,
-                                                                          final boolean isLogDebug) {
+            final boolean isLogDebug) {
         if (decDegId != -1) {
             final TreeMap<Double, List<StarProperty>> decIndex = new TreeMap<Double, List<StarProperty>>();
 

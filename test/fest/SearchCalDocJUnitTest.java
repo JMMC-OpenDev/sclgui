@@ -23,7 +23,7 @@ import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JMenuItemFixture;
 import org.fest.swing.fixture.JProgressBarFixture;
 import org.fest.swing.timing.Timeout;
-import org.ivoa.util.timer.TimerFactory;
+import fr.jmmc.jmcs.util.timer.TimerFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
