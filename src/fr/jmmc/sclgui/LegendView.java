@@ -5,7 +5,7 @@ package fr.jmmc.sclgui;
 
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
-import fr.jmmc.jmcs.network.BrowserLauncher;
+import fr.jmmc.jmcs.service.BrowserLauncher;
 import fr.jmmc.jmcs.util.PropertyUtils;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.BorderLayout;

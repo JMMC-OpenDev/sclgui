@@ -2,7 +2,7 @@ package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
-import fr.jmmc.jmcs.network.BrowserLauncher;
+import fr.jmmc.jmcs.service.BrowserLauncher;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -911,8 +911,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         }
 
         public Component getTableCellRendererComponent(final JTable table, final Object value,
-                                                       final boolean isSelected, final boolean hasFocus,
-                                                       final int row, final int column) {
+                final boolean isSelected, final boolean hasFocus,
+                final int row, final int column) {
 
             final Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -1026,8 +1026,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
          */
         @Override
         public Component getTableCellRendererComponent(final JTable table, final Object value,
-                                                       final boolean isSelected, final boolean hasFocus,
-                                                       final int row, final int column) {
+                final boolean isSelected, final boolean hasFocus,
+                final int row, final int column) {
 
             final long start = System.nanoTime();
 
@@ -1271,7 +1271,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         // This method is called when a cell value is edited by the user.
         public Component getTableCellEditorComponent(final JTable table, final Object value, final boolean isSelected,
-                                                     final int row, final int column) {
+                final int row, final int column) {
 
             // Retrieve clicked cell informations
             final int modelRow = modelIndex(row);
