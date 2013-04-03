@@ -100,7 +100,7 @@ sclgui_DIRS     = fr \
                   cds \
                   com
 
-sclgui_EXTRAS   = jmmc-app-logback.xml \
+sclgui_EXTRAS   = LogbackConfiguration.xml \
                   fr/jmmc/sclgui/resource/* \
                   org/apache/axis/client/*.wsdd
 
