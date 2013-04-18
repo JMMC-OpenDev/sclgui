@@ -67,67 +67,57 @@ public final class SearchCal extends App {
     @Override
     protected void setupGui() {
 
-        // Using invokeAndWait to be in sync with this thread :
-        // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
-        SwingUtils.invokeAndWaitEDT(new Runnable() {
-            /**
-             * Initializes the swing components with their actions in EDT
-             */
-            @Override
-            public void run() {
+        // Create a query model
+        final QueryModel queryModel = new QueryModel();
+        queryModel.init();
 
-                // Create a query model
-                final QueryModel queryModel = new QueryModel();
-                queryModel.init();
+        // Create filters
+        final FiltersModel filtersModel = new FiltersModel(queryModel);
+        final FiltersView filtersView = new FiltersView(filtersModel);
 
-                // Create filters
-                final FiltersModel filtersModel = new FiltersModel(queryModel);
-                final FiltersView filtersView = new FiltersView(filtersModel);
+        // Create a calibrators model and attach it to a calibrators view
+        final CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
 
-                // Create a calibrators model and attach it to a calibrators view
-                final CalibratorsModel calibratorsModel = new CalibratorsModel(filtersModel, queryModel);
+        final CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
 
-                final CalibratorsView calibratorsView = new CalibratorsView(calibratorsModel);
+        filtersModel.addObserver(calibratorsModel);
 
-                filtersModel.addObserver(calibratorsModel);
+        // Link everything up
+        // note: _vo member is defined by App constructor !
+        _vo = new VirtualObservatory(queryModel, calibratorsModel);
 
-                // Link everything up
-                // note: _vo member is defined by App constructor !
-                _vo = new VirtualObservatory(queryModel, calibratorsModel);
+        // Attach the query model to its query view
+        final QueryView queryView = new QueryView(queryModel, _vo);
+        queryView.init();
 
-                // Attach the query model to its query view
-                final QueryView queryView = new QueryView(queryModel, _vo);
-                queryView.init();
+        // Retrieve application preferences and attach them to their view
+        // (This instance must be instanciated after dependencies)
+        final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
+        // Add the columns preferences pane
+        final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
+        columnsView.init();
+        panels.put("Columns Order", columnsView);
+        // Add the catalog preferences pane
+        final JPanel catalogView = new LegendView(true);
+        panels.put("Legend Colors", catalogView);
+        // Add the help preferences pane
+        final HelpPreferencesView helpView = new HelpPreferencesView();
+        helpView.init();
+        panels.put("Help Settings", helpView);
+        final PreferencesView preferencesView = new PreferencesView(_preferences, panels);
+        preferencesView.init();
 
-                // Retrieve application preferences and attach them to their view
-                // (This instance must be instanciated after dependencies)
-                final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
-                // Add the columns preferences pane
-                final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
-                columnsView.init();
-                panels.put("Columns Order", columnsView);
-                // Add the catalog preferences pane
-                final JPanel catalogView = new LegendView(true);
-                panels.put("Legend Colors", catalogView);
-                // Add the help preferences pane
-                final HelpPreferencesView helpView = new HelpPreferencesView();
-                helpView.init();
-                panels.put("Help Settings", helpView);
-                final PreferencesView preferencesView = new PreferencesView(_preferences, panels);
-                preferencesView.init();
+        // Show the user the app is been initialized
+        final StatusBar statusBar = new StatusBar();
+        StatusBar.show("application initialization...");
 
-                final StatusBar statusBar = new StatusBar();
-                // Show the user the app is been initialized
-                StatusBar.show("application initialization...");
+        // Build the main window
+        final MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
+        setFrame(window);
+        window.setVisible(true);
 
-                // Build the main window
-                final MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
-                App.setFrame(window);
-
-                // Triggers all preferences observers notification to finnish GUI setup.
-                _preferences.triggerObserversNotification();
-            }
-        });
+        // Triggers all preferences observers notification to finnish GUI setup.
+        _preferences.triggerObserversNotification();
     }
 
     /**
@@ -185,8 +175,6 @@ public final class SearchCal extends App {
             @Override
             public void run() {
                 _logger.debug("SearchCal.ready : handler called.");
-
-                getFrame().setVisible(true);
 
                 // If a query was received (when instanciated by ASPRO)
                 if (_query != null) {
