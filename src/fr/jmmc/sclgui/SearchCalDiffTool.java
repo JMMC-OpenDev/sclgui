@@ -111,142 +111,132 @@ public final class SearchCalDiffTool extends App {
     @Override
     protected void setupGui() {
 
-        // Using invokeAndWait to be in sync with this thread :
-        // note: invokeAndWaitEDT throws an IllegalStateException if any exception occurs
-        SwingUtils.invokeAndWaitEDT(new Runnable() {
-            /**
-             * Initializes the swing components with their actions in EDT
-             */
-            @Override
-            public void run() {
-                // Disable Open Recent files in diff tool:
-                RecentFilesManager.setEnabled(false);
+        // Disable Open Recent files in diff tool:
+        RecentFilesManager.setEnabled(false);
 
-                // Get preferences
-                final Preferences preferences = Preferences.getInstance();
+        // Get preferences
+        final Preferences preferences = Preferences.getInstance();
 
-                try {
-                    // Disable non calibrator filter (show all stars):
-                    preferences.setPreference(PreferenceKey.FILTER_NON_CALIBRATORS, Boolean.FALSE);
+        try {
+            // Disable non calibrator filter (show all stars):
+            preferences.setPreference(PreferenceKey.FILTER_NON_CALIBRATORS, Boolean.FALSE);
 
-                    // Use detailed view:
-                    preferences.setPreference(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, Boolean.FALSE);
-                    preferences.setPreference(PreferenceKey.VERBOSITY_DETAILED_FLAG, Boolean.TRUE);
-                    preferences.setPreference(PreferenceKey.VERBOSITY_FULL_FLAG, Boolean.FALSE);
+            // Use detailed view:
+            preferences.setPreference(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG, Boolean.FALSE);
+            preferences.setPreference(PreferenceKey.VERBOSITY_DETAILED_FLAG, Boolean.TRUE);
+            preferences.setPreference(PreferenceKey.VERBOSITY_FULL_FLAG, Boolean.FALSE);
 
-                } catch (PreferencesException pe) {
-                    _logger.warn("setPreference failed: ", pe);
-                }
+        } catch (PreferencesException pe) {
+            _logger.warn("setPreference failed: ", pe);
+        }
 
-                // Enable multi views:
-                System.setProperty(CalibratorsView.MODE_MULTI_VIEW, "true");
+        // Enable multi views:
+        System.setProperty(CalibratorsView.MODE_MULTI_VIEW, "true");
 
-                // Disable distance check in cell renderer:
-                System.setProperty(TableSorter.DISABLE_DISTANCE_RENDERER, "true");
+        // Disable distance check in cell renderer:
+        System.setProperty(TableSorter.DISABLE_DISTANCE_RENDERER, "true");
 
-                // Create a query model
-                final QueryModel queryModel = new QueryModel();
-                queryModel.init();
+        // Create a query model
+        final QueryModel queryModel = new QueryModel();
+        queryModel.init();
 
-                // Create filters
-                final FiltersModel filtersModel = new FiltersModel(queryModel);
+        // Create filters
+        final FiltersModel filtersModel = new FiltersModel(queryModel);
 
-                // Disable all filters at startup:
-                for (FilterView filterView : filtersModel.getFilterViews()) {
-                    if (filterView.getEnabledCheckbox().isSelected()) {
-                        // trick to fire actionPerformed():
-                        filterView.getEnabledCheckbox().doClick();
-                    }
-                }
-
-                final FiltersView filtersView = new FiltersView(filtersModel);
-
-                final CalibratorsModel calibratorsModelLeft = new CalibratorsModel(filtersModel, queryModel); // query model represents the reference file
-                final CalibratorsView calibratorsViewLeft = new CalibratorsView(calibratorsModelLeft);
-
-                final CalibratorsModel calibratorsModelRight = new CalibratorsModel(filtersModel, null); // query model is null 
-                final CalibratorsView calibratorsViewRight = new CalibratorsView(calibratorsModelRight);
-
-                final CalibratorsModel calibratorsModelDiff = new CalibratorsModel(filtersModel, null); // query model is null 
-                final CalibratorsView calibratorsViewDiff = new CalibratorsView(calibratorsModelDiff);
-
-                filtersModel.addObserver(calibratorsModelLeft);
-                filtersModel.addObserver(calibratorsModelRight);
-                filtersModel.addObserver(calibratorsModelDiff);
-
-                // Link everything up
-                // note: _vo member is defined by App constructor !
-                // note: only used to instanciate actions !
-                final VirtualObservatory vo = new VirtualObservatory(queryModel, calibratorsModelLeft);
-                // free reference to disable any action:
-                calibratorsModelLeft.setVirtualObservatory(null);
-
-                // Attach the query model to its query view
-                _queryView = new QueryView(queryModel, null); // vo is null to disable ___internalStart query action
-                _queryView.init();
-
-                // Retrieve application preferences and attach them to their view
-                // (This instance must be instanciated after dependencies)
-                final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>(4);
-
-                // Add the columns preferences pane
-                final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
-                columnsView.init();
-                panels.put("Columns Order", columnsView);
-
-                // Add the catalog preferences pane
-                final JPanel catalogView = new LegendView(true);
-                panels.put("Legend Colors", catalogView);
-
-                // Add the help preferences pane
-                final HelpPreferencesView helpView = new HelpPreferencesView();
-                helpView.init();
-                panels.put("Help Settings", helpView);
-
-                final PreferencesView preferencesView = new PreferencesView(preferences, panels);
-                preferencesView.init();
-
-                final StatusBar statusBar = new StatusBar();
-                // Show the user the app is been initialized
-                StatusBar.show("application initialization...");
-
-                // Build the main window
-                final DiffWindow window = new DiffWindow(vo, _queryView, calibratorsViewLeft, calibratorsViewRight,
-                        calibratorsViewDiff, filtersView, statusBar);
-                App.setFrame(window);
-
-                // Triggers all preferences observers notification to finnish GUI setup.
-                preferences.triggerObserversNotification();
-
-                // Overwrite the Open action:
-                new OpenDiffFilesAction(VirtualObservatory.class.getName(), "_openFileAction");
-
-                // create diff model:
-                _diffModel = new DiffCalibratorsModel(calibratorsModelLeft, calibratorsModelRight, calibratorsModelDiff);
-
-                final Map<String, String> args = getCommandLineArguments();
-                if (args != null && args.get(ARG_DIFF) != null && args.get(ARG_LEFT) != null && args.get(ARG_RIGHT) != null) {
-                    diff(new File(args.get(ARG_LEFT)), new File(args.get(ARG_RIGHT)));
-                }
-
-                _calibratorsViewLeft = calibratorsViewLeft;
-                _calibratorsViewRight = calibratorsViewRight;
-                _calibratorsViewDiff = calibratorsViewDiff;
-
-                // add table selection listeners:
-                final SyncSelectionHandler sshLeft = new SyncSelectionHandler(calibratorsViewLeft);
-                calibratorsViewLeft.addColumnSelectionListener(sshLeft);
-                calibratorsViewLeft.addRowSelectionListener(sshLeft);
-
-                final SyncSelectionHandler sshRight = new SyncSelectionHandler(calibratorsViewRight);
-                calibratorsViewRight.addColumnSelectionListener(sshRight);
-                calibratorsViewRight.addRowSelectionListener(sshRight);
-
-                final SyncSelectionHandler sshDiff = new SyncSelectionHandler(calibratorsViewDiff);
-                calibratorsViewDiff.addColumnSelectionListener(sshDiff);
-                calibratorsViewDiff.addRowSelectionListener(sshDiff);
+        // Disable all filters at startup:
+        for (FilterView filterView : filtersModel.getFilterViews()) {
+            if (filterView.getEnabledCheckbox().isSelected()) {
+                // trick to fire actionPerformed():
+                filterView.getEnabledCheckbox().doClick();
             }
-        });
+        }
+
+        final FiltersView filtersView = new FiltersView(filtersModel);
+
+        final CalibratorsModel calibratorsModelLeft = new CalibratorsModel(filtersModel, queryModel); // query model represents the reference file
+        final CalibratorsView calibratorsViewLeft = new CalibratorsView(calibratorsModelLeft);
+
+        final CalibratorsModel calibratorsModelRight = new CalibratorsModel(filtersModel, null); // query model is null 
+        final CalibratorsView calibratorsViewRight = new CalibratorsView(calibratorsModelRight);
+
+        final CalibratorsModel calibratorsModelDiff = new CalibratorsModel(filtersModel, null); // query model is null 
+        final CalibratorsView calibratorsViewDiff = new CalibratorsView(calibratorsModelDiff);
+
+        filtersModel.addObserver(calibratorsModelLeft);
+        filtersModel.addObserver(calibratorsModelRight);
+        filtersModel.addObserver(calibratorsModelDiff);
+
+        // Link everything up
+        // note: _vo member is defined by App constructor !
+        // note: only used to instanciate actions !
+        final VirtualObservatory vo = new VirtualObservatory(queryModel, calibratorsModelLeft);
+        // free reference to disable any action:
+        calibratorsModelLeft.setVirtualObservatory(null);
+
+        // Attach the query model to its query view
+        _queryView = new QueryView(queryModel, null); // vo is null to disable ___internalStart query action
+        _queryView.init();
+
+        // Retrieve application preferences and attach them to their view
+        // (This instance must be instanciated after dependencies)
+        final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>(4);
+
+        // Add the columns preferences pane
+        final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
+        columnsView.init();
+        panels.put("Columns Order", columnsView);
+
+        // Add the catalog preferences pane
+        final JPanel catalogView = new LegendView(true);
+        panels.put("Legend Colors", catalogView);
+
+        // Add the help preferences pane
+        final HelpPreferencesView helpView = new HelpPreferencesView();
+        helpView.init();
+        panels.put("Help Settings", helpView);
+
+        final PreferencesView preferencesView = new PreferencesView(preferences, panels);
+        preferencesView.init();
+
+        final StatusBar statusBar = new StatusBar();
+        // Show the user the app is been initialized
+        StatusBar.show("application initialization...");
+
+        // Build the main window
+        final DiffWindow window = new DiffWindow(vo, _queryView, calibratorsViewLeft, calibratorsViewRight,
+                calibratorsViewDiff, filtersView, statusBar);
+        App.setFrame(window);
+
+        // Triggers all preferences observers notification to finnish GUI setup.
+        preferences.triggerObserversNotification();
+
+        // Overwrite the Open action:
+        new OpenDiffFilesAction(VirtualObservatory.class.getName(), "_openFileAction");
+
+        // create diff model:
+        _diffModel = new DiffCalibratorsModel(calibratorsModelLeft, calibratorsModelRight, calibratorsModelDiff);
+
+        final Map<String, String> args = getCommandLineArguments();
+        if (args != null && args.get(ARG_DIFF) != null && args.get(ARG_LEFT) != null && args.get(ARG_RIGHT) != null) {
+            diff(new File(args.get(ARG_LEFT)), new File(args.get(ARG_RIGHT)));
+        }
+
+        _calibratorsViewLeft = calibratorsViewLeft;
+        _calibratorsViewRight = calibratorsViewRight;
+        _calibratorsViewDiff = calibratorsViewDiff;
+
+        // add table selection listeners:
+        final SyncSelectionHandler sshLeft = new SyncSelectionHandler(calibratorsViewLeft);
+        calibratorsViewLeft.addColumnSelectionListener(sshLeft);
+        calibratorsViewLeft.addRowSelectionListener(sshLeft);
+
+        final SyncSelectionHandler sshRight = new SyncSelectionHandler(calibratorsViewRight);
+        calibratorsViewRight.addColumnSelectionListener(sshRight);
+        calibratorsViewRight.addRowSelectionListener(sshRight);
+
+        final SyncSelectionHandler sshDiff = new SyncSelectionHandler(calibratorsViewDiff);
+        calibratorsViewDiff.addColumnSelectionListener(sshDiff);
+        calibratorsViewDiff.addRowSelectionListener(sshDiff);
     }
 
     /** Execute application body */
@@ -260,12 +250,12 @@ public final class SearchCalDiffTool extends App {
             public void run() {
                 _logger.debug("SearchCalDiff.ready : handler called.");
 
-                // hide filters view:
-                final DiffWindow window = (DiffWindow) App.getFrame();
+                // Hide filters view
+                final JFrame frame = App.getFrame();
+                final DiffWindow window = (DiffWindow) frame;
                 final JSplitPane resultPane = window.resultPane;
                 resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
-
-                getFrame().setVisible(true);
+                frame.setVisible(true);
             }
         });
     }
@@ -508,19 +498,15 @@ public final class SearchCalDiffTool extends App {
 
             // Create a first top-bottom split pane for calibrators and filters
             resultPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diffPane, filtersView);
-            // Give priority to calibrators view
-//            resultPane.setResizeWeight(1.0);
 
-            // Set the split pane to continuously resize the child components
-            // which the divider is dragged
+            // Set the split pane to continuously resize the child components which the divider is dragged
             resultPane.setContinuousLayout(true);
             // Allows the user to conveniently move the divider to either end with a single click
             resultPane.setOneTouchExpandable(true);
 
             // Create a second top-bottom split pane
             final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, queryView, resultPane);
-            // Set the split pane to continuously resize the child components
-            // which the divider is dragged
+            // Set the split pane to continuously resize the child components which the divider is dragged
             splitPane.setContinuousLayout(true);
             // Allows the user to conveniently move the divider to either end with a single click
             splitPane.setOneTouchExpandable(true);
