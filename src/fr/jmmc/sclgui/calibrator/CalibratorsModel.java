@@ -1415,6 +1415,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             // confidence index:
                             if (property.hasConfidence()) {
                                 confidenceTd = cacheTD[c + 2];
+                                // TODO: fix Field header (integer no more char[])
                                 confidenceTd.setContent(property.getConfidence().getIntString());
                             } else {
                                 confidenceTd = emptyTD;

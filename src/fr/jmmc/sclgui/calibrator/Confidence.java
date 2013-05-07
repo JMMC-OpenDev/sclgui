@@ -53,7 +53,7 @@ public final class Confidence {
         Confidence confidence = parse(str);
         if (confidence == UNDEFINED) {
             // create a new custom confidence
-            confidence = new Confidence(customInt--, str);
+            confidence = new Confidence(customInt--, str); // Should not be stored: use an extra table ??
         }
         return confidence;
     }
