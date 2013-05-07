@@ -533,7 +533,6 @@ public final class DiffCalibratorsModel {
         final int deletedFlagColumnID = diffStarList.getDeletedFlagColumnID();
 
         final Map<String, String> originValues = new HashMap<String, String>(32);
-        final Map<String, String> confidenceValues = new HashMap<String, String>(16);
 
         StarProperty starPropertyLeftRowIdx, starPropertyRightRowIdx;
         Integer rightRowIdx;
@@ -545,7 +544,8 @@ public final class DiffCalibratorsModel {
         StarProperty starPropertyRight;
         StarProperty starProperty;
         Object propertyValue;
-        String origin, originValue, confidence, confidenceValue;
+        String origin, originValue, confidenceValue;
+        Confidence confidence;
         boolean isSet;
 
         int res;
@@ -766,14 +766,15 @@ public final class DiffCalibratorsModel {
                     }
 
                     // confidence:
-                    strLeft = starPropertyLeft.getConfidence();
-                    strRight = starPropertyRight.getConfidence();
+                    confidence = Confidence.UNDEFINED;
+                    strLeft = starPropertyLeft.getConfidence().toString();
+                    strRight = starPropertyRight.getConfidence().toString();
 
                     if (strLeft.equals(strRight)) {
                         // use value for colors:
-                        confidence = starPropertyLeft.hasConfidence() ? strLeft : null;
+                        confidenceValue = starPropertyLeft.getConfidence().toString();
                     } else {
-                        confidence = ((strLeft.length() != 0) ? strLeft : "~") + " | " + ((strRight.length() != 0) ? strRight : "~");
+                        confidenceValue = ((strLeft.length() != 0) ? strLeft : "~") + " | " + ((strRight.length() != 0) ? strRight : "~");
 
                         isSet = true;
 
@@ -783,34 +784,27 @@ public final class DiffCalibratorsModel {
                         }
                     }
 
-                    if (confidence != null) {
+                    if (confidenceValue != null) {
                         switch (res) {
                             default:
                                 break;
                             case -1:
-                                confidence = "RIGHT: " + confidence;
+                                confidenceValue = "RIGHT: " + confidenceValue;
                                 break;
                             case 1:
-                                confidence = "LEFT: " + confidence;
+                                confidenceValue = "LEFT: " + confidenceValue;
                                 break;
                             case 2:
-                                confidence = "DIFF: " + confidence;
+                                confidenceValue = "DIFF: " + confidenceValue;
                                 break;
                         }
                         if (!propMask[i]) {
-                            confidence = "SKIP " + confidence;
+                            confidenceValue = "SKIP " + confidenceValue;
                         } else if (lessTh) {
-                            confidence = "LESS " + confidence;
+                            confidenceValue = "LESS " + confidenceValue;
                         }
 
-                        confidenceValue = confidenceValues.get(confidence);
-                        if (confidenceValue == null) {
-                            // cache confidence:
-                            confidenceValues.put(confidence, confidence);
-                        } else {
-                            // use shared instance
-                            confidence = confidenceValue;
-                        }
+                        confidence = Confidence.parseCustomConfidence(confidenceValue);
                     }
 
                     if (isLogDebug) {

@@ -6,7 +6,7 @@ package fr.jmmc.sclgui.preference;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
-import fr.jmmc.sclgui.calibrator.StarProperty;
+import fr.jmmc.sclgui.calibrator.Confidence;
 import java.awt.Color;
 import java.util.HashMap;
 import org.slf4j.Logger;
@@ -205,13 +205,13 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         i = 0;
 
         if (defaultFlag) {
-            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + StarProperty.CONFIDENCE_HIGH, i++, "#ECECEC");
-            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + StarProperty.CONFIDENCE_MEDIUM, i++, "#CCCCCC");
-            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + StarProperty.CONFIDENCE_LOW, i++, "#6F6F6F");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_HIGH, i++, "#ECECEC");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_MEDIUM, i++, "#CCCCCC");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_LOW, i++, "#6F6F6F");
         } else {
-            setPreference(PREFIX_CONFIDENCE_COLOR + StarProperty.CONFIDENCE_HIGH, i++, "#ECECEC");
-            setPreference(PREFIX_CONFIDENCE_COLOR + StarProperty.CONFIDENCE_MEDIUM, i++, "#CCCCCC");
-            setPreference(PREFIX_CONFIDENCE_COLOR + StarProperty.CONFIDENCE_LOW, i++, "#6F6F6F");
+            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_HIGH, i++, "#ECECEC");
+            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_MEDIUM, i++, "#CCCCCC");
+            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_LOW, i++, "#6F6F6F");
         }
     }
 
@@ -280,7 +280,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     /**
      * @return the singleton instance.
      */
-    public static final synchronized Preferences getInstance() {
+    public static synchronized Preferences getInstance() {
         // DO NOT MODIFY !!!
         if (_instance == null) {
             _instance = new Preferences();

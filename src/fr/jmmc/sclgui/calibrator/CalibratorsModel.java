@@ -756,7 +756,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // origin and confidence index are enumerations: use shared instance cache to use less memory:
             final Map<String, String> originValues = new HashMap<String, String>(32);
-            final Map<String, String> confidenceValues = new HashMap<String, String>(16);
 
             // reserve space:
             if (tableRows != 0) {
@@ -774,7 +773,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 List<StarProperty> star;
                 Object propertyValue;
                 int groupId, mainGroupCellId;
-                String value, origin, originValue, confidence, confidenceValue;
+                String value, origin, originValue, confidenceValue;
+                Confidence confidence;
                 StarProperty starProperty;
                 boolean isSet;
                 Catalog catalog;
@@ -881,23 +881,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                         // Store the group confidence (always the third group cell)
                         ++mainGroupCellId;
-                        confidence = row.getContent(mainGroupCellId);
+                        confidenceValue = row.getContent(mainGroupCellId);
 
                         // replace "" by null to use less memory:
-                        if (confidence.length() == 0) {
-                            confidence = null;
+                        if (confidenceValue.length() == 0) {
+                            confidence = Confidence.UNDEFINED;
                         } else {
                             isSet = true;
-
-                            confidenceValue = confidenceValues.get(confidence);
-                            if (confidenceValue == null) {
-                                // use interned string:
-                                confidence = confidence.intern();
-                                confidenceValues.put(confidence, confidence);
-                            } else {
-                                // use shared instance
-                                confidence = confidenceValue;
-                            }
+                            confidence = Confidence.parse(confidenceValue);
                         }
 
                         /*
@@ -1123,7 +1114,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             // add RADeg value:
                             star.add(new StarProperty(Double.valueOf(currentRA),
                                     cell.hasOrigin() ? cell.getOrigin() : null,
-                                    cell.hasConfidence() ? cell.getConfidence() : null));
+                                    cell.getConfidence()));
                         }
                     }
                 }
@@ -1150,7 +1141,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             // add RADeg value:
                             star.add(new StarProperty(Double.valueOf(currentDEC),
                                     cell.hasOrigin() ? cell.getOrigin() : null,
-                                    cell.hasConfidence() ? cell.getConfidence() : null));
+                                    cell.getConfidence()));
                         }
                     }
                 }
@@ -1424,7 +1415,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             // confidence index:
                             if (property.hasConfidence()) {
                                 confidenceTd = cacheTD[c + 2];
-                                confidenceTd.setContent(property.getConfidence());
+                                confidenceTd.setContent(property.getConfidence().getIntString());
                             } else {
                                 confidenceTd = emptyTD;
                             }

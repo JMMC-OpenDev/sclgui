@@ -1081,7 +1081,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
                 } else if (starProperty.hasConfidence()) {
                     // Get confidence and set it as tooltip
-                    confidence = starProperty.getConfidence();
+                    confidence = starProperty.getConfidence().toString();
 
                     tooltip = sb.append("Computed value (confidence index: ").append(confidence).append(')').toString();
                     sb.setLength(0); // recycle buffer
