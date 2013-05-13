@@ -730,10 +730,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                     if (fieldDataType.equals("char")) {
                         columnClass = String.class;
-                    } else if (fieldDataType.equals("float")) {
+                    } else if (fieldDataType.equals("double") || fieldDataType.equals("float")) {
                         columnClass = Double.class;
                     } else if (fieldDataType.equals("boolean")) {
                         columnClass = Boolean.class;
+                    } else if (fieldDataType.equals("int")) {
+                        columnClass = Integer.class;
                     }
                 } else {
                     throw new IllegalArgumentException("Invalid VOTable - empty fieldType for " + field.getName());
@@ -835,14 +837,43 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             } else if (columnClass == String.class) {
                                 propertyValue = value;
                             } else if (columnClass == Boolean.class) {
+                                // Test first "0" or "1" values (
+                                if (value.length() == 1) {
+                                    final char ch = Character.toLowerCase(value.charAt(0));
+                                    // 0/1 or T/F cases:
+                                    switch (ch) {
+                                        case '1':
+                                            propertyValue = Boolean.TRUE;
+                                            break;
+                                        case '0':
+                                            propertyValue = Boolean.FALSE;
+                                            break;
+                                        case 't':
+                                            propertyValue = Boolean.TRUE;
+                                            break;
+                                        case 'f':
+                                            propertyValue = Boolean.FALSE;
+                                            break;
+                                        default:
+                                            _logger.warn("invalid Boolean [{}]", value);
+                                            propertyValue = Boolean.FALSE;
+                                    }
+                                } else {
+                                    try {
+                                        propertyValue = Boolean.valueOf(value);
+                                    } catch (NumberFormatException nfe) {
+                                        _logger.warn("invalid Boolean [{}]", value);
+                                    }
+                                }
+                            } else if (columnClass == Integer.class) {
                                 try {
-                                    propertyValue = Boolean.valueOf(value);
+                                    propertyValue = Integer.valueOf(value);
                                 } catch (NumberFormatException nfe) {
-                                    _logger.warn("invalid Boolean [{}]", value);
+                                    _logger.warn("invalid Integer [{}]", value);
                                 }
                             } else {
                                 isSet = false;
-                                _logger.warn("unsupported data type [{}]", columnClass);
+                                _logger.warn("unsupported data type [{}]: {}", columnClass, value);
                             }
                         }
 

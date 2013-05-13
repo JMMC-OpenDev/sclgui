@@ -553,6 +553,7 @@ public final class DiffCalibratorsModel {
         Double dblLeft, dblRight;
         String strLeft, strRight;
         Boolean boolLeft, boolRight;
+        Integer intLeft, intRight;
         Threshold th;
 
         int left, right, diff;
@@ -593,6 +594,8 @@ public final class DiffCalibratorsModel {
 
                         classType = propMeta.getClassType();
 
+                        // TODO: handle new column types (int)
+                        
                         // value:
                         if (classType == Double.class) {
                             dblLeft = starPropertyLeft.getDouble();
@@ -681,6 +684,25 @@ public final class DiffCalibratorsModel {
                                     break;
                                 case 2:
                                     propertyValue = Boolean.FALSE;
+                                    break;
+                            }
+                        } else if (classType == Integer.class) {
+                            intLeft = starPropertyLeft.getInteger();
+                            intRight = starPropertyRight.getInteger();
+
+                            res = compareObject(intLeft, intRight);
+
+                            switch (res) {
+                                default:
+                                    break;
+                                case -1:
+                                    propertyValue = intRight;
+                                    break;
+                                case 1:
+                                    propertyValue = intLeft;
+                                    break;
+                                case 2:
+                                    propertyValue = Integer.valueOf(intLeft.intValue() - intRight.intValue());
                                     break;
                             }
                         } else {
