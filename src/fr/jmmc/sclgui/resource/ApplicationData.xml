@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.5b2"/>
-    <compilation date="16/01/2013" compiler="JDK 1.5.0_16"/>
+    <program name="SearchCal" version="4.5b3"/>
+    <compilation date="16/05/2013" compiler="JDK 1.6"/>
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://apps.jmmc.fr/~sclws/SearchCal/SearchCal.jnlp</jnlp>
@@ -131,6 +131,11 @@
   
     <releasenotes>
         <release version="4.5">
+            <prerelease version="4.5b3">
+                <change type="CHANGE">Increase the minimum required java version from 1.5 to 1.6 (aka java 6)</change>
+                <change type="DEVELOPER">New VOTable format: confidences have integer types, flags move to boolean type (plxFlag, diamFlag, deletedFlag) </change>
+                <change type="DEVELOPER">New diam_count column to count number of consistent computed diameters</change>
+            </prerelease>
             <prerelease version="4.5b2">
                 <change type="FEATURE" url="http://trac.jmmc.fr/jmmc-sw/ticket/343">Added support for J and H bands in faint mode.</change>
             </prerelease>
