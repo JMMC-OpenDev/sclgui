@@ -90,7 +90,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        return 17;
+        return 18;
     }
 
     /**
@@ -174,6 +174,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             // Added server URL preference
             case 16:
                 return updateFromVersion16ToVersion17();
+
+            // Reset legend colors (new HIP1 / HIP2 catalogs)
+            case 17:
+                return updateFromVersion17ToVersion18();
 
             // By default, triggers default values load.
             default:
@@ -711,4 +715,23 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private boolean updateFromVersion16ToVersion17() {
         return true; // To effectively save Preference file with the new empty value as default
     }
+
+    /**
+     * Correction : reset legend colors (new HIP1 / HIP2 catalogs).
+     *
+     * @return always true to force Preference file write to disk with the new empty value as default.
+     */
+    private boolean updateFromVersion17ToVersion18() {
+        // Update legend colors and order
+        try {
+            setLegendColorsAndOrders(false);
+            _logger.debug("Updated legend colors and order.");
+        } catch (PreferencesException pe) {
+            _logger.warn("Could updated legend colors and order:", pe);
+
+            return false;
+        }
+        return true; // To effectively save Preference file with the new empty value as default
+    }
+    
 }
