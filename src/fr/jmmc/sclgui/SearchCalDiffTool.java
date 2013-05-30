@@ -248,13 +248,14 @@ public final class SearchCalDiffTool extends App {
              */
             @Override
             public void run() {
-                _logger.debug("SearchCalDiff.ready : handler called.");
+                _logger.debug("SearchCalDiff.execute() handler called.");
 
                 // Hide filters view
-                final JFrame frame = App.getFrame();
+                final JFrame frame = getFrame();
                 final DiffWindow window = (DiffWindow) frame;
                 final JSplitPane resultPane = window.resultPane;
                 resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
+                
                 frame.setVisible(true);
             }
         });

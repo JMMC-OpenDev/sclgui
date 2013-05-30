@@ -174,13 +174,15 @@ public final class SearchCal extends App {
              */
             @Override
             public void run() {
-                _logger.debug("SearchCal.ready : handler called.");
+                _logger.debug("SearchCal.execute() handler called.");
 
                 // If a query was received (when instanciated by ASPRO)
                 if (_query != null) {
                     // Launch the request
                     _vo.executeQuery(_query);
                 }
+
+                getFrame().setVisible(true);
             }
         });
     }
