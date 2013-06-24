@@ -167,7 +167,7 @@ all:	do_soap do_all
 	cp -vp fr/jmmc/sclgui/resource/*.xsl ../config
 	@echo " . . . 'all' done" 
 
-clean : clean_soap clean_all 
+clean : clean_all 
 	@echo " . . . clean done"
 
 man   : do_man 
@@ -190,9 +190,5 @@ CLASSPATH = $(shell mkfMakeJavaClasspath)
 WSLD_FILE = $(shell miscLocateFile sclws.wsdl)
 do_soap :
 	java -classpath $(CLASSPATH) org.apache.axis.wsdl.WSDL2Java $(WSLD_FILE)
-
-clean_soap :
-	rm -rf fr/jmmc/sclws_wsdl
-
 
 #___oOo___
