@@ -683,7 +683,7 @@ public final class DiffCalibratorsModel {
                                     propertyValue = boolLeft;
                                     break;
                                 case 2:
-                                    propertyValue = Boolean.FALSE;
+                                    propertyValue = boolRight; // show right value (true or false)
                                     break;
                             }
                         } else if (classType == Integer.class) {
