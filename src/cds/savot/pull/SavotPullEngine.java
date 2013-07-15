@@ -1371,14 +1371,12 @@ public final class SavotPullEngine implements Markups {
                                         currentOption.getOptions().addItem(tmp);
                                         includedOption--;
                                     } else {
-                                        if (parsingType == FULL) {
-                                            if (lastFather() == VoTableTag.VALUES) {
-                                                currentValues.getOptions().addItem(currentOption);
-                                                if (trace) {
-                                                    System.err.println("OPTION from VALUES father = " + father);
-                                                }
-                                                includedOption--;
+                                        if (lastFather() == VoTableTag.VALUES) {
+                                            currentValues.getOptions().addItem(currentOption);
+                                            if (trace) {
+                                                System.err.println("OPTION from VALUES father = " + father);
                                             }
+                                            includedOption--;
                                         }
                                     }
                                     break;
