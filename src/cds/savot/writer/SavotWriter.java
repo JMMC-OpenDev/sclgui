@@ -92,7 +92,6 @@ import cds.savot.model.SavotTable;
 import cds.savot.model.SavotTableData;
 import cds.savot.model.SavotVOTable;
 import cds.savot.model.SavotValues;
-import cds.savot.model.TDSet;
 import cds.savot.model.TRSet;
 import cds.savot.model.TableSet;
 import java.io.BufferedOutputStream;
@@ -103,6 +102,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
@@ -121,8 +121,10 @@ import java.util.zip.GZIPOutputStream;
  */
 public final class SavotWriter {
 
+    private static final String tdempty = "<TD/>";
+    private static final String tdbegin = "<TD>";
     private static final String tdbegin1 = "<TD";
-    private static final char tdbegin2 = '>';
+    private static final String tdbegin2 = ">";
     private static final String tdend = "</TD>";
     private static final String trbegin = "<TR>";
     private static final String trend = "</TR>\n";
@@ -1456,56 +1458,44 @@ public final class SavotWriter {
      */
     public void writeTR(final SavotTR tr) throws IOException {
         final Writer w = bw; // local copy
-        final boolean encode = elementEntities;
-        String s;
-        /*
-         if ((s = tr.getAbove()).length() != 0) {
-         writeComment(s);
-         }
-         */
+        final boolean doEncode = elementEntities;
+        String e, v;
+
         // <TR>
         w.write(trbegin);
-        /*
-         if ((s = tr.getBelow()).length() != 0) {
-         // TODO
-         writeComment(s);
-         }
-         */
 
         // TODO: ID attribute ?
 
-        final TDSet tds = tr.getTDSet();
+        final List<SavotTD> tds = tr.getTDSet().getItems();
         SavotTD td;
 
-        for (int i = 0, tdLen = tds.getItemCount(); i < tdLen; i++) {
-            td = tds.getItemAt(i);
-            /*
-             if ((s = td.getAbove()).length() != 0) {
-             // TODO
-             writeComment(s);
-             }
-             */
-            // <TD>
-            w.write(tdbegin1);
+        for (int i = 0, tdLen = tds.size(); i < tdLen; i++) {
+            td = tds.get(i);
 
-            // TD attributes
-            if ((s = td.getEncoding()).length() != 0) {
-                w.append(" encoding=\"").append(s).append('"');
+            // use raw values to test null values efficiently:
+            v = td.getRawContent();
+
+            if (v != null) {
+
+                // TD optional encoding attribute
+                e = td.getRawEncoding();
+
+                if (e != null) {
+                    // <TD encoding="...">
+                    w.append(tdbegin1).append(" encoding=\"").append(e).append('"').write(tdbegin2);
+                } else {
+                    // <TD>
+                    w.write(tdbegin);
+                }
+
+                w.write((doEncode) ? encodeElement(v) : v);
+
+                // </TD>
+                w.write(tdend);
+
+            } else {
+                w.write(tdempty);
             }
-
-            w.write(tdbegin2);
-            /*
-             if ((s = td.getBelow()).length() != 0) {
-             // TODO
-             writeComment(s);
-             }
-             */
-            if ((s = td.getContent()).length() != 0) {
-                w.write((encode) ? encodeElement(s) : s);
-            }
-
-            // </TD>
-            w.write(tdend);
         }
         // </TR>
         w.write(trend);
