@@ -171,7 +171,7 @@ public final class QueryView extends JPanel implements Observer,
         symbols.setNaN("???"); // Set the symbol for a Double.NaN to an empty String
 
         DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####", symbols));
-        doubleFormater.setValueClass(java.lang.Double.class);
+        doubleFormater.setValueClass(Double.class);
 
         DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
                 doubleFormater, doubleFormater);
@@ -353,9 +353,8 @@ public final class QueryView extends JPanel implements Observer,
         DecimalFormatSymbols radialSymbols = new DecimalFormatSymbols();
         radialSymbols.setNaN("0.0"); // Set the symbol for a Double.NaN to an "auto" String
 
-        DefaultFormatter radialDoubleFormater = new NumberFormatter(new DecimalFormat(
-                "0.0####", radialSymbols));
-        radialDoubleFormater.setValueClass(java.lang.Double.class);
+        DefaultFormatter radialDoubleFormater = new NumberFormatter(new DecimalFormat("0.0####", radialSymbols));
+        radialDoubleFormater.setValueClass(Double.class);
 
         DefaultFormatterFactory radialDoubleFormaterFactory = new DefaultFormatterFactory(radialDoubleFormater,
                 radialDoubleFormater, radialDoubleFormater);

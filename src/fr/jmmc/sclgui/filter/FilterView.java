@@ -66,9 +66,8 @@ public final class FilterView extends JPanel implements Observer {
 
         // JFormattedTextField formatter creation
         DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####"));
-        doubleFormater.setValueClass(java.lang.Double.class);
-        _doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
-                doubleFormater, doubleFormater);
+        doubleFormater.setValueClass(Double.class);
+        _doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater, doubleFormater, doubleFormater);
 
         // Create the filter enable/disable checkbox
         _enabledCheckbox = new JCheckBox(_filter.getName(), _filter.isEnabled());
@@ -134,7 +133,7 @@ public final class FilterView extends JPanel implements Observer {
         ParamListener paramListener;
 
         // If the constraint is a Double object
-        if (constraintValue.getClass() == java.lang.Double.class) {
+        if (constraintValue.getClass() == Double.class) {
             // Create the widget label
             panel.add(label);
 
@@ -150,7 +149,7 @@ public final class FilterView extends JPanel implements Observer {
             panel.add(widget);
             add(panel);
         } // Else if the constraint is a String object
-        else if (constraintValue.getClass() == java.lang.String.class) {
+        else if (constraintValue.getClass() == String.class) {
             // Create the widget label
             panel.add(label);
 
@@ -164,10 +163,9 @@ public final class FilterView extends JPanel implements Observer {
             panel.add(widget);
             add(panel);
         } // Else if the constraint is a Boolean object
-        else if (constraintValue.getClass() == java.lang.Boolean.class) {
+        else if (constraintValue.getClass() == Boolean.class) {
             // Create the constraint widget
-            JCheckBox widget = new JCheckBox(constraintName,
-                    ((Boolean) constraintValue).booleanValue());
+            JCheckBox widget = new JCheckBox(constraintName, ((Boolean) constraintValue).booleanValue());
             paramListener = new ParamListener(_filter, constraintName, widget);
             widget.addActionListener(paramListener);
             _widgets.put(constraintName, widget);
@@ -299,7 +297,7 @@ public final class FilterView extends JPanel implements Observer {
 
                 // Refresh its value from the corresponding widget
                 // If the constraint is a Double object
-                if (constraintValue.getClass() == java.lang.Double.class) {
+                if (constraintValue.getClass() == Double.class) {
                     try {
                         // Convert and commit the new value (focus lost)
                         ((JFormattedTextField) _widget).commitEdit();
@@ -310,11 +308,11 @@ public final class FilterView extends JPanel implements Observer {
                     Double doubleValue = (Double) ((JFormattedTextField) _widget).getValue();
                     _filter.setConstraint(_constraintName, doubleValue);
                 } // Else if the constraint is a String object
-                else if (constraintValue.getClass() == java.lang.String.class) {
+                else if (constraintValue.getClass() == String.class) {
                     String stringValue = ((JTextField) _widget).getText();
                     _filter.setConstraint(_constraintName, stringValue);
                 } // Else if the constraint is a Boolean object
-                else if (constraintValue.getClass() == java.lang.Boolean.class) {
+                else if (constraintValue.getClass() == Boolean.class) {
                     Boolean booleanValue = ((JCheckBox) _widget).isSelected();
                     _filter.setConstraint(_constraintName, booleanValue);
                 }
