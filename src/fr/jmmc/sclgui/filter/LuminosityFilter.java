@@ -109,7 +109,7 @@ public final class LuminosityFilter extends Filter {
             // If spectral type was found in the current line
             if (cell.hasValue()) {
                 // Extract the spectral type from the cell
-                final String rawSpectralType = cell.getStringValue();
+                final String rawSpectralType = cell.getString();
 
                 // Get back the luminosity classes found in the given spectral type
                 final List<String> luminosityClasses = ALX.luminosityClasses(rawSpectralType);

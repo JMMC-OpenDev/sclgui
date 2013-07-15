@@ -74,7 +74,7 @@ public final class SpectralTypeFilter extends Filter {
 
             // If spectral type was found in the current line
             if (cell.hasValue()) {
-                final String rawSpectralType = cell.getStringValue();
+                final String rawSpectralType = cell.getString();
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("rawSpectralType = '{}'.", rawSpectralType);
                 }

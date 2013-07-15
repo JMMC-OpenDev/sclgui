@@ -92,7 +92,7 @@ public final class VariabilityFilter extends Filter {
             // If "variability3" flag was found in the current line
             if (cell.hasValue()) {
                 // If "variability3" value is not "C"
-                final String varFlag3Flag = cell.getStringValue().trim();
+                final String varFlag3Flag = cell.getString().trim();
 
                 if (!varFlag3Flag.equalsIgnoreCase("C")) {
                     // This row should be removed
