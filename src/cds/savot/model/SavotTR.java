@@ -68,7 +68,7 @@ package cds.savot.model;
  * @author Andre Schaaff
  * @version 4.0 (kickoff 31 May 02)
  */
-public final class SavotTR extends SavotBase /* MarkupComment */ implements IDSupport {
+public final class SavotTR extends SavotBase implements IDSupport {
 
     // ID attribute - extension since 1.2
     private String id = null;

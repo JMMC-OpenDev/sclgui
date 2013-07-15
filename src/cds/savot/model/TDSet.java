@@ -81,7 +81,7 @@ public final class TDSet extends SavotSet<SavotTD> {
      * Get the content at the TDIndex position of the TDSet
      * 
      * @param TDIndex
-     * @return String
+     * @return a String
      */
     public String getContent(final int TDIndex) {
         final SavotTD td = getItemAt(TDIndex);
@@ -89,5 +89,19 @@ public final class TDSet extends SavotSet<SavotTD> {
             return "";
         }
         return td.getContent();
+    }
+
+    /**
+     * Get the raw content at the TDIndex position of the TDSet (maybe null)
+     * 
+     * @param TDIndex
+     * @return a String or null
+     */
+    public String getRawContent(final int TDIndex) {
+        final SavotTD td = getItemAt(TDIndex);
+        if (td == null) {
+            return null;
+        }
+        return td.getRawContent();
     }
 }

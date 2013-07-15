@@ -69,7 +69,7 @@ package cds.savot.model;
  * @version 4.0 (kickoff 31 May 02)
  * @see SavotSet
  */
-public final class SavotTD extends SavotBase /* MarkupComment */ {
+public final class SavotTD extends SavotBase {
 
     // encoding attribute - extension since 1.2
     private String encoding = null;
@@ -102,6 +102,15 @@ public final class SavotTD extends SavotBase /* MarkupComment */ {
     }
 
     /**
+     * Get the raw encoding value (maybe null)
+     * 
+     * @return a String or null
+     */
+    public String getRawEncoding() {
+        return encoding;
+    }
+
+    /**
      * Set element content
      * 
      * @param content
@@ -117,5 +126,14 @@ public final class SavotTD extends SavotBase /* MarkupComment */ {
      */
     public String getContent() {
         return str(content);
+    }
+
+    /**
+     * Get the raw content value (maybe null)
+     * 
+     * @return a String or null
+     */
+    public String getRawContent() {
+        return content;
     }
 }
