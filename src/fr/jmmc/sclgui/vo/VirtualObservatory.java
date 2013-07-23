@@ -308,7 +308,7 @@ public final class VirtualObservatory extends Observable {
             return false; // Exit immediatly
         }
 
-        StatusBar.show("saving file...");
+        StatusBar.show("saving file " + selectedFile.getName() + " ...");
 
         // save data to file and remember its path
         _calibratorsModel.saveVOTableFile(selectedFile);
@@ -371,7 +371,7 @@ public final class VirtualObservatory extends Observable {
 
                 // If a file was defined (No cancel in the dialog)
                 if (_currentFile != null) {
-                    StatusBar.show("loading file...");
+                    StatusBar.show("loading file " + _currentFile.getName()+ " ...");
 
                     // Loading the file in the calibrators model
                     String errorMsg = null;
@@ -486,7 +486,6 @@ public final class VirtualObservatory extends Observable {
         @Override
         public void actionPerformed(ActionEvent e) {
             _currentFile = null; // reset previously remembered file (if any)
-            StatusBar.show("saving file as...");
             if (saveCalibratorListToFile()) {
                 StatusBar.show("file succesfully saved.");
             }
