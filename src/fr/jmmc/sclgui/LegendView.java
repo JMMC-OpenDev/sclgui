@@ -421,13 +421,13 @@ public final class LegendView extends JPanel {
                 }
             }
 
-            // Implement the one CellEditor method that AbstractCellEditor doesn't.
+            // Implement one CellEditor method that AbstractCellEditor doesn't.
             @Override
             public Object getCellEditorValue() {
                 return _currentColor;
             }
 
-            // Implement the one method defined by TableCellEditor.
+            // Implement one method defined by TableCellEditor.
             @Override
             public Component getTableCellEditorComponent(JTable table,
                     Object value, boolean isSelected, int row, int column) {
