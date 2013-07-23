@@ -6,6 +6,7 @@ package fr.jmmc.sclgui.vo;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.util.MCSExceptionHandler;
+import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.sclgui.vo.VirtualObservatory.QueryState;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import java.awt.event.ActionEvent;
@@ -271,10 +272,10 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                         currentCatalogName = Catalog.titleFromReference(splittedStatus[i++]);
 
                         // Get the catalog index
-                        catalogIndex = Integer.valueOf(splittedStatus[i++]);
+                        catalogIndex = NumberUtils.valueOf(splittedStatus[i++]);
 
                         // Get the total number of catalogs
-                        nbOfCatalogs = Integer.valueOf(splittedStatus[i++]);
+                        nbOfCatalogs = NumberUtils.valueOf(splittedStatus[i++]);
 
                         // Compose the dispalyed query status
                         final String composedQueryStatus = currentCatalogName
@@ -286,8 +287,8 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
                     } else {
                         currentCatalogName = "";
-                        catalogIndex = Integer.valueOf(0);
-                        nbOfCatalogs = Integer.valueOf(0);
+                        catalogIndex = NumberUtils.valueOf(0);
+                        nbOfCatalogs = NumberUtils.valueOf(0);
                     }
 
                     if (_logger.isDebugEnabled()) {
