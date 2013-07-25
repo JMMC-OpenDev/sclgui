@@ -72,916 +72,883 @@ import java.util.zip.GZIPOutputStream;
  */
 public final class AbortableCommonsHTTPSender extends BasicHandler {
 
-  /** default serial UID for Serializable interface */
-  private static final long serialVersionUID = 1;
-  /** Field log */
-  protected static Log log = LogFactory.getLog(AbortableCommonsHTTPSender.class.getName());
-  /** connection manager */
-  protected MultiThreadedHttpConnectionManager connectionManager;
-  /** http client properties */
-  protected CommonsHTTPClientProperties clientProperties;
-  /** Use HTTP chunking or not */
-  protected boolean httpChunkStream = true;
+    /** default serial UID for Serializable interface */
+    private static final long serialVersionUID = 1;
+    /** Field log */
+    private static Log log = LogFactory.getLog(AbortableCommonsHTTPSender.class.getName());
+    /** connection manager */
+    private MultiThreadedHttpConnectionManager connectionManager;
+    /** http client properties */
+    private CommonsHTTPClientProperties clientProperties;
+    /** Use HTTP chunking or not */
+    private boolean httpChunkStream = true;
 
-  /**
-   * Public constructor
-   */
-  public AbortableCommonsHTTPSender() {
-    initialize();
-    
-    log.debug("AbortableCommonsHTTPSender created.");
-  }
+    /**
+     * Public constructor
+     */
+    public AbortableCommonsHTTPSender() {
+        initialize();
 
-  /**
-   * Allocate the MultiThreadedHttpConnectionManager and define its default parameters
-   */
-  protected final void initialize() {
-    MultiThreadedHttpConnectionManager cm = new MultiThreadedHttpConnectionManager();
-    this.clientProperties = CommonsHTTPClientPropertiesFactory.create();
-    cm.getParams().setDefaultMaxConnectionsPerHost(clientProperties.getMaximumConnectionsPerHost());
-    cm.getParams().setMaxTotalConnections(clientProperties.getMaximumTotalConnections());
-    // If defined, set the default timeouts
-    // Can be overridden by the MessageContext
-    if (this.clientProperties.getDefaultConnectionTimeout() > 0) {
-      cm.getParams().setConnectionTimeout(this.clientProperties.getDefaultConnectionTimeout());
+        log.debug("AbortableCommonsHTTPSender created.");
     }
-    if (this.clientProperties.getDefaultSoTimeout() > 0) {
-      cm.getParams().setSoTimeout(this.clientProperties.getDefaultSoTimeout());
+
+    /**
+     * Allocate the MultiThreadedHttpConnectionManager and define its default parameters
+     */
+    private void initialize() {
+        MultiThreadedHttpConnectionManager cm = new MultiThreadedHttpConnectionManager();
+        this.clientProperties = CommonsHTTPClientPropertiesFactory.create();
+        cm.getParams().setDefaultMaxConnectionsPerHost(clientProperties.getMaximumConnectionsPerHost());
+        cm.getParams().setMaxTotalConnections(clientProperties.getMaximumTotalConnections());
+        // If defined, set the default timeouts
+        // Can be overridden by the MessageContext
+        if (this.clientProperties.getDefaultConnectionTimeout() > 0) {
+            cm.getParams().setConnectionTimeout(this.clientProperties.getDefaultConnectionTimeout());
+        }
+        if (this.clientProperties.getDefaultSoTimeout() > 0) {
+            cm.getParams().setSoTimeout(this.clientProperties.getDefaultSoTimeout());
+        }
+        this.connectionManager = cm;
     }
-    this.connectionManager = cm;
-  }
 
-  /**
-   * invoke creates a socket connection, sends the request SOAP message and then
-   * reads the response SOAP message back from the SOAP server
-   *
-   * @param msgContext the messsage context
-   *
-   * @throws AxisFault
-   */
-  public void invoke(final MessageContext msgContext) throws AxisFault {
-    HttpMethodBase method = null;
-    if (log.isDebugEnabled()) {
-      log.debug(Messages.getMessage("enter00",
-              "CommonsHTTPSender::invoke"));
-    }
-    try {
-      URL targetURL =
-          new URL(msgContext.getStrProp(MessageContext.TRANS_URL));
-
-      // no need to retain these, as the cookies/credentials are
-      // stored in the message context across multiple requests.
-      // the underlying connection manager, however, is retained
-      // so sockets get recycled when possible.
-      HttpClient httpClient = new HttpClient(this.connectionManager);
-      // the timeout value for allocation of connections from the pool
-      httpClient.getParams().setConnectionManagerTimeout(this.clientProperties.getConnectionPoolTimeout());
-
-      HostConfiguration hostConfiguration =
-                        getHostConfiguration(httpClient, msgContext, targetURL);
-
-      boolean posting = true;
-
-      // If we're SOAP 1.2, allow the web method to be set from the
-      // MessageContext.
-      if (msgContext.getSOAPConstants() == SOAPConstants.SOAP12_CONSTANTS) {
-        String webMethod = msgContext.getStrProp(SOAP12Constants.PROP_WEBMETHOD);
-        if (webMethod != null) {
-          posting = webMethod.equals(HTTPConstants.HEADER_POST);
+    /**
+     * invoke creates a socket connection, sends the request SOAP message and then
+     * reads the response SOAP message back from the SOAP server
+     *
+     * @param msgContext the messsage context
+     *
+     * @throws AxisFault
+     */
+    @Override
+    public void invoke(final MessageContext msgContext) throws AxisFault {
+        HttpMethodBase method = null;
+        if (log.isDebugEnabled()) {
+            log.debug(Messages.getMessage("enter00", "CommonsHTTPSender::invoke"));
         }
-      }
+        try {
+            URL targetURL = new URL(msgContext.getStrProp(MessageContext.TRANS_URL));
 
-      if (posting) {
-        Message reqMessage = msgContext.getRequestMessage();
-        method = new PostMethod(targetURL.toString());
+            // no need to retain these, as the cookies/credentials are
+            // stored in the message context across multiple requests.
+            // the underlying connection manager, however, is retained
+            // so sockets get recycled when possible.
+            HttpClient httpClient = new HttpClient(this.connectionManager);
+            // the timeout value for allocation of connections from the pool
+            httpClient.getParams().setConnectionManagerTimeout(this.clientProperties.getConnectionPoolTimeout());
 
-        // set false as default, addContetInfo can overwrite
-        method.getParams().setBooleanParameter(HttpMethodParams.USE_EXPECT_CONTINUE,
-                false);
+            HostConfiguration hostConfiguration = getHostConfiguration(httpClient, msgContext, targetURL);
 
-        addContextInfo(method, httpClient, msgContext, targetURL);
+            boolean posting = true;
 
-        MessageRequestEntity requestEntity = null;
-        if (msgContext.isPropertyTrue(HTTPConstants.MC_GZIP_REQUEST)) {
-          requestEntity = new GzipMessageRequestEntity(method, reqMessage, httpChunkStream);
-        } else {
-          requestEntity = new MessageRequestEntity(method, reqMessage, httpChunkStream);
-        }
-        ((PostMethod) method).setRequestEntity(requestEntity);
-      } else {
-        method = new GetMethod(targetURL.toString());
-        addContextInfo(method, httpClient, msgContext, targetURL);
-      }
+            // If we're SOAP 1.2, allow the web method to be set from the
+            // MessageContext.
+            if (msgContext.getSOAPConstants() == SOAPConstants.SOAP12_CONSTANTS) {
+                String webMethod = msgContext.getStrProp(SOAP12Constants.PROP_WEBMETHOD);
+                if (webMethod != null) {
+                    posting = webMethod.equals(HTTPConstants.HEADER_POST);
+                }
+            }
 
-      String httpVersion =
-             msgContext.getStrProp(MessageContext.HTTP_TRANSPORT_VERSION);
-      if (httpVersion != null) {
-        if (httpVersion.equals(HTTPConstants.HEADER_PROTOCOL_V10)) {
-          method.getParams().setVersion(HttpVersion.HTTP_1_0);
-        }
-        // assume 1.1
-      }
+            if (posting) {
+                Message reqMessage = msgContext.getRequestMessage();
+                method = new PostMethod(targetURL.toString());
 
-      // don't forget the cookies!
-      // Cookies need to be set on HttpState, since HttpMethodBase
-      // overwrites the cookies from HttpState
-      if (msgContext.getMaintainSession()) {
-        HttpState state = httpClient.getState();
-        method.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
-        String host = hostConfiguration.getHost();
-        String path = targetURL.getPath();
-        boolean secure = hostConfiguration.getProtocol().isSecure();
-        fillHeaders(msgContext, state, HTTPConstants.HEADER_COOKIE, host, path, secure);
-        fillHeaders(msgContext, state, HTTPConstants.HEADER_COOKIE2, host, path, secure);
-        httpClient.setState(state);
-      }
+                // set false as default, addContetInfo can overwrite
+                method.getParams().setBooleanParameter(HttpMethodParams.USE_EXPECT_CONTINUE, false);
 
-      // LAURENT : memorize HTTPMethodBase associated to the current thread:
-      HttpMethodThreadMap.get().set(Thread.currentThread().getName(), method);
+                addContextInfo(method, httpClient, msgContext, targetURL);
 
-      int returnCode = httpClient.executeMethod(hostConfiguration, method, null);
+                final MessageRequestEntity requestEntity;
+                if (msgContext.isPropertyTrue(HTTPConstants.MC_GZIP_REQUEST)) {
+                    requestEntity = new GzipMessageRequestEntity(method, reqMessage, httpChunkStream);
+                } else {
+                    requestEntity = new MessageRequestEntity(method, reqMessage, httpChunkStream);
+                }
+                ((PostMethod) method).setRequestEntity(requestEntity);
+            } else {
+                method = new GetMethod(targetURL.toString());
+                addContextInfo(method, httpClient, msgContext, targetURL);
+            }
 
-      String contentType =
-             getHeader(method, HTTPConstants.HEADER_CONTENT_TYPE);
-      String contentLocation =
-             getHeader(method, HTTPConstants.HEADER_CONTENT_LOCATION);
-      String contentLength =
-             getHeader(method, HTTPConstants.HEADER_CONTENT_LENGTH);
+            String httpVersion = msgContext.getStrProp(MessageContext.HTTP_TRANSPORT_VERSION);
+            if (httpVersion != null) {
+                if (httpVersion.equals(HTTPConstants.HEADER_PROTOCOL_V10)) {
+                    method.getParams().setVersion(HttpVersion.HTTP_1_0);
+                }
+                // assume 1.1
+            }
 
-      if ((returnCode > 199) && (returnCode < 300)) {
-        // SOAP return is OK - so fall through
-      } else if (msgContext.getSOAPConstants()
-              == SOAPConstants.SOAP12_CONSTANTS) {
-        // For now, if we're SOAP 1.2, fall through, since the range of
-        // valid result codes is much greater
-      } else if ((contentType != null) && !contentType.equals("text/html")
-              && ((returnCode > 499) && (returnCode < 600))) {
-        // SOAP Fault should be in here - so fall through
-      } else {
-        String statusMessage = method.getStatusText();
-        AxisFault fault = new AxisFault("HTTP",
-                "(" + returnCode + ")"
-                + statusMessage, null,
-                null);
+            // don't forget the cookies!
+            // Cookies need to be set on HttpState, since HttpMethodBase
+            // overwrites the cookies from HttpState
+            if (msgContext.getMaintainSession()) {
+                HttpState state = httpClient.getState();
+                method.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
+                String host = hostConfiguration.getHost();
+                String path = targetURL.getPath();
+                boolean secure = hostConfiguration.getProtocol().isSecure();
+                fillHeaders(msgContext, state, HTTPConstants.HEADER_COOKIE, host, path, secure);
+                fillHeaders(msgContext, state, HTTPConstants.HEADER_COOKIE2, host, path, secure);
+                httpClient.setState(state);
+            }
+
+            // LAURENT : memorize HTTPMethodBase associated to the current thread:
+            HttpMethodThreadMap.get().set(Thread.currentThread().getName(), method);
+
+            int returnCode = httpClient.executeMethod(hostConfiguration, method, null);
+
+            String contentType = getHeader(method, HTTPConstants.HEADER_CONTENT_TYPE);
+            String contentLocation = getHeader(method, HTTPConstants.HEADER_CONTENT_LOCATION);
+            String contentLength = getHeader(method, HTTPConstants.HEADER_CONTENT_LENGTH);
+
+            if ((returnCode > 199) && (returnCode < 300)) {
+                // SOAP return is OK - so fall through
+            } else if (msgContext.getSOAPConstants() == SOAPConstants.SOAP12_CONSTANTS) {
+                // For now, if we're SOAP 1.2, fall through, since the range of
+                // valid result codes is much greater
+            } else if ((contentType != null) && !contentType.equals("text/html")
+                    && ((returnCode > 499) && (returnCode < 600))) {
+                // SOAP Fault should be in here - so fall through
+            } else {
+                String statusMessage = method.getStatusText();
+                AxisFault fault = new AxisFault("HTTP", "(" + returnCode + ")" + statusMessage, null, null);
 
 //        try {
-        fault.setFaultDetailString(
-                Messages.getMessage("return01",
-                "" + returnCode,
-                method.getResponseBodyAsString()));
-        fault.addFaultDetail(Constants.QNAME_FAULTDETAIL_HTTPERRORCODE,
-                Integer.toString(returnCode));
-        throw fault;
+                fault.setFaultDetailString(Messages.getMessage("return01", "" + returnCode, method.getResponseBodyAsString()));
+                fault.addFaultDetail(Constants.QNAME_FAULTDETAIL_HTTPERRORCODE, Integer.toString(returnCode));
+                throw fault;
 //        } finally {
 // LAURENT :
 //          relaseConnection(method);
 //          method.releaseConnection();
 //        }
-      }
+            }
 
-      // wrap the response body stream so that close() also releases
-      // the connection back to the pool.
-      InputStream releaseConnectionOnCloseStream =
-                  createConnectionReleasingInputStream(method);
+            // wrap the response body stream so that close() also releases
+            // the connection back to the pool.
+            InputStream releaseConnectionOnCloseStream = createConnectionReleasingInputStream(method);
 
-      Header contentEncoding =
-             method.getResponseHeader(HTTPConstants.HEADER_CONTENT_ENCODING);
-      if (contentEncoding != null) {
-        if (contentEncoding.getValue().
-                equalsIgnoreCase(HTTPConstants.COMPRESSION_GZIP)) {
-          releaseConnectionOnCloseStream =
-          new GZIPInputStream(releaseConnectionOnCloseStream);
-        } else {
-          AxisFault fault = new AxisFault("HTTP",
-                  "unsupported content-encoding of '"
-                  + contentEncoding.getValue()
-                  + "' found", null, null);
-          throw fault;
-        }
+            Header contentEncoding = method.getResponseHeader(HTTPConstants.HEADER_CONTENT_ENCODING);
+            if (contentEncoding != null) {
+                if (contentEncoding.getValue().equalsIgnoreCase(HTTPConstants.COMPRESSION_GZIP)) {
+                    releaseConnectionOnCloseStream = new GZIPInputStream(releaseConnectionOnCloseStream);
+                } else {
+                    AxisFault fault = new AxisFault("HTTP", "unsupported content-encoding of '" + contentEncoding.getValue() + "' found", null, null);
+                    throw fault;
+                }
 
-      }
-      Message outMsg = new Message(releaseConnectionOnCloseStream,
-              false, contentType, contentLocation);
-      // Transfer HTTP headers of HTTP message to MIME headers of SOAP message
-      Header[] responseHeaders = method.getResponseHeaders();
-      MimeHeaders responseMimeHeaders = outMsg.getMimeHeaders();
-      for (int i = 0; i < responseHeaders.length; i++) {
-        Header responseHeader = responseHeaders[i];
-        responseMimeHeaders.addHeader(responseHeader.getName(),
-                responseHeader.getValue());
-      }
-      outMsg.setMessageType(Message.RESPONSE);
-      msgContext.setResponseMessage(outMsg);
-      if (log.isDebugEnabled()) {
-        if (null == contentLength) {
-          log.debug("\n"
-                  + Messages.getMessage("no00", "Content-Length"));
-        }
-        log.debug("\n" + Messages.getMessage("xmlRecd00"));
-        log.debug("-----------------------------------------------");
-        log.debug(outMsg.getSOAPPartAsString());
-      }
+            }
+            Message outMsg = new Message(releaseConnectionOnCloseStream,
+                    false, contentType, contentLocation);
+            // Transfer HTTP headers of HTTP message to MIME headers of SOAP message
+            Header[] responseHeaders = method.getResponseHeaders();
+            MimeHeaders responseMimeHeaders = outMsg.getMimeHeaders();
+            for (int i = 0; i < responseHeaders.length; i++) {
+                Header responseHeader = responseHeaders[i];
+                responseMimeHeaders.addHeader(responseHeader.getName(), responseHeader.getValue());
+            }
+            outMsg.setMessageType(Message.RESPONSE);
+            msgContext.setResponseMessage(outMsg);
+            if (log.isDebugEnabled()) {
+                if (null == contentLength) {
+                    log.debug("\n" + Messages.getMessage("no00", "Content-Length"));
+                }
+                log.debug("\n" + Messages.getMessage("xmlRecd00"));
+                log.debug("-----------------------------------------------");
+                log.debug(outMsg.getSOAPPartAsString());
+            }
 
-      // if we are maintaining session state,
-      // handle cookies (if any)
-      if (msgContext.getMaintainSession()) {
-        Header[] headers = method.getResponseHeaders();
-
-        for (int i = 0; i < headers.length; i++) {
-          if (headers[i].getName().equalsIgnoreCase(HTTPConstants.HEADER_SET_COOKIE)) {
-            handleCookie(HTTPConstants.HEADER_COOKIE, headers[i].getValue(), msgContext);
-          } else if (headers[i].getName().equalsIgnoreCase(HTTPConstants.HEADER_SET_COOKIE2)) {
-            handleCookie(HTTPConstants.HEADER_COOKIE2, headers[i].getValue(), msgContext);
-          }
-        }
-      }
-
-      // always release the connection back to the pool if
-      // it was one way invocation
-      if (msgContext.isPropertyTrue("axis.one.way")) {
 // LAURENT :
-        relaseConnection(method);
+            /*
+             log.info("Content-Type:   " + contentType);
+             log.info("Content-Type:   " + contentEncoding);
+             log.info("Content-Length: " + contentLength);
+             */
+
+            // if we are maintaining session state,
+            // handle cookies (if any)
+            if (msgContext.getMaintainSession()) {
+                Header[] headers = method.getResponseHeaders();
+
+                for (int i = 0; i < headers.length; i++) {
+                    if (headers[i].getName().equalsIgnoreCase(HTTPConstants.HEADER_SET_COOKIE)) {
+                        handleCookie(HTTPConstants.HEADER_COOKIE, headers[i].getValue(), msgContext);
+                    } else if (headers[i].getName().equalsIgnoreCase(HTTPConstants.HEADER_SET_COOKIE2)) {
+                        handleCookie(HTTPConstants.HEADER_COOKIE2, headers[i].getValue(), msgContext);
+                    }
+                }
+            }
+
+            // always release the connection back to the pool if
+            // it was one way invocation
+            if (msgContext.isPropertyTrue("axis.one.way")) {
+// LAURENT :
+                relaseConnection(method);
 //          method.releaseConnection();
-      }
+            }
 
-    } catch (Exception e) {
-      log.debug(e);
+        } catch (Exception e) {
+            log.debug(e);
 
-      // LAURENT :
-      // To be sure to release connection when catching java.net.SocketException: Socket closed:
-      relaseConnection(method);
+            // LAURENT :
+            // To be sure to release connection when catching java.net.SocketException: Socket closed:
+            relaseConnection(method);
 
-      throw AxisFault.makeFault(e);
+            throw AxisFault.makeFault(e);
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug(Messages.getMessage("exit00", "CommonsHTTPSender::invoke"));
+        }
     }
 
-    if (log.isDebugEnabled()) {
-      log.debug(Messages.getMessage("exit00",
-              "CommonsHTTPSender::invoke"));
+    /**
+     * Release both connection and the HttpMethodBase associated to the current thread
+     * Added by LAURENT
+     *
+     * @param method HttpMethodBase to release
+     */
+    private static void relaseConnection(final HttpMethodBase method) {
+        relaseConnection(method, Thread.currentThread().getName());
     }
-  }
 
-  /**
-   * Release both connection and the HttpMethodBase associated to the current thread
-   * Added by LAURENT
-   *
-   * @param method HttpMethodBase to release
-   */
-  private static void relaseConnection(final HttpMethodBase method) {
-    relaseConnection(method, Thread.currentThread().getName());
-  }
-
-  /**
-   * Release both connection and the thread local HttpMethodBase associated to the given thread name
-   * Added by LAURENT
-   *
-   * @param method HttpMethodBase to release
-   * @param threadName thread name
-   */
-  private static void relaseConnection(final HttpMethodBase method, final String threadName) {
+    /**
+     * Release both connection and the thread local HttpMethodBase associated to the given thread name
+     * Added by LAURENT
+     *
+     * @param method HttpMethodBase to release
+     * @param threadName thread name
+     */
+    private static void relaseConnection(final HttpMethodBase method, final String threadName) {
 
 //    if (true) {
 //      log.error("relaseConnection : stack: ", new Throwable());
 //    } else {
 //      log.error("relaseConnection: " + method);
 //    }
-     
-    if (log.isDebugEnabled()) {
-      log.debug("relaseConnection : " + threadName + " = " + method);
+
+        if (log.isDebugEnabled()) {
+            log.debug("relaseConnection : " + threadName + " = " + method);
+        }
+
+        // LAURENT : clear HttpMethodBase and release connection once:
+        HttpMethodThreadMap.get().remove(threadName);
+
+        // release connection back to pool:
+        if (method != null) {
+            method.releaseConnection();
+        }
     }
 
-    // LAURENT : clear HttpMethodBase and release connection once:
-    HttpMethodThreadMap.get().remove(threadName);
-
-    // release connection back to pool:
-    if (method != null) {
-      method.releaseConnection();
-    }
-  }
-
-  /**
-   * Abort the execution of the Http method associated to the given thread
-   * Added by LAURENT
-   *
-   * @param thread thread to use
-   */
-  public static void abort(final Thread thread) {
-    final String threadName = thread.getName();
+    /**
+     * Abort the execution of the Http method associated to the given thread
+     * Added by LAURENT
+     *
+     * @param thread thread to use
+     */
+    public static void abort(final Thread thread) {
+        final String threadName = thread.getName();
 
 //    log.error("abort: " + threadName);
 
-    final HttpMethodBase method = HttpMethodThreadMap.get().get(threadName);
+        final HttpMethodBase method = HttpMethodThreadMap.get().get(threadName);
 
-    if (log.isDebugEnabled()) {
-      log.debug("abort : " + threadName + " = " + method);
-    }
+        if (log.isDebugEnabled()) {
+            log.debug("abort : " + threadName + " = " + method);
+        }
 
-    if (method != null) {
-      // abort method:
-      try {
+        if (method != null) {
+            // abort method:
+            try {
 //      log.error("abort: " + method);
 
-        /* This closes the socket handling our blocking I/O, which will
-         * interrupt the request immediately. */
-        method.abort();
+                /* This closes the socket handling our blocking I/O, which will
+                 * interrupt the request immediately. */
+                method.abort();
 
-      } finally {
-        // To be sure to call relaseConnection altought the thread should do it (normally):
-        relaseConnection(method, threadName);
-      }
-    }
-  }
-
-  /**
-   * little helper function for cookies. fills up the message context with
-   * a string or an array of strings (if there are more than one Set-Cookie)
-   *
-   * @param cookieName
-   * @param cookie
-   * @param msgContext
-   */
-  public void handleCookie(final String cookieName, String cookie,
-                           final MessageContext msgContext) {
-
-    cookie = cleanupCookie(cookie);
-    final int keyIndex = cookie.indexOf("=");
-    final String key = (keyIndex != -1) ? cookie.substring(0, keyIndex) : cookie;
-
-    final ArrayList<String> cookies = new ArrayList<String>();
-    final Object oldCookies = msgContext.getProperty(cookieName);
-    boolean alreadyExist = false;
-    if (oldCookies != null) {
-      if (oldCookies instanceof String[]) {
-        final String[] oldCookiesArray = (String[]) oldCookies;
-        for (int i = 0; i < oldCookiesArray.length; i++) {
-          String anOldCookie = oldCookiesArray[i];
-          if (key != null && anOldCookie.indexOf(key) == 0) { // same cookie key
-            anOldCookie = cookie;             // update to new one
-            alreadyExist = true;
-          }
-          cookies.add(anOldCookie);
+            } finally {
+                // To be sure to call relaseConnection altought the thread should do it (normally):
+                relaseConnection(method, threadName);
+            }
         }
-      } else {
-        String oldCookie = (String) oldCookies;
-        if (key != null && oldCookie.indexOf(key) == 0) { // same cookie key
-          oldCookie = cookie;             // update to new one
-          alreadyExist = true;
+    }
+
+    /**
+     * little helper function for cookies. fills up the message context with
+     * a string or an array of strings (if there are more than one Set-Cookie)
+     *
+     * @param cookieName
+     * @param cookie
+     * @param msgContext
+     */
+    public void handleCookie(final String cookieName, String cookie,
+                             final MessageContext msgContext) {
+
+        cookie = cleanupCookie(cookie);
+        final int keyIndex = cookie.indexOf('=');
+        final String key = (keyIndex != -1) ? cookie.substring(0, keyIndex) : cookie;
+
+        final ArrayList<String> cookies = new ArrayList<String>();
+        final Object oldCookies = msgContext.getProperty(cookieName);
+        boolean alreadyExist = false;
+        if (oldCookies != null) {
+            if (oldCookies instanceof String[]) {
+                final String[] oldCookiesArray = (String[]) oldCookies;
+                for (int i = 0; i < oldCookiesArray.length; i++) {
+                    String anOldCookie = oldCookiesArray[i];
+                    if (key != null && anOldCookie.indexOf(key) == 0) { // same cookie key
+                        anOldCookie = cookie;             // update to new one
+                        alreadyExist = true;
+                    }
+                    cookies.add(anOldCookie);
+                }
+            } else {
+                String oldCookie = (String) oldCookies;
+                if (key != null && oldCookie.indexOf(key) == 0) { // same cookie key
+                    oldCookie = cookie;             // update to new one
+                    alreadyExist = true;
+                }
+                cookies.add(oldCookie);
+            }
         }
-        cookies.add(oldCookie);
-      }
-    }
 
-    if (!alreadyExist) {
-      cookies.add(cookie);
-    }
-
-    if (cookies.size() == 1) {
-      msgContext.setProperty(cookieName, cookies.get(0));
-    } else if (cookies.size() > 1) {
-      msgContext.setProperty(cookieName, cookies.toArray(new String[cookies.size()]));
-    }
-  }
-
-  /**
-   * Add cookies from message context
-   *
-   * @param msgContext
-   * @param state
-   * @param header
-   * @param host
-   * @param path
-   * @param secure
-   */
-  private void fillHeaders(final MessageContext msgContext, final HttpState state, final String header, final String host, final String path, final boolean secure) {
-    final Object ck1 = msgContext.getProperty(header);
-    if (ck1 != null) {
-      if (ck1 instanceof String[]) {
-        final String[] cookies = (String[]) ck1;
-        for (int i = 0; i < cookies.length; i++) {
-          addCookie(state, cookies[i], host, path, secure);
+        if (!alreadyExist) {
+            cookies.add(cookie);
         }
-      } else {
-        addCookie(state, (String) ck1, host, path, secure);
-      }
+
+        if (cookies.size() == 1) {
+            msgContext.setProperty(cookieName, cookies.get(0));
+        } else if (cookies.size() > 1) {
+            msgContext.setProperty(cookieName, cookies.toArray(new String[cookies.size()]));
+        }
     }
-  }
 
-  /**
-   * add cookie to state
-   * @param state
-   * @param cookie
-   */
-  private void addCookie(final HttpState state, final String cookie, final String host, final String path, final boolean secure) {
-    final int index = cookie.indexOf('=');
-    state.addCookie(new Cookie(host, cookie.substring(0, index),
-            cookie.substring(index + 1), path,
-            null, secure));
-  }
-
-  /**
-   * cleanup the cookie value.
-   *
-   * @param cookie initial cookie value
-   *
-   * @return a cleaned up cookie value.
-   */
-  private String cleanupCookie(String cookie) {
-    cookie = cookie.trim();
-    // chop after first ; a la Apache SOAP (see HTTPUtils.java there)
-    final int index = cookie.indexOf(';');
-    if (index != -1) {
-      cookie = cookie.substring(0, index);
+    /**
+     * Add cookies from message context
+     *
+     * @param msgContext
+     * @param state
+     * @param header
+     * @param host
+     * @param path
+     * @param secure
+     */
+    private void fillHeaders(final MessageContext msgContext, final HttpState state, final String header, final String host, final String path, final boolean secure) {
+        final Object ck1 = msgContext.getProperty(header);
+        if (ck1 != null) {
+            if (ck1 instanceof String[]) {
+                final String[] cookies = (String[]) ck1;
+                for (int i = 0; i < cookies.length; i++) {
+                    addCookie(state, cookies[i], host, path, secure);
+                }
+            } else {
+                addCookie(state, (String) ck1, host, path, secure);
+            }
+        }
     }
-    return cookie;
-  }
 
-  protected HostConfiguration getHostConfiguration(final HttpClient client,
+    /**
+     * add cookie to state
+     * @param state
+     * @param cookie
+     * @param host
+     * @param path
+     * @param secure  
+     */
+    private void addCookie(final HttpState state, final String cookie, final String host, final String path, final boolean secure) {
+        final int index = cookie.indexOf('=');
+        state.addCookie(new Cookie(host, cookie.substring(0, index), cookie.substring(index + 1), path, null, secure));
+    }
+
+    /**
+     * cleanup the cookie value.
+     *
+     * @param cookie initial cookie value
+     *
+     * @return a cleaned up cookie value.
+     */
+    private String cleanupCookie(String cookie) {
+        cookie = cookie.trim();
+        // chop after first ; a la Apache SOAP (see HTTPUtils.java there)
+        final int index = cookie.indexOf(';');
+        if (index != -1) {
+            cookie = cookie.substring(0, index);
+        }
+        return cookie;
+    }
+
+    private HostConfiguration getHostConfiguration(final HttpClient client,
                                                    final MessageContext context,
                                                    final URL targetURL) {
-    final TransportClientProperties tcp =
-                                    TransportClientPropertiesFactory.create(targetURL.getProtocol()); // http or https
-    int port = targetURL.getPort();
-    boolean hostInNonProxyList =
-            isHostInNonProxyList(targetURL.getHost(), tcp.getNonProxyHosts());
+        final TransportClientProperties tcp = TransportClientPropertiesFactory.create(targetURL.getProtocol()); // http or https
+        int port = targetURL.getPort();
+        boolean hostInNonProxyList = isHostInNonProxyList(targetURL.getHost(), tcp.getNonProxyHosts());
 
-    HostConfiguration config = new HostConfiguration();
+        HostConfiguration config = new HostConfiguration();
 
-    if (port == -1) {
-      if (targetURL.getProtocol().equalsIgnoreCase("https")) {
-        port = 443;		// default port for https being 443
-      } else { // it must be http
-        port = 80;		// default port for http being 80
-      }
-    }
-
-    if (hostInNonProxyList) {
-      config.setHost(targetURL.getHost(), port, targetURL.getProtocol());
-    } else {
-      if (tcp.getProxyHost().length() == 0
-              || tcp.getProxyPort().length() == 0) {
-        config.setHost(targetURL.getHost(), port, targetURL.getProtocol());
-      } else {
-        if (tcp.getProxyUser().length() != 0) {
-          Credentials proxyCred =
-                      new UsernamePasswordCredentials(tcp.getProxyUser(),
-                  tcp.getProxyPassword());
-          // if the username is in the form "user\domain"
-          // then use NTCredentials instead.
-          int domainIndex = tcp.getProxyUser().indexOf("\\");
-          if (domainIndex > 0) {
-            String domain = tcp.getProxyUser().substring(0, domainIndex);
-            if (tcp.getProxyUser().length() > domainIndex + 1) {
-              String user = tcp.getProxyUser().substring(domainIndex + 1);
-              proxyCred = new NTCredentials(user,
-                      tcp.getProxyPassword(),
-                      tcp.getProxyHost(), domain);
+        if (port == -1) {
+            if (targetURL.getProtocol().equalsIgnoreCase("https")) {
+                port = 443;		// default port for https being 443
+            } else { // it must be http
+                port = 80;		// default port for http being 80
             }
-          }
-          client.getState().setProxyCredentials(AuthScope.ANY, proxyCred);
         }
-        int proxyPort = new Integer(tcp.getProxyPort()).intValue();
-        config.setProxy(tcp.getProxyHost(), proxyPort);
-      }
-    }
-    return config;
-  }
 
-  /**
-   * Extracts info from message context.
-   *
-   * @param method Post method
-   * @param httpClient The client used for posting
-   * @param msgContext the message context
-   * @param tmpURL the url to post to.
-   *
-   * @throws Exception
-   */
-  private void addContextInfo(final HttpMethodBase method,
-                              final HttpClient httpClient,
-                              final MessageContext msgContext,
-                              final URL tmpURL)
-          throws Exception {
-
-    // optionally set a timeout for the request
-    if (msgContext.getTimeout() != 0) {
-      /* ISSUE: these are not the same, but MessageContext has only one
-      definition of timeout */
-      // SO_TIMEOUT -- timeout for blocking reads
-      httpClient.getHttpConnectionManager().getParams().setSoTimeout(msgContext.getTimeout());
-      // timeout for initial connection
-      httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(msgContext.getTimeout());
-    }
-
-    // Get SOAPAction, default to ""
-    String action = msgContext.useSOAPAction()
-            ? msgContext.getSOAPActionURI()
-            : "";
-
-    if (action == null) {
-      action = "";
-    }
-
-    final Message msg = msgContext.getRequestMessage();
-    if (msg != null) {
-      method.setRequestHeader(new Header(HTTPConstants.HEADER_CONTENT_TYPE,
-              msg.getContentType(msgContext.getSOAPConstants())));
-    }
-    method.setRequestHeader(new Header(HTTPConstants.HEADER_SOAP_ACTION,
-            "\"" + action + "\""));
-    method.setRequestHeader(new Header(HTTPConstants.HEADER_USER_AGENT, Messages.getMessage("axisUserAgent")));
-    String userID = msgContext.getUsername();
-    String passwd = msgContext.getPassword();
-
-    // if UserID is not part of the context, but is in the URL, use
-    // the one in the URL.
-    if ((userID == null) && (tmpURL.getUserInfo() != null)) {
-      String info = tmpURL.getUserInfo();
-      int sep = info.indexOf(':');
-
-      if ((sep >= 0) && (sep + 1 < info.length())) {
-        userID = info.substring(0, sep);
-        passwd = info.substring(sep + 1);
-      } else {
-        userID = info;
-      }
-    }
-    if (userID != null) {
-      Credentials proxyCred =
-                  new UsernamePasswordCredentials(userID,
-              passwd);
-      // if the username is in the form "user\domain"
-      // then use NTCredentials instead.
-      int domainIndex = userID.indexOf("\\");
-      if (domainIndex > 0) {
-        String domain = userID.substring(0, domainIndex);
-        if (userID.length() > domainIndex + 1) {
-          String user = userID.substring(domainIndex + 1);
-          proxyCred = new NTCredentials(user,
-                  passwd,
-                  NetworkUtils.getLocalHostname(), domain);
-        }
-      }
-      httpClient.getState().setCredentials(AuthScope.ANY, proxyCred);
-    }
-
-    // add compression headers if needed
-    if (msgContext.isPropertyTrue(HTTPConstants.MC_ACCEPT_GZIP)) {
-      method.addRequestHeader(HTTPConstants.HEADER_ACCEPT_ENCODING,
-              HTTPConstants.COMPRESSION_GZIP);
-    }
-    if (msgContext.isPropertyTrue(HTTPConstants.MC_GZIP_REQUEST)) {
-      method.addRequestHeader(HTTPConstants.HEADER_CONTENT_ENCODING,
-              HTTPConstants.COMPRESSION_GZIP);
-    }
-
-    // Transfer MIME headers of SOAPMessage to HTTP headers.
-    MimeHeaders mimeHeaders = msg.getMimeHeaders();
-    if (mimeHeaders != null) {
-      for (Iterator i = mimeHeaders.getAllHeaders(); i.hasNext();) {
-        MimeHeader mimeHeader = (MimeHeader) i.next();
-        //HEADER_CONTENT_TYPE and HEADER_SOAP_ACTION are already set.
-        //Let's not duplicate them.
-        String headerName = mimeHeader.getName();
-        if (headerName.equals(HTTPConstants.HEADER_CONTENT_TYPE)
-                || headerName.equals(HTTPConstants.HEADER_SOAP_ACTION)) {
-          continue;
-        }
-        method.addRequestHeader(mimeHeader.getName(),
-                mimeHeader.getValue());
-      }
-    }
-
-    // process user defined headers for information.
-    Hashtable userHeaderTable =
-              (Hashtable) msgContext.getProperty(HTTPConstants.REQUEST_HEADERS);
-
-    if (userHeaderTable != null) {
-      for (Iterator e = userHeaderTable.entrySet().iterator();
-              e.hasNext();) {
-        Map.Entry me = (Map.Entry) e.next();
-        Object keyObj = me.getKey();
-
-        if (null == keyObj) {
-          continue;
-        }
-        String key = keyObj.toString().trim();
-        String value = me.getValue().toString().trim();
-
-        if (key.equalsIgnoreCase(HTTPConstants.HEADER_EXPECT)
-                && value.equalsIgnoreCase(HTTPConstants.HEADER_EXPECT_100_Continue)) {
-          method.getParams().setBooleanParameter(HttpMethodParams.USE_EXPECT_CONTINUE,
-                  true);
-        } else if (key.equalsIgnoreCase(HTTPConstants.HEADER_TRANSFER_ENCODING_CHUNKED)) {
-          String val = me.getValue().toString();
-          if (null != val) {
-            httpChunkStream = JavaUtils.isTrue(val);
-          }
+        if (hostInNonProxyList) {
+            config.setHost(targetURL.getHost(), port, targetURL.getProtocol());
         } else {
-          method.addRequestHeader(key, value);
+            if (tcp.getProxyHost().length() == 0 || tcp.getProxyPort().length() == 0) {
+                config.setHost(targetURL.getHost(), port, targetURL.getProtocol());
+            } else {
+                if (tcp.getProxyUser().length() != 0) {
+                    Credentials proxyCred = new UsernamePasswordCredentials(tcp.getProxyUser(), tcp.getProxyPassword());
+                    // if the username is in the form "user\domain"
+                    // then use NTCredentials instead.
+                    int domainIndex = tcp.getProxyUser().indexOf('\\');
+                    if (domainIndex > 0) {
+                        String domain = tcp.getProxyUser().substring(0, domainIndex);
+                        if (tcp.getProxyUser().length() > domainIndex + 1) {
+                            String user = tcp.getProxyUser().substring(domainIndex + 1);
+                            proxyCred = new NTCredentials(user, tcp.getProxyPassword(), tcp.getProxyHost(), domain);
+                        }
+                    }
+                    client.getState().setProxyCredentials(AuthScope.ANY, proxyCred);
+                }
+                int proxyPort = new Integer(tcp.getProxyPort()).intValue();
+                config.setProxy(tcp.getProxyHost(), proxyPort);
+            }
         }
-      }
-    }
-  }
-
-  /**
-   * Check if the specified host is in the list of non proxy hosts.
-   *
-   * @param host host name
-   * @param nonProxyHosts string containing the list of non proxy hosts
-   *
-   * @return true/false
-   */
-  protected boolean isHostInNonProxyList(final String host, final String nonProxyHosts) {
-
-    if ((nonProxyHosts == null) || (host == null)) {
-      return false;
+        return config;
     }
 
-    /*
-     * The http.nonProxyHosts system property is a list enclosed in
-     * double quotes with items separated by a vertical bar.
+    /**
+     * Extracts info from message context.
+     *
+     * @param method Post method
+     * @param httpClient The client used for posting
+     * @param msgContext the message context
+     * @param tmpURL the url to post to.
+     *
+     * @throws Exception
      */
-    StringTokenizer tokenizer = new StringTokenizer(nonProxyHosts, "|\"");
+    private void addContextInfo(final HttpMethodBase method,
+                                final HttpClient httpClient,
+                                final MessageContext msgContext,
+                                final URL tmpURL)
+            throws Exception {
 
-    while (tokenizer.hasMoreTokens()) {
-      String pattern = tokenizer.nextToken();
+        // optionally set a timeout for the request
+        if (msgContext.getTimeout() != 0) {
+            /* ISSUE: these are not the same, but MessageContext has only one
+             definition of timeout */
+            // SO_TIMEOUT -- timeout for blocking reads
+            httpClient.getHttpConnectionManager().getParams().setSoTimeout(msgContext.getTimeout());
+            // timeout for initial connection
+            httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(msgContext.getTimeout());
+        }
 
-      if (log.isDebugEnabled()) {
-        log.debug(Messages.getMessage("match00",
-                new String[]{"HTTPSender",
-                             host,
-                             pattern}));
-      }
-      if (match(pattern, host, false)) {
-        return true;
-      }
+        // Get SOAPAction, default to ""
+        String action = msgContext.useSOAPAction() ? msgContext.getSOAPActionURI() : "";
+
+        if (action == null) {
+            action = "";
+        }
+
+        final Message msg = msgContext.getRequestMessage();
+        if (msg != null) {
+            method.setRequestHeader(new Header(HTTPConstants.HEADER_CONTENT_TYPE, msg.getContentType(msgContext.getSOAPConstants())));
+        }
+        method.setRequestHeader(new Header(HTTPConstants.HEADER_SOAP_ACTION,
+                "\"" + action + "\""));
+        method.setRequestHeader(new Header(HTTPConstants.HEADER_USER_AGENT, Messages.getMessage("axisUserAgent")));
+        String userID = msgContext.getUsername();
+        String passwd = msgContext.getPassword();
+
+        // if UserID is not part of the context, but is in the URL, use
+        // the one in the URL.
+        if ((userID == null) && (tmpURL.getUserInfo() != null)) {
+            String info = tmpURL.getUserInfo();
+            int sep = info.indexOf(':');
+
+            if ((sep >= 0) && (sep + 1 < info.length())) {
+                userID = info.substring(0, sep);
+                passwd = info.substring(sep + 1);
+            } else {
+                userID = info;
+            }
+        }
+        if (userID != null) {
+            Credentials proxyCred = new UsernamePasswordCredentials(userID, passwd);
+            // if the username is in the form "user\domain"
+            // then use NTCredentials instead.
+            int domainIndex = userID.indexOf('\\');
+            if (domainIndex > 0) {
+                String domain = userID.substring(0, domainIndex);
+                if (userID.length() > domainIndex + 1) {
+                    String user = userID.substring(domainIndex + 1);
+                    proxyCred = new NTCredentials(user, passwd, NetworkUtils.getLocalHostname(), domain);
+                }
+            }
+            httpClient.getState().setCredentials(AuthScope.ANY, proxyCred);
+        }
+
+        // add compression headers if needed
+        if (msgContext.isPropertyTrue(HTTPConstants.MC_ACCEPT_GZIP)) {
+            method.addRequestHeader(HTTPConstants.HEADER_ACCEPT_ENCODING, HTTPConstants.COMPRESSION_GZIP);
+        }
+        if (msgContext.isPropertyTrue(HTTPConstants.MC_GZIP_REQUEST)) {
+            method.addRequestHeader(HTTPConstants.HEADER_CONTENT_ENCODING, HTTPConstants.COMPRESSION_GZIP);
+        }
+
+        // Transfer MIME headers of SOAPMessage to HTTP headers.
+        MimeHeaders mimeHeaders = msg.getMimeHeaders();
+        if (mimeHeaders != null) {
+            for (Iterator i = mimeHeaders.getAllHeaders(); i.hasNext();) {
+                MimeHeader mimeHeader = (MimeHeader) i.next();
+                //HEADER_CONTENT_TYPE and HEADER_SOAP_ACTION are already set.
+                //Let's not duplicate them.
+                String headerName = mimeHeader.getName();
+                if (headerName.equals(HTTPConstants.HEADER_CONTENT_TYPE)
+                        || headerName.equals(HTTPConstants.HEADER_SOAP_ACTION)) {
+                    continue;
+                }
+                method.addRequestHeader(mimeHeader.getName(), mimeHeader.getValue());
+            }
+        }
+
+        // process user defined headers for information.
+        Hashtable userHeaderTable =
+                  (Hashtable) msgContext.getProperty(HTTPConstants.REQUEST_HEADERS);
+
+        if (userHeaderTable != null) {
+            for (Iterator e = userHeaderTable.entrySet().iterator();
+                    e.hasNext();) {
+                Map.Entry me = (Map.Entry) e.next();
+                Object keyObj = me.getKey();
+
+                if (null == keyObj) {
+                    continue;
+                }
+                String key = keyObj.toString().trim();
+                String value = me.getValue().toString().trim();
+
+                if (key.equalsIgnoreCase(HTTPConstants.HEADER_EXPECT)
+                        && value.equalsIgnoreCase(HTTPConstants.HEADER_EXPECT_100_Continue)) {
+                    method.getParams().setBooleanParameter(HttpMethodParams.USE_EXPECT_CONTINUE, true);
+                } else if (key.equalsIgnoreCase(HTTPConstants.HEADER_TRANSFER_ENCODING_CHUNKED)) {
+                    String val = me.getValue().toString();
+                    if (null != val) {
+                        httpChunkStream = JavaUtils.isTrue(val);
+                    }
+                } else {
+                    method.addRequestHeader(key, value);
+                }
+            }
+        }
     }
-    return false;
-  }
 
-  /**
-   * Matches a string against a pattern. The pattern contains two special
-   * characters:
-   * '*' which means zero or more characters,
-   *
-   * @param pattern the (non-null) pattern to match against
-   * @param str     the (non-null) string that must be matched against the
-   *                pattern
-   * @param isCaseSensitive
-   *
-   * @return <code>true</code> when the string matches against the pattern,
-   *         <code>false</code> otherwise.
-   */
-  protected static boolean match(final String pattern, final String str,
+    /**
+     * Check if the specified host is in the list of non proxy hosts.
+     *
+     * @param host host name
+     * @param nonProxyHosts string containing the list of non proxy hosts
+     *
+     * @return true/false
+     */
+    private boolean isHostInNonProxyList(final String host, final String nonProxyHosts) {
+
+        if ((nonProxyHosts == null) || (host == null)) {
+            return false;
+        }
+
+        /*
+         * The http.nonProxyHosts system property is a list enclosed in
+         * double quotes with items separated by a vertical bar.
+         */
+        StringTokenizer tokenizer = new StringTokenizer(nonProxyHosts, "|\"");
+
+        while (tokenizer.hasMoreTokens()) {
+            String pattern = tokenizer.nextToken();
+
+            if (log.isDebugEnabled()) {
+                log.debug(Messages.getMessage("match00", new String[]{"HTTPSender", host, pattern}));
+            }
+            if (match(pattern, host, false)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Matches a string against a pattern. The pattern contains two special
+     * characters:
+     * '*' which means zero or more characters,
+     *
+     * @param pattern the (non-null) pattern to match against
+     * @param str     the (non-null) string that must be matched against the
+     *                pattern
+     * @param isCaseSensitive
+     *
+     * @return <code>true</code> when the string matches against the pattern,
+     *         <code>false</code> otherwise.
+     */
+    private static boolean match(final String pattern, final String str,
                                  final boolean isCaseSensitive) {
 
-    char[] patArr = pattern.toCharArray();
-    char[] strArr = str.toCharArray();
-    int patIdxStart = 0;
-    int patIdxEnd = patArr.length - 1;
-    int strIdxStart = 0;
-    int strIdxEnd = strArr.length - 1;
-    char ch;
-    boolean containsStar = false;
+        char[] patArr = pattern.toCharArray();
+        char[] strArr = str.toCharArray();
+        int patIdxStart = 0;
+        int patIdxEnd = patArr.length - 1;
+        int strIdxStart = 0;
+        int strIdxEnd = strArr.length - 1;
+        char ch;
+        boolean containsStar = false;
 
-    for (int i = 0; i < patArr.length; i++) {
-      if (patArr[i] == '*') {
-        containsStar = true;
-        break;
-      }
-    }
-    if (!containsStar) {
-
-      // No '*'s, so we make a shortcut
-      if (patIdxEnd != strIdxEnd) {
-        return false;        // Pattern and string do not have the same size
-      }
-      for (int i = 0; i <= patIdxEnd; i++) {
-        ch = patArr[i];
-        if (isCaseSensitive && (ch != strArr[i])) {
-          return false;    // Character mismatch
+        for (int i = 0; i < patArr.length; i++) {
+            if (patArr[i] == '*') {
+                containsStar = true;
+                break;
+            }
         }
-        if (!isCaseSensitive
-                && (Character.toUpperCase(ch)
-                != Character.toUpperCase(strArr[i]))) {
-          return false;    // Character mismatch
+        if (!containsStar) {
+
+            // No '*'s, so we make a shortcut
+            if (patIdxEnd != strIdxEnd) {
+                return false;        // Pattern and string do not have the same size
+            }
+            for (int i = 0; i <= patIdxEnd; i++) {
+                ch = patArr[i];
+                if (isCaseSensitive && (ch != strArr[i])) {
+                    return false;    // Character mismatch
+                }
+                if (!isCaseSensitive
+                        && (Character.toUpperCase(ch)
+                        != Character.toUpperCase(strArr[i]))) {
+                    return false;    // Character mismatch
+                }
+            }
+            return true;             // String matches against pattern
         }
-      }
-      return true;             // String matches against pattern
-    }
-    if (patIdxEnd == 0) {
-      return true;    // Pattern contains only '*', which matches anything
-    }
-
-    // Process characters before first star
-    while ((ch = patArr[patIdxStart]) != '*'
-            && (strIdxStart <= strIdxEnd)) {
-      if (isCaseSensitive && (ch != strArr[strIdxStart])) {
-        return false;    // Character mismatch
-      }
-      if (!isCaseSensitive
-              && (Character.toUpperCase(ch)
-              != Character.toUpperCase(strArr[strIdxStart]))) {
-        return false;    // Character mismatch
-      }
-      patIdxStart++;
-      strIdxStart++;
-    }
-    if (strIdxStart > strIdxEnd) {
-
-      // All characters in the string are used. Check if only '*'s are
-      // left in the pattern. If so, we succeeded. Otherwise failure.
-      for (int i = patIdxStart; i <= patIdxEnd; i++) {
-        if (patArr[i] != '*') {
-          return false;
+        if (patIdxEnd == 0) {
+            return true;    // Pattern contains only '*', which matches anything
         }
-      }
-      return true;
-    }
 
-    // Process characters after last star
-    while ((ch = patArr[patIdxEnd]) != '*' && (strIdxStart <= strIdxEnd)) {
-      if (isCaseSensitive && (ch != strArr[strIdxEnd])) {
-        return false;    // Character mismatch
-      }
-      if (!isCaseSensitive
-              && (Character.toUpperCase(ch)
-              != Character.toUpperCase(strArr[strIdxEnd]))) {
-        return false;    // Character mismatch
-      }
-      patIdxEnd--;
-      strIdxEnd--;
-    }
-    if (strIdxStart > strIdxEnd) {
-
-      // All characters in the string are used. Check if only '*'s are
-      // left in the pattern. If so, we succeeded. Otherwise failure.
-      for (int i = patIdxStart; i <= patIdxEnd; i++) {
-        if (patArr[i] != '*') {
-          return false;
+        // Process characters before first star
+        while ((ch = patArr[patIdxStart]) != '*'
+                && (strIdxStart <= strIdxEnd)) {
+            if (isCaseSensitive && (ch != strArr[strIdxStart])) {
+                return false;    // Character mismatch
+            }
+            if (!isCaseSensitive
+                    && (Character.toUpperCase(ch)
+                    != Character.toUpperCase(strArr[strIdxStart]))) {
+                return false;    // Character mismatch
+            }
+            patIdxStart++;
+            strIdxStart++;
         }
-      }
-      return true;
-    }
+        if (strIdxStart > strIdxEnd) {
 
-    // process pattern between stars. padIdxStart and patIdxEnd point
-    // always to a '*'.
-    while ((patIdxStart != patIdxEnd) && (strIdxStart <= strIdxEnd)) {
-      int patIdxTmp = -1;
-
-      for (int i = patIdxStart + 1; i <= patIdxEnd; i++) {
-        if (patArr[i] == '*') {
-          patIdxTmp = i;
-          break;
+            // All characters in the string are used. Check if only '*'s are
+            // left in the pattern. If so, we succeeded. Otherwise failure.
+            for (int i = patIdxStart; i <= patIdxEnd; i++) {
+                if (patArr[i] != '*') {
+                    return false;
+                }
+            }
+            return true;
         }
-      }
-      if (patIdxTmp == patIdxStart + 1) {
 
-        // Two stars next to each other, skip the first one.
-        patIdxStart++;
-        continue;
-      }
-
-      // Find the pattern between padIdxStart & padIdxTmp in str between
-      // strIdxStart & strIdxEnd
-      int patLength = (patIdxTmp - patIdxStart - 1);
-      int strLength = (strIdxEnd - strIdxStart + 1);
-      int foundIdx = -1;
-
-      strLoop:
-      for (int i = 0; i <= strLength - patLength; i++) {
-        for (int j = 0; j < patLength; j++) {
-          ch = patArr[patIdxStart + j + 1];
-          if (isCaseSensitive
-                  && (ch != strArr[strIdxStart + i + j])) {
-            continue strLoop;
-          }
-          if (!isCaseSensitive && (Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxStart + i + j]))) {
-            continue strLoop;
-          }
+        // Process characters after last star
+        while ((ch = patArr[patIdxEnd]) != '*' && (strIdxStart <= strIdxEnd)) {
+            if (isCaseSensitive && (ch != strArr[strIdxEnd])) {
+                return false;    // Character mismatch
+            }
+            if (!isCaseSensitive
+                    && (Character.toUpperCase(ch)
+                    != Character.toUpperCase(strArr[strIdxEnd]))) {
+                return false;    // Character mismatch
+            }
+            patIdxEnd--;
+            strIdxEnd--;
         }
-        foundIdx = strIdxStart + i;
-        break;
-      }
-      if (foundIdx == -1) {
-        return false;
-      }
-      patIdxStart = patIdxTmp;
-      strIdxStart = foundIdx + patLength;
+        if (strIdxStart > strIdxEnd) {
+
+            // All characters in the string are used. Check if only '*'s are
+            // left in the pattern. If so, we succeeded. Otherwise failure.
+            for (int i = patIdxStart; i <= patIdxEnd; i++) {
+                if (patArr[i] != '*') {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // process pattern between stars. padIdxStart and patIdxEnd point
+        // always to a '*'.
+        while ((patIdxStart != patIdxEnd) && (strIdxStart <= strIdxEnd)) {
+            int patIdxTmp = -1;
+
+            for (int i = patIdxStart + 1; i <= patIdxEnd; i++) {
+                if (patArr[i] == '*') {
+                    patIdxTmp = i;
+                    break;
+                }
+            }
+            if (patIdxTmp == patIdxStart + 1) {
+
+                // Two stars next to each other, skip the first one.
+                patIdxStart++;
+                continue;
+            }
+
+            // Find the pattern between padIdxStart & padIdxTmp in str between
+            // strIdxStart & strIdxEnd
+            int patLength = (patIdxTmp - patIdxStart - 1);
+            int strLength = (strIdxEnd - strIdxStart + 1);
+            int foundIdx = -1;
+
+            strLoop:
+            for (int i = 0; i <= strLength - patLength; i++) {
+                for (int j = 0; j < patLength; j++) {
+                    ch = patArr[patIdxStart + j + 1];
+                    if (isCaseSensitive
+                            && (ch != strArr[strIdxStart + i + j])) {
+                        continue strLoop;
+                    }
+                    if (!isCaseSensitive && (Character.toUpperCase(ch) != Character.toUpperCase(strArr[strIdxStart + i + j]))) {
+                        continue strLoop;
+                    }
+                }
+                foundIdx = strIdxStart + i;
+                break;
+            }
+            if (foundIdx == -1) {
+                return false;
+            }
+            patIdxStart = patIdxTmp;
+            strIdxStart = foundIdx + patLength;
+        }
+
+        // All characters in the string are used. Check if only '*'s are left
+        // in the pattern. If so, we succeeded. Otherwise failure.
+        for (int i = patIdxStart; i <= patIdxEnd; i++) {
+            if (patArr[i] != '*') {
+                return false;
+            }
+        }
+        return true;
     }
 
-    // All characters in the string are used. Check if only '*'s are left
-    // in the pattern. If so, we succeeded. Otherwise failure.
-    for (int i = patIdxStart; i <= patIdxEnd; i++) {
-      if (patArr[i] != '*') {
-        return false;
-      }
+    private static String getHeader(final HttpMethodBase method, final String headerName) {
+        final Header header = method.getResponseHeader(headerName);
+        return (header == null) ? null : header.getValue().trim();
     }
-    return true;
-  }
 
-  private static String getHeader(final HttpMethodBase method, final String headerName) {
-    final Header header = method.getResponseHeader(headerName);
-    return (header == null) ? null : header.getValue().trim();
-  }
-
-  private InputStream createConnectionReleasingInputStream(final HttpMethodBase method) throws IOException {
-    return new FilterInputStream(method.getResponseBodyAsStream()) {
-
-      @Override
-      public final void close() throws IOException {
-        try {
-          super.close();
-        } finally {
+    private InputStream createConnectionReleasingInputStream(final HttpMethodBase method) throws IOException {
+        return new FilterInputStream(method.getResponseBodyAsStream()) {
+            @Override
+            public final void close() throws IOException {
+                try {
+                    super.close();
+                } finally {
 // LAURENT :
-          relaseConnection(method);
+                    relaseConnection(method);
 //          method.releaseConnection();
+                }
+            }
+        };
+    }
+
+    private static class MessageRequestEntity implements RequestEntity {
+
+        private final HttpMethodBase method;
+        private final Message message;
+        private final boolean httpChunkStream; //Use HTTP chunking or not.
+
+        MessageRequestEntity(final HttpMethodBase method, final Message message) {
+            this.message = message;
+            this.method = method;
+            this.httpChunkStream = true;
         }
-      }
-    };
-  }
 
-  private static class MessageRequestEntity implements RequestEntity {
-
-    private final HttpMethodBase method;
-    private final Message message;
-    private final boolean httpChunkStream; //Use HTTP chunking or not.
-
-    public MessageRequestEntity(final HttpMethodBase method, final Message message) {
-      this.message = message;
-      this.method = method;
-      this.httpChunkStream = true;
-    }
-
-    public MessageRequestEntity(final HttpMethodBase method, final Message message, final boolean httpChunkStream) {
-      this.message = message;
-      this.method = method;
-      this.httpChunkStream = httpChunkStream;
-    }
-
-    public final boolean isRepeatable() {
-      return true;
-    }
-
-    public void writeRequest(final OutputStream out) throws IOException {
-      try {
-        this.message.writeTo(out);
-      } catch (SOAPException e) {
-        throw new IOException(e.getMessage());
-      }
-    }
-
-    protected final boolean isContentLengthNeeded() {
-      return this.method.getParams().getVersion() == HttpVersion.HTTP_1_0 || !httpChunkStream;
-    }
-
-    public long getContentLength() {
-      if (isContentLengthNeeded()) {
-        try {
-          return message.getContentLength();
-        } catch (Exception e) {
+        MessageRequestEntity(final HttpMethodBase method, final Message message, final boolean httpChunkStream) {
+            this.message = message;
+            this.method = method;
+            this.httpChunkStream = httpChunkStream;
         }
-      }
-      return -1; /* -1 for chunked */
-    }
 
-    public final String getContentType() {
-      return null; // a separate header is added
-    }
-  }
-
-  private static class GzipMessageRequestEntity extends MessageRequestEntity {
-
-    public GzipMessageRequestEntity(final HttpMethodBase method, final Message message) {
-      super(method, message);
-    }
-
-    public GzipMessageRequestEntity(final HttpMethodBase method, final Message message, final boolean httpChunkStream) {
-      super(method, message, httpChunkStream);
-    }
-
-    public void writeRequest(final OutputStream out) throws IOException {
-      if (cachedStream != null) {
-        cachedStream.writeTo(out);
-      } else {
-        final GZIPOutputStream gzStream = new GZIPOutputStream(out);
-        super.writeRequest(gzStream);
-        gzStream.finish();
-      }
-    }
-
-    public long getContentLength() {
-      if (isContentLengthNeeded()) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-          writeRequest(baos);
-          cachedStream = baos;
-          return baos.size();
-        } catch (IOException e) {
-          // fall through to doing chunked.
+        @Override
+        public final boolean isRepeatable() {
+            return true;
         }
-      }
-      return -1; // do chunked
+
+        @Override
+        public void writeRequest(final OutputStream out) throws IOException {
+            try {
+                this.message.writeTo(out);
+            } catch (SOAPException e) {
+                throw new IOException(e.getMessage());
+            }
+        }
+
+        protected final boolean isContentLengthNeeded() {
+            return this.method.getParams().getVersion() == HttpVersion.HTTP_1_0 || !httpChunkStream;
+        }
+
+        @Override
+        public long getContentLength() {
+            if (isContentLengthNeeded()) {
+                try {
+                    return message.getContentLength();
+                } catch (Exception e) {
+                }
+            }
+            return -1; /* -1 for chunked */
+        }
+
+        @Override
+        public final String getContentType() {
+            return null; // a separate header is added
+        }
     }
-    private ByteArrayOutputStream cachedStream;
-  }
+
+    private static class GzipMessageRequestEntity extends MessageRequestEntity {
+
+        GzipMessageRequestEntity(final HttpMethodBase method, final Message message) {
+            super(method, message);
+        }
+
+        GzipMessageRequestEntity(final HttpMethodBase method, final Message message, final boolean httpChunkStream) {
+            super(method, message, httpChunkStream);
+        }
+
+        @Override
+        public void writeRequest(final OutputStream out) throws IOException {
+            if (cachedStream != null) {
+                cachedStream.writeTo(out);
+            } else {
+                final GZIPOutputStream gzStream = new GZIPOutputStream(out);
+                super.writeRequest(gzStream);
+                gzStream.finish();
+            }
+        }
+
+        @Override
+        public long getContentLength() {
+            if (isContentLengthNeeded()) {
+                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                try {
+                    writeRequest(baos);
+                    cachedStream = baos;
+                    return baos.size();
+                } catch (IOException e) {
+                    // fall through to doing chunked.
+                }
+            }
+            return -1; // do chunked
+        }
+        private ByteArrayOutputStream cachedStream;
+    }
 }
