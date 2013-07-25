@@ -7,10 +7,34 @@ package fr.jmmc.sclgui.calibrator;
  * Meta data of a star property.
  */
 public final class StarPropertyMeta {
-    /* members */
+    /* constants */
 
+    /** undefined type */
+    public static final int TYPE_ANY = 0;
+    /** String type */
+    public static final int TYPE_STRING = 1;
+    /** boolean type */
+    public static final int TYPE_BOOLEAN = 2;
+    /** integer type */
+    public static final int TYPE_INTEGER = 3;
+    /** double type */
+    public static final int TYPE_DOUBLE = 4;
+    /** type to Class mapping */
+    private static final Class<?>[] TYPE_TO_CLASS = new Class<?>[]{Object.class, String.class, Boolean.class, Integer.class, Double.class};
+
+    /**
+     * Return the data type as Class corresponding to the given data type as integer
+     * @param type data type as integer
+     * @return data type as Class
+     */
+    public static Class<?> getClassType(final int type) {
+        return TYPE_TO_CLASS[type]; // no range check
+    }
+    /* members */
     /** property name */
     private final String _name;
+    /** property data type as integer */
+    private final int _type;
     /** property data type as Class */
     private final Class<?> _classType;
     /** property description */
@@ -25,15 +49,16 @@ public final class StarPropertyMeta {
     /**
      * Protected constructor
      * @param name property name
-     * @param classType property data type as Class
+     * @param type property data type as integer
      * @param description property description
      * @param ucd property ucd
      * @param unit optional property unit
      * @param url optional link URL
      */
-    StarPropertyMeta(final String name, final Class<?> classType, final String description, final String ucd, final String unit, final String url) {
+    StarPropertyMeta(final String name, int type, final String description, final String ucd, final String unit, final String url) {
         this._name = name;
-        this._classType = classType;
+        this._type = type;
+        this._classType = getClassType(type);
         this._description = description;
         this._ucd = ucd;
         this._unit = unit;
@@ -51,6 +76,14 @@ public final class StarPropertyMeta {
      */
     public String getName() {
         return _name;
+    }
+
+    /**
+     * Return the property data type as integer
+     * @return property data type as integer
+     */
+    public int getType() {
+        return _type;
     }
 
     /**

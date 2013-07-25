@@ -51,8 +51,9 @@ public final class StarListMeta {
     /**
      * Add the given star property meta data
      * @param propertyMeta star property meta data to add
+     * @return StarPropertyMeta index
      */
-    void addPropertyMeta(final StarPropertyMeta propertyMeta) {
+    int addPropertyMeta(final StarPropertyMeta propertyMeta) {
         _propertyMetaList.add(propertyMeta);
 
         if (_logger.isDebugEnabled()) {
@@ -67,20 +68,7 @@ public final class StarListMeta {
         }
 
         // increment then:
-        _nProperties++;
-    }
-
-    /**
-     * Return an array of property classes (for performance)
-     * @return array of property classes
-     */
-    Class<?>[] getPropertyClasses() {
-        final Class<?>[] colClasses = new Class<?>[_nProperties];
-        int i = 0;
-        for (StarPropertyMeta propertyMeta : _propertyMetaList) {
-            colClasses[i++] = propertyMeta.getClassType();
-        }
-        return colClasses;
+        return _nProperties++;
     }
 
     /**

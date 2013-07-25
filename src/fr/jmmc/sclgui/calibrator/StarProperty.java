@@ -9,35 +9,33 @@ package fr.jmmc.sclgui.calibrator;
 public final class StarProperty implements Comparable<StarProperty> {
 
     /** shared empty star property to reduce memory footprint */
-    public final static StarProperty EMPTY_STAR_PROPERTY = new StarProperty(null, null, Confidence.UNDEFINED);
-    /** Origin - computed */
-    public final static String ORIGIN_COMPUTED = "computed";
+    public final static StarProperty EMPTY_STAR_PROPERTY = new StarProperty(null, Origin.KEY_ORIGIN_NONE, Confidence.KEY_CONFIDENCE_NO);
     /* members */
     /** Value */
     private Object _value;
-    /** Origin */
-    private final String _origin;
-    /** Confidence */
-    private final Confidence _confidence;
+    /** Origin index as integer */
+    private final int _originIndex;
+    /** Confidence index as integer */
+    private final int _confidenceIndex;
 
     /**
-     * Custom constructor defining origin = "computed" and confidence to HIGH
+     * Custom constructor setting origin to COMPUTED and confidence to HIGH
      * @param value the new star property value.
      */
     public StarProperty(final Object value) {
-        this(value, ORIGIN_COMPUTED, Confidence.CONFIDENCE_HIGH);
+        this(value, Origin.KEY_ORIGIN_COMPUTED, Confidence.KEY_CONFIDENCE_HIGH);
     }
 
     /**
      * Fully parameter-ed constructor.
      * @param value the new star property value.
-     * @param origin the origin of the star property
-     * @param confidence the confidence index of the star property (NOT NULL)
+     * @param originIndex the origin of the star property
+     * @param confidenceIndex the confidence index of the star property
      */
-    public StarProperty(final Object value, final String origin, final Confidence confidence) {
+    public StarProperty(final Object value, final int originIndex, final int confidenceIndex) {
         setValue(value);
-        _origin = origin;
-        _confidence = confidence;
+        _originIndex = originIndex;
+        _confidenceIndex = confidenceIndex;
     }
 
     /**
@@ -140,30 +138,50 @@ public final class StarProperty implements Comparable<StarProperty> {
     }
 
     /**
-     * Get the origin of the star property as a String object.
+     * Get the origin of the star property as an Origin enum.
      *
-     * @return a String object representing the star property origin.
+     * @return an Origin enum representing the star property origin.
      */
-    public String getOrigin() {
-        return (_origin == null) ? "" : _origin;
+    public Origin getOrigin() {
+        return Origin.parse(_originIndex);
     }
 
     /**
-     * Return whether the star property has a catalog origin.
+     * Get the origin index of the star property as an integer.
      *
-     * @return true if a confidence index is set, false otherwise.
+     * @return Origin index as integer representing the star property origin index.
+     */
+    public int getOriginIndex() {
+        return _originIndex;
+    }
+
+    /**
+     * Return whether the star property has a catalog origin (ie not undefined nor computed and (high or no) confidence index).
+     *
+     * @return true if a origin index is set, false otherwise.
      */
     public boolean hasOrigin() {
-        return (hasConfidence()) ? false : (_origin != null);
+        // note: return false if confidence is not HIGH (bad conversion):
+        return (_originIndex > Origin.KEY_ORIGIN_COMPUTED
+                && ((_confidenceIndex == Confidence.KEY_CONFIDENCE_HIGH) || (_confidenceIndex == Confidence.KEY_CONFIDENCE_NO)));
     }
 
     /**
-     * Get the confidence index of the star property as a Confidence enum.
+     * Get the confidence of the star property as a Confidence enum.
      *
      * @return a Confidence enum representing the star property confidence index.
      */
     public Confidence getConfidence() {
-        return _confidence;
+        return Confidence.parse(_confidenceIndex);
+    }
+
+    /**
+     * Get the confidence index of the star property as an integer.
+     *
+     * @return Confidence index as integer representing the star property confidence index.
+     */
+    public int getConfidenceIndex() {
+        return _confidenceIndex;
     }
 
     /**
@@ -172,7 +190,7 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @return true if a confidence index is set, false otherwise.
      */
     public boolean hasConfidence() {
-        return (_confidence != Confidence.UNDEFINED);
+        return (_confidenceIndex != Confidence.KEY_CONFIDENCE_NO);
     }
 
     /**
@@ -191,7 +209,7 @@ public final class StarProperty implements Comparable<StarProperty> {
 
     @Override
     public String toString() {
-        return "StarProperty{" + "_value=" + _value + ", _origin=" + _origin + ", _confidence=" + _confidence + '}';
+        return "StarProperty{" + "_value=" + _value + ", _origin=" + getOrigin() + ", _confidence=" + getConfidence() + '}';
     }
 }
 /*___oOo___*/
