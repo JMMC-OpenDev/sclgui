@@ -3,12 +3,17 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
+import cds.savot.model.FieldRefSet;
 import cds.savot.model.FieldSet;
 import cds.savot.model.GroupSet;
+import cds.savot.model.OptionSet;
+import cds.savot.model.ParamRefSet;
 import cds.savot.model.ParamSet;
 import cds.savot.model.ResourceSet;
 import cds.savot.model.SavotData;
 import cds.savot.model.SavotField;
+import cds.savot.model.SavotGroup;
+import cds.savot.model.SavotOption;
 import cds.savot.model.SavotParam;
 import cds.savot.model.SavotResource;
 import cds.savot.model.SavotTD;
@@ -16,12 +21,12 @@ import cds.savot.model.SavotTR;
 import cds.savot.model.SavotTable;
 import cds.savot.model.SavotTableData;
 import cds.savot.model.SavotVOTable;
+import cds.savot.model.SavotValues;
 import cds.savot.model.TDSet;
 import cds.savot.pull.SavotPullEngine;
 import cds.savot.pull.SavotPullParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
-import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -50,6 +55,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,14 +85,28 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private final static long serialVersionUID = 1L;
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
+    /** SearchCal output format undefined */
+    public static final double OUTPUT_FORMAT_UNDEFINED = 0.0;
+    /** SearchCal output format 2013.7 */
+    public static final double OUTPUT_FORMAT_2013_7 = 2013.7;
+    /** SearchCal GUI supported output format */
+    public static final String GUI_OUTPUT_FORMAT = "2013.7";
     /** table size threshold to load them asynchronously */
     private final static int LOAD_TABLE_ASYNC_THRESHOLD = 5000;
-    /** number of extra properties (dynamically added and computed in the GUI) */
-    private final static int N_EXTRA_PROPERTIES = 8;
+    /** number of extra properties (dynamically added and computed in the GUI): RA/DEC (deg), rowIdx, otherRowIdx */
+    private final static int N_EXTRA_PROPERTIES = 4;
     /** parameter SearchCalGuiVersion (string) */
     public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
     /** parameter SearchCalServerVersion (string) */
     public final static String PARAMETER_SCL_SERVER_VERSION = "SearchCalServerVersion";
+    /** parameter outputFormat (double) */
+    public final static String PARAMETER_SCL_OUTPUT_FORMAT = "outputFormat";
+    /** parameter ConfidenceIndexes (int) */
+    public final static String PARAMETER_SCL_CONFIDENCE_INDEXES = "ConfidenceIndexes";
+    /** parameter OriginIndexes (int) */
+    public final static String PARAMETER_SCL_ORIGIN_INDEXES = "OriginIndexes";
+    /** undefined (blanking value) */
+    public final static String STR_UNDEFINED = "-";
     /** url token replace regexp */
     private final Pattern patternURL_REPLACE_TOKEN = Pattern.compile("[${].+[}]");
     /* members */
@@ -118,8 +138,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     int _nProperties;
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
-    /** Filters */
-    ParamSet _paramSet = null;
+    /** Query parameters */
+    Map<String, String> _parameters = null;
+    /** Field Save mapping */
+    private VOTableSaveMapping[] _saveMappings = null;
     /** Flag indicating whether data have changed or not */
     private boolean _dataHaveChanged;
     /** Raw headers */
@@ -147,7 +169,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _currentStarList = StarList.EMPTY_LIST;
         setFilteredStarList(StarList.EMPTY_LIST);
 
-        _paramSet = null;
+        _parameters = null;
+        _saveMappings = null;
         _dataHaveChanged = false;
 
         _rowHeadersModel = new RowHeadersModel();
@@ -345,7 +368,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     Map<Integer, Integer> getFilteredStarIndexMap() {
         if (_filteredStarIndexMap == null) {
             final int size = _nFilteredStars;
-            final Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>(size);
+            final HashMap<Integer, Integer> indexMap = new HashMap<Integer, Integer>(size);
 
             if (size != 0) {
                 final StarList starList = _filteredStarList;
@@ -550,7 +573,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     private void parseVOTable(final File file, final String content, final long length,
-            final boolean startQuery, final boolean async) throws IllegalArgumentException {
+                              final boolean startQuery, final boolean async) throws IllegalArgumentException {
         // Diff tool:
         if (_vo != null) {
             _vo.enableDataRelatedMenus(false);
@@ -558,6 +581,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         if (file == null && content == null) {
             throw new IllegalArgumentException("Incorrect VOTable input");
+        }
+
+        if (file != null) {
+            _logger.info("Loading votable file: {}", file.getAbsolutePath());
         }
 
         _logger.info("CalibratorsModel.parseVOTable: VOTable size = {} bytes.", length);
@@ -650,6 +677,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         private final SavotVOTable savotVoTable;
         /** Parameter set */
         private ParamSet paramSet = null;
+        /** Field Save mapping */
+        private VOTableSaveMapping[] saveMappings = null;
 
         /**
          * Hidden constructor
@@ -663,8 +692,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          * @param startTime start time (nano seconds)
          */
         private ParseVoTableSwingWorker(final File file, final boolean startQuery, final CalibratorsModel calModel,
-                final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
-                final long startTime) {
+                                        final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
+                                        final long startTime) {
             // get current observation version :
             super(SearchCalTaskRegistry.TASK_LOAD);
             this.file = file;
@@ -700,72 +729,323 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Retrieve VOTable parameters
             paramSet = table.getParams();
 
-            final GroupSet groupSet = table.getGroups();
-            final FieldSet fieldSet = table.getFields();
+            final int nParams = paramSet.getItemCount();
 
+            /* TODO: use a single Param/Field map in Savot keyed by id / name ? 
+             * because VOTABLE says both represents an 'identical' concept */
+
+            // PARAM by id:
+            final HashMap<String, SavotParam> paramById = new HashMap<String, SavotParam>(nParams);
+            final HashMap<String, SavotParam> paramByName = new HashMap<String, SavotParam>(nParams);
+
+            for (int i = 0; i < nParams; i++) {
+                final SavotParam param = paramSet.getItemAt(i);
+                final String id = param.getId();
+                if (id.length() != 0) {
+                    paramById.put(id, param);
+                }
+                final String name = param.getName();
+                if (name.length() != 0) {
+                    paramByName.put(name, param);
+                }
+            }
+
+            /* Parse optional output format parameter */
+            double outputFormat = OUTPUT_FORMAT_UNDEFINED; // 0 means default format (SearchCal < 5.0)
+            final SavotParam paramOutputFormat = paramByName.get(PARAMETER_SCL_OUTPUT_FORMAT);
+            if (paramOutputFormat != null) {
+                outputFormat = Double.valueOf(paramOutputFormat.getValue());
+                _logger.debug("outputFormat: {}", outputFormat);
+            }
+
+            final boolean isOutputFormatUndefined = (outputFormat == OUTPUT_FORMAT_UNDEFINED);
+
+            /* Origin index mapping (int to string) */
+            // Parse PARAM name="OriginIndexes"
+            final SavotParam paramOriginIndexes = paramByName.get(PARAMETER_SCL_ORIGIN_INDEXES);
+            if (paramOriginIndexes != null) {
+                final SavotValues values = paramOriginIndexes.getValues();
+                if (values != null) {
+                    for (final SavotOption option : values.getOptions().getItems()) {
+                        // name="int" - value="catalog id" mapping
+                        // check mapping with built-in Origin enum:
+                        Origin origin = Origin.parse(option.getName());
+
+                        if (_logger.isDebugEnabled()) {
+                            _logger.debug("origin found for key={}: '{}' vs '{}'", option.getName(), origin.getValue(), option.getValue());
+                        }
+
+                        // TODO: validate support for extra origin values !
+
+                        if (!origin.getValue().equals(option.getValue())) {
+                            if (origin.getKeyString().equals(option.getName())) {
+                                _logger.warn("origin for key={} mismatchs: '{}' vs '{}'", option.getName(), origin.getValue(), option.getValue());
+                            } else {
+                                _logger.warn("missing origin index for key={}: '{}'", option.getName(), option.getValue());
+                                // new origin value:
+                                Origin.createOrigin(Integer.parseInt(option.getName()), option.getValue());
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            final FieldSet fieldSet = table.getFields();
+            final int nFields = fieldSet.getItemCount();
+
+            // PARAM by id:
+            final HashMap<String, SavotField> fieldById = new HashMap<String, SavotField>(nParams);
+            final HashMap<String, Integer> fieldPosById = new HashMap<String, Integer>(nParams);
+
+            for (int i = 0; i < nFields; i++) {
+                final SavotField field = fieldSet.getItemAt(i);
+                final String id = field.getId();
+                if (id.length() != 0) {
+                    fieldById.put(id, field);
+                    fieldPosById.put(id, NumberUtils.valueOf(i));
+                }
+            }
+
+            final GroupSet groupSet = table.getGroups();
             final int nGroups = groupSet.getItemCount();
 
             // number of properties to size collections properly:
-            final int nProperties = nGroups + N_EXTRA_PROPERTIES;
+            int nProperties = nGroups + N_EXTRA_PROPERTIES;
 
             // Create a new star list meta data:
-            final StarListMeta starListMeta = new StarListMeta(nProperties);
+            final StarListMeta starListMeta = new StarListMeta(nProperties * 5 / 4); // add 25% capacity for fake error properties
             // Create a new star list:
             final StarList starList = new StarList(starListMeta);
 
+            // Interpret VOTable Groups
+            final VOTableLoadMapping[] loadMappings = new VOTableLoadMapping[nGroups];
+            saveMappings = new VOTableSaveMapping[nFields];
+
+            /* TODO: use UCD or UTYPE to discrimminate FIELD/PARAM corresponding to value/origin/confidence/error ... */
+
             StarPropertyMeta starPropertyMeta;
-            SavotField field;
-            String url;
-            String fieldDataType;
-            Class<?> columnClass;
+            VOTableLoadMapping loadMapping;
+            int type;
+            int nStrFields = 0;
 
             for (int groupId = 0; groupId < nGroups; groupId++) {
-                // Get back the field type
-                field = fieldSet.getItemAt(3 * groupId); // x3 as there is 3 fields per group
+                // Get Group to analyze its content (property, origin, confidence)
+                // TODO: in future it will also contain error field/param
 
-                fieldDataType = field.getDataType();
-                if (fieldDataType != null) {
-                    // Default class
-                    columnClass = Object.class;
+                loadMapping = new VOTableLoadMapping();
+                loadMappings[groupId] = loadMapping;
 
-                    if (fieldDataType.equals("char")) {
-                        columnClass = String.class;
-                    } else if (fieldDataType.equals("double") || fieldDataType.equals("float")) {
-                        columnClass = Double.class;
-                    } else if (fieldDataType.equals("boolean")) {
-                        columnClass = Boolean.class;
-                    } else if (fieldDataType.equals("int")) {
-                        columnClass = Integer.class;
+                final SavotGroup group = groupSet.getItemAt(groupId);
+
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("parsing group: {}", group.getName());
+                }
+
+                // Parse field refs:
+                final FieldRefSet fieldRefs = group.getFieldsRef();
+                final int nFieldRefs = fieldRefs.getItemCount();
+
+                Integer propertyPos = null;
+                Integer errorPos = null;
+
+                for (int i = 0; i < nFieldRefs; i++) {
+                    final String ref = fieldRefs.getItemAt(i).getRef();
+
+                    // Resolve the reference (field)
+                    final SavotField field = fieldById.get(ref);
+                    final Integer pos = fieldPosById.get(ref);
+
+                    if (field == null || pos == null) {
+                        throw new IllegalArgumentException("Invalid VOTable - invalid FIELDref '" + ref + "'");
                     }
-                } else {
-                    throw new IllegalArgumentException("Invalid VOTable - empty fieldType for " + field.getName());
+
+                    boolean valid = false;
+
+                    // Check field name as ucd may be used also by properties 
+                    // (CODE_QUALITY or REFER_CODE for example ...)
+                    // TODO: use FieldRef utypes ?
+                    final String name = field.getName();
+
+                    if (name.length() != 0) {
+                        if (name.endsWith("origin")) {
+                            valid = true;
+                            // origin
+                            loadMapping.originPos = pos;
+                            if (isOutputFormatUndefined) {
+                                // fix datatype and remove arraysize:
+                                field.setDataType("int");
+                                field.setArraySize(null);
+                            }
+                        } else if (name.endsWith("confidence")) {
+                            valid = true;
+                            // confidence
+                            loadMapping.confidencePos = pos;
+                            if (isOutputFormatUndefined) {
+                                // fix datatype and remove arraysize:
+                                field.setDataType("int");
+                                field.setArraySize(null);
+                            }
+                        } else if (loadMapping.valuePos == null) {
+                            valid = true;
+                            // field name
+                            loadMapping.name = name;
+                            // field value
+                            loadMapping.valuePos = pos;
+
+                            // Parse field's datatype attribute:
+                            final String fieldDataType = field.getDataType();
+
+                            if (fieldDataType != null) {
+                                type = StarPropertyMeta.TYPE_ANY;
+
+                                if (fieldDataType.equals("double")) {
+                                    type = StarPropertyMeta.TYPE_DOUBLE;
+                                } else if (isOutputFormatUndefined && fieldDataType.equals("float")) {
+                                    /* note: datatype="float" used by SearchCal 4;x */
+                                    type = StarPropertyMeta.TYPE_DOUBLE;
+                                    // fix datatype:
+                                    field.setDataType("double");
+                                } else if (fieldDataType.equals("char")) {
+                                    if (isOutputFormatUndefined) {
+                                        if ("diamFlag".equals(name) || "plxFlag".equals(name)) {
+                                            // convert "diamFlag" and "PlxFlag" columns to use 'boolean' datatype:
+                                            type = StarPropertyMeta.TYPE_BOOLEAN;
+                                            // fix datatype:
+                                            field.setDataType("boolean");
+                                        } else {
+                                            type = StarPropertyMeta.TYPE_STRING;
+                                            nStrFields++;
+                                        }
+                                    } else {
+                                        type = StarPropertyMeta.TYPE_STRING;
+                                        nStrFields++;
+                                    }
+                                } else if (fieldDataType.equals("boolean")) {
+                                    type = StarPropertyMeta.TYPE_BOOLEAN;
+                                } else if (fieldDataType.equals("int")) {
+                                    type = StarPropertyMeta.TYPE_INTEGER;
+                                }
+                                // set parsed field type
+                                loadMapping.valueType = type;
+                            } else {
+                                throw new IllegalArgumentException("Invalid VOTable - empty datatype attribute for field " + name);
+                            }
+
+                            // Get back the optional field link
+                            final String url;
+
+                            if (field.getLinks().getItemCount() != 0) {
+                                url = field.getLinks().getItemAt(0).getHref();
+                            } else {
+                                url = "";
+                            }
+
+                            // Define a new star property meta data to hold the star property value:
+                            starPropertyMeta = new StarPropertyMeta(name, type,
+                                    field.getDescription(), field.getUcd(), field.getUnit(), url);
+
+                            // Add it to the star list meta data:
+                            propertyPos = starListMeta.addPropertyMeta(starPropertyMeta);
+                        } else {
+                            // handle error field:
+                            final String ucd = field.getUcd();
+                            if (ucd != null && ucd.endsWith("_ERROR")) {
+                                valid = true;
+                                // error field name
+                                loadMapping.errorName = name;
+
+                                // field error
+                                loadMapping.errorPos = pos;
+
+                                if (_logger.isDebugEnabled()) {
+                                    _logger.debug("ERROR Field: name='" + name + "' ucd='" + field.getUcd() + "'");
+                                }
+
+                                // Define a new star property meta data to hold the star property error:
+                                starPropertyMeta = new StarPropertyMeta(name, StarPropertyMeta.TYPE_DOUBLE,
+                                        field.getDescription(), field.getUcd(), field.getUnit(), "");
+
+                                // Add it to the star list meta data:
+                                errorPos = starListMeta.addPropertyMeta(starPropertyMeta);
+                            }
+                        }
+                    }
+                    if (!valid) {
+                        throw new IllegalArgumentException("Invalid VOTable - invalid Field: name='" + name + "' ucd='" + field.getUcd() + "'");
+                    }
+                } // FieldRefs
+
+                // Update save property mapping (based on Field mapping only):
+                if (propertyPos != null) {
+                    // ie loadMapping.valuePos != null
+
+                    // StarProperty.value mapping
+                    saveMappings[loadMapping.valuePos] = new VOTableSaveMapping(loadMapping.name, propertyPos, VOTableSaveMapping.FieldType.VALUE, loadMapping.valueType);
+
+                    if (loadMapping.originPos != null) {
+                        saveMappings[loadMapping.originPos] = new VOTableSaveMapping(loadMapping.name, propertyPos, VOTableSaveMapping.FieldType.ORIGIN);
+                    }
+                    if (loadMapping.confidencePos != null) {
+                        saveMappings[loadMapping.confidencePos] = new VOTableSaveMapping(loadMapping.name, propertyPos, VOTableSaveMapping.FieldType.CONFIDENCE);
+                    }
+                    if (loadMapping.errorPos != null) {
+                        saveMappings[loadMapping.errorPos] = new VOTableSaveMapping(loadMapping.errorName, errorPos, VOTableSaveMapping.FieldType.ERROR);
+                    }
                 }
 
-                // Get back the field link
-                if (field.getLinks().getItemCount() != 0) {
-                    url = field.getLinks().getItemAt(0).getHref();
-                } else {
-                    url = "";
+                // Parse param refs:
+                final ParamRefSet paramRefs = group.getParamsRef();
+                final int nParamRefs = paramRefs.getItemCount();
+
+                for (int i = 0; i < nParamRefs; i++) {
+                    final String ref = paramRefs.getItemAt(i).getRef();
+
+                    // Resolve the reference (field)
+                    final SavotParam param = paramById.get(ref);
+
+                    if (param == null) {
+                        throw new IllegalArgumentException("Invalid VOTable - invalid PARAMref '" + ref + "'");
+                    }
+
+                    boolean valid = false;
+
+                    // Check param name as ucd may be used also by properties 
+                    // (CODE_QUALITY or REFER_CODE for example ...)
+                    // TODO: use ParamRef utypes ?
+                    final String name = param.getName();
+
+                    if (name.length() != 0) {
+                        if (name.endsWith("origin")) {
+                            valid = true;
+                            // define Origin constant value as resolved Origin enum:
+                            loadMapping.originConst = Origin.parse(param.getValue());
+                        } else if (name.endsWith("confidence")) {
+                            valid = true;
+                            // define Confidence constant value as resolved Confidence enum:
+                            loadMapping.confidenceConst = Confidence.parse(param.getValue());
+                        }
+                    }
+                    if (!valid) {
+                        throw new IllegalArgumentException("Invalid VOTable - invalid Param: name='" + name + "' ucd='" + param.getUcd() + "'");
+                    }
                 }
-
-                // Define star property meta data:
-                starPropertyMeta = new StarPropertyMeta(groupSet.getItemAt(groupId).getName(), columnClass,
-                        field.getDescription(), field.getUcd(), field.getUnit(), url);
-
-                // Add it to the star list meta data:
-                starListMeta.addPropertyMeta(starPropertyMeta);
             }
 
-            // origin and confidence index are enumerations: use shared instance cache to use less memory:
-            final Map<String, String> originValues = new HashMap<String, String>(32);
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("load mappings: {}", Arrays.toString(loadMappings));
+                _logger.debug("save mappings: {}", Arrays.toString(saveMappings));
+            }
+
+            // update number of properties to size collections properly:
+            nProperties = starListMeta.getPropertyCount() + N_EXTRA_PROPERTIES;
+
+            _logger.debug("nProperties: {}", nProperties);
 
             // reserve space:
             if (tableRows != 0) {
                 starList.ensureCapacity(tableRows);
             }
-
-            // local copies for performance:
-            final Class<?>[] colClasses = starListMeta.getPropertyClasses();
 
             int nRow = 0;
 
@@ -774,12 +1054,31 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 TDSet row;
                 List<StarProperty> star;
                 Object propertyValue;
-                int groupId, mainGroupCellId;
-                String value, origin, originValue, confidenceValue;
+                int groupId;
+                String value, originValue, confidenceValue;
+                Origin origin;
                 Confidence confidence;
                 StarProperty starProperty;
-                boolean isSet;
-                Catalog catalog;
+                int nStrValues = 0;
+
+                // Origin and Confidence index are enumerations: use instance cache to use less memory
+                // Origin resolved instance cache:
+                final HashMap<String, Origin> originValues = new HashMap<String, Origin>(32);
+
+                // TODO: put origin values (default mapping) for SearchCal release 4.4 !
+                // => format conversion (2013.7) ...
+
+                // Confidence resolved instance cache:
+                final HashMap<String, Confidence> confidenceValues = new HashMap<String, Confidence>(8); // only 4 different values
+
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("nStrFields: {} / max value count: {}", nStrFields, nStrFields * tableRows);
+                }
+
+                // String instance cache to use less memory (25% capacity):
+                final HashMap<String, String> stringCache = new HashMap<String, String>(nStrFields * tableRows >> 2);
+
+                // note: Double instance cache has too much overhead (cpu / memory) for only 50% gain (number of instances)
 
                 // only use Progress bar for large tables (JSDC):
                 final int step = (async && tableRows > LOAD_TABLE_ASYNC_THRESHOLD) ? tableRows / 100 : Integer.MAX_VALUE;
@@ -801,6 +1100,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
 
                     // Get the data corresponding to the current row
+                    // note: use TDSet that ensures range checks
                     row = tr.getTDSet();
 
                     // For each group of the row create a star property of each 3 cells
@@ -808,127 +1108,160 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     star = new Vector<StarProperty>(nProperties);
 
                     for (groupId = 0; groupId < nGroups; ++groupId) {
-
-                        /*
-                         * The index of first cell of the current group (as there is
-                         * always 3 cells for each group).
-                         */
-                        mainGroupCellId = 3 * groupId;
-
                         propertyValue = null;
-                        isSet = false;
+                        origin = Origin.ORIGIN_NONE;
+                        confidence = Confidence.CONFIDENCE_NO;
 
-                        // Get the value (always the first group cell)
-                        value = row.getContent(mainGroupCellId);
+                        // use field mapping:
+                        loadMapping = loadMappings[groupId];
 
-                        // replace "" by null to use less memory:
-                        if (value.length() != 0) {
-                            isSet = true;
+                        // Get the value
+                        value = (loadMapping.valuePos != null) ? row.getRawContent(loadMapping.valuePos) : null;
 
-                            // Get column field type:
-                            columnClass = colClasses[groupId];
+                        if (value != null) {
+                            // Get property type:
+                            type = loadMapping.valueType;
 
-                            if (columnClass == Double.class) {
-                                try {
-                                    propertyValue = Double.valueOf(value);
-                                } catch (NumberFormatException nfe) {
-                                    _logger.warn("invalid Double [{}]", value);
-                                }
-                            } else if (columnClass == String.class) {
-                                propertyValue = value;
-                            } else if (columnClass == Boolean.class) {
-                                // Test first "0" or "1" values (
-                                if (value.length() == 1) {
-                                    final char ch = Character.toLowerCase(value.charAt(0));
-                                    // 0/1 or T/F cases:
-                                    switch (ch) {
-                                        case '1':
-                                            propertyValue = Boolean.TRUE;
-                                            break;
-                                        case '0':
-                                            propertyValue = Boolean.FALSE;
-                                            break;
-                                        case 't':
-                                            propertyValue = Boolean.TRUE;
-                                            break;
-                                        case 'f':
-                                            propertyValue = Boolean.FALSE;
-                                            break;
-                                        default:
-                                            _logger.warn("invalid Boolean [{}]", value);
-                                            propertyValue = Boolean.FALSE;
-                                    }
-                                } else {
-                                    try {
-                                        propertyValue = Boolean.valueOf(value);
-                                    } catch (NumberFormatException nfe) {
-                                        _logger.warn("invalid Boolean [{}]", value);
-                                    }
-                                }
-                            } else if (columnClass == Integer.class) {
-                                try {
-                                    propertyValue = Integer.valueOf(value);
-                                } catch (NumberFormatException nfe) {
-                                    _logger.warn("invalid Integer [{}]", value);
-                                }
-                            } else {
-                                isSet = false;
-                                _logger.warn("unsupported data type [{}]: {}", columnClass, value);
-                            }
-                        }
-
-                        // Store the group origin (always the second group cell)
-                        ++mainGroupCellId;
-                        origin = row.getContent(mainGroupCellId);
-
-                        // replace "" or "-" (blanking value used up to SearchCal release 4.4) 
-                        // by null to use less memory:
-                        if ((origin.length() == 0) || ("-".equals(origin))) {
-                            origin = null;
-                        } else {
-                            isSet = true;
-
-                            originValue = originValues.get(origin);
-                            if (originValue == null) {
-                                if (!StarProperty.ORIGIN_COMPUTED.equals(origin)) {
-                                    // Resolve possible alias ie fix catalog name:
-                                    catalog = Catalog.catalogFromReference(origin);
-                                    if (catalog != null) {
-                                        origin = catalog.reference();
+                            switch (type) {
+                                case StarPropertyMeta.TYPE_DOUBLE:
+                                    // Stilts uses NaN for null double values:
+                                    if ("NaN".equals(value)) {
+                                        propertyValue = null;
                                     } else {
-                                        _logger.warn("Unable to resolve catalog for origin = '{}'", origin);
-                                        origin = null;
+                                        try {
+                                            propertyValue = Double.valueOf(value);
+                                        } catch (NumberFormatException nfe) {
+                                            _logger.warn("invalid Double value [{}] at column index={}", value, loadMapping.valuePos);
+                                        }
                                     }
-                                }
-                                if (origin != null) {
-                                    // cache resolved origin:
-                                    originValues.put(origin, origin);
-                                }
-                            } else {
-                                // use shared instance
-                                origin = originValue;
+                                    break;
+                                case StarPropertyMeta.TYPE_STRING:
+                                    nStrValues++;
+                                    propertyValue = stringCache.get(value);
+                                    if (propertyValue == null) {
+                                        propertyValue = value;
+                                        // cache String (never null):
+                                        stringCache.put(value, value);
+                                    }
+                                    break;
+                                case StarPropertyMeta.TYPE_BOOLEAN:
+                                    // Test first "0" or "1" values (
+                                    if (value.length() == 1) {
+                                        propertyValue = parseBoolean(value.charAt(0));
+                                    } else {
+                                        if (isOutputFormatUndefined) {
+                                            // fix OK / NOK handling (SearchCal 4.x):
+                                            if ("OK".equals(value)) {
+                                                propertyValue = Boolean.TRUE;
+                                                break;
+                                            }
+                                            // NOK will become Boolean.FALSE (see below):
+                                        }
+                                        // deleted flag (true|false) before SearchCal 5.0:
+                                        try {
+                                            propertyValue = Boolean.valueOf(value);
+                                        } catch (NumberFormatException nfe) {
+                                            _logger.warn("invalid Boolean value [{}] at column index={}", value, loadMapping.valuePos);
+                                        }
+                                    }
+                                    break;
+                                case StarPropertyMeta.TYPE_INTEGER:
+                                    try {
+                                        propertyValue = NumberUtils.valueOf(value);
+                                    } catch (NumberFormatException nfe) {
+                                        _logger.warn("invalid Integer value [{}] at column index={}", value, loadMapping.valuePos);
+                                    }
+                                    break;
+                                default:
+                                    _logger.warn("unsupported data type [{}]: {}", type, value);
                             }
                         }
 
-                        // Store the group confidence (always the third group cell)
-                        ++mainGroupCellId;
-                        confidenceValue = row.getContent(mainGroupCellId);
-
-                        // replace "" by null to use less memory:
-                        if (confidenceValue.length() == 0) {
-                            confidence = Confidence.UNDEFINED;
+                        if (propertyValue == null) {
+                            starProperty = StarProperty.EMPTY_STAR_PROPERTY;
                         } else {
-                            isSet = true;
-                            confidence = Confidence.parse(confidenceValue);
-                        }
+                            // Get the origin
+                            if (loadMapping.originPos != null) {
+                                originValue = row.getRawContent(loadMapping.originPos);
 
-                        /*
-                         * Create a new StarProperty instance from the retrieved value, origin and confidence.
-                         */
-                        starProperty = (isSet) ? new StarProperty(propertyValue, origin, confidence) : StarProperty.EMPTY_STAR_PROPERTY;
+                                if (originValue != null) {
+                                    // use cached instance if available:
+                                    origin = originValues.get(originValue);
+
+                                    if (origin == null) {
+                                        origin = Origin.parse(originValue);
+
+                                        // cache resolved Origin (never null):
+                                        originValues.put(originValue, origin);
+                                    }
+                                }
+                            } else {
+                                // Use Origin constant value:
+                                origin = loadMapping.originConst;
+                            }
+
+                            // Get the confidence
+                            if (loadMapping.confidencePos != null) {
+                                confidenceValue = row.getRawContent(loadMapping.confidencePos);
+
+                                if (confidenceValue != null) {
+                                    // use cached instance if available:
+                                    confidence = confidenceValues.get(confidenceValue);
+
+                                    if (confidence == null) {
+                                        confidence = Confidence.parse(confidenceValue);
+
+                                        // cache resolved Confidence (never null):
+                                        confidenceValues.put(confidenceValue, confidence);
+                                    }
+                                }
+                            } else {
+                                // Use Confidence constant value:
+                                confidence = loadMapping.confidenceConst;
+                            }
+
+                            /*
+                             * Create a new StarProperty instance from the retrieved value, origin and confidence.
+                             */
+                            starProperty = new StarProperty(propertyValue, origin.getKey(), confidence.getKey());
+
+                        } // value is set
 
                         // Add the newly created star property to the star property list
                         star.add(starProperty);
+
+                        // handle error field:
+                        if (loadMapping.errorPos != null) {
+                            propertyValue = null;
+
+                            // Get the error
+                            value = row.getRawContent(loadMapping.errorPos);
+
+                            if (value != null) {
+                                // Parse error value:
+                                // Stilts uses NaN for null double values:
+                                if ("NaN".equals(value)) {
+                                    propertyValue = null;
+                                } else {
+                                    try {
+                                        propertyValue = Double.valueOf(value);
+                                    } catch (NumberFormatException nfe) {
+                                        _logger.warn("invalid Double error [{}] at column index={}", value, loadMapping.errorPos);
+                                    }
+                                }
+                            }
+                            if (propertyValue == null) {
+                                starProperty = StarProperty.EMPTY_STAR_PROPERTY;
+                            } else {
+                                /*
+                                 * Create a new StarProperty instance from the retrieved error, origin and confidence.
+                                 */
+                                starProperty = new StarProperty(propertyValue, origin.getKey(), confidence.getKey());
+                            }
+
+                            // Add the newly created star property to the star property list
+                            star.add(starProperty);
+                        }
                     }
 
                     // Store each VOTable row as a list of star properties
@@ -937,6 +1270,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     nRow++;
 
                 } while ((tr = parser.getNextTR()) != null);
+
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("stringCache: size: {} / values: {}", stringCache.size(), nStrValues);
+                }
             }
 
             _logger.info("CalibratorsModel.parseVOTable: {} rows read in {} ms.", nRow, 1e-6d * (System.nanoTime() - start));
@@ -953,7 +1290,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         public void refreshUI(final StarList starList) {
 
             // update calibrators model:
-            calModel.updateModelFromVOTable(savotVoTable, paramSet, starList);
+            calModel.updateModelFromVOTable(savotVoTable, paramSet, starList, saveMappings);
 
             _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
 
@@ -970,7 +1307,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     // Loading the file in the query model
                     StatusBar.show("loading file (parsing query)...");
                     try {
-                        queryModel.loadParamSet(calModel.getParamSet());
+                        queryModel.loadParameters(calModel.getParameters());
                         StatusBar.show("loading file (query successfully parsed)...");
                         StatusBar.show("file succesfully loaded.");
 
@@ -989,7 +1326,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         // load default values to reset completely the query model:
                         queryModel.loadDefaultValues();
                         // load given parameters (some may be missing)
-                        queryModel.loadParamSet(calModel.getParamSet());
+                        queryModel.loadParameters(calModel.getParameters());
 
                     } catch (NumberFormatException nfe) {
                         e = nfe;
@@ -1036,12 +1373,17 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /**
      * Update this calibrators model from parsed VOTable
      * @param savotVoTable  parsed SAVOT VOTable 
-     * @param starList parsed StarList
      * @param paramSet parameter set
+     * @param starList parsed StarList
+     * @param saveMappings Field Save mapping
      */
-    void updateModelFromVOTable(final SavotVOTable savotVoTable, final ParamSet paramSet, final StarList starList) {
+    void updateModelFromVOTable(final SavotVOTable savotVoTable, final ParamSet paramSet, final StarList starList,
+                                final VOTableSaveMapping[] saveMappings) {
         // Keep only VOTable structure (without data):
         _parsedVOTable = savotVoTable;
+
+        // Update Field Save mapping:
+        _saveMappings = saveMappings;
 
         // Compute selected magnitude band and scenario
         // TODO: put in Savot Param finder by name:
@@ -1091,8 +1433,54 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             param.setValue(version);
             paramSet.addItem(param);
         }
+        // Add SearchCal outputFormat parameter (sclsvr 5.0):
+        if (parameters.get(PARAMETER_SCL_OUTPUT_FORMAT) == null) {
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_OUTPUT_FORMAT);
+            param.setDataType("double");
+            param.setValue(GUI_OUTPUT_FORMAT);
+            paramSet.addItem(param);
+        }
 
-        _paramSet = paramSet;
+        // Add SearchCal ConfidenceIndexes parameter (sclsvr 5.0):
+        if (parameters.get(PARAMETER_SCL_CONFIDENCE_INDEXES) == null) {
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_CONFIDENCE_INDEXES);
+            param.setDataType("int");
+            param.setValue(Confidence.CONFIDENCE_NO.getKeyString());
+
+            final SavotValues values = new SavotValues();
+            final OptionSet options = values.getOptions();
+            for (Confidence c : Confidence.values()) {
+                SavotOption option = new SavotOption();
+                option.setName(c.getKeyString());
+                option.setValue(c.getValue());
+                options.addItem(option);
+            }
+            param.setValues(values);
+            paramSet.addItem(param);
+        }
+
+        // Add SearchCal OriginIndexes parameter (sclsvr 5.0):
+        if (parameters.get(PARAMETER_SCL_ORIGIN_INDEXES) == null) {
+            final SavotParam param = new SavotParam();
+            param.setName(PARAMETER_SCL_ORIGIN_INDEXES);
+            param.setDataType("int");
+            param.setValue(Origin.ORIGIN_NONE.getKeyString());
+
+            final SavotValues values = new SavotValues();
+            final OptionSet options = values.getOptions();
+            for (Origin o : Origin.values()) {
+                SavotOption option = new SavotOption();
+                option.setName(o.getKeyString());
+                option.setValue(o.getValue());
+                options.addItem(option);
+            }
+            param.setValues(values);
+            paramSet.addItem(param);
+        }
+
+        _parameters = parameters;
 
         // Process star list:
         postProcess(starList);
@@ -1127,7 +1515,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Add RA (deg) property:
         if (starListMeta.getPropertyIndexByName(StarList.RADegColumnName) == -1) {
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, Double.class, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
 
             if (!starList.isEmpty()) {
                 // Get the ID of the column containing 'RA' star properties
@@ -1139,13 +1527,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         final StarProperty cell = star.get(raId);
 
                         if (cell.hasValue()) {
-                            final String raString = cell.getStringValue();
+                            final String raString = cell.getString();
                             final double currentRA = ALX.parseRA(raString);
 
                             // add RADeg value:
                             star.add(new StarProperty(Double.valueOf(currentRA),
-                                    cell.hasOrigin() ? cell.getOrigin() : null,
-                                    cell.getConfidence()));
+                                    cell.getOriginIndex(), cell.getConfidenceIndex()));
                         }
                     }
                 }
@@ -1154,7 +1541,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Add DEC (deg) property:
         if (starListMeta.getPropertyIndexByName(StarList.DEDegColumnName) == -1) {
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, Double.class, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
 
             if (!starList.isEmpty()) {
                 // Get the ID of the column containing 'DEC' star properties
@@ -1166,13 +1553,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         final StarProperty cell = star.get(decId);
 
                         if (cell.hasValue()) {
-                            final String decString = cell.getStringValue();
+                            final String decString = cell.getString();
                             final double currentDEC = ALX.parseDEC(decString);
 
                             // add RADeg value:
                             star.add(new StarProperty(Double.valueOf(currentDEC),
-                                    cell.hasOrigin() ? cell.getOrigin() : null,
-                                    cell.getConfidence()));
+                                    cell.getOriginIndex(), cell.getConfidenceIndex()));
                         }
                     }
                 }
@@ -1181,7 +1567,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Add row index property:
         if (starListMeta.getPropertyIndexByName(StarList.RowIdxColumnName) == -1) {
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, Integer.class, "row index", "ID_NUMBER", "", ""));
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, StarPropertyMeta.TYPE_INTEGER, "row index", "ID_NUMBER", "", ""));
 
             if (!starList.isEmpty()) {
                 int i = 0;
@@ -1205,12 +1591,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
-     * Give back the VOTable parameters.
+     * Give back the query parameters.
      *
-     * @return a ParamSet.
+     * @return query parameters as (name, value) pairs.
      */
-    public ParamSet getParamSet() {
-        return _paramSet;
+    public Map<String, String> getParameters() {
+        return _parameters;
     }
 
     /**
@@ -1327,15 +1713,22 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             return false;
         }
 
+        // If no Field Save Mapping
+        if (_saveMappings == null) {
+            _logger.warn("Could not get field mapping");
+            return false;
+        }
+
         final String filename = file.getAbsolutePath();
 
-        _logger.info("Saving the starlist as votable into file: {}", filename);
+        _logger.info("Saving votable file: {}", filename);
 
         boolean ok = false;
 
         final long start = System.nanoTime();
         try {
             final SavotVOTable votable = _parsedVOTable;
+            final VOTableSaveMapping[] saveMappings = _saveMappings;
 
             // Use SavotWriter TR / TR:
             final SavotWriter wd = new SavotWriter();
@@ -1351,7 +1744,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // write COOSYS elements - deprecated since VOTable 1.2
             wd.writeCoosys(votable.getCoosys());
 
-            // RESOURCE
+            // RESOURCE: custom writer to perform row by row processing
             // @See SavotWriter.writeResource()
 
             final SavotResource resource = votable.getResources().getItemAt(0);
@@ -1368,11 +1761,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // <TABLE>
             wd.writeTableBegin(table);
 
+            // write PARAM elements (FIRST)
+            wd.writeParam(table.getParams());
+
             // write FIELD elements
             wd.writeField(table.getFields());
-
-            // write PARAM elements
-            wd.writeParam(table.getParams());
 
             // write GROUP elements
             wd.writeGroup(table.getGroups());
@@ -1393,67 +1786,106 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     wd.writeTableDataBegin();
 
                     // Get only server properties not dynamic ones:
-                    final int nGroups = table.getGroups().getItemCount();
-                    final int nProps = 3 * nGroups;
+                    final int nFields = saveMappings.length;
 
-                    final SavotTD[] cacheTD = new SavotTD[nProps];
+                    final SavotTD[] cacheTD = new SavotTD[nFields];
 
-                    int i, c;
-                    for (c = 0; c < nProps; c++) {
-                        cacheTD[c] = new SavotTD();
+                    int fieldId;
+                    for (fieldId = 0; fieldId < nFields; fieldId++) {
+                        cacheTD[fieldId] = new SavotTD();
                     }
 
                     // shared empty TD instance
                     final SavotTD emptyTD = new SavotTD();
 
                     final SavotTR tr = new SavotTR();
-                    final TDSet tdSet = tr.getTDSet(nProps);
+                    // Get raw TDSet from TR:
+                    final List<SavotTD> row = tr.getTDSet(nFields).getItems();
 
-                    SavotTD valueTd;
-                    SavotTD originTd;
-                    SavotTD confidenceTd;
                     StarProperty property;
+                    int type, propertyPos;
+                    VOTableSaveMapping saveMapping;
+                    SavotTD td;
 
                     // And create one row per star entry
                     for (final List<StarProperty> star : starList) {
 
-                        tr.clear(); // recycle TR instance (also TDSet)
-                        c = 0;
+                        row.clear(); // recycle row ie TR and TDSet instance
 
                         // Get only server properties not dynamic ones:
-                        for (i = 0; i < nGroups; i++) {
-                            property = star.get(i);
+                        for (fieldId = 0; fieldId < nFields; fieldId++) {
+                            saveMapping = saveMappings[fieldId];
 
-                            // value:
-                            if (property.hasValue()) {
-                                valueTd = cacheTD[c];
-                                // convert double / boolean to string:
-                                valueTd.setContent(property.getStringValue());
-                            } else {
-                                valueTd = emptyTD;
+                            td = emptyTD;
+
+                            if (saveMapping != null) {
+                                propertyPos = saveMapping.propertyPos;
+                                property = star.get(propertyPos);
+
+                                td = cacheTD[fieldId];
+
+                                switch (saveMapping.fieldType) {
+                                    case VALUE:
+                                        // Get property type:
+                                        type = saveMapping.valueType;
+
+                                        // Set field value:
+                                        if (property.hasValue()) {
+                                            if (type == StarPropertyMeta.TYPE_BOOLEAN) {
+                                                // custom boolean to string conversion:
+                                                td.setContent(property.getBooleanValue() ? "1" : "0");
+                                            } else {
+                                                // implicitely convert double / integer to string:
+                                                td.setContent(property.getStringValue());
+                                            }
+                                            break;
+                                        }
+
+                                        /* handle / fix null value handling 
+                                         * as VOTABLE 1.1 does not support nulls for integer (-INF) / double values (NaN)
+                                         * note: stilts complains and replaces empty cells by (-INF) and (NaN) */
+
+                                        /* TODO: switch to VOTABLE 1.3 that supports null values */
+
+                                        switch (type) {
+                                            case StarPropertyMeta.TYPE_DOUBLE:
+                                            /* do not use NaN (useless and annoying in XSLT scripts) */
+//                                                td.setContent("NaN");
+//                                                break;
+                                            case StarPropertyMeta.TYPE_STRING:
+                                            default:
+                                                td = emptyTD;
+                                                break;
+                                            case StarPropertyMeta.TYPE_INTEGER:
+                                            case StarPropertyMeta.TYPE_BOOLEAN:
+                                                td.setContent("0"); // 0 or false as defaults
+                                        }
+                                        break;
+                                    case ORIGIN:
+                                        // Origin index (always defined even if property has no value):
+                                        td.setContent(property.getOrigin().getKeyString());
+                                        break;
+                                    case CONFIDENCE:
+                                        // Confidence index (always defined even if property has no value):
+                                        td.setContent(property.getConfidence().getKeyString());
+                                        break;
+                                    case ERROR:
+                                        // Set field value:
+                                        if (property.hasValue()) {
+                                            // implicitely convert double to string:
+                                            td.setContent(property.getStringValue());
+                                            break;
+                                        }
+                                    /* do not use NaN (useless and annoying in XSLT scripts) */
+//                                                td.setContent("NaN");
+//                                                break;
+                                    case NONE:
+                                    default:
+                                        td = emptyTD;
+                                }
                             }
-                            tdSet.addItem(valueTd);
-
-                            // origin:
-                            if (property.hasOrigin()) {
-                                originTd = cacheTD[c + 1];
-                                originTd.setContent(property.getOrigin());
-                            } else {
-                                originTd = emptyTD;
-                            }
-                            tdSet.addItem(originTd);
-
-                            // confidence index:
-                            if (property.hasConfidence()) {
-                                confidenceTd = cacheTD[c + 2];
-                                // TODO: fix Field header (integer no more char[])
-                                confidenceTd.setContent(property.getConfidence().getIntString());
-                            } else {
-                                confidenceTd = emptyTD;
-                            }
-                            tdSet.addItem(confidenceTd);
-
-                            c += 3;
+                            // add cell:
+                            row.add(td);
                         }
 
                         // <TR>
@@ -1634,18 +2066,20 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             }
 
         } catch (FileNotFoundException fnfe) {
-            _logger.error("File not found", fnfe);
+            throw new IllegalStateException("File not found: ", fnfe);
         } catch (IllegalArgumentException iae) {
             // An error occurred in the XSL file
-            _logger.error("An error occured during XSLT transformation '{}'", xsltFile, iae);
-
             if (iae.getCause() instanceof TransformerException) {
                 // An error occurred while applying the XSL file
                 // Get location of error in input file
                 final SourceLocator locator = ((TransformerException) iae.getCause()).getLocator();
 
-                _logger.error("One error occured while applying XSL file '{}', on line '{}' and column '{}'", xsltFile, locator.getLineNumber(), locator.getColumnNumber());
+                if (locator != null) {
+                    throw new IllegalStateException("An error occured while applying XSL file '" + xsltFile + "',"
+                            + " on line '" + locator.getLineNumber() + "' and column '" + locator.getColumnNumber() + "'", iae);
+                }
             }
+            throw new IllegalStateException("An error occured during XSLT transformation '" + xsltFile + "'", iae);
         }
     }
 
@@ -1683,11 +2117,114 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             dataVector.clear();
 
             // Generate as many row headers as the given number of data rows
-            for (int i = 0; i < nbOfRows; i++) {
+            for (int i = 1; i <= nbOfRows; i++) {
                 final Vector<Integer> row = new Vector<Integer>(1);
-                row.add(NumberUtils.valueOf(i + 1));
+                row.add(NumberUtils.valueOf(i));
                 addRow(row);
             }
+        }
+    }
+
+    private static Boolean parseBoolean(final char ch) {
+        // 0/1 or T/F cases:
+        switch (ch) {
+            case '1':
+                return Boolean.TRUE;
+            case '0':
+                return Boolean.FALSE;
+            case 't':
+            case 'T':
+                return Boolean.TRUE;
+            case 'f':
+            case 'F':
+                return Boolean.FALSE;
+            default:
+                _logger.warn("invalid Boolean [{}]", ch);
+                return Boolean.FALSE;
+        }
+    }
+
+    /**
+     * VOTable load mapping: it contains Group parsing results to load fields into StarProperty instances
+     */
+    private static class VOTableLoadMapping {
+
+        /** field name ie StarProperty name */
+        String name = null;
+        /** parsed field type as integer */
+        int valueType = StarPropertyMeta.TYPE_ANY;
+        /** field position of the StarProperty value */
+        Integer valuePos = null;
+        /** optional field position of the StarProperty origin index (FieldRef) */
+        Integer originPos = null;
+        /** optional resolved Origin of the StarProperty origin index (PARAMRef) */
+        Origin originConst = Origin.ORIGIN_NONE;
+        /** optional field position of the StarProperty confidence index (FieldRef) */
+        Integer confidencePos = null;
+        /** optional resolved Confidence of the StarProperty confidence index (PARAMRef) */
+        Confidence confidenceConst = Confidence.CONFIDENCE_NO;
+        /** error field name ie StarProperty error */
+        String errorName = null;
+        /** field position of the StarProperty error */
+        Integer errorPos = null;
+
+        @Override
+        public String toString() {
+            return "VOTableLoadMapping{" + "name=" + name
+                    + ", valuePos=" + valuePos
+                    + ", valueType=" + StarPropertyMeta.getClassType(valueType)
+                    + ((originPos != null) ? ", originPos=" + originPos : "")
+                    + ((originConst != Origin.ORIGIN_NONE) ? ", originConst=" + originConst : "")
+                    + ((confidencePos != null) ? ", confidencePos=" + confidencePos : "")
+                    + ((confidenceConst != Confidence.CONFIDENCE_NO) ? ", confidenceConst=" + confidenceConst : "")
+                    + ((errorName != null) ? ", errorName=" + errorName : "")
+                    + ((errorPos != null) ? ", errorPos=" + errorPos : "")
+                    + '}';
+        }
+    }
+
+    /**
+     * VOTable save mapping: it contains field mapping to save fields from StarProperty instances
+     */
+    private static class VOTableSaveMapping {
+
+        enum FieldType {
+
+            NONE,
+            VALUE,
+            ORIGIN,
+            CONFIDENCE,
+            ERROR;
+        }
+        /** field name ie StarProperty name */
+        final String name;
+        /** StarProperty position of the field */
+        final Integer propertyPos;
+        /** field type */
+        final FieldType fieldType;
+        /** parsed field type as integer */
+        int valueType = StarPropertyMeta.TYPE_ANY;
+
+        VOTableSaveMapping(final String name, final Integer propertyPos, final FieldType fieldType) {
+            this.name = name;
+            this.propertyPos = propertyPos;
+            this.fieldType = fieldType;
+        }
+
+        VOTableSaveMapping(final String name, final Integer propertyPos, final FieldType fieldType, final int valueType) {
+            this.name = name;
+            this.propertyPos = propertyPos;
+            this.fieldType = fieldType;
+            this.valueType = valueType;
+        }
+
+        @Override
+        public String toString() {
+            return "VOTableSaveMapping{" + "name=" + name
+                    + ((propertyPos != null) ? ", propertyPos=" + propertyPos : "")
+                    + ((fieldType != FieldType.NONE) ? ", type=" + fieldType : "")
+                    + ", valueType=" + StarPropertyMeta.getClassType(valueType)
+                    + '}';
         }
     }
 }
