@@ -41,7 +41,7 @@ public final class SearchCalServerClient {
     /** Beta release path */
     private static final String BETA_SERVER_PATH = "/~betaswmgr/";
     /** Development release path */
-    private static final String ALPHA_SERVER_PATH = "/~lafrasse/";
+    private static final String ALPHA_SERVER_PATH = "/~bourgesl/";
     /** Server proxy script */
     private static final String DEFAULT_PROXY_SCRIPT = "sclwsProxy.php";
 
@@ -189,10 +189,13 @@ public final class SearchCalServerClient {
 
             // disable HTTP 1.1 chunk encoding because some proxy servers does not accept it:
             if (_httpHeaders == null) {
-                _httpHeaders = new Hashtable<String, String>();
+                _httpHeaders = new Hashtable<String, String>(4);
                 _httpHeaders.put(HTTPConstants.HEADER_TRANSFER_ENCODING_CHUNKED, "false");
             }
             stub._setProperty(HTTPConstants.REQUEST_HEADERS, _httpHeaders);
+
+            // enable gzip compression from client-side:
+            stub._setProperty(HTTPConstants.MC_ACCEPT_GZIP, "true");
 
             // enable streaming for SAX performance issues:
             stub._setProperty(Call.STREAMING_PROPERTY, Boolean.TRUE);
