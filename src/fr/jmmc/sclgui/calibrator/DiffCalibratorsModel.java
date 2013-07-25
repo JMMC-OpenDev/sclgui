@@ -465,9 +465,9 @@ public final class DiffCalibratorsModel {
         final StarListMeta diffStarListMetaData = diffStarList.getMetaData();
 
         // prepare star properties:
-        diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.LeftColumnName, Integer.class, "left only count", "ID_MAIN:1", "", ""));
-        diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.RightColumnName, Integer.class, "right only count", "ID_MAIN:2", "", ""));
-        diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.DiffColumnName, Integer.class, "diff count", "ID_MAIN:3", "", ""));
+        diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.LeftColumnName, StarPropertyMeta.TYPE_INTEGER, "left only count", "ID_MAIN:1", "", ""));
+        diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.RightColumnName, StarPropertyMeta.TYPE_INTEGER, "right only count", "ID_MAIN:2", "", ""));
+        diffStarListMetaData.addPropertyMeta(new StarPropertyMeta(StarList.DiffColumnName, StarPropertyMeta.TYPE_INTEGER, "diff count", "ID_MAIN:3", "", ""));
 
         // total number of properties in diff stars:
         final int propCount = diffStarListMetaData.getPropertyCount();
@@ -532,8 +532,6 @@ public final class DiffCalibratorsModel {
         // => always create a new editable Star Property
         final int deletedFlagColumnID = diffStarList.getDeletedFlagColumnID();
 
-        final Map<String, String> originValues = new HashMap<String, String>(32);
-
         StarProperty starPropertyLeftRowIdx, starPropertyRightRowIdx;
         Integer rightRowIdx;
         StarPropertyMeta propMeta;
@@ -544,11 +542,12 @@ public final class DiffCalibratorsModel {
         StarProperty starPropertyRight;
         StarProperty starProperty;
         Object propertyValue;
-        String origin, originValue, confidenceValue;
+        String originValue, confidenceValue;
+        Origin origin;
         Confidence confidence;
         boolean isSet;
 
-        int res;
+        int valCmpRes;
         final DoubleDiff dblDiff = new DoubleDiff();
         Double dblLeft, dblRight;
         String strLeft, strRight;
@@ -583,7 +582,7 @@ public final class DiffCalibratorsModel {
                     starPropertyRight = starRight.get(mapIdxRight[i]);
 
                     propertyValue = null;
-                    res = 0;
+                    valCmpRes = 0;
                     lessTh = false;
 
                     if (i == deletedFlagColumnID) {
@@ -595,15 +594,15 @@ public final class DiffCalibratorsModel {
                         classType = propMeta.getClassType();
 
                         // TODO: handle new column types (int)
-                        
+
                         // value:
                         if (classType == Double.class) {
                             dblLeft = starPropertyLeft.getDouble();
                             dblRight = starPropertyRight.getDouble();
 
-                            res = compareDouble(dblLeft, dblRight, dblDiff);
+                            valCmpRes = compareDouble(dblLeft, dblRight, dblDiff);
 
-                            switch (res) {
+                            switch (valCmpRes) {
                                 default:
                                     break;
                                 case -1:
@@ -652,9 +651,9 @@ public final class DiffCalibratorsModel {
                             strLeft = starPropertyLeft.getString();
                             strRight = starPropertyRight.getString();
 
-                            res = compareObject(strLeft, strRight);
+                            valCmpRes = compareObject(strLeft, strRight);
 
-                            switch (res) {
+                            switch (valCmpRes) {
                                 default:
                                     break;
                                 case -1:
@@ -671,9 +670,9 @@ public final class DiffCalibratorsModel {
                             boolLeft = starPropertyLeft.getBoolean();
                             boolRight = starPropertyRight.getBoolean();
 
-                            res = compareObject(boolLeft, boolRight);
+                            valCmpRes = compareObject(boolLeft, boolRight);
 
-                            switch (res) {
+                            switch (valCmpRes) {
                                 default:
                                     break;
                                 case -1:
@@ -690,9 +689,9 @@ public final class DiffCalibratorsModel {
                             intLeft = starPropertyLeft.getInteger();
                             intRight = starPropertyRight.getInteger();
 
-                            res = compareObject(intLeft, intRight);
+                            valCmpRes = compareObject(intLeft, intRight);
 
-                            switch (res) {
+                            switch (valCmpRes) {
                                 default:
                                     break;
                                 case -1:
@@ -702,7 +701,7 @@ public final class DiffCalibratorsModel {
                                     propertyValue = intLeft;
                                     break;
                                 case 2:
-                                    propertyValue = Integer.valueOf(intLeft.intValue() - intRight.intValue());
+                                    propertyValue = NumberUtils.valueOf(intLeft.intValue() - intRight.intValue());
                                     break;
                             }
                         } else {
@@ -719,7 +718,7 @@ public final class DiffCalibratorsModel {
                             isSet = true;
 
                             if (propMask[i] && !lessTh) {
-                                switch (res) {
+                                switch (valCmpRes) {
                                     default:
                                         break;
                                     case -1:
@@ -740,14 +739,16 @@ public final class DiffCalibratorsModel {
                     }
 
                     // origin:
-                    strLeft = starPropertyLeft.getOrigin();
-                    strRight = starPropertyRight.getOrigin();
+                    origin = Origin.ORIGIN_NONE;
+
+                    strLeft = starPropertyLeft.getOrigin().toString();
+                    strRight = starPropertyRight.getOrigin().toString();
 
                     if (strLeft.equals(strRight)) {
                         // use value for colors:
-                        origin = starPropertyLeft.hasOrigin() ? strLeft : null;
+                        originValue = (starPropertyLeft.hasOrigin()) ? strLeft : null;
                     } else {
-                        origin = ((strLeft.length() != 0) ? strLeft : "~") + " | " + ((strRight.length() != 0) ? strRight : "~");
+                        originValue = strLeft + " | " + strRight;
 
                         isSet = true;
 
@@ -757,46 +758,46 @@ public final class DiffCalibratorsModel {
                         }
                     }
 
-                    if (origin != null) {
-                        switch (res) {
+                    if (originValue != null) {
+                        switch (valCmpRes) {
                             default:
                                 break;
                             case -1:
-                                origin = "RIGHT: " + origin;
+                                originValue = "RIGHT: " + originValue;
                                 break;
                             case 1:
-                                origin = "LEFT: " + origin;
+                                originValue = "LEFT: " + originValue;
                                 break;
                             case 2:
-                                origin = "DIFF: " + origin;
+                                originValue = "DIFF: " + originValue;
                                 break;
                         }
                         if (!propMask[i]) {
-                            origin = "SKIP " + origin;
+                            originValue = "SKIP " + originValue;
                         } else if (lessTh) {
-                            origin = "LESS " + origin;
+                            originValue = "LESS " + originValue;
                         }
 
-                        originValue = originValues.get(origin);
-                        if (originValue == null) {
-                            // cache origin:
-                            originValues.put(origin, origin);
-                        } else {
-                            // use shared instance
-                            origin = originValue;
-                        }
+                        origin = Origin.parseCustomOrigin(originValue);
                     }
 
                     // confidence:
-                    confidence = Confidence.UNDEFINED;
-                    strLeft = starPropertyLeft.getConfidence().toString();
-                    strRight = starPropertyRight.getConfidence().toString();
+                    confidence = Confidence.CONFIDENCE_NO;
+
+                    // hack for former undefined Confidence indexes:
+                    if (starPropertyLeft.getConfidenceIndex() == Confidence.KEY_CONFIDENCE_NO
+                            || starPropertyRight.getConfidenceIndex() == Confidence.KEY_CONFIDENCE_NO) {
+                        strLeft = strRight = Confidence.CONFIDENCE_NO.toString();
+                    } else {
+                        strLeft = starPropertyLeft.getConfidence().toString();
+                        strRight = starPropertyRight.getConfidence().toString();
+                    }
 
                     if (strLeft.equals(strRight)) {
                         // use value for colors:
                         confidenceValue = starPropertyLeft.getConfidence().toString();
                     } else {
-                        confidenceValue = ((strLeft.length() != 0) ? strLeft : "~") + " | " + ((strRight.length() != 0) ? strRight : "~");
+                        confidenceValue = strLeft + " | " + strRight;
 
                         isSet = true;
 
@@ -807,7 +808,7 @@ public final class DiffCalibratorsModel {
                     }
 
                     if (confidenceValue != null) {
-                        switch (res) {
+                        switch (valCmpRes) {
                             default:
                                 break;
                             case -1:
@@ -836,7 +837,7 @@ public final class DiffCalibratorsModel {
                     /*
                      * Create a new StarProperty instance from the retrieved value, origin and confidence.
                      */
-                    starProperty = (isSet) ? new StarProperty(propertyValue, origin, confidence) : StarProperty.EMPTY_STAR_PROPERTY;
+                    starProperty = (isSet) ? new StarProperty(propertyValue, origin.getKey(), confidence.getKey()) : StarProperty.EMPTY_STAR_PROPERTY;
 
                     // Add the newly created star property to the star property list
                     star.add(starProperty);
@@ -866,6 +867,18 @@ public final class DiffCalibratorsModel {
                 }
             }
         }
+
+        if (!diffStarList.isEmpty()) {
+            // First star:
+            final Vector<StarProperty> first = (Vector<StarProperty>) diffStarList.get(0);
+
+            _logger.info("{} Compared Star Properties.", first.size());
+
+            if (first.size() != first.capacity()) {
+                _logger.warn("Incorrect Property capacity: {} != {} ", first.size(), first.capacity());
+            }
+        }
+
 
         if (_logger.isInfoEnabled()) {
             _logger.info("compare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
@@ -1095,8 +1108,8 @@ public final class DiffCalibratorsModel {
         final StarListMeta starListMetaRight = starListRight.getMetaData();
 
         // Add otherRowIdx property:
-        starListMetaLeft.addPropertyMeta(new StarPropertyMeta(StarList.OtherRowIdxColumnName, Integer.class, "row index in other list", "ID_CROSSID", "", ""));
-        starListMetaRight.addPropertyMeta(new StarPropertyMeta(StarList.OtherRowIdxColumnName, Integer.class, "row index in other list", "ID_CROSSID", "", ""));
+        starListMetaLeft.addPropertyMeta(new StarPropertyMeta(StarList.OtherRowIdxColumnName, StarPropertyMeta.TYPE_INTEGER, "row index in other list", "ID_CROSSID", "", ""));
+        starListMetaRight.addPropertyMeta(new StarPropertyMeta(StarList.OtherRowIdxColumnName, StarPropertyMeta.TYPE_INTEGER, "row index in other list", "ID_CROSSID", "", ""));
 
         final int nPropLeft = starListMetaLeft.getPropertyCount();
         final int nPropRight = starListMetaRight.getPropertyCount();
@@ -1218,11 +1231,11 @@ public final class DiffCalibratorsModel {
      * @return 
      */
     private static List<StarProperty> GetStarMatchingCriteria(final double raRef, final double decRef,
-            final double criteriaPos,
-            final int raDegIdx, final int decDegIdx,
-            final TreeMap<Double, List<StarProperty>> starIndex,
-            final TreeMap<Double, List<StarProperty>> distMap,
-            final boolean isLogDebug) {
+                                                              final double criteriaPos,
+                                                              final int raDegIdx, final int decDegIdx,
+                                                              final TreeMap<Double, List<StarProperty>> starIndex,
+                                                              final TreeMap<Double, List<StarProperty>> distMap,
+                                                              final boolean isLogDebug) {
         // GetStarMatchingCriteria:
         distMap.clear();
         List<StarProperty> starFound = null;
@@ -1280,7 +1293,7 @@ public final class DiffCalibratorsModel {
      * @return 
      */
     private static TreeMap<Double, List<StarProperty>> createStarDecIndex(final StarList starList, final int decDegId,
-            final boolean isLogDebug) {
+                                                                          final boolean isLogDebug) {
         if (decDegId != -1) {
             final TreeMap<Double, List<StarProperty>> decIndex = new TreeMap<Double, List<StarProperty>>();
 
