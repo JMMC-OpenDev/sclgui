@@ -7,181 +7,374 @@ DESCRIPTION
 - transform VOTable into HTML files
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:exslt="http://exslt.org/common"
-                xmlns:math="http://exslt.org/math"
-                xmlns:date="http://exslt.org/dates-and-times"
-                xmlns:func="http://exslt.org/functions"
-                xmlns:set="http://exslt.org/sets"
-                xmlns:str="http://exslt.org/strings"
-                xmlns:dyn="http://exslt.org/dynamic"
-                xmlns:saxon="http://icl.com/saxon"
-                xmlns:xalanredirect="org.apache.xalan.xslt.extensions.Redirect"
-                xmlns:xt="http://www.jclark.com/xt"
-                xmlns:libxslt="http://xmlsoft.org/XSLT/namespace"
-                xmlns:test="http://xmlsoft.org/XSLT/"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:VOT11="http://www.ivoa.net/xml/VOTable/v1.1"
-                xmlns="http://www.ivoa.net/xml/VOTable/v1.1"
-                extension-element-prefixes="exslt math date func set str dyn saxon xalanredirect xt libxslt test"
-                exclude-result-prefixes="math str">
-    
-    <xsl:output method="xml" indent="yes" />
-    
-    <xsl:variable name="colorSets">
-        <set>
-            <key>MEDIUM</key>
-            <value>#D8D8D8</value>
-        </set>
-        <set>
-            <key>HIGH</key>
-            <value>#EFEFEF</value>
-        </set>
-        <set>
-            <key>LOW</key>
-            <value>#6E6E6E</value>
-        </set>
-        <set>
-            <key>J_A_A_433_1155</key>
-            <value>#C89292</value>
-        </set>
-        <set>
-            <key>V_50_catalog</key>
-            <value>#B6FFE6</value>
-        </set>
-        <set>
-            <key>II_246_out</key>
-            <value>#B6E8FF</value>
-        </set>
-        <set>
-            <key>II_225_catalog</key>
-            <value>#F6B6FF</value>
-        </set>
-        <set>
-            <key>V_36B_bsc4s</key>
-            <value>#88A0A6</value>
-        </set>
-        <set>
-            <key>I_196_main</key>
-            <value>#78FB8B</value>
-        </set>
-        <set>
-            <key>J_A_A_431_773_charm2</key>
-            <value>#B7FF5A</value>
-        </set>
-        <set>
-            <key>MIDI</key>
-            <value>#C994CA</value>
-        </set>
-        <set>
-            <key>I_284</key>
-            <value>#F1FB58</value>
-        </set>
-        <set>
-            <key>I_280</key>
-            <value>#FFB6B6</value>
-        </set>
-        <set>
-            <key>J_A_A_393_183_catalog</key>
-            <value>#9778FB</value>
-        </set>
-        <set>
-            <key>B_sb9_main</key>
-            <value>#A688A0</value>
-        </set>
-        <set>
-            <key>J_A_A_413_1037</key>
-            <value>#FFFADD</value>
-        </set>
-        <set>
-            <key>II_7A_catalog</key>
-            <value>#B9B6FF</value>
-        </set>
-        <set>
-            <key>B_denis</key>
-            <value>#FFF4B6</value>
-        </set>
-    </xsl:variable>
-    
-    <xsl:variable name="cssHeader">
-        <style type="text/css">        
-            <xsl:comment>                  
-                .content {                    
-                background-color:#F0F0F0;  
-                border:1px solid #BBBBBB;          
-                color: #010170;                    
-                padding: 1px;                      
-                margin: 1px;                       
-                font-family:Arial,Helvetica,sans-serif;
-                font-size:11px;                        
-                }                                      
-                .vbox {                                
-                border:1px solid #CCCCCC;              
-                padding: 3px;                          
-                margin: 3px;                           
-                float: left;                           
-                }                                      
-                .box {                                 
-                border:1px solid #CCCCCC;              
-                padding: 3px;                          
-                margin: 3px;                           
-                }                                      
-                table {                                
-                border: 2px solid #000099;             
-                border-collapse:collapse;      
-                }                                      
-                td {                                   
-                border: 1px solid #000099;             
-                }                                      
-                <xsl:for-each select="exslt:node-set($colorSets)/*">
-                    <xsl:value-of select="concat('                td.',VOT11:key,' { background-color : ',VOT11:value,' }&#10;')"/>
-                </xsl:for-each>
-                th {                                   
-                border: 1px solid #000099;             
-                background-color:#FFFFDD;      
-                }                                      
-            </xsl:comment>                         
-        </style>                               
+                xmlns:exslt="http://exslt.org/common"
+                exclude-result-prefixes="exslt VOT11">
 
-    </xsl:variable>
-    
-    <xsl:template match="/">
-        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-                <xsl:copy-of select="$cssHeader"/>
-            </head>
-            <body>
-                <table>
-                    <tr>
-                        <xsl:for-each select="exslt:node-set($colorSets)/*">
-                            <td class="{VOT11:key}">
-                                <xsl:value-of select="VOT11:key"/>
-                            </td>
-                        </xsl:for-each>
-                    </tr>
-                </table>
-                
-                <xsl:variable name="groups" select="/VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE/VOT11:GROUP"/>                           
-                <table>
-                    <xsl:for-each select="$groups">
-                        <xsl:element name="th">
+    <xsl:output method="xml" indent="no" encoding="UTF-8"/>
+
+    <!-- FIELD/PARAM ID keys -->
+    <xsl:key name="fieldID" match="/VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE/VOT11:FIELD" use = "@ID" />
+    <xsl:key name="paramID" match="/VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE/VOT11:PARAM" use = "@ID" />
+
+<!-- Confidence and origin indexes defined for outputFormat 2013.7 (19/07/2013) -->
+<xsl:variable name="colorSets">
+    <!-- confidence indexes -->
+    <set>
+        <key>c0</key>
+        <value>NO</value>
+        <color>none</color>
+    </set>
+    <set>
+        <key>c1</key>
+        <value>LOW</value>
+        <color>#6E6E6E</color>
+    </set>
+    <set>
+        <key>c2</key>
+        <value>MEDIUM</value>
+        <color>#D8D8D8</color>
+    </set>
+    <set>
+        <key>c3</key>
+        <value>HIGH</value>
+        <color>#EFEFEF</color>
+    </set>
+
+    <!-- origin indexes (catalog) -->
+    <set>
+        <key>o0</key>
+        <value>NO CATALOG</value>
+        <color>none</color>
+    </set>
+    <set>
+        <key>o1</key>
+        <value>MIXED CATALOG</value>
+        <color>none</color>
+    </set>
+    <set>
+        <key>o2</key>
+        <value>computed</value>
+        <color>none</color>
+    </set>
+    <set>
+        <key>o3</key>
+        <value>II/297/irc</value>
+        <color>#ff80d4</color>
+    </set>
+    <set>
+        <key>o4</key>
+        <value>I/280</value>
+        <color>#ffaa80</color>
+    </set>
+    <set>
+        <key>o5</key>
+        <value>I/280B</value>
+        <color>#ffaa80</color>
+    </set>
+    <set>
+        <key>o6</key>
+        <value>V/50/catalog</value>
+        <color>#80ff80</color>
+    </set>
+    <set>
+        <key>o7</key>
+        <value>II/225/catalog</value>
+        <color>#ffff80</color>
+    </set>
+    <set>
+        <key>o8</key>
+        <value>B/denis</value>
+        <color>#80ffd5</color>
+    </set>
+    <set>
+        <key>o9</key>
+        <value>J/A+A/413/1037/table1</value>
+        <color>#80ffff</color>
+    </set>
+    <set>
+        <key>o10</key>
+        <value>I/196/main</value>
+        <color>#80d4ff</color>
+    </set>
+    <set>
+        <key>o11</key>
+        <value>I/239/hip_main</value>
+        <color>#ff8080</color>
+    </set>
+    <set>
+        <key>o12</key>
+        <value>I/311/hip2</value>
+        <color>#ff80aa</color>
+    </set>
+    <set>
+        <key>o13</key>
+        <value>J/A+A/393/183/catalog</value>
+        <color>#80aaff</color>
+    </set>
+    <set>
+        <key>o14</key>
+        <value>II/246/out</value>
+        <color>#aaff80</color>
+    </set>
+    <set>
+        <key>o15</key>
+        <value>J/A+A/433/1155</value>
+        <color>#80ffaa</color>
+    </set>
+    <set>
+        <key>o16</key>
+        <value>MIDI</value>
+        <color>#8080ff</color>
+    </set>
+    <set>
+        <key>o17</key>
+        <value>II/7A/catalog</value>
+        <color>#d5ff80</color>
+    </set>
+    <set>
+        <key>o18</key>
+        <value>V/36B/bsc4s</value>
+        <color>#aa80ff</color>
+    </set>
+    <set>
+        <key>o19</key>
+        <value>B/sb9/main</value>
+        <color>#d580ff</color>
+    </set>
+    <set>
+        <key>o20</key>
+        <value>I/284</value>
+        <color>#ffd580</color>
+    </set>
+    <set>
+        <key>o21</key>
+        <value>B/wds/wds</value>
+        <color>#ff80ff</color>
+    </set>
+</xsl:variable>
+<!-- convert colorSet into node-set -->
+<xsl:variable name="colorNodeSet" select="exslt:node-set($colorSets)" />
+
+
+<xsl:template match="/">
+    <xsl:variable name="table" select="VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE"/>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <title>SearchCal GUI</title>
+            <xsl:call-template name="generateCSS" />
+        </head>
+        <xsl:text>&#10;</xsl:text>
+        <body>
+            <table>
+                <tr><xsl:call-template name="generateLegend" /></tr>
+            </table>
+            <xsl:text>&#10;</xsl:text>
+            
+            <xsl:variable name="mappings">
+                <xsl:call-template name="generateMapping">
+                    <xsl:with-param name="groups" select="$table/VOT11:GROUP"/>
+                </xsl:call-template>
+            </xsl:variable>
+
+            <table>
+                <tr>
+                    <!-- use group name -->
+<!-- TODO: fix Error handling ie use mapping here -->                    
+                    <xsl:for-each select="$table/VOT11:GROUP">
+                        <th>
                             <xsl:value-of select="@name"/>
-                        </xsl:element>
-                    </xsl:for-each>                    
-                    <xsl:for-each select="/VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE/VOT11:DATA/VOT11:TABLEDATA/VOT11:TR">
-                        <xsl:variable name="trNode" select="."/>                         
-                        <tr>            
-                            <xsl:for-each select="$groups">                        
-                                <xsl:variable name="colIndex" select="3 * (position()-1) + 1"/>                                
-                                <xsl:variable name="class" 
-                                              select="translate(concat($trNode/VOT11:TD[$colIndex + 1],' ',$trNode/VOT11:TD[$colIndex + 2]),'/+.','___')"/>                                                   
-                                <td class="{$class}">           
-                                    <xsl:value-of select="$trNode/VOT11:TD[$colIndex]"/>
-                                </td>
-                            </xsl:for-each>
-                        </tr>
-                    </xsl:for-each>                    
-                </table>
-            </body>
-        </html>
-    </xsl:template>
+                        </th>
+                    </xsl:for-each>
+                </tr>
+                <xsl:text>&#10;</xsl:text>
+
+                <!-- convert mappings into node-set -->
+                <xsl:variable name="mappingNodeSet" select="exslt:node-set($mappings)" />
+                <!--
+                    <xsl:message>
+                        <xsl:for-each select="$mappingNodeSet/*">
+                            mapping {
+                                valuePos: <xsl:value-of select="@valuePos"/>
+                                originPos: <xsl:value-of select="@originPos"/>
+                                confidencePos: <xsl:value-of select="@confidencePos"/>
+                                originConst: <xsl:value-of select="@originConst"/>
+                                confidenceConst: <xsl:value-of select="@confidenceConst"/>
+                            }
+                        </xsl:for-each>
+                    </xsl:message>
+                -->
+
+                <xsl:apply-templates select="$table/VOT11:DATA/VOT11:TABLEDATA/VOT11:TR">
+                    <xsl:with-param name="mappingNodeSet" select="$mappingNodeSet"/>
+                </xsl:apply-templates>
+                
+            </table>
+        </body>
+    </html>
+</xsl:template>
+
+
+<xsl:template name="generateMapping">
+    <xsl:param name="groups"/>
+    <xsl:variable name="fields" select="/VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE/VOT11:FIELD"/>
+
+    <xsl:for-each select="$groups">
+        <xsl:element name="mapping">
+            <xsl:for-each select="./VOT11:FIELDref">
+                <xsl:variable name="fieldName" select="key('fieldID', @ref)/@name"/>
+                <xsl:choose>
+                    <xsl:when test="contains($fieldName, 'origin')">
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="originPos">
+                                    <xsl:value-of select="position()"/>
+                                </xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:when test="contains($fieldName, 'confidence')">
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="confidencePos">
+                                    <xsl:value-of select="position()"/>
+                                </xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+<!-- TODO: fix Error handling -->
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="valuePos">
+                                    <xsl:value-of select="position()"/>
+                                </xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+
+            <xsl:for-each select="./VOT11:PARAMref">
+                <xsl:variable name="param" select="key('paramID', @ref)"/>
+                <xsl:variable name="paramName" select="$param/@name"/>
+                <xsl:choose>
+                    <xsl:when test="contains($paramName, 'origin')">
+                        <xsl:attribute name="originConst">
+                            <xsl:value-of select="$param/@value"/>
+                        </xsl:attribute> 
+                    </xsl:when>
+                    <xsl:when test="contains($paramName, 'confidence')">
+                        <xsl:attribute name="confidenceConst">
+                            <xsl:value-of select="$param/@value"/>
+                        </xsl:attribute> 
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:element>
+    </xsl:for-each>
+</xsl:template>
+
+
+<xsl:template name="generateCSS">
+<style type="text/css">
+<xsl:comment>
+.content {
+background-color:#F0F0F0;
+border:1px solid #BBBBBB;
+color: #010170;
+padding: 1px;
+margin: 1px;
+font-family:Arial,Helvetica,sans-serif;
+font-size:11px;
+}
+.vbox {
+border:1px solid #CCCCCC;
+padding: 3px;
+margin: 3px;
+float: left;
+}
+.box {
+border:1px solid #CCCCCC;
+padding: 3px;
+margin: 3px;
+}
+table {
+border: 2px solid #000099;
+border-collapse:collapse;
+}
+td {
+border: 1px solid #000099;
+}
+<xsl:for-each select="$colorNodeSet/*">
+<xsl:value-of select="concat('td.',xhtml:key,' { background-color : ',xhtml:color,' }&#10;')"/>
+</xsl:for-each>
+th {
+border: 1px solid #000099;
+background-color:#FFFFDD;
+}
+</xsl:comment>
+</style>
+</xsl:template>
+
+
+<xsl:template name="generateLegend">
+<xsl:for-each select="$colorNodeSet/*">
+    <td class="{xhtml:key}">
+        <xsl:value-of select="xhtml:value"/>
+    </td>
+</xsl:for-each>
+</xsl:template>
+
+
+<xsl:template match="VOT11:TR">
+    <xsl:param name="mappingNodeSet" />
+    <xsl:text disable-output-escaping="yes">&lt;tr&gt;</xsl:text>
+    <xsl:apply-templates select="$mappingNodeSet/*">
+        <xsl:with-param name="trNode" select="."/>
+    </xsl:apply-templates>
+    <xsl:text disable-output-escaping="yes">&lt;/tr&gt;&#10;</xsl:text>
+</xsl:template>
+
+
+<!-- note: xsltproc requires xhtml namespace: match="xhtml:mapping" -->
+<xsl:template match="mapping">
+    <xsl:param name="trNode" />
+    <xsl:variable name="iValuePos" select="number(@valuePos)"/>
+    <xsl:variable name="cellValue" select="$trNode/VOT11:TD[$iValuePos]/text()"/>
+    <xsl:choose>
+        <xsl:when test="$cellValue">
+            <xsl:text disable-output-escaping="yes">&lt;td class="o</xsl:text>
+            <xsl:choose>
+                <xsl:when test="@originPos">
+                    <xsl:variable name="iOriginPos" select="number(@originPos)"/>
+                    <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iOriginPos]/text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of disable-output-escaping="yes" select="@originConst"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text disable-output-escaping="yes"> c</xsl:text>
+            <xsl:choose>
+                <xsl:when test="@confidencePos">
+                    <xsl:variable name="iConfidencePos" select="number(@confidencePos)"/>
+                    <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iConfidencePos]/text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of disable-output-escaping="yes" select="@confidenceConst"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
+            <xsl:value-of select="$cellValue"/>
+            <xsl:text disable-output-escaping="yes">&lt;/td&gt;</xsl:text>
+<!-- TODO: fix Error handling -->
+        </xsl:when>
+        <xsl:otherwise><xsl:text disable-output-escaping="yes">&lt;td/&gt;</xsl:text></xsl:otherwise>
+<!-- TODO: fix Error handling -->
+    </xsl:choose>
+</xsl:template>
+
 </xsl:stylesheet>
