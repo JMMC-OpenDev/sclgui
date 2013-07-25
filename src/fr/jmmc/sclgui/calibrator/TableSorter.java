@@ -122,6 +122,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * DOCUMENT ME!
      */
     public static final Comparator COMPARABLE_COMPARATOR = new Comparator() {
+        @Override
         public int compare(final Object o1, final Object o2) {
             return ((Comparable) o1).compareTo(o2);
         }
@@ -130,6 +131,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * DOCUMENT ME!
      */
     public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
+        @Override
         public int compare(final Object o1, final Object o2) {
             return o1.toString().compareTo(o2.toString());
         }
@@ -513,6 +515,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      *
      * @return DOCUMENT ME!
      */
+    @Override
     public int getRowCount() {
         return (tableModel == null) ? 0 : tableModel.getRowCount();
     }
@@ -522,6 +525,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      *
      * @return DOCUMENT ME!
      */
+    @Override
     public int getColumnCount() {
         int nbOfColumns = 0;
 
@@ -578,6 +582,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      *
      * @return DOCUMENT ME!
      */
+    @Override
     public Object getValueAt(final int row, final int column) {
         return tableModel.getValueAt(modelIndex(row), _viewIndex[column]);
     }
@@ -694,6 +699,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     /**
      * Automatically called whenever the observed model changed
      */
+    @Override
     public void update(Observable o, Object arg) {
         computeColumnsIndirectionArray();
 
@@ -705,11 +711,12 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         final int modelIndex;
 
-        public Row(final int index) {
+        Row(final int index) {
             this.modelIndex = index;
         }
 
         @SuppressWarnings("unchecked")
+        @Override
         public int compareTo(final Object o) {
             final int row1 = modelIndex;
             final int row2 = ((Row) o).modelIndex;
@@ -744,6 +751,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
     private final class TableModelHandler implements TableModelListener {
 
+        @Override
         public void tableChanged(TableModelEvent e) {
 
             computeColumnsIndirectionArray();
@@ -848,6 +856,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             this.priority = priority;
         }
 
+        @Override
         public void paintIcon(final Component c, final Graphics g, final int x, int y) {
             final Color color = (c == null) ? Color.red : c.getBackground();
 
@@ -885,10 +894,12 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             g.translate(-x, -bl);
         }
 
+        @Override
         public int getIconWidth() {
             return size;
         }
 
+        @Override
         public int getIconHeight() {
             return size;
         }
@@ -910,9 +921,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             this.tableCellRenderer = tableCellRenderer;
         }
 
+        @Override
         public Component getTableCellRendererComponent(final JTable table, final Object value,
-                final boolean isSelected, final boolean hasFocus,
-                final int row, final int column) {
+                                                       final boolean isSelected, final boolean hasFocus,
+                                                       final int row, final int column) {
 
             final Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -960,7 +972,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         final int column;
         final int direction;
 
-        public Directive(int column, int direction) {
+        Directive(int column, int direction) {
             this.column = column;
             this.direction = direction;
         }
@@ -1026,10 +1038,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
          */
         @Override
         public Component getTableCellRendererComponent(final JTable table, final Object value,
-                final boolean isSelected, final boolean hasFocus,
-                final int row, final int column) {
-
-            final long start = System.nanoTime();
+                                                       final boolean isSelected, final boolean hasFocus,
+                                                       final int row, final int column) {
 
             // Set default renderer to the component
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -1060,27 +1070,37 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             Color foregroundColor = Color.BLACK;
             Color backgroundColor = Color.WHITE;
 
-            String origin = null;
+            Origin origin = null;
             String confidence = null;
 
             final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
-            if (starProperty != null) {
+
+            if (starProperty != StarProperty.EMPTY_STAR_PROPERTY && starProperty != null) {
                 // Set Background Color corresponding to the Catalog Origin Color or confidence index
                 if (starProperty.hasOrigin()) {
                     // Get origin and set it as tooltip
                     origin = starProperty.getOrigin();
 
-                    final Catalog catalog = Catalog.catalogFromReference(origin);
+                    sb.append("Catalog origin: ");
 
-                    // Only use catalog origin as tooltip
-                    tooltip = sb.append("Catalog origin: ").append(((catalog != null) ? catalog : origin)).toString(); // Diff tool
+                    // use optional catalog reference stored in origin enum: 
+                    final Catalog catalog = origin.getCatalog();
+
+                    if (catalog != null) {
+                        // use catalog description as tooltip
+                        catalog.toString(sb);
+
+                        // Get origin color (alias handling) and set it as cell background color
+                        backgroundColor = TableCellColorsPreferenceListener.instance._colorForOrigin.get(catalog.reference());
+                    } else {
+                        // Only use catalog origin as tooltip (Diff tool) (note: no string creation)
+                        sb.append(origin.toString());
+                    }
+                    tooltip = sb.toString();
                     sb.setLength(0); // recycle buffer
 
-                    // Get origin color and set it as cell background color
-                    backgroundColor = TableCellColorsPreferenceListener.instance._colorForOrigin.get(origin);
-
                 } else if (starProperty.hasConfidence()) {
-                    // Get confidence and set it as tooltip
+                    // Get confidence and set it as tooltip (note: no string creation)
                     confidence = starProperty.getConfidence().toString();
 
                     tooltip = sb.append("Computed value (confidence index: ").append(confidence).append(')').toString();
@@ -1098,25 +1118,25 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                     // If the property has no origin nor confidence: it is empty
                     tooltip = null;
                 }
-            }
 
-            if (backgroundColor == null) {
-                // Diff tool case: origin or confidence not found in color maps:
-                confidence = (origin != null) ? origin : (confidence != null) ? confidence : null;
-                if (confidence != null) {
-                    if (confidence.startsWith("DIFF")) {
-                        backgroundColor = Color.ORANGE;
-                    } else if (confidence.startsWith("LEFT")) {
-                        backgroundColor = Color.GREEN;
-                    } else if (confidence.startsWith("RIGHT")) {
-                        backgroundColor = Color.PINK;
-                    } else if (confidence.startsWith("SKIP")) {
-                        backgroundColor = Color.GRAY;
-                    } else if (confidence.startsWith("LESS")) {
-                        backgroundColor = Color.LIGHT_GRAY;
+                if (backgroundColor == null) {
+                    // Diff tool case: origin or confidence not found in color maps:
+                    confidence = (origin != null) ? origin.toString() : (confidence != null) ? confidence : null;
+                    if (confidence != null) {
+                        if (confidence.startsWith("DIFF")) {
+                            backgroundColor = Color.ORANGE;
+                        } else if (confidence.startsWith("LEFT")) {
+                            backgroundColor = Color.GREEN;
+                        } else if (confidence.startsWith("RIGHT")) {
+                            backgroundColor = Color.PINK;
+                        } else if (confidence.startsWith("SKIP")) {
+                            backgroundColor = Color.GRAY;
+                        } else if (confidence.startsWith("LESS")) {
+                            backgroundColor = Color.LIGHT_GRAY;
+                        }
+                    } else {
+                        backgroundColor = Color.RED;
                     }
-                } else {
-                    backgroundColor = Color.RED;
                 }
             }
 
@@ -1221,6 +1241,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         /**
          * Automatically called whenever color preferences change.
          */
+        @Override
         public void update(final Observable o, final Object arg) {
             // React to preferences changes
             if (o.equals(_preferences)) {
@@ -1229,11 +1250,11 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
                 // Read colors preferences for catalogs
                 String prefix = Preferences.PREFIX_CATALOG_COLOR;
-                Enumeration e = _preferences.getPreferences(prefix);
-                _colorForOrigin = new HashMap<String, Color>();
+                Enumeration<String> e = _preferences.getPreferences(prefix);
+                _colorForOrigin = new HashMap<String, Color>(32);
 
                 while (e.hasMoreElements()) {
-                    String entry = (String) e.nextElement();
+                    String entry = e.nextElement();
                     String catalogName = entry.substring(prefix.length());
 
                     try {
@@ -1247,10 +1268,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 // Read colors preferences for confidences
                 prefix = Preferences.PREFIX_CONFIDENCE_COLOR;
                 e = _preferences.getPreferences(prefix);
-                _colorForConfidence = new HashMap<String, Color>();
+                _colorForConfidence = new HashMap<String, Color>(8);
 
                 while (e.hasMoreElements()) {
-                    String entry = (String) e.nextElement();
+                    String entry = e.nextElement();
                     String confidenceName = entry.substring(prefix.length());
 
                     try {
@@ -1270,8 +1291,9 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         private static final long serialVersionUID = 1;
 
         // This method is called when a cell value is edited by the user.
+        @Override
         public Component getTableCellEditorComponent(final JTable table, final Object value, final boolean isSelected,
-                final int row, final int column) {
+                                                     final int row, final int column) {
 
             // Retrieve clicked cell informations
             final int modelRow = modelIndex(row);
@@ -1311,6 +1333,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         // This method is called when editing is completed.
         // It must return the new value to be stored in the cell.
+        @Override
         public Object getCellEditorValue() {
             // Should not be called
             _logger.error("TableCellColorsEditor.getCellEditorValue() should have not been called.");
