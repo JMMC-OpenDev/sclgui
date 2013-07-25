@@ -9,18 +9,82 @@ DESCRIPTION
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:VOT11="http://www.ivoa.net/xml/VOTable/v1.1"
                 xmlns:exslt="http://exslt.org/common"
-                extension-element-prefixes="exslt">
+                extension-element-prefixes="exslt VOT11">
 
     <xsl:output method="text" encoding="UTF-8" />
 
     <xsl:param name="fieldSeparator">,</xsl:param>
    		
     <xsl:template match="/">
-        <xsl:apply-templates select="VOT11:VOTABLE" />        
+        <xsl:apply-templates select="VOT11:VOTABLE" />
     </xsl:template>
 
+
+    <xsl:template match="VOT11:VOTABLE">
+        <xsl:text>#  This file was generated using SearchCal GUI&#10;</xsl:text>
+
+        <!-- Print description -->
+        <xsl:apply-templates select="VOT11:DESCRIPTION"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:variable name="table" select="VOT11:RESOURCE/VOT11:TABLE"/>
+
+        <!-- store mappings for future output of TD linked to non hidden fields -->
+        <xsl:variable name="mappings">
+            <xsl:for-each select="$table/VOT11:FIELD">
+                <xsl:if test="not(@type='hidden')">
+                    <xsl:element name="mapping">
+                        <xsl:attribute name="pos"><xsl:value-of select="position()"/></xsl:attribute>
+                    </xsl:element>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="mappingNodeSet" select="exslt:node-set($mappings)" />
+
+        <!--
+        <xsl:message>
+            <xsl:for-each select="$mappingNodeSet/*">
+                mapping {
+                    pos: <xsl:value-of select="@pos"/>
+                }
+            </xsl:for-each>
+        </xsl:message>
+        -->
+
+        <!-- Print fields name as header (no confidence nor origin fields) -->
+        <xsl:for-each select="$mappingNodeSet/*">
+            <xsl:variable name="iPos" select="number(@pos)"/>
+            <xsl:value-of disable-output-escaping="yes" select="$table/VOT11:FIELD[$iPos]/@name"/>
+            <xsl:value-of disable-output-escaping="yes" select="$fieldSeparator"/>
+        </xsl:for-each>
+
+        <!-- Print data -->
+        <xsl:apply-templates select="$table/VOT11:DATA/VOT11:TABLEDATA/VOT11:TR">
+            <xsl:with-param name="mappingNodeSet" select="$mappingNodeSet"/>
+        </xsl:apply-templates>
+    </xsl:template>
+
+
+    <xsl:template match="VOT11:TR">
+        <xsl:param name="mappingNodeSet" />
+        <xsl:text>&#10;</xsl:text>
+        <xsl:apply-templates select="$mappingNodeSet/*">
+            <xsl:with-param name="trNode" select="."/>
+        </xsl:apply-templates>
+    </xsl:template>
+
+
+    <!-- note: xsltproc requires xhtml namespace: match="xhtml:mapping" -->
+    <xsl:template match="mapping">
+        <xsl:param name="trNode" />
+        <xsl:variable name="iPos" select="number(@pos)"/>
+        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iPos]/text()"/>
+        <xsl:value-of disable-output-escaping="yes" select="$fieldSeparator"/>
+    </xsl:template>
+
+
     <!-- Read line separated description and output them prefixed with dash --> 
-    <xsl:template match="VOT11:DESCRIPTION">#  
+    <xsl:template match="VOT11:DESCRIPTION"><xsl:text>#  </xsl:text>
         <xsl:call-template name="SubstringReplace">
             <xsl:with-param name="stringIn" select="."/>
             <xsl:with-param name="substringIn" select="'&#10;'"/>
@@ -28,44 +92,7 @@ DESCRIPTION
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="VOT11:VOTABLE">
-        <xsl:text>#  This file was generated using Java SearchCal program&#10;</xsl:text>
 
-        <!-- Print description -->
-        <xsl:apply-templates select="VOT11:DESCRIPTION"/>
-        <xsl:value-of select="'&#10;'"/>
-        <xsl:for-each select="VOT11:RESOURCE/VOT11:TABLE">
-            <!-- Print fields name as header -->
-            <xsl:for-each select="VOT11:FIELD[not(@type='hidden')]">
-                <xsl:value-of select="./@name"/>
-                <xsl:value-of select="$fieldSeparator"/>
-            </xsl:for-each>
-            <!-- store indices for future output of TD linked to non hidden fields -->
-            <xsl:variable name="indices">
-                <xsl:for-each select="VOT11:FIELD">
-                    <xsl:if test="not(@type='hidden')">
-                        <indice> 
-                            <xsl:value-of select="position()"/> 
-                        </indice>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:variable>
-            <xsl:variable name="indiceNodes" select="exslt:node-set($indices)/indice" />
-
-            <!-- Print data -->            
-            <xsl:for-each select="VOT11:DATA/VOT11:TABLEDATA/VOT11:TR">
-                <xsl:variable name="row" select="."/>                    
-                <xsl:value-of select="'&#10;'"/>
-                <xsl:for-each select="$indiceNodes">
-                    <xsl:value-of select="$row/VOT11:TD[number(.)]"/>
-                    <xsl:value-of select="$fieldSeparator"/>
-                </xsl:for-each>
-            </xsl:for-each>
-                        
-        </xsl:for-each>
-    </xsl:template>
-    
-    
     <xsl:template name="SubstringReplace">
         <xsl:param name="stringIn"/>
         <xsl:param name="substringIn"/>
