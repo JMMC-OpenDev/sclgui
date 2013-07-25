@@ -3,8 +3,13 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
+import fr.jmmc.jmcs.util.NumberUtils;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Confidence (custom enum like) 
@@ -12,98 +17,172 @@ import java.util.Map;
  */
 public final class Confidence {
 
-    /** int String index */
-    private final static Map<String, Confidence> intStringIndex = new HashMap<String, Confidence>(64);
-    /** representation index */
-    private final static Map<String, Confidence> representationIndex = new HashMap<String, Confidence>(64);
-    /** undefined */
-    public final static Confidence UNDEFINED = new Confidence(0, "UNDEFINED");
+    /** Logger */
+    private final static Logger _logger = LoggerFactory.getLogger(Confidence.class.getName());
+    /* Confidence enum keys as integer */
+    /** Confidence - NO */
+    public final static int KEY_CONFIDENCE_NO = 0;
     /** Confidence - LOW */
-    public final static Confidence CONFIDENCE_LOW = new Confidence(1, "LOW");
+    public final static int KEY_CONFIDENCE_LOW = 1;
     /** Confidence - MEDIUM */
-    public final static Confidence CONFIDENCE_MEDIUM = new Confidence(2, "MEDIUM");
+    public final static int KEY_CONFIDENCE_MEDIUM = 2;
     /** Confidence - HIGH */
-    public final static Confidence CONFIDENCE_HIGH = new Confidence(3, "HIGH");
-    /** custom confidence int value */
-    private static int customInt = -100;
+    public final static int KEY_CONFIDENCE_HIGH = 3;
+    /** custom confidence negative integer values (starts at -1) */
+    private static int customInt = -1;
+    /* Confidence instances */
+    /** Confidence - NO */
+    public final static Confidence CONFIDENCE_NO = new Confidence(KEY_CONFIDENCE_NO, "NO");
+    /** Confidence - LOW */
+    public final static Confidence CONFIDENCE_LOW = new Confidence(KEY_CONFIDENCE_LOW, "LOW");
+    /** Confidence - MEDIUM */
+    public final static Confidence CONFIDENCE_MEDIUM = new Confidence(KEY_CONFIDENCE_MEDIUM, "MEDIUM");
+    /** Confidence - HIGH */
+    public final static Confidence CONFIDENCE_HIGH = new Confidence(KEY_CONFIDENCE_HIGH, "HIGH");
 
     /**
      * Parse the given string as a Confidence
-     * @param str string to parse
-     * @return Confidence
+     * @param str string to parse (key as string or string value)
+     * @return Confidence or CONFIDENCE_NO if no match found
      */
     public static Confidence parse(final String str) {
-        Confidence confidence = intStringIndex.get(str);
+        // integer mapping for SearchCal 5.0:
+        Confidence confidence = ConfidenceMapping.keyStringMap.get(str);
         if (confidence == null) {
-            // fallback mode for SearchCal votable < 5.0:
-            confidence = representationIndex.get(str);
+            // fallback mode for SearchCal 4.x:
+            confidence = ConfidenceMapping.valueMap.get(str);
         }
         if (confidence == null) {
-            confidence = UNDEFINED;
+            _logger.debug("unable to parse confidence value [{}] !", str);
+            confidence = CONFIDENCE_NO;
         }
         return confidence;
     }
 
     /**
-     * Parse or create new custom confidence index
+     * Parse the given integer as a Confidence
+     * @param key enum key as integer
+     * @return Confidence or CONFIDENCE_NO if no match found
+     */
+    public static Confidence parse(final int key) {
+        Confidence confidence = ConfidenceMapping.keyIntegerMap.get(NumberUtils.valueOf(key));
+        if (confidence == null) {
+            confidence = CONFIDENCE_NO;
+        }
+        return confidence;
+    }
+
+    /**
+     * Parse or create a new custom confidence index
      * @param str string representation
      * @return Confidence or custom Confidence
      */
     public static Confidence parseCustomConfidence(final String str) {
         Confidence confidence = parse(str);
-        if (confidence == UNDEFINED) {
+        if (confidence == CONFIDENCE_NO) {
             // create a new custom confidence
-            confidence = new Confidence(customInt--, str); // Should not be stored: use an extra table ??
+            confidence = new Confidence(customInt--, str); // Should not be stored except for tooltip: use an extra table ??
         }
         return confidence;
     }
 
-    private static void addConfidence(final Confidence confidence) {
-        intStringIndex.put(confidence.getIntString(), confidence);
-        representationIndex.put(confidence.getRepresentation(), confidence);
+    /** @return Confidence instances */
+    public static Set<Confidence> values() {
+        return ConfidenceMapping.set;
     }
+
     /* members */
-    /** enum value */
-    private final int value;
-    /** int string representation ("1", "2", "3") */
-    private final String intString;
-    /** string representation ("LOW", "MEDIUM", "HIGH") */
-    private final String representation;
+    /** enum key as integer */
+    private final int key;
+    /** key as string ("0", "1", "2", "3") */
+    private final String keyString;
+    /** string value ("NO", "LOW", "MEDIUM", "HIGH") */
+    private final String value;
 
-    private Confidence(final int value, final String representation) {
+    /**
+     * Private constructor
+     * @param key enum key as integer
+     * @param value string value
+     */
+    private Confidence(final int key, final String value) {
+        this.key = key;
+        this.keyString = String.valueOf(key);
         this.value = value;
-        this.intString = (value != 0) ? String.valueOf(value) : ""; // empty string for undefined value
-        this.representation = representation;
-
-        addConfidence(this);
+        ConfidenceMapping.addConfidence(this);
     }
 
     /**
-     * Return the enum value
-     * @return enum value
+     * Return the enum key as integer
+     * @return enum key as integer
      */
-    public int getValue() {
+    public int getKey() {
+        return key;
+    }
+
+    /**
+     * Return the key as string ("0", "1", "2", "3")
+     * @return key as string
+     */
+    public String getKeyString() {
+        return keyString;
+    }
+
+    /**
+     * Return the string value ("NO", "LOW", "MEDIUM", "HIGH")
+     * @return string value
+     */
+    public String getValue() {
+        return value;
+    }
+    
+    @Override
+    public String toString() {
         return value;
     }
 
-    /**
-     * Return the int string representation ("1", "2", "3")
-     * @return int string representation
-     */
-    public String getIntString() {
-        return intString;
+    /** mappings: specific class to ensure mappings are defined before Confidence instances (initialization order issue) */
+    private final static class ConfidenceMapping {
+
+        /** default map capacity */
+        private final static int CAPACITY = 64;
+        /** Confidence map keyed by key as integer */
+        final static Map<Integer, Confidence> keyIntegerMap = new HashMap<Integer, Confidence>(CAPACITY);
+        /** Confidence map keyed by key as string */
+        final static Map<String, Confidence> keyStringMap = new HashMap<String, Confidence>(CAPACITY);
+        /** Confidence map keyed by string value */
+        final static Map<String, Confidence> valueMap = new HashMap<String, Confidence>(CAPACITY);
+        /** Confidence ordered set */
+        final static Set<Confidence> set = new LinkedHashSet<Confidence>(CAPACITY);
+        
+        static void addConfidence(final Confidence confidence) {
+            keyIntegerMap.put(NumberUtils.valueOf(confidence.getKey()), confidence);
+            keyStringMap.put(confidence.getKeyString(), confidence);
+            valueMap.put(confidence.getValue(), confidence);
+            set.add(confidence);
+        }
+
+        /* Forbidden constructor */
+        private ConfidenceMapping() {
+        }
     }
 
     /**
-     * Return the string representation ("LOW", "MEDIUM", "HIGH")
-     * @return string representation
+     * To generate CSS styles in sclguiVOTableToHTML.xsl
+     * @param args unused arguments
      */
-    public String getRepresentation() {
-        return representation;
-    }
+    public static void main(String[] args) {
 
-    @Override
-    public String toString() {
-        return representation;
+        System.out.println("CSS version  :\n<!-- confidence indexes -->");
+
+        for (Confidence confidence : Confidence.values()) {
+            System.out.println("<set>");
+            System.out.print("<key>c");
+            System.out.print(confidence.getKeyString());
+            System.out.println("</key>");
+            System.out.print("<value>");
+            System.out.print(confidence.getValue());
+            System.out.println("</value>");
+            System.out.println("</set>");
+        }
     }
 }
