@@ -3,14 +3,13 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.query;
 
-import cds.savot.model.ParamSet;
-import cds.savot.model.SavotParam;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
+import fr.jmmc.sclgui.calibrator.CalibratorsModel;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.util.HashMap;
@@ -45,7 +44,7 @@ public final class QueryModel extends Star implements Observer {
     /** Available magnitude band for BRIGHT scenario */
     private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "J", "H", "K", "N"};
     /** Available magnitude band for FAINT scenario */
-    private static final String[] FAINT_MAGNITUDE_BANDS = {"J", "H", "K"};
+    private static final String[] FAINT_MAGNITUDE_BANDS = {"I", "J", "H", "K"};
 
     /**
      * Enumeration of all different observers notification a star can raise.
@@ -323,32 +322,14 @@ public final class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Set all properties from the given SAVOT ParamSet.
+     * Set all properties from the given query parameters as (name, value) pairs.
      *
-     * @param paramSet the part of the VOTable containing our query parameters.
-     * @throws NumberFormatException  if the string does not contain a
-     * parsable number.
+     * @param parameters query parameters as (name, value) pairs
+     * @throws NumberFormatException  if the string does not contain a parsable number.
      */
-    public void loadParamSet(ParamSet paramSet) throws NumberFormatException {
-        final int nParams = paramSet.getItemCount();
-        // Convert the ParamSet in an HashTable on parameters name -> value
-        // TODO: put in Savot Param finder by name:
-        final Map<String, String> parameters = new HashMap<String, String>(nParams);
-
+    public void loadParameters(final Map<String, String> parameters) throws NumberFormatException {
+        // Set the query members from the query parameters
         String paramValue;
-
-        for (int i = 0; i < nParams; i++) {
-            final SavotParam param = paramSet.getItemAt(i);
-            final String paramName = param.getName();
-            paramValue = param.getValue();
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("{} = '{}'", paramName, paramValue);
-            }
-            parameters.put(paramName, paramValue);
-        }
-
-        // Set the query members from the ParamSet values
 
         // optional "bright" parameter (Aspro2):
         paramValue = parameters.get("bright");
@@ -548,7 +529,10 @@ public final class QueryModel extends Star implements Observer {
         query.append("-bright ").append(brightFlag).append(" ");
 
         // Get the science star
-        query.append("-noScienceStar false");
+        query.append("-noScienceStar false ");
+
+        // Output format
+        query.append("-outputFormat ").append(CalibratorsModel.GUI_OUTPUT_FORMAT);
 
         if (_logger.isDebugEnabled()) {
             _logger.debug("query = '{}'.", query);
