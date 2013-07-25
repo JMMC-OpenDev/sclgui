@@ -585,16 +585,20 @@ public final class SavotWriter {
 
                 w.write("\n<PARAM");
 
+                if (param.getName().length() != 0) {
+                    w.append(" name=\"").append(encodeAttribute(param.getName())).append('"');
+                }
+
                 if (param.getId().length() != 0) {
                     w.append(" ID=\"").append(encodeAttribute(param.getId())).append('"');
                 }
 
-                if (param.getUnit().length() != 0) {
-                    w.append(" unit=\"").append(encodeAttribute(param.getUnit())).append('"');
-                }
-
                 if (param.getDataType().length() != 0) {
                     w.append(" datatype=\"").append(encodeAttribute(param.getDataType())).append('"');
+                }
+
+                if (param.getArraySize().length() != 0) {
+                    w.append(" arraysize=\"").append(encodeAttribute(param.getArraySize())).append('"');
                 }
 
                 if (param.getPrecision().length() != 0) {
@@ -607,15 +611,11 @@ public final class SavotWriter {
 
                 // since VOTable version 1.2
                 if (param.getXtype().length() != 0) {
-                    w.append(" width=\"").append(encodeAttribute(param.getXtype())).append('"');
+                    w.append(" xtype=\"").append(encodeAttribute(param.getXtype())).append('"');
                 }
 
                 if (param.getRef().length() != 0) {
                     w.append(" ref=\"").append(encodeAttribute(param.getRef())).append('"');
-                }
-
-                if (param.getName().length() != 0) {
-                    w.append(" name=\"").append(encodeAttribute(param.getName())).append('"');
                 }
 
                 if (param.getUcd().length() != 0) {
@@ -626,12 +626,11 @@ public final class SavotWriter {
                     w.append(" utype=\"").append(encodeAttribute(param.getUtype())).append('"');
                 }
 
-                if (param.getValue().length() != 0) {
-                    w.append(" value=\"").append(encodeAttribute(param.getValue())).append('"');
-                }
+                // Mandatory value:
+                w.append(" value=\"").append(encodeAttribute(param.getValue())).append('"');
 
-                if (param.getArraySize().length() != 0) {
-                    w.append(" arraysize=\"").append(encodeAttribute(param.getArraySize())).append('"');
+                if (param.getUnit().length() != 0) {
+                    w.append(" unit=\"").append(encodeAttribute(param.getUnit())).append('"');
                 }
 
                 if (param.getValues() != null || param.getLinks().getItemCount() != 0 || param.getDescription().length() != 0) {
@@ -872,16 +871,20 @@ public final class SavotWriter {
 
             w.write("\n<FIELD");
 
-            if (field.getId().length() != 0) {
-                w.append(" ID=\"").append(encodeAttribute(field.getId())).append('"');
-            }
-
             if (field.getName().length() != 0) {
                 w.append(" name=\"").append(encodeAttribute(field.getName())).append('"');
             }
 
+            if (field.getId().length() != 0) {
+                w.append(" ID=\"").append(encodeAttribute(field.getId())).append('"');
+            }
+
             if (field.getDataType().length() != 0) {
                 w.append(" datatype=\"").append(encodeAttribute(field.getDataType())).append('"');
+            }
+
+            if (field.getArraySize().length() != 0) {
+                w.append(" arraysize=\"").append(encodeAttribute(field.getArraySize())).append('"');
             }
 
             if (field.getPrecision().length() != 0) {
@@ -894,7 +897,7 @@ public final class SavotWriter {
 
             // since VOTable version 1.2
             if (field.getXtype().length() != 0) {
-                w.append(" width=\"").append(encodeAttribute(field.getXtype())).append('"');
+                w.append(" xtype=\"").append(encodeAttribute(field.getXtype())).append('"');
             }
 
             if (field.getRef().length() != 0) {
@@ -907,10 +910,6 @@ public final class SavotWriter {
 
             if (field.getUtype().length() != 0) {
                 w.append(" utype=\"").append(encodeAttribute(field.getUtype())).append('"');
-            }
-
-            if (field.getArraySize().length() != 0) {
-                w.append(" arraysize=\"").append(encodeAttribute(field.getArraySize())).append('"');
             }
 
             if (field.getType().length() != 0) {
@@ -1464,7 +1463,7 @@ public final class SavotWriter {
         // <TR>
         w.write(trbegin);
 
-        // TODO: ID attribute ?
+        // TODO: TR id attribute ?
 
         final List<SavotTD> tds = tr.getTDSet().getItems();
         SavotTD td;
