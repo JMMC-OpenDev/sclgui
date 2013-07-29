@@ -34,6 +34,11 @@ public final class DiffCalibratorsModel {
     public final static String IGNORE_PROPERTIES;
     /** hard coded preference for ignored properties */
     private final static Map<String, Threshold> THRESHOLD_PROPERTIES = new HashMap<String, Threshold>(32);
+    /** 
+     * To avoid declination key duplicates in TreeMap (dec index), key = dec + ra / normFactor;
+     * normFactor  is very big to ensure (ra / normFactor) < 0.5 mas
+     */
+    private final static double RA_NORM_FACTOR = ALX.MILLI_ARCSEC_IN_DEGREES / 360d;
     /** default key */
     public final static String THRESHOLD_DEFAULT = "_default_";
 
@@ -1094,7 +1099,8 @@ public final class DiffCalibratorsModel {
      * @return -1 if failure or number of matches
      */
     private int crossMatchRaDec(final StarList starListLeft, final StarList starListRight) {
-        final double criteriaPos = 2d * ALX.ARCSEC_IN_DEGREES;
+        /* 1 arcsec separation criteria */
+        final double criteriaPos = 1d * ALX.ARCSEC_IN_DEGREES;
 
         final boolean isLogDebug = _logger.isDebugEnabled();
 
@@ -1125,8 +1131,8 @@ public final class DiffCalibratorsModel {
                 && raDegIdxRight != -1 && decDegIdxRight != -1) {
 
             // create star indexes (declination):
-            final TreeMap<Double, List<StarProperty>> starIndexLeft = createStarDecIndex(starListLeft, decDegIdxLeft, isLogDebug);
-            final TreeMap<Double, List<StarProperty>> starIndexRight = createStarDecIndex(starListRight, decDegIdxRight, isLogDebug);
+            final TreeMap<Double, List<StarProperty>> starIndexLeft = createStarDecIndex(starListLeft, raDegIdxLeft, decDegIdxLeft, isLogDebug);
+            final TreeMap<Double, List<StarProperty>> starIndexRight = createStarDecIndex(starListRight, raDegIdxRight, decDegIdxRight, isLogDebug);
 
             final TreeMap<Double, List<StarProperty>> distMap = new TreeMap<Double, List<StarProperty>>();
 
@@ -1262,7 +1268,7 @@ public final class DiffCalibratorsModel {
 
             if (distMap.isEmpty()) {
                 if (isLogDebug) {
-                    _logger.debug("no star matching distance : {} +/- {}", decRef, criteriaPos * ALX.DEG_IN_ARCSEC);
+                    _logger.debug("no star matching position : {} {} +/- {}", raRef, decRef, criteriaPos * ALX.DEG_IN_ARCSEC);
                 }
             } else {
                 if (isLogDebug) {
@@ -1288,20 +1294,28 @@ public final class DiffCalibratorsModel {
     /**
      * Create star index (dec)
      * @param starList
+     * @param raDegId
      * @param decDegId
      * @param isLogDebug
      * @return 
      */
-    private static TreeMap<Double, List<StarProperty>> createStarDecIndex(final StarList starList, final int decDegId,
+    private static TreeMap<Double, List<StarProperty>> createStarDecIndex(final StarList starList, final int raDegId, final int decDegId,
                                                                           final boolean isLogDebug) {
         if (decDegId != -1) {
+            // Map can not contain duplicate keys ie duplicated dec values:
+            // to avoid duplicates, key = dec + ra / normFactor
             final TreeMap<Double, List<StarProperty>> decIndex = new TreeMap<Double, List<StarProperty>>();
 
-            Double dec;
+            Double ra, dec, key;
             // fill sorted set:
             for (List<StarProperty> star : starList) {
+                ra = star.get(raDegId).getDouble();
                 dec = star.get(decDegId).getDouble();
-                decIndex.put(dec, star);
+
+                key = Double.valueOf(dec + ra * RA_NORM_FACTOR);
+                if (decIndex.put(key, star) != null) {
+                    _logger.warn("duplicated key found in star dec index: {}", key);
+                }
             }
 
             if (isLogDebug) {
