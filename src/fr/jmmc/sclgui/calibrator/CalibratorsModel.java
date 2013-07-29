@@ -824,7 +824,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             /* TODO: use UCD or UTYPE to discrimminate FIELD/PARAM corresponding to value/origin/confidence/error ... */
 
-            StarPropertyMeta starPropertyMeta;
             VOTableLoadMapping loadMapping;
             int type;
             int nStrFields = 0;
@@ -846,8 +845,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final FieldRefSet fieldRefs = group.getFieldsRef();
                 final int nFieldRefs = fieldRefs.getItemCount();
 
-                Integer propertyPos = null;
-                Integer errorPos = null;
+                StarPropertyMeta propertyMeta = null;
+                StarPropertyMeta propertyErrorMeta = null;
 
                 for (int i = 0; i < nFieldRefs; i++) {
                     final String ref = fieldRefs.getItemAt(i).getRef();
@@ -886,88 +885,87 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                 field.setDataType("int");
                                 field.setArraySize(null);
                             }
-                        } else if (loadMapping.valuePos == null) {
-                            valid = true;
-                            // field name
-                            loadMapping.name = name;
-                            // field value
-                            loadMapping.valuePos = pos;
+                        } else {
+                            // Check first if the property value is defined:
+                            // Old format (one group representing a property error)
+                            if (loadMapping.valuePos == null) {
+                                valid = true;
+                                // field name
+                                loadMapping.name = name;
+                                // field value
+                                loadMapping.valuePos = pos;
 
-                            // Parse field's datatype attribute:
-                            final String fieldDataType = field.getDataType();
+                                // Parse field's datatype attribute:
+                                final String fieldDataType = field.getDataType();
 
-                            if (fieldDataType != null) {
-                                type = StarPropertyMeta.TYPE_ANY;
+                                if (fieldDataType != null) {
+                                    type = StarPropertyMeta.TYPE_ANY;
 
-                                if (fieldDataType.equals("double")) {
-                                    type = StarPropertyMeta.TYPE_DOUBLE;
-                                } else if (isOutputFormatUndefined && fieldDataType.equals("float")) {
-                                    /* note: datatype="float" used by SearchCal 4;x */
-                                    type = StarPropertyMeta.TYPE_DOUBLE;
-                                    // fix datatype:
-                                    field.setDataType("double");
-                                } else if (fieldDataType.equals("char")) {
-                                    if (isOutputFormatUndefined) {
-                                        if ("diamFlag".equals(name) || "plxFlag".equals(name)) {
-                                            // convert "diamFlag" and "PlxFlag" columns to use 'boolean' datatype:
-                                            type = StarPropertyMeta.TYPE_BOOLEAN;
-                                            // fix datatype:
-                                            field.setDataType("boolean");
+                                    if (fieldDataType.equals("double")) {
+                                        type = StarPropertyMeta.TYPE_DOUBLE;
+                                    } else if (isOutputFormatUndefined && fieldDataType.equals("float")) {
+                                        /* note: datatype="float" used by SearchCal 4;x */
+                                        type = StarPropertyMeta.TYPE_DOUBLE;
+                                        // fix datatype:
+                                        field.setDataType("double");
+                                    } else if (fieldDataType.equals("char")) {
+                                        if (isOutputFormatUndefined) {
+                                            if ("diamFlag".equals(name) || "plxFlag".equals(name)) {
+                                                // convert "diamFlag" and "PlxFlag" columns to use 'boolean' datatype:
+                                                type = StarPropertyMeta.TYPE_BOOLEAN;
+                                                // fix datatype:
+                                                field.setDataType("boolean");
+                                            } else {
+                                                type = StarPropertyMeta.TYPE_STRING;
+                                                nStrFields++;
+                                            }
                                         } else {
                                             type = StarPropertyMeta.TYPE_STRING;
                                             nStrFields++;
                                         }
-                                    } else {
-                                        type = StarPropertyMeta.TYPE_STRING;
-                                        nStrFields++;
+                                    } else if (fieldDataType.equals("boolean")) {
+                                        type = StarPropertyMeta.TYPE_BOOLEAN;
+                                    } else if (fieldDataType.equals("int")) {
+                                        type = StarPropertyMeta.TYPE_INTEGER;
                                     }
-                                } else if (fieldDataType.equals("boolean")) {
-                                    type = StarPropertyMeta.TYPE_BOOLEAN;
-                                } else if (fieldDataType.equals("int")) {
-                                    type = StarPropertyMeta.TYPE_INTEGER;
-                                }
-                                // set parsed field type
-                                loadMapping.valueType = type;
-                            } else {
-                                throw new IllegalArgumentException("Invalid VOTable - empty datatype attribute for field " + name);
-                            }
-
-                            // Get back the optional field link
-                            final String url;
-
-                            if (field.getLinks().getItemCount() != 0) {
-                                url = field.getLinks().getItemAt(0).getHref();
-                            } else {
-                                url = "";
-                            }
-
-                            // Define a new star property meta data to hold the star property value:
-                            starPropertyMeta = new StarPropertyMeta(name, type,
-                                    field.getDescription(), field.getUcd(), field.getUnit(), url);
-
-                            // Add it to the star list meta data:
-                            propertyPos = starListMeta.addPropertyMeta(starPropertyMeta);
-                        } else {
-                            // handle error field:
-                            final String ucd = field.getUcd();
-                            if (ucd != null && ucd.endsWith("_ERROR")) {
-                                valid = true;
-                                // error field name
-                                loadMapping.errorName = name;
-
-                                // field error
-                                loadMapping.errorPos = pos;
-
-                                if (_logger.isDebugEnabled()) {
-                                    _logger.debug("ERROR Field: name='" + name + "' ucd='" + field.getUcd() + "'");
+                                    // set parsed field type
+                                    loadMapping.valueType = type;
+                                } else {
+                                    throw new IllegalArgumentException("Invalid VOTable - empty datatype attribute for field " + name);
                                 }
 
-                                // Define a new star property meta data to hold the star property error:
-                                starPropertyMeta = new StarPropertyMeta(name, StarPropertyMeta.TYPE_DOUBLE,
-                                        field.getDescription(), field.getUcd(), field.getUnit(), "");
+                                // Get back the optional field link
+                                final String url;
 
-                                // Add it to the star list meta data:
-                                errorPos = starListMeta.addPropertyMeta(starPropertyMeta);
+                                if (field.getLinks().getItemCount() != 0) {
+                                    url = field.getLinks().getItemAt(0).getHref();
+                                } else {
+                                    url = "";
+                                }
+
+                                // Define a new star property meta data to hold the star property value:
+                                propertyMeta = new StarPropertyMeta(name, type,
+                                        field.getDescription(), field.getUcd(), field.getUnit(), url);
+
+                            } else {
+                                // Check if it is an error FIELD:
+                                final String ucd = field.getUcd();
+                                if (loadMapping.errorPos == null && ucd != null && ucd.endsWith("_ERROR")) {
+                                    valid = true;
+                                    // error field name
+                                    loadMapping.errorName = name;
+
+                                    // field error
+                                    loadMapping.errorPos = pos;
+
+                                    if (_logger.isDebugEnabled()) {
+                                        _logger.debug("ERROR Field: name='" + name + "' ucd='" + ucd + "'");
+                                    }
+
+                                    // Define a new star property meta data to hold the star property error:
+                                    propertyErrorMeta = new StarPropertyMeta(name, StarPropertyMeta.TYPE_DOUBLE,
+                                            field.getDescription(), ucd, field.getUnit(), "");
+                                }
                             }
                         }
                     }
@@ -976,9 +974,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
                 } // FieldRefs
 
-                // Update save property mapping (based on Field mapping only):
-                if (propertyPos != null) {
-                    // ie loadMapping.valuePos != null
+                // Update property mapping (based on Field mapping only):
+                if (loadMapping.valuePos != null) {
+
+                    // Add the star property meta data to the star list meta data:
+                    final Integer propertyPos = starListMeta.addPropertyMeta(propertyMeta);
 
                     // StarProperty.value mapping
                     saveMappings[loadMapping.valuePos] = new VOTableSaveMapping(loadMapping.name, propertyPos, VOTableSaveMapping.FieldType.VALUE, loadMapping.valueType);
@@ -990,6 +990,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         saveMappings[loadMapping.confidencePos] = new VOTableSaveMapping(loadMapping.name, propertyPos, VOTableSaveMapping.FieldType.CONFIDENCE);
                     }
                     if (loadMapping.errorPos != null) {
+                        // Add the property error meta data to the star list meta data:
+                        final Integer errorPos = starListMeta.addPropertyMeta(propertyErrorMeta);
+
                         saveMappings[loadMapping.errorPos] = new VOTableSaveMapping(loadMapping.errorName, errorPos, VOTableSaveMapping.FieldType.ERROR);
                     }
                 }

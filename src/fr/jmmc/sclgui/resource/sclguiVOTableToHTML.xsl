@@ -180,34 +180,33 @@ DESCRIPTION
                 </xsl:call-template>
             </xsl:variable>
 
+            <!-- convert mappings into node-set -->
+            <xsl:variable name="mappingNodeSet" select="exslt:node-set($mappings)" />
+
             <table>
                 <tr>
-                    <!-- use group name -->
-<!-- TODO: fix Error handling ie use mapping here -->                    
-                    <xsl:for-each select="$table/VOT11:GROUP">
-                        <th>
-                            <xsl:value-of select="@name"/>
-                        </th>
+                    <xsl:for-each select="$mappingNodeSet/*">
+                        <xsl:if test="@valuePos"><th><xsl:value-of select="@name"/></th></xsl:if>
+                        <xsl:if test="@errorPos"><th><xsl:value-of select="@errorName"/></th></xsl:if>
                     </xsl:for-each>
                 </tr>
                 <xsl:text>&#10;</xsl:text>
-
-                <!-- convert mappings into node-set -->
-                <xsl:variable name="mappingNodeSet" select="exslt:node-set($mappings)" />
-                <!--
-                    <xsl:message>
-                        <xsl:for-each select="$mappingNodeSet/*">
-                            mapping {
-                                valuePos: <xsl:value-of select="@valuePos"/>
-                                originPos: <xsl:value-of select="@originPos"/>
-                                confidencePos: <xsl:value-of select="@confidencePos"/>
-                                originConst: <xsl:value-of select="@originConst"/>
-                                confidenceConst: <xsl:value-of select="@confidenceConst"/>
-                            }
-                        </xsl:for-each>
-                    </xsl:message>
-                -->
-
+<!--
+                <xsl:message>
+                    <xsl:for-each select="$mappingNodeSet/*">
+                        mapping {
+                        name:            <xsl:value-of select="@name"/>
+                        valuePos:        <xsl:value-of select="@valuePos"/>
+                        originPos:       <xsl:value-of select="@originPos"/>
+                        confidencePos:   <xsl:value-of select="@confidencePos"/>
+                        originConst:     <xsl:value-of select="@originConst"/>
+                        confidenceConst: <xsl:value-of select="@confidenceConst"/>
+                        errorName:       <xsl:value-of select="@errorName"/>
+                        errorPos:        <xsl:value-of select="@errorPos"/>
+                        }
+                    </xsl:for-each>
+                </xsl:message>
+-->
                 <xsl:apply-templates select="$table/VOT11:DATA/VOT11:TABLEDATA/VOT11:TR">
                     <xsl:with-param name="mappingNodeSet" select="$mappingNodeSet"/>
                 </xsl:apply-templates>
@@ -221,37 +220,43 @@ DESCRIPTION
 <xsl:template name="generateMapping">
     <xsl:param name="groups"/>
     <xsl:variable name="fields" select="/VOT11:VOTABLE/VOT11:RESOURCE/VOT11:TABLE/VOT11:FIELD"/>
+    <xsl:variable name="errorPattern" select="'_ERROR'"/>
 
     <xsl:for-each select="$groups">
         <xsl:element name="mapping">
             <xsl:for-each select="./VOT11:FIELDref">
-                <xsl:variable name="fieldName" select="key('fieldID', @ref)/@name"/>
+                <xsl:variable name="field" select="key('fieldID', @ref)"/>
+                <xsl:variable name="fieldName" select="$field/@name"/>
+                <xsl:variable name="fieldUCD"  select="$field/@ucd"/>
                 <xsl:choose>
                     <xsl:when test="contains($fieldName, 'origin')">
                         <xsl:for-each select="$fields">
                             <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="originPos">
-                                    <xsl:value-of select="position()"/>
-                                </xsl:attribute> 
+                                <xsl:attribute name="originPos"><xsl:value-of select="position()"/></xsl:attribute> 
                             </xsl:if>
                         </xsl:for-each>
                     </xsl:when>
                     <xsl:when test="contains($fieldName, 'confidence')">
                         <xsl:for-each select="$fields">
                             <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="confidencePos">
-                                    <xsl:value-of select="position()"/>
-                                </xsl:attribute> 
+                                <xsl:attribute name="confidencePos"><xsl:value-of select="position()"/></xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <!-- error property handling -->
+                    <xsl:when test="substring($fieldUCD, (string-length($fieldUCD) - string-length($errorPattern)) + 1) = $errorPattern">
+                        <xsl:attribute name="errorName"><xsl:value-of select="$fieldName"/></xsl:attribute> 
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="errorPos"><xsl:value-of select="position()"/></xsl:attribute> 
                             </xsl:if>
                         </xsl:for-each>
                     </xsl:when>
                     <xsl:otherwise>
-<!-- TODO: fix Error handling -->
+                        <xsl:attribute name="name"><xsl:value-of select="$fieldName"/></xsl:attribute> 
                         <xsl:for-each select="$fields">
                             <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="valuePos">
-                                    <xsl:value-of select="position()"/>
-                                </xsl:attribute> 
+                                <xsl:attribute name="valuePos"><xsl:value-of select="position()"/></xsl:attribute> 
                             </xsl:if>
                         </xsl:for-each>
                     </xsl:otherwise>
@@ -263,14 +268,10 @@ DESCRIPTION
                 <xsl:variable name="paramName" select="$param/@name"/>
                 <xsl:choose>
                     <xsl:when test="contains($paramName, 'origin')">
-                        <xsl:attribute name="originConst">
-                            <xsl:value-of select="$param/@value"/>
-                        </xsl:attribute> 
+                        <xsl:attribute name="originConst"><xsl:value-of select="$param/@value"/></xsl:attribute> 
                     </xsl:when>
                     <xsl:when test="contains($paramName, 'confidence')">
-                        <xsl:attribute name="confidenceConst">
-                            <xsl:value-of select="$param/@value"/>
-                        </xsl:attribute> 
+                        <xsl:attribute name="confidenceConst"><xsl:value-of select="$param/@value"/></xsl:attribute> 
                     </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
@@ -281,7 +282,6 @@ DESCRIPTION
 
 <xsl:template name="generateCSS">
 <style type="text/css">
-<xsl:comment>
 .content {
 background-color:#F0F0F0;
 border:1px solid #BBBBBB;
@@ -302,6 +302,9 @@ border:1px solid #CCCCCC;
 padding: 3px;
 margin: 3px;
 }
+.fixed {
+position:fixed;
+}
 table {
 border: 2px solid #000099;
 border-collapse:collapse;
@@ -316,7 +319,6 @@ th {
 border: 1px solid #000099;
 background-color:#FFFFDD;
 }
-</xsl:comment>
 </style>
 </xsl:template>
 
@@ -343,38 +345,71 @@ background-color:#FFFFDD;
 <!-- note: xsltproc requires xhtml namespace: match="xhtml:mapping" -->
 <xsl:template match="mapping">
     <xsl:param name="trNode" />
-    <xsl:variable name="iValuePos" select="number(@valuePos)"/>
-    <xsl:variable name="cellValue" select="$trNode/VOT11:TD[$iValuePos]/text()"/>
-    <xsl:choose>
-        <xsl:when test="$cellValue">
-            <xsl:text disable-output-escaping="yes">&lt;td class="o</xsl:text>
-            <xsl:choose>
-                <xsl:when test="@originPos">
-                    <xsl:variable name="iOriginPos" select="number(@originPos)"/>
-                    <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iOriginPos]/text()"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of disable-output-escaping="yes" select="@originConst"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text disable-output-escaping="yes"> c</xsl:text>
-            <xsl:choose>
-                <xsl:when test="@confidencePos">
-                    <xsl:variable name="iConfidencePos" select="number(@confidencePos)"/>
-                    <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iConfidencePos]/text()"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of disable-output-escaping="yes" select="@confidenceConst"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
-            <xsl:value-of select="$cellValue"/>
-            <xsl:text disable-output-escaping="yes">&lt;/td&gt;</xsl:text>
-<!-- TODO: fix Error handling -->
-        </xsl:when>
-        <xsl:otherwise><xsl:text disable-output-escaping="yes">&lt;td/&gt;</xsl:text></xsl:otherwise>
-<!-- TODO: fix Error handling -->
-    </xsl:choose>
+    
+    <xsl:if test="@valuePos">
+        <xsl:variable name="iValuePos" select="number(@valuePos)"/>
+        <xsl:variable name="cellValue" select="$trNode/VOT11:TD[$iValuePos]/text()"/>
+        <xsl:choose>
+            <xsl:when test="$cellValue">
+                <xsl:text disable-output-escaping="yes">&lt;td class="o</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="@originPos">
+                        <xsl:variable name="iOriginPos" select="number(@originPos)"/>
+                        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iOriginPos]/text()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of disable-output-escaping="yes" select="@originConst"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text disable-output-escaping="yes"> c</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="@confidencePos">
+                        <xsl:variable name="iConfidencePos" select="number(@confidencePos)"/>
+                        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iConfidencePos]/text()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of disable-output-escaping="yes" select="@confidenceConst"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
+                <xsl:value-of select="$cellValue"/>
+                <xsl:text disable-output-escaping="yes">&lt;/td&gt;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise><xsl:text disable-output-escaping="yes">&lt;td/&gt;</xsl:text></xsl:otherwise>
+        </xsl:choose>
+    </xsl:if>
+    <xsl:if test="@errorPos">
+        <xsl:variable name="iErrorPos" select="number(@errorPos)"/>
+        <xsl:variable name="cellValue" select="$trNode/VOT11:TD[$iErrorPos]/text()"/>
+        <xsl:choose>
+            <xsl:when test="$cellValue">
+                <xsl:text disable-output-escaping="yes">&lt;td class="o</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="@originPos">
+                        <xsl:variable name="iOriginPos" select="number(@originPos)"/>
+                        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iOriginPos]/text()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of disable-output-escaping="yes" select="@originConst"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text disable-output-escaping="yes"> c</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="@confidencePos">
+                        <xsl:variable name="iConfidencePos" select="number(@confidencePos)"/>
+                        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iConfidencePos]/text()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of disable-output-escaping="yes" select="@confidenceConst"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
+                <xsl:value-of select="$cellValue"/>
+                <xsl:text disable-output-escaping="yes">&lt;/td&gt;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise><xsl:text disable-output-escaping="yes">&lt;td/&gt;</xsl:text></xsl:otherwise>
+        </xsl:choose>
+    </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
