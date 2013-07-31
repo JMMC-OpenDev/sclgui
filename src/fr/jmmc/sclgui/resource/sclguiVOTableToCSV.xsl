@@ -7,31 +7,31 @@ DESCRIPTION
 - transform VOTable into CSV files
 - accept external parameter to specify field separator (fieldSeparator)
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:VOT11="http://www.ivoa.net/xml/VOTable/v1.1"
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:VOT="http://www.ivoa.net/xml/VOTable/v1.1"
                 xmlns:exslt="http://exslt.org/common"
-                extension-element-prefixes="exslt VOT11">
+                extension-element-prefixes="exslt VOT">
 
     <xsl:output method="text" encoding="UTF-8" />
 
     <xsl:param name="fieldSeparator">,</xsl:param>
    		
     <xsl:template match="/">
-        <xsl:apply-templates select="VOT11:VOTABLE" />
+        <xsl:apply-templates select="VOT:VOTABLE" />
     </xsl:template>
 
 
-    <xsl:template match="VOT11:VOTABLE">
+    <xsl:template match="VOT:VOTABLE">
         <xsl:text>#  This file was generated using SearchCal GUI&#10;</xsl:text>
 
         <!-- Print description -->
-        <xsl:apply-templates select="VOT11:DESCRIPTION"/>
+        <xsl:apply-templates select="VOT:DESCRIPTION"/>
         <xsl:text>&#10;</xsl:text>
 
-        <xsl:variable name="table" select="VOT11:RESOURCE/VOT11:TABLE"/>
+        <xsl:variable name="table" select="VOT:RESOURCE/VOT:TABLE"/>
 
         <!-- store mappings for future output of TD linked to non hidden fields -->
         <xsl:variable name="mappings">
-            <xsl:for-each select="$table/VOT11:FIELD">
+            <xsl:for-each select="$table/VOT:FIELD">
                 <xsl:if test="not(@type='hidden')">
                     <xsl:element name="mapping">
                         <xsl:attribute name="pos"><xsl:value-of select="position()"/></xsl:attribute>
@@ -54,18 +54,18 @@ DESCRIPTION
         <!-- Print fields name as header (no confidence nor origin fields) -->
         <xsl:for-each select="$mappingNodeSet/*">
             <xsl:variable name="iPos" select="number(@pos)"/>
-            <xsl:value-of disable-output-escaping="yes" select="$table/VOT11:FIELD[$iPos]/@name"/>
+            <xsl:value-of disable-output-escaping="yes" select="$table/VOT:FIELD[$iPos]/@name"/>
             <xsl:value-of disable-output-escaping="yes" select="$fieldSeparator"/>
         </xsl:for-each>
 
         <!-- Print data -->
-        <xsl:apply-templates select="$table/VOT11:DATA/VOT11:TABLEDATA/VOT11:TR">
+        <xsl:apply-templates select="$table/VOT:DATA/VOT:TABLEDATA/VOT:TR">
             <xsl:with-param name="mappingNodeSet" select="$mappingNodeSet"/>
         </xsl:apply-templates>
     </xsl:template>
 
 
-    <xsl:template match="VOT11:TR">
+    <xsl:template match="VOT:TR">
         <xsl:param name="mappingNodeSet" />
         <xsl:text>&#10;</xsl:text>
         <xsl:apply-templates select="$mappingNodeSet/*">
@@ -78,13 +78,13 @@ DESCRIPTION
     <xsl:template match="mapping">
         <xsl:param name="trNode" />
         <xsl:variable name="iPos" select="number(@pos)"/>
-        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT11:TD[$iPos]/text()"/>
+        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT:TD[$iPos]/text()"/>
         <xsl:value-of disable-output-escaping="yes" select="$fieldSeparator"/>
     </xsl:template>
 
 
     <!-- Read line separated description and output them prefixed with dash --> 
-    <xsl:template match="VOT11:DESCRIPTION"><xsl:text>#  </xsl:text>
+    <xsl:template match="VOT:DESCRIPTION"><xsl:text>#  </xsl:text>
         <xsl:call-template name="SubstringReplace">
             <xsl:with-param name="stringIn" select="."/>
             <xsl:with-param name="substringIn" select="'&#10;'"/>
