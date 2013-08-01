@@ -44,7 +44,7 @@ public final class QueryModel extends Star implements Observer {
     /** Available magnitude band for BRIGHT scenario */
     private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "J", "H", "K", "N"};
     /** Available magnitude band for FAINT scenario */
-    private static final String[] FAINT_MAGNITUDE_BANDS = {"I", "J", "H", "K"};
+    private static final String[] FAINT_MAGNITUDE_BANDS = {"J", "H", "K"};
 
     /**
      * Enumeration of all different observers notification a star can raise.
