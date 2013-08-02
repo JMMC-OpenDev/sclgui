@@ -1735,8 +1735,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // Use SavotWriter TR / TR:
             final SavotWriter wd = new SavotWriter();
-            // do not encode 
-            wd.enableElementEntities(false);
             wd.enableAttributeEntities(true);
 
             // @See SavotWriter.generateDocument():
@@ -1746,6 +1744,18 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // write COOSYS elements - deprecated since VOTable 1.2
             wd.writeCoosys(votable.getCoosys());
+
+            // write INFO elements
+            wd.writeInfo(votable.getInfos());
+
+            // do not encode elements below:
+            wd.enableElementEntities(false);
+            
+            // write PARAM elements
+            wd.writeParam(votable.getParams());
+
+            // write GROUP elements - since VOTable 1.2
+            wd.writeGroup(votable.getGroups());
 
             // RESOURCE: custom writer to perform row by row processing
             // @See SavotWriter.writeResource()

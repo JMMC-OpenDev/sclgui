@@ -826,7 +826,7 @@ public final class SavotWriter {
 
                     writeComment(info.getBelow());
 
-                    w.append(info.getContent()).append("</INFO>");
+                    w.append(encodeElement(info.getContent())).append("</INFO>");
 
                 } else {
                     // from VOTable 1.2
