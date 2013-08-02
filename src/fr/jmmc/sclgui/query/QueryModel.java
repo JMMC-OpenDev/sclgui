@@ -533,6 +533,11 @@ public final class QueryModel extends Star implements Observer {
 
         // Output format
         query.append("-outputFormat ").append(CalibratorsModel.GUI_OUTPUT_FORMAT);
+        
+        // Optional diagnose parameter:
+        if (_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE)) {
+            query.append(" -diagnose true");
+        }
 
         if (_logger.isDebugEnabled()) {
             _logger.debug("query = '{}'.", query);

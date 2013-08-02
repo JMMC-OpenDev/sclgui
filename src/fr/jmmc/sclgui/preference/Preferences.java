@@ -279,6 +279,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
         setDefaultPreference(PreferenceKey.FILTER_NON_CALIBRATORS, "true");
         setDefaultPreference(PreferenceKey.SERVER_URL_ADDRESS, "");
+        setDefaultPreference(PreferenceKey.SERVER_DIAGNOSE, "false");
     }
 
     /**
@@ -733,5 +734,4 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         }
         return true; // To effectively save Preference file with the new empty value as default
     }
-    
 }

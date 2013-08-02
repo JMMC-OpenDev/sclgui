@@ -47,7 +47,9 @@ public enum PreferenceKey {
         QUERY_RADIAL_SIZE("query.queryRadialSize"),
         QUERY_RADIAL_FLAG("query.queryAutoRadius"),
         
-        FILTER_NON_CALIBRATORS("filter.nonCalibrators");
+        FILTER_NON_CALIBRATORS("filter.nonCalibrators"),
+        
+        SERVER_DIAGNOSE("server.diagnose");
     
     /** the preferenced value identifying token */
     private final String _key;
