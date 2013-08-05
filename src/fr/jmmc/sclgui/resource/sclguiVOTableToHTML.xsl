@@ -271,126 +271,6 @@ DESCRIPTION
 </xsl:template>
 
 
-<xsl:template name="generateMapping">
-    <xsl:param name="groups"/>
-    <xsl:variable name="fields" select="$table/VOT:FIELD"/>
-    <xsl:variable name="errorPattern" select="'_ERROR'"/>
-
-    <xsl:for-each select="$groups">
-        <xsl:element name="mapping">
-            <xsl:for-each select="./VOT:FIELDref">
-                <xsl:variable name="field" select="key('fieldID', @ref)"/>
-                <xsl:variable name="fieldName" select="$field/@name"/>
-                <xsl:variable name="fieldUCD"  select="$field/@ucd"/>
-                <xsl:choose>
-                    <xsl:when test="contains($fieldName, 'origin')">
-                        <xsl:for-each select="$fields">
-                            <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="originPos"><xsl:value-of select="position()"/></xsl:attribute> 
-                            </xsl:if>
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:when test="contains($fieldName, 'confidence')">
-                        <xsl:for-each select="$fields">
-                            <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="confidencePos"><xsl:value-of select="position()"/></xsl:attribute> 
-                            </xsl:if>
-                        </xsl:for-each>
-                    </xsl:when>
-                    <!-- error property handling -->
-                    <xsl:when test="substring($fieldUCD, (string-length($fieldUCD) - string-length($errorPattern)) + 1) = $errorPattern">
-                        <xsl:attribute name="errorName"><xsl:value-of select="$fieldName"/></xsl:attribute> 
-                        <xsl:for-each select="$fields">
-                            <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="errorPos"><xsl:value-of select="position()"/></xsl:attribute> 
-                            </xsl:if>
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="name"><xsl:value-of select="$fieldName"/></xsl:attribute> 
-                        <xsl:for-each select="$fields">
-                            <xsl:if test="$fieldName = @name">
-                                <xsl:attribute name="valuePos"><xsl:value-of select="position()"/></xsl:attribute> 
-                            </xsl:if>
-                        </xsl:for-each>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>
-
-            <xsl:for-each select="./VOT:PARAMref">
-                <xsl:variable name="param" select="key('paramID', @ref)"/>
-                <xsl:variable name="paramName" select="$param/@name"/>
-                <xsl:choose>
-                    <xsl:when test="contains($paramName, 'origin')">
-                        <xsl:attribute name="originConst"><xsl:value-of select="$param/@value"/></xsl:attribute> 
-                    </xsl:when>
-                    <xsl:when test="contains($paramName, 'confidence')">
-                        <xsl:attribute name="confidenceConst"><xsl:value-of select="$param/@value"/></xsl:attribute> 
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:for-each>
-        </xsl:element>
-    </xsl:for-each>
-</xsl:template>
-
-
-<xsl:template name="generateCSS">
-<style type="text/css">
-.content {
-background-color:#F0F0F0;
-border:1px solid #BBBBBB;
-color: #010170;
-padding: 1px;
-margin: 1px;
-font-family:Arial,Helvetica,sans-serif;
-font-size:11px;
-}
-.vbox {
-border:1px solid #CCCCCC;
-padding: 3px;
-margin: 3px;
-float: left;
-}
-.box {
-border:1px solid #CCCCCC;
-padding: 3px;
-margin: 3px;
-}
-table {
-border: 2px solid #000099;
-border-collapse:collapse;
-}
-td {
-border: 1px solid #000099;
-}
-<xsl:for-each select="$colorNodeSet/*">
-<xsl:value-of select="concat('td.',xhtml:key,' { background-color : ',xhtml:color,' }&#10;')"/>
-</xsl:for-each>
-th {
-border: 1px solid #000099;
-background-color:#FFFFDD;
-}
-</style>
-</xsl:template>
-
-
-<xsl:template name="generateLegend">
-<xsl:for-each select="$colorNodeSet/*">
-    <td class="{xhtml:key}">
-        <a>
-            <xsl:if test="xhtml:description/text()">
-                <xsl:attribute name="title"><xsl:value-of select="xhtml:description/text()"/></xsl:attribute>
-            </xsl:if>
-            <xsl:if test="xhtml:value/text()">
-                <xsl:attribute name="href">http://cdsarc.u-strasbg.fr/cgi-bin/VizieR?-source=<xsl:value-of select="xhtml:value/text()"/></xsl:attribute>
-            </xsl:if>
-            <xsl:value-of select="xhtml:title"/>
-        </a>
-    </td>
-</xsl:for-each>
-</xsl:template>
-
-
 <xsl:template match="VOT:TR">
     <xsl:param name="mappingNodeSet" />
     <xsl:text disable-output-escaping="yes">&lt;tr&gt;</xsl:text>
@@ -402,7 +282,7 @@ background-color:#FFFFDD;
 
 
 <!-- note: xsltproc requires xhtml namespace: match="xhtml:mapping" -->
-<xsl:template match="mapping">
+<xsl:template match="mapping|xhtml:mapping">
     <xsl:param name="trNode" />
     
     <xsl:if test="@valuePos">
@@ -470,5 +350,115 @@ background-color:#FFFFDD;
         </xsl:choose>
     </xsl:if>
 </xsl:template>
+
+
+<xsl:template name="generateMapping">
+    <xsl:param name="groups"/>
+    <xsl:variable name="fields" select="$table/VOT:FIELD"/>
+    <xsl:variable name="errorPattern" select="'_ERROR'"/>
+
+    <xsl:for-each select="$groups">
+        <xsl:element name="mapping">
+            <xsl:for-each select="./VOT:FIELDref">
+                <xsl:variable name="field" select="key('fieldID', @ref)"/>
+                <xsl:variable name="fieldName" select="$field/@name"/>
+                <xsl:variable name="fieldUCD"  select="$field/@ucd"/>
+                <xsl:choose>
+                    <xsl:when test="contains($fieldName, 'origin')">
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="originPos"><xsl:value-of select="position()"/></xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:when test="contains($fieldName, 'confidence')">
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="confidencePos"><xsl:value-of select="position()"/></xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <!-- error property handling -->
+                    <xsl:when test="substring($fieldUCD, (string-length($fieldUCD) - string-length($errorPattern)) + 1) = $errorPattern">
+                        <xsl:attribute name="errorName"><xsl:value-of select="$fieldName"/></xsl:attribute> 
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="errorPos"><xsl:value-of select="position()"/></xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="name"><xsl:value-of select="$fieldName"/></xsl:attribute> 
+                        <xsl:for-each select="$fields">
+                            <xsl:if test="$fieldName = @name">
+                                <xsl:attribute name="valuePos"><xsl:value-of select="position()"/></xsl:attribute> 
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+
+            <xsl:for-each select="./VOT:PARAMref">
+                <xsl:variable name="param" select="key('paramID', @ref)"/>
+                <xsl:variable name="paramName" select="$param/@name"/>
+                <xsl:choose>
+                    <xsl:when test="contains($paramName, 'origin')">
+                        <xsl:attribute name="originConst"><xsl:value-of select="$param/@value"/></xsl:attribute> 
+                    </xsl:when>
+                    <xsl:when test="contains($paramName, 'confidence')">
+                        <xsl:attribute name="confidenceConst"><xsl:value-of select="$param/@value"/></xsl:attribute> 
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:element>
+    </xsl:for-each>
+</xsl:template>
+
+
+<xsl:template name="generateCSS">
+<style type="text/css">
+body {
+background-color:white;
+font-family:Arial,Helvetica,sans-serif;
+}
+.box {
+border:1px solid #CCCCCC;
+padding: 3px;
+margin: 3px;
+}
+table {
+border: 2px solid #000099;
+border-collapse:collapse;
+}
+td {
+border: 1px solid #000099;
+}
+<xsl:for-each select="$colorNodeSet/*">
+<xsl:value-of select="concat('td.',xhtml:key,' { background-color : ',xhtml:color,' }&#10;')"/>
+</xsl:for-each>
+th {
+border: 1px solid #000099;
+background-color:#FFFFDD;
+}
+</style>
+</xsl:template>
+
+
+<xsl:template name="generateLegend">
+<xsl:for-each select="$colorNodeSet/*">
+    <td class="{xhtml:key}">
+        <a>
+            <xsl:if test="xhtml:description/text()">
+                <xsl:attribute name="title"><xsl:value-of select="xhtml:description/text()"/></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="xhtml:value/text()">
+                <xsl:attribute name="href">http://cdsarc.u-strasbg.fr/cgi-bin/VizieR?-source=<xsl:value-of select="xhtml:value/text()"/></xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="xhtml:title"/>
+        </a>
+    </td>
+</xsl:for-each>
+</xsl:template>
+
 
 </xsl:stylesheet>
