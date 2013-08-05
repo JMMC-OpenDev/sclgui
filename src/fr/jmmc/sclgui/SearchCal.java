@@ -114,10 +114,6 @@ public final class SearchCal extends App {
         // Build the main window
         final MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
         setFrame(window);
-        window.setVisible(true);
-
-        // Triggers all preferences observers notification to finnish GUI setup.
-        _preferences.triggerObserversNotification();
     }
 
     /**
@@ -175,6 +171,9 @@ public final class SearchCal extends App {
             @Override
             public void run() {
                 _logger.debug("SearchCal.execute() handler called.");
+
+                // Triggers all preferences observers notification to finish GUI setup.
+                _preferences.triggerObserversNotification();
 
                 // If a query was received (when instanciated by ASPRO)
                 if (_query != null) {

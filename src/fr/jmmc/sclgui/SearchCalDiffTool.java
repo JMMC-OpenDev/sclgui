@@ -207,9 +207,6 @@ public final class SearchCalDiffTool extends App {
                 calibratorsViewDiff, filtersView, statusBar);
         App.setFrame(window);
 
-        // Triggers all preferences observers notification to finnish GUI setup.
-        preferences.triggerObserversNotification();
-
         // Overwrite the Open action:
         new OpenDiffFilesAction(VirtualObservatory.class.getName(), "_openFileAction");
 
@@ -250,12 +247,15 @@ public final class SearchCalDiffTool extends App {
             public void run() {
                 _logger.debug("SearchCalDiff.execute() handler called.");
 
+                // Triggers all preferences observers notification to finish GUI setup.
+                Preferences.getInstance().triggerObserversNotification();
+
                 // Hide filters view
                 final JFrame frame = getFrame();
                 final DiffWindow window = (DiffWindow) frame;
                 final JSplitPane resultPane = window.resultPane;
                 resultPane.setDividerLocation(resultPane.getHeight() - resultPane.getDividerSize());
-                
+
                 frame.setVisible(true);
             }
         });
@@ -462,9 +462,9 @@ public final class SearchCalDiffTool extends App {
          * @param statusBar  
          */
         DiffWindow(final VirtualObservatory vo, final QueryView queryView,
-                final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
-                final CalibratorsView calibratorsViewDiff,
-                final FiltersView filtersView, final StatusBar statusBar) {
+                   final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
+                   final CalibratorsView calibratorsViewDiff,
+                   final FiltersView filtersView, final StatusBar statusBar) {
             super("SearchCal Diff tool");
 
             // Use MainWindow class path for registered actions:
