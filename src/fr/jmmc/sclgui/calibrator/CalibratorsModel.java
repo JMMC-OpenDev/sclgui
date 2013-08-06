@@ -85,6 +85,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private final static long serialVersionUID = 1L;
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
+    /** server log */
+    public final static String SCL_SERVER_LOG = "fr.jmmc.sclgui.server";
+    /** Server Log */
+    private final static Logger _serverLog = LoggerFactory.getLogger(SCL_SERVER_LOG);
     /** SearchCal output format undefined */
     public static final double OUTPUT_FORMAT_UNDEFINED = 0.0;
     /** SearchCal output format 2013.7 */
@@ -1387,6 +1391,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Update Field Save mapping:
         _saveMappings = saveMappings;
+        
+        // If server log are present, dump them:
+        if (savotVoTable.getInfos().getItemCount() != 0) {
+            final String log = savotVoTable.getInfos().getItemAt(0).getContent();
+            _serverLog.info(log);
+        }
 
         // Compute selected magnitude band and scenario
         // TODO: put in Savot Param finder by name:

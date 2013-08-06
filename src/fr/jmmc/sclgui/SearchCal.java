@@ -8,6 +8,7 @@ import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
+import fr.jmmc.jmcs.logging.LoggingService;
 import fr.jmmc.jmcs.network.interop.SampCapability;
 import fr.jmmc.jmcs.network.interop.SampMessageHandler;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
@@ -16,6 +17,7 @@ import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.sclgui.preference.ColumnsPreferencesView;
 import fr.jmmc.sclgui.preference.HelpPreferencesView;
+import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.query.QueryView;
@@ -61,6 +63,11 @@ public final class SearchCal extends App {
 
         // Get preferences
         _preferences = Preferences.getInstance();
+
+        if (_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE)) {
+            // Initialize server log:
+            LoggingService.getInstance().addLogMapper("Server logs", CalibratorsModel.SCL_SERVER_LOG, "SERVERLOG");
+        }
     }
 
     /** Initialize application objects */
