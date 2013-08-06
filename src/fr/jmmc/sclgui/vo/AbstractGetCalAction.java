@@ -430,18 +430,15 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 }
 
                 // First Cancel the request:
-                // Disabled cancel query because it crashes the SearchCal Server !
-                /*
-                 if (_id != null) {
-                 // Launch the cancel query thread to free resources on the server side:
-                 final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
-                
-                 // define UncaughtExceptionHandler :
-                 MCSExceptionHandler.installThreadHandler(cancelThread);
-                
-                 cancelThread.start();
-                 }
-                 */
+                if (_id != null) {
+                    // Launch the cancel query thread to free resources on the server side:
+                    final CancelQueryThread cancelThread = new CancelQueryThread(_queryNumber, _sclws, _id);
+
+                    // define UncaughtExceptionHandler :
+                    MCSExceptionHandler.installThreadHandler(cancelThread);
+
+                    cancelThread.start();
+                }
 
                 // If the QueryResult thread has already been launched
                 if (_queryResultThread != null) {
@@ -570,8 +567,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
         /**
          * Send cancel message to the server asynchronously
-         *
-         * UNUSED until server handles properly getCalCancelSession() i.e. stable (no more crash)
          */
         private final class CancelQueryThread extends Thread {
 
