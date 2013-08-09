@@ -35,8 +35,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedBrightN_v3 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Calib MultFlag VarFlag3 V H plx e_Plx pmRa pmDec A_V Chi2 SpTyp_Teff";
     /** Detailed bright N columns order list, as of default in preference version 4 */
     private static final String _detailedBrightN_v4 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag VarFlag3 V H A_V Chi2 SpTyp_Teff";
+    /** Detailed bright N columns order list, as of default in preference version 18 */
+    private static final String _detailedBrightN_v18 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
     /** Detailed bright N columns order list, as of default in current preference version */
-    private static final String _detailedBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
+    private static final String _detailedBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
     /** Detailed bright V columns order list, as of default in preference version 3 */
     private static final String _detailedBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright V columns order list, as of default in preference version 4 */
@@ -69,6 +71,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B Bphg V Rphg Icous Iphg J Jcous H Hcous K Kcous Av";
     /** Simple bright V columns order list, as of default in preference version 15 */
     private static final String _simpleBrightV_v15 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_B UD_V UD_R UD_I SpType B V R I";
+    /** Simple bright N columns order list, as of default in preference version 18 */
+    private static final String _simpleBrightN_v18 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)";
+    /** Simple bright N columns order list, as of default in current preference version */
+    private static final String _simpleBrightN = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N";
     /** Simple bright V columns order list, as of default in current preference version */
     private static final String _simpleBrightV = "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_B UD_V UD_R UD_I SpType B V R Icous";
 
@@ -90,7 +96,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        return 18;
+        return 19;
     }
 
     /**
@@ -179,6 +185,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             case 17:
                 return updateFromVersion17ToVersion18();
 
+            // Fix Bright N scenario
+            case 18:
+                return updateFromVersion18ToVersion19();
+
             // By default, triggers default values load.
             default:
                 return false;
@@ -235,8 +245,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         setDefaultPreference(PreferenceKey.VERBOSITY_FULL_FLAG, "false");
 
         // Simple 'Bright N' view
-        setDefaultPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N,
-                "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)");
+        setDefaultPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N, _simpleBrightN);
         // detailed 'Bright N' view
         setDefaultPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N, _detailedBrightN);
 
@@ -733,5 +742,24 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             return false;
         }
         return true; // To effectively save Preference file with the new empty value as default
+    }
+
+    /**
+     * Correction : removed vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) in Bright N scenario
+     *
+     * @return always true to force Preference file write to disk with the new empty value as default.
+     */
+    private boolean updateFromVersion18ToVersion19() {
+
+        boolean status = true;
+        String[] deprecatedColumns = {" vis2\\(8mu\\)", " vis2Err\\(8mu\\)", " vis2\\(13mu\\)", " vis2Err\\(13mu\\)"};
+        // Remove all deprecated columns found
+        for (String column : deprecatedColumns) {
+            status &= removeTokenInPreference(PreferenceKey.VIEW_SIMPLE_BRIGHT_N, column);
+            status &= removeTokenInPreference(PreferenceKey.VIEW_DETAILED_BRIGHT_N, column);
+        }
+
+        // Commit all changes if and only if everything went fine.
+        return status;
     }
 }
