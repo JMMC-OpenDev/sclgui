@@ -38,6 +38,7 @@ import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.jmcs.util.ResourceUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
+import fr.jmmc.sclgui.calibrator.VisibilityUtils.VisibilityResult;
 import fr.jmmc.sclgui.filter.FacelessNonCalibratorsFilter;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.preference.PreferenceKey;
@@ -914,6 +915,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                         field.setDataType("double");
                                     } else if (fieldDataType.equals("char")) {
                                         if (isOutputFormatUndefined) {
+                                            // TODO: externalize column names:
                                             if ("diamFlag".equals(name) || "plxFlag".equals(name)) {
                                                 // convert "diamFlag" and "PlxFlag" columns to use 'boolean' datatype:
                                                 type = StarPropertyMeta.TYPE_BOOLEAN;
@@ -1162,14 +1164,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                                 propertyValue = Boolean.TRUE;
                                                 break;
                                             }
-                                            // NOK will become Boolean.FALSE (see below):
+                                            // NOK will become Boolean.FALSE (below):
                                         }
                                         // deleted flag (true|false) before SearchCal 5.0:
-                                        try {
-                                            propertyValue = Boolean.valueOf(value);
-                                        } catch (NumberFormatException nfe) {
-                                            _logger.warn("invalid Boolean value [{}] at column index={}", value, loadMapping.valuePos);
-                                        }
+                                        propertyValue = Boolean.valueOf(value);
                                     }
                                     break;
                                 case StarPropertyMeta.TYPE_INTEGER:
@@ -1391,7 +1389,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // Update Field Save mapping:
         _saveMappings = saveMappings;
-        
+
         // If server log are present, dump them:
         if (savotVoTable.getInfos().getItemCount() != 0) {
             final String log = savotVoTable.getInfos().getItemAt(0).getContent();
@@ -1522,15 +1520,15 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param starList star list to process
      */
     void postProcess(final StarList starList) {
-        final StarListMeta starListMeta = starList.getMetaData();
+        if (!starList.isEmpty()) {
+            final StarListMeta starListMeta = starList.getMetaData();
 
-        // Add custom properties:
+            // Add custom properties:
 
-        // Add RA (deg) property:
-        if (starListMeta.getPropertyIndexByName(StarList.RADegColumnName) == -1) {
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
+            // Add RA (deg) property:
+            if (starListMeta.getPropertyIndexByName(StarList.RADegColumnName) == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
 
-            if (!starList.isEmpty()) {
                 // Get the ID of the column containing 'RA' star properties
                 final int raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
                 if (raId != -1) {
@@ -1550,13 +1548,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
                 }
             }
-        }
 
-        // Add DEC (deg) property:
-        if (starListMeta.getPropertyIndexByName(StarList.DEDegColumnName) == -1) {
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
+            // Add DEC (deg) property:
+            if (starListMeta.getPropertyIndexByName(StarList.DEDegColumnName) == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
 
-            if (!starList.isEmpty()) {
                 // Get the ID of the column containing 'DEC' star properties
                 final int decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
                 if (decId != -1) {
@@ -1576,22 +1572,32 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
                 }
             }
-        }
 
-        // Add row index property:
-        if (starListMeta.getPropertyIndexByName(StarList.RowIdxColumnName) == -1) {
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, StarPropertyMeta.TYPE_INTEGER, "row index", "ID_NUMBER", "", ""));
+            // Add row index property:
+            if (starListMeta.getPropertyIndexByName(StarList.RowIdxColumnName) == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, StarPropertyMeta.TYPE_INTEGER, "row index", "ID_NUMBER", "", ""));
 
-            if (!starList.isEmpty()) {
                 int i = 0;
                 for (List<StarProperty> star : starList) {
                     // add rowIdx value:
                     star.add(new StarProperty(NumberUtils.valueOf(++i)));
                 }
             }
-        }
 
-        if (!starList.isEmpty()) {
+            // Update vis2/vis2Err properties:
+
+            // Get instrument band
+            final String band = _parameters.get("band");
+
+            // Get value of the wavelength (m)
+            final double wavelength = 1e-6 * Double.parseDouble(_parameters.get("wlen"));
+
+            // Get value of the base max (m)
+            final double baseMax = Double.parseDouble(_parameters.get("baseMax"));
+
+            // Compute visiblities BEFORE filters:
+            computeVisibility(starList, band, wavelength, baseMax);
+
             // First star:
             final Vector<StarProperty> first = (Vector<StarProperty>) starList.get(0);
 
@@ -1601,6 +1607,227 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 _logger.warn("Incorrect Property capacity: {} != {} ", first.size(), first.capacity());
             }
         }
+    }
+
+    /**
+     * Update the square visibility and its error on the given star list
+     * @param starList
+     * @param band instrumental band
+     * @param wavelength wavelength (m)
+     * @param baseMax base max (m)
+     */
+    private void computeVisibility(final StarList starList, final String band, final double wavelength, final double baseMax) {
+
+        final boolean doUseDiamVK = false; // Only for OLD VOTable (ie version != 5)
+        final boolean doCompareVis2 = false;
+
+        final long start = System.nanoTime();
+
+        // Get the ID of the column containing 'vis2' star properties
+        final int vis2Id = starList.getColumnIdByName(StarList.Vis2ColumnName);
+        final int e_vis2Id = starList.getColumnIdByName(StarList.Vis2ErrColumnName);
+
+        // Use existing vis2 columns:
+        final boolean useVis2 = ((vis2Id != -1 && e_vis2Id != -1));
+
+        if (!useVis2) {
+            // TODO: add missing vis2 / vis2Err properties properly i.e. Savot Field / Group to be persisted 
+            // once removed from server-side!
+
+            final StarListMeta starListMeta = starList.getMetaData();
+
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.Vis2ColumnName, StarPropertyMeta.TYPE_DOUBLE, "Squared Visibility", "VIS2", "", ""));
+
+            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.Vis2ErrColumnName, StarPropertyMeta.TYPE_DOUBLE, "Error on Squared Visibility", "VIS2_ERROR", "", ""));
+
+            _logger.warn("computeVisibility: bad case: vis2/vis2Err are missing => not persisted in VOTABLE output !");
+
+            // TODO: update _parsedVOTable:
+            /*
+             <FIELD name="vis2" ID="col274" ucd="VIS2" datatype="double">
+             <DESCRIPTION>Squared Visibility</DESCRIPTION>
+             <!-- values (78) errors (78) origins (78 [computed] ) confidences (78 [HIGH] ) -->
+             </FIELD>
+             <PARAM name="vis2.origin" ID="col275" ucd="REFER_CODE" datatype="int" value="2">
+             <DESCRIPTION>Origin index of property vis2 (computed)</DESCRIPTION>
+             </PARAM>
+             <PARAM name="vis2.confidence" ID="col276" ucd="CODE_QUALITY" datatype="int" value="3">
+             <DESCRIPTION>Confidence index of property vis2 (HIGH)</DESCRIPTION>
+             </PARAM>
+             <FIELD name="vis2Err" ID="col277" ucd="VIS2_ERROR" datatype="double">
+             <DESCRIPTION>Error on Squared Visibility</DESCRIPTION>
+             </FIELD>
+             * 
+             <GROUP name="vis2" ucd="VIS2">
+             <DESCRIPTION>vis2 with its origin and confidence indexes and its error when available</DESCRIPTION>
+             <FIELDref ref="col274"/>
+             <PARAMref ref="col275"/>
+             <PARAMref ref="col276"/>
+             <FIELDref ref="col277"/>
+             </GROUP>
+             */
+        }
+
+        // TODO: externalize string constants (parameters and Column names) !
+
+        // Get star properties:
+        // Get the ID of the column containing 'UDDK' star properties
+        final int uddkId = starList.getColumnIdByName("UDDK");
+        final int e_uddkId = starList.getColumnIdByName("e_UDDK");
+
+        // Get the ID of the column containing 'diamFlag' star properties
+        final int diamFlagId = starList.getColumnIdByName("diamFlag");
+
+        // Get the ID of the column containing 'diam_vk' star properties
+        final int diamVKId = starList.getColumnIdByName("diam_vk");
+        final int e_diamVKId = starList.getColumnIdByName("e_diam_vk");
+
+        // Get the ID of the column containing 'diam_weighted_mean' star properties
+        final int diamWMeanId = starList.getColumnIdByName("diam_weighted_mean");
+        final int e_diamWMeanId = starList.getColumnIdByName("e_diam_weighted_mean");
+
+        // Get the ID of the column containing 'diam_mean' star properties
+        final int diamMeanId = starList.getColumnIdByName("diam_mean");
+        final int e_diamMeanId = starList.getColumnIdByName("e_diam_mean");
+
+        // try UDDK ?
+        final boolean tryUDDK = ((uddkId != -1 && e_uddkId != -1));
+        _logger.debug("tryUDDK[{}]: {}", uddkId, tryUDDK);
+
+        // try diam_vk ?
+        final boolean tryDiamVK = doUseDiamVK && ((diamVKId != -1 && e_diamVKId != -1));
+        _logger.debug("tryDiamVK[{}]: {}", diamVKId, tryDiamVK);
+
+        // try diam_weighted_mean ?
+        final boolean tryDiamWMean = ((diamWMeanId != -1 && e_diamWMeanId != -1));
+        _logger.debug("tryDiamWMean[{}]: {}", diamWMeanId, tryDiamWMean);
+
+        // try diam_mean ?
+        final boolean tryDiamMean = ((diamMeanId != -1 && e_diamMeanId != -1));
+        _logger.debug("tryDiamMean[{}]: {}", diamMeanId, tryDiamMean);
+
+        final int originIndex = Origin.KEY_ORIGIN_COMPUTED;
+        int confidenceIndex = Confidence.KEY_CONFIDENCE_NO;
+
+        StarProperty pDiam, pErrDiam, diamFlag;
+        StarProperty pVis2, pErrVis2;
+        double diam, diamError;
+        boolean found;
+
+        pDiam = pErrDiam = null;
+
+        final VisibilityResult visibilities = new VisibilityResult();
+
+        for (List<StarProperty> star : starList) {
+            found = false;
+
+            if (tryUDDK) {
+                // Get the current star UDDK value
+                pDiam = star.get(uddkId);
+                pErrDiam = star.get(e_uddkId);
+
+                found = (pDiam.hasValue() && pErrDiam.hasValue());
+
+                if (found) {
+                    // Set confidence index to high (value coming from catalog)
+                    confidenceIndex = Confidence.KEY_CONFIDENCE_HIGH;
+                }
+            }
+
+            // If not found in catalog, use the computed one (if exist)
+            if (!found) {
+                // Get the current star diamFlag value
+                diamFlag = star.get(diamFlagId);
+
+                // If computed diameter is OK
+                if (diamFlag.hasValue() && diamFlag.getBooleanValue()) {
+
+                    // FIXME: totally wrong => should use the UD diameter for the appropriate band (see Aspro2)
+                    // But NO ERROR for UD_<band> for now !!
+
+                    if (tryDiamVK) {
+                        // Get the current star diam_vk value
+                        pDiam = star.get(diamVKId);
+                        pErrDiam = star.get(e_diamVKId);
+
+                        found = (pDiam.hasValue() && pErrDiam.hasValue());
+                    }
+
+                    if (!found && tryDiamWMean) {
+                        // Get the current star diam_weighted_mean value
+                        pDiam = star.get(diamWMeanId);
+                        pErrDiam = star.get(e_diamWMeanId);
+
+                        found = (pDiam.hasValue() && pErrDiam.hasValue());
+                    }
+
+                    if (!found && tryDiamMean) {
+                        // Get the current star diam_mean value
+                        pDiam = star.get(diamMeanId);
+                        pErrDiam = star.get(e_diamMeanId);
+
+                        found = (pDiam.hasValue() && pErrDiam.hasValue());
+                    }
+
+                    if (found) {
+                        // Get confidence index of computed diameter
+                        confidenceIndex = pDiam.getConfidenceIndex();
+                    }
+                }
+            }
+
+            if (found) {
+                // Get values
+                diam = pDiam.getDoubleValue();
+                diamError = pErrDiam.getDoubleValue();
+
+                VisibilityUtils.computeVisibility(diam, diamError, baseMax, wavelength, visibilities);
+
+                if (useVis2) {
+                    // Get the current star vis2 value
+                    pVis2 = star.get(vis2Id);
+                    pErrVis2 = star.get(e_vis2Id);
+
+                    if (doCompareVis2) {
+                        if (pVis2.hasValue() && pErrVis2.hasValue()) {
+                            _logger.info("DELTA vis2={} vis2Err={}",
+                                    NumberUtils.format(Math.abs(pVis2.getDoubleValue() - visibilities.vis2)),
+                                    NumberUtils.format(Math.abs(pErrVis2.getDoubleValue() - visibilities.vis2Err)));
+                        }
+                    }
+
+                    // Update values:
+                    // TODO: move in helper method like StarList
+                    if (pVis2 == StarProperty.EMPTY_STAR_PROPERTY) {
+                        // replace star property:
+                        star.set(vis2Id, new StarProperty(visibilities.vis2, originIndex, confidenceIndex));
+                    } else {
+                        // update star property:
+                        pVis2.set(visibilities.vis2, originIndex, confidenceIndex);
+                    }
+                    if (pErrVis2 == StarProperty.EMPTY_STAR_PROPERTY) {
+                        // replace star property:
+                        star.set(e_vis2Id, new StarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
+                    } else {
+                        // update star property:
+                        pErrVis2.set(visibilities.vis2Err, originIndex, confidenceIndex);
+                    }
+
+                } else {
+                    // add vis2 value:
+                    star.add(new StarProperty(visibilities.vis2, originIndex, confidenceIndex));
+                    // add vis2Err value:
+                    star.add(new StarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
+                }
+
+            } else {
+                // add empty value:
+                star.add(StarProperty.EMPTY_STAR_PROPERTY);
+                // add empty value:
+                star.add(StarProperty.EMPTY_STAR_PROPERTY);
+            }
+        }
+        _logger.info("CalibratorsModel.computeVisibility: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
     }
 
     /**
@@ -1760,7 +1987,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // do not encode elements below:
             wd.enableElementEntities(false);
-            
+
             // write PARAM elements
             wd.writeParam(votable.getParams());
 

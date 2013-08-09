@@ -14,16 +14,16 @@ public final class StarProperty implements Comparable<StarProperty> {
     /** Value */
     private Object _value;
     /** Origin index as integer */
-    private final int _originIndex;
+    private int _originIndex;
     /** Confidence index as integer */
-    private final int _confidenceIndex;
+    private int _confidenceIndex;
 
     /**
      * Custom constructor setting origin to COMPUTED and confidence to HIGH
      * @param value the new star property value.
      */
     public StarProperty(final Object value) {
-        this(value, Origin.KEY_ORIGIN_COMPUTED, Confidence.KEY_CONFIDENCE_HIGH);
+        set(value, Origin.KEY_ORIGIN_COMPUTED, Confidence.KEY_CONFIDENCE_HIGH);
     }
 
     /**
@@ -33,7 +33,17 @@ public final class StarProperty implements Comparable<StarProperty> {
      * @param confidenceIndex the confidence index of the star property
      */
     public StarProperty(final Object value, final int originIndex, final int confidenceIndex) {
-        setValue(value);
+        set(value, originIndex, confidenceIndex);
+    }
+
+    /**
+     * Update the star property with new given values (use with care).
+     * @param value the new star property value.
+     * @param originIndex the origin of the star property
+     * @param confidenceIndex the confidence index of the star property
+     */
+    public void set(final Object value, final int originIndex, final int confidenceIndex) {
+        _value = value;
         _originIndex = originIndex;
         _confidenceIndex = confidenceIndex;
     }
