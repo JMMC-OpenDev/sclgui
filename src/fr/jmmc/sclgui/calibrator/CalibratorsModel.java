@@ -23,8 +23,7 @@ import cds.savot.model.SavotTableData;
 import cds.savot.model.SavotVOTable;
 import cds.savot.model.SavotValues;
 import cds.savot.model.TDSet;
-import cds.savot.pull.SavotPullEngine;
-import cds.savot.pull.SavotPullParser;
+import cds.savot.stax.SavotStaxParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
@@ -221,8 +220,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
-     * @param o 
-     * @param arg 
+     * @param o
+     * @param arg
      * @sa java.util.Observer
      */
     @Override
@@ -423,7 +422,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /**
      * Give back the column name from its ID.
      *
-     * @param groupId 
+     * @param groupId
      * @return name of the column's ID.
      */
     public String getColumnNameById(final int groupId) {
@@ -527,11 +526,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Parse the given file as VOTable and update any attached JTable to show its content.
-     * 
+     *
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param file the VOTable file to parse as File
-     * 
+     *
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final File file) throws IllegalArgumentException {
@@ -540,12 +539,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Parse the given file as VOTable and update any attached JTable to show its content.
-     * 
+     *
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param file the VOTable file to parse as File
      * @param async true to use asynchronous parsing (in background); false to use EDT (synchronous)
-     * 
+     *
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final File file, final boolean async) throws IllegalArgumentException {
@@ -554,12 +553,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Parse the given string as VOTable and update any attached JTable to show its content.
-     * 
+     *
      * Note: this action uses a SwingWorker to parse the VOTable in background (async)
      *
      * @param voTable the VOTable content to parse as String
      * @param startQuery true to start query after parsing votable
-     * 
+     *
      * @throws IllegalArgumentException if given VOTable is not compatible with SearchCal format
      */
     public void parseVOTable(final String voTable, final boolean startQuery) throws IllegalArgumentException {
@@ -596,64 +595,67 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         final long startTime = System.nanoTime();
 
-        final SavotPullParser parser;
-        if (file != null) {
-            parser = new SavotPullParser(file.getAbsolutePath(), SavotPullEngine.ROWREAD);
-        } else {
-            parser = new SavotPullParser(new StringReader(content), SavotPullEngine.ROWREAD);
-        }
-
-        // start parsing document and get first TR if data are present:
-        final SavotTR tr = parser.getNextTR();
-
-        // Get the VOTable
-        final SavotVOTable savotVoTable = parser.getVOTable();
-        final ResourceSet resources = savotVoTable.getResources();
-
-        SavotResource resource = null;
-        SavotTable table = null;
-
-        if (resources.getItemCount() == 1) {
-            // SearchCal VOTable must have 1 resource:
-            resource = resources.getItemAt(0);
-
-            if (resource.getTables().getItemCount() == 1) {
-                // SearchCal resource must have 1 table:
-                table = resource.getTables().getItemAt(0);
+        try {
+            final SavotStaxParser parser;
+            if (file != null) {
+                parser = new SavotStaxParser(file.getAbsolutePath(), SavotStaxParser.ROWREAD);
+            } else {
+                parser = new SavotStaxParser(new StringReader(content), SavotStaxParser.ROWREAD);
             }
-        }
 
-        // check that the votable has one resource / table containing groups and fields:
-        if (resource == null || table == null) {
-            _logger.warn("Incorrect VOTable format");
-            throw new IllegalArgumentException("Incorrect VOTable format");
-        }
+            // start parsing document and get first TR if data are present:
+            final SavotTR tr = parser.getNextTR();
 
-        // check that the votable corresponds to the SearchCal VOTable format:
-        if (!resource.getName().startsWith("SearchCal")) {
-            _logger.warn("Ressource should be 'SearchCal' but is : {}", resource.getName());
-            throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
-        }
+            // Get the VOTable
+            final SavotVOTable savotVoTable = parser.getVOTable();
+            final ResourceSet resources = savotVoTable.getResources();
 
-        // TODO: try also to check PARAMETER_SCL_SERVER_VERSION !
+            SavotResource resource = null;
+            SavotTable table = null;
 
-        // Clear all internal lists before new parsing:
-        _originalStarList.clear();
-        _calibratorStarList.clear();
-        _currentStarList.clear();
+            if (resources.getItemCount() == 1) {
+                // SearchCal VOTable must have 1 resource:
+                resource = resources.getItemAt(0);
 
-        // Update any attached observer TO FREE MEMORY:
-        update(null, this);
+                if (resource.getTables().getItemCount() == 1) {
+                    // SearchCal resource must have 1 table:
+                    table = resource.getTables().getItemAt(0);
+                }
+            }
 
-        // Create parse votable task worker :
-        final ParseVoTableSwingWorker loadWorker = new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime);
+            // check that the votable has one resource / table containing groups and fields:
+            if (resource == null || table == null) {
+                _logger.warn("Incorrect VOTable format");
+                throw new IllegalArgumentException("Incorrect VOTable format");
+            }
 
-        if (async && table.getNrowsValue() > LOAD_TABLE_ASYNC_THRESHOLD) {
-            // Cancel other tasks and execute this new task in background:
-            loadWorker.executeTask();
-        } else {
-            // Execute the worker using EDT:
-            loadWorker.executeTaskInEDT();
+            // check that the votable corresponds to the SearchCal VOTable format:
+            if (!resource.getName().startsWith("SearchCal")) {
+                _logger.warn("Ressource should be 'SearchCal' but is : {}", resource.getName());
+                throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
+            }
+
+            // TODO: try also to check PARAMETER_SCL_SERVER_VERSION !
+            // Clear all internal lists before new parsing:
+            _originalStarList.clear();
+            _calibratorStarList.clear();
+            _currentStarList.clear();
+
+            // Update any attached observer TO FREE MEMORY:
+            update(null, this);
+
+            // Create parse votable task worker :
+            final ParseVoTableSwingWorker loadWorker = new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime);
+
+            if (async && table.getNrowsValue() > LOAD_TABLE_ASYNC_THRESHOLD) {
+                // Cancel other tasks and execute this new task in background:
+                loadWorker.executeTask();
+            } else {
+                // Execute the worker using EDT:
+                loadWorker.executeTaskInEDT();
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("VOTable Parsing error", e);
         }
     }
 
@@ -671,8 +673,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         private final CalibratorsModel calModel;
         /** Store the current query model in order to allow later update to progress bar and parse query parameters */
         private final QueryModel queryModel;
-        /** SAVOT pull parser initialized */
-        private final SavotPullParser parser;
+        /** SAVOT stax parser initialized */
+        private final SavotStaxParser parser;
         /** first SavotTR tr */
         private final SavotTR trFirst;
         /** start time */
@@ -697,7 +699,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          * @param startTime start time (nano seconds)
          */
         private ParseVoTableSwingWorker(final File file, final boolean startQuery, final CalibratorsModel calModel,
-                                        final SavotPullParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
+                                        final SavotStaxParser parser, final SavotVOTable savotVoTable, final SavotTR trFirst,
                                         final long startTime) {
             // get current observation version :
             super(SearchCalTaskRegistry.TASK_LOAD);
@@ -736,9 +738,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             final int nParams = paramSet.getItemCount();
 
-            /* TODO: use a single Param/Field map in Savot keyed by id / name ? 
+            /* TODO: use a single Param/Field map in Savot keyed by id / name ?
              * because VOTABLE says both represents an 'identical' concept */
-
             // PARAM by id:
             final HashMap<String, SavotParam> paramById = new HashMap<String, SavotParam>(nParams);
             final HashMap<String, SavotParam> paramByName = new HashMap<String, SavotParam>(nParams);
@@ -781,7 +782,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         }
 
                         // TODO: validate support for extra origin values !
-
                         if (!origin.getValue().equals(option.getValue())) {
                             if (origin.getKeyString().equals(option.getName())) {
                                 _logger.warn("origin for key={} mismatchs: '{}' vs '{}'", option.getName(), origin.getValue(), option.getValue());
@@ -794,7 +794,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     }
                 }
             }
-
 
             final FieldSet fieldSet = table.getFields();
             final int nFields = fieldSet.getItemCount();
@@ -828,7 +827,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             saveMappings = new VOTableSaveMapping[nFields];
 
             /* TODO: use UCD or UTYPE to discrimminate FIELD/PARAM corresponding to value/origin/confidence/error ... */
-
             VOTableLoadMapping loadMapping;
             int type;
             int nStrFields = 0;
@@ -866,7 +864,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                     boolean valid = false;
 
-                    // Check field name as ucd may be used also by properties 
+                    // Check field name as ucd may be used also by properties
                     // (CODE_QUALITY or REFER_CODE for example ...)
                     // TODO: use FieldRef utypes ?
                     final String name = field.getName();
@@ -1019,7 +1017,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                     boolean valid = false;
 
-                    // Check param name as ucd may be used also by properties 
+                    // Check param name as ucd may be used also by properties
                     // (CODE_QUALITY or REFER_CODE for example ...)
                     // TODO: use ParamRef utypes ?
                     final String name = param.getName();
@@ -1076,7 +1074,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                 // TODO: put origin values (default mapping) for SearchCal release 4.4 !
                 // => format conversion (2013.7) ...
-
                 // Confidence resolved instance cache:
                 final HashMap<String, Confidence> confidenceValues = new HashMap<String, Confidence>(8); // only 4 different values
 
@@ -1088,7 +1085,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final HashMap<String, String> stringCache = new HashMap<String, String>(nStrFields * tableRows >> 2);
 
                 // note: Double instance cache has too much overhead (cpu / memory) for only 50% gain (number of instances)
-
                 // only use Progress bar for large tables (JSDC):
                 final int step = (async && tableRows > LOAD_TABLE_ASYNC_THRESHOLD) ? tableRows / 100 : Integer.MAX_VALUE;
 
@@ -1377,7 +1373,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Update this calibrators model from parsed VOTable
-     * @param savotVoTable  parsed SAVOT VOTable 
+     * @param savotVoTable  parsed SAVOT VOTable
      * @param paramSet parameter set
      * @param starList parsed StarList
      * @param saveMappings Field Save mapping
@@ -1524,7 +1520,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             final StarListMeta starListMeta = starList.getMetaData();
 
             // Add custom properties:
-
             // Add RA (deg) property:
             if (starListMeta.getPropertyIndexByName(StarList.RADegColumnName) == -1) {
                 starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
@@ -1585,7 +1580,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             }
 
             // Update vis2/vis2Err properties:
-
             // Get instrument band
             final String band = _parameters.get("band");
 
@@ -1631,7 +1625,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         final boolean useVis2 = ((vis2Id != -1 && e_vis2Id != -1));
 
         if (!useVis2) {
-            // TODO: add missing vis2 / vis2Err properties properly i.e. Savot Field / Group to be persisted 
+            // TODO: add missing vis2 / vis2Err properties properly i.e. Savot Field / Group to be persisted
             // once removed from server-side!
 
             final StarListMeta starListMeta = starList.getMetaData();
@@ -1657,7 +1651,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
              <FIELD name="vis2Err" ID="col277" ucd="VIS2_ERROR" datatype="double">
              <DESCRIPTION>Error on Squared Visibility</DESCRIPTION>
              </FIELD>
-             * 
+             *
              <GROUP name="vis2" ucd="VIS2">
              <DESCRIPTION>vis2 with its origin and confidence indexes and its error when available</DESCRIPTION>
              <FIELDref ref="col274"/>
@@ -1669,7 +1663,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         }
 
         // TODO: externalize string constants (parameters and Column names) !
-
         // Get star properties:
         // Get the ID of the column containing 'UDDK' star properties
         final int uddkId = starList.getColumnIdByName("UDDK");
@@ -1744,7 +1737,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                     // FIXME: totally wrong => should use the UD diameter for the appropriate band (see Aspro2)
                     // But NO ERROR for UD_<band> for now !!
-
                     if (tryDiamVK) {
                         // Get the current star diam_vk value
                         pDiam = star.get(diamVKId);
@@ -1996,7 +1988,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // RESOURCE: custom writer to perform row by row processing
             // @See SavotWriter.writeResource()
-
             final SavotResource resource = votable.getResources().getItemAt(0);
 
             // <RESOURCE>
@@ -2091,12 +2082,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                             break;
                                         }
 
-                                        /* handle / fix null value handling 
+                                        /* handle / fix null value handling
                                          * as VOTABLE 1.1 does not support nulls for integer (-INF) / double values (NaN)
                                          * note: stilts complains and replaces empty cells by (-INF) and (NaN) */
 
                                         /* TODO: switch to VOTABLE 1.3 that supports null values */
-
                                         switch (type) {
                                             case StarPropertyMeta.TYPE_DOUBLE:
                                             /* do not use NaN (useless and annoying in XSLT scripts) */
@@ -2182,7 +2172,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     }
 
     /**
-     * Delete the shown elements according to the given row indexes. 
+     * Delete the shown elements according to the given row indexes.
      * The shown elements are the not filtered elements.
      *
      * @param indices indices of the row to be removed.
@@ -2212,7 +2202,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     /**
      * Remove all stars previously flagged as deleted.
-     * 
+     *
      * @param silently true to ignore that data have changed
      */
     private void removeDeletedStars(boolean silently) {
