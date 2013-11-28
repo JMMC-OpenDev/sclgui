@@ -43,6 +43,7 @@ public class CalibratorSearchPanelDelegate implements SearchPanelDelegate {
         _lastFoundColumn = UNDEFINED_INDEX;
     }
 
+    @Override
     public boolean search(final Pattern pattern, final SEARCH_DIRECTION givenDirection) {
 
         if (pattern == null) {

@@ -122,6 +122,7 @@ public final class QueryModel extends Star implements Observer {
 
                 case 1: // Quit
                     SwingUtils.invokeLaterEDT(new Runnable() {
+                        @Override
                         public void run() {
                             Bootstrapper.stopApp(-1);
                         }
@@ -282,7 +283,7 @@ public final class QueryModel extends Star implements Observer {
      * @throws PreferencesException if preference error occurs
      * @throws IllegalArgumentException  if default values have wrong values
      */
-    public final void loadDefaultValues() throws PreferencesException, IllegalArgumentException {
+    public void loadDefaultValues() throws PreferencesException, IllegalArgumentException {
         final boolean prevNotify = isNotify();
         try {
             // avoid multiple observer notifications:
@@ -579,7 +580,7 @@ public final class QueryModel extends Star implements Observer {
     /**
      * Reset the instrumental wavelength parameters.
      */
-    public final void resetInstrumentalWavelengthes() {
+    public void resetInstrumentalWavelengthes() {
         _magnitudeBandToWavelength = new HashMap<String, Double>(ALL_MAGNITUDE_BANDS.length);
 
         // For each "magnitude band-predefined wavelength" couple
@@ -739,7 +740,7 @@ public final class QueryModel extends Star implements Observer {
     /**
      * Reset the science object magnitudes.
      */
-    public final void resetScienceObjectMagnitudes() {
+    public void resetScienceObjectMagnitudes() {
         // For each "magnitude-band" couple
         for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
             // Construct the conversion table between both
