@@ -1,99 +1,111 @@
-//
-// Copyright 2002-2012 - Universite de Strasbourg / Centre National de la
-// Recherche Scientifique
-// ------
-//
-// SAVOT Data Model
-//
-// Author:  Andre Schaaff
-// Address: Centre de Donnees astronomiques de Strasbourg
-//          11 rue de l'Universite
-//          67000 STRASBOURG
-//          FRANCE
-// Email:   question@simbad.u-strasbg.fr
-//
-// -------
-//
-// In accordance with the international conventions about intellectual
-// property rights this software and associated documentation files
-// (the "Software") is protected. The rightholder authorizes :
-// the reproduction and representation as a private copy or for educational
-// and research purposes outside any lucrative use,
-// subject to the following conditions:
-//
-// The above copyright notice shall be included.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
-// LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
-// TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
-// THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// For any other exploitation contact the rightholder.
-//
-//                        -----------
-//
-// Conformement aux conventions internationales relatives aux droits de
-// propriete intellectuelle ce logiciel et sa documentation sont proteges.
-// Le titulaire des droits autorise :
-// la reproduction et la representation a titre de copie privee ou des fins
-// d'enseignement et de recherche et en dehors de toute utilisation lucrative.
-// Cette autorisation est faite sous les conditions suivantes :
-//
-// La mention du copyright portee ci-dessus devra etre clairement indiquee.
-//
-// LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
-// LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
-// OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
-// (Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
-// LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
-// LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
-// D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
-// POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
-// OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
-// QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
-//
-// Pour toute autre utilisation contactez le titulaire des droits.
-//
 package cds.savot.model;
 
+//
+//Copyright 2002-2013 - Universite de Strasbourg / Centre National de la
+//Recherche Scientifique
+//------
+//
+//SAVOT - Simple Access to VOTable - Parser
+//
+//Author:  Andre Schaaff
+//Address: Centre de Donnees astronomiques de Strasbourg
+//         11 rue de l'Universite
+//         67000 STRASBOURG
+//         FRANCE
+//Contributors: Laurent Bourges (code improvement, ideas, tests, etc.), Gregory Mantelet (binary capabilities)
+//Email:   cds-question@astro.unistra.fr
+//
+//-------
+//
+//In accordance with the international conventions about intellectual
+//property rights this software and associated documentation files
+//(the "Software") is protected. The rightholder authorizes :
+//the reproduction and representation as a private copy or for educational
+//and research purposes outside any lucrative use,
+//subject to the following conditions:
+//
+//The above copyright notice shall be included.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
+//LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
+//TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
+//FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+//THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//For any other exploitation contact the rightholder.
+//
+//                     -----------
+//
+//Conformement aux conventions internationales relatives aux droits de
+//propriete intellectuelle ce logiciel et sa documentation sont proteges.
+//Le titulaire des droits autorise :
+//la reproduction et la representation a titre de copie privee ou des fins
+//d'enseignement et de recherche et en dehors de toute utilisation lucrative.
+//Cette autorisation est faite sous les conditions suivantes :
+//
+//La mention du copyright portee ci-dessus devra etre clairement indiquee.
+//
+//LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
+//LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
+//OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
+//(Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
+//LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
+//LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
+//D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
+//POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
+//OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
+//QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
+//
+//Pour toute autre utilisation contactez le titulaire des droits.
 /**
  * <p>
  * Resource element
  * </p>
- * 
+ *
  * @author Andre Schaaff
- * @version 4.0 (kickoff 31 May 02)
+ * @version 4.0
  */
 public final class SavotResource extends MarkupComment implements IDSupport, NameSupport {
 
     // name attribute
     private String name = null;
+
     // id attribute
     private String id = null;
+
     // type attribute (results, meta)
     private String type = "results"; // default
+
     // utype attribute
     private String utype = null;
+
     // DESCRIPTION element
     private String description = null;
+
     // COOSYS element set - deprecated since 1.2
     private CoosysSet coosys = null;
+
     // GROUP element set - since VOTable 1.2
     private GroupSet groups = null;
+
     // PARAM element set
     private ParamSet params = null;
+
     // INFO element set
     private InfoSet infos = null;
+
     // LINK element set
     private LinkSet links = null;
+
     // TABLE element set
     private TableSet tables = null;
+
     // RESOURCE element set (recursive usage)
     private ResourceSet resources = null;
+
     // INFO (at End) element set - since VOTable 1.2
     private InfoSet infosAtEnd = null;
 
@@ -112,6 +124,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
         type = null;
         utype = null;
         description = null;
+
         coosys = null;
         groups = null;
         params = null;
@@ -124,7 +137,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the description
-     * 
+     *
      * @param description
      *            String
      */
@@ -134,7 +147,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the description
-     * 
+     *
      * @return a String
      */
     public String getDescription() {
@@ -143,7 +156,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the Coosys elements
-     * 
+     *
      * @deprecated since VOTable 1.2
      * @param coosys
      */
@@ -153,7 +166,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the Coosys elements
-     * 
+     *
      * @deprecated since VOTable 1.2
      * @return a CoosysSet object
      */
@@ -166,7 +179,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set GROUP element set reference
-     * 
+     *
      * @since VOTable 1.2
      * @param groups
      */
@@ -176,7 +189,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get GROUP element set reference
-     * 
+     *
      * @since VOTable 1.2
      * @return GroupSet
      */
@@ -189,7 +202,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the Infos elements
-     * 
+     *
      * @param infos
      */
     public void setInfos(final InfoSet infos) {
@@ -198,7 +211,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the Infos elements
-     * 
+     *
      * @return a InfoSet object
      */
     public InfoSet getInfos() {
@@ -210,7 +223,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the Param elements
-     * 
+     *
      * @param params
      */
     public void setParams(final ParamSet params) {
@@ -219,7 +232,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the Param elements
-     * 
+     *
      * @return a ParamSet object
      */
     public ParamSet getParams() {
@@ -231,7 +244,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the Link elements
-     * 
+     *
      * @param links
      */
     public void setLinks(final LinkSet links) {
@@ -240,7 +253,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the Link elements
-     * 
+     *
      * @return a LinkSet object
      */
     public LinkSet getLinks() {
@@ -252,7 +265,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the Table elements
-     * 
+     *
      * @param tables
      */
     public void setTables(final TableSet tables) {
@@ -261,7 +274,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the Table elements
-     * 
+     *
      * @return a TableSet object
      */
     public TableSet getTables() {
@@ -273,7 +286,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the Resource elements
-     * 
+     *
      * @param resources
      */
     public void setResources(final ResourceSet resources) {
@@ -282,7 +295,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the Resource elements
-     * 
+     *
      * @return a ResourceSet object
      */
     public ResourceSet getResources() {
@@ -294,7 +307,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the InfosAtEnd elements
-     * 
+     *
      * @param infosAtEnd
      * @since VOTable 1.2
      */
@@ -304,7 +317,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the InfosAtEnd elements
-     * 
+     *
      * @return a InfoSet object
      * @since VOTable 1.2
      */
@@ -317,45 +330,49 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the name attribute
-     * 
+     *
      * @param name
      *            String
      */
+    @Override
     public void setName(final String name) {
         this.name = name;
     }
 
     /**
      * Get the name attribute
-     * 
+     *
      * @return a String
      */
+    @Override
     public String getName() {
         return str(name);
     }
 
     /**
      * Set the id attribute
-     * 
+     *
      * @param id
      *            String
      */
+    @Override
     public void setId(final String id) {
         this.id = id;
     }
 
     /**
      * Get the id attribute
-     * 
+     *
      * @return String
      */
+    @Override
     public String getId() {
         return str(id);
     }
 
     /**
      * Set the type attribute
-     * 
+     *
      * @param type
      *            String (results, meta)
      */
@@ -365,7 +382,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the type attribute
-     * 
+     *
      * @return a String
      */
     public String getType() {
@@ -374,7 +391,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Set the utype attribute
-     * 
+     *
      * @param utype
      *            String
      */
@@ -384,7 +401,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the utype attribute
-     * 
+     *
      * @return a String
      */
     public String getUtype() {
@@ -393,7 +410,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get the number of TR object for table index tableIndex (shortcut)
-     * 
+     *
      * @param tableIndex
      * @return int
      */
@@ -403,7 +420,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get a TRSet object for table index tableIndex (shortcut)
-     * 
+     *
      * @param tableIndex
      * @return TRSet
      */
@@ -414,7 +431,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
     /**
      * Get a TR object for table index tableIndex and the corresponding row
      * index rowIndex of this table (shortcut)
-     * 
+     *
      * @param tableIndex
      * @param rowIndex
      * @return SavotTR
@@ -426,7 +443,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
     /**
      * Return the number of tables contained in the resource this value doesn't
      * contain the tables of included resources (shortcut)
-     * 
+     *
      * @return int
      */
     public int getTableCount() {
@@ -435,7 +452,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get a FieldSet object for table index tableIndex (shortcut)
-     * 
+     *
      * @param tableIndex
      * @return FieldSet
      */
@@ -445,7 +462,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get a LinkSet object for table index tableIndex (shortcut)
-     * 
+     *
      * @param tableIndex
      * @return LinkSet
      */
@@ -454,8 +471,8 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
     }
 
     /**
-     * Get a Description object (final String) for table index tableIndex (shortcut)
-     * 
+     * Get a Description object (String) for table index tableIndex (shortcut)
+     *
      * @param tableIndex
      * @return String
      */
@@ -465,7 +482,7 @@ public final class SavotResource extends MarkupComment implements IDSupport, Nam
 
     /**
      * Get a SavotData object for table index tableIndex (shortcut)
-     * 
+     *
      * @param tableIndex
      * @return SavotData
      */

@@ -1,64 +1,65 @@
-//
-// Copyright 2002-2011 - Universite de Strasbourg / Centre National de la
-// Recherche Scientifique
-// ------
-//
-// SAVOT tools
-//
-// Author:  Andre Schaaff
-// Address: Centre de Donnees astronomiques de Strasbourg
-//          11 rue de l'Universite
-//          67000 STRASBOURG
-//          FRANCE
-// Email:   question@simbad.u-strasbg.fr
-//
-// -------
-//
-// In accordance with the international conventions about intellectual
-// property rights this software and associated documentation files
-// (the "Software") is protected. The rightholder authorizes :
-// the reproduction and representation as a private copy or for educational
-// and research purposes outside any lucrative use,
-// subject to the following conditions:
-//
-// The above copyright notice shall be included.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
-// LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
-// TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
-// THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// For any other exploitation contact the rightholder.
-//
-//                        -----------
-//
-// Conformement aux conventions internationales relatives aux droits de
-// propriete intellectuelle ce logiciel et sa documentation sont proteges.
-// Le titulaire des droits autorise :
-// la reproduction et la representation a titre de copie privee ou des fins
-// d'enseignement et de recherche et en dehors de toute utilisation lucrative.
-// Cette autorisation est faite sous les conditions suivantes :
-//
-// La mention du copyright portee ci-dessus devra etre clairement indiquee.
-//
-// LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
-// LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
-// OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
-// (Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
-// LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
-// LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
-// D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
-// POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
-// OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
-// QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
-//
-// Pour toute autre utilisation contactez le titulaire des droits.
-//
 package cds.savot.writer;
+
+//
+//Copyright 2002-2013 - Universite de Strasbourg / Centre National de la
+//Recherche Scientifique
+//------
+//
+//SAVOT - Simple Access to VOTable - Parser
+//
+//Author:  Andre Schaaff
+//Address: Centre de Donnees astronomiques de Strasbourg
+//         11 rue de l'Universite
+//         67000 STRASBOURG
+//         FRANCE
+//Contributors: Laurent Bourges (code improvement, ideas, tests, etc.), Gregory Mantelet (binary capabilities)
+//Email:   cds-question@astro.unistra.fr
+//
+//-------
+//
+//In accordance with the international conventions about intellectual
+//property rights this software and associated documentation files
+//(the "Software") is protected. The rightholder authorizes :
+//the reproduction and representation as a private copy or for educational
+//and research purposes outside any lucrative use,
+//subject to the following conditions:
+//
+//The above copyright notice shall be included.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
+//LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
+//TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
+//FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+//THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//For any other exploitation contact the rightholder.
+//
+//                     -----------
+//
+//Conformement aux conventions internationales relatives aux droits de
+//propriete intellectuelle ce logiciel et sa documentation sont proteges.
+//Le titulaire des droits autorise :
+//la reproduction et la representation a titre de copie privee ou des fins
+//d'enseignement et de recherche et en dehors de toute utilisation lucrative.
+//Cette autorisation est faite sous les conditions suivantes :
+//
+//La mention du copyright portee ci-dessus devra etre clairement indiquee.
+//
+//LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
+//LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
+//OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
+//(Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
+//LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
+//LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
+//D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
+//POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
+//OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
+//QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
+//
+//Pour toute autre utilisation contactez le titulaire des droits.
 
 import cds.savot.model.CoosysSet;
 import cds.savot.model.FieldRefSet;
@@ -110,21 +111,20 @@ import java.util.zip.GZIPOutputStream;
  * <p>
  * VOTable document generation from memory
  * </p>
- * 
- * 
+ *
+ *
  * @author Andre Schaaff
  * @version 4.0
- * 
+ *
  *          6 June 2005 : the user can now write a VOTable document flow step by
  *          step, the previous method is available too (writing of a whole
  *          document) (kickoff 31 May 02)
  */
+@SuppressWarnings({"deprecation", "UseOfSystemOutOrSystemErr"})
 public final class SavotWriter {
 
     private static final String tdempty = "<TD/>";
     private static final String tdbegin = "<TD>";
-    private static final String tdbegin1 = "<TD";
-    private static final String tdbegin2 = ">";
     private static final String tdend = "</TD>";
     private static final String trbegin = "<TR>";
     private static final String trend = "</TR>\n";
@@ -176,10 +176,10 @@ public final class SavotWriter {
     /**
      * Change the default XML document head Default value <?xml
      * version="1.0 encoding="UTF-8"?>
-     * 
+     *
      * @param top1
      * @since VOTable 1.2
-     * 
+     *
      */
     public void setTop1(final String top1) {
         this.top1 = top1;
@@ -187,10 +187,10 @@ public final class SavotWriter {
 
     /**
      * Set a stylesheet Also possible with setTop1
-     * 
+     *
      * @param href
      * @since VOTable 1.2
-     * 
+     *
      */
     public void setStyleSheet(final String href) {
         this.styleSheet = href;
@@ -198,7 +198,7 @@ public final class SavotWriter {
 
     /**
      * Enable or disable Attribute entities mapping
-     * 
+     *
      * @param entities
      *            true if Attribute entities are taken into account
      */
@@ -208,7 +208,7 @@ public final class SavotWriter {
 
     /**
      * Enable or disable Element entities mapping
-     * 
+     *
      * @param entities
      *            true if Element entities are taken into account
      */
@@ -218,7 +218,7 @@ public final class SavotWriter {
 
     /**
      * Enable or disable Attribute and Element entities mapping
-     * 
+     *
      * @param entities
      *            true if all entities are taken into account
      */
@@ -261,7 +261,7 @@ public final class SavotWriter {
     /**
      * Generates a VOTable XML document corresponding to the internal model The
      * result is sent to the standard output
-     * 
+     *
      * @param votable
      *            object corresponding to the savot internal model
      * @throws IOException
@@ -272,7 +272,7 @@ public final class SavotWriter {
 
     /**
      * Generates a VOTable XML document corresponding to the internal model
-     * 
+     *
      * @param votable
      *            object corresponding to the savot internal model
      * @param stream
@@ -286,7 +286,7 @@ public final class SavotWriter {
 
     /**
      * Generates a VOTable XML document corresponding to the internal model
-     * 
+     *
      * @param votable
      *            object corresponding to the savot internal model
      * @param file
@@ -300,16 +300,15 @@ public final class SavotWriter {
 
     /**
      * Generates a VOTable XML document corresponding to the internal model
-     * 
+     *
      * @param votable
      *            SavotVOTable
      * @param file
      *            String
      * @param stream
      *            OutputStream
-     * @throws IOException  
+     * @throws IOException
      */
-    @SuppressWarnings("deprecation")
     public void generateDocument(final SavotVOTable votable, final String file,
                                  final OutputStream stream) throws IOException {
 
@@ -346,10 +345,10 @@ public final class SavotWriter {
 
     /**
      * Init the Stream for the output
-     * 
+     *
      * @param file
      *            String
-     * @throws IOException  
+     * @throws IOException
      */
     public void initStream(final String file) throws IOException {
         final boolean compressed = file.endsWith("gz");
@@ -360,10 +359,10 @@ public final class SavotWriter {
 
     /**
      * Init the Stream for the output
-     * 
+     *
      * @param stream
      *            OutputStream
-     * @throws IOException  
+     * @throws IOException
      */
     public void initStream(final OutputStream stream) throws IOException {
         final OutputStream outStream = getOutputStream(stream, false);
@@ -372,7 +371,7 @@ public final class SavotWriter {
 
     /**
      * Init the Stream for the output using the given Writer
-     * 
+     *
      * @param writer writer implementation to write into
      */
     public void initStream(final Writer writer) {
@@ -384,7 +383,7 @@ public final class SavotWriter {
      * @param outstream stream to wrap
      * @param compressed true to indicate to use a gzip input stream
      * @return input stream
-     * @throws IOException useless 
+     * @throws IOException useless
      */
     private OutputStream getOutputStream(final OutputStream outstream, final boolean compressed) throws IOException {
         final int bufferSize = 64 * 1024; // 64K write buffer
@@ -401,10 +400,10 @@ public final class SavotWriter {
 
     /**
      * Write a comment
-     * 
+     *
      * @param comment
      *            String
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeComment(final String comment) throws IOException {
         if (comment.length() != 0) {
@@ -414,10 +413,10 @@ public final class SavotWriter {
 
     /**
      * Write a description
-     * 
+     *
      * @param description
-     * @throws IOException  
-     * 
+     * @throws IOException
+     *
      */
     public void writeDescription(final String description) throws IOException {
         if (description.length() != 0) {
@@ -428,11 +427,10 @@ public final class SavotWriter {
 
     /**
      * Write a VOTable XML head
-     * 
+     *
      * @param votable
-     * @throws IOException  
+     * @throws IOException
      */
-    @SuppressWarnings("deprecation")
     public void writeDocumentHead(final SavotVOTable votable) throws IOException {
         final Writer w = bw; // local copy
 
@@ -504,8 +502,8 @@ public final class SavotWriter {
 
     /**
      * Write a VOTable XML end
-     * 
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     public void writeDocumentEnd() throws IOException {
         bw.write("\n</VOTABLE>\n");
@@ -516,11 +514,10 @@ public final class SavotWriter {
 
     /**
      * Write a COOSYS set
-     * 
+     *
      * @param coosysSet
-     * @throws IOException  
+     * @throws IOException
      */
-    @SuppressWarnings("deprecation")
     public void writeCoosys(final CoosysSet coosysSet) throws IOException {
         final Writer w = bw; // local copy
 
@@ -568,9 +565,9 @@ public final class SavotWriter {
 
     /**
      * Write a PARAM set
-     * 
+     *
      * @param params
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeParam(final ParamSet params) throws IOException {
         if (params != null) {
@@ -660,9 +657,9 @@ public final class SavotWriter {
 
     /**
      * Write a PARAMref set
-     * 
+     *
      * @param refparams
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeParamRef(final ParamRefSet refparams) throws IOException {
         if (refparams != null) {
@@ -698,9 +695,9 @@ public final class SavotWriter {
 
     /**
      * Write a LINK set
-     * 
+     *
      * @param linkSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeLink(final LinkSet linkSet) throws IOException {
         final Writer w = bw; // local copy
@@ -765,9 +762,9 @@ public final class SavotWriter {
 
     /**
      * Write an INFO set
-     * 
+     *
      * @param infoSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeInfo(final InfoSet infoSet) throws IOException {
         if (infoSet != null) {
@@ -855,9 +852,9 @@ public final class SavotWriter {
 
     /**
      * Write a FIELD set
-     * 
+     *
      * @param fieldSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeField(final FieldSet fieldSet) throws IOException {
         final Writer w = bw; // local copy
@@ -943,9 +940,9 @@ public final class SavotWriter {
 
     /**
      * Write a FIELD set
-     * 
+     *
      * @param fieldRefSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeFieldRef(final FieldRefSet fieldRefSet) throws IOException {
         final Writer w = bw; // local copy
@@ -977,9 +974,9 @@ public final class SavotWriter {
 
     /**
      * Write a STREAM element
-     * 
+     *
      * @param stream
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeStream(final SavotStream stream) throws IOException {
         final Writer w = bw; // local copy
@@ -1025,9 +1022,9 @@ public final class SavotWriter {
 
     /**
      * Write a BINARY element
-     * 
+     *
      * @param binary
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeBinary(final SavotBinary binary) throws IOException {
         if (binary.getStream() != null) {
@@ -1047,9 +1044,9 @@ public final class SavotWriter {
 
     /**
      * Write a VALUES element
-     * 
+     *
      * @param values
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeValues(final SavotValues values) throws IOException {
         if (values != null) {
@@ -1104,9 +1101,9 @@ public final class SavotWriter {
 
     /**
      * Write a FITS element
-     * 
+     *
      * @param fits
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeFits(final SavotFits fits) throws IOException {
         final Writer w = bw; // local copy
@@ -1134,9 +1131,9 @@ public final class SavotWriter {
 
     /**
      * Write a MIN element
-     * 
+     *
      * @param min
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeMin(final SavotMin min) throws IOException {
         final Writer w = bw; // local copy
@@ -1171,9 +1168,9 @@ public final class SavotWriter {
 
     /**
      * Write a MAX element
-     * 
+     *
      * @param max
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeMax(final SavotMax max) throws IOException {
         final Writer w = bw; // local copy
@@ -1208,9 +1205,9 @@ public final class SavotWriter {
 
     /**
      * Write an OPTION set
-     * 
+     *
      * @param optionSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeOption(final OptionSet optionSet) throws IOException {
         final Writer w = bw; // local copy
@@ -1251,9 +1248,9 @@ public final class SavotWriter {
 
     /**
      * Write a GROUP set
-     * 
+     *
      * @param groupSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeGroup(final GroupSet groupSet) throws IOException {
         final Writer w = bw; // local copy
@@ -1312,10 +1309,10 @@ public final class SavotWriter {
 
     /**
      * Write a TABLE begin
-     * 
+     *
      * @param table
      *            SavotTable
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeTableBegin(final SavotTable table) throws IOException {
         final Writer w = bw; // local copy
@@ -1359,7 +1356,7 @@ public final class SavotWriter {
 
     /**
      * Write a TABLE end
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeTableEnd() throws IOException {
         // </TABLE>
@@ -1368,10 +1365,10 @@ public final class SavotWriter {
 
     /**
      * Write a RESOURCE begin
-     * 
+     *
      * @param resource
      *            SavotResource
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeResourceBegin(final SavotResource resource) throws IOException {
         final Writer w = bw; // local copy
@@ -1407,7 +1404,7 @@ public final class SavotWriter {
 
     /**
      * Write a RESOURCE end
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeResourceEnd() throws IOException {
         // </RESOURCE>
@@ -1416,7 +1413,7 @@ public final class SavotWriter {
 
     /**
      * Write a TABLEDATA begin
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeTableDataBegin() throws IOException {
         // <TABLEDATA>
@@ -1425,7 +1422,7 @@ public final class SavotWriter {
 
     /**
      * Write a TABLEDATA end
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeTableDataEnd() throws IOException {
         // </TABLEDATA>
@@ -1434,7 +1431,7 @@ public final class SavotWriter {
 
     /**
      * Write a DATA begin
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeDataBegin() throws IOException {
         // <DATA>
@@ -1443,7 +1440,7 @@ public final class SavotWriter {
 
     /**
      * Write a DATA end
-     * @throws IOException 
+     * @throws IOException
      */
     public void writeDataEnd() throws IOException {
         // </DATA>
@@ -1453,17 +1450,15 @@ public final class SavotWriter {
     /**
      * Write a TR
      * @param tr
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeTR(final SavotTR tr) throws IOException {
         final Writer w = bw; // local copy
         final boolean doEncode = elementEntities;
-        String e, v;
+        String v;
 
         // <TR>
         w.write(trbegin);
-
-        // TODO: TR id attribute ?
 
         final List<SavotTD> tds = tr.getTDSet().getItems();
         SavotTD td;
@@ -1475,17 +1470,8 @@ public final class SavotWriter {
             v = td.getRawContent();
 
             if (v != null) {
-
-                // TD optional encoding attribute
-                e = td.getRawEncoding();
-
-                if (e != null) {
-                    // <TD encoding="...">
-                    w.append(tdbegin1).append(" encoding=\"").append(e).append('"').write(tdbegin2);
-                } else {
-                    // <TD>
-                    w.write(tdbegin);
-                }
+                // <TD>
+                w.write(tdbegin);
 
                 w.write((doEncode) ? encodeElement(v) : v);
 
@@ -1502,10 +1488,10 @@ public final class SavotWriter {
 
     /**
      * Write a RESOURCE set
-     * 
+     *
      * @param resourceset
      *            ResourceSet
-     * @throws IOException  
+     * @throws IOException
      */
     public void writeResource(final ResourceSet resourceset) throws IOException {
         if (resourceset != null) {

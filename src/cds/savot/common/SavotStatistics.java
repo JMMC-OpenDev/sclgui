@@ -1,200 +1,144 @@
-//
-// Copyright 2002-2012 - Universite de Strasbourg / Centre National de la
-// Recherche Scientifique
-// ------
-//
-// SAVOT Statistics
-//
-// Author:  Andre Schaaff
-// Address: Centre de Donnees astronomiques de Strasbourg
-//          11 rue de l'Universite
-//          67000 STRASBOURG
-//          FRANCE
-// Email:   question@simbad.u-strasbg.fr
-//
-// -------
-//
-// In accordance with the international conventions about intellectual
-// property rights this software and associated documentation files
-// (the "Software") is protected. The rightholder authorizes :
-// the reproduction and representation as a private copy or for educational
-// and research purposes outside any lucrative use,
-// subject to the following conditions:
-//
-// The above copyright notice shall be included.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
-// LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
-// TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
-// THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// For any other exploitation contact the rightholder.
-//
-//                        -----------
-//
-// Conformement aux conventions internationales relatives aux droits de
-// propriete intellectuelle ce logiciel et sa documentation sont proteges.
-// Le titulaire des droits autorise :
-// la reproduction et la representation a titre de copie privee ou des fins
-// d'enseignement et de recherche et en dehors de toute utilisation lucrative.
-// Cette autorisation est faite sous les conditions suivantes :
-//
-// La mention du copyright portee ci-dessus devra etre clairement indiquee.
-//
-// LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
-// LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
-// OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
-// (Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
-// LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
-// LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
-// D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
-// POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
-// OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
-// QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
-//
-// Pour toute autre utilisation contactez le titulaire des droits.
 package cds.savot.common;
 
+//
+//Copyright 2002-2013 - Universite de Strasbourg / Centre National de la
+//Recherche Scientifique
+//------
+//
+//SAVOT - Simple Access to VOTable - Parser
+//
+//Author:  Andre Schaaff
+//Address: Centre de Donnees astronomiques de Strasbourg
+//         11 rue de l'Universite
+//         67000 STRASBOURG
+//         FRANCE
+//Contributors: Laurent Bourges (code improvement, ideas, tests, etc.), Gregory Mantelet (binary capabilities)
+//Email:   cds-question@astro.unistra.fr
+//
+//-------
+//
+//In accordance with the international conventions about intellectual
+//property rights this software and associated documentation files
+//(the "Software") is protected. The rightholder authorizes :
+//the reproduction and representation as a private copy or for educational
+//and research purposes outside any lucrative use,
+//subject to the following conditions:
+//
+//The above copyright notice shall be included.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
+//LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
+//TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
+//FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+//THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//For any other exploitation contact the rightholder.
+//
+//                   -----------
+//
+//Conformement aux conventions internationales relatives aux droits de
+//propriete intellectuelle ce logiciel et sa documentation sont proteges.
+//Le titulaire des droits autorise :
+//la reproduction et la representation a titre de copie privee ou des fins
+//d'enseignement et de recherche et en dehors de toute utilisation lucrative.
+//Cette autorisation est faite sous les conditions suivantes :
+//
+//La mention du copyright portee ci-dessus devra etre clairement indiquee.
+//
+//LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
+//LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
+//OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
+//(Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
+//LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
+//LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
+//D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
+//POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
+//OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
+//QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
+//
+//Pour toute autre utilisation contactez le titulaire des droits.
 /**
  * <p>
  * Statistics
  * </p>
  * * @author Andre Schaaff
- * 
- * @version 4.0 (kickoff 31 May 02)
+ *
+ * @version 4.0
  */
 public final class SavotStatistics {
 
-    public int iTablesGlobal = 0; // index of TABLE element
-    public int iTablesLocal = 0; // index of TABLE element in current RESOURCE
-    public int iTRGlobal = 0; // index of TR element
-    public int iTRLocal = 0; // index of TR element in current TABLE
-    public int iTDGlobal = 0; // index of TD element
-    public int iTDLocal = 0; // index of TD element in current TABLE
-    public int iResources = 0; // index of RESOURCES element
-    public int iGroupsGlobal = 0; // index of GROUP element
+    private int iTablesGlobal = 0; // index of TABLE element
+    private int iTablesLocal = 0; // index of TABLE element in current RESOURCE
+    private int iTRGlobal = 0; // index of TR element
+    private int iTRLocal = 0; // index of TR element in current TABLE
+    private int iTDGlobal = 0; // index of TD element
+    private int iTDLocal = 0; // index of TD element in current TABLE
+    private int iResources = 0; // index of RESOURCES element
+    private int iGroupsGlobal = 0; // index of GROUP element
 
-    public void iTablesGlobalInc() {
+    public void iTablesInc() {
         iTablesGlobal++;
-    }
-
-    public void iTablesGlobalDec() {
-        iTablesGlobal--;
+        iTablesLocal++;
     }
 
     public void iTablesGlobalReset() {
         iTablesGlobal = 0;
     }
 
-    public void iTablesGlobalSet(int value) {
-        iTablesGlobal = value;
-    }
-
-    public int iTablesGlobalGet() {
+    public int getITablesGlobal() {
         return iTablesGlobal;
-    }
-
-    public void iTablesLocalInc() {
-        iTablesLocal++;
-    }
-
-    public void iTablesLocalDec() {
-        iTablesLocal--;
     }
 
     public void iTablesLocalReset() {
         iTablesLocal = 0;
     }
 
-    public void iTablesLocalSet(int value) {
-        iTablesLocal = value;
-    }
-
-    public int iTablesLocalGet() {
+    public int getITablesLocal() {
         return iTablesLocal;
     }
 
-    public void iTRGlobalInc() {
+    public void iTRInc() {
         iTRGlobal++;
-    }
-
-    public void iTRGlobalDec() {
-        iTRGlobal--;
+        iTRLocal++;
     }
 
     public void iTRGlobalReset() {
         iTRGlobal = 0;
     }
 
-    public void iTRGlobalSet(int value) {
-        iTRGlobal = value;
-    }
-
-    public long iTRGlobalGet() {
+    public int getITRGlobal() {
         return iTRGlobal;
-    }
-
-    public void iTRLocalInc() {
-        iTRLocal++;
-    }
-
-    public void iTRLocalDec() {
-        iTRLocal--;
     }
 
     public void iTRLocalReset() {
         iTRLocal = 0;
     }
 
-    public void iTRLocalSet(int value) {
-        iTRLocal = value;
-    }
-
-    public long iTRLocalGet() {
+    public int getITRLocal() {
         return iTRLocal;
     }
 
-    public void iTDGlobalInc() {
+    public void iTDInc() {
         iTDGlobal++;
-    }
-
-    public void iTDGlobalDec() {
-        iTDGlobal--;
+        iTDLocal++;
     }
 
     public void iTDGlobalReset() {
         iTDGlobal = 0;
     }
 
-    public void iTDGlobalSet(int value) {
-        iTDGlobal = value;
-    }
-
-    public long iTDGlobalGet() {
+    public int getITDGlobal() {
         return iTDGlobal;
-    }
-
-    public void iTDLocalInc() {
-        iTDLocal++;
-    }
-
-    public void iTDLocalDec() {
-        iTDLocal--;
     }
 
     public void iTDLocalReset() {
         iTDLocal = 0;
     }
 
-    public void iTDLocalSet(int value) {
-        iTDLocal = value;
-    }
-
-    public long iTDLocalGet() {
+    public int getITDLocal() {
         return iTDLocal;
     }
 
@@ -202,19 +146,15 @@ public final class SavotStatistics {
         iResources++;
     }
 
-    public void iResourcesDec() {
-        iResources--;
-    }
-
     public void iResourcesReset() {
         iResources = 0;
     }
 
-    public void iResources(int value) {
+    public void iResources(final int value) {
         iResources = value;
     }
 
-    public long iResourcesGet() {
+    public int getIResources() {
         return iResources;
     }
 
@@ -222,19 +162,15 @@ public final class SavotStatistics {
         iGroupsGlobal++;
     }
 
-    public void iGroupsGlobalDec() {
-        iGroupsGlobal--;
-    }
-
     public void iGroupsGlobalReset() {
         iGroupsGlobal = 0;
     }
 
-    public void iGroupsGlobal(int value) {
+    public void iGroupsGlobal(final int value) {
         iGroupsGlobal = value;
     }
 
-    public long iGroupsGlobalGet() {
+    public int getIGroupsGlobal() {
         return iGroupsGlobal;
     }
 }

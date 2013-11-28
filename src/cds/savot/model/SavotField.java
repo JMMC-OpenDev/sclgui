@@ -1,72 +1,72 @@
-//
-// Copyright 2002-2011 - Universite de Strasbourg / Centre National de la
-// Recherche Scientifique
-// ------
-//
-// SAVOT Data Model
-//
-// Author:  Andre Schaaff
-// Address: Centre de Donnees astronomiques de Strasbourg
-//          11 rue de l'Universite
-//          67000 STRASBOURG
-//          FRANCE
-// Email:   question@simbad.u-strasbg.fr
-//
-// -------
-//
-// In accordance with the international conventions about intellectual
-// property rights this software and associated documentation files
-// (the "Software") is protected. The rightholder authorizes :
-// the reproduction and representation as a private copy or for educational
-// and research purposes outside any lucrative use,
-// subject to the following conditions:
-//
-// The above copyright notice shall be included.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
-// LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
-// TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
-// THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// For any other exploitation contact the rightholder.
-//
-//                        -----------
-//
-// Conformement aux conventions internationales relatives aux droits de
-// propriete intellectuelle ce logiciel et sa documentation sont proteges.
-// Le titulaire des droits autorise :
-// la reproduction et la representation a titre de copie privee ou des fins
-// d'enseignement et de recherche et en dehors de toute utilisation lucrative.
-// Cette autorisation est faite sous les conditions suivantes :
-//
-// La mention du copyright portee ci-dessus devra etre clairement indiquee.
-//
-// LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
-// LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
-// OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
-// (Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
-// LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
-// LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
-// D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
-// POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
-// OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
-// QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
-//
-// Pour toute autre utilisation contactez le titulaire des droits.
-//
 package cds.savot.model;
 
+//
+//Copyright 2002-2013 - Universite de Strasbourg / Centre National de la
+//Recherche Scientifique
+//------
+//
+//SAVOT - Simple Access to VOTable - Parser
+//
+//Author:  Andre Schaaff
+//Address: Centre de Donnees astronomiques de Strasbourg
+//         11 rue de l'Universite
+//         67000 STRASBOURG
+//         FRANCE
+//Contributors: Laurent Bourges (code improvement, ideas, tests, etc.), Gregory Mantelet (binary capabilities)
+//Email:   cds-question@astro.unistra.fr
+//
+//-------
+//
+//In accordance with the international conventions about intellectual
+//property rights this software and associated documentation files
+//(the "Software") is protected. The rightholder authorizes :
+//the reproduction and representation as a private copy or for educational
+//and research purposes outside any lucrative use,
+//subject to the following conditions:
+//
+//The above copyright notice shall be included.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON INFRINGEMENT,
+//LOSS OF DATA, LOSS OF PROFIT, LOSS OF BARGAIN OR IMPOSSIBILITY
+//TO USE SUCH SOFWARE. IN NO EVENT SHALL THE RIGHTHOLDER BE LIABLE
+//FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+//THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//For any other exploitation contact the rightholder.
+//
+//                     -----------
+//
+//Conformement aux conventions internationales relatives aux droits de
+//propriete intellectuelle ce logiciel et sa documentation sont proteges.
+//Le titulaire des droits autorise :
+//la reproduction et la representation a titre de copie privee ou des fins
+//d'enseignement et de recherche et en dehors de toute utilisation lucrative.
+//Cette autorisation est faite sous les conditions suivantes :
+//
+//La mention du copyright portee ci-dessus devra etre clairement indiquee.
+//
+//LE LOGICIEL EST LIVRE "EN L'ETAT", SANS GARANTIE D'AUCUNE SORTE.
+//LE TITULAIRE DES DROITS NE SAURAIT, EN AUCUN CAS ETRE TENU CONTRACTUELLEMENT
+//OU DELICTUELLEMENT POUR RESPONSABLE DES DOMMAGES DIRECTS OU INDIRECTS
+//(Y COMPRIS ET A TITRE PUREMENT ILLUSTRATIF ET NON LIMITATIF,
+//LA PRIVATION DE JOUISSANCE DU LOGICIEL, LA PERTE DE DONNEES,
+//LE MANQUE A GAGNER OU AUGMENTATION DE COUTS ET DEPENSES, LES PERTES
+//D'EXPLOITATION,LES PERTES DE MARCHES OU TOUTES ACTIONS EN CONTREFACON)
+//POUVANT RESULTER DE L'UTILISATION, DE LA MAUVAISE UTILISATION
+//OU DE L'IMPOSSIBILITE D'UTILISER LE LOGICIEL, ALORS MEME
+//QU'IL AURAIT ETE AVISE DE LA POSSIBILITE DE SURVENANCE DE TELS DOMMAGES.
+//
+//Pour toute autre utilisation contactez le titulaire des droits.
 /**
  * <p>
  * Field element
  * </p>
- * 
+ *
  * @author Andre Schaaff
- * @version 4.0 (kickoff 31 May 02)
+ * @version 4.0
  */
 public final class SavotField extends MarkupComment implements IDSupport, NameSupport {
 
@@ -109,25 +109,27 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set ID attribute
-     * 
+     *
      * @param id
      */
+    @Override
     public void setId(final String id) {
         this.id = id;
     }
 
     /**
      * Get id attribute
-     * 
+     *
      * @return String
      */
+    @Override
     public String getId() {
         return str(id);
     }
 
     /**
      * Get unit attribute
-     * 
+     *
      * @return String
      */
     public String getUnit() {
@@ -136,7 +138,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set unit attribute
-     * 
+     *
      * @param unit
      */
     public void setUnit(final String unit) {
@@ -145,7 +147,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get datatype attribute
-     * 
+     *
      * @return String
      */
     public String getDataType() {
@@ -154,7 +156,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set datatype attribute
-     * 
+     *
      * @param datatype
      *            (boolean, bit, unsignedByte, short, int, long, char,
      *            unicodeChar, float, double, floatComplex, doubleComplex)
@@ -165,25 +167,27 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set name attribute
-     * 
+     *
      * @param name
      */
+    @Override
     public void setName(final String name) {
         this.name = name;
     }
 
     /**
      * Get name attribute
-     * 
+     *
      * @return String
      */
+    @Override
     public String getName() {
         return str(name);
     }
 
     /**
      * Set ucd attribute
-     * 
+     *
      * @param ucd
      *            ([A-Za-z0-9_.,-]*)
      */
@@ -193,7 +197,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get ucd attribute
-     * 
+     *
      * @return String
      */
     public String getUcd() {
@@ -202,7 +206,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set ref attribute
-     * 
+     *
      * @param ref
      */
     public void setRef(final String ref) {
@@ -211,7 +215,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get ref attribute
-     * 
+     *
      * @return String
      */
     public String getRef() {
@@ -220,7 +224,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set precision attribute
-     * 
+     *
      * @param precision
      *            ([EF]?[1-0][0-9]*)
      */
@@ -230,7 +234,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get precision attribute
-     * 
+     *
      * @return String
      */
     public String getPrecision() {
@@ -239,7 +243,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set width attribute
-     * 
+     *
      * @param width
      */
     public void setWidth(final String width) {
@@ -247,8 +251,17 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
     }
 
     /**
+     * Get width attribute
+     *
+     * @return String
+     */
+    public String getWidth() {
+        return str(width);
+    }
+
+    /**
      * Set width attribute
-     * 
+     *
      * @param width
      */
     public void setWidthValue(final int width) {
@@ -257,16 +270,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get width attribute
-     * 
-     * @return String
-     */
-    public String getWidth() {
-        return str(width);
-    }
-
-    /**
-     * Get width attribute
-     * 
+     *
      * @return String
      */
     public int getWidthValue() {
@@ -275,7 +279,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set xtype attribute
-     * 
+     *
      * @since VOTable 1.2
      * @param xtype
      */
@@ -285,7 +289,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get xtype attribute
-     * 
+     *
      * @since VOTable 1.2
      * @return String
      */
@@ -295,7 +299,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set arraysize attribute
-     * 
+     *
      * @param arraysize
      */
     public void setArraySize(final String arraysize) {
@@ -304,7 +308,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get arraysize attribute
-     * 
+     *
      * @return String
      */
     public String getArraySize() {
@@ -313,7 +317,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set type attribute
-     * 
+     *
      * @param type
      *            (hidden, no_query, trigger, location) warning : deprecated in
      *            VOTable 1.1
@@ -324,7 +328,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get type attribute
-     * 
+     *
      * @return String warning : deprecated in VOTable 1.1
      */
     public String getType() {
@@ -333,7 +337,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set utype attribute
-     * 
+     *
      * @param utype
      */
     public void setUtype(final String utype) {
@@ -342,7 +346,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get utype attribute
-     * 
+     *
      * @return String
      */
     public String getUtype() {
@@ -351,7 +355,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set DESCRIPTION content
-     * 
+     *
      * @param description
      */
     public void setDescription(final String description) {
@@ -360,7 +364,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get DESCRIPTION content
-     * 
+     *
      * @return String
      */
     public String getDescription() {
@@ -369,7 +373,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set the VALUES element
-     * 
+     *
      * @param values
      */
     public void setValues(final SavotValues values) {
@@ -378,7 +382,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get the VALUES element
-     * 
+     *
      * @return SavotValues
      */
     public SavotValues getValues() {
@@ -387,7 +391,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Get LINK elements set reference
-     * 
+     *
      * @return LinkSet
      */
     public LinkSet getLinks() {
@@ -399,7 +403,7 @@ public final class SavotField extends MarkupComment implements IDSupport, NameSu
 
     /**
      * Set LINK elements set reference
-     * 
+     *
      * @param links
      */
     public void setLinks(final LinkSet links) {
