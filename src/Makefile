@@ -97,8 +97,7 @@ simbad_DIRS     = cds
 # <brief description of sclgui jar files>
 sclgui_DIRS     = fr \
                   org \
-                  cds \
-                  com
+                  cds
 
 sclgui_EXTRAS   = LogbackConfiguration.xml \
                   fr/jmmc/sclgui/resource/* \
