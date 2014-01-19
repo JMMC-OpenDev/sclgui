@@ -533,7 +533,8 @@ public final class QueryModel extends Star implements Observer {
         query.append("-noScienceStar false ");
 
         // Output format
-        query.append("-outputFormat ").append(CalibratorsModel.GUI_OUTPUT_FORMAT);
+        // TODO: uncomment next line on next server update
+        // query.append("-outputFormat ").append(CalibratorsModel.GUI_OUTPUT_FORMAT);
         
         // Optional diagnose parameter:
         if (_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE)) {
