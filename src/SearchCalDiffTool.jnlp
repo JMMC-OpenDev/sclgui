@@ -4,10 +4,10 @@
         <title>SearchCal Diff tool</title>
         <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
         <homepage href="http://www.jmmc.fr/searchcal"/>
+        <description>Search Calibrators Diff tool ...</description>
         <description kind="tooltip">SearchCal diff tool</description>
-        <description kind="short">Search Calibrators Diff tool</description>
-        <icon href="AppIcon.jpg"/>
-        <offline-allowed/> 
+        <icon href="@GENERATED@/AppIcon.png"/>
+        <offline-allowed/>
         <shortcut>
             <desktop/>
         </shortcut>
@@ -16,7 +16,7 @@
         <all-permissions/>
     </security>
     <resources>
-        <j2se version="1.6+" initial-heap-size="256m" max-heap-size="1024m"/>        
+        <j2se version="1.6+" initial-heap-size="256m" max-heap-size="1024m"/>
 
         <!-- Application module first (main class) -->
         <jar href="jar/sclgui.jar" />
@@ -29,7 +29,7 @@
         <!-- JMMC libs -->
         <extension href="../JmcsLibs/JmcsLibs.jnlp"/>
         <extension href="../JmalLibs/JmalLibs.jnlp"/>
-        
+
         <!-- Axis 1.4 (SOAP) -->
         <jar href="@SHARED@/axis.jar" />
         <!-- saaj provides SoapException for java 1.5 -->

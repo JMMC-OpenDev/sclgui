@@ -4,17 +4,17 @@
         <title>SearchCal</title>
         <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
         <homepage href="http://www.jmmc.fr/searchcal"/>
+        <description>Search Calibrators tool</description>
         <description kind="tooltip">SearchCal</description>
-        <description kind="short">Search Calibrators tool</description>
-        <icon href="AppIcon.jpg"/>
-        <offline-allowed/> 
+        <icon href="@GENERATED@/AppIcon.jpg"/>
+        <offline-allowed/>
         <association mime-type="application/x-searchcal+votable+xml" extensions="scvot">
-            <icon href="FileIcon.png"/>
+            <icon href="@GENERATED@/FileIcon.png"/>
             <description>SearchCal reads and writes SCVOT files</description>
         </association>
         <association mime-type="application/x-searchcal+votable+xml+gzip" extensions="scvot.gz">
-            <icon href="FileIcon.png"/>
-            <description>SearchCal reads and writes SCVOT Gzip files</description>
+            <icon href="@GENERATED@/FileIcon.png"/>
+            <description>SearchCal reads and writes SCVOT gzipped files</description>
         </association>
         <shortcut>
             <desktop/>
@@ -24,7 +24,7 @@
         <all-permissions/>
     </security>
     <resources>
-        <j2se version="1.6+" initial-heap-size="256m" max-heap-size="1024m"/>        
+        <j2se version="1.6+" initial-heap-size="256m" max-heap-size="1024m"/>
 
         <!-- Application module first (main class) -->
         <jar href="jar/sclgui.jar" />
@@ -37,7 +37,7 @@
         <!-- JMMC libs -->
         <extension href="../JmcsLibs/JmcsLibs.jnlp"/>
         <extension href="../JmalLibs/JmalLibs.jnlp"/>
-        
+
         <!-- Axis 1.4 (SOAP) -->
         <jar href="@SHARED@/axis.jar" />
         <!-- saaj provides SoapException for java 1.5 -->
@@ -46,9 +46,6 @@
         <jar href="@SHARED@/wsdl4j-1.5.1.jar" />
         <jar href="@SHARED@/commons-discovery-0.2.jar" />
         <!-- commons-logging (provided by JMCS) -->
-
-        <!-- CDS SAVOT (embedded) but XmlPullParser API -->
-        <jar href="@SHARED@/xmlpull_1_1_3_1.jar" />
     </resources>
     <application-desc main-class="fr.jmmc.sclgui.SearchCal"/>
 </jnlp>
