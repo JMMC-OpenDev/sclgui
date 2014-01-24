@@ -316,7 +316,7 @@ public final class Origin {
 
     /**
      * To generate CSS styles in sclguiVOTableToHTML.xsl
-     * and describes origins in http://apps.jmmc.fr/exist/apps/myapp/origins.xql
+     * and describes origins in http://apps.jmmc.fr/exist/apps/myapp/origins.html
      * @param args unused arguments
      */
     public static void main(String[] args) {
