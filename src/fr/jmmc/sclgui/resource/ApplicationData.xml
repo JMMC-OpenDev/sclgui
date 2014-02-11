@@ -9,8 +9,10 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="4.5b3"/>
-    <compilation date="16/05/2013" compiler="JDK 1.6"/>
+    <program name="SearchCal" version="5.0 alpha 1"/>
+
+    <compilation date="11/07/2013" compiler="JDK 1.6"/>
+
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://apps.jmmc.fr/~sclws/SearchCal/SearchCal.jnlp</jnlp>
@@ -22,10 +24,10 @@
 
         <!-- Java Mariotti Astronomical library -->
         <package name="jMAL"
-            description="JMMC library to provide common astronomical computations (coordinate conversion, SIMBAD star resolver and analytical object models in interferometry)"
-            link="http://www.jmmc.fr/dev/jmal/"
-            jars="jmal.jar"
-            license="CECILL-B ???"/>     
+                 description="JMMC library to provide common astronomical computations (coordinate conversion, SIMBAD star resolver and analytical object models in interferometry)"
+                 link="http://www.jmmc.fr/dev/jmal/"
+                 jars="jmal.jar"
+                 license="CECILL-B ???"/>
 
 
         <!-- 1. Science / VO libraries (always on top for better visibility) -->
@@ -34,37 +36,31 @@
 
         <!-- CDS SAVOT -->
         <package name="SAVOT"
-            description="CDS library to provide simple access to VOTable from Java"
-            link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"
-            jars="savot4 beta embedded (embedded)"/>
-
-        <!-- CDS SAVOT dependencies -->
-        <package name="kXML"
-            description="opensource XML pull parser and writer"
-            link="http://kxml.sourceforge.net/"
-            jars="kXml 2.3 patched (embedded)"/>
+                 description="CDS library to provide simple access to VOTable from Java"
+                 link="http://cdsweb.u-strasbg.fr/cdsdevcorner/savot.html"
+                 jars="savot 4.0 (embedded)"/>
 
         <!-- jMAL dependencies -->
 
         <!-- CDS Used by ld2ud computation (fr.jmmc.mcs.astro) -->
         <package name="CDS_SpType"
-            description="Get information from spectral type of stellar objects. Provided by CDS"
-            link="nc"
-            jars="sptype.jar"/>
+                 description="Get information from spectral type of stellar objects. Provided by CDS"
+                 link="nc"
+                 jars="sptype.jar"/>
 
         <!-- Model computations (bessel functions) -->
         <package name="CERN colt"
-            description="provides a set of Open Source Libraries for High Performance Scientific and Technical Computing in Java"
-            link="http://acs.lbl.gov/software/colt/"
-            jars="colt.jar"
-            license="Copyright (c) 1999 CERN - European Organization for Nuclear Research"/>
-            <!--
-              Copyright (c) 1999 CERN - European Organization for Nuclear Research.
-              Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is
-              hereby granted without fee, provided that the above copyright notice appear in all copies and that both that
-              copyright notice and this permission notice appear in supporting documentation. CERN makes no representations
-              about the suitability of this software for any purpose. It is provided "as is" without expressed or implied warranty.
-            -->
+                 description="provides a set of Open Source Libraries for High Performance Scientific and Technical Computing in Java"
+                 link="http://acs.lbl.gov/software/colt/"
+                 jars="colt.jar"
+                 license="Copyright (c) 1999 CERN - European Organization for Nuclear Research"/>
+        <!--
+          Copyright (c) 1999 CERN - European Organization for Nuclear Research.
+          Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is
+          hereby granted without fee, provided that the above copyright notice appear in all copies and that both that
+          copyright notice and this permission notice appear in supporting documentation. CERN makes no representations
+          about the suitability of this software for any purpose. It is provided "as is" without expressed or implied warranty.
+        -->
 
 
         <!-- 3. Tools -->
@@ -73,15 +69,15 @@
 
         <!-- Apache Axis -->
         <package name="Axis"
-            description="SOAP protocol stack, provided by The Apache Software Foundation"
-            link="http://ws.apache.org/axis/java/"
-            jars="axis.jar jaxrpc.jar commons-discovery-0.2.jar"/>
+                 description="SOAP protocol stack, provided by The Apache Software Foundation"
+                 link="http://ws.apache.org/axis/java/"
+                 jars="axis.jar jaxrpc.jar commons-discovery-0.2.jar"/>
 
         <!-- Apache Axis dependencies -->
         <package name="WSDL4j"
-            description="opensource Web Services description language for Java toolkit"
-            link="http://sourceforge.net/projects/wsdl4j"
-            jars="wsdl4j-1.5.1.jar"/>
+                 description="opensource Web Services description language for Java toolkit"
+                 link="http://sourceforge.net/projects/wsdl4j"
+                 jars="wsdl4j-1.5.1.jar"/>
 
     </dependences>
 
@@ -128,11 +124,17 @@
             <menu label="Send All Calibrators to..." classpath="fr.jmmc.sclgui.vo.VirtualObservatory" action="_shareCalibratorsThroughSAMPAction"/>
         </menu>
     </menubar>
-  
+
     <releasenotes>
+        <release version="5.0">
+            <prerelease version="5.0 alpha 1">
+                <change type="CHANGE">Updated server version to 5.0.0</change>
+                <change type="CHANGE">Updated server version to 5.0.0: TODO: fix release notes since public release 4.4.3</change>
+            </prerelease>
+        </release>
         <release version="4.5">
             <prerelease version="4.5b3">
-                <change type="CHANGE">Increase the minimum required java version from 1.5 to 1.6 (aka java 6)</change>
+                <change type="CHANGE">Increased the minimum required java version from 1.5 to 1.6 (aka java 6)</change>
                 <change type="DEVELOPER">New VOTable format: confidences have integer types, flags move to boolean type (plxFlag, diamFlag, deletedFlag) </change>
                 <change type="DEVELOPER">New diam_count column to count number of consistent computed diameters</change>
             </prerelease>
@@ -147,7 +149,7 @@
                 <change type="DEVELOPER">Modified Bright K and Faint K scenarii to use only one primary request (ASCC and 2MASS respectively) and other catalogs as secondary requests (proper motion handling).</change>
                 <change type="CHANGE">Added duplicated stars filter on the ASCC catalog (distance less than 10 arcsec) in bright scenario.</change>
                 <change type="CHANGE">Modified Bright K scenario to use a larger constraint on V band (Kmaxi + 4 to get more giant stars).</change>
-                <change type="CHANGE">Modified rule to determine the mean diameter OK (now require 3 diameters ,BVK in bright and JHK in faint).</change>
+                <change type="CHANGE">Modified rule to determine the mean diameter OK (now require 3 diameters, BVK in bright and JHK in faint).</change>
                 <change type="CHANGE">Compute all possible diameters in both bright and faint scenarii.</change>
                 <change type="CHANGE">Check the validity domain of each color index before computing its corresponding angular diameter.</change>
                 <change type="BUGFIX">Fixed interstellar absorption (AV) correction on K and V magnitudes in faint scenario.</change>
@@ -185,9 +187,10 @@
             </prerelease>
         </release>
 
-        <release version="4.4.3"><pubDate>Tue, 18 Sep 2012 09:06:31 GMT</pubDate>
+        <release version="4.4.3">
+            <pubDate>Tue, 18 Sep 2012 09:06:31 GMT</pubDate>
             <prerelease version="4.4.3b3" tag="SC_V4_4_3b3">
-                <change type="CHANGE">Removed deprecated I-band querying.</change>                
+                <change type="CHANGE">Removed deprecated I-band querying.</change>
                 <change type="BUGFIX">Fixed compatibility for java 1.5.</change>
                 <change type="DEVELOPER">Replace GroupLayout(java1.6) by GridBagLayout</change>
                 <change type="DEVELOPER">Add saaj.jar to fix SoapException NoClassDefFoundError</change>
@@ -203,19 +206,22 @@
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/337">Fixed minor concurrency issue when the query status fails with an Invalid server id error but the query was successfully performed.</change>
             </prerelease>
         </release>
-        <release version="4.4.2"><pubDate>Tue, 12 Jun 2012 18:20:03 GMT</pubDate>
+        <release version="4.4.2">
+            <pubDate>Tue, 12 Jun 2012 18:20:03 GMT</pubDate>
             <prerelease version="4.4.2b1" tag="SC_V4_4_2b1">
                 <change type="FEATURE">Added an easy way to choose SIMBAD mirrors from star search field.</change>
                 <change type="CHANGE">Enhanced file choosers behavior.</change>
                 <change type="FEATURE">Added keyboard shortcuts to close Preferences window.</change>
             </prerelease>
         </release>
-        <release version="4.4.1"><pubDate>Mon, 30 Jan 2012 15:43:00 GMT</pubDate>
+        <release version="4.4.1">
+            <pubDate>Mon, 30 Jan 2012 15:43:00 GMT</pubDate>
             <prerelease version="4.4.1b1" tag="SC_V4_4_1b1">
                 <change type="FEATURE">Added a new 'Find' capability.</change>
             </prerelease>
         </release>
-        <release version="4.4"><pubDate>Wed, 07 Dec 2011 17:40:32 GMT</pubDate>
+        <release version="4.4">
+            <pubDate>Wed, 07 Dec 2011 17:40:32 GMT</pubDate>
             <prerelease version="4.4b2" tag="SC_V4_4b2">
                 <change type="BUGFIX">Fixed FAINT crossmatch radius from 10 (!) to 1 arcsecond.</change>
                 <change type="CHANGE">Enhanced VOTable output efficiency.</change>
@@ -242,13 +248,15 @@
                 <change type="CHANGE">Updated polynomial coefficients (FAINT) to compute uniform diameters.</change>
             </prerelease>
         </release>
-        <release version="4.3.2"><pubDate>Wed, 15 Jun 2011 10:16:22 GMT</pubDate>
+        <release version="4.3.2">
+            <pubDate>Wed, 15 Jun 2011 10:16:22 GMT</pubDate>
             <prerelease version="4.3.2b1" tag="SC_V4_3_2b1">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/160">Fixed memory leaks causing heap fill-up with big queries.</change>
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/172">Fixed null pointer exception requesting full column display.</change>
-            </prerelease>          
+            </prerelease>
         </release>
-        <release version="4.3.1"><pubDate>Tue, 31 May 2011 16:44:44 GMT</pubDate>
+        <release version="4.3.1">
+            <pubDate>Tue, 31 May 2011 16:44:44 GMT</pubDate>
             <prerelease version="4.3.1b2" tag="SC_V4_3_1b2">
                 <change type="CHANGE">Feedback report user's e-mail address is now remembered and shared accross all JMMC application.</change>
                 <change type="CHANGE">User's query settings are now automatically provided (to developpers only) in feedback reports.</change>
@@ -264,7 +272,8 @@
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/71">Fixed concurrency issues with Swing EDT.</change>
             </prerelease>
         </release>
-        <release version="4.3"><pubDate>Tue, 15 Mar 2011 16:47:28 GMT</pubDate>
+        <release version="4.3">
+            <pubDate>Tue, 15 Mar 2011 16:47:28 GMT</pubDate>
             <prerelease version="4.3b5" tag="SC_V4_3_b5">
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/47">Significantly increased performance on UD diameters computation to circumvent a timeout during large queries.</change>
                 <change type="BUGFIX">Fixed a querying crash when science object magnitude is missing.</change>
@@ -288,7 +297,8 @@
                 <change type="FEATURE">Added support for SAMP calibrator export and query launch.</change>
             </prerelease>
         </release>
-        <release version="4.2"><pubDate>Thu, 23 Sep 2010 17:51:24 GMT</pubDate>
+        <release version="4.2">
+            <pubDate>Thu, 23 Sep 2010 17:51:24 GMT</pubDate>
             <prerelease version="4.2b7" tag="SC_V4_2_b7">
                 <change type="BUGFIX" id="1283847571">Fixed Min. and Max. Magnitude textfields to automatically follow Science Object Magnitude changes.</change>
             </prerelease>
@@ -318,7 +328,8 @@
                 <change type="BUGFIX">Hardened CDS Simbad science star resolution mecanisms while failing.</change>
             </prerelease>
         </release>
-        <release version="4.1.2"><pubDate>Thu, 10 Dec 2009 14:46:56 GMT</pubDate>
+        <release version="4.1.2">
+            <pubDate>Thu, 10 Dec 2009 14:46:56 GMT</pubDate>
             <prerelease version="4.1.2b1" tag="SC_V4_1_2_b1">
                 <change type="CHANGE">Updated acknowledgment to include involved laboratory's names.</change>
                 <change type="BUGFIX" id="1255675722">Fixed unit conversion problem while filtering stars on RA separation.</change>
@@ -345,7 +356,8 @@
                 <change type="BUGFIX" id="1259360028">Corrected Spectral Type filter to ignore 'SB' as 'S' and 'B' spectral type tokens.</change>
             </prerelease>
         </release>
-        <release version="4.1.1"><pubDate>Fri, 28 Aug 2009 13:58:27 GMT</pubDate>
+        <release version="4.1.1">
+            <pubDate>Fri, 28 Aug 2009 13:58:27 GMT</pubDate>
             <prerelease version="4.1.1b1" tag="SC_V4_1_1_b1">
                 <change type="BUGFIX">Corrected a bug that prevented I, J and H bands to be used.</change>
             </prerelease>
@@ -356,7 +368,8 @@
                 <change type="BUGFIX">Changed 'VarFlag3' column for 'VFlag' column in the detailled bright N column set.</change>
             </prerelease>
         </release>
-        <release version="4.1"><pubDate>Wed, 13 May 2009 14:45:42 GMT</pubDate>
+        <release version="4.1">
+            <pubDate>Wed, 13 May 2009 14:45:42 GMT</pubDate>
             <prerelease version="4.1b1" tag="SC_V4_1_b1">
                 <change type="FEATURE">Added spectral binary detection (from SBC9 catalog, with Multiplicity filter).</change>
             </prerelease>
@@ -376,7 +389,8 @@
                 <change type="FEATURE">Added a Help menu item to open SearchCal hot news RSS feed.</change>
             </prerelease>
         </release>
-        <release version="4.0.1"><pubDate>Wed, 13 May 2009 14:45:42 GMT</pubDate>
+        <release version="4.0.1">
+            <pubDate>Wed, 13 May 2009 14:45:42 GMT</pubDate>
             <prerelease version="4.0.1b1" tag="SC_V4_0_1b1">
                 <change type="FEATURE">Added a new application icon.</change>
                 <change type="BUGFIX" id="searchcal/16" url="http://jmmc.fr/gnats?cmd=view%20audit-trail&amp;database=JMMC-SW&amp;pr=16">Corrected diameter columns in simple bright view for N band.</change>
@@ -391,7 +405,8 @@
                 <change type="BUGFIX" url="http://forums.sun.com/thread.jspa?messageID=10522645">Workaround a known Java 1.5.0_16 bug that prevented the load of user manual.</change>
             </prerelease>
         </release>
-        <release version="4.0"><pubDate>Mon, 27 Oct 2008 16:46:27 GMT</pubDate>
+        <release version="4.0">
+            <pubDate>Mon, 27 Oct 2008 16:46:27 GMT</pubDate>
             <prerelease version="4.0" tag="SC_V4_0">
                 <change>Complete rewrite of our client as a full-featured desktop-class Java application.</change>
                 <change>Our server is now wrapped and available as a VO-compliant webservice.</change>
@@ -406,11 +421,11 @@ co-developped by FIZEAU and LAOG/IPAG, and of CDS Astronomical Databases SIMBAD 
   author = {{Bonneau}, D. and {Clausse}, J.-M. and {Delfosse}, X. and {Mourard}, D. and
    {Cetre}, S. and {Chelli}, A. and {Cruzal{\`e}bes}, P. and {Duvert}, G. and
    {Zins}, G.},
-   title = "{SearchCal: a virtual observatory tool for searching calibrators in optical 
+   title = "{SearchCal: a virtual observatory tool for searching calibrators in optical
 long baseline interferometry. I. The bright object case}",
  journal = {\aap},
   eprint = {arXiv:astro-ph/0607026},
-keywords = {instrumentation: high angular resolution, instrumentation: interferometric, 
+keywords = {instrumentation: high angular resolution, instrumentation: interferometric,
 stars: fundamentals parameters, catalogs, astronomical database: miscellaneous},
     year = 2006,
    month = sep,
@@ -421,7 +436,7 @@ stars: fundamentals parameters, catalogs, astronomical database: miscellaneous},
  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 @ARTICLE{2011A&A...535A..53B,
-   author = {{Bonneau}, D. and {Delfosse}, X. and {Mourard}, D. and {Lafrasse}, S. and 
+   author = {{Bonneau}, D. and {Delfosse}, X. and {Mourard}, D. and {Lafrasse}, S. and
 	{Mella}, G. and {Cetre}, S. and {Clausse}, J.-M. and {Zins}, G.
 	},
     title = "{SearchCal: a Virtual Observatory tool for searching calibrators in optical long-baseline interferometry. II. The faint-object case}",
