@@ -99,10 +99,8 @@ import cds.savot.model.SavotTableData;
 import cds.savot.model.SavotVOTable;
 import cds.savot.model.SavotValues;
 import cds.savot.model.TDSet;
-import java.io.BufferedInputStream;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.zip.GZIPInputStream;
@@ -137,7 +135,7 @@ public final class SavotStaxParser implements Markups {
 
     /* Parsing modes */
     /** FULL parsing mode: deprecated and replaced by FULLREAD */
-    public static final int FULL = 0; //
+    public static final int FULL = 0;
     /** FULLREAD parsing mode: all in memory */
     public static final int FULLREAD = 0;
     /** SEQUENTIAL parsing mode: deprecated and replaced by RESOURCEREAD */
@@ -145,7 +143,7 @@ public final class SavotStaxParser implements Markups {
     /** RESOURCEREAD parsing mode: resource per resource reading */
     public static final int RESOURCEREAD = 1;
     /** ROWREAD parsing mode: row per row reading */
-    public static final int ROWREAD = 2; // row per row reading
+    public static final int ROWREAD = 2;
     /** default stack capacity = 4 slots */
     public final static int DEFAULT_STACK_CAPACITY = 4;
     /** empty TD instance */
@@ -310,7 +308,7 @@ public final class SavotStaxParser implements Markups {
      * @param mode
      *            FULLREAD (all in memory), RESOURCEREAD (per RESOURCE) or
      *            ROWREAD (per ROW, for small memory size applications)
-     * @throws java.io.IOException
+     * @throws IOException
      * @throws javax.xml.stream.XMLStreamException
      */
     public SavotStaxParser(final URL url, final int mode) throws IOException, XMLStreamException {
@@ -326,7 +324,7 @@ public final class SavotStaxParser implements Markups {
      *            FULLREAD (all in memory), RESOURCEREAD (per RESOURCE) or
      *            ROWREAD (per ROW, for small memory size applications)
      * @param debug
-     * @throws java.io.IOException
+     * @throws IOException
      * @throws javax.xml.stream.XMLStreamException
      */
     public SavotStaxParser(final URL url, final int mode, final boolean debug) throws IOException, XMLStreamException {
@@ -342,7 +340,7 @@ public final class SavotStaxParser implements Markups {
      *            ROWREAD (per ROW, for small memory size applications)
      * @param debug
      * @param stats
-     * @throws java.io.IOException
+     * @throws IOException
      * @throws javax.xml.stream.XMLStreamException
      */
     public SavotStaxParser(final URL url, final int mode,
@@ -714,7 +712,7 @@ public final class SavotStaxParser implements Markups {
             SavotTD currentTD = null;
 
             // name from parser.getName and current markup
-            String name;
+            String name, prefix;
             VOTableTag currentMarkup = VOTableTag.UNDEFINED;
             String attrName, attrValue;
             String textValue;
@@ -788,28 +786,59 @@ public final class SavotStaxParser implements Markups {
                                     break;
 
                                 case VOTABLE:
-                                    // partie à revoir pour permettre la prise
-                                    // en compte de plusieurs namespaces
+                                    // Get namespaces from Stax:
+                                    counter = parser.getNamespaceCount();
+                                    if (counter != 0) {
+                                        String uri;
+                                        for (i = 0; i < parser.getNamespaceCount(); i++) {
+                                            prefix = parser.getNamespacePrefix(i);
+                                            uri = parser.getNamespaceURI(i);
+                                            if (prefix == null) {
+                                                // xmlns attribute:
+                                                if (trace) {
+                                                    System.err.println("xmlns='" + uri + "'");
+                                                }
+                                                _currentVOTable.setXmlns(uri);
+                                            } else {
+                                                if (trace) {
+                                                    System.err.println("xmlns:" + prefix + "='" + uri + "'");
+                                                }
+                                                // partie à revoir pour permettre la prise
+                                                // en compte de plusieurs namespaces
+                                                if (prefix.equalsIgnoreCase(XSI)) {
+                                                    _currentVOTable.setXmlnsxsi(uri);
+                                                }
+                                            }
+                                        }
+                                    }
 
                                     counter = parser.getAttributeCount();
                                     if (counter != 0) {
                                         for (i = 0; i < counter; i++) {
                                             attrValue = parser.getAttributeValue(i);
                                             if (attrValue.length() != 0) {
+                                                if (trace) {
+                                                    System.err.println("VOTABLE attribute:" + parser.getAttributeName(i) + "='" + attrValue + "'");
+                                                }
                                                 attrName = parser.getAttributeLocalName(i);
                                                 if (attrName.equalsIgnoreCase(VERSION)) {
                                                     _currentVOTable.setVersion(attrValue);
-                                                } else if (attrName.equalsIgnoreCase(XMLNSXSI)) {
-                                                    _currentVOTable.setXmlnsxsi(attrValue);
-                                                } else if (attrName.equalsIgnoreCase(XSINOSCHEMA)) {
-                                                    _currentVOTable.setXsinoschema(attrValue);
-                                                } else if (attrName.equalsIgnoreCase(XSISCHEMA)) {
-                                                    _currentVOTable.setXsischema(attrValue);
-                                                } else if (attrName.equalsIgnoreCase(XMLNS)) {
-                                                    _currentVOTable.setXmlns(attrValue);
                                                 } else if (attrName.equalsIgnoreCase(ID)) {
                                                     _currentVOTable.setId(attrValue);
                                                     idRefLinks.put(attrValue, _currentVOTable);
+                                                } else {
+                                                    prefix = parser.getAttributePrefix(i);
+                                                    if (trace) {
+                                                        System.err.println("VOTABLE attribute:" + prefix + ":" + attrName);
+                                                    }
+                                                    /* TODO: use uri because prefix can be changed ? */
+                                                    if (XSI.equalsIgnoreCase(prefix)) {
+                                                        if (attrName.equalsIgnoreCase(XSI_NOSCHEMA)) {
+                                                            _currentVOTable.setXsinoschema(attrValue);
+                                                        } else if (attrName.equalsIgnoreCase(XSI_SCHEMA)) {
+                                                            _currentVOTable.setXsischema(attrValue);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }

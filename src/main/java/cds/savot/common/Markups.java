@@ -134,9 +134,12 @@ public interface Markups {
     final static String EXPIRES = "expires";
     final static String RIGHTS = "rights";
     final static String NROWS = "nrows"; // since VOTable 1.1
-    final static String XMLNSXSI = "xmlns:xsi";
-    final static String XSINOSCHEMA = "xsi:noNamespaceSchemaLocation";
-    final static String XSISCHEMA = "xsi:schemaLocation";
     final static String XMLNS = "xmlns";
+    final static String XSI = "xsi";
+    final static String XMLNSXSI = XMLNS + ":" + XSI;
+    final static String XSI_NOSCHEMA = "noNamespaceSchemaLocation";
+    final static String XSI_SCHEMA = "schemaLocation";
+    final static String XSINOSCHEMA = XSI + ":" + XSI_NOSCHEMA;
+    final static String XSISCHEMA = XSI + ":" + XSI_SCHEMA;
     final static String SYSTEM_ATTRIBUTE = "system";
 }
