@@ -4,6 +4,7 @@
 package fr.jmmc.sclgui.filter;
 
 import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.CoordUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.query.QueryModel;
@@ -137,8 +138,7 @@ public final class DistanceFilter extends Filter {
                 // Compute separation between science object and the current star:
                 // use distance computation to correct RA arround poles (by cos(dec)) : 
                 // TODO: use a correct distance ?
-                
-                final double raSeparation = ALX.computeDistanceInDegrees(_scienceObjectRA, _scienceObjectDEC, currentRA, _scienceObjectDEC);
+                final double raSeparation = CoordUtils.computeDistanceInDegrees(_scienceObjectRA, _scienceObjectDEC, currentRA, _scienceObjectDEC);
                 final double decSeparation = Math.abs(_scienceObjectDEC - currentDEC);
 
                 // If the current star is out of range

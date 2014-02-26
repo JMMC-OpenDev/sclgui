@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.filter;
 
-import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.SpTypeUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
@@ -112,7 +112,7 @@ public final class LuminosityFilter extends Filter {
                 final String rawSpectralType = cell.getString();
 
                 // Get back the luminosity classes found in the given spectral type
-                final List<String> luminosityClasses = ALX.luminosityClasses(rawSpectralType);
+                final List<String> luminosityClasses = SpTypeUtils.luminosityClasses(rawSpectralType);
 
                 // For each found luminosity class
                 for (String luminosityClassName : luminosityClasses) {

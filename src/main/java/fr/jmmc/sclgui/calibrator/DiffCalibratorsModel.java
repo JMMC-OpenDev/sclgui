@@ -4,6 +4,7 @@
 package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.CoordUtils;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -53,7 +54,6 @@ public final class DiffCalibratorsModel {
         IGNORE_PROPERTIES = "pmRa pmDec GLAT GLON sep1 sep2 SpType Bphg Rphg Teff_SpType logg_SpType";
 
         // note: Use String patterns to match multiple properties:
-
         // Johnson magnitudes (0.05 mag) :
         addThreshold("B", 5e-2d);
         addThreshold("V", 5e-2d);
@@ -293,7 +293,6 @@ public final class DiffCalibratorsModel {
             }
 
             // TODO: compare also paramSet (query params)
-
             // Get Star lists:
             final StarList starListLeft = _calibratorsModelLeft.getOriginalStarList();
             final StarList starListRight = _calibratorsModelRight.getOriginalStarList();
@@ -599,7 +598,6 @@ public final class DiffCalibratorsModel {
                         classType = propMeta.getClassType();
 
                         // TODO: handle new column types (int)
-
                         // value:
                         if (classType == Double.class) {
                             dblLeft = starPropertyLeft.getDouble();
@@ -884,7 +882,6 @@ public final class DiffCalibratorsModel {
             }
         }
 
-
         if (_logger.isInfoEnabled()) {
             _logger.info("compare: {} matchs, {} left only, {} right only - diffs: {} values, {} origins, {} confidences - duration = {} ms.",
                     matchs, onlyLeft, onlyRight, diffValues, diffOrigins, diffConfidences, 1e-6d * (System.nanoTime() - start));
@@ -1016,7 +1013,6 @@ public final class DiffCalibratorsModel {
             dblDiff.set(diff, diff / left);
         }
         return 2;
-
 
     }
 
@@ -1220,7 +1216,6 @@ public final class DiffCalibratorsModel {
             return matchs;
         }
 
-
         return -1;
     }
 
@@ -1259,7 +1254,7 @@ public final class DiffCalibratorsModel {
                 ra = star.get(raDegIdx).getDoubleValue();
                 dec = star.get(decDegIdx).getDoubleValue();
 
-                dist = ALX.computeDistanceInDegrees(raRef, decRef, ra, dec);
+                dist = CoordUtils.computeDistanceInDegrees(raRef, decRef, ra, dec);
 
                 if (dist <= criteriaPos) {
                     distMap.put(Double.valueOf(dist), star);

@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.filter;
 
-import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.SpTypeUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
@@ -80,7 +80,7 @@ public final class SpectralTypeFilter extends Filter {
                 }
 
                 // Get back the spectral types found in the given spectral type
-                final List<String> foundSpectralTypes = ALX.spectralTypes(rawSpectralType);
+                final List<String> foundSpectralTypes = SpTypeUtils.spectralTypes(rawSpectralType);
 
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("foundSpectralTypes = '{}'.", foundSpectralTypes);
