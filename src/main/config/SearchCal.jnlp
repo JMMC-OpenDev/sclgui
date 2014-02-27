@@ -26,26 +26,29 @@
     <resources>
         <j2se version="1.6+" initial-heap-size="256m" max-heap-size="1024m"/>
 
-        <!-- Application module first (main class) -->
-        <jar href="jar/sclgui.jar" />
+        <!-- MANUALLY EDITED - Should be generated with maven ASAP ! -->
 
-        <!-- JMMC modules -->
-        <jar href="jar/jmcs-1.0-SNAPSHOT.jar" />
-        <jar href="jar/jmal.jar" />
+        <!-- Application module first (main class) -->
+        <jar href="jar/sclgui-TRUNK.jar" />
+
+
+        <!-- doc module -->
         <jar href="jar/sclgui-doc.jar" />
 
-        <!-- JMMC libs -->
-        <extension href="../JmcsLibs/JmcsLibs.jnlp"/>
-        <extension href="../JmalLibs/JmalLibs.jnlp"/>
 
-        <!-- Axis 1.4 (SOAP) -->
-        <jar href="@SHARED@/axis.jar" />
-        <!-- saaj provides SoapException for java 1.5 -->
-        <jar href="@SHARED@/saaj.jar" />
-        <jar href="@SHARED@/jaxrpc.jar" />
-        <jar href="@SHARED@/wsdl4j-1.5.1.jar" />
+        <!-- JMMC modules -->
+        <extension href="../jmcs/Jmcs.jnlp"/>
+        <extension href="../jmal/Jmal.jnlp"/>
+
+
+        <!-- Librairies -->
+        <jar href="@SHARED@/axis-1.4.jar" />
+        <jar href="@SHARED@/axis-jaxrpc-1.4.jar" />
+        <jar href="@SHARED@/axis-saaj-1.4.jar" />
+        <jar href="@SHARED@/axis-wsdl4j-1.5.1.jar" />
         <jar href="@SHARED@/commons-discovery-0.2.jar" />
-        <!-- commons-logging (provided by JMCS) -->
+        <!-- commons-logging (provided by JMCS jcl-over-slf4j-...jar) -->
+
     </resources>
     <application-desc main-class="fr.jmmc.sclgui.SearchCal"/>
 </jnlp>
