@@ -9,9 +9,9 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.0 alpha 1"/>
+    <program name="SearchCal" version="5.0 beta 1"/>
 
-    <compilation date="11/07/2013" compiler="JDK 1.6"/>
+    <compilation date="28/02/2014" compiler="JDK 1.6"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>FIZEAU and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -127,9 +127,13 @@
 
     <releasenotes>
         <release version="5.0">
-            <prerelease version="5.0 alpha 1">
-                <change type="CHANGE">Updated server version to 5.0.0</change>
-                <change type="CHANGE">Updated server version to 5.0.0: TODO: fix release notes since public release 4.4.3</change>
+            <prerelease version="5.0 beta 1">
+                <change type="CHANGE">Updated server version to 5.0.0:
+                    new stellar diameter relations,
+                    totally rewritten rigourous error propagation
+                    fit AV / distance using photometry
+                </change>
+                <change type="CHANGE">TODO: fix release notes since public release 4.4.3</change>
             </prerelease>
         </release>
         <release version="4.5">
