@@ -5,12 +5,14 @@ package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.jmcs.gui.util.ResourceImage;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.sclgui.query.QueryView;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
@@ -60,6 +62,10 @@ public final class MainWindow extends JFrame {
                       final CalibratorsView calibratorsView, final FiltersView filtersView,
                       final StatusBar statusBar) {
         super("SearchCal");
+
+        // handle frame icon
+        final Image jmmcFavImage = ResourceImage.JMMC_FAVICON.icon().getImage();
+        this.setIconImage(jmmcFavImage);
 
         final String classPath = getClass().getName();
 

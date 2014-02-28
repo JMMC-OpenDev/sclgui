@@ -10,6 +10,7 @@ import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.jmcs.gui.util.ResourceImage;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.service.RecentFilesManager;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
@@ -29,6 +30,7 @@ import fr.jmmc.sclgui.query.QueryView;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
@@ -465,13 +467,18 @@ public final class SearchCalDiffTool extends App {
                    final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
                    final CalibratorsView calibratorsViewDiff,
                    final FiltersView filtersView, final StatusBar statusBar) {
+            
             super("SearchCal Diff tool");
+
+            // handle frame icon
+            final Image jmmcFavImage = ResourceImage.JMMC_FAVICON.icon().getImage();
+            this.setIconImage(jmmcFavImage);
 
             // Use MainWindow class path for registered actions:
             final String classPath = MainWindow.class.getName();
 
-            final PageSetupAction pageSetupAction = new PageSetupAction(classPath, "_pageSetupAction");
-            final PrintAction printAction = new PrintAction(classPath, "_printAction");
+            new PageSetupAction(classPath, "_pageSetupAction");
+            new PrintAction(classPath, "_printAction");
 
             final Container mainPane = getContentPane();
             mainPane.setLayout(new BorderLayout());
