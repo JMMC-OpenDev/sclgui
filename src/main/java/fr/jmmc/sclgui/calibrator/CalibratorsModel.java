@@ -798,9 +798,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             final FieldSet fieldSet = table.getFields();
             final int nFields = fieldSet.getItemCount();
 
-            // PARAM by id:
-            final HashMap<String, SavotField> fieldById = new HashMap<String, SavotField>(nParams);
-            final HashMap<String, Integer> fieldPosById = new HashMap<String, Integer>(nParams);
+            // FIELD by id:
+            final HashMap<String, SavotField> fieldById = new HashMap<String, SavotField>(nFields);
+            final HashMap<String, Integer> fieldPosById = new HashMap<String, Integer>(nFields);
 
             for (int i = 0; i < nFields; i++) {
                 final SavotField field = fieldSet.getItemAt(i);
