@@ -231,6 +231,9 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
             Header contentEncoding = method.getResponseHeader(HTTPConstants.HEADER_CONTENT_ENCODING);
             if (contentEncoding != null) {
                 if (contentEncoding.getValue().equalsIgnoreCase(HTTPConstants.COMPRESSION_GZIP)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Using GZIPInputStream for Content-Encoding=" + contentEncoding.getValue());
+                    }
                     releaseConnectionOnCloseStream = new GZIPInputStream(releaseConnectionOnCloseStream);
                 } else {
                     AxisFault fault = new AxisFault("HTTP", "unsupported content-encoding of '" + contentEncoding.getValue() + "' found", null, null);
@@ -243,7 +246,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
             // Transfer HTTP headers of HTTP message to MIME headers of SOAP message
             Header[] responseHeaders = method.getResponseHeaders();
             MimeHeaders responseMimeHeaders = outMsg.getMimeHeaders();
-            for (int i = 0; i < responseHeaders.length; i++) {
+            for (int i = 0, size = responseHeaders.length; i < size; i++) {
                 Header responseHeader = responseHeaders[i];
                 responseMimeHeaders.addHeader(responseHeader.getName(), responseHeader.getValue());
             }
@@ -264,13 +267,12 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
              log.info("Content-Type:   " + contentEncoding);
              log.info("Content-Length: " + contentLength);
              */
-
             // if we are maintaining session state,
             // handle cookies (if any)
             if (msgContext.getMaintainSession()) {
                 Header[] headers = method.getResponseHeaders();
 
-                for (int i = 0; i < headers.length; i++) {
+                for (int i = 0, size = headers.length; i < size; i++) {
                     if (headers[i].getName().equalsIgnoreCase(HTTPConstants.HEADER_SET_COOKIE)) {
                         handleCookie(HTTPConstants.HEADER_COOKIE, headers[i].getValue(), msgContext);
                     } else if (headers[i].getName().equalsIgnoreCase(HTTPConstants.HEADER_SET_COOKIE2)) {
@@ -326,7 +328,6 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
 //    } else {
 //      log.error("relaseConnection: " + method);
 //    }
-
         if (log.isDebugEnabled()) {
             log.debug("relaseConnection : " + threadName + " = " + method);
         }
@@ -350,7 +351,6 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
         final String threadName = thread.getName();
 
 //    log.error("abort: " + threadName);
-
         final HttpMethodBase method = HttpMethodThreadMap.get().get(threadName);
 
         if (log.isDebugEnabled()) {
@@ -378,13 +378,13 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
      * a string or an array of strings (if there are more than one Set-Cookie)
      *
      * @param cookieName
-     * @param cookie
+     * @param initialCookie
      * @param msgContext
      */
-    public void handleCookie(final String cookieName, String cookie,
+    public void handleCookie(final String cookieName, String initialCookie,
                              final MessageContext msgContext) {
 
-        cookie = cleanupCookie(cookie);
+        String cookie = cleanupCookie(initialCookie);
         final int keyIndex = cookie.indexOf('=');
         final String key = (keyIndex != -1) ? cookie.substring(0, keyIndex) : cookie;
 
@@ -394,7 +394,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
         if (oldCookies != null) {
             if (oldCookies instanceof String[]) {
                 final String[] oldCookiesArray = (String[]) oldCookies;
-                for (int i = 0; i < oldCookiesArray.length; i++) {
+                for (int i = 0, size = oldCookiesArray.length; i < size; i++) {
                     String anOldCookie = oldCookiesArray[i];
                     if (key != null && anOldCookie.indexOf(key) == 0) { // same cookie key
                         anOldCookie = cookie;             // update to new one
@@ -438,7 +438,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
         if (ck1 != null) {
             if (ck1 instanceof String[]) {
                 final String[] cookies = (String[]) ck1;
-                for (int i = 0; i < cookies.length; i++) {
+                for (int i = 0, size = cookies.length; i < size; i++) {
                     addCookie(state, cookies[i], host, path, secure);
                 }
             } else {
@@ -463,12 +463,12 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
     /**
      * cleanup the cookie value.
      *
-     * @param cookie initial cookie value
+     * @param initialCookie initial cookie value
      *
      * @return a cleaned up cookie value.
      */
-    private String cleanupCookie(String cookie) {
-        cookie = cookie.trim();
+    private String cleanupCookie(String initialCookie) {
+        String cookie = initialCookie.trim();
         // chop after first ; a la Apache SOAP (see HTTPUtils.java there)
         final int index = cookie.indexOf(';');
         if (index != -1) {
@@ -514,7 +514,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
                     }
                     client.getState().setProxyCredentials(AuthScope.ANY, proxyCred);
                 }
-                int proxyPort = new Integer(tcp.getProxyPort()).intValue();
+                int proxyPort = Integer.parseInt(tcp.getProxyPort());
                 config.setProxy(tcp.getProxyHost(), proxyPort);
             }
         }
@@ -617,8 +617,8 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
         }
 
         // process user defined headers for information.
-        Hashtable userHeaderTable =
-                  (Hashtable) msgContext.getProperty(HTTPConstants.REQUEST_HEADERS);
+        Hashtable userHeaderTable
+                  = (Hashtable) msgContext.getProperty(HTTPConstants.REQUEST_HEADERS);
 
         if (userHeaderTable != null) {
             for (Iterator e = userHeaderTable.entrySet().iterator();
@@ -906,6 +906,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
                 }
             }
             return -1; /* -1 for chunked */
+
         }
 
         @Override
