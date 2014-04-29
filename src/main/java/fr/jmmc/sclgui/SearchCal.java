@@ -115,12 +115,10 @@ public final class SearchCal extends App {
         preferencesView.init();
 
         // Show the user the app is been initialized
-        final StatusBar statusBar = new StatusBar();
         StatusBar.show("application initialization...");
 
         // Build the main window
-        final MainWindow window = new MainWindow(_vo, queryView, calibratorsView, filtersView, statusBar);
-        setFrame(window);
+        App.setFrame(new MainWindow(_vo, queryView, calibratorsView, filtersView, StatusBar.getInstance()));
     }
 
     /**

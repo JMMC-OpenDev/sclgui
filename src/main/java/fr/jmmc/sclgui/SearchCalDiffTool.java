@@ -200,14 +200,12 @@ public final class SearchCalDiffTool extends App {
         final PreferencesView preferencesView = new PreferencesView(preferences, panels);
         preferencesView.init();
 
-        final StatusBar statusBar = new StatusBar();
         // Show the user the app is been initialized
         StatusBar.show("application initialization...");
 
         // Build the main window
-        final DiffWindow window = new DiffWindow(vo, _queryView, calibratorsViewLeft, calibratorsViewRight,
-                calibratorsViewDiff, filtersView, statusBar);
-        App.setFrame(window);
+        App.setFrame(new DiffWindow(vo, _queryView, calibratorsViewLeft, calibratorsViewRight,
+                calibratorsViewDiff, filtersView, StatusBar.getInstance()));
 
         // Overwrite the Open action:
         new OpenDiffFilesAction(VirtualObservatory.class.getName(), "_openFileAction");
