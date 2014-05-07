@@ -3,11 +3,11 @@
  ******************************************************************************/
 package fest;
 
-import fest.common.JmcsApplicationSetup;
 import fest.common.JmcsFestSwingJUnitTestCase;
+import fr.jmmc.jmcs.Bootstrapper;
+import fr.jmmc.jmcs.util.JVMUtils;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Frame;
-import java.util.logging.Level;
 import javax.swing.JButton;
 import javax.swing.JList;
 import org.fest.assertions.Fail;
@@ -28,6 +28,7 @@ import static org.fest.swing.timing.Pause.*;
 import org.fest.swing.timing.Timeout;
 import fr.jmmc.jmcs.util.timer.TimerFactory;
 import fr.jmmc.jmcs.util.timer.TimerFactory.UNIT;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -54,11 +55,16 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     private static final boolean TEST_BAND_N = false;
 
     /**
-     * Define the application
+     * Initialize system properties & static variables and finally starts the application
      */
-    static {
+    @BeforeClass
+    public static void intializeAndStartApplication() {
+
+        // invoke Bootstrapper method to initialize logback now:
+        Bootstrapper.getState();
+
         // disable dev LAF menu :
-        System.setProperty("jmcs.laf.menu", "false");
+        System.setProperty(JVMUtils.SYSTEM_PROPERTY_LAF_MENU, "false");
 
         // reset Preferences:
         Preferences.getInstance().resetToDefaultPreferences();
@@ -72,10 +78,6 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
             fileName = "SearchCal-ETA_TAU_fast.scvot";
         }
 
-        JmcsApplicationSetup.define(
-                fr.jmmc.sclgui.SearchCal.class,
-                "-open", TEST_FOLDER + fileName);
-
         // define robot delays :
         defineRobotDelayBetweenEvents(SHORT_DELAY);
 
@@ -87,6 +89,11 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
         // TimerFactory warmup and reset :
         TimerFactory.resetTimers();
+
+        // Start application:
+        JmcsFestSwingJUnitTestCase.startApplication(
+                fr.jmmc.sclgui.SearchCal.class,
+                "-open", TEST_FOLDER + fileName);
     }
 
     /**
@@ -135,9 +142,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
                     window.show();
 
                     if (buttonText.equals(buttonFixture.text())) {
-                        if (logger.isLoggable(Level.INFO)) {
-                            logger.info("START  query:          " + i);
-                        }
+                        logger.info("START  query:          " + i);
 
                         // click to START SearchCal query:
                         buttonFixture.click();
@@ -149,16 +154,12 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
                     if (i % stepIteration == 0) {
                         delay += stepWait;
                     }
-                    if (logger.isLoggable(Level.INFO)) {
-                        logger.info("pause before cancel (ms) : " + delay);
-                    }
+                    logger.info("pause before cancel (ms) : " + delay);
                     pause(delay);
 
                     // click to CANCEL SearchCal query:
                     if ("Cancel".equals(buttonFixture.text())) {
-                        if (logger.isLoggable(Level.INFO)) {
-                            logger.info("CANCEL query:          " + i);
-                        }
+                        logger.info("CANCEL query:          " + i);
 
                         buttonFixture.click();
 
@@ -172,21 +173,17 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
                         Fail.fail("An error occured while cancelling query [" + nStart + "] !");
                     }
 
-                    if (logger.isLoggable(Level.INFO)) {
-                        logger.info("pause (ms) : " + QUERY_PAUSE);
-                    }
+                    logger.info("pause (ms) : " + QUERY_PAUSE);
                     pause(QUERY_PAUSE);
                 }
             } catch (RuntimeException re) {
-                logger.log(Level.SEVERE, "runtime failure : ", re);
+                logger.error("runtime failure : ", re);
                 throw re;
             } catch (Error e) {
-                logger.log(Level.SEVERE, "runtime failure : ", e);
+                logger.error("runtime failure : ", e);
                 throw e;
             } finally {
-                if (logger.isLoggable(Level.INFO)) {
-                    logger.info("Queries started/cancelled: " + nStart + " / " + nCancel);
-                }
+                logger.info("Queries started/cancelled: " + nStart + " / " + nCancel);
             }
         }
     }
@@ -216,9 +213,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
                 for (int i = 0; i < QUERY_ITERATIONS; i++) {
 
-                    if (logger.isLoggable(Level.INFO)) {
-                        logger.info("start query : " + i);
-                    }
+                    logger.info("start query : " + i);
 
                     start = System.nanoTime();
 
@@ -250,9 +245,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
                                     final String text = button.getText();
                                     final boolean done = buttonText.equals(text);
 
-                                    if (logger.isLoggable(Level.FINE)) {
-                                        logger.fine("SearchCalQueryRunning : text = " + text);
-                                    }
+                                    logger.debug("SearchCalQueryRunning : text = {}", text);
                                     return done;
                                 }
                             });
@@ -262,19 +255,15 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
                     TimerFactory.getTimer("SearchCal (ms)", UNIT.ms, 5000l).addMilliSeconds(start, System.nanoTime());
 
-                    if (logger.isLoggable(Level.INFO)) {
-                        logger.info("pause (ms) : " + QUERY_PAUSE);
-                    }
+                    logger.info("pause (ms) : " + QUERY_PAUSE);
 
                     pause(QUERY_PAUSE);
                 }
             } finally {
-                if (logger.isLoggable(Level.INFO)) {
-                    logger.info("Queries started: " + nStart);
-                }
+                logger.info("Queries started: " + nStart);
 
                 if (!TimerFactory.isEmpty()) {
-                    logger.warning("TimerFactory : statistics : " + TimerFactory.dumpTimers());
+                    logger.info("TimerFactory : statistics : " + TimerFactory.dumpTimers());
                 }
             }
         }
@@ -379,7 +368,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     @Test
     @GUITest
     public void shouldExit() {
-        logger.severe("shouldExit test");
+        logger.info("shouldExit test");
 
         window.close();
 

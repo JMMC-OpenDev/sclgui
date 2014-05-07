@@ -3,14 +3,14 @@
  ******************************************************************************/
 package fest;
 
-import fest.common.JmcsApplicationSetup;
 import fest.common.JmcsFestSwingJUnitTestCase;
+import fr.jmmc.jmcs.Bootstrapper;
+import fr.jmmc.jmcs.util.JVMUtils;
 import fr.jmmc.jmcs.data.preference.CommonPreferences;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Frame;
-import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import org.fest.assertions.Fail;
 import org.fest.swing.annotation.GUITest;
@@ -24,6 +24,7 @@ import org.fest.swing.fixture.JMenuItemFixture;
 import org.fest.swing.fixture.JProgressBarFixture;
 import org.fest.swing.timing.Timeout;
 import fr.jmmc.jmcs.util.timer.TimerFactory;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -42,23 +43,24 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
     private static final Timeout LONG_TIMEOUT = Timeout.timeout(120 * 1000l);
 
     /**
-     * Define the application
+     * Initialize system properties & static variables and finally starts the application
      */
-    static {
+    @BeforeClass
+    public static void intializeAndStartApplication() {
+
+        // invoke Bootstrapper method to initialize logback now:
+        Bootstrapper.getState();
+
         // disable dev LAF menu :
-        System.setProperty("jmcs.laf.menu", "false");
+        System.setProperty(JVMUtils.SYSTEM_PROPERTY_LAF_MENU, "false");
 
         // reset Preferences:
         Preferences.getInstance().resetToDefaultPreferences();
         try {
             CommonPreferences.getInstance().setPreference(CommonPreferences.SHOW_STARTUP_SPLASHSCREEN, false);
-        } catch (PreferencesException ex) {
-            logger.log(Level.SEVERE, null, ex);
+        } catch (PreferencesException pe) {
+            logger.error("setPreference failed", pe);
         }
-
-        JmcsApplicationSetup.define(
-                fr.jmmc.sclgui.SearchCal.class,
-                "-open", TEST_FOLDER + "SearchCal-ETA_TAU.scvot");
 
         // define robot delays :
         defineRobotDelayBetweenEvents(SHORT_DELAY);
@@ -71,6 +73,11 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
 
         // TimerFactory warmup and reset :
         TimerFactory.resetTimers();
+
+        // Start application:
+        JmcsFestSwingJUnitTestCase.startApplication(
+                fr.jmmc.sclgui.SearchCal.class,
+                "-open", TEST_FOLDER + "SearchCal-ETA_TAU.scvot");
     }
 
     /**
@@ -165,7 +172,7 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
     @Test
     @GUITest
     public void shouldExit() {
-        logger.severe("shouldExit test");
+        logger.info("shouldExit test");
 
         window.close();
         confirmDialogDontSave();
