@@ -28,6 +28,10 @@ public final class QueryModel extends Star implements Observer {
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(QueryModel.class.getName());
+    /** maximum value for the declination difference in degrees = 30 deg */
+    private static final double MAX_DIFF_DE_DEG = 30.0;
+    /** maximum value for the right ascension difference in minutes = 6 hours (90 deg) */
+    private static final double MAX_DIFF_RA_MINUTES = ALX.hours2min(6.0);
     /**
      * All handled magnitude bands.
      *
@@ -535,7 +539,7 @@ public final class QueryModel extends Star implements Observer {
         // Output format
         // TODO: enable/disable next line respectively for SearchCal 5 / Search 4.x:
         query.append("-outputFormat ").append(CalibratorsModel.GUI_OUTPUT_FORMAT);
-        
+
         // Optional diagnose parameter:
         if (_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE)) {
             query.append(" -diagnose true");
@@ -1007,13 +1011,13 @@ public final class QueryModel extends Star implements Observer {
      * Change the query box differential RA size.
      *
      * @warning negative values will be made positive.
-     * @warning values greater than 240 will be replaced by 240.
+     * @warning values greater than MAX_DIFF_RA_MINUTES will be replaced by MAX_DIFF_RA_MINUTES.
      *
      * @param diffRASize the new query box differential RA size as a double.
      */
     public void setQueryDiffRASizeInMinutes(double diffRASize) {
-        // The value shall not be negative, nor greater than 240.
-        _queryDiffRASize = Math.min(240, Math.abs(diffRASize));
+        // The value shall not be negative, nor greater than MAX_DIFF_RA_MINUTES.
+        _queryDiffRASize = Math.min(MAX_DIFF_RA_MINUTES, Math.abs(diffRASize));
 
         setChanged();
     }
@@ -1040,13 +1044,13 @@ public final class QueryModel extends Star implements Observer {
      * Change the query box differential DEC size.
      *
      * @warning negative values will be made positive.
-     * @warning values greater than 30 will be replaced by 30.
+     * @warning values greater than MAX_DIFF_DE_DEG will be replaced by MAX_DIFF_DE_DEG.
      *
      * @param diffDECSize the new query box differential DEC size as a double.
      */
     public void setQueryDiffDECSizeInDegrees(double diffDECSize) {
-        // The value shall not be negative, nor greater than 30.
-        _queryDiffDECSize = Math.min(30, Math.abs(diffDECSize));
+        // The value shall not be negative, nor greater than MAX_DIFF_DE_DEG.
+        _queryDiffDECSize = Math.min(MAX_DIFF_DE_DEG, Math.abs(diffDECSize));
 
         setChanged();
     }
@@ -1218,7 +1222,6 @@ public final class QueryModel extends Star implements Observer {
         }
 
         // The magnitude is not tested as any Double value is valid
-
         return true;
     }
 
