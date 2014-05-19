@@ -23,7 +23,7 @@ public abstract class Filter extends Observable {
     private static final Logger _logger = LoggerFactory.getLogger(Filter.class.getName());
     /* members */
     /** Enabled flag */
-    private Boolean _enabledFlag = null;
+    private boolean _enabledFlag;
     /** 'constraint name-constraint value' table */
     private HashMap<String, Object> _constraints = null;
     /** Ordered table of filter constraint names */
@@ -57,16 +57,6 @@ public abstract class Filter extends Observable {
      * @return true if the filter is enabled, false otherwise.
      */
     public final boolean isEnabled() {
-        return _enabledFlag.booleanValue();
-    }
-
-    /**
-     * Give internal access to the Boolean object representing the filter state.
-     *
-     * @return a Boolean object at TRUE if the filter is enabled, FALSE
-     * otherwise.
-     */
-    public final Boolean getEnabled() {
         return _enabledFlag;
     }
 
@@ -76,9 +66,10 @@ public abstract class Filter extends Observable {
      * @param enabledFlag if true enable the filter, disable it otherwise.
      */
     public final void setEnabled(final Boolean enabledFlag) {
+        final boolean enabled = (enabledFlag != null) ? enabledFlag.booleanValue() : false;
         // avoid recursive loop:
-        if (enabledFlag != _enabledFlag) {
-            _enabledFlag = enabledFlag;
+        if (_enabledFlag != enabled) {
+            _enabledFlag = enabled;
 
             setChanged();
             notifyObservers();

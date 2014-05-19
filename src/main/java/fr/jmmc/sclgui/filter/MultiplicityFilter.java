@@ -6,16 +6,12 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Multiplicity filter.
  */
 public final class MultiplicityFilter extends Filter {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(MultiplicityFilter.class.getName());
     /** In arcseconds. Any orbit separation below should reject */
     private static final double _orbitSeparationLimit = 2d;
     /* members */

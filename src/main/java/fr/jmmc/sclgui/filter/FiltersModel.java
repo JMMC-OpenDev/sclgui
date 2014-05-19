@@ -8,16 +8,12 @@ import fr.jmmc.sclgui.query.QueryModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Filters model that can be adopted by a JTable.
  */
 public final class FiltersModel {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(FiltersModel.class.getName());
     /** List of filters to handle */
     private final FilterList _filterList;
     /** Store each filter view */

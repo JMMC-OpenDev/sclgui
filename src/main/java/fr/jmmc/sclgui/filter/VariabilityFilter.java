@@ -6,16 +6,12 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Variability filter.
  */
 public final class VariabilityFilter extends Filter {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(VariabilityFilter.class.getName());
     /** Set columns name whose rows should be removed if cell is not empty */
     private static final String[] VarFlagColumns = new String[]{StarList.VarFlag1ColumnName, StarList.VarFlag2ColumnName};
     /* members */

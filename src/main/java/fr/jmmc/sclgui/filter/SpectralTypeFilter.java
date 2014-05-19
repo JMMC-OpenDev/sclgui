@@ -112,10 +112,10 @@ public final class SpectralTypeFilter extends Filter {
                         return true;
                     }
                 }
-            } else // If the spectral type is undefined
-            {
+            } else {
                 _logger.debug("Undefined Spectral Type.\n");
 
+                // If the spectral type is undefined
                 // This line must be removed
                 return true;
             }

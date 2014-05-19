@@ -6,16 +6,12 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Visibiliy accuracy filter.
  */
 public final class VisibilityAccuracyFilter extends Filter {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(VisibilityAccuracyFilter.class.getName());
     /** Store the visibility accuracy constraint name */
     private final static String _visibilityAccuracyConstraintName = "vis2Err/vis2 (%)";
     /* members */
@@ -83,7 +79,6 @@ public final class VisibilityAccuracyFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(final List<StarProperty> row) {
-
         // If the desired column names exists
         if ((_vis2Id != -1) && (_vis2errId != -1)) {
             // Get the cell of the desired column
@@ -109,8 +104,8 @@ public final class VisibilityAccuracyFilter extends Filter {
                     // This row should be removed
                     return true;
                 }
-            } else // If any value is missing
-            {
+            } else {
+                // If any value is missing
                 // This row should be removed
                 return true;
             }

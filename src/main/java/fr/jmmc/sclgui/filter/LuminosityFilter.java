@@ -7,16 +7,12 @@ import fr.jmmc.jmal.SpTypeUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *  LuminosityFilter filter.
  */
 public final class LuminosityFilter extends Filter {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(LuminosityFilter.class.getName());
     /* members */
     /* filter execution variables */
     /** the 'SpType' column ID */

@@ -9,16 +9,12 @@ import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.query.QueryModel;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Distance filter.
  */
 public final class DistanceFilter extends Filter {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(DistanceFilter.class.getName());
     /** Store the RA delta constraint name */
     private final static String _deltaRAConstraintName = "Maximum RA Separation (mn)";
     /** Store the DEC delta constraint name */
@@ -29,7 +25,7 @@ public final class DistanceFilter extends Filter {
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
      */
-    private QueryModel _queryModel;
+    private final QueryModel _queryModel;
     /* filter execution variables */
     /** the 'RA' (deg) column ID */
     private int _raId = -1;
@@ -150,7 +146,7 @@ public final class DistanceFilter extends Filter {
             } else {
                 // If any value is missing
                 // This row should be removed
-                return false;
+                return true;
             }
         }
 
