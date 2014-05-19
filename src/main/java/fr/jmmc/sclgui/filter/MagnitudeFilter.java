@@ -7,16 +7,12 @@ import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import fr.jmmc.sclgui.query.QueryModel;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Magnitude filter.
  */
 public final class MagnitudeFilter extends Filter {
 
-    /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(MagnitudeFilter.class.getName());
     /** Store the magnitude constraint name below */
     private final static String _belowMagnitudeConstraintName = "below";
     /** Store the magnitude constraint name above */
@@ -26,7 +22,7 @@ public final class MagnitudeFilter extends Filter {
      * Store the current query model in order to allow later retrieves of
      * any science object properties if needed (eg DistanceFilter).
      */
-    private QueryModel _queryModel;
+    private final QueryModel _queryModel;
 
     /* filter execution variables */
     /** the good magnitude column Id */
@@ -119,6 +115,10 @@ public final class MagnitudeFilter extends Filter {
                     // This row should be removed
                     return true;
                 }
+            } else {
+                // If any value is missing
+                // This row should be removed
+                return true;
             }
         }
 
