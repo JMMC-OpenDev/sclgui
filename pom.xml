@@ -38,6 +38,15 @@
             <version>TRUNK</version>
         </dependency>
 
+        <dependency>
+            <!-- Requires you to install manually the artifact:
+          mvn install:install-file -Dfile=lib/savot-4.0.0.jar -DgroupId=cds.savot -DartifactId=savot -Dversion=4.0.0 -Dpackaging=jar
+            -->
+	    <groupId>cds.savot</groupId>
+	    <artifactId>savot</artifactId>
+	    <version>4.0.0</version>
+        </dependency>
+
         <!-- TODO: use latex to helpset for the SearchCal documentation -->
         <dependency>
             <!-- Requires you to install manually the artifact:
