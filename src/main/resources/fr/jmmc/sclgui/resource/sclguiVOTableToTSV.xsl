@@ -7,7 +7,7 @@ DESCRIPTION
 - transform VOTable into TSV files (tab separated values)
 - accept external parameter to specify field separator (fieldSeparator)
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:VOT="http://www.ivoa.net/xml/VOTable/v1.2"
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:VOT="http://www.ivoa.net/xml/VOTable/v1.1"
                 xmlns:exslt="http://exslt.org/common"
                 extension-element-prefixes="exslt VOT">
 
