@@ -4,6 +4,8 @@
 package fr.jmmc.sclgui.query;
 
 import fr.jmmc.jmal.star.Star;
+import fr.jmmc.jmal.star.StarResolverListener;
+import fr.jmmc.jmal.star.StarResolverResult;
 import fr.jmmc.jmal.star.StarResolverWidget;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.ResourcedAction;
@@ -55,8 +57,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Query view.
  */
-public final class QueryView extends JPanel implements Observer,
-        PropertyChangeListener, ActionListener, FocusListener, Printable {
+public final class QueryView extends JPanel implements StarResolverListener, Observer,
+                                                       PropertyChangeListener, ActionListener, FocusListener, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -70,12 +72,12 @@ public final class QueryView extends JPanel implements Observer,
     private JPanel _instrumentPanel = new JPanel();
     /** Instrument magnitude band */
     private JComboBox _instrumentalMagnitudeBandCombo = new JComboBox();
-    /** Instrument wavelentgh label */
+    /** Instrument wavelength label */
     private JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
             JLabel.TRAILING);
-    /** Instrument wavelentgh */
+    /** Instrument wavelength */
     private JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(0));
-    /** Instrument maximun baseline */
+    /** Instrument maximum baseline */
     private JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(0));
     /** Science object panel */
     private JPanel _scienceObjectPanel = null;
@@ -83,7 +85,7 @@ public final class QueryView extends JPanel implements Observer,
     private StarResolverWidget _scienceObjectNameTextfield = null;
     /** Science object right ascension coordinate */
     private JTextField _scienceObjectRATextfield = new JTextField();
-    /** Science object declinaison coordinate */
+    /** Science object declination coordinate */
     private JTextField _scienceObjectDECTextfield = new JTextField();
     /** Science object magnitude label */
     private JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ",
@@ -225,7 +227,7 @@ public final class QueryView extends JPanel implements Observer,
         c.gridx = 0;
         label = new JLabel("Name : ", JLabel.TRAILING);
         _scienceObjectPanel.add(label, c);
-        _scienceObjectNameTextfield = new StarResolverWidget(_queryModel);
+        _scienceObjectNameTextfield = new StarResolverWidget();
         label.setLabelFor(_scienceObjectNameTextfield);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectNameTextfield, c);
@@ -413,6 +415,8 @@ public final class QueryView extends JPanel implements Observer,
         _instrumentalMaxBaselineTextField.addActionListener(this);
         _instrumentalMaxBaselineTextField.addFocusListener(this);
 
+        // register the StarResolverListener:
+        _scienceObjectNameTextfield.setListener(this);
         _scienceObjectNameTextfield.addActionListener(this);
         _scienceObjectNameTextfield.addFocusListener(this);
 
@@ -457,6 +461,22 @@ public final class QueryView extends JPanel implements Observer,
     }
 
     /**
+     * Handle the star resolver result (EDT) to update the queryModel with the single resolved Star model
+     * @param result star resolver result
+     */
+    @Override
+    public void handleResult(final StarResolverResult result) {
+        _logger.debug("star resolver result:\n{}", result);
+        if (!result.isEmpty()) {
+            final Star starModel = result.getSingleStar();
+            if (starModel != null) {
+                _queryModel.copy(starModel);
+                _queryModel.notifyObservers();
+            }
+        }
+    }
+
+    /**
      * Automatically called on attached QueryModel changes.
      * @param o
      * @param arg  
@@ -482,19 +502,6 @@ public final class QueryView extends JPanel implements Observer,
             }
         }
 
-        // handle Star resolver errors:
-        if (arg instanceof Star.Notification) {
-            final Star.Notification notification = (Star.Notification) arg;
-
-            if (notification == Star.Notification.QUERY_ERROR) {
-                // focus on object name:
-                _scienceObjectNameTextfield.requestFocus();
-
-                // do nothing, simply return to stop updating model:
-                return;
-            }
-        }
-
         String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
         if (instrumentalMagnitudeBand == null) {
             // GetStar case:
@@ -506,7 +513,6 @@ public final class QueryView extends JPanel implements Observer,
         final boolean nBand = instrumentalMagnitudeBand.matches("N");
         // This flag is true for bands present in bright and faint scenarii (cf sclsvrGetCalCB.cpp)
         final boolean brightOrFaintBand = !instrumentalMagnitudeBand.matches("[V,N]");
-
 
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
@@ -532,7 +538,6 @@ public final class QueryView extends JPanel implements Observer,
         _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
         _maxMagnitudeTextfield.setEnabled(!nBand);
-
 
         // Search box size handling
         _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASizeInMinutes());
