@@ -666,7 +666,7 @@ public final class QueryModel extends Star implements Observer {
      * @return the star name.
      */
     public String getScienceObjectName() {
-        return getPropertyAsString(Property.NAME);
+        return getName();
     }
 
     /**
@@ -675,7 +675,7 @@ public final class QueryModel extends Star implements Observer {
      * @param scienceObjectName the new star name.
      */
     public void setScienceObjectName(String scienceObjectName) {
-        setPropertyAsString(Property.NAME, scienceObjectName);
+        setName(scienceObjectName);
     }
 
     /**
