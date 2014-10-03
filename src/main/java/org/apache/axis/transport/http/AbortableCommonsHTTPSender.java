@@ -3,6 +3,8 @@
  ******************************************************************************/
 package org.apache.axis.transport.http;
 
+import fr.jmmc.jmcs.network.http.Http;
+import fr.jmmc.jmcs.network.http.HttpMethodThreadMap;
 import org.apache.axis.AxisFault;
 import org.apache.axis.Constants;
 import org.apache.axis.Message;
@@ -193,7 +195,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
             }
 
             // LAURENT : memorize HTTPMethodBase associated to the current thread:
-            HttpMethodThreadMap.get().set(Thread.currentThread().getName(), method);
+            HttpMethodThreadMap.setCurrentThread(method);
 
             int returnCode = httpClient.executeMethod(hostConfiguration, method, null);
 
@@ -219,7 +221,6 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
                 throw fault;
 //        } finally {
 // LAURENT :
-//          relaseConnection(method);
 //          method.releaseConnection();
 //        }
             }
@@ -285,7 +286,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
             // it was one way invocation
             if (msgContext.isPropertyTrue("axis.one.way")) {
 // LAURENT :
-                relaseConnection(method);
+                Http.releaseConnection(method);
 //          method.releaseConnection();
             }
 
@@ -294,82 +295,13 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
 
             // LAURENT :
             // To be sure to release connection when catching java.net.SocketException: Socket closed:
-            relaseConnection(method);
+            Http.releaseConnection(method);
 
             throw AxisFault.makeFault(e);
         }
 
         if (log.isDebugEnabled()) {
             log.debug(Messages.getMessage("exit00", "CommonsHTTPSender::invoke"));
-        }
-    }
-
-    /**
-     * Release both connection and the HttpMethodBase associated to the current thread
-     * Added by LAURENT
-     *
-     * @param method HttpMethodBase to release
-     */
-    private static void relaseConnection(final HttpMethodBase method) {
-        relaseConnection(method, Thread.currentThread().getName());
-    }
-
-    /**
-     * Release both connection and the thread local HttpMethodBase associated to the given thread name
-     * Added by LAURENT
-     *
-     * @param method HttpMethodBase to release
-     * @param threadName thread name
-     */
-    private static void relaseConnection(final HttpMethodBase method, final String threadName) {
-
-//    if (true) {
-//      log.error("relaseConnection : stack: ", new Throwable());
-//    } else {
-//      log.error("relaseConnection: " + method);
-//    }
-        if (log.isDebugEnabled()) {
-            log.debug("relaseConnection : " + threadName + " = " + method);
-        }
-
-        // LAURENT : clear HttpMethodBase and release connection once:
-        HttpMethodThreadMap.get().remove(threadName);
-
-        // release connection back to pool:
-        if (method != null) {
-            method.releaseConnection();
-        }
-    }
-
-    /**
-     * Abort the execution of the Http method associated to the given thread
-     * Added by LAURENT
-     *
-     * @param thread thread to use
-     */
-    public static void abort(final Thread thread) {
-        final String threadName = thread.getName();
-
-//    log.error("abort: " + threadName);
-        final HttpMethodBase method = HttpMethodThreadMap.get().get(threadName);
-
-        if (log.isDebugEnabled()) {
-            log.debug("abort : " + threadName + " = " + method);
-        }
-
-        if (method != null) {
-            // abort method:
-            try {
-//      log.error("abort: " + method);
-
-                /* This closes the socket handling our blocking I/O, which will
-                 * interrupt the request immediately. */
-                method.abort();
-
-            } finally {
-                // To be sure to call relaseConnection altought the thread should do it (normally):
-                relaseConnection(method, threadName);
-            }
         }
     }
 
@@ -854,7 +786,7 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
                     super.close();
                 } finally {
 // LAURENT :
-                    relaseConnection(method);
+                    Http.releaseConnection(method);
 //          method.releaseConnection();
                 }
             }

@@ -5,6 +5,8 @@ package fr.jmmc.sclgui.vo;
 
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.network.http.Http;
+import fr.jmmc.jmcs.network.http.HttpMethodThreadMap;
 import fr.jmmc.jmcs.util.MCSExceptionHandler;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.sclgui.vo.VirtualObservatory.QueryState;
@@ -14,7 +16,6 @@ import java.rmi.RemoteException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.axis.transport.http.AbortableCommonsHTTPSender;
-import org.apache.axis.transport.http.HttpMethodThreadMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -357,7 +358,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
                 // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                 // in AbortableCommonsHTTPSender#relaseConnection() :
-                HttpMethodThreadMap.get().remove(getName());
+                HttpMethodThreadMap.release(getName());
 
                 // Query is finished
                 defineQueryLaunchedState(false);
@@ -456,7 +457,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     _queryResultThread.interrupt();
 
                     // Close HTTP connection:
-                    AbortableCommonsHTTPSender.abort(_queryResultThread);
+                    Http.abort(_queryResultThread.getName());
 
                     _logger.debug("QueryResult thread killed.");
                 }
@@ -471,7 +472,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 this.interrupt();
 
                 // Close HTTP connection:
-                AbortableCommonsHTTPSender.abort(this);
+                Http.abort(this.getName());
 
                 _logger.debug("cancel done.");
             }
@@ -552,7 +553,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
                     // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                     // in AbortableCommonsHTTPSender#relaseConnection() :
-                    HttpMethodThreadMap.get().remove(getName());
+                    HttpMethodThreadMap.release(getName());
                 }
             }
 
@@ -599,7 +600,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                     // 1- free resources on the server side
                     // 2- remove id from active identifiers
                     // note: next calls using this id will fail.
-
                     // this WS call can block if connection attempt fails :
                     _sclws.getCalCancelSession(_id);
 
@@ -612,7 +612,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
 
                     // ensure clean up (PostMethod object) in case releaseConnection() did not already do it 
                     // in AbortableCommonsHTTPSender#relaseConnection() :
-                    HttpMethodThreadMap.get().remove(getName());
+                    HttpMethodThreadMap.release(getName());
                 }
             }
         }
