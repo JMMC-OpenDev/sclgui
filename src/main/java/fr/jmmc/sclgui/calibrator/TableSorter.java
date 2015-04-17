@@ -723,8 +723,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
             int column, comparison;
             Object o1, o2;
-
-            for (Directive directive : sortingColumns) {
+            Directive directive;
+            
+            for (int i = 0, len = sortingColumns.size(); i < len; i++) {
+                directive = sortingColumns.get(i);
                 column = directive.column;
                 o1 = tableModel.getValueAt(row1, column);
                 o2 = tableModel.getValueAt(row2, column);
