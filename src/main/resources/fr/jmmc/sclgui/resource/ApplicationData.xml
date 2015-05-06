@@ -9,9 +9,9 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.0 alpha 4"/>
+    <program name="SearchCal" version="5.0 alpha 6"/>
 
-    <compilation date="28/08/2014" compiler="JDK 1.6"/>
+    <compilation date="06/05/2015" compiler="JDK 1.6"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -127,6 +127,13 @@
 
     <releasenotes>
         <release version="5.0">
+            <prerelease version="5.0 alpha 6">
+                <change type="CHANGE">Added new filter on Simbad's Object types (algol, mira ...) when known (JSDC).</change>
+            </prerelease>
+            <prerelease version="5.0 alpha 5">
+                <change type="CHANGE">Use new JSDC query scenario = fast cone search and magnitude filter made by the new SearchCal Server</change>
+                <change type="CHANGE">New Polynomial relations implemented (V-B, V-J, V-H, V-K)</change>
+            </prerelease>
             <prerelease version="5.0 alpha 4">
                 <change type="CHANGE">Improved Star resolver: report ambiguous matches (more than 1 object per identifier),
                     better timeout settings (3s for connection) ...</change>
