@@ -26,6 +26,7 @@ public final class MultiplicityFilter extends Filter {
      */
     public MultiplicityFilter() {
         super();
+        setEnabled(Boolean.TRUE);
     }
 
     /**
@@ -35,9 +36,6 @@ public final class MultiplicityFilter extends Filter {
      */
     @Override
     public String getName() {
-        // TODO: enable the filter somewhere else not in getName() !
-        setEnabled(Boolean.TRUE);
-
         return "Reject Multiplicity";
     }
 

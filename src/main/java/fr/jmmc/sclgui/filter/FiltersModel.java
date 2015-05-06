@@ -67,10 +67,10 @@ public final class FiltersModel {
         _filterViews.add(filterView);
 
         // Visibiliy filter
-        VisibilityFilter visibiliyFilter = new VisibilityFilter();
-        _filterList.add(visibiliyFilter);
+        VisibilityFilter visibilityFilter = new VisibilityFilter();
+        _filterList.add(visibilityFilter);
 
-        filterView = new FilterView(visibiliyFilter);
+        filterView = new FilterView(visibilityFilter);
         filterView.init();
         _filterViews.add(filterView);
 
@@ -95,6 +95,14 @@ public final class FiltersModel {
         _filterList.add(multiplicityFilter);
 
         filterView = new FilterView(multiplicityFilter);
+        filterView.init();
+        _filterViews.add(filterView);
+
+        // ObjectTypes filter
+        ObjectTypeFilter objTypesFilter = new ObjectTypeFilter();
+        _filterList.add(objTypesFilter);
+
+        filterView = new FilterView(objTypesFilter);
         filterView.init();
         _filterViews.add(filterView);
     }
