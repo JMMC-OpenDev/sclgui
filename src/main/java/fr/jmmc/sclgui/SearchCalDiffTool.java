@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SearchCal Diff Tool
- * 
+ *
  * @author laurent bourges, sylvain lafrasse
  */
 public final class SearchCalDiffTool extends App {
@@ -92,16 +92,9 @@ public final class SearchCalDiffTool extends App {
      */
     @Override
     protected void defineCustomCommandLineArgumentsAndHelp() {
-        addCustomCommandLineArgument(ARG_DIFF, false);
-        addCustomCommandLineArgument(ARG_LEFT, true);
-        addCustomCommandLineArgument(ARG_RIGHT, true);
-
-        String help = "";
-        help += "| [-diff]                      Enable comparison mode (diff)                   |";
-        help += "| [-left]                      First file to compare (reference)               |";
-        help += "| [-right]                     Second file to compare                          |";
-        help += "|------------------------------------------------------------------------------|";
-        addCustomArgumentsHelp(help);
+        addCustomCommandLineArgument(ARG_DIFF, false, "Enable comparison mode (diff)");
+        addCustomCommandLineArgument(ARG_LEFT, true, "First file to compare (reference)");
+        addCustomCommandLineArgument(ARG_RIGHT, true, "Second file to compare");
     }
 
     @Override
@@ -158,10 +151,10 @@ public final class SearchCalDiffTool extends App {
         final CalibratorsModel calibratorsModelLeft = new CalibratorsModel(filtersModel, queryModel); // query model represents the reference file
         final CalibratorsView calibratorsViewLeft = new CalibratorsView(calibratorsModelLeft);
 
-        final CalibratorsModel calibratorsModelRight = new CalibratorsModel(filtersModel, null); // query model is null 
+        final CalibratorsModel calibratorsModelRight = new CalibratorsModel(filtersModel, null); // query model is null
         final CalibratorsView calibratorsViewRight = new CalibratorsView(calibratorsModelRight);
 
-        final CalibratorsModel calibratorsModelDiff = new CalibratorsModel(filtersModel, null); // query model is null 
+        final CalibratorsModel calibratorsModelDiff = new CalibratorsModel(filtersModel, null); // query model is null
         final CalibratorsView calibratorsViewDiff = new CalibratorsView(calibratorsModelDiff);
 
         filtersModel.addObserver(calibratorsModelLeft);
@@ -333,7 +326,7 @@ public final class SearchCalDiffTool extends App {
     }
 
     /**
-     * Select the given row indexes and column in the given calibrators view 
+     * Select the given row indexes and column in the given calibrators view
      * @param calibratorsView calibrators view
      * @param rowIndexes row indexes
      * @param selectedColumn column index
@@ -388,7 +381,7 @@ public final class SearchCalDiffTool extends App {
 
         /**
          * Process list selection event
-         * @param lse list selection event 
+         * @param lse list selection event
          */
         @Override
         public void valueChanged(final ListSelectionEvent lse) {
@@ -409,7 +402,7 @@ public final class SearchCalDiffTool extends App {
         /**
          * Protected constructor
          * @param classPath
-         * @param fieldName 
+         * @param fieldName
          */
         OpenDiffFilesAction(final String classPath, final String fieldName) {
             super(classPath, fieldName);
@@ -455,17 +448,17 @@ public final class SearchCalDiffTool extends App {
          * Constructor.
          * @param vo
          * @param _queryView
-         * @param _calibratorsViewLeft 
-         * @param _calibratorsViewRight 
-         * @param _calibratorsViewDiff 
+         * @param _calibratorsViewLeft
+         * @param _calibratorsViewRight
+         * @param _calibratorsViewDiff
          * @param filtersView
-         * @param statusBar  
+         * @param statusBar
          */
         DiffWindow(final VirtualObservatory vo, final QueryView queryView,
-                   final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
-                   final CalibratorsView calibratorsViewDiff,
-                   final FiltersView filtersView, final StatusBar statusBar) {
-            
+                final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
+                final CalibratorsView calibratorsViewDiff,
+                final FiltersView filtersView, final StatusBar statusBar) {
+
             super("SearchCal Diff tool");
 
             // handle frame icon
