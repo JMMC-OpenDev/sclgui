@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.AbstractCellEditor;
@@ -117,23 +116,24 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     /**
      * DOCUMENT ME!
      */
-    private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
+    private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED, null);
     /**
-     * DOCUMENT ME!
+     * comparison based on Comparable interface
      */
-    public static final Comparator COMPARABLE_COMPARATOR = new Comparator() {
+    public static final Comparator<Object> COMPARABLE_COMPARATOR = new Comparator<Object>() {
         @Override
+        @SuppressWarnings("unchecked")
         public int compare(final Object o1, final Object o2) {
             return ((Comparable) o1).compareTo(o2);
         }
     };
     /**
-     * DOCUMENT ME!
+     * Lexical comparison ie compare String values ignoring case.
      */
-    public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
+    public static final Comparator<Object> LEXICAL_COMPARATOR = new Comparator<Object>() {
         @Override
         public int compare(final Object o1, final Object o2) {
-            return o1.toString().compareTo(o2.toString());
+            return o1.toString().compareToIgnoreCase(o2.toString());
         }
     };
 
@@ -162,10 +162,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      * DOCUMENT ME!
      */
     TableModelListener tableModelListener;
-    /**
-     * DOCUMENT ME!
-     */
-    private final Map<Class<?>, Comparator<?>> columnComparators = new HashMap<Class<?>, Comparator<?>>(4);
     /**
      * DOCUMENT ME!
      */
@@ -265,7 +261,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         this.tableModel = tableModel;
 
         // Multiple table model listeners => ordering side effects !!!
-
         clearSortingState();
         fireTableStructureChanged();
     }
@@ -368,7 +363,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         }
 
         if (status != NOT_SORTED) {
-            sortingColumns.add(new Directive(realColumn, status));
+            sortingColumns.add(new Directive(realColumn, status, getComparator(realColumn)));
         }
 
         sortingStatusChanged();
@@ -403,30 +398,15 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     /**
      * DOCUMENT ME!
      *
-     * @param type DOCUMENT ME!
-     * @param comparator DOCUMENT ME!
-     */
-    public void setColumnComparator(final Class<?> type, final Comparator<?> comparator) {
-        if (comparator == null) {
-            columnComparators.remove(type);
-        } else {
-            columnComparators.put(type, comparator);
-        }
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
      * @param column DOCUMENT ME!
      *
      * @return DOCUMENT ME!
      */
-    Comparator getComparator(final int column) {
+    Comparator<Object> getComparator(final int column) {
         final Class<?> columnType = tableModel.getColumnClass(column);
-        final Comparator<?> comparator = columnComparators.get(columnType);
-
-        if (comparator != null) {
-            return comparator;
+        
+        if (String.class == columnType) {
+            return LEXICAL_COMPARATOR;
         }
 
         if (Comparable.class.isAssignableFrom(columnType)) {
@@ -443,16 +423,26 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      */
     private Row[] getViewToModel() {
         if (viewToModel == null) {
+
             final int tableModelRowCount = tableModel.getRowCount();
-            viewToModel = new Row[tableModelRowCount];
+            final Row[] newModel = new Row[tableModelRowCount];
 
             for (int row = 0; row < tableModelRowCount; row++) {
-                viewToModel[row] = new Row(row);
+                newModel[row] = new Row(row);
             }
 
             if (isSorting()) {
-                Arrays.sort(viewToModel);
+                final long start = System.nanoTime();
+
+                Arrays.sort(newModel);
+
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("sort ({} stars) processed in {} ms.", tableModelRowCount, 1e-6d * (System.nanoTime() - start));
+                }
             }
+
+            // update model once:
+            viewToModel = newModel;
         }
 
         return viewToModel;
@@ -617,6 +607,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         } else if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
             selectedView = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + scenario + '.' + magnitude;
         } else {
+            // Full view:
             selectedView = null;
         }
 
@@ -707,7 +698,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     }
 
     // Helper classes
-    private final class Row implements Comparable {
+    private final class Row implements Comparable<Row> {
 
         final int modelIndex;
 
@@ -717,14 +708,14 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         @SuppressWarnings("unchecked")
         @Override
-        public int compareTo(final Object o) {
+        public int compareTo(final Row other) {
             final int row1 = modelIndex;
-            final int row2 = ((Row) o).modelIndex;
+            final int row2 = other.modelIndex;
 
             int column, comparison;
             Object o1, o2;
             Directive directive;
-            
+
             for (int i = 0, len = sortingColumns.size(); i < len; i++) {
                 directive = sortingColumns.get(i);
                 column = directive.column;
@@ -739,7 +730,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 } else if (o2 == null) {
                     comparison = 1;
                 } else {
-                    comparison = getComparator(column).compare(o1, o2);
+                    comparison = directive.comparator.compare(o1, o2);
                 }
 
                 if (comparison != 0) {
@@ -973,10 +964,12 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         final int column;
         final int direction;
+        final Comparator<Object> comparator;
 
-        Directive(int column, int direction) {
+        Directive(final int column, final int direction, final Comparator<Object> comparator) {
             this.column = column;
             this.direction = direction;
+            this.comparator = comparator;
         }
     }
 
