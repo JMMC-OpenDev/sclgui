@@ -326,12 +326,8 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         if (_autoFitsColumns) {
             // If DataTableChanged event:
             if (e.getLastRow() == Integer.MAX_VALUE && _calibratorsTable.getRowCount() != 0) {
-                final long startTime = System.nanoTime();
-
                 // use cell values not renderer values (html code):
                 AutofitTableColumns.autoResizeTable(_calibratorsTable, true);
-
-                _logger.info("AutofitTableColumns.autoResizeTable: done in {} ms.", 1e-6d * (System.nanoTime() - startTime));
             }
         }
 
