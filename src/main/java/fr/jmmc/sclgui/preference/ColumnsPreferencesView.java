@@ -41,25 +41,25 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(ColumnsPreferencesView.class.getName());
     /** Data model */
-    private Preferences _preferences = null;
+    private final Preferences _preferences;
     /** The name of preference that must be managed as ordered columns. */
-    private String _preferencePath = null;
+    private String _preferencePath;
     /** The widget that display the list of columns */
-    private JList _columnList = null;
+    private final JList _columnList;
     /** The model associated to the widget that display the list of columns */
-    private DefaultListModel _listModel = null;
+    private final DefaultListModel _listModel;
     /** The actual shown list of columns */
     private String _shownColumns = "";
     /** All available columns set */
-    JComboBox _columnsSetCombobox = null;
+    private final JComboBox _columnsSetComboBox;
     /** The column sets combo box model */
-    private DefaultComboBoxModel _columsSetModel = null;
+    private final DefaultComboBoxModel _columsSetModel;
     /** The column sets combo box names to path matching table */
-    private HashMap<String, String> _columnSetNameToPathHashtable = null;
+    private final HashMap<String, String> _columnSetNameToPathHashtable;
     /** Move up Button */
-    private JButton _moveUpButton = null;
+    private final JButton _moveUpButton;
     /** Move down Button */
-    private JButton _moveDownButton = null;
+    private final JButton _moveDownButton;
 
     /**
      * Constructor.
@@ -81,9 +81,9 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
         panel.setOpaque(false);
         JLabel label = new JLabel("Column Set : ", JLabel.TRAILING);
         panel.add(label);
-        _columnsSetCombobox = new JComboBox();
-        label.setLabelFor(_columnsSetCombobox);
-        panel.add(_columnsSetCombobox);
+        _columnsSetComboBox = new JComboBox();
+        label.setLabelFor(_columnsSetComboBox);
+        panel.add(_columnsSetComboBox);
         headPanel.add(panel, BorderLayout.LINE_START);
         add(headPanel);
 
@@ -106,7 +106,7 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
             _columsSetModel.addElement(columnSetName);
         }
 
-        _columnsSetCombobox.setModel(_columsSetModel);
+        _columnsSetComboBox.setModel(_columsSetModel);
         _preferencePath = _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
 
         // Instanciate the list widget and its associated model
@@ -141,7 +141,7 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
 
     public void init() {
         _preferences.addObserver(this);
-        _columnsSetCombobox.addActionListener(this);
+        _columnsSetComboBox.addActionListener(this);
 
         // Add a 'selection modification' listener to enable/disable 'Up' & 'Down' buttons
         _columnList.addListSelectionListener(this);
@@ -241,7 +241,7 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
     @Override
     public void actionPerformed(ActionEvent evt) {
         // If the ComboBox was used
-        if (evt.getSource().equals(_columnsSetCombobox)) {
+        if (evt.getSource().equals(_columnsSetComboBox)) {
             // Get the the newly selected column set preference path
             _preferencePath = _columnSetNameToPathHashtable.get((String) _columsSetModel.getSelectedItem());
 

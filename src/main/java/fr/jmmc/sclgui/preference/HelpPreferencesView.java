@@ -30,11 +30,11 @@ public final class HelpPreferencesView extends JPanel implements Observer, Chang
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(HelpPreferencesView.class.getName());
     /** Data model */
-    private Preferences _preferences;
+    private final Preferences _preferences;
     /** Tooltip enabling checkbox */
-    private JCheckBox _enableToolTipCheckBox;
+    private final JCheckBox _enableToolTipCheckBox;
     /** Tooltip manager */
-    private ToolTipManager _sharedToolTipManager;
+    private final ToolTipManager _sharedToolTipManager;
 
     /**
      * Constructor.
