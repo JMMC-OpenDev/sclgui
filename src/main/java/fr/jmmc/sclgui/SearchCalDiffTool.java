@@ -9,6 +9,7 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.PreferencesView;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
+import fr.jmmc.jmcs.gui.component.CommonPreferencesView;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.ResourceImage;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
@@ -174,7 +175,7 @@ public final class SearchCalDiffTool extends App {
 
         // Retrieve application preferences and attach them to their view
         // (This instance must be instanciated after dependencies)
-        final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>(4);
+        final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>(8);
 
         // Add the columns preferences pane
         final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
@@ -189,6 +190,7 @@ public final class SearchCalDiffTool extends App {
         final HelpPreferencesView helpView = new HelpPreferencesView();
         helpView.init();
         panels.put("Help Settings", helpView);
+        panels.put("Misc. settings", new CommonPreferencesView());
 
         final PreferencesView preferencesView = new PreferencesView(preferences, panels);
         preferencesView.init();
@@ -444,16 +446,6 @@ public final class SearchCalDiffTool extends App {
         /** result pane */
         final JSplitPane resultPane;
 
-        /**
-         * Constructor.
-         * @param vo
-         * @param _queryView
-         * @param _calibratorsViewLeft
-         * @param _calibratorsViewRight
-         * @param _calibratorsViewDiff
-         * @param filtersView
-         * @param statusBar
-         */
         DiffWindow(final VirtualObservatory vo, final QueryView queryView,
                 final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
                 final CalibratorsView calibratorsViewDiff,

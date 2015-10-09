@@ -6,6 +6,7 @@ package fr.jmmc.sclgui;
 import fr.jmmc.jmcs.App;
 import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.gui.PreferencesView;
+import fr.jmmc.jmcs.gui.component.CommonPreferencesView;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.logging.LoggingService;
@@ -25,6 +26,7 @@ import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.util.LinkedHashMap;
 import javax.swing.JPanel;
 import org.astrogrid.samp.Message;
+import org.astrogrid.samp.client.SampException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +101,7 @@ public final class SearchCal extends App {
 
         // Retrieve application preferences and attach them to their view
         // (This instance must be instanciated after dependencies)
-        final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>();
+        final LinkedHashMap<String, JPanel> panels = new LinkedHashMap<String, JPanel>(8);
         // Add the columns preferences pane
         final ColumnsPreferencesView columnsView = new ColumnsPreferencesView(Preferences.PREFIX_VIEW_COLUMNS);
         columnsView.init();
@@ -111,6 +113,8 @@ public final class SearchCal extends App {
         final HelpPreferencesView helpView = new HelpPreferencesView();
         helpView.init();
         panels.put("Help Settings", helpView);
+        panels.put("Misc. settings", new CommonPreferencesView());
+        
         final PreferencesView preferencesView = new PreferencesView(_preferences, panels);
         preferencesView.init();
 
