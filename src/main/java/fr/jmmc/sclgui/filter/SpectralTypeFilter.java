@@ -6,6 +6,7 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.jmal.SpTypeUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,18 +22,28 @@ public final class SpectralTypeFilter extends Filter {
     /* filter execution variables */
     /** the 'SpType' column ID */
     private int _rawSpectralTypeID = -1;
+    /* temporay list instance */
+    final List<String> tmpList = new ArrayList<String>();
 
     /**
      * Default constructor.
      */
     public SpectralTypeFilter() {
         super();
+    }
 
-        setConstraint("O", Boolean.FALSE);
-        setConstraint("B", Boolean.FALSE);
-        setConstraint("A", Boolean.FALSE);
-        setConstraint("F", Boolean.FALSE);
-        setConstraint("G", Boolean.FALSE);
+    /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
+        // filter early spectral classes: OBAFG
+        setEnabled(Boolean.TRUE);
+        setConstraint("O", Boolean.TRUE);
+        setConstraint("B", Boolean.TRUE);
+        setConstraint("A", Boolean.TRUE);
+        setConstraint("F", Boolean.TRUE);
+        setConstraint("G", Boolean.TRUE);
         setConstraint("K", Boolean.FALSE);
         setConstraint("M", Boolean.FALSE);
     }
@@ -80,10 +91,19 @@ public final class SpectralTypeFilter extends Filter {
                 }
 
                 // Get back the spectral types found in the given spectral type
-                final List<String> foundSpectralTypes = SpTypeUtils.spectralTypes(rawSpectralType);
+                final List<String> foundSpectralTypes = SpTypeUtils.spectralTypes(rawSpectralType, tmpList);
 
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("foundSpectralTypes = '{}'.", foundSpectralTypes);
+                }
+
+                // TODO: how to handle multiple values
+                final int nSpType = foundSpectralTypes.size();
+
+                if (nSpType == 0) {
+                    // If the spectral type is undefined
+                    // This line must be removed
+                    return true;
                 }
 
                 // For each spectral type found
@@ -98,7 +118,7 @@ public final class SpectralTypeFilter extends Filter {
 
                     // If the current spectral type is not handled (eg R, N ,S, ...)
                     if (spectralTypeCheckBoxState == null) {
-                        _logger.debug("spType not handled -> skipped.");
+                        _logger.debug("spType[{}] not handled -> skipped.", spectralTypeName);
 
                         // Skip it
                         continue;
@@ -122,7 +142,6 @@ public final class SpectralTypeFilter extends Filter {
         } else {
             _logger.warn("Unknown Spectral Type Column Name = '{}'.", StarList.SpTypeColumnName);
         }
-
         _logger.debug("Line kept.\n");
 
         // Otherwise the current star row from the star list should be kept

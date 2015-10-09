@@ -6,30 +6,46 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.jmal.SpTypeUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
+import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  LuminosityFilter filter.
  */
 public final class LuminosityFilter extends Filter {
 
+    /** Logger */
+    private static final Logger _logger = LoggerFactory.getLogger(LuminosityFilter.class.getName());
+
     /* members */
     /* filter execution variables */
     /** the 'SpType' column ID */
     private int _rawSpectralTypeID = -1;
+    /* temporay list instance */
+    final List<String> tmpList = new ArrayList<String>();
 
     /**
      * Default constructor.
      */
     public LuminosityFilter() {
         super();
+    }
 
+    /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
+        // filter dwarfs : lum class VI V IV
+        setEnabled(Boolean.TRUE);
         setConstraint("I", Boolean.FALSE);
         setConstraint("II", Boolean.FALSE);
         setConstraint("III", Boolean.FALSE);
-        setConstraint("IV", Boolean.FALSE);
-        setConstraint("V", Boolean.FALSE);
-        setConstraint("VI", Boolean.FALSE);
+        setConstraint("IV", Boolean.TRUE);
+        setConstraint("V", Boolean.TRUE);
+        setConstraint("VI", Boolean.TRUE);
     }
 
     /**
@@ -108,13 +124,26 @@ public final class LuminosityFilter extends Filter {
                 final String rawSpectralType = cell.getString();
 
                 // Get back the luminosity classes found in the given spectral type
-                final List<String> luminosityClasses = SpTypeUtils.luminosityClasses(rawSpectralType);
+                final List<String> luminosityClasses = SpTypeUtils.luminosityClasses(rawSpectralType, tmpList);
 
                 // For each found luminosity class
                 for (String luminosityClassName : luminosityClasses) {
                     // Get the luminosity class check box boolean state
-                    Boolean luminosityClassState = (Boolean) getConstraintByName(luminosityClassName);
+                    final Boolean luminosityClassState = (Boolean) getConstraintByName(luminosityClassName);
 
+                    if (_logger.isDebugEnabled()) {
+                        _logger.debug("luminosityClassName = '{}'.", luminosityClassName);
+                        _logger.debug("luminosityClassState = '{}'.", luminosityClassState);
+                    }
+
+                    // If the current  luminosity class is not handled (eg IVIV, ...)
+                    if (luminosityClassState == null) {
+                        _logger.debug("luminosityClass[{}] not handled -> skipped.", luminosityClassName);
+
+                        // Skip it
+                        continue;
+                    }
+                    
                     // If the current luminosity class must be kept
                     if (!luminosityClassState.booleanValue()) {
                         // This line must be kept

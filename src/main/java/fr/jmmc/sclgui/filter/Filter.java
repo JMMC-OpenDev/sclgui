@@ -61,6 +61,11 @@ public abstract class Filter extends Observable {
     }
 
     /**
+     * Reset the filter
+     */
+    public abstract void reset();
+
+    /**
      * Set whether the filter is enabled or not.
      *
      * @param enabledFlag if true enable the filter, disable it otherwise.
@@ -115,8 +120,10 @@ public abstract class Filter extends Observable {
         _constraints.put(constraintName, constraintValue);
         _orderedConstraintNames.add(constraintName);
 
-        setChanged();
-        notifyObservers();
+        if (_enabledFlag) {
+            setChanged();
+            notifyObservers();
+        }
     }
 
     /**

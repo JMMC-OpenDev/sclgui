@@ -32,6 +32,13 @@ public final class VisibilityFilter extends Filter {
         super();
 
         setConstraint(_visibilityConstraintName, new Double(0.5));
+    }
+
+    /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
         setEnabled(Boolean.TRUE);
     }
 

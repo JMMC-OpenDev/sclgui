@@ -8,11 +8,16 @@ import fr.jmmc.sclgui.query.QueryModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Filters model that can be adopted by a JTable.
  */
 public final class FiltersModel {
+
+    /** Logger */
+    private static final Logger _logger = LoggerFactory.getLogger(FiltersModel.class.getName());
 
     /** List of filters to handle */
     private final FilterList _filterList;
@@ -31,80 +36,51 @@ public final class FiltersModel {
         _queryModel = queryModel;
 
         _filterList = new FilterList();
-        _filterList.setEnabled(Boolean.TRUE);
         _filterViews = new ArrayList<FilterView>(8);
 
         // Distance filter
-        DistanceFilter distanceFilter = new DistanceFilter(_queryModel);
-        _filterList.add(distanceFilter);
-
-        FilterView filterView = new FilterView(distanceFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new DistanceFilter(_queryModel));
 
         // Magnitude filter
-        MagnitudeFilter magnitudeFilter = new MagnitudeFilter(_queryModel);
-        _filterList.add(magnitudeFilter);
-
-        filterView = new FilterView(magnitudeFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new MagnitudeFilter(_queryModel));
 
         // Spectral Type filter
-        SpectralTypeFilter spectralTypeFilter = new SpectralTypeFilter();
-        _filterList.add(spectralTypeFilter);
-
-        filterView = new FilterView(spectralTypeFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new SpectralTypeFilter());
 
         // Luminosity filter
-        LuminosityFilter luminosityFilter = new LuminosityFilter();
-        _filterList.add(luminosityFilter);
-
-        filterView = new FilterView(luminosityFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new LuminosityFilter());
 
         // Visibiliy filter
-        VisibilityFilter visibilityFilter = new VisibilityFilter();
-        _filterList.add(visibilityFilter);
-
-        filterView = new FilterView(visibilityFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new VisibilityFilter());
 
         // Visibility accuracy filter
-        VisibilityAccuracyFilter visibilityAccuracyFilter = new VisibilityAccuracyFilter();
-        _filterList.add(visibilityAccuracyFilter);
-
-        filterView = new FilterView(visibilityAccuracyFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new VisibilityAccuracyFilter());
 
         // Variability filter
-        VariabilityFilter variabilityFilter = new VariabilityFilter();
-        _filterList.add(variabilityFilter);
-
-        filterView = new FilterView(variabilityFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new VariabilityFilter());
 
         // Multiplicity filter
-        MultiplicityFilter multiplicityFilter = new MultiplicityFilter();
-        _filterList.add(multiplicityFilter);
-
-        filterView = new FilterView(multiplicityFilter);
-        filterView.init();
-        _filterViews.add(filterView);
+        addFilter(new MultiplicityFilter());
 
         // ObjectTypes filter
-        ObjectTypeFilter objTypesFilter = new ObjectTypeFilter();
-        _filterList.add(objTypesFilter);
+        addFilter(new ObjectTypeFilter());
+    }
 
-        filterView = new FilterView(objTypesFilter);
+    private void addFilter(final Filter filter) {
+        // call reset to prepare constraints and enable filters by default:
+        filter.reset();
+        _filterList.add(filter);
+
+        final FilterView filterView = new FilterView(filter);
         filterView.init();
         _filterViews.add(filterView);
+    }
+
+    /**
+     * Reset filters
+     */
+    public void resetFilters() {
+        _filterList.reset();
     }
 
     /**

@@ -26,7 +26,18 @@ public final class FilterList extends Filter implements Observer {
      */
     public FilterList() {
         super();
-        _filters = new ArrayList<Filter>();
+        _filters = new ArrayList<Filter>(10);
+    }
+
+    /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
+        setEnabled(Boolean.TRUE);
+        for (Filter filter : _filters) {
+            filter.reset();
+        }
     }
 
     /**

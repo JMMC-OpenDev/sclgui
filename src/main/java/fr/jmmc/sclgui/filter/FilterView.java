@@ -13,6 +13,7 @@ import java.awt.event.FocusListener;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
@@ -41,31 +42,32 @@ public final class FilterView extends JPanel implements Observer {
     private static final long serialVersionUID = 1;
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(FilterView.class.getName());
+    /* members */
     /** The filter to represent */
-    private Filter _filter = null;
+    private final Filter _filter;
     /** Filter enabling check box */
-    private JCheckBox _enabledCheckbox = null;
+    private final JCheckBox _enabledCheckbox;
     /** Store all the GUI component used to represent the attached filter */
-    private HashMap<String, JComponent> _widgets = null;
+    private final Map<String, JComponent> _widgets;
     /** Widgets panel */
-    private JPanel _widgetsPanel = null;
+    private final JPanel _widgetsPanel;
     /** JFormattedTextField formatter for Double constraints */
-    private DefaultFormatterFactory _doubleFormaterFactory = null;
+    private final DefaultFormatterFactory _doubleFormaterFactory;
 
     /**
      * Default constructor.
      * @param filter 
      */
-    public FilterView(Filter filter) {
-        // Members initialization
-        _widgets = new HashMap<String, JComponent>();
-        _widgetsPanel = new JPanel();
+    public FilterView(final Filter filter) {
+        final int nConstraints = filter.getNbOfConstraints();
 
         // Members initialization
         _filter = filter;
+        _widgets = new HashMap<String, JComponent>(nConstraints);
+        _widgetsPanel = new JPanel();
 
         // JFormattedTextField formatter creation
-        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####"));
+        final DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####"));
         doubleFormater.setValueClass(Double.class);
         _doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater, doubleFormater, doubleFormater);
 
@@ -78,7 +80,7 @@ public final class FilterView extends JPanel implements Observer {
         add(new JPanel());
 
         // For each constraint of the associated filter
-        for (int i = 0, len = _filter.getNbOfConstraints(); i < len; i++) {
+        for (int i = 0; i < nConstraints; i++) {
             // Get the constraint name
             String constraintName = _filter.getConstraintNameByOrder(i);
 
@@ -108,6 +110,13 @@ public final class FilterView extends JPanel implements Observer {
      */
     public void init() {
         _filter.addObserver(this);
+    }
+
+    /**
+     * @return filter
+     */
+    public Filter getFilter() {
+        return _filter;
     }
 
     /**
@@ -202,6 +211,11 @@ public final class FilterView extends JPanel implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        if (_filter.isEnabled() != _enabledCheckbox.isSelected()) {
+            // trick to fire actionPerformed():
+            _enabledCheckbox.doClick();
+        }
+        
         // For each constraint of the associated filter
         for (int i = 0, len = _filter.getNbOfConstraints(); i < len; i++) {
             // Get the constraint name
@@ -213,12 +227,6 @@ public final class FilterView extends JPanel implements Observer {
             // Update the corresponding value from the widget
             setParam(constraintName, constraintObject);
         }
-
-        // Disabled to make filter GUI always enabled.
-        /*
-         // Enable or disable all the constraint widgets
-         QueryView.setEnabledComponents(_widgetsPanel, ((Filter) o).isEnabled());
-         */
     }
 
     /**

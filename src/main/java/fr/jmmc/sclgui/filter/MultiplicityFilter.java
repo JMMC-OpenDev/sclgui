@@ -26,6 +26,13 @@ public final class MultiplicityFilter extends Filter {
      */
     public MultiplicityFilter() {
         super();
+    }
+
+    /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
         setEnabled(Boolean.TRUE);
     }
 

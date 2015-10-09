@@ -47,6 +47,14 @@ public final class MagnitudeFilter extends Filter {
     }
 
     /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
+        // no-op
+    }
+
+    /**
      * Return the filter name.
      *
      * @return the name of the filter.

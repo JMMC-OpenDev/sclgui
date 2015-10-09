@@ -22,6 +22,13 @@ public final class ObjectTypeFilter extends Filter {
      */
     public ObjectTypeFilter() {
         super();
+    }
+
+    /**
+     * Reset the filter
+     */
+    @Override
+    public void reset() {
         setEnabled(Boolean.TRUE);
     }
 
@@ -32,7 +39,7 @@ public final class ObjectTypeFilter extends Filter {
      */
     @Override
     public String getName() {
-        return "Reject invalid Object Types (Simbad)";
+        return "Reject invalid Object Types";
     }
 
     /**
