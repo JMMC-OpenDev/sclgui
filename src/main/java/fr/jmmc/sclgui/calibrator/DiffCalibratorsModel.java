@@ -31,6 +31,10 @@ public final class DiffCalibratorsModel {
 
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(DiffCalibratorsModel.class.getName());
+    
+    /** shared null star property to reduce memory footprint */
+    private final static StarProperty NULL_STAR_PROPERTY = new ObjectStarProperty(null, Origin.KEY_ORIGIN_COMPUTED, Confidence.KEY_CONFIDENCE_HIGH);
+    
     /** hard coded preference for ignored properties */
     public final static String IGNORE_PROPERTIES;
     /** hard coded preference for ignored properties */
@@ -840,7 +844,7 @@ public final class DiffCalibratorsModel {
                     /*
                      * Create a new StarProperty instance from the retrieved value, origin and confidence.
                      */
-                    starProperty = (isSet) ? new StarProperty(propertyValue, origin.getKey(), confidence.getKey()) : StarProperty.EMPTY_STAR_PROPERTY;
+                    starProperty = (isSet) ? new ObjectStarProperty(propertyValue, origin.getKey(), confidence.getKey()) : StarProperty.EMPTY_STAR_PROPERTY;
 
                     // Add the newly created star property to the star property list
                     star.add(starProperty);
@@ -853,9 +857,9 @@ public final class DiffCalibratorsModel {
                 star.add(starPropertyRightRowIdx);
 
                 // add star stats (left, right, diff):
-                star.add(new StarProperty(left));
-                star.add(new StarProperty(right));
-                star.add(new StarProperty(diff));
+                star.add(new ObjectStarProperty(left));
+                star.add(new ObjectStarProperty(right));
+                star.add(new ObjectStarProperty(diff));
 
                 // Store each diff row as a list of star properties
                 diffStarList.add(star);
@@ -915,7 +919,7 @@ public final class DiffCalibratorsModel {
                             mapIdxRelStats[i].toString(sb, full);
                         }
                     }
-                    sb.append("\n");
+                    sb.append('\n');
                 }
             }
             _logger.info("compare: diff properties with left/right only:\n{} {} diff properties", sb.toString(), diffProperties);
@@ -948,7 +952,7 @@ public final class DiffCalibratorsModel {
                             mapIdxRelStats[i].toString(sb, full);
                         }
                     }
-                    sb.append("\n");
+                    sb.append('\n');
                 }
             }
             _logger.info("compare: diff properties with diff only:\n{} {} diff properties", sb.toString(), diffProperties);
@@ -1176,13 +1180,13 @@ public final class DiffCalibratorsModel {
                             // avoid reentrance:
                             if (starFoundRight.size() != nPropRight) {
                                 // add otherRowIdx value to star found right:                
-                                starFoundRight.add(new StarProperty(rowIdxLeft));
+                                starFoundRight.add(new ObjectStarProperty(rowIdxLeft));
                             }
 
                             // avoid reentrance:
                             if (starFoundLeft.size() != nPropLeft) {
                                 // add otherRowIdx value to star found left:
-                                starFoundLeft.add(new StarProperty(rowIdxRight));
+                                starFoundLeft.add(new ObjectStarProperty(rowIdxRight));
                             }
                         }
                     }
@@ -1192,7 +1196,7 @@ public final class DiffCalibratorsModel {
                         onlyRight++;
 
                         // add NULL otherRowIdx value to star right (NO MATCH):
-                        star.add(new StarProperty(null));
+                        star.add(NULL_STAR_PROPERTY);
                     }
                 }
             }
@@ -1204,7 +1208,7 @@ public final class DiffCalibratorsModel {
                     onlyLeft++;
 
                     // add NULL otherRowIdx value:
-                    star.add(new StarProperty(null));
+                    star.add(NULL_STAR_PROPERTY);
                 }
             }
 

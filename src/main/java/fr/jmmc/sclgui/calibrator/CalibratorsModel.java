@@ -85,6 +85,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private final static long serialVersionUID = 1L;
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
+    /** Enable CrossIds checker (development only) */
+    public final static boolean DO_CROSS_ID_CHECKER = false;
     /** server log */
     public final static String SCL_SERVER_LOG = "fr.jmmc.sclgui.server";
     /** Server Log */
@@ -185,6 +187,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // This faceless filter should always be activated
         // (set once here as no GUI can change it anywhere else)
         _facelessNonCalibratorsFilter.setEnabled(Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FILTER_NON_CALIBRATORS));
+    }
+
+    void resetFilters() {
+        _filtersModel.resetFilters();
     }
 
     /**
@@ -963,7 +969,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                     loadMapping.errorPos = pos;
 
                                     if (_logger.isDebugEnabled()) {
-                                        _logger.debug("ERROR Field: name='" + name + "' ucd='" + ucd + "'");
+                                        _logger.debug("ERROR Field: name='{}' ucd='{}'", name, ucd);
                                     }
 
                                     // Define a new star property meta data to hold the star property error:
@@ -1067,6 +1073,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 Confidence confidence;
                 StarProperty starProperty;
                 int nStrValues = 0;
+                boolean isDbl;
+                double dblValue;
+                final Object fakeDblValue = "1";
 
                 // Origin and Confidence index are enumerations: use instance cache to use less memory
                 // Origin resolved instance cache:
@@ -1113,7 +1122,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     star = new Vector<StarProperty>(nProperties);
 
                     for (groupId = 0; groupId < nGroups; ++groupId) {
+                        isDbl = false;
                         propertyValue = null;
+                        dblValue = Double.NaN;
                         origin = Origin.ORIGIN_NONE;
                         confidence = Confidence.CONFIDENCE_NO;
 
@@ -1134,7 +1145,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                         propertyValue = null;
                                     } else {
                                         try {
-                                            propertyValue = Double.valueOf(value);
+                                            dblValue = Double.parseDouble(value);
+                                            propertyValue = fakeDblValue;
+                                            isDbl = true;
                                         } catch (NumberFormatException nfe) {
                                             _logger.warn("invalid Double value [{}] at column index={}", value, loadMapping.valuePos);
                                         }
@@ -1224,7 +1237,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             /*
                              * Create a new StarProperty instance from the retrieved value, origin and confidence.
                              */
-                            starProperty = new StarProperty(propertyValue, origin.getKey(), confidence.getKey());
+                            if (isDbl) {
+                                starProperty = new DoubleStarProperty(dblValue, origin.getKey(), confidence.getKey());
+                            } else {
+                                starProperty = new ObjectStarProperty(propertyValue, origin.getKey(), confidence.getKey());
+                            }
 
                         } // value is set
 
@@ -1233,7 +1250,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                         // handle error field:
                         if (loadMapping.errorPos != null) {
+                            isDbl = false;
                             propertyValue = null;
+                            dblValue = Double.NaN;
 
                             // Get the error
                             value = row.getRawContent(loadMapping.errorPos);
@@ -1245,7 +1264,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                     propertyValue = null;
                                 } else {
                                     try {
-                                        propertyValue = Double.valueOf(value);
+                                        dblValue = Double.parseDouble(value);
+                                        propertyValue = fakeDblValue;
+                                        isDbl = true;
                                     } catch (NumberFormatException nfe) {
                                         _logger.warn("invalid Double error [{}] at column index={}", value, loadMapping.errorPos);
                                     }
@@ -1257,7 +1278,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                 /*
                                  * Create a new StarProperty instance from the retrieved error, origin and confidence.
                                  */
-                                starProperty = new StarProperty(propertyValue, origin.getKey(), confidence.getKey());
+                                if (isDbl) {
+                                    starProperty = new DoubleStarProperty(dblValue, origin.getKey(), confidence.getKey());
+                                } else {
+                                    starProperty = new ObjectStarProperty(propertyValue, origin.getKey(), confidence.getKey());
+                                }
                             }
 
                             // Add the newly created star property to the star property list
@@ -1275,6 +1300,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 if (_logger.isDebugEnabled()) {
                     _logger.debug("stringCache: size: {} / values: {}", stringCache.size(), nStrValues);
                 }
+
+                // trim to size (jsdc):
+                starList.trimToSize();
             }
 
             _logger.info("CalibratorsModel.parseVOTable: {} rows read in {} ms.", nRow, 1e-6d * (System.nanoTime() - start));
@@ -1289,6 +1317,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          */
         @Override
         public void refreshUI(final StarList starList) {
+            // reset filters:
+            calModel.resetFilters();
 
             // update calibrators model:
             calModel.updateModelFromVOTable(savotVoTable, paramSet, starList, saveMappings);
@@ -1537,7 +1567,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             final double currentRA = ALX.parseRA(raString);
 
                             // add RADeg value:
-                            star.add(new StarProperty(Double.valueOf(currentRA),
+                            star.add(new DoubleStarProperty(currentRA,
                                     cell.getOriginIndex(), cell.getConfidenceIndex()));
                         }
                     }
@@ -1561,7 +1591,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                             final double currentDEC = ALX.parseDEC(decString);
 
                             // add RADeg value:
-                            star.add(new StarProperty(Double.valueOf(currentDEC),
+                            star.add(new DoubleStarProperty(currentDEC,
                                     cell.getOriginIndex(), cell.getConfidenceIndex()));
                         }
                     }
@@ -1575,7 +1605,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 int i = 0;
                 for (List<StarProperty> star : starList) {
                     // add rowIdx value:
-                    star.add(new StarProperty(NumberUtils.valueOf(++i)));
+                    star.add(new ObjectStarProperty(NumberUtils.valueOf(++i)));
                 }
             }
 
@@ -1600,6 +1630,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             if (first.size() > first.capacity()) {
                 _logger.warn("Incorrect Property capacity: {} != {} ", first.size(), first.capacity());
             }
+
+            // DEV: Check cross identification with Simbad
+            if (DO_CROSS_ID_CHECKER) {
+                fr.jmmc.sclgui.vo.CrossIdChecker.check(starList);
+            }
+
         }
     }
 
@@ -1792,14 +1828,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     // TODO: move in helper method like StarList
                     if (pVis2 == StarProperty.EMPTY_STAR_PROPERTY) {
                         // replace star property:
-                        star.set(vis2Id, new StarProperty(visibilities.vis2, originIndex, confidenceIndex));
+                        star.set(vis2Id, new DoubleStarProperty(visibilities.vis2, originIndex, confidenceIndex));
                     } else {
                         // update star property:
                         pVis2.set(visibilities.vis2, originIndex, confidenceIndex);
                     }
                     if (pErrVis2 == StarProperty.EMPTY_STAR_PROPERTY) {
                         // replace star property:
-                        star.set(e_vis2Id, new StarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
+                        star.set(e_vis2Id, new DoubleStarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
                     } else {
                         // update star property:
                         pErrVis2.set(visibilities.vis2Err, originIndex, confidenceIndex);
@@ -1807,9 +1843,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                 } else {
                     // add vis2 value:
-                    star.add(new StarProperty(visibilities.vis2, originIndex, confidenceIndex));
+                    star.add(new DoubleStarProperty(visibilities.vis2, originIndex, confidenceIndex));
                     // add vis2Err value:
-                    star.add(new StarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
+                    star.add(new DoubleStarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
                 }
 
             } else {
