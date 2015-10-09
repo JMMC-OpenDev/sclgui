@@ -34,8 +34,10 @@ public final class SearchCalServerClient {
     /** singleton */
     private static SearchCalServerClient _instance;
     // Constants
-    /** Default server URL */
-    private static final String DEFAULT_SERVER_URL = "http://apps.jmmc.fr";
+    /** JMMC application server to detect DNS */
+    private final static String JMMC_APPS_SERVER_HOST = "apps.jmmc.fr";
+    /** JMMC application server IP (hard-coded) */
+    private final static String JMMC_APPS_SERVER_IP = "152.77.114.210";
     /** Official release path */
     private static final String OFFICIAL_SERVER_PATH = "/~sclws/";
     /** Beta release path */
@@ -76,7 +78,6 @@ public final class SearchCalServerClient {
      * Configure Axis library (SOAP client)
      */
     private void configureAxis() {
-
         // Define custom config to use AbortableCommonsHTTPSender (and SOAP logs in dev):
         AxisProperties.setProperty(EngineConfigurationFactoryDefault.OPTION_CLIENT_CONFIG_FILE, "sclgui-client-config.wsdd");
 
@@ -95,7 +96,6 @@ public final class SearchCalServerClient {
         // Timeout to establish connection in millis
         AxisProperties.setProperty(DefaultCommonsHTTPClientProperties.CONNECTION_DEFAULT_CONNECTION_TIMEOUT_KEY,
                 Integer.toString(NetworkSettings.DEFAULT_CONNECT_TIMEOUT));
-
 
         // Timeout "waiting for data" (read timeout) in milliseconds:
         AxisProperties.setProperty(DefaultCommonsHTTPClientProperties.CONNECTION_DEFAULT_SO_TIMEOUT_KEY,
@@ -131,12 +131,14 @@ public final class SearchCalServerClient {
      */
     private SclwsLocator getSclwsLocator() {
         if (_sclwsLocator == null) {
-
             final SclwsLocator locator = new SclwsLocator();
 
             // Retrieve prefered SearchCal server URL (if any)
             String proxyScriptURL = Preferences.getInstance().getPreference(PreferenceKey.SERVER_URL_ADDRESS);
             if (StringUtils.isTrimmedEmpty(proxyScriptURL)) {
+                // Use JMMC server IP (ESO constraint):
+                final String serverIP = NetworkSettings.getHostIP(JMMC_APPS_SERVER_HOST, JMMC_APPS_SERVER_IP);
+
                 // If none found
                 // Decipher which proxy script to use according to app version status (release, beta or alpha)
                 String serverPath = OFFICIAL_SERVER_PATH;
@@ -145,7 +147,7 @@ public final class SearchCalServerClient {
                 } else if (ApplicationDescription.isAlphaVersion()) {
                     serverPath = ALPHA_SERVER_PATH;
                 }
-                proxyScriptURL = DEFAULT_SERVER_URL + serverPath + DEFAULT_PROXY_SCRIPT;
+                proxyScriptURL = "http://" + serverIP + serverPath + DEFAULT_PROXY_SCRIPT;
             }
 
             _logger.info("SearchCal server URL: {}", proxyScriptURL);
