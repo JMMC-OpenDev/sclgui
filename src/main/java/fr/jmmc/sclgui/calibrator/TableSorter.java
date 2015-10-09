@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -404,7 +405,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
      */
     Comparator<Object> getComparator(final int column) {
         final Class<?> columnType = tableModel.getColumnClass(column);
-        
+
         if (String.class == columnType) {
             return LEXICAL_COMPARATOR;
         }
@@ -640,6 +641,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             final String[] columnStrings = prefColumns.trim().split(" ");
             final int nbOfColumns = columnStrings.length;
 
+            final Set<String> missingCols = _calibratorsModel.getIgnoreMissingColumns();
+
             // Use list to keep only valid columns:
             final List<Integer> viewIndex = new ArrayList<Integer>(nbOfColumns);
 
@@ -655,7 +658,9 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
                     // If no column Id was found for the given column name
                     if (columnId == -1) {
-                        _logger.warn("No column called '{}'.", columnName);
+                        if (missingCols.add(columnName)) {
+                            _logger.warn("No column called '{}'.", columnName);
+                        }
                     } else {
                         viewIndex.add(NumberUtils.valueOf(columnId));
 

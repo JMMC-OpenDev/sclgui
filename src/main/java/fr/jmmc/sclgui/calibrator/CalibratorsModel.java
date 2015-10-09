@@ -57,10 +57,12 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
@@ -158,6 +160,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     Boolean _brightScenarioFlag = true;
     /** flag to enable/disable update events (ie multiple calls) */
     private boolean _autoUpdateEvent = true;
+    /** unique column names that are missing (avoid repeated messages in logs) */
+    final HashSet<String> _ignoreMissingColumns = new HashSet<String>(32);
 
     /**
      * Constructor.
@@ -191,6 +195,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
     void resetFilters() {
         _filtersModel.resetFilters();
+    }
+
+    public Set<String> getIgnoreMissingColumns() {
+        return _ignoreMissingColumns;
     }
 
     /**
@@ -646,7 +654,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             _originalStarList.clear();
             _calibratorStarList.clear();
             _currentStarList.clear();
-
+            
             // Update any attached observer TO FREE MEMORY:
             update(null, this);
 
@@ -1317,6 +1325,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
          */
         @Override
         public void refreshUI(final StarList starList) {
+            // Clear missing cols before new parsing:
+            calModel.getIgnoreMissingColumns().clear();
+            
             // reset filters:
             calModel.resetFilters();
 
