@@ -15,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.apache.axis.transport.http.AbortableCommonsHTTPSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -210,7 +209,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             // current state used to report proper message if an exception is caught:
             QueryState currentState = QueryState.OpenSession;
             try {
-
                 // Check if the query was cancelled:
                 if (isCancelled()) {
                     return;
@@ -247,7 +245,6 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
                 // 3 - GetCal status polling to update ProgressBar
                 int requestStatus;
                 do {
-
                     // Check if the query was cancelled:
                     if (isCancelled()) {
                         return;
