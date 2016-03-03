@@ -55,6 +55,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpMethodRetryHandler;
 
 /**
  * This class enhance the Axis CommonsHTTPSender to allow query cancellation
@@ -78,6 +80,8 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
     private static final long serialVersionUID = 1;
     /** Field log */
     private static Log log = LogFactory.getLog(AbortableCommonsHTTPSender.class.getName());
+    /** shared Http retry handler that disabled http retries */
+    private static final HttpMethodRetryHandler httpNoRetryHandler = new DefaultHttpMethodRetryHandler(0, false);
     /** connection manager */
     private MultiThreadedHttpConnectionManager connectionManager;
     /** http client properties */
@@ -137,6 +141,9 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
             HttpClient httpClient = new HttpClient(this.connectionManager);
             // the timeout value for allocation of connections from the pool
             httpClient.getParams().setConnectionManagerTimeout(this.clientProperties.getConnectionPoolTimeout());
+            
+            // LAURENT: avoid retries (3 by default):
+            httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, httpNoRetryHandler);
 
             HostConfiguration hostConfiguration = getHostConfiguration(httpClient, msgContext, targetURL);
 
