@@ -37,19 +37,19 @@ public final class QueryModel extends Star implements Observer {
      *
      * @warning Do not change the order, as it is used to parse SIMBAD VOTables.
      */
-    private static final String[] ALL_MAGNITUDE_BANDS = {"V", "J", "H", "K", "N"};
+    private static final String[] ALL_MAGNITUDE_BANDS = {"V", "J", "H", "K", "L", "M", "N"};
     /**
      * Default magnitude band wavelengthes in micrometer.
      *
      * @warning Do not change the order,as it is linked to ALL_MAGNITUDE_BANDS.
      * @sa ALL_MAGNITUDE_BANDS
      */
-    private static final Double[] _defaultWavelengths = {0.55d, 1.25d, 1.65d, 2.2d, 10d};
+    private static final Double[] _defaultWavelengths = {0.55d, 1.25d, 1.65d, 2.2d, 3.5, 5.0, 10d};
     /** Available magnitude band for BRIGHT scenario */
-    private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "J", "H", "K", "N"};
+    private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "J", "H", "K", "L", "M", "N"};
     /** Available magnitude band for FAINT scenario */
     private static final String[] FAINT_MAGNITUDE_BANDS = {"J", "H", "K"};
-
+    
     /**
      * Enumeration of all different observers notification a star can raise.
      */

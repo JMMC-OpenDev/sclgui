@@ -271,6 +271,8 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         setDefaultPreference(PreferenceKey.VIEW_SIMPLE_FAINT_K, _simpleFaintK);
         // detailed 'Faint K' view
         setDefaultPreference(PreferenceKey.VIEW_DETAILED_FAINT_K, _detailedFaintK);
+        
+        // TODO: add view preferences for LM bands
 
         // Query default values preferences (ETA_TAU, bright V)
         setDefaultPreference(PreferenceKey.QUERY_MAGNITUDE_BAND, "V");

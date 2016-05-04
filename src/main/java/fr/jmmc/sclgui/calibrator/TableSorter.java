@@ -622,7 +622,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         if (selectedView == null) {
             prefColumns = null;
         } else {
-            prefColumns = _preferences.getPreference(selectedView);
+            // ignore missing:
+            prefColumns = _preferences.getPreference(selectedView, true);
 
             if (prefColumns == null) {
                 _logger.error("No preference found for [{}]", selectedView);
