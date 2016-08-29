@@ -3,6 +3,8 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
+import fr.jmmc.jmcs.util.NumberUtils;
+
 /**
  * Star property storing values as Object instances (Boolean, Integer, String)
  */
@@ -114,7 +116,7 @@ public final class ObjectStarProperty implements StarProperty {
      */
     @Override
     public Double getDouble() {
-        throw new UnsupportedOperationException("ObjectStarProperty.getDouble() not implemented !");
+        return NumberUtils.DBL_NAN;
     }
 
     /**
@@ -124,7 +126,7 @@ public final class ObjectStarProperty implements StarProperty {
      */
     @Override
     public double getDoubleValue() {
-        throw new UnsupportedOperationException("ObjectStarProperty.getDoubleValue() not implemented !");
+        return Double.NaN;
     }
 
     /**
