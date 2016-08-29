@@ -3,6 +3,7 @@
  ******************************************************************************/
 package org.apache.axis.transport.http;
 
+import fr.jmmc.jmcs.network.NetworkSettings;
 import fr.jmmc.jmcs.network.http.Http;
 import fr.jmmc.jmcs.network.http.HttpMethodThreadMap;
 import org.apache.axis.AxisFault;
@@ -57,6 +58,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpMethodRetryHandler;
+import org.apache.commons.httpclient.params.HttpClientParams;
 
 /**
  * This class enhance the Axis CommonsHTTPSender to allow query cancellation
@@ -138,12 +140,18 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
             // stored in the message context across multiple requests.
             // the underlying connection manager, however, is retained
             // so sockets get recycled when possible.
-            HttpClient httpClient = new HttpClient(this.connectionManager);
+            final HttpClient httpClient = new HttpClient(this.connectionManager);
+
+            final HttpClientParams httpClientParams = httpClient.getParams();
+            
             // the timeout value for allocation of connections from the pool
-            httpClient.getParams().setConnectionManagerTimeout(this.clientProperties.getConnectionPoolTimeout());
+            httpClientParams.setConnectionManagerTimeout(this.clientProperties.getConnectionPoolTimeout());
             
             // LAURENT: avoid retries (3 by default):
-            httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, httpNoRetryHandler);
+            httpClientParams.setParameter(HttpMethodParams.RETRY_HANDLER, httpNoRetryHandler);
+            
+            // LBO: customize globally http user-agent:
+            httpClientParams.setParameter(HttpMethodParams.USER_AGENT, System.getProperty(NetworkSettings.PROPERTY_USER_AGENT));
 
             HostConfiguration hostConfiguration = getHostConfiguration(httpClient, msgContext, targetURL);
 
@@ -499,7 +507,8 @@ public final class AbortableCommonsHTTPSender extends BasicHandler {
         }
         method.setRequestHeader(new Header(HTTPConstants.HEADER_SOAP_ACTION,
                 "\"" + action + "\""));
-        method.setRequestHeader(new Header(HTTPConstants.HEADER_USER_AGENT, Messages.getMessage("axisUserAgent")));
+// LBO: customize globally http user-agent:        
+//        method.setRequestHeader(new Header(HTTPConstants.HEADER_USER_AGENT, Messages.getMessage("axisUserAgent")));
         String userID = msgContext.getUsername();
         String passwd = msgContext.getPassword();
 
