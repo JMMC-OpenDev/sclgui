@@ -189,6 +189,7 @@ public class CrossIdChecker {
             final AtomicInteger countError = new AtomicInteger();
             final AtomicInteger countOK = new AtomicInteger();
             final AtomicInteger countKO = new AtomicInteger();
+            final AtomicInteger countBadDist = new AtomicInteger();
             int ns = 0;
             int nc = 0;
 
@@ -238,7 +239,7 @@ public class CrossIdChecker {
                         // if failure: exit:
                         if (!checkTargets(reportWriter, nameList, dataCoords, dataIds,
                                 globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS,
-                                countError, countOK, countKO)) {
+                                countError, countOK, countKO, countBadDist)) {
                             return;
                         }
                         // reset
@@ -252,6 +253,7 @@ public class CrossIdChecker {
                                 + "\nGlobal Mismatch count: {}"
                                 + "\nTotal checked count: {}"
                                 + "\nTotal simbad error: {}"
+                                + "\nTotal bad distance: {}"
                                 + "\nGlobal Mismatchs[SCL NULL]: {}"
                                 + "\nGlobal Mismatchs[SIMBAD NULL]: {}"
                                 + "\nGlobal Mismatchs[SCL <> SIMBAD]: {}",
@@ -261,6 +263,7 @@ public class CrossIdChecker {
                                 countKO.get(),
                                 countOK.get() + countKO.get(),
                                 countError.get(),
+                                countBadDist.get(),
                                 Arrays.toString(globalMismatchs_NULL_1),
                                 Arrays.toString(globalMismatchs_NULL_2),
                                 Arrays.toString(globalMismatchs_VALS)
@@ -271,7 +274,7 @@ public class CrossIdChecker {
                 if (nc != 0) {
                     checkTargets(reportWriter, nameList, dataCoords, dataIds,
                             globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS,
-                            countError, countOK, countKO);
+                            countError, countOK, countKO, countBadDist);
                 }
             } catch (IOException ioe) {
                 _logger.error("IO failure:", ioe);
@@ -283,6 +286,7 @@ public class CrossIdChecker {
                         + "\nGlobal Mismatch count: {}"
                         + "\nTotal checked count: {}"
                         + "\nTotal simbad error: {}"
+                        + "\nTotal bad distance: {}"
                         + "\nGlobal Mismatchs[SCL NULL]: {}"
                         + "\nGlobal Mismatchs[SIMBAD NULL]: {}"
                         + "\nGlobal Mismatchs[SCL <> SIMBAD]: {}",
@@ -292,6 +296,7 @@ public class CrossIdChecker {
                         countKO.get(),
                         countOK.get() + countKO.get(),
                         countError.get(),
+                        countBadDist.get(),
                         Arrays.toString(globalMismatchs_NULL_1),
                         Arrays.toString(globalMismatchs_NULL_2),
                         Arrays.toString(globalMismatchs_VALS)
@@ -304,7 +309,8 @@ public class CrossIdChecker {
                                         final List<String> nameList, double[][] dataCoords, final String[][] dataIds,
                                         final int[] globalMismatchs_NULL_1, final int[] globalMismatchs_NULL_2,
                                         final int[] globalMismatchs_VALS, final AtomicInteger countError,
-                                        final AtomicInteger countOK, final AtomicInteger countKO) throws IOException {
+                                        final AtomicInteger countOK, final AtomicInteger countKO,
+                                        final AtomicInteger countBadDist) throws IOException {
 
         final int len = nameList.size();
         if (len != 0) {
@@ -366,7 +372,8 @@ public class CrossIdChecker {
                         extractIds(rawIds, simbadIds);
 
                         compare(reportWriter, name, sep, dataCoords[i], dataIds[i], j, simbadCoords, rawIds, simbadIds, mismatchs,
-                                globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS, countOK, countKO);
+                                globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS,
+                                countOK, countKO, countBadDist);
                     }
                 }
             }
@@ -380,10 +387,12 @@ public class CrossIdChecker {
                                 final int[] mismatchs,
                                 final int[] globalMismatchs_NULL_1, final int[] globalMismatchs_NULL_2,
                                 final int[] globalMismatchs_VALS,
-                                final AtomicInteger countOK, final AtomicInteger countKO) throws IOException {
+                                final AtomicInteger countOK, final AtomicInteger countKO,
+                                final AtomicInteger countBadDist) throws IOException {
 
-        if (sep >= 1.0) {
-            _logger.info("name[{}]: sep={} as:\nSearchCal: {}\nSimbad[{}]: {}",
+        if (sep >= 1.5) {
+            countBadDist.incrementAndGet();
+            _logger.info("name[{}]: bad sep={} as:\nSearchCal: {}\nSimbad[{}]: {}",
                     name,
                     NumberUtils.trimTo3Digits(sep),
                     Arrays.toString(sclCoords),
