@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui;
 
+import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.component.StatusBar;
 import fr.jmmc.jmcs.gui.util.ResourceImage;
@@ -61,7 +62,7 @@ public final class MainWindow extends JFrame {
     public MainWindow(final VirtualObservatory vo, final QueryView queryView,
                       final CalibratorsView calibratorsView, final FiltersView filtersView,
                       final StatusBar statusBar) {
-        super("SearchCal");
+        super(ApplicationDescription.getInstance().getProgramName());
 
         // handle frame icon
         final Image jmmcFavImage = ResourceImage.JMMC_FAVICON.icon().getImage();
