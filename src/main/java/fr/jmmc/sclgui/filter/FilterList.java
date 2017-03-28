@@ -34,10 +34,11 @@ public final class FilterList extends Filter implements Observer {
      */
     @Override
     public void reset() {
-        setEnabled(Boolean.TRUE);
+        setEnabled(Boolean.FALSE);
         for (Filter filter : _filters) {
             filter.reset();
         }
+        setEnabled(Boolean.TRUE);
     }
 
     /**
@@ -127,8 +128,10 @@ public final class FilterList extends Filter implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        setChanged();
-        notifyObservers();
+        if (isEnabled()) {
+            setChanged();
+            notifyObservers();
+        }
     }
 }
 /*___oOo___*/
