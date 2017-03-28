@@ -34,7 +34,7 @@ public final class DistanceFilter extends Filter {
     /** Store the science object RA value (in degrees) */
     private double _scienceObjectRA;
     /** Store the science object DEC value (in degrees) */
-    private double _scienceObjectDEC;
+    private double _scienceObjectDE;
     /** Store the allowed RA delta (in degrees) */
     private double _deltaRA;
     /** Store the allowed DEC delta (in degrees) */
@@ -83,7 +83,7 @@ public final class DistanceFilter extends Filter {
     private void retrieveScienceObjectCoordinates() {
         // Get the science object 'RA' and 'DEC' properties
         _scienceObjectRA = ALX.parseRA(_queryModel.getScienceObjectRA());
-        _scienceObjectDEC = ALX.parseDEC(_queryModel.getScienceObjectDEC());
+        _scienceObjectDE = ALX.parseDEC(_queryModel.getScienceObjectDEC());
     }
 
     /**
@@ -142,11 +142,11 @@ public final class DistanceFilter extends Filter {
                 // Compute separation between science object and the current star:
                 // use distance computation to correct RA arround poles (by cos(dec)) : 
                 // TODO: use a correct distance ?
-                final double raSeparation = CoordUtils.computeDistanceInDegrees(_scienceObjectRA, _scienceObjectDEC, currentRA, _scienceObjectDEC);
-                final double decSeparation = Math.abs(_scienceObjectDEC - currentDEC);
+                final double raSeparation = CoordUtils.computeDistanceInDegrees(_scienceObjectRA, _scienceObjectDE, currentRA, _scienceObjectDE);
+                final double deSeparation = Math.abs(_scienceObjectDE - currentDEC);
 
                 // If the current star is out of range
-                if ((raSeparation > _deltaRA) || (decSeparation > _deltaDEC)) {
+                if ((raSeparation > _deltaRA) || (deSeparation > _deltaDEC)) {
                     // TODO: use correct distance computation ? because it will be false close to poles
                     // The current star row should be removed
                     return true;
