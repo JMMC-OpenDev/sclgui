@@ -23,8 +23,8 @@ public final class VisibilityUtils {
     /**
      * Compute star visibility.
      *
-     * This method computes the potential calibrator visibility according to the
-     * angular diameter, the length of the maximal baseline and the wavelength
+     * This method computes the calibrator visibility according to the uniform
+     * disk diameter, the length of the maximal baseline and the wavelength
      *
      * @param angDiam angular diameter of the star (mas)
      * @param angDiamError relative error on the angular diameter
@@ -42,7 +42,7 @@ public final class VisibilityUtils {
         final double vis = Math.abs(Functions.computeDisk(freq, angDiam));
 
         // and its associated error for Diameter Uniform Disc 
-        final double err = Functions.computeDiskError(freq, angDiam, angDiamError);
+        final double err = Math.abs(Functions.computeDiskError(freq, angDiam, angDiamError));
 
         visibilities.vis = vis;
         visibilities.visErr = err;
