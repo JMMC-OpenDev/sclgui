@@ -6,13 +6,17 @@ package fr.jmmc.sclgui.filter;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Object Type filter.
  */
 public final class ObjectTypeFilter extends Filter {
 
-    /* members */
+    /** Logger */
+    private static final Logger _logger = LoggerFactory.getLogger(ObjectTypeFilter.class.getName());
+
     /* filter execution variables */
     /** the Simbad ObjectTypes column Id */
     private int _ObjTypesID = -1;
@@ -72,7 +76,13 @@ public final class ObjectTypeFilter extends Filter {
             // if the Simbad ObjectTypes exist
             if (cell.hasValue()) {
                 // Check the value:
-                return filterObjTypes(cell.getString());
+                final boolean remove = filterObjTypes(cell.getString());
+                
+                if (remove && _logger.isDebugEnabled()) {
+                    _logger.debug("Filtered [{}]", cell.getString());
+                }
+                    
+                return remove;
             }
         }
 
