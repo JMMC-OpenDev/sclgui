@@ -645,7 +645,6 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             // Remove any deprecated columns found
             for (String column : deprecatedColumns) {
                 status &= removeTokenInPreference(view, column);
-                //System.out.println("\tstatus['" + column + "'] = " + status);
             }
 
             String after = getPreference(view);

@@ -306,7 +306,7 @@ public final class ColumnsPreferencesView extends JPanel implements Observer, Ac
 
         while (en.hasMoreElements()) {
             Object o = en.nextElement();
-            sb.append(" ").append(o);
+            sb.append(' ').append(o);
         }
 
         // Save the new order in preference
