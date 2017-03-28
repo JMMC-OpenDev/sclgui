@@ -8,7 +8,6 @@ import cds.savot.model.FieldSet;
 import cds.savot.model.GroupSet;
 import cds.savot.model.OptionSet;
 import cds.savot.model.ParamRefSet;
-import cds.savot.model.ParamSet;
 import cds.savot.model.ResourceSet;
 import cds.savot.model.SavotData;
 import cds.savot.model.SavotField;
@@ -26,6 +25,7 @@ import cds.savot.model.TDSet;
 import cds.savot.stax.SavotStaxParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.CoordUtils;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -35,6 +35,7 @@ import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.service.XslTransform;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.NumberUtils;
+import fr.jmmc.jmcs.util.ObjectUtils;
 import fr.jmmc.jmcs.util.ResourceUtils;
 import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.sclgui.calibrator.VisibilityUtils.VisibilityResult;
@@ -43,6 +44,7 @@ import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.query.QueryModel;
+import fr.jmmc.sclgui.query.QueryModel.Notification;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -89,6 +91,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private final static Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
     /** Enable CrossIds checker (development only) */
     public final static boolean DO_CROSS_ID_CHECKER = false;
+    /** Enable Vis2 computation comparison vs original column (development only) */
+    public final static boolean DO_COMPARE_VIS2 = false;
+    /** Enable Distance computation comparison vs original column (development only) */
+    public final static boolean DO_COMPARE_DIST = false;
     /** server log */
     public final static String SCL_SERVER_LOG = "fr.jmmc.sclgui.server";
     /** Server Log */
@@ -103,6 +109,18 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private final static int LOAD_TABLE_ASYNC_THRESHOLD = 5000;
     /** number of extra properties (dynamically added and computed in the GUI): RA/DEC (deg), rowIdx, otherRowIdx */
     private final static int N_EXTRA_PROPERTIES = 4;
+    /** parameter 'band' */
+    public final static String PARAMETER_BAND = "band";
+    /** parameter SearchCalServerVersion (string) */
+    public final static String PARAMETER_BRIGHT = "bright";
+    /** parameter 'band' */
+    public final static String PARAMETER_BASE_MAX = "baseMax";
+    /** parameter 'wlen' */
+    public final static String PARAMETER_WAVELENGTH = "wlen";
+    /** parameter 'ra' */
+    public final static String PARAMETER_RA = "ra";
+    /** parameter 'dec' */
+    public final static String PARAMETER_DEC = "dec";
     /** parameter SearchCalGuiVersion (string) */
     public final static String PARAMETER_SCL_GUI_VERSION = "SearchCalGuiVersion";
     /** parameter SearchCalServerVersion (string) */
@@ -146,13 +164,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     int _nProperties;
     /** Store the selected stars displayed and updated by calibratorView */
     private int[] _selectedStarIndices = null;
-    /** Query parameters */
-    Map<String, String> _parameters = null;
+    /** VOTable parameters */
+    ParameterSetWrapper _paramSetWrapper = null;
     /** Field Save mapping */
     private VOTableSaveMapping[] _saveMappings = null;
     /** Flag indicating whether data have changed or not */
     private boolean _dataHaveChanged;
-    /** Raw headers */
+    /** Row headers */
     final RowHeadersModel _rowHeadersModel;
     /** Selected magnitude band */
     String _magnitudeBand = "V";
@@ -162,6 +180,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     private boolean _autoUpdateEvent = true;
     /** unique column names that are missing (avoid repeated messages in logs) */
     final HashSet<String> _ignoreMissingColumns = new HashSet<String>(32);
+    /** dist computation state used to avoid redundant computations */
+    final DistParameters distState = new DistParameters();
+    /** vis2 computation state used to avoid redundant computations */
+    final Vis2Parameters vis2State = new Vis2Parameters();
 
     /**
      * Constructor.
@@ -173,13 +195,16 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         _filtersModel = filtersModel;
         _queryModel = queryModel;
 
+        // add observer to query model (to compute dynamic columns):
+        _queryModel.addObserver(new QueryModelObserverForDynamicColumns());
+
         // create empty star lists:
         setOriginalStarList(StarList.EMPTY_LIST);
         _calibratorStarList = StarList.EMPTY_LIST;
         _currentStarList = StarList.EMPTY_LIST;
         setFilteredStarList(StarList.EMPTY_LIST);
 
-        _parameters = null;
+        _paramSetWrapper = null;
         _saveMappings = null;
         _dataHaveChanged = false;
 
@@ -190,6 +215,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // This faceless filter should always be activated
         // (set once here as no GUI can change it anywhere else)
+        
+        // TODO: do not filter GetStar results:
         _facelessNonCalibratorsFilter.setEnabled(Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FILTER_NON_CALIBRATORS));
     }
 
@@ -252,7 +279,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // it calls fireTableStructureChanged()
             setDataVector(_filteredStarList, _starListMeta.getPropertyNames());
 
-            // Generate as many raw headers as data raws
+            // Generate as many row headers as data rows
             _rowHeadersModel.populate(_nFilteredStars);
 
             // Ask all the attached JTable views to update
@@ -649,12 +676,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
             }
 
-            // TODO: try also to check PARAMETER_SCL_SERVER_VERSION !
             // Clear all internal lists before new parsing:
             _originalStarList.clear();
             _calibratorStarList.clear();
             _currentStarList.clear();
-            
+
             // Update any attached observer TO FREE MEMORY:
             update(null, this);
 
@@ -696,8 +722,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         /* meta data */
         /** SAVOT VOTable partially loaded */
         private final SavotVOTable savotVoTable;
-        /** Parameter set */
-        private ParamSet paramSet = null;
+        /** ParameterSet wrapper */
+        private ParameterSetWrapper paramSetWrapper = null;
         /** Field Save mapping */
         private VOTableSaveMapping[] saveMappings = null;
 
@@ -748,31 +774,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             final int tableRows = table.getNrowsValue(); // optional
 
             // Retrieve VOTable parameters
-            paramSet = table.getParams();
-
-            final int nParams = paramSet.getItemCount();
-
-            /* TODO: use a single Param/Field map in Savot keyed by id / name ?
-             * because VOTABLE says both represents an 'identical' concept */
-            // PARAM by id:
-            final HashMap<String, SavotParam> paramById = new HashMap<String, SavotParam>(nParams);
-            final HashMap<String, SavotParam> paramByName = new HashMap<String, SavotParam>(nParams);
-
-            for (int i = 0; i < nParams; i++) {
-                final SavotParam param = paramSet.getItemAt(i);
-                final String id = param.getId();
-                if (id.length() != 0) {
-                    paramById.put(id, param);
-                }
-                final String name = param.getName();
-                if (name.length() != 0) {
-                    paramByName.put(name, param);
-                }
-            }
+            this.paramSetWrapper = new ParameterSetWrapper(table.getParams());
 
             /* Parse optional output format parameter */
             double outputFormat = OUTPUT_FORMAT_UNDEFINED; // 0 means default format (SearchCal < 5.0)
-            final SavotParam paramOutputFormat = paramByName.get(PARAMETER_SCL_OUTPUT_FORMAT);
+            final SavotParam paramOutputFormat = paramSetWrapper.get(PARAMETER_SCL_OUTPUT_FORMAT);
             if (paramOutputFormat != null) {
                 outputFormat = Double.valueOf(paramOutputFormat.getValue());
                 _logger.debug("outputFormat: {}", outputFormat);
@@ -782,7 +788,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             /* Origin index mapping (int to string) */
             // Parse PARAM name="OriginIndexes"
-            final SavotParam paramOriginIndexes = paramByName.get(PARAMETER_SCL_ORIGIN_INDEXES);
+            final SavotParam paramOriginIndexes = paramSetWrapper.get(PARAMETER_SCL_ORIGIN_INDEXES);
             if (paramOriginIndexes != null) {
                 final SavotValues values = paramOriginIndexes.getValues();
                 if (values != null) {
@@ -927,8 +933,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                         field.setDataType("double");
                                     } else if (fieldDataType.equals("char")) {
                                         if (isOutputFormatUndefined) {
-                                            // TODO: externalize column names:
-                                            if ("diamFlag".equals(name) || "plxFlag".equals(name)) {
+                                            if (StarList.DiamFlagColumnName.equals(name) || "plxFlag".equals(name)) {
                                                 // convert "diamFlag" and "PlxFlag" columns to use 'boolean' datatype:
                                                 type = StarPropertyMeta.TYPE_BOOLEAN;
                                                 // fix datatype:
@@ -1023,7 +1028,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     final String ref = paramRefs.getItemAt(i).getRef();
 
                     // Resolve the reference (field)
-                    final SavotParam param = paramById.get(ref);
+                    final SavotParam param = paramSetWrapper.getById(ref);
 
                     if (param == null) {
                         throw new IllegalArgumentException("Invalid VOTable - invalid PARAMref '" + ref + "'");
@@ -1033,7 +1038,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                     // Check param name as ucd may be used also by properties
                     // (CODE_QUALITY or REFER_CODE for example ...)
-                    // TODO: use ParamRef utypes ?
                     final String name = param.getName();
 
                     if (name.length() != 0) {
@@ -1327,12 +1331,16 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         public void refreshUI(final StarList starList) {
             // Clear missing cols before new parsing:
             calModel.getIgnoreMissingColumns().clear();
-            
+
             // reset filters:
             calModel.resetFilters();
 
+            // reset computation states:
+            calModel.vis2State.reset();
+            calModel.distState.reset();
+
             // update calibrators model:
-            calModel.updateModelFromVOTable(savotVoTable, paramSet, starList, saveMappings);
+            calModel.updateModelFromVOTable(savotVoTable, paramSetWrapper, starList, saveMappings);
 
             _logger.info("CalibratorsModel.parseVOTable done: {} ms.", 1e-6d * (System.nanoTime() - startTime));
 
@@ -1415,17 +1423,22 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /**
      * Update this calibrators model from parsed VOTable
      * @param savotVoTable  parsed SAVOT VOTable
-     * @param paramSet parameter set
+     * @param paramSetWrapper parameterSet wrapper
      * @param starList parsed StarList
      * @param saveMappings Field Save mapping
      */
-    void updateModelFromVOTable(final SavotVOTable savotVoTable, final ParamSet paramSet, final StarList starList,
+    void updateModelFromVOTable(final SavotVOTable savotVoTable,
+                                final ParameterSetWrapper paramSetWrapper,
+                                final StarList starList,
                                 final VOTableSaveMapping[] saveMappings) {
         // Keep only VOTable structure (without data):
         _parsedVOTable = savotVoTable;
 
         // Update Field Save mapping:
         _saveMappings = saveMappings;
+
+        // Update Parameters:
+        _paramSetWrapper = paramSetWrapper;
 
         // If server log are present, dump them:
         if (savotVoTable.getInfos().getItemCount() != 0) {
@@ -1434,68 +1447,36 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         }
 
         // Compute selected magnitude band and scenario
-        // TODO: put in Savot Param finder by name:
-        final int nParams = paramSet.getItemCount();
-        final HashMap<String, String> parameters = new HashMap<String, String>(nParams);
-
-        for (int i = 0; i < nParams; i++) {
-            final SavotParam param = paramSet.getItemAt(i);
-            final String paramName = param.getName();
-            final String paramValue = param.getValue();
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("{} = '{}'", paramName, paramValue);
-            }
-            parameters.put(paramName, paramValue);
-        }
-
-        _magnitudeBand = parameters.get("band");
-
-        if ((_magnitudeBand != null) && (_magnitudeBand.matches("I") || _magnitudeBand.matches("J") || _magnitudeBand.matches("H"))) {
-            _magnitudeBand = "K";
-        }
-
-        _brightScenarioFlag = Boolean.valueOf(parameters.get("bright"));
+        // Retrieve VOTable parameters
+        _magnitudeBand = paramSetWrapper.getValue(PARAMETER_BAND, QueryModel.DEF_MAGNITUDE_BAND);
+        
+        /* scenario bright because it is the only available for any instrumental band */
+        _brightScenarioFlag = Boolean.valueOf(paramSetWrapper.getValue(PARAMETER_BRIGHT, "true"));
 
         if (_logger.isDebugEnabled()) {
             _logger.debug("magnitude band = '{}'; bright scenario = '{}'.", _magnitudeBand, _brightScenarioFlag);
         }
 
         // Add SearchCal versions as PARAM if missing (before sclsvr 4.1):
-        if (parameters.get(PARAMETER_SCL_SERVER_VERSION) == null) {
+        if (paramSetWrapper.get(PARAMETER_SCL_SERVER_VERSION) == null) {
             final SavotResource resource = savotVoTable.getResources().getItemAt(0);
 
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_SERVER_VERSION);
-            param.setDataType("char");
-            param.setArraySize("*");
-            param.setValue(resource.getName());
-            paramSet.addItem(param);
+            paramSetWrapper.add(PARAMETER_SCL_SERVER_VERSION, "char", resource.getName());
         }
-        if (parameters.get(PARAMETER_SCL_GUI_VERSION) == null) {
+        if (paramSetWrapper.get(PARAMETER_SCL_GUI_VERSION) == null) {
             final String version = ApplicationDescription.getInstance().getProgramVersion();
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_GUI_VERSION);
-            param.setDataType("char");
-            param.setArraySize("*");
-            param.setValue(version);
-            paramSet.addItem(param);
+
+            paramSetWrapper.add(PARAMETER_SCL_GUI_VERSION, "char", version);
         }
         // Add SearchCal outputFormat parameter (sclsvr 5.0):
-        if (parameters.get(PARAMETER_SCL_OUTPUT_FORMAT) == null) {
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_OUTPUT_FORMAT);
-            param.setDataType("double");
-            param.setValue(GUI_OUTPUT_FORMAT);
-            paramSet.addItem(param);
+        if (paramSetWrapper.get(PARAMETER_SCL_OUTPUT_FORMAT) == null) {
+            paramSetWrapper.add(PARAMETER_SCL_OUTPUT_FORMAT, "double", GUI_OUTPUT_FORMAT);
         }
 
         // Add SearchCal ConfidenceIndexes parameter (sclsvr 5.0):
-        if (parameters.get(PARAMETER_SCL_CONFIDENCE_INDEXES) == null) {
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_CONFIDENCE_INDEXES);
-            param.setDataType("int");
-            param.setValue(Confidence.CONFIDENCE_NO.getKeyString());
+        if (paramSetWrapper.get(PARAMETER_SCL_CONFIDENCE_INDEXES) == null) {
+            final SavotParam param = ParameterSetWrapper.newParam(PARAMETER_SCL_CONFIDENCE_INDEXES, "int",
+                    Confidence.CONFIDENCE_NO.getKeyString());
 
             final SavotValues values = new SavotValues();
             final OptionSet options = values.getOptions();
@@ -1506,15 +1487,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 options.addItem(option);
             }
             param.setValues(values);
-            paramSet.addItem(param);
+            paramSetWrapper.add(param);
         }
 
         // Add SearchCal OriginIndexes parameter (sclsvr 5.0):
-        if (parameters.get(PARAMETER_SCL_ORIGIN_INDEXES) == null) {
-            final SavotParam param = new SavotParam();
-            param.setName(PARAMETER_SCL_ORIGIN_INDEXES);
-            param.setDataType("int");
-            param.setValue(Origin.ORIGIN_NONE.getKeyString());
+        if (paramSetWrapper.get(PARAMETER_SCL_ORIGIN_INDEXES) == null) {
+            final SavotParam param = ParameterSetWrapper.newParam(PARAMETER_SCL_ORIGIN_INDEXES, "int", Origin.ORIGIN_NONE.getKeyString());
 
             final SavotValues values = new SavotValues();
             final OptionSet options = values.getOptions();
@@ -1525,10 +1503,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 options.addItem(option);
             }
             param.setValues(values);
-            paramSet.addItem(param);
+            paramSetWrapper.add(param);
         }
-
-        _parameters = parameters;
 
         // Process star list:
         postProcess(starList);
@@ -1563,7 +1539,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Add custom properties:
             // Add RA (deg) property:
             if (starListMeta.getPropertyIndexByName(StarList.RADegColumnName) == -1) {
-                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RADegColumnName, StarPropertyMeta.TYPE_DOUBLE,
+                        "Right Ascension - J2000", "POS_EQ_RA_MAIN", "deg", ""));
 
                 // Get the ID of the column containing 'RA' star properties
                 final int raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
@@ -1573,21 +1550,19 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         // Get the current star RA value
                         final StarProperty cell = star.get(raId);
 
-                        if (cell.hasValue()) {
-                            final String raString = cell.getString();
-                            final double currentRA = ALX.parseRA(raString);
+                        final double raDeg = cell.hasValue() ? ALX.parseRA(cell.getString()) : Double.NaN;
 
-                            // add RADeg value:
-                            star.add(new DoubleStarProperty(currentRA,
-                                    cell.getOriginIndex(), cell.getConfidenceIndex()));
-                        }
+                        // add RADeg value:
+                        star.add(new DoubleStarProperty(raDeg,
+                                cell.getOriginIndex(), cell.getConfidenceIndex()));
                     }
                 }
             }
 
             // Add DEC (deg) property:
             if (starListMeta.getPropertyIndexByName(StarList.DEDegColumnName) == -1) {
-                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, StarPropertyMeta.TYPE_DOUBLE, "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.DEDegColumnName, StarPropertyMeta.TYPE_DOUBLE,
+                        "Declination - J2000", "POS_EQ_DEC_MAIN", "deg", ""));
 
                 // Get the ID of the column containing 'DEC' star properties
                 final int decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
@@ -1597,21 +1572,19 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         // Get the current star DEC value
                         final StarProperty cell = star.get(decId);
 
-                        if (cell.hasValue()) {
-                            final String decString = cell.getString();
-                            final double currentDEC = ALX.parseDEC(decString);
+                        final double deDeg = cell.hasValue() ? ALX.parseDEC(cell.getString()) : Double.NaN;
 
-                            // add RADeg value:
-                            star.add(new DoubleStarProperty(currentDEC,
-                                    cell.getOriginIndex(), cell.getConfidenceIndex()));
-                        }
+                        // add DEDeg value:
+                        star.add(new DoubleStarProperty(deDeg,
+                                cell.getOriginIndex(), cell.getConfidenceIndex()));
                     }
                 }
             }
 
             // Add row index property:
             if (starListMeta.getPropertyIndexByName(StarList.RowIdxColumnName) == -1) {
-                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, StarPropertyMeta.TYPE_INTEGER, "row index", "ID_NUMBER", "", ""));
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.RowIdxColumnName, StarPropertyMeta.TYPE_INTEGER,
+                        "row index", "ID_NUMBER", "", ""));
 
                 int i = 0;
                 for (List<StarProperty> star : starList) {
@@ -1620,17 +1593,22 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 }
             }
 
+            // Update distance:
+            final String scienceRA = _paramSetWrapper.getValue(PARAMETER_RA);
+            final String scienceDE = _paramSetWrapper.getValue(PARAMETER_DEC);
+
+            // Compute distance:
+            computeDistance(starList, scienceRA, scienceDE);
+
             // Update vis2/vis2Err properties:
             // Get instrument band
-            final String band = _parameters.get("band");
-
+            final String band = _magnitudeBand;
             // Get value of the wavelength (m)
-            final double wavelength = 1e-6 * Double.parseDouble(_parameters.get("wlen"));
-
+            final double wavelength = 1e-6 * Double.parseDouble(_paramSetWrapper.getValue(PARAMETER_WAVELENGTH));
             // Get value of the base max (m)
-            final double baseMax = Double.parseDouble(_parameters.get("baseMax"));
+            final double baseMax = Double.parseDouble(_paramSetWrapper.getValue(PARAMETER_BASE_MAX));
 
-            // Compute visiblities BEFORE filters:
+            // Compute visibilities BEFORE filters:
             computeVisibility(starList, band, wavelength, baseMax);
 
             // First star:
@@ -1656,226 +1634,250 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @param band instrumental band
      * @param wavelength wavelength (m)
      * @param baseMax base max (m)
+     * @return true if computation done; false otherwise
      */
-    private void computeVisibility(final StarList starList, final String band, final double wavelength, final double baseMax) {
+    private boolean computeVisibility(final StarList starList, final String band, final double wavelength, final double baseMax) {
 
-        final boolean doUseDiamVK = false; // Only for OLD VOTable (ie version != 5)
-        final boolean doCompareVis2 = false;
-
-        final long start = System.nanoTime();
+        // Compare with current state:
+        if (!vis2State.setIfModified(band, wavelength, baseMax)) {
+            return false;
+        }
 
         // Get the ID of the column containing 'vis2' star properties
         final int vis2Id = starList.getColumnIdByName(StarList.Vis2ColumnName);
         final int e_vis2Id = starList.getColumnIdByName(StarList.Vis2ErrColumnName);
 
         // Use existing vis2 columns:
-        final boolean useVis2 = ((vis2Id != -1 && e_vis2Id != -1));
-
-        if (!useVis2) {
-            // TODO: add missing vis2 / vis2Err properties properly i.e. Savot Field / Group to be persisted
-            // once removed from server-side!
-
-            final StarListMeta starListMeta = starList.getMetaData();
-
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.Vis2ColumnName, StarPropertyMeta.TYPE_DOUBLE, "Squared Visibility", "VIS2", "", ""));
-
-            starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.Vis2ErrColumnName, StarPropertyMeta.TYPE_DOUBLE, "Error on Squared Visibility", "VIS2_ERROR", "", ""));
-
-            _logger.warn("computeVisibility: bad case: vis2/vis2Err are missing => not persisted in VOTABLE output !");
-
-            // TODO: update _parsedVOTable:
-            /*
-             <FIELD name="vis2" ID="col274" ucd="VIS2" datatype="double">
-             <DESCRIPTION>Squared Visibility</DESCRIPTION>
-             <!-- values (78) errors (78) origins (78 [computed] ) confidences (78 [HIGH] ) -->
-             </FIELD>
-             <PARAM name="vis2.origin" ID="col275" ucd="REFER_CODE" datatype="int" value="2">
-             <DESCRIPTION>Origin index of property vis2 (computed)</DESCRIPTION>
-             </PARAM>
-             <PARAM name="vis2.confidence" ID="col276" ucd="CODE_QUALITY" datatype="int" value="3">
-             <DESCRIPTION>Confidence index of property vis2 (HIGH)</DESCRIPTION>
-             </PARAM>
-             <FIELD name="vis2Err" ID="col277" ucd="VIS2_ERROR" datatype="double">
-             <DESCRIPTION>Error on Squared Visibility</DESCRIPTION>
-             </FIELD>
-             *
-             <GROUP name="vis2" ucd="VIS2">
-             <DESCRIPTION>vis2 with its origin and confidence indexes and its error when available</DESCRIPTION>
-             <FIELDref ref="col274"/>
-             <PARAMref ref="col275"/>
-             <PARAMref ref="col276"/>
-             <FIELDref ref="col277"/>
-             </GROUP>
-             */
+        if ((vis2Id == -1) || (e_vis2Id == -1)) {
+            // Missing vis2 / vis2Err properties (should be present in any server response)
+            _logger.warn("computeVisibility: bad case: vis2 / vis2Err are missing !");
+            return false;
         }
 
-        // TODO: externalize string constants (parameters and Column names) !
         // Get star properties:
-        // Get the ID of the column containing 'UDDK' star properties
-        final int uddkId = starList.getColumnIdByName("UDDK");
-        final int e_uddkId = starList.getColumnIdByName("e_UDDK");
-
         // Get the ID of the column containing 'diamFlag' star properties
-        final int diamFlagId = starList.getColumnIdByName("diamFlag");
+        final int diamFlagId = starList.getColumnIdByName(StarList.DiamFlagColumnName);
 
-        // Get the ID of the column containing 'diam_vk' star properties
-        final int diamVKId = starList.getColumnIdByName("diam_vk");
+        // Get the ID of the column containing 'UD_i' and 'e_LDD' star properties
+        final String udColName = "UD_" + band;
+
+        _logger.debug("computeVisibility: using diameter {}", udColName);
+
+        final int diamUdId = starList.getColumnIdByName(udColName);
+
+        if ((diamFlagId == -1) || (diamUdId == -1)) {
+            // Missing diamFlag / UD_i properties (should be present in any server response)
+            _logger.warn("computeVisibility: bad case: diamFlag / {} / e_LDD are missing !", udColName);
+            return false;
+        }
+
+        // Consider e_UD_<i> = e_LDD:
+        final int e_diamLddId = starList.getColumnIdByName("e_LDD");
+
+        // Get the IDs of other error columns (SearchCal 4.x or older):
+        final int e_diamWMeanId = starList.getColumnIdByName("e_diam_weighted_mean");
         final int e_diamVKId = starList.getColumnIdByName("e_diam_vk");
 
-        // Get the ID of the column containing 'diam_weighted_mean' star properties
-        final int diamWMeanId = starList.getColumnIdByName("diam_weighted_mean");
-        final int e_diamWMeanId = starList.getColumnIdByName("e_diam_weighted_mean");
-
-        // Get the ID of the column containing 'diam_mean' star properties
-        final int diamMeanId = starList.getColumnIdByName("diam_mean");
-        final int e_diamMeanId = starList.getColumnIdByName("e_diam_mean");
-
-        // try UDDK ?
-        final boolean tryUDDK = ((uddkId != -1 && e_uddkId != -1));
-        _logger.debug("tryUDDK[{}]: {}", uddkId, tryUDDK);
-
-        // try diam_vk ?
-        final boolean tryDiamVK = doUseDiamVK && ((diamVKId != -1 && e_diamVKId != -1));
-        _logger.debug("tryDiamVK[{}]: {}", diamVKId, tryDiamVK);
-
-        // try diam_weighted_mean ?
-        final boolean tryDiamWMean = ((diamWMeanId != -1 && e_diamWMeanId != -1));
-        _logger.debug("tryDiamWMean[{}]: {}", diamWMeanId, tryDiamWMean);
-
-        // try diam_mean ?
-        final boolean tryDiamMean = ((diamMeanId != -1 && e_diamMeanId != -1));
-        _logger.debug("tryDiamMean[{}]: {}", diamMeanId, tryDiamMean);
+        if ((e_diamLddId == -1) && (e_diamWMeanId == -1) && (e_diamVKId == -1)) {
+            // Missing e_LDD / e_diam_mean properties (should be present in any server response)
+            _logger.warn("computeVisibility: bad case: e_LDD / e_diam_weighted_mean / e_diam_vk are missing !");
+            return false;
+        }
 
         final int originIndex = Origin.KEY_ORIGIN_COMPUTED;
-        int confidenceIndex = Confidence.KEY_CONFIDENCE_NO;
+        int confidenceIndex;
 
         StarProperty pDiam, pErrDiam, diamFlag;
         StarProperty pVis2, pErrVis2;
         double diam, diamError;
-        boolean found;
+        boolean valid;
 
         pDiam = pErrDiam = null;
 
-        final VisibilityResult visibilities = new VisibilityResult();
+        final VisibilityResult visRes = new VisibilityResult();
+
+        final long start = System.nanoTime();
 
         for (List<StarProperty> star : starList) {
-            found = false;
+            valid = false;
 
-            if (tryUDDK) {
-                // Get the current star UDDK value
-                pDiam = star.get(uddkId);
-                pErrDiam = star.get(e_uddkId);
+            // Get the current star diamFlag value
+            diamFlag = star.get(diamFlagId);
 
-                found = (pDiam.hasValue() && pErrDiam.hasValue());
+            // If computed diameter is OK
+            if (diamFlag.hasValue() && diamFlag.getBooleanValue()) {
 
-                if (found) {
-                    // Set confidence index to high (value coming from catalog)
-                    confidenceIndex = Confidence.KEY_CONFIDENCE_HIGH;
-                }
-            }
+                // Get the UD diameter for the given band with e_UD_i = e_LDD:
+                pDiam = star.get(diamUdId);
 
-            // If not found in catalog, use the computed one (if exist)
-            if (!found) {
-                // Get the current star diamFlag value
-                diamFlag = star.get(diamFlagId);
+                valid = pDiam.hasValue();
 
-                // If computed diameter is OK
-                if (diamFlag.hasValue() && diamFlag.getBooleanValue()) {
-
-                    // FIXME: totally wrong => should use the UD diameter for the appropriate band (see Aspro2)
-                    // But NO ERROR for UD_<band> for now !!
-                    if (tryDiamVK) {
-                        // Get the current star diam_vk value
-                        pDiam = star.get(diamVKId);
-                        pErrDiam = star.get(e_diamVKId);
-
-                        found = (pDiam.hasValue() && pErrDiam.hasValue());
+                if (valid) {
+                    pErrDiam = null;
+                    if (pErrDiam == null && e_diamLddId != -1) {
+                        pErrDiam = star.get(e_diamLddId);
+                        if (!pErrDiam.hasValue()) {
+                            pErrDiam = null;
+                        }
                     }
-
-                    if (!found && tryDiamWMean) {
-                        // Get the current star diam_weighted_mean value
-                        pDiam = star.get(diamWMeanId);
+                    if (pErrDiam == null && e_diamWMeanId != -1) {
                         pErrDiam = star.get(e_diamWMeanId);
-
-                        found = (pDiam.hasValue() && pErrDiam.hasValue());
+                        if (!pErrDiam.hasValue()) {
+                            pErrDiam = null;
+                        }
                     }
-
-                    if (!found && tryDiamMean) {
-                        // Get the current star diam_mean value
-                        pDiam = star.get(diamMeanId);
-                        pErrDiam = star.get(e_diamMeanId);
-
-                        found = (pDiam.hasValue() && pErrDiam.hasValue());
+                    if (pErrDiam == null && e_diamVKId != -1) {
+                        pErrDiam = star.get(e_diamVKId);
+                        if (!pErrDiam.hasValue()) {
+                            pErrDiam = null;
+                        }
                     }
-
-                    if (found) {
-                        // Get confidence index of computed diameter
-                        confidenceIndex = pDiam.getConfidenceIndex();
-                    }
+                    valid = (pErrDiam != null);
                 }
             }
 
-            if (found) {
+            if (valid) {
+                // Get confidence index of computed diameter
+                confidenceIndex = pDiam.getConfidenceIndex();
+
                 // Get values
                 diam = pDiam.getDoubleValue();
                 diamError = pErrDiam.getDoubleValue();
 
-                VisibilityUtils.computeVisibility(diam, diamError, baseMax, wavelength, visibilities);
-
-                if (useVis2) {
-                    // Get the current star vis2 value
-                    pVis2 = star.get(vis2Id);
-                    pErrVis2 = star.get(e_vis2Id);
-
-                    if (doCompareVis2) {
-                        if (pVis2.hasValue() && pErrVis2.hasValue()) {
-                            _logger.info("DELTA vis2={} vis2Err={}",
-                                    NumberUtils.format(Math.abs(pVis2.getDoubleValue() - visibilities.vis2)),
-                                    NumberUtils.format(Math.abs(pErrVis2.getDoubleValue() - visibilities.vis2Err)));
-                        }
-                    }
-
-                    // Update values:
-                    // TODO: move in helper method like StarList
-                    if (pVis2 == StarProperty.EMPTY_STAR_PROPERTY) {
-                        // replace star property:
-                        star.set(vis2Id, new DoubleStarProperty(visibilities.vis2, originIndex, confidenceIndex));
-                    } else {
-                        // update star property:
-                        pVis2.set(visibilities.vis2, originIndex, confidenceIndex);
-                    }
-                    if (pErrVis2 == StarProperty.EMPTY_STAR_PROPERTY) {
-                        // replace star property:
-                        star.set(e_vis2Id, new DoubleStarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
-                    } else {
-                        // update star property:
-                        pErrVis2.set(visibilities.vis2Err, originIndex, confidenceIndex);
-                    }
-
-                } else {
-                    // add vis2 value:
-                    star.add(new DoubleStarProperty(visibilities.vis2, originIndex, confidenceIndex));
-                    // add vis2Err value:
-                    star.add(new DoubleStarProperty(visibilities.vis2Err, originIndex, confidenceIndex));
-                }
-
+                VisibilityUtils.computeVisibility(diam, diamError, baseMax, wavelength, visRes);
             } else {
-                // add empty value:
-                star.add(StarProperty.EMPTY_STAR_PROPERTY);
-                // add empty value:
-                star.add(StarProperty.EMPTY_STAR_PROPERTY);
+                // reset:
+                confidenceIndex = Confidence.KEY_CONFIDENCE_NO;
+                visRes.vis2 = Double.NaN;
+                visRes.vis2Err = Double.NaN;
             }
+            // Get the current star vis2 value
+            pVis2 = star.get(vis2Id);
+            pErrVis2 = star.get(e_vis2Id);
+
+            if (DO_COMPARE_VIS2) {
+                if (pVis2.hasValue() && pErrVis2.hasValue()) {
+                    _logger.info("DELTA vis2={} vis2Err={}",
+                            NumberUtils.format(Math.abs(pVis2.getDoubleValue() - visRes.vis2)),
+                            NumberUtils.format(Math.abs(pErrVis2.getDoubleValue() - visRes.vis2Err)));
+                }
+            }
+
+            // Update values:
+            setStarProperty(star, pVis2, vis2Id, visRes.vis2, originIndex, confidenceIndex);
+            setStarProperty(star, pErrVis2, e_vis2Id, visRes.vis2Err, originIndex, confidenceIndex);
         }
         _logger.info("CalibratorsModel.computeVisibility: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
+
+        return true;
+    }
+
+    /**
+     * Update the distance on the given star list
+     * @param starList
+     * @param scienceRA right ascension
+     * @param scienceDE declination
+     * @return true if computation done; false otherwise
+     */
+    private boolean computeDistance(final StarList starList, final String scienceRA, final String scienceDE) {
+
+        // Compare with current state:
+        if (!distState.setIfModified(scienceRA, scienceDE)) {
+            return false;
+        }
+
+        // Get the ID of the column containing 'dist' star properties
+        final int distId = starList.getColumnIdByName(StarList.DistColumnName);
+
+        // Use existing dist column:
+        if (distId == -1) {
+            // Missing dist properties (should be present in any server response)
+            _logger.warn("computeDistance: bad case: dist are missing !");
+            return false;
+        }
+
+        // Get star properties:
+        // Get the IDs of the DYNAMIC columns containing 'RA' & 'DEC' (degrees) star properties
+        final int raId = starList.getColumnIdByName(StarList.RADegColumnName);
+        final int decId = starList.getColumnIdByName(StarList.DEDegColumnName);
+
+        if ((raId == -1) || (decId == -1)) {
+            // Missing raId /decId properties
+            return false;
+        }
+
+        // Get the science object 'RA' and 'DEC' properties
+        final double scienceObjectRA = ALX.parseRA(scienceRA);
+        final double scienceObjectDE = ALX.parseDEC(scienceDE);
+
+        final int originIndex = Origin.KEY_ORIGIN_COMPUTED;
+        final int confidenceIndex = Confidence.KEY_CONFIDENCE_HIGH;
+
+        StarProperty pRA, pDE;
+        StarProperty pDist;
+        double separation;
+
+        final long start = System.nanoTime();
+
+        for (List<StarProperty> star : starList) {
+
+            // Get the current star RA value
+            pRA = star.get(raId);
+
+            // Get the current star DEC value
+            pDE = star.get(decId);
+
+            // If the 2 values were found in the current line
+            if (pRA.hasValue() && pDE.hasValue()) {
+                separation = CoordUtils.computeDistanceInDegrees(scienceObjectRA, scienceObjectDE,
+                        pRA.getDoubleValue(), pDE.getDoubleValue());
+            } else {
+                separation = Double.NaN;
+            }
+
+            // Get the current star dist value
+            pDist = star.get(distId);
+
+            if (DO_COMPARE_DIST) {
+                if (pDist.hasValue()) {
+                    _logger.info("DELTA dist={}",
+                            NumberUtils.format(Math.abs(pDist.getDoubleValue() - separation)));
+                }
+            }
+
+            // Update values:
+            setStarProperty(star, pDist, distId, separation, originIndex, confidenceIndex);
+        }
+        _logger.info("CalibratorsModel.computeDistance: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
+
+        return true;
+    }
+
+    private static void setStarProperty(final List<StarProperty> star, final StarProperty prop, final int propId,
+                                        final double value, final int originIndex, final int confidenceIndex) {
+        if (Double.isNaN(value)) {
+            if (prop != StarProperty.EMPTY_STAR_PROPERTY) {
+                // replace star property:
+                star.set(propId, StarProperty.EMPTY_STAR_PROPERTY);
+            }
+        } else {
+            if (prop == StarProperty.EMPTY_STAR_PROPERTY) {
+                // replace star property:
+                star.set(propId, new DoubleStarProperty(value, originIndex, confidenceIndex));
+            } else {
+                // update star property:
+                prop.set(value, originIndex, confidenceIndex);
+            }
+        }
     }
 
     /**
      * Give back the query parameters.
      *
-     * @return query parameters as (name, value) pairs.
+     * @return query parameters.
      */
-    public Map<String, String> getParameters() {
-        return _parameters;
+    public ParameterSetWrapper getParameters() {
+        return _paramSetWrapper;
     }
 
     /**
@@ -2133,7 +2135,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                          * as VOTABLE 1.1 does not support nulls for integer (-INF) / double values (NaN)
                                          * note: stilts complains and replaces empty cells by (-INF) and (NaN) */
 
-                                        /* TODO: switch to VOTABLE 1.3 that supports null values */
+ /* TODO: switch to VOTABLE 1.3 that supports null values */
                                         switch (type) {
                                             case StarPropertyMeta.TYPE_DOUBLE:
                                             /* do not use NaN (useless and annoying in XSLT scripts) */
@@ -2367,6 +2369,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 }
             }
             throw new IllegalStateException("An error occured during XSLT transformation '" + xsltFile + "'", iae);
+
         }
     }
 
@@ -2428,13 +2431,70 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             default:
                 _logger.warn("invalid Boolean [{}]", ch);
                 return Boolean.FALSE;
+
+        }
+    }
+
+    private final class QueryModelObserverForDynamicColumns implements Observer {
+
+        @Override
+        public void update(final Observable o, final Object arg) {
+            if (Notification.isModel(arg)) {
+                final QueryModel qm = (QueryModel) o;
+
+                final StarList starList = getOriginalStarList();
+
+                if (!starList.isEmpty()) {
+                    boolean changed = false;
+
+                    // Update distance:
+                    final String scienceRA = qm.getScienceObjectRA();
+                    final String scienceDE = qm.getScienceObjectDEC();
+
+                    // Compute distance:
+                    if (computeDistance(starList, scienceRA, scienceDE)) {
+                        changed = true;
+                    }
+
+                    // Update vis2/vis2Err properties:
+                    // Get instrument band
+                    final String band = qm.getInstrumentalMagnitudeBand();
+
+                    // Get value of the wavelength (m)
+                    final double wavelength = 1e-6 * qm.getInstrumentalWavelength();
+
+                    // Get value of the base max (m)
+                    final double baseMax = qm.getInstrumentalMaxBaseLine();
+
+                    // Compute visibilities:
+                    if (computeVisibility(starList, band, wavelength, baseMax)) {
+                        changed = true;
+
+                        // update parameters into VOTable:
+                        // Set instrument band
+                        _paramSetWrapper.setValue(PARAMETER_BAND, band);
+
+                        // Set value of the wavelength (micro-m)
+                        _paramSetWrapper.setValue(PARAMETER_WAVELENGTH, Double.toString(NumberUtils.trimTo3Digits(1e6 * wavelength)));
+
+                        // Get value of the base max (m)
+                        _paramSetWrapper.setValue(PARAMETER_BASE_MAX, Double.toString(NumberUtils.trimTo3Digits(baseMax)));
+                    }
+
+                    // Finally refresh calibrator list (and filters):
+                    if (changed) {
+                        // apply filters and fire Update:
+                        updateModel(starList);
+                    }
+                }
+            }
         }
     }
 
     /**
      * VOTable load mapping: it contains Group parsing results to load fields into StarProperty instances
      */
-    private static class VOTableLoadMapping {
+    private static final class VOTableLoadMapping {
 
         /** field name ie StarProperty name */
         String name = null;
@@ -2473,7 +2533,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /**
      * VOTable save mapping: it contains field mapping to save fields from StarProperty instances
      */
-    private static class VOTableSaveMapping {
+    private static final class VOTableSaveMapping {
 
         enum FieldType {
 
@@ -2512,6 +2572,86 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     + ((fieldType != FieldType.NONE) ? ", type=" + fieldType : "")
                     + ", valueType=" + StarPropertyMeta.getClassType(valueType)
                     + '}';
+        }
+    }
+
+    private static final class DistParameters {
+
+        private String ra;
+        private String de;
+
+        DistParameters() {
+            reset();
+        }
+
+        void reset() {
+            this.ra = null;
+            this.de = null;
+        }
+
+        boolean setIfModified(final String ra, final String de) {
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("setIfModified: ra: [{} vs {}] - de: [{} vs {}]",
+                        this.ra, ra, this.de, de
+                );
+            }
+            boolean changed = false;
+            if (!ObjectUtils.areEquals(this.ra, ra)) {
+                this.ra = ra;
+                changed = true;
+            }
+            if (!ObjectUtils.areEquals(this.de, de)) {
+                this.de = de;
+                changed = true;
+            }
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("setIfModified: changed: {}", changed);
+            }
+            return changed;
+        }
+    }
+
+    private static final class Vis2Parameters {
+
+        private String band;
+        /** wavelength (m) */
+        private double wavelength;
+        /** base max (m) */
+        private double baseMax;
+
+        Vis2Parameters() {
+            reset();
+        }
+
+        void reset() {
+            this.band = null;
+            this.wavelength = Double.NaN;
+            this.baseMax = Double.NaN;
+        }
+
+        boolean setIfModified(final String band, final double wavelength, final double baseMax) {
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("setIfModified: band: [{} vs {}] - wlen: [{} vs {}] - baseMax: [{} vs {}]",
+                        this.band, band, this.wavelength, wavelength, this.baseMax, baseMax
+                );
+            }
+            boolean changed = false;
+            if (!ObjectUtils.areEquals(this.band, band)) {
+                this.band = band;
+                changed = true;
+            }
+            if (Double.compare(this.wavelength, wavelength) != 0) {
+                this.wavelength = wavelength;
+                changed = true;
+            }
+            if (Double.compare(this.baseMax, baseMax) != 0) {
+                this.baseMax = baseMax;
+                changed = true;
+            }
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("setIfModified: changed: {}", changed);
+            }
+            return changed;
         }
     }
 }

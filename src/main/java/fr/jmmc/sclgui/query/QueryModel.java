@@ -10,10 +10,10 @@ import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.calibrator.CalibratorsModel;
+import fr.jmmc.sclgui.calibrator.ParameterSetWrapper;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultComboBoxModel;
@@ -39,17 +39,19 @@ public final class QueryModel extends Star implements Observer {
      */
     private static final String[] ALL_MAGNITUDE_BANDS = {"V", "J", "H", "K", "L", "M", "N"};
     /**
-     * Default magnitude band wavelengthes in micrometer.
+     * Default band wavelengths in micrometer.
      *
      * @warning Do not change the order,as it is linked to ALL_MAGNITUDE_BANDS.
      * @sa ALL_MAGNITUDE_BANDS
      */
-    private static final Double[] _defaultWavelengths = {0.55d, 1.25d, 1.65d, 2.2d, 3.5, 5.0, 10d};
+    private static final Double[] DEF_WAVELENGTH_BANDS = {0.55d, 1.25d, 1.65d, 2.2d, 3.5, 5.0, 10d};
     /** Available magnitude band for BRIGHT scenario */
     private static final String[] BRIGHT_MAGNITUDE_BANDS = {"V", "J", "H", "K", "L", "M", "N"};
     /** Available magnitude band for FAINT scenario */
     private static final String[] FAINT_MAGNITUDE_BANDS = {"J", "H", "K"};
-    
+    /** default magnitude band = K */
+    public static final String DEF_MAGNITUDE_BAND = "K";
+
     /**
      * Enumeration of all different observers notification a star can raise.
      */
@@ -59,6 +61,14 @@ public final class QueryModel extends Star implements Observer {
         MODEL,
         /** query progress */
         PROGRESS;
+
+        public static boolean isModel(final Object arg) {
+            return ((arg instanceof Notification) && (((Notification) arg) == MODEL));
+        }
+
+        public static boolean isProgress(final Object arg) {
+            return ((arg instanceof Notification) && (((Notification) arg) == PROGRESS));
+        }
     };
     /** For default values */
     private Preferences _preferences = null;
@@ -255,7 +265,7 @@ public final class QueryModel extends Star implements Observer {
             // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
             setQueryBrightScenarioFlag(true);
 
-            setInstrumentalMagnitudeBand("K");
+            setInstrumentalMagnitudeBand(DEF_MAGNITUDE_BAND);
             setInstrumentalMaxBaseLine(0.0);
             resetInstrumentalWavelengthes();
 
@@ -327,24 +337,14 @@ public final class QueryModel extends Star implements Observer {
     }
 
     /**
-     * Set all properties from the given query parameters as (name, value) pairs.
+     * Set all properties from the given query parameters.
      *
-     * @param parameters query parameters as (name, value) pairs
+     * @param paramSetWrapper query parameters
      * @throws NumberFormatException  if the string does not contain a parsable number.
      */
-    public void loadParameters(final Map<String, String> parameters) throws NumberFormatException {
+    public void loadParameters(final ParameterSetWrapper paramSetWrapper) throws NumberFormatException {
         // Set the query members from the query parameters
         String paramValue;
-
-        // optional "bright" parameter (Aspro2):
-        paramValue = parameters.get("bright");
-
-        /* scenario bright because it is the only available for any instrumental band */
-        boolean bright = true;
-
-        if (paramValue != null) {
-            bright = Boolean.valueOf(paramValue).booleanValue();
-        }
 
         final boolean prevNotify = isNotify();
         try {
@@ -352,69 +352,73 @@ public final class QueryModel extends Star implements Observer {
             setNotify(false);
 
             // Done first as the available magnitude band sets are not the same for Bright and Faint scenarii
-            setQueryBrightScenarioFlag(bright);
+            // optional "bright" parameter (Aspro2):
+            paramValue = paramSetWrapper.getValue(CalibratorsModel.PARAMETER_BRIGHT, "true");
 
-            paramValue = parameters.get("band");
+            /* scenario bright because it is the only available for any instrumental band */
+            setQueryBrightScenarioFlag(Boolean.parseBoolean(paramValue));
+
+            paramValue = paramSetWrapper.getValue(CalibratorsModel.PARAMETER_BAND, DEF_MAGNITUDE_BAND);
             if (paramValue != null) {
                 setInstrumentalMagnitudeBand(paramValue);
             }
 
-            paramValue = parameters.get("wlen");
+            paramValue = paramSetWrapper.getValue(CalibratorsModel.PARAMETER_WAVELENGTH);
             if (paramValue != null) {
                 setInstrumentalWavelength(Double.valueOf(paramValue));
             }
 
-            paramValue = parameters.get("baseMax");
+            paramValue = paramSetWrapper.getValue(CalibratorsModel.PARAMETER_BASE_MAX);
             if (paramValue != null) {
                 setInstrumentalMaxBaseLine(Double.valueOf(paramValue));
             }
 
-            paramValue = parameters.get("objectName");
+            paramValue = paramSetWrapper.getValue("objectName");
             if (paramValue != null) {
                 setScienceObjectName(paramValue);
             }
 
-            paramValue = parameters.get("ra");
+            paramValue = paramSetWrapper.getValue(CalibratorsModel.PARAMETER_RA);
             if (paramValue != null) {
                 setScienceObjectRA(paramValue);
             }
 
-            paramValue = parameters.get("dec");
+            paramValue = paramSetWrapper.getValue(CalibratorsModel.PARAMETER_DEC);
             if (paramValue != null) {
                 setScienceObjectDEC(paramValue);
             }
 
-            paramValue = parameters.get("mag");
+            paramValue = paramSetWrapper.getValue("mag");
             if (paramValue != null) {
                 setScienceObjectMagnitude(Double.valueOf(paramValue));
             }
 
             // optional "minMagRange" parameter (Aspro2):
-            paramValue = parameters.get("minMagRange");
+            paramValue = paramSetWrapper.getValue("minMagRange");
             if (paramValue != null) {
                 setQueryMinMagnitude(Double.valueOf(paramValue));
             }
 
             // optional "maxMagRange" parameter (Aspro2):
-            paramValue = parameters.get("maxMagRange");
+            paramValue = paramSetWrapper.getValue("maxMagRange");
             if (paramValue != null) {
                 setQueryMaxMagnitude(Double.valueOf(paramValue));
             }
 
             // optional "diffRa" parameter (Aspro2):
-            paramValue = parameters.get("diffRa");
+            paramValue = paramSetWrapper.getValue("diffRa");
             if (paramValue != null) {
                 setQueryDiffRASizeInMinutes(ALX.arcmin2minutes(Double.valueOf(paramValue)));
             }
 
             // optional "diffDec" parameter (Aspro2):
-            paramValue = parameters.get("diffDec");
+            paramValue = paramSetWrapper.getValue("diffDec");
             if (paramValue != null) {
                 setQueryDiffDECSizeInDegrees(ALX.arcmin2degrees(Double.valueOf(paramValue)));
             }
 
             // optional "radius" parameter (Aspro2):
-            paramValue = parameters.get("radius");
+            paramValue = paramSetWrapper.getValue("radius");
 
             if (paramValue != null) {
                 setQueryAutoRadiusFlag(true);
@@ -478,39 +482,39 @@ public final class QueryModel extends Star implements Observer {
         final StringBuilder query = new StringBuilder(255);
 
         // Object name
-        query.append("-objectName ").append(getScienceObjectName()).append(" ");
+        query.append("-objectName ").append(getScienceObjectName()).append(' ');
 
         // Magnitude
-        query.append("-mag ").append(getScienceObjectMagnitude()).append(" ");
+        query.append("-mag ").append(getScienceObjectMagnitude()).append(' ');
 
         // Diff RA
         double arcminRA = ALX.minutes2arcmin(getQueryDiffRASizeInMinutes());
-        query.append("-diffRa ").append(arcminRA).append(" ");
+        query.append("-diffRa ").append(arcminRA).append(' ');
 
         // Diff DEC
         double arcminDEC = ALX.degrees2arcmin(getQueryDiffDECSizeInDegrees());
-        query.append("-diffDec ").append(arcminDEC).append(" ");
+        query.append("-diffDec ").append(arcminDEC).append(' ');
 
         // Band
-        query.append("-band ").append(getInstrumentalMagnitudeBand()).append(" ");
+        query.append("-band ").append(getInstrumentalMagnitudeBand()).append(' ');
 
         // Min Magnitude
-        query.append("-minMagRange ").append(getQueryMinMagnitude()).append(" ");
+        query.append("-minMagRange ").append(getQueryMinMagnitude()).append(' ');
 
         // Max Magnitude
-        query.append("-maxMagRange ").append(getQueryMaxMagnitude()).append(" ");
+        query.append("-maxMagRange ").append(getQueryMaxMagnitude()).append(' ');
 
         // RA
-        query.append("-ra ").append(getScienceObjectRA()).append(" ");
+        query.append("-ra ").append(getScienceObjectRA()).append(' ');
 
         // DEC
-        query.append("-dec ").append(getScienceObjectDEC()).append(" ");
+        query.append("-dec ").append(getScienceObjectDEC()).append(' ');
 
         // Max Baseline
-        query.append("-baseMax ").append(getInstrumentalMaxBaseLine()).append(" ");
+        query.append("-baseMax ").append(getInstrumentalMaxBaseLine()).append(' ');
 
         // Wavelength
-        query.append("-wlen ").append(getInstrumentalWavelength()).append(" ");
+        query.append("-wlen ").append(getInstrumentalWavelength()).append(' ');
 
         // Radius
         final Boolean brightFlag = getQueryBrightScenarioFlag();
@@ -527,17 +531,16 @@ public final class QueryModel extends Star implements Observer {
                 queryRadialSize = 0.0d;
             }
 
-            query.append("-radius ").append(queryRadialSize).append(" ");
+            query.append("-radius ").append(queryRadialSize).append(' ');
         }
 
         // Bright/Faint flag
-        query.append("-bright ").append(brightFlag).append(" ");
+        query.append("-bright ").append(brightFlag).append(' ');
 
         // Get the science star
         query.append("-noScienceStar false ");
 
         // Output format
-        // TODO: enable/disable next line respectively for SearchCal 5 / Search 4.x:
         query.append("-outputFormat ").append(CalibratorsModel.GUI_OUTPUT_FORMAT);
 
         // Optional diagnose parameter:
@@ -591,7 +594,7 @@ public final class QueryModel extends Star implements Observer {
         // For each "magnitude band-predefined wavelength" couple
         for (int i = 0; i < ALL_MAGNITUDE_BANDS.length; i++) {
             // Construct the conversion table between both
-            _magnitudeBandToWavelength.put(ALL_MAGNITUDE_BANDS[i], _defaultWavelengths[i]);
+            _magnitudeBandToWavelength.put(ALL_MAGNITUDE_BANDS[i], DEF_WAVELENGTH_BANDS[i]);
         }
 
         setChanged();

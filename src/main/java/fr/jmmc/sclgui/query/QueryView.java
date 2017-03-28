@@ -11,6 +11,7 @@ import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.ResourcedAction;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.sclgui.query.QueryModel.Notification;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.AWTEvent;
 import java.awt.Component;
@@ -454,7 +455,7 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
 
         // Refresh the GUI with the model values and reset progress bar:
         update(null, null);
-        update(null, QueryModel.Notification.PROGRESS);
+        update(null, Notification.PROGRESS);
 
         // To overcome silent call on setQueryMxxMagnitude() by storeValues() after update(null, null)
         _queryModel.restoreMinMaxMagnitudeFieldsAutoUpdating();
@@ -488,18 +489,14 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         }
 
         // handle query progress notifications:
-        if (arg instanceof QueryModel.Notification) {
-            final QueryModel.Notification notification = (QueryModel.Notification) arg;
+        if (Notification.isProgress(arg)) {
+            // update Progress bar only:
+            _progressBar.setValue(_queryModel.getCurrentStep());
+            _progressBar.setMaximum(_queryModel.getTotalStep());
+            _progressBar.setString(_queryModel.getCatalogName());
 
-            if (notification == QueryModel.Notification.PROGRESS) {
-                // update Progress bar only:
-                _progressBar.setValue(_queryModel.getCurrentStep());
-                _progressBar.setMaximum(_queryModel.getTotalStep());
-                _progressBar.setString(_queryModel.getCatalogName());
-
-                // do nothing, simply return to stop updating model:
-                return;
-            }
+            // do nothing, simply return to stop updating model:
+            return;
         }
 
         String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
