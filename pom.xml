@@ -9,7 +9,7 @@
         <version>TRUNK</version>
         <!--  please install first parent pom from jMCS/parent-pom directory -->
     </parent>
-    
+
     <groupId>fr.jmmc.sclgui</groupId>
     <artifactId>sclgui</artifactId>
 
@@ -17,11 +17,11 @@
     <name>SearchCal</name>
 
     <properties>
-	<!-- do make assembly and copy dependencies (JNLP) -->
-	<assembly.skipAssembly>false</assembly.skipAssembly>
-	<mdep.skip>false</mdep.skip>
+        <!-- do make assembly and copy dependencies (JNLP) -->
+        <assembly.skipAssembly>false</assembly.skipAssembly>
+        <mdep.skip>false</mdep.skip>
 
-	<!-- disable tests (fest fails for now) -->
+        <!-- disable tests (fest fails for now) -->
         <maven.test.skip>true</maven.test.skip>
     </properties>
 
@@ -39,24 +39,20 @@
         </dependency>
 
         <dependency>
-            <!-- Requires you to install manually the artifact:
-          mvn install:install-file -Dfile=lib/savot-4.0.0.jar -DgroupId=cds.savot -DartifactId=savot -Dversion=4.0.0 -Dpackaging=jar
-            -->
-	    <groupId>cds.savot</groupId>
-	    <artifactId>savot</artifactId>
-	    <version>4.0.0</version>
+            <!-- Requires you to install the artifact running mvn process-resources -->
+            <groupId>cds.savot</groupId>
+            <artifactId>savot</artifactId>
+            <version>4.0.0</version>
         </dependency>
 
         <!-- TODO: use latex to helpset for the SearchCal documentation -->
         <dependency>
-            <!-- Requires you to install manually the artifact:
-          mvn install:install-file -Dfile=lib/sclgui-doc.jar -DgroupId=fr.jmmc.sclgui -DartifactId=sclgui-doc -Dversion=5.0.0 -Dpackaging=jar
-            -->
+            <!-- Requires you to install the artifact running mvn process-resources -->
             <groupId>fr.jmmc.sclgui</groupId>
             <artifactId>sclgui-doc</artifactId>
             <version>5.0.0</version>
         </dependency>
-      
+
         <!-- axis 1.4 -->
         <dependency>
             <groupId>axis</groupId>
@@ -88,5 +84,49 @@
         </dependency>
 
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>savot</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <phase>process-resources</phase> <!-- just before compilation -->
+                        <configuration>
+                            <file>lib/savot-4.0.0.jar</file>
+                            <groupId>cds.savot</groupId>
+                            <artifactId>savot</artifactId>
+                            <version>4.0.0</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>sclgui-doc</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <phase>process-resources</phase> <!-- just before compilation -->
+                        <configuration>
+                            <file>lib/sclgui-doc.jar</file>
+                            <groupId>fr.jmmc.sclgui</groupId>
+                            <artifactId>sclgui-doc</artifactId>
+                            <version>5.0.0</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>
