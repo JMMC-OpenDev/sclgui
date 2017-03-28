@@ -42,6 +42,8 @@ public final class StarList extends Vector<List<StarProperty>> {
     public static final String Vis2ColumnName = "vis2";
     /** Store the vis2Err column name */
     public static final String Vis2ErrColumnName = "vis2Err";
+    /** Store the diamFlag column name */
+    public static final String DiamFlagColumnName = "diamFlag";
     /** Store the deletedFlag column name */
     public static final String DeletedFlagColumnName = "deletedFlag";
     /** Store the ObjTypes column name */
