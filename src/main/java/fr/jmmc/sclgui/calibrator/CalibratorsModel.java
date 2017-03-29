@@ -1672,15 +1672,16 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         }
 
         // Consider e_UD_<i> = e_LDD:
+        final int diamLddId = starList.getColumnIdByName("LDD");
         final int e_diamLddId = starList.getColumnIdByName("e_LDD");
 
         // Get the IDs of other error columns (SearchCal 4.x or older):
         final int e_diamWMeanId = starList.getColumnIdByName("e_diam_weighted_mean");
         final int e_diamVKId = starList.getColumnIdByName("e_diam_vk");
 
-        if ((e_diamLddId == -1) && (e_diamWMeanId == -1) && (e_diamVKId == -1)) {
+        if ((diamLddId == -1) && (e_diamLddId == -1) && (e_diamWMeanId == -1) && (e_diamVKId == -1)) {
             // Missing e_LDD / e_diam_mean properties (should be present in any server response)
-            _logger.warn("computeVisibility: bad case: e_LDD / e_diam_weighted_mean / e_diam_vk are missing !");
+            _logger.warn("computeVisibility: bad case: LDD / e_LDD / e_diam_weighted_mean / e_diam_vk are missing !");
             return false;
         }
 
@@ -1709,6 +1710,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                 // Get the UD diameter for the given band with e_UD_i = e_LDD:
                 pDiam = star.get(diamUdId);
+                
+                // if no UD (no Teff...) then use LDD:
+                if (!pDiam.hasValue() && (diamLddId != -1)) {
+                    pDiam = star.get(diamLddId);
+                }
 
                 valid = pDiam.hasValue();
 
