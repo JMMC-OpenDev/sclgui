@@ -151,6 +151,12 @@ public abstract class Filter extends Observable {
     }
 
     /**
+     * Finish the filter execution (potential cleanup / log).
+     */
+    public void onFinish() {
+    }
+
+    /**
      * Return whether the given row should be removed or not.
      *
      * @param row the star properties to be evaluated.
@@ -216,6 +222,9 @@ public abstract class Filter extends Observable {
                     outputList.add(star);
                 }
             }
+
+            // Finish this filter execution:
+            onFinish();
 
             // trim to size:
             outputList.trimToSize();
