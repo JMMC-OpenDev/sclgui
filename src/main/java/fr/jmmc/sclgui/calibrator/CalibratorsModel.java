@@ -1676,12 +1676,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         final int e_diamLddId = starList.getColumnIdByName("e_LDD");
 
         // Get the IDs of other error columns (SearchCal 4.x or older):
-        final int e_diamWMeanId = starList.getColumnIdByName("e_diam_weighted_mean");
         final int e_diamVKId = starList.getColumnIdByName("e_diam_vk");
 
-        if ((diamLddId == -1) && (e_diamLddId == -1) && (e_diamWMeanId == -1) && (e_diamVKId == -1)) {
+        if ((diamLddId == -1) && (e_diamLddId == -1) && (e_diamVKId == -1)) {
             // Missing e_LDD / e_diam_mean properties (should be present in any server response)
-            _logger.warn("computeVisibility: bad case: LDD / e_LDD / e_diam_weighted_mean / e_diam_vk are missing !");
+            _logger.warn("computeVisibility: bad case: LDD / e_LDD / e_diam_vk are missing !");
             return false;
         }
 
@@ -1722,12 +1721,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     pErrDiam = null;
                     if (pErrDiam == null && e_diamLddId != -1) {
                         pErrDiam = star.get(e_diamLddId);
-                        if (!pErrDiam.hasValue()) {
-                            pErrDiam = null;
-                        }
-                    }
-                    if (pErrDiam == null && e_diamWMeanId != -1) {
-                        pErrDiam = star.get(e_diamWMeanId);
                         if (!pErrDiam.hasValue()) {
                             pErrDiam = null;
                         }
