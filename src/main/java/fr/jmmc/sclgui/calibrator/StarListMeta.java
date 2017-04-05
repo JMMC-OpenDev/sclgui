@@ -81,6 +81,9 @@ public final class StarListMeta {
         for (StarPropertyMeta propertyMeta : _propertyMetaList) {
             colNames.add(propertyMeta.getName());
         }
+        
+        _logger.debug("PropertyNames: {}", colNames);
+        
         return colNames;
     }
 
