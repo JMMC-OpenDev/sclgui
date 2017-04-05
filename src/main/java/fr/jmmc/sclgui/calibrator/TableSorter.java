@@ -461,17 +461,21 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     public void computeColumnsIndirectionArray() {
 
         // Get the scenario
-        final String scenario = (_calibratorsModel.getBrightScenarioFlag()) ? "bright" : "faint";
+        final boolean bright = _calibratorsModel.getBrightScenarioFlag();
+        final String scenario = (bright) ? "bright" : "faint";
 
-        // Get the magnitude band
-        final String magnitude = _calibratorsModel.getMagnitudeBand();
+        // Get the magnitude band:
+        String band = _calibratorsModel.getMagnitudeBand();
+        if (!bright || !"V".equals(band) && !"K".equals(band) && !"N".equals(band)) {
+            band = "K";
+        }
 
         // Get the detailed/simple view flag state
         final String selectedView;
-        if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG))) {
-            selectedView = Preferences.PREFIX_VIEW_COLUMNS_SIMPLE + scenario + '.' + magnitude;
-        } else if ((magnitude != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
-            selectedView = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + scenario + '.' + magnitude;
+        if ((band != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_SYNTHETIC_FLAG))) {
+            selectedView = Preferences.PREFIX_VIEW_COLUMNS_SIMPLE + scenario + '.' + band;
+        } else if ((band != null) && (_preferences.getPreferenceAsBoolean(PreferenceKey.VERBOSITY_DETAILED_FLAG))) {
+            selectedView = Preferences.PREFIX_VIEW_COLUMNS_DETAILED + scenario + '.' + band;
         } else {
             // Full view:
             selectedView = null;
