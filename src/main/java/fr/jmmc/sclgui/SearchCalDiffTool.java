@@ -23,7 +23,7 @@ import fr.jmmc.sclgui.filter.FilterView;
 import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.sclgui.preference.ColumnsPreferencesView;
-import fr.jmmc.sclgui.preference.HelpPreferencesView;
+import fr.jmmc.sclgui.preference.GeneralPreferencesView;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.query.QueryModel;
@@ -187,9 +187,9 @@ public final class SearchCalDiffTool extends App {
         panels.put("Legend Colors", catalogView);
 
         // Add the help preferences pane
-        final HelpPreferencesView helpView = new HelpPreferencesView();
-        helpView.init();
-        panels.put("Help Settings", helpView);
+        final GeneralPreferencesView generalView = new GeneralPreferencesView();
+        generalView.init();
+        panels.put("General Settings", generalView);
         panels.put("Misc. settings", new CommonPreferencesView());
 
         final PreferencesView preferencesView = new PreferencesView(preferences, panels);

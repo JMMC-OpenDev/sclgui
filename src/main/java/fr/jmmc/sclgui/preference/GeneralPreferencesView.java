@@ -21,30 +21,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This Panel is dedicated to manage help behavior configuration.
+ * This Panel is dedicated to manage general behavior configuration.
  */
-public final class HelpPreferencesView extends JPanel implements Observer, ChangeListener {
+public final class GeneralPreferencesView extends JPanel implements Observer, ChangeListener {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
     /** Logger */
-    private static final Logger _logger = LoggerFactory.getLogger(HelpPreferencesView.class.getName());
+    private static final Logger _logger = LoggerFactory.getLogger(GeneralPreferencesView.class.getName());
     /** Data model */
     private final Preferences _preferences;
     /** Tooltip enabling checkbox */
     private final JCheckBox _enableToolTipCheckBox;
     /** Tooltip manager */
     private final ToolTipManager _sharedToolTipManager;
+    /** Diagnose mode checkbox */
+    private final JCheckBox _diagnoseMode;
 
     /**
      * Constructor.
      */
-    public HelpPreferencesView() {
+    public GeneralPreferencesView() {
         _preferences = Preferences.getInstance();
 
         // Layout management
         JPanel topPanel = new JPanel();
-        topPanel.setOpaque(false);
         add(topPanel);
         topPanel.setLayout(new GridBagLayout());
 
@@ -59,7 +60,6 @@ public final class HelpPreferencesView extends JPanel implements Observer, Chang
 
         // Handle "Result Verbosity" radio buttons
         JPanel radioPanel = new JPanel();
-        radioPanel.setOpaque(false);
         radioPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -69,7 +69,7 @@ public final class HelpPreferencesView extends JPanel implements Observer, Chang
         gbc.gridy = 0;
         gbc.gridx = 0;
 
-        JLabel label = new JLabel("Results Verbosity : ", JLabel.TRAILING);
+        JLabel label = new JLabel("Results Verbosity: ", JLabel.TRAILING);
         radioPanel.add(label, gbc);
         gbc.gridx++;
 
@@ -103,11 +103,34 @@ public final class HelpPreferencesView extends JPanel implements Observer, Chang
         _enableToolTipCheckBox = new JCheckBox("Show Tooltips");
         _sharedToolTipManager.registerComponent(_enableToolTipCheckBox);
         topPanel.add(_enableToolTipCheckBox, c);
+        c.gridy++;
+
+        // Server settings:
+        JPanel serverPanel = new JPanel();
+        serverPanel.setLayout(new GridBagLayout());
+
+        gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.weightx = 1;
+        gbc.gridy = 0;
+        gbc.gridx = 0;
+        
+        label = new JLabel("Server: ", JLabel.LEADING);
+        serverPanel.add(label, gbc);
+        gbc.gridy++;
+
+        // Handle "Diagnose mode" checkbox
+        _diagnoseMode = new JCheckBox("Diagnose mode");
+        serverPanel.add(_diagnoseMode, gbc);        
+        
+        topPanel.add(serverPanel, c);
     }
 
     public void init() {
         _preferences.addObserver(this);
         _enableToolTipCheckBox.addChangeListener(this);
+        _diagnoseMode.addChangeListener(this);
     }
 
     /**
@@ -122,6 +145,8 @@ public final class HelpPreferencesView extends JPanel implements Observer, Chang
         boolean b = _preferences.getPreferenceAsBoolean(PreferenceKey.SHOW_TOOLTIPS_FLAG);
         _enableToolTipCheckBox.setSelected(b);
         _sharedToolTipManager.setEnabled(b);
+        
+        _diagnoseMode.setSelected(_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE));
     }
 
     /**
@@ -135,6 +160,9 @@ public final class HelpPreferencesView extends JPanel implements Observer, Chang
         try {
             if (source.equals(_enableToolTipCheckBox)) {
                 _preferences.setPreference(PreferenceKey.SHOW_TOOLTIPS_FLAG, _enableToolTipCheckBox.isSelected());
+            }
+            if (source.equals(_diagnoseMode)) {
+                _preferences.setPreference(PreferenceKey.SERVER_DIAGNOSE, _diagnoseMode.isSelected());
             }
         } catch (PreferencesException pe) {
             _logger.warn("Could not set preference : ", pe);
