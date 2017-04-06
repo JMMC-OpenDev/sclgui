@@ -506,10 +506,8 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
             _queryModel.setInstrumentalMagnitudeBand(instrumentalMagnitudeBand);
         }
 
-        // N band flag true for N, false else
-        final boolean nBand = instrumentalMagnitudeBand.matches("N");
-        // This flag is true for bands present in bright and faint scenarii (cf sclsvrGetCalCB.cpp)
-        final boolean brightOrFaintBand = !instrumentalMagnitudeBand.matches("[V,N]");
+        // This flag is true for bands present in bright and faint scenarii
+        final boolean brightOrFaintBand = QueryModel.isBrightOrFaint(instrumentalMagnitudeBand);
 
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
@@ -531,10 +529,8 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         // SearchCal parameters (N band does not support bounds on magnitude)
         _minMagnitudeLabel.setText("Min. " + magnitudeWithBand);
         _minMagnitudeTextfield.setValue(_queryModel.getQueryMinMagnitude());
-        _minMagnitudeTextfield.setEnabled(!nBand);
         _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
         _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
-        _maxMagnitudeTextfield.setEnabled(!nBand);
 
         // Search box size handling
         _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASizeInMinutes());

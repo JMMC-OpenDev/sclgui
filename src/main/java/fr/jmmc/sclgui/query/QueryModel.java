@@ -1247,5 +1247,15 @@ public final class QueryModel extends Star implements Observer {
 
         setChanged();
     }
+    
+    static boolean isBrightOrFaint(final String band) {
+        // faint bands are included in bright bands:
+        for (int i = 0; i < FAINT_MAGNITUDE_BANDS.length; i++) {
+            if (band.equals(FAINT_MAGNITUDE_BANDS[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 /*___oOo___*/
