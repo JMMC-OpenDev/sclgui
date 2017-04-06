@@ -1066,6 +1066,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             nProperties = starListMeta.getPropertyCount() + N_EXTRA_PROPERTIES;
 
             _logger.debug("nProperties: {}", nProperties);
+            _logger.debug("Properties: {}", starListMeta.getPropertyNames());
 
             // reserve space:
             if (tableRows != 0) {
