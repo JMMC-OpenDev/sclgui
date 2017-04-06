@@ -2,13 +2,13 @@
 
 <!-- Application specific configuration -->
 <included>
-  
+
     <appender name="SERVERLOG" class="fr.jmmc.jmcs.logging.ByteArrayOutputStreamAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} ----------------------------------------------------------------------------%n%msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %msg</pattern>
         </encoder>
     </appender>
-  
+
     <!-- Jmal: star resolver -->
     <logger name="fr.jmmc.jmal.star" level="INFO"/>
 
@@ -17,7 +17,7 @@
     <logger name="fr.jmmc.sclgui.vo.VirtualObservatory" level="INFO"/>
 
     <!-- SearchCal server log -->
-    <logger name="fr.jmmc.sclgui.server" level="INFO" additivity="false">
+    <logger name="fr.jmmc.sclgui.server" level="INFO" additivity="true">
         <appender-ref ref="SERVERLOG" />
     </logger>
 

@@ -66,10 +66,8 @@ public final class SearchCal extends App {
         // Get preferences
         _preferences = Preferences.getInstance();
 
-        if (_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE)) {
-            // Initialize server log:
-            LoggingService.getInstance().addLogMapper("Server logs", CalibratorsModel.SCL_SERVER_LOG, "SERVERLOG");
-        }
+        // Initialize server log:
+        LoggingService.getInstance().addLogMapper("Server logs", CalibratorsModel.SCL_SERVER_LOG, "SERVERLOG");
     }
 
     /** Initialize application objects */

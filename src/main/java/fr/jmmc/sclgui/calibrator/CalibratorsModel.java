@@ -1443,7 +1443,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // If server log are present, dump them:
         if (savotVoTable.getInfos().getItemCount() != 0) {
             final String log = savotVoTable.getInfos().getItemAt(0).getContent();
-            _serverLog.info(log);
+            _serverLog.info("Server Log\n---------------------------------------\n{}\n---------------------------------------", log);
         }
 
         // Compute selected magnitude band and scenario
