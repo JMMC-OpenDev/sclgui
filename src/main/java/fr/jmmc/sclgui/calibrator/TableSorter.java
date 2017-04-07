@@ -466,7 +466,19 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         // Get the magnitude band:
         String band = _calibratorsModel.getMagnitudeBand();
-        if (!bright || !"V".equals(band) && !"K".equals(band) && !"N".equals(band)) {
+        if (bright) {
+            // "V", "J", "H", "K", "L", "M", "N"
+            if (!"V".equals(band)) {
+                if ("J".equals(band) || "H".equals(band) || "K".equals(band)) {
+                    // JHK
+                    band = "K";
+                } else {
+                    // LMN:
+                    band = "N";
+                }
+            }
+        } else {
+            // faint = JHK
             band = "K";
         }
 
@@ -571,7 +583,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         _calibratorsModel.update(null, this);
     }
-
     // Helper classes
     private final class Row implements Comparable<Row> {
 
