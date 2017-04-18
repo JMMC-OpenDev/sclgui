@@ -120,8 +120,8 @@ public final class Origin {
     public final static Origin ORIGIN_USNO = new Origin(KEY_ORIGIN_USNO, Catalog.USNO_B);
     /** Origin - WDS */
     public final static Origin ORIGIN_WDS = new Origin(KEY_ORIGIN_WDS, Catalog.WDS);
-    /** Origin - ASCC FAINT LOCAL */
-    public final static Origin ORIGIN_ASCC_FAINT_LOCAL = new Origin(KEY_ORIGIN_JSDC_FAINT_LOCAL, "SIMBAD", Catalog.SIMBAD);
+    /** Origin - ASCC LOCAL FAINT */
+    public final static Origin ORIGIN_ASCC_FAINT_LOCAL = new Origin(KEY_ORIGIN_JSDC_FAINT_LOCAL, "I/280B", Catalog.ASCC_2_5);
     /** Origin - SIMBAD */
     public final static Origin ORIGIN_SIMBAD = new Origin(KEY_ORIGIN_SIMBAD, Catalog.SIMBAD);
     /** Origin - SIMBAD */
