@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Diameter quality filter.
  */
-public final class DiamQualityFilter extends Filter {
+public final class DiameterQualityFilter extends Filter {
 
     /** Store the diam_chi2 constraint name */
     private final static String _chi2ConstraintName = "Maximum chi square";
@@ -31,11 +31,11 @@ public final class DiamQualityFilter extends Filter {
     /**
      * Default constructor.
      */
-    public DiamQualityFilter() {
+    public DiameterQualityFilter() {
         super();
 
         _maxChi2 = new Double(2.0);
-        _maxRelDiamErr = new Double(5.0);
+        _maxRelDiamErr = new Double(10.0);
 
         setConstraint(_chi2ConstraintName, _maxChi2);
         setConstraint(_relDiamErrorConstraintName, _maxRelDiamErr);
