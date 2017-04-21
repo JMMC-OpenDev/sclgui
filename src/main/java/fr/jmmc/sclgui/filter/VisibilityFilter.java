@@ -86,7 +86,7 @@ public final class VisibilityFilter extends Filter {
      */
     @Override
     public boolean shouldRemoveRow(final List<StarProperty> row) {
-        // If the desired column names exists
+        // If the desired column name exists
         if (_vis2Id != -1) {
             // Get the cell of the desired column
             final StarProperty cell = row.get(_vis2Id);

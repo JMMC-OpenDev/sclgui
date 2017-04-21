@@ -126,7 +126,7 @@ public final class ObjectTypeFilter extends Filter {
      */
     @Override
     public String getName() {
-        return "Reject invalid Object Types";
+        return "Reject Invalid Object Types";
     }
 
     /**
