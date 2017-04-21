@@ -64,6 +64,9 @@ public final class FiltersModel {
 
         // ObjectTypes filter
         addFilter(new ObjectTypeFilter());
+        
+        // Diameter quality filter
+        addFilter(new DiamQualityFilter());
     }
 
     private void addFilter(final Filter filter) {
