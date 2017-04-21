@@ -8,7 +8,9 @@ import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.sclgui.calibrator.Confidence;
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedBrightN_v18 = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu) Dia12 e_dia12 orig F12 e_F12 N SpType Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
     /** Detailed bright N columns order list, as of default in current preference version */
     private static final String _detailedBrightN = "dist HD RAJ2000 DEJ2000 plx e_Plx pmRa pmDec vis2 vis2Err Dia12 e_dia12 orig F12 e_F12 N SpType ObjTypes Calib MultFlag BinFlag V H A_V Chi2 SpTyp_Teff";
+
     /** Detailed bright V columns order list, as of default in preference version 3 */
     private static final String _detailedBrightV_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright V columns order list, as of default in preference version 4 */
@@ -49,6 +52,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedBrightV_v15 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel UDDK e_UDDK B V R I J H K N Av";
     /** Detailed bright V columns order list, as of default in current preference version */
     private static final String _detailedBrightV = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel UDDK e_UDDK B V R Icous J H K N Av";
+
     /** Detailed bright K columns order list, as of default in preference version 3 */
     private static final String _detailedBrightK_v3 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk HIP HD DM RAJ2000 DEJ2000 pmDec pmRa plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 GLAT GLON RadVel RotVel LD e_LD UD e_UD Meth lambda UDDK e_UDDK B V R I J H K L M N Av";
     /** Detailed bright K columns order list, as of default in preference version 4 */
@@ -59,6 +63,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedBrightK_v15 = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel UDDK e_UDDK B V R I J H K N Av";
     /** Detailed bright K columns order list, as of default in current preference version */
     private static final String _detailedBrightK = "dist vis2 vis2Err diam_bv diam_vr diam_vk e_diam_vk UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 RadVel RotVel UDDK e_UDDK B V R Icous J H K N Av";
+
     /** Detailed faint K columns order list, as of default in preference version 3 */
     private static final String _detailedFaintK_v3 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmDec pmRa GLAT GLON plx SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 LD e_LD UD e_UD Meth lambda B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
     /** Detailed faint K columns order list, as of default in preference version 4 */
@@ -69,12 +74,14 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedFaintK_v15 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
     /** Detailed faint K columns order list, as of default in current preference version */
     private static final String _detailedFaintK = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B Bphg V Rphg Icous Iphg J Jcous H Hcous K Kcous Av";
+
     /** Simple bright V columns order list, as of default in preference version 15 */
     private static final String _simpleBrightV_v15 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_B UD_V UD_R UD_I SpType B V R I";
     /** Simple bright N columns order list, as of default in preference version 18 */
     private static final String _simpleBrightN_v18 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType N vis2(8mu) vis2Err(8mu) vis2(13mu) vis2Err(13mu)";
     /** Simple bright N columns order list, as of default in current preference version */
     private static final String _simpleBrightN = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType ObjTypes N";
+
     /** Simple bright V columns order list, as of default in current preference version */
     private static final String _simpleBrightV = "dist HD RAJ2000 DEJ2000 vis2 vis2Err diam_vk e_diam_vk UD_B UD_V UD_R UD_I SpType ObjTypes B V R Icous";
     /** Simple bright K columns order list, as of default in current preference version */
@@ -100,7 +107,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        return 20;
+        return 21;
     }
 
     /**
@@ -197,6 +204,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             case 19:
                 return updateFromVersion19ToVersion20();
 
+            // SearchCal v5
+            case 20:
+                return updateFromVersion20ToVersion21();
+
             // By default, triggers default values load.
             default:
                 return false;
@@ -271,9 +282,8 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         setDefaultPreference(PreferenceKey.VIEW_SIMPLE_FAINT_K, _simpleFaintK);
         // detailed 'Faint K' view
         setDefaultPreference(PreferenceKey.VIEW_DETAILED_FAINT_K, _detailedFaintK);
-        
-        // TODO: add view preferences for LM bands
 
+        // TODO: add view preferences for LM bands
         // Query default values preferences (ETA_TAU, bright V)
         setDefaultPreference(PreferenceKey.QUERY_MAGNITUDE_BAND, "V");
         setDefaultPreference(PreferenceKey.QUERY_INSTRUMENTAL_WAVELENGTH, Double.toString(1.0d * ALX.MICRON));
@@ -793,5 +803,126 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
         // Commit all changes if and only if everything went fine.
         return status;
+    }
+
+    /**
+     * Correction : add SIMBAD, GroupSize, LDD, e_LDD_rel, diam_chi2 in all scenarios
+     *
+     * @return always true to force Preference file write to disk with the new empty value as default.
+     */
+    private boolean updateFromVersion20ToVersion21() {
+        boolean status = true;
+
+        Object[] viewNames = {PreferenceKey.VIEW_SIMPLE_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_V,
+                              PreferenceKey.VIEW_SIMPLE_BRIGHT_K, PreferenceKey.VIEW_DETAILED_BRIGHT_K,
+                              PreferenceKey.VIEW_SIMPLE_FAINT_K, PreferenceKey.VIEW_DETAILED_FAINT_K,
+                              PreferenceKey.VIEW_SIMPLE_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_N};
+        // For each views
+        for (Object view : viewNames) {
+            String before = getPreference(view);
+
+            if (!before.contains("GroupSize")) {
+                status &= replaceTokenInPreference(view, " SpType ", " GroupSize SpType ");
+            }
+
+            if (!before.contains("SIMBAD")) {
+                status &= replaceTokenInPreference(view, " SpType ", " SIMBAD SpType ");
+            }
+            if (!before.contains("LDD")) {
+                status &= replaceTokenInPreference(view, " vis2Err ", " vis2Err LDD e_LDD_rel");
+            }
+            if (!before.contains("diam_chi2")) {
+                status &= replaceTokenInPreference(view, " vis2Err ", " vis2Err diam_chi2 ");
+            }
+        }
+
+        // Remove any deprecated columns found
+        List<String> deprecatedColumns;
+        viewNames = new Object[]{PreferenceKey.VIEW_SIMPLE_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_V};
+        // V:
+        deprecatedColumns = Arrays.asList(
+                ("Av diam_bv diam_vk diam_vr e_diam_vk e_UDDK GLAT GLON Icous UDDK")
+                        .split(" ")
+        );
+        for (Object view : viewNames) {
+            for (String column : deprecatedColumns) {
+                status &= removeTokenInPreference(view, column);
+            }
+        }
+
+        viewNames = new Object[]{PreferenceKey.VIEW_SIMPLE_BRIGHT_K, PreferenceKey.VIEW_DETAILED_BRIGHT_K};
+        // K:
+        deprecatedColumns = Arrays.asList(
+                ("Av diam_bv diam_vk diam_vr e_diam_vk e_UDDK GLAT GLON Icous UDDK")
+                        .split(" ")
+        );
+        for (Object view : viewNames) {
+            for (String column : deprecatedColumns) {
+                status &= removeTokenInPreference(view, column);
+            }
+        }
+
+        viewNames = new Object[]{PreferenceKey.VIEW_SIMPLE_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_N};
+        // N:
+        deprecatedColumns = Arrays.asList(
+                ("A_V BinFlag Calib Chi2 Dia12 e_dia12 e_F12 F12 orig SpTyp_Teff")
+                        .split(" ")
+        );
+        for (Object view : viewNames) {
+            for (String column : deprecatedColumns) {
+                status &= removeTokenInPreference(view, column);
+            }
+            status &= replaceTokenInPreference(view, " N ", " L M N UD_L UD_M UD_N");
+        }
+
+        viewNames = new Object[]{PreferenceKey.VIEW_SIMPLE_FAINT_K, PreferenceKey.VIEW_DETAILED_FAINT_K};
+        // FAINT K:
+        deprecatedColumns = Arrays.asList(
+                ("Av Bphg DENIS diam_hk diam_ij diam_ik diam_jh diam_jk diam_mean e_diam_mean GLAT GLON Hcous Icous Iphg Jcous Kcous Rphg")
+                        .split(" ")
+        );
+        for (Object view : viewNames) {
+            for (String column : deprecatedColumns) {
+                status &= removeTokenInPreference(view, column);
+            }
+        }
+
+        // Commit all changes if and only if everything went fine.
+        return status;
+    }
+
+    public static void main(String[] args) {
+        final Preferences prefs = Preferences.getInstance();
+
+        final List<String> newCols = Arrays.asList(
+                ("HD, HIP, DM, TYC1, TYC2, TYC3, 2MASS, WISE, "
+                        + "RAJ2000, DEJ2000, GROUP_SIZE_5, pmRa, pmDec, plx, e_Plx, "
+                        + "SpType, ObjTypes, SIMBAD, "
+                        + "VarFlag1, VarFlag2, VarFlag3, MultFlag, SBC9, WDS, sep1, sep2, RadVel, RotVel, "
+                        + "B, e_B, V, e_V, R, I, J, e_J, H, e_H, K, e_K, L, e_L, M, e_M, N, e_N, "
+                        + "LDD, e_LDD, e_LDD_rel, diam_chi2, CalFlag, diamFlag, Teff_SpType, logg_SpType, "
+                        + "UD_U, UD_B, UD_V, UD_R, UD_I, UD_J, UD_H, UD_K, UD_L, UD_M, UD_N, "
+                        + "vis2, vis2Err, dist, SpType_JMMC, Name")
+                        .split(", ")
+        );
+
+        Object[] viewNames = {PreferenceKey.VIEW_SIMPLE_BRIGHT_V, PreferenceKey.VIEW_DETAILED_BRIGHT_V,
+                              PreferenceKey.VIEW_SIMPLE_BRIGHT_K, PreferenceKey.VIEW_DETAILED_BRIGHT_K,
+                              PreferenceKey.VIEW_SIMPLE_FAINT_K, PreferenceKey.VIEW_DETAILED_FAINT_K,
+                              PreferenceKey.VIEW_SIMPLE_BRIGHT_N, PreferenceKey.VIEW_DETAILED_BRIGHT_N};
+        // For each views
+        for (Object view : viewNames) {
+            String before = prefs.getPreference(view);
+
+            String[] oldCols = before.split(" ");
+
+            System.out.println("Checking view: " + view);
+
+            for (String col : oldCols) {
+                if (!newCols.contains(col)) {
+                    System.out.println("Deprecated column: " + col);
+                }
+            }
+        }
     }
 }
