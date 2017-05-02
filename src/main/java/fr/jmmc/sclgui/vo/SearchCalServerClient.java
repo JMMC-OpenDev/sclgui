@@ -36,8 +36,9 @@ public final class SearchCalServerClient {
     // Constants
     /** JMMC application server to detect DNS */
     private final static String JMMC_APPS_SERVER_HOST = "apps.jmmc.fr";
-    /** JMMC application server IP (hard-coded) */
-    private final static String JMMC_APPS_SERVER_IP = "152.77.114.210";
+    /** JMMC application server IP (hard-coded).
+    was 152.77.114.210 until 27 april 2017, will move again in 2017... */
+    private final static String JMMC_APPS_SERVER_IP = "152.77.135.209";
     /** Official release path */
     private static final String OFFICIAL_SERVER_PATH = "/~sclws/";
     /** Beta release path */
