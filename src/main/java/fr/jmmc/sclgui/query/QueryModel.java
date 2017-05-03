@@ -1113,7 +1113,8 @@ public final class QueryModel extends Star implements Observer {
      * @param flag true for the radius to be automatically computed, false otherwise.
      */
     public void setQueryAutoRadiusFlag(boolean flag) {
-        _queryAutoRadiusFlag = flag;
+        // 2017.5: disable automatic mode:
+        _queryAutoRadiusFlag = false; /* = flag; */
 
         setChanged();
         notifyObservers();

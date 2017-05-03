@@ -558,9 +558,10 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _diffRASizeLabel.setVisible(brightScenarioFlag);
         _diffDECSizeTextfield.setVisible(brightScenarioFlag);
         _diffDECSizeLabel.setVisible(brightScenarioFlag);
-        _autoRadiusRadioButton.setVisible(!brightScenarioFlag);
-        _autoRadiusRadioButtonLabel.setVisible(!brightScenarioFlag);
-        _manualRadiusRadioButton.setVisible(!brightScenarioFlag);
+        // 2017.5 disable auto mode:
+        _autoRadiusRadioButton.setVisible(false);
+        _autoRadiusRadioButtonLabel.setVisible(false);
+        _manualRadiusRadioButton.setVisible(false);
         _radialSizeTextfield.setVisible(!brightScenarioFlag);
         _radialSizeLabel.setVisible(!brightScenarioFlag);
 
