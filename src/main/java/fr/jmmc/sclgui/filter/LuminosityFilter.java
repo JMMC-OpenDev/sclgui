@@ -35,11 +35,13 @@ public final class LuminosityFilter extends Filter {
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
+    public void reset(final boolean bright) {
+        // enabled for BRIGHT scenario:
+        setEnabled(bright ? Boolean.TRUE : Boolean.FALSE);
         // filter dwarfs : lum class VI V IV
-        setEnabled(Boolean.TRUE);
         setConstraint("I", Boolean.FALSE);
         setConstraint("II", Boolean.FALSE);
         setConstraint("III", Boolean.FALSE);

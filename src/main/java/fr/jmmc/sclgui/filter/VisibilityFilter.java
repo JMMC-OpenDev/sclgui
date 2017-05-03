@@ -30,16 +30,16 @@ public final class VisibilityFilter extends Filter {
      */
     public VisibilityFilter() {
         super();
-
-        setConstraint(_visibilityConstraintName, new Double(0.5));
     }
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
+    public void reset(final boolean bright) {
         setEnabled(Boolean.TRUE);
+        setConstraint(_visibilityConstraintName, new Double(0.5));
     }
 
     /**

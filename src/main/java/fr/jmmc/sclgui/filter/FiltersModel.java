@@ -71,7 +71,7 @@ public final class FiltersModel {
 
     private void addFilter(final Filter filter) {
         // call reset to prepare constraints and enable filters by default:
-        filter.reset();
+        filter.reset(true);
         _filterList.add(filter);
 
         final FilterView filterView = new FilterView(filter);
@@ -81,9 +81,10 @@ public final class FiltersModel {
 
     /**
      * Reset filters
+     * @param bright true if bright mode; false otherwise
      */
-    public void resetFilters() {
-        _filterList.reset();
+    public void resetFilters(final boolean bright) {
+        _filterList.reset(bright);
     }
 
     /**

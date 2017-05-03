@@ -41,17 +41,16 @@ public final class MagnitudeFilter extends Filter {
         super();
 
         _queryModel = queryModel;
-
-        setConstraint(_belowMagnitudeConstraintName, new Double(0));
-        setConstraint(_aboveMagnitudeConstraintName, new Double(10));
     }
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
-        // no-op
+    public void reset(final boolean bright) {
+        setConstraint(_belowMagnitudeConstraintName, new Double(0));
+        setConstraint(_aboveMagnitudeConstraintName, new Double(10));
     }
 
     /**

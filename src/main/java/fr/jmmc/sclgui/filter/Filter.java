@@ -62,8 +62,9 @@ public abstract class Filter extends Observable {
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
-    public abstract void reset();
+    public abstract void reset(final boolean bright);
 
     /**
      * Set whether the filter is enabled or not.

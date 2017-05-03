@@ -31,12 +31,13 @@ public final class FilterList extends Filter implements Observer {
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
+    public void reset(final boolean bright) {
         setEnabled(Boolean.FALSE);
         for (Filter filter : _filters) {
-            filter.reset();
+            filter.reset(bright);
         }
         setEnabled(Boolean.TRUE);
     }

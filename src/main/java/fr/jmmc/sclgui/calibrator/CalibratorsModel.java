@@ -215,13 +215,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
         // This faceless filter should always be activated
         // (set once here as no GUI can change it anywhere else)
-        
         // TODO: do not filter GetStar results:
         _facelessNonCalibratorsFilter.setEnabled(Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FILTER_NON_CALIBRATORS));
     }
 
     void resetFilters() {
-        _filtersModel.resetFilters();
+        _filtersModel.resetFilters(getBrightScenarioFlag().booleanValue());
     }
 
     public Set<String> getIgnoreMissingColumns() {
@@ -1333,9 +1332,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Clear missing cols before new parsing:
             calModel.getIgnoreMissingColumns().clear();
 
-            // reset filters:
-            calModel.resetFilters();
-
             // reset computation states:
             calModel.vis2State.reset();
             calModel.distState.reset();
@@ -1450,7 +1446,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // Compute selected magnitude band and scenario
         // Retrieve VOTable parameters
         _magnitudeBand = paramSetWrapper.getValue(PARAMETER_BAND, QueryModel.DEF_MAGNITUDE_BAND);
-        
+
         /* scenario bright because it is the only available for any instrumental band */
         _brightScenarioFlag = Boolean.valueOf(paramSetWrapper.getValue(PARAMETER_BRIGHT, "true"));
 
@@ -1506,6 +1502,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             param.setValues(values);
             paramSetWrapper.add(param);
         }
+
+        // reset filters:
+        resetFilters();
 
         // Process star list:
         postProcess(starList);
@@ -1710,7 +1709,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
                 // Get the UD diameter for the given band with e_UD_i = e_LDD:
                 pDiam = star.get(diamUdId);
-                
+
                 // if no UD (no Teff...) then use LDD:
                 if (!pDiam.hasValue() && (diamLddId != -1)) {
                     pDiam = star.get(diamLddId);

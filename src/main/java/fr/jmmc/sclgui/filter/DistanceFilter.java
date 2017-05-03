@@ -49,22 +49,16 @@ public final class DistanceFilter extends Filter {
         super();
 
         _queryModel = queryModel;
-
-        _deltaRA = new Double(10.0);
-        _deltaDEC = new Double(10.0);
-
-        setConstraint(_deltaRAConstraintName, _deltaRA);
-        setConstraint(_deltaDECConstraintName, _deltaDEC);
-
-        retrieveScienceObjectCoordinates();
     }
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
-        // no-op
+    public void reset(final boolean bright) {
+        setConstraint(_deltaRAConstraintName, new Double(10.0));
+        setConstraint(_deltaDECConstraintName, new Double(10.0));
     }
 
     /**

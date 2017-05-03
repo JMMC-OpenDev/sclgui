@@ -34,11 +34,13 @@ public final class SpectralTypeFilter extends Filter {
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
+    public void reset(final boolean bright) {
+        // enabled for BRIGHT scenario:
+        setEnabled(bright ? Boolean.TRUE : Boolean.FALSE);
         // filter early spectral classes: OBAFG
-        setEnabled(Boolean.TRUE);
         setConstraint("O", Boolean.TRUE);
         setConstraint("B", Boolean.TRUE);
         setConstraint("A", Boolean.TRUE);

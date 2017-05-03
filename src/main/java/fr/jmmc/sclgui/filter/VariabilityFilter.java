@@ -30,9 +30,10 @@ public final class VariabilityFilter extends Filter {
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
+    public void reset(final boolean bright) {
         // no-op
     }
 

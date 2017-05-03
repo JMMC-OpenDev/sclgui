@@ -33,20 +33,17 @@ public final class DiameterQualityFilter extends Filter {
      */
     public DiameterQualityFilter() {
         super();
-
-        _maxChi2 = new Double(2.0);
-        _maxRelDiamErr = new Double(10.0);
-
-        setConstraint(_chi2ConstraintName, _maxChi2);
-        setConstraint(_relDiamErrorConstraintName, _maxRelDiamErr);
     }
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
+    public void reset(final boolean bright) {
         setEnabled(Boolean.TRUE);
+        setConstraint(_chi2ConstraintName, new Double(2.0));
+        setConstraint(_relDiamErrorConstraintName, new Double(10.0));
     }
 
     /**

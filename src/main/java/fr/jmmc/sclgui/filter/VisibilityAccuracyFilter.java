@@ -28,16 +28,15 @@ public final class VisibilityAccuracyFilter extends Filter {
      */
     public VisibilityAccuracyFilter() {
         super();
-
-        setConstraint(_visibilityAccuracyConstraintName, new Double(2.0));
     }
 
     /**
      * Reset the filter
+     * @param bright true if bright mode; false otherwise
      */
     @Override
-    public void reset() {
-        // no-op
+    public void reset(final boolean bright) {
+        setConstraint(_visibilityAccuracyConstraintName, new Double(2.0));
     }
 
     /**
