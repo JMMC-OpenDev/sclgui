@@ -18,7 +18,6 @@ import fr.jmmc.sclgui.filter.FiltersModel;
 import fr.jmmc.sclgui.filter.FiltersView;
 import fr.jmmc.sclgui.preference.ColumnsPreferencesView;
 import fr.jmmc.sclgui.preference.GeneralPreferencesView;
-import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.query.QueryModel;
 import fr.jmmc.sclgui.query.QueryView;

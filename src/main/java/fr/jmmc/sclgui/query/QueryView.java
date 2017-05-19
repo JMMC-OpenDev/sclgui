@@ -181,7 +181,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
 
         // Form panel global attributes and common objects
         JPanel tempPanel;
-        Dimension textfieldDimension = new Dimension(100, 20);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
@@ -203,8 +202,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _instrumentPanel.add(_instrumentalWavelengthLabel, c);
         _instrumentalWavelengthLabel.setLabelFor(_instrumentalWavelengthTextfield);
         _instrumentalWavelengthTextfield.setFormatterFactory(doubleFormaterFactory);
-        _instrumentalWavelengthTextfield.setMinimumSize(textfieldDimension);
-        _instrumentalWavelengthTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalWavelengthTextfield, c);
         // Maximum baseline
@@ -214,8 +211,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _instrumentPanel.add(label, c);
         label.setLabelFor(_instrumentalMaxBaselineTextField);
         _instrumentalMaxBaselineTextField.setFormatterFactory(doubleFormaterFactory);
-        _instrumentalMaxBaselineTextField.setMinimumSize(textfieldDimension);
-        _instrumentalMaxBaselineTextField.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _instrumentPanel.add(_instrumentalMaxBaselineTextField, c);
 
@@ -238,8 +233,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         label = new JLabel("RA 2000 [hh:mm:ss] : ", JLabel.TRAILING);
         _scienceObjectPanel.add(label, c);
         label.setLabelFor(_scienceObjectRATextfield);
-        _scienceObjectRATextfield.setMinimumSize(textfieldDimension);
-        _scienceObjectRATextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectRATextfield, c);
         // DEC coordinate field
@@ -248,8 +241,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         label = new JLabel("DEC 2000 [+/-dd:mm:ss] : ", JLabel.TRAILING);
         _scienceObjectPanel.add(label, c);
         label.setLabelFor(_scienceObjectDECTextfield);
-        _scienceObjectDECTextfield.setMinimumSize(textfieldDimension);
-        _scienceObjectDECTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectDECTextfield, c);
         // Magnitude field
@@ -258,8 +249,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _scienceObjectPanel.add(_scienceObjectMagnitudeLabel, c);
         _scienceObjectMagnitudeLabel.setLabelFor(_scienceObjectMagnitudeTextfield);
         _scienceObjectMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
-        _scienceObjectMagnitudeTextfield.setMinimumSize(textfieldDimension);
-        _scienceObjectMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _scienceObjectPanel.add(_scienceObjectMagnitudeTextfield, c);
 
@@ -273,8 +262,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _searchCalPanel.add(_minMagnitudeLabel, c);
         _minMagnitudeLabel.setLabelFor(_minMagnitudeTextfield);
         _minMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
-        _minMagnitudeTextfield.setMinimumSize(textfieldDimension);
-        _minMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _searchCalPanel.add(_minMagnitudeTextfield, c);
         // Maximum magnitude field
@@ -283,8 +270,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _searchCalPanel.add(_maxMagnitudeLabel, c);
         _maxMagnitudeLabel.setLabelFor(_maxMagnitudeTextfield);
         _maxMagnitudeTextfield.setFormatterFactory(doubleFormaterFactory);
-        _maxMagnitudeTextfield.setMinimumSize(textfieldDimension);
-        _maxMagnitudeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _searchCalPanel.add(_maxMagnitudeTextfield, c);
         // Bright/Faint Scenario
@@ -310,8 +295,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _searchCalPanel.add(_diffRASizeLabel, c);
         _diffRASizeLabel.setLabelFor(_diffRASizeTextfield);
         _diffRASizeTextfield.setFormatterFactory(doubleFormaterFactory);
-        _diffRASizeTextfield.setMinimumSize(textfieldDimension);
-        _diffRASizeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _searchCalPanel.add(_diffRASizeTextfield, c);
         // DEC delta field
@@ -320,8 +303,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _searchCalPanel.add(_diffDECSizeLabel, c);
         _diffDECSizeLabel.setLabelFor(_diffDECSizeTextfield);
         _diffDECSizeTextfield.setFormatterFactory(doubleFormaterFactory);
-        _diffDECSizeTextfield.setMinimumSize(textfieldDimension);
-        _diffDECSizeTextfield.setPreferredSize(textfieldDimension);
         c.gridx = 1;
         _searchCalPanel.add(_diffDECSizeTextfield, c);
         // Radial size field
@@ -362,8 +343,6 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         DefaultFormatterFactory radialDoubleFormaterFactory = new DefaultFormatterFactory(radialDoubleFormater,
                 radialDoubleFormater, radialDoubleFormater);
         _radialSizeTextfield.setFormatterFactory(radialDoubleFormaterFactory);
-        _radialSizeTextfield.setMinimumSize(textfieldDimension);
-        _radialSizeTextfield.setPreferredSize(textfieldDimension);
 
         // Status panel global attributes and common objects
         _actionPanel.setLayout(new BoxLayout(_actionPanel, BoxLayout.X_AXIS));

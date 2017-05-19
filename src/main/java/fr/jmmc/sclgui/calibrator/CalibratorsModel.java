@@ -1744,6 +1744,9 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 diamError = pErrDiam.getDoubleValue();
 
                 VisibilityUtils.computeVisibility(diam, diamError, baseMax, wavelength, visRes);
+                // only 9 digits:
+                visRes.vis2 = NumberUtils.trimTo9Digits(visRes.vis2);
+                visRes.vis2Err = NumberUtils.trimTo9Digits(visRes.vis2Err);
             } else {
                 // reset:
                 confidenceIndex = Confidence.KEY_CONFIDENCE_NO;
@@ -1830,6 +1833,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             if (pRA.hasValue() && pDE.hasValue()) {
                 separation = CoordUtils.computeDistanceInDegrees(scienceObjectRA, scienceObjectDE,
                         pRA.getDoubleValue(), pDE.getDoubleValue());
+                // only 9 digits:
+                separation = NumberUtils.trimTo9Digits(separation);
             } else {
                 separation = Double.NaN;
             }
@@ -2339,7 +2344,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Prepare the input and output files
             final File tmpFile = FileUtils.getTempFile("currentStarList.scvot");
 
-            if (saveVOTableFile(tmpFile, _currentStarList)) {
+            // TODO: decide to export all or only filtered:
+            final StarList starList = _filteredStarList; // _currentStarList
+            
+            if (saveVOTableFile(tmpFile, starList)) {
                 final InputStream sourceStream = new BufferedInputStream(new FileInputStream(tmpFile));
                 final OutputStream resultStream = new BufferedOutputStream(new FileOutputStream(outputFile));
 

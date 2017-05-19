@@ -7,6 +7,7 @@ import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.RegisteredPreferencedBooleanAction;
 import fr.jmmc.jmcs.gui.component.SearchPanel;
 import fr.jmmc.jmcs.gui.util.AutofitTableColumns;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.sclgui.LegendView;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -193,6 +194,10 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         rowHeader.setPreferredScrollableViewportSize(d);
         rowHeader.setRowHeight(_calibratorsTable.getRowHeight());
         rowHeader.setRowSelectionAllowed(false);
+        
+        // Fix row height:
+        SwingUtils.adjustRowHeight(_calibratorsTable);
+        SwingUtils.adjustRowHeight(rowHeader);
         scrollPane.setRowHeaderView(rowHeader);
 
         final JTableHeader corner = rowHeader.getTableHeader();

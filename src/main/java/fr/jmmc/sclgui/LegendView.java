@@ -5,6 +5,7 @@ package fr.jmmc.sclgui;
 
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.service.BrowserLauncher;
 import fr.jmmc.jmcs.util.PropertyUtils;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -118,7 +119,7 @@ public final class LegendView extends JPanel {
          * @param isEditable if true, the catalog colors will be editable, otherwise the link to the catalog will be open instead of editing
          */
         ColorPreferencesView(Preferences preferences, String prefix,
-                String header, boolean isEditable) {
+                             String header, boolean isEditable) {
             // Register to catalog preferences
             _colorPreferencePrefix = prefix + ".color.";
             _preferences = preferences;
@@ -133,6 +134,9 @@ public final class LegendView extends JPanel {
                     new ColorRenderer(false, isEditable));
             _table.setDefaultEditor(Color.class, new ColorEditor(isEditable));
             _table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+            // Fix row height:
+            SwingUtils.adjustRowHeight(_table);
 
             setLayout(new BorderLayout());
 
@@ -305,8 +309,8 @@ public final class LegendView extends JPanel {
 
             @Override
             public Component getTableCellRendererComponent(JTable table,
-                    Object color, boolean isSelected, boolean hasFocus, int row,
-                    int column) {
+                                                           Object color, boolean isSelected, boolean hasFocus, int row,
+                                                           int column) {
 
                 String cellReference = (String) _data[row][REFERENCE];
                 String cellName = (String) _data[row][TITLE];
@@ -354,7 +358,7 @@ public final class LegendView extends JPanel {
         }
 
         class ColorEditor extends AbstractCellEditor implements TableCellEditor,
-                ActionListener {
+                                                                ActionListener {
 
             /** default serial UID for Serializable interface */
             private static final long serialVersionUID = 1;
@@ -430,7 +434,7 @@ public final class LegendView extends JPanel {
             // Implement one method defined by TableCellEditor.
             @Override
             public Component getTableCellEditorComponent(JTable table,
-                    Object value, boolean isSelected, int row, int column) {
+                                                         Object value, boolean isSelected, int row, int column) {
 
                 _currentColor = (Color) value;
                 _catalogReference = (String) _data[row][REFERENCE];
