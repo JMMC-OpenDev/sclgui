@@ -6,13 +6,11 @@ package fr.jmmc.sclgui.vo;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.network.NetworkSettings;
 import fr.jmmc.jmcs.util.StringUtils;
-import fr.jmmc.jmcs.util.UrlUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclws_wsdl.SclwsLocator;
 import fr.jmmc.sclws_wsdl.SclwsPortType;
 import fr.jmmc.sclws_wsdl.SclwsStub;
-import java.net.URL;
 import java.util.Hashtable;
 import javax.xml.rpc.ServiceException;
 import org.apache.axis.AxisProperties;
@@ -51,10 +49,8 @@ public final class SearchCalServerClient {
     /* members */
     /** shared service locator */
     private SclwsLocator _sclwsLocator = null;
-    /** shared service URL */
-    private URL _sclwsURL = null;
     /** HTTP headers (no chunk encoding transfer to support proxies) */
-    private Hashtable<String, String> _httpHeaders = null;
+    private final Hashtable<String, String> _httpHeaders;
 
     /**
      * This code returns the singleton instance.
@@ -73,6 +69,10 @@ public final class SearchCalServerClient {
     private SearchCalServerClient() {
         super();
         configureAxis();
+
+        // disable HTTP 1.1 chunk encoding because some proxy servers does not accept it:
+        _httpHeaders = new Hashtable<String, String>(4);
+        _httpHeaders.put(HTTPConstants.HEADER_TRANSFER_ENCODING_CHUNKED, "false");
     }
 
     /**
@@ -123,7 +123,7 @@ public final class SearchCalServerClient {
 
         _logger.info("Axis properties:\n{}", Preferences.dumpProperties(AxisProperties.getProperties()));
 
-        // Note: default retryhandler = 3 retry.
+        // Note: default retryhandler = 0 retry
     }
 
     /**
@@ -132,10 +132,9 @@ public final class SearchCalServerClient {
      */
     private SclwsLocator getSclwsLocator() {
         if (_sclwsLocator == null) {
-            final SclwsLocator locator = new SclwsLocator();
-
-            // Retrieve prefered SearchCal server URL (if any)
+            // Retrieve preferred SearchCal server URL (if any)
             String proxyScriptURL = Preferences.getInstance().getPreference(PreferenceKey.SERVER_URL_ADDRESS);
+
             if (StringUtils.isTrimmedEmpty(proxyScriptURL)) {
                 // Use JMMC server IP (ESO constraint):
                 final String serverIP = NetworkSettings.getHostIP(JMMC_APPS_SERVER_HOST, JMMC_APPS_SERVER_IP);
@@ -152,6 +151,8 @@ public final class SearchCalServerClient {
             }
 
             _logger.info("SearchCal server URL: {}", proxyScriptURL);
+
+            final SclwsLocator locator = new SclwsLocator();
 
             // Re-route network traffic at specified address on standard 80 port
             // (e.g to overcome tightly filtered TCP outputs on public WiFi)
@@ -171,16 +172,12 @@ public final class SearchCalServerClient {
      * Return a new SearchCal web service client
      * @return SclwsPortType
      */
-    public SclwsPortType getSclWsClient() {
+    public SclwsPortType getSclwsClient() {
         final SclwsLocator locator = getSclwsLocator();
-
-        if (_sclwsURL == null) {
-            _sclwsURL = UrlUtils.parseURL(locator.getsclwsAddress());
-        }
 
         try {
             // Create the web service client
-            final SclwsPortType sclws = locator.getsclws(_sclwsURL);
+            final SclwsPortType sclws = locator.getsclws();
 
             if (_logger.isDebugEnabled()) {
                 _logger.debug("Connected to '{}'.", locator.getsclwsAddress());
@@ -191,10 +188,6 @@ public final class SearchCalServerClient {
             stub.setTimeout(0);
 
             // disable HTTP 1.1 chunk encoding because some proxy servers does not accept it:
-            if (_httpHeaders == null) {
-                _httpHeaders = new Hashtable<String, String>(4);
-                _httpHeaders.put(HTTPConstants.HEADER_TRANSFER_ENCODING_CHUNKED, "false");
-            }
             stub._setProperty(HTTPConstants.REQUEST_HEADERS, _httpHeaders);
 
             // enable gzip compression from client-side:

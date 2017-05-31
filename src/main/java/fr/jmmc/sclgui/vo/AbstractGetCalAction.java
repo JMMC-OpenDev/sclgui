@@ -201,7 +201,7 @@ public abstract class AbstractGetCalAction extends RegisteredAction {
             _query = query;
 
             // Get one WS client:
-            _sclws = SearchCalServerClient.getInstance().getSclWsClient();
+            _sclws = SearchCalServerClient.getInstance().getSclwsClient();
         }
 
         @Override
