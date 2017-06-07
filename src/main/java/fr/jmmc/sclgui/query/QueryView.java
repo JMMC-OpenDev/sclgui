@@ -355,6 +355,7 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         // Fixed space
         _actionPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         // Progressbar
+        _progressBar.setName("QueryProgress");
         _progressBar.setStringPainted(true);
         _actionPanel.add(_progressBar);
         // Fixed space

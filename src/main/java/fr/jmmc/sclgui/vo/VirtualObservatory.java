@@ -36,6 +36,10 @@ public final class VirtualObservatory extends Observable {
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(VirtualObservatory.class.getName());
+    /** label for the Get Calibrator action */
+    public static final String LABEL_GET_CAL = "Get Calibrators";
+    /** label for the Cancel action */
+    public static final String LABEL_CANCEL = "Cancel";
     /** Query model */
     private final QueryModel _queryModel;
     /** Data model to which the result should be passed */
@@ -185,11 +189,10 @@ public final class VirtualObservatory extends Observable {
             public void run() {
                 _queryIsLaunched.set(running);
 
-                String newActionName = "Cancel";
+                String newActionName = LABEL_CANCEL;
 
                 if (!running) {
-                    // Change button title to 'Get Calibrators'
-                    newActionName = "Get Calibrators";
+                    newActionName = LABEL_GET_CAL;
                     _queryModel.setQueryProgress("", 0, 0);
                 }
 
@@ -589,7 +592,7 @@ public final class VirtualObservatory extends Observable {
          * @param fieldName the name of the field pointing to the action.
          */
         protected GetCalAction(final VirtualObservatory vo, final String classPath, final String fieldName) {
-            super(classPath, fieldName, "Get Calibrators");
+            super(classPath, fieldName, LABEL_GET_CAL);
 
             this._vo = vo;
         }

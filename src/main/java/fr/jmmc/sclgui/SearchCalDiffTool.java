@@ -192,15 +192,16 @@ public final class SearchCalDiffTool extends App {
         panels.put("General Settings", generalView);
         panels.put("Misc. settings", new CommonPreferencesView());
 
-        final PreferencesView preferencesView = new PreferencesView(preferences, panels);
+        // Build the main window
+        final DiffWindow frame = new DiffWindow(vo, _queryView, calibratorsViewLeft, calibratorsViewRight,
+                calibratorsViewDiff, filtersView, StatusBar.getInstance());
+        App.setFrame(frame);
+
+        final PreferencesView preferencesView = new PreferencesView(frame, preferences, panels);
         preferencesView.init();
 
         // Show the user the app is been initialized
         StatusBar.show("application initialization...");
-
-        // Build the main window
-        App.setFrame(new DiffWindow(vo, _queryView, calibratorsViewLeft, calibratorsViewRight,
-                calibratorsViewDiff, filtersView, StatusBar.getInstance()));
 
         // Overwrite the Open action:
         new OpenDiffFilesAction(VirtualObservatory.class.getName(), "_openFileAction");
@@ -447,9 +448,9 @@ public final class SearchCalDiffTool extends App {
         final JSplitPane resultPane;
 
         DiffWindow(final VirtualObservatory vo, final QueryView queryView,
-                final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
-                final CalibratorsView calibratorsViewDiff,
-                final FiltersView filtersView, final StatusBar statusBar) {
+                   final CalibratorsView calibratorsViewLeft, final CalibratorsView calibratorsViewRight,
+                   final CalibratorsView calibratorsViewDiff,
+                   final FiltersView filtersView, final StatusBar statusBar) {
 
             super("SearchCal Diff tool");
 

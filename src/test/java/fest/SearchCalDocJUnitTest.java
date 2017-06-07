@@ -5,28 +5,31 @@ package fest;
 
 import fest.common.JmcsFestSwingJUnitTestCase;
 import fr.jmmc.jmcs.Bootstrapper;
-import fr.jmmc.jmcs.util.JVMUtils;
 import fr.jmmc.jmcs.data.preference.CommonPreferences;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
+import fr.jmmc.jmcs.util.timer.TimerFactory;
 import fr.jmmc.sclgui.preference.Preferences;
-import java.awt.Frame;
+import fr.jmmc.sclgui.vo.VirtualObservatory;
+import java.awt.Dialog;
+import java.io.File;
 import javax.swing.AbstractAction;
+import org.apache.commons.lang.SystemUtils;
 import org.fest.assertions.Fail;
 import org.fest.swing.annotation.GUITest;
-import org.fest.swing.core.matcher.FrameMatcher;
+import org.fest.swing.core.matcher.DialogMatcher;
 import static org.fest.swing.core.matcher.JButtonMatcher.*;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiTask;
-import org.fest.swing.fixture.FrameFixture;
+import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JMenuItemFixture;
 import org.fest.swing.fixture.JProgressBarFixture;
 import org.fest.swing.timing.Timeout;
-import fr.jmmc.jmcs.util.timer.TimerFactory;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * This simple tests concerns SearchCal GUI
@@ -35,24 +38,25 @@ import org.junit.Test;
  *
  * @author Laurent BOURGES, Sylvain LAFRASSE. 
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
 
-    /** absolute path to test folder to load observations */
-    private final static String TEST_FOLDER = "/Users/lafrasse/Dev/sclgui/test/";
-    /** 60s timeout */
-    private static final Timeout LONG_TIMEOUT = Timeout.timeout(120 * 1000l);
+    /** 20s timeout */
+    private static final Timeout LONG_TIMEOUT = Timeout.timeout(20 * 1000l);
 
     /**
      * Initialize system properties & static variables and finally starts the application
      */
     @BeforeClass
     public static void intializeAndStartApplication() {
-
+        // Hack to reset LAF & ui scale:
+        CommonPreferences.getInstance().resetToDefaultPreferences();
+        
         // invoke Bootstrapper method to initialize logback now:
         Bootstrapper.getState();
 
-        // disable dev LAF menu :
-        System.setProperty(JVMUtils.SYSTEM_PROPERTY_LAF_MENU, "false");
+        // reset window Preferences:
+        new File(SystemUtils.USER_HOME + "/.fr.jmmc.jmcs.session_settings.jmmc.searchcal.properties").delete();
 
         // reset Preferences:
         Preferences.getInstance().resetToDefaultPreferences();
@@ -85,11 +89,10 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
      */
     @Test
     @GUITest
-    public void shouldQuery() {
+    public void m01_shouldQuery() {
         window.requireVisible();
 
         // TODO: test Simbad resolver
-
         // Mac OS X workaround to perform action in menu:
         final JMenuItemFixture menuItemWithPath = window.menuItemWithPath("Calibrators", "Show Legend");
         GuiActionRunner.execute(new GuiTask() {
@@ -99,10 +102,8 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
             }
         });
 
-        // TODO: create constants ...
-        final String buttonText = "Get Calibrators";
-        final JButtonFixture buttonFixture = window.button(withText(buttonText));
-        final JProgressBarFixture progressFixture = window.progressBar();
+        final JButtonFixture buttonFixture = window.button(withText(VirtualObservatory.LABEL_GET_CAL));
+        final JProgressBarFixture progressFixture = window.progressBar("QueryProgress");
 
         // click to start SearchCal query:
         buttonFixture.click();
@@ -111,8 +112,8 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
             Fail.fail("An error occured while running query !");
         }
 
-        // 2MASS catalog (4/14)
-        progressFixture.waitUntilValueIs(4, LONG_TIMEOUT);
+        // JSDC query catalog (0/1)
+        progressFixture.waitUntilValueIs(0, LONG_TIMEOUT);
 
         saveScreenshot(window, "sc_ihm.png");
 
@@ -129,7 +130,7 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
      */
     @Test
     @GUITest
-    public void shouldOpenPreferences() {
+    public void m02_shouldOpenPreferences() {
 
         // TODO : generalize this over menu click method (cross-platform issue)
         GuiActionRunner.execute(new GuiTask() {
@@ -140,9 +141,9 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
             }
         });
 
-        final Frame prefFrame = robot().finder().find(FrameMatcher.withTitle("Preferences"));
+        final Dialog prefFrame = robot().finder().find(DialogMatcher.withTitle("Preferences"));
         if (prefFrame != null) {
-            final FrameFixture frame = new FrameFixture(robot(), prefFrame);
+            final DialogFixture frame = new DialogFixture(robot(), prefFrame);
 
             frame.requireVisible();
             frame.moveToFront();
@@ -157,9 +158,13 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
             saveScreenshot(frame, "sc_ihm_pref_win_2.png");
 
             // Get the third tab screenshot
-            frame.tabbedPane().selectTab("Help Settings");
+            frame.tabbedPane().selectTab("General Settings");
             saveScreenshot(frame, "sc_ihm_pref_win_3.png");
 
+            // Get the fourth tab screenshot
+            frame.tabbedPane().selectTab("Misc. settings");
+            saveScreenshot(frame, "sc_ihm_pref_win_4.png");
+            
             // Close frame
             frame.close();
         }
@@ -168,10 +173,9 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
     /**
      * Test the application exit sequence : ALWAYS THE LAST TEST
      */
-    @Ignore
     @Test
     @GUITest
-    public void shouldExit() {
+    public void m03_shouldExit() {
         logger.info("shouldExit test");
 
         window.close();

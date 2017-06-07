@@ -75,11 +75,17 @@
             <scope>compile</scope>
         </dependency>
 
-
         <dependency>
             <groupId>fr.jmmc.testgui</groupId>
             <artifactId>testgui</artifactId>
             <version>TRUNK</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <artifactId>junit</artifactId>
+            <groupId>junit</groupId>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
 

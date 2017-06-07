@@ -28,6 +28,7 @@ import static org.fest.swing.timing.Pause.*;
 import org.fest.swing.timing.Timeout;
 import fr.jmmc.jmcs.util.timer.TimerFactory;
 import fr.jmmc.jmcs.util.timer.TimerFactory.UNIT;
+import fr.jmmc.sclgui.vo.VirtualObservatory;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,16 +40,14 @@ import org.junit.Test;
  */
 public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
-    /** absolute path to test folder to load observations */
-    private final static String TEST_FOLDER = "/Users/lafrasse/Dev/sclgui/test/";
     /** 60s timeout */
     private static final Timeout LONG_TIMEOUT = Timeout.timeout(60 * 1000l);
     /** queries to perform (500) */
-    private static final int QUERY_ITERATIONS = 1000;
+    private static final int QUERY_ITERATIONS = 100;
     /** time to wait between queries (ms) */
     private static final long QUERY_PAUSE = 1 * 1000l;
     /** flag indicating to test cancel n queries */
-    private static final boolean TEST_CANCEL = false;
+    private static final boolean TEST_CANCEL = true;
     /** flag to perform big queries on V band */
     private static final boolean TEST_BIG = true;
     /** flag to perform queries on N band */
@@ -62,9 +61,6 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
         // invoke Bootstrapper method to initialize logback now:
         Bootstrapper.getState();
-
-        // disable dev LAF menu :
-        System.setProperty(JVMUtils.SYSTEM_PROPERTY_LAF_MENU, "false");
 
         // reset Preferences:
         Preferences.getInstance().resetToDefaultPreferences();
@@ -120,15 +116,15 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
             // initial delay:
             final long startAt = 0l;
 
-            // typical query duration = 5s:
-            final long queryDuration = 5000l;
+            // typical query duration = 0.5s:
+            final long queryDuration = 500l;
 
             // 10 queries to consider that SearchCal server is stable within the wait delay:
             final int stepIteration = 10;
 
             final long stepWait = (queryDuration - startAt) / (QUERY_ITERATIONS / stepIteration);
 
-            final String buttonText = "Get Calibrators";
+            final String buttonText = VirtualObservatory.LABEL_GET_CAL;
 
             final JButtonFixture buttonFixture = window.button(withText(buttonText));
 
@@ -203,7 +199,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
         if (!TEST_CANCEL) {
 
-            final String buttonText = "Get Calibrators";
+            final String buttonText = VirtualObservatory.LABEL_GET_CAL;
 
             final JButtonFixture buttonFixture = window.button(withText(buttonText));
 

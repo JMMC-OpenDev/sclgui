@@ -111,15 +111,16 @@ public final class SearchCal extends App {
         generalView.init();
         panels.put("General Settings", generalView);
         panels.put("Misc. settings", new CommonPreferencesView());
+
+        // Build the main window
+        final MainWindow frame = new MainWindow(_vo, queryView, calibratorsView, filtersView, StatusBar.getInstance());
+        App.setFrame(frame);
         
-        final PreferencesView preferencesView = new PreferencesView(_preferences, panels);
+        final PreferencesView preferencesView = new PreferencesView(frame, _preferences, panels);
         preferencesView.init();
 
         // Show the user the app is been initialized
         StatusBar.show("application initialization...");
-
-        // Build the main window
-        App.setFrame(new MainWindow(_vo, queryView, calibratorsView, filtersView, StatusBar.getInstance()));
     }
 
     /**
