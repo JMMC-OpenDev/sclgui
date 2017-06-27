@@ -45,7 +45,16 @@
             <version>4.0.0</version>
         </dependency>
 
-        <!-- TODO: use latex to helpset for the SearchCal documentation -->
+        <!-- use JMCS Latex2Helpset for the SearchCal documentation -->
+        <!--
+            Get the jmcs module:
+            cd jmcs/tools/helpset/
+            ./jmcsHTML2HelpSet.sh JMMC-MAN-2600-0001
+
+            Get the jar file: JMMC-MAN-2600-0001-latex-tmp/JMMC-MAN-2600-0001-doc.jar
+            Push into lib/sclgui-doc.jar
+        -->
+
         <dependency>
             <!-- Requires you to install the artifact running mvn process-resources -->
             <groupId>fr.jmmc.sclgui</groupId>
