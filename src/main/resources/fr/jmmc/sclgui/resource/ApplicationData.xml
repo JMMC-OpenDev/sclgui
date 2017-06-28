@@ -9,9 +9,9 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.1 alpha 1"/>
+    <program name="SearchCal" version="5.0.1 alpha 1"/>
 
-    <compilation date="06/06/2017" compiler="JDK 1.6"/>
+    <compilation date="27/06/2017" compiler="JDK 1.6"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -133,10 +133,10 @@
     </menubar>
 
     <releasenotes>
-        <release version="5.1">
-            <pubDate>Tue, 06 Jun 2017 16:00:00 GMT</pubDate>
-            <prerelease version="5.1 alpha 1">
-                <change type="FEATURE">...</change>
+        <release version="5.0.1">
+            <pubDate>Tue, 27 Jun 2017 16:00:00 GMT</pubDate>
+            <prerelease version="5.0.1 alpha 1">
+                <change type="FEATURE">Updated documentation and release notes</change>
             </prerelease>
         </release>
         <release version="5.0">
@@ -157,26 +157,28 @@
                 <change type="BUGFIX" url="http://trac.jmmc.fr/jmmc-sw/ticket/744">Fixed server crash occuring when the client performs an http retry query (firewall / proxy timeout).</change>
             </prerelease>
             <prerelease version="5.0 alpha 7">
-                <change type="CHANGE">TODO: review the complete release notes since last release (2012).</change>
+                <change type="CHANGE">Added new filter on both chi2 and relative error.</change>
             </prerelease>
             <prerelease version="5.0 alpha 6">
                 <change type="CHANGE">Added new filter on Simbad's Object types (algol, mira ...) when known (JSDC).</change>
             </prerelease>
             <prerelease version="5.0 alpha 5">
-                <change type="CHANGE">Use new JSDC query scenario = fast cone search and magnitude filter made by the new SearchCal Server</change>
-                <change type="CHANGE">New Polynomial relations implemented (V-B, V-J, V-H, V-K)</change>
+                <change type="CHANGE">Use the new JSDC query scenario = fast cone search and magnitude filter implemented by the new SearchCal Server</change>
+                <change type="CHANGE">Upgraded SearchCal Server: Bright and Faint query modes now use the JSDC V2 (490 000 stars) and complementary data (2M stars)</change>
+                <change type="CHANGE">Faint mode rewritten to estimate the mean diameter and its error by using the complete spectral type range (min chi2)</change>
+                <change type="CHANGE">New Polynomial relations implemented (V-J, V-H, V-K) base on Alain Chelli's paper</change>
             </prerelease>
             <prerelease version="5.0 alpha 4">
                 <change type="CHANGE">Improved Star resolver: report ambiguous matches (more than 1 object per identifier),
                     better timeout settings (3s for connection) ...</change>
             </prerelease>
             <prerelease version="5.0 alpha 3">
-                <change type="CHANGE">Fixed the magnitude filter to reject stars where the magnitude is missing for the selected band</change>
+                <change type="CHANGE">Fixed the magnitude filter to reject stars where the magnitude is msising for the selected band</change>
             </prerelease>
             <prerelease version="5.0 alpha 2">
                 <change type="CHANGE">Updated stellar diameter relations (JSDC v2)</change>
                 <change type="CHANGE">Increased maximum diffRA to 6H ie 360 min.</change>
-                <change type="CHANGE">Increased maximum query size to 10,000 stars (slower but more returned calibrators)</change>
+                <change type="CHANGE">Increased maximum query size to 5000 stars</change>
             </prerelease>
             <prerelease version="5.0 beta 1">
                 <change type="CHANGE">Updated server version to 5.0.0:
@@ -184,7 +186,6 @@
                     totally rewritten rigourous error propagation
                     fit AV / distance using photometry
                 </change>
-                <change type="CHANGE">TODO: fix release notes since public release 4.4.3</change>
             </prerelease>
         </release>
         <release version="4.5">
