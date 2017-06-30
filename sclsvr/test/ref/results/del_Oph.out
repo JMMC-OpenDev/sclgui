@@ -1,0 +1,903 @@
+unknown -    alx - Info  - 2013-01-16T15:47:47.981978 - alxAngularDiameter.c:91 - Loading /home/users/bourgesl/INTROOT/config/alxAngDiamPolynomial.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.982272 - alxCorrectedMagnitude.c:139 - Loading /home/users/bourgesl/INTROOT/config/alxExtinctionRatioTable.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.982363 - alxCorrectedMagnitude.c:414 - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForDwarfStar.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.982617 - alxCorrectedMagnitude.c:414 - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForGiantStar.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.982869 - alxCorrectedMagnitude.c:414 - Loading /home/users/bourgesl/INTROOT/config/alxColorTableForSuperGiantStar.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.983108 - alxCorrectedMagnitude.c:1609 - Loading /home/users/bourgesl/INTROOT/config/alxAkariBlackBodyCorrectionTable.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.983345 - alxCorrectedMagnitude.c:1879 - Loading /home/users/bourgesl/INTROOT/config/alxTableTeffLogg.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.983624 - alxCorrectedMagnitude.c:2099 - Loading /home/users/bourgesl/INTROOT/config/alxTableUDCoefficientCorrection.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.985991 - alxInterstellarAbsorption.c:95 - Loading /home/users/bourgesl/INTROOT/config/alxIntAbsPolynomial.cfg ...
+unknown -    alx - Info  - 2013-01-16T15:47:47.986165 - alxResearchArea.c:97 - Loading /home/users/bourgesl/INTROOT/config/alxStarPopulationInKBand.cfg ...
+unknown -   vobs - Quiet - 2013-01-16T15:47:47.986949 - vobsREMOTE_CATALOG.cpp:107 - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
+sclsvrServer -   vobs - Test  - Search: start
+sclsvrServer -   vobs - Info  - Execute: start
+sclsvrServer -   vobs - Test  - Execute: Step 1 - inputList [NONE]
+sclsvrServer -   vobs - Test  - Execute: Step 1 - Consulting I/280 ...
+sclsvrServer -   vobs - Test  - Search area [3578.220 - 1200.000] (arcmin)
+sclsvrServer -   vobs - Test  - Search: Box search area = 3579/1200 arcmin
+sclsvrServer -   vobs - Test  - Search: Magnitude V range = 0.00..6.00
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=243.586417-3.694323&-c.geom=b&-c.bm=3579/1200&Vmag=0.00..6.00&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=e_RAJ2000&-out=e_DEJ2000&-out=pmRA&-out=pmDE&-out=e_pmRA&-out=e_pmDE&-out=Plx&-out=e_Plx&-out=SpType&-out=Bmag&-out=Vmag&-out=v1&-out=v2&-out=v3&-out=d5&SpType=%5bOBAFGKM%5d*&e_Plx=%3E0.0&Plx=%3E0.999'
+sclsvrServer -   vobs - Test  - Parsing XML document (24377 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (110 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/280':
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'DM' [ID_DM] found for parameter 'DM' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'TYC1' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'TYC2' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'TYC3' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RAJ2000' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DEJ2000' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD = 'POS_PARLX_TRIG')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SpType' (UCD = 'SPECT_TYPE_MK')
+sclsvrServer -   vobs - Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD = 'PHOT_JHN_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD = 'PHOT_JHN_V')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'v1' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'v2' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'v3' (UCD = 'VAR_CLASS')
+sclsvrServer -   vobs - Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'd5' (UCD = 'CODE_MULT_FLAG')
+sclsvrServer -   vobs - Test  - Execute: Step 1 - number of returned stars = 110
+sclsvrServer -   vobs - Test  - FilterDuplicates: list [0 stars] with criteria - input list [110 stars]
+sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - FilterDuplicates: filter search radius = 10.0 arcsec
+sclsvrServer -   vobs - Warn  - Compare Properties[4]: COMMON(6) {ID_HIP = '80883' ID_TYC1 = '386' ID_TYC2 = '2062' POS_EQ_DEC_ERROR = '0.1' POS_PARLX_TRIG_ERROR = '1.34' CODE_MULT_FLAG = 'C' } - LEFT(16) {ID_HD = '148857' ID_DM = '203118' ID_TYC3 = '1' POS_EQ_RA_MAIN = '16 30 54.825' POS_EQ_DEC_MAIN = '+01 59 02.06' POS_EQ_RA_ERROR = '1.2' POS_EQ_PMRA = '-27.5' POS_EQ_PMDEC = '-79.94' POS_EQ_PMRA_ERROR = '1.79' POS_EQ_PMDEC_ERROR = '1.62' POS_PARLX_TRIG = '19.04' SPECT_TYPE_MK = 'A2V' CODE_VARIAB_V1 = 'N' VAR_CLASS = 'D' PHOT_JHN_B = '3.956' PHOT_JHN_V = '3.996' } - RIGHT(12) {ID_TYC3 = '2' POS_EQ_RA_MAIN = '16 30 54.859' POS_EQ_DEC_MAIN = '+01 59 03.33' POS_EQ_RA_ERROR = '8.6' POS_EQ_PMRA = '-26.34' POS_EQ_PMDEC = '-78.77' POS_EQ_PMRA_ERROR = '1.67' POS_EQ_PMDEC_ERROR = '1.51' POS_PARLX_TRIG = '19.62' SPECT_TYPE_MK = 'A0 V+...' PHOT_JHN_B = '5.224' PHOT_JHN_V = '5.138' }
+sclsvrServer -   vobs - Warn  - FilterDuplicates: separation = 1.368461993 arcsec
+sclsvrServer -   vobs - Warn  - Compare Properties[-4]: COMMON(5) {ID_HD = '152127' ID_HIP = '82480' ID_DM = '103323' POS_PARLX_TRIG_ERROR = '1.11' CODE_MULT_FLAG = 'C' } - LEFT(12) {POS_EQ_RA_MAIN = '16 51 24.908' POS_EQ_DEC_MAIN = '+01 12 57.80' POS_EQ_RA_ERROR = '8.1' POS_EQ_DEC_ERROR = '3.7' POS_EQ_PMRA = '-30.7' POS_EQ_PMDEC = '-4.53' POS_EQ_PMRA_ERROR = '5.09' POS_EQ_PMDEC_ERROR = '2.7' POS_PARLX_TRIG = '9.43' SPECT_TYPE_MK = 'A0' PHOT_JHN_B = '5.652' PHOT_JHN_V = '5.572' } - RIGHT(16) {ID_TYC1 = '384' ID_TYC2 = '2284' ID_TYC3 = '1' POS_EQ_RA_MAIN = '16 51 24.925' POS_EQ_DEC_MAIN = '+01 12 57.42' POS_EQ_RA_ERROR = '1.7' POS_EQ_DEC_ERROR = '0.1' POS_EQ_PMRA = '-22.94' POS_EQ_PMDEC = '-13.3' POS_EQ_PMRA_ERROR = '1.42' POS_EQ_PMDEC_ERROR = '1.12' POS_PARLX_TRIG = '9.81' SPECT_TYPE_MK = 'A2Vs' VAR_CLASS = 'D' PHOT_JHN_B = '5.568' PHOT_JHN_V = '5.504' }
+sclsvrServer -   vobs - Warn  - FilterDuplicates: separation = 0.457597766 arcsec
+sclsvrServer -   vobs - Warn  - Compare Properties[4]: COMMON(6) {ID_HD = '163624' ID_HIP = '87875' ID_DM = '3816' POS_EQ_RA_ERROR = '1.7' POS_PARLX_TRIG_ERROR = '1.15' CODE_MULT_FLAG = 'C' } - LEFT(15) {ID_TYC1 = '417' ID_TYC2 = '2593' ID_TYC3 = '1' POS_EQ_RA_MAIN = '17 57 04.317' POS_EQ_DEC_MAIN = '+00 03 59.99' POS_EQ_DEC_ERROR = '0.1' POS_EQ_PMRA = '23.8' POS_EQ_PMDEC = '-9.51' POS_EQ_PMRA_ERROR = '1.48' POS_EQ_PMDEC_ERROR = '1.24' POS_PARLX_TRIG = '10.67' SPECT_TYPE_MK = 'A3V' VAR_CLASS = 'D' PHOT_JHN_B = '6.08' PHOT_JHN_V = '5.947' } - RIGHT(11) {POS_EQ_RA_MAIN = '17 57 04.349' POS_EQ_DEC_MAIN = '+00 03 59.93' POS_EQ_DEC_ERROR = '1.2' POS_EQ_PMRA = '30.13' POS_EQ_PMDEC = '-12.76' POS_EQ_PMRA_ERROR = '1.5' POS_EQ_PMDEC_ERROR = '1.17' POS_PARLX_TRIG = '10.46' SPECT_TYPE_MK = 'A2' PHOT_JHN_B = '6.112' PHOT_JHN_V = '5.986' }
+sclsvrServer -   vobs - Warn  - FilterDuplicates: separation = 0.483735143 arcsec
+sclsvrServer -   vobs - Warn  - Compare Properties[-3]: COMMON(7) {ID_HIP = '88404' ID_TYC1 = '5675' ID_TYC2 = '662' POS_EQ_DEC_ERROR = '0.1' POS_PARLX_TRIG = '19.2' POS_PARLX_TRIG_ERROR = '0.97' CODE_MULT_FLAG = 'C' } - LEFT(12) {ID_HD = '164765' ID_TYC3 = '2' POS_EQ_RA_MAIN = '18 03 04.802' POS_EQ_DEC_MAIN = '-08 10 48.93' POS_EQ_RA_ERROR = '2.2' POS_EQ_PMRA = '19.54' POS_EQ_PMDEC = '-33.5' POS_EQ_PMRA_ERROR = '2.43' POS_EQ_PMDEC_ERROR = '1.48' SPECT_TYPE_MK = 'F5V' PHOT_JHN_B = '6.217' PHOT_JHN_V = '5.816' } - RIGHT(15) {ID_HD = '164764' ID_DM = '-804549' ID_TYC3 = '1' POS_EQ_RA_MAIN = '18 03 04.920' POS_EQ_DEC_MAIN = '-08 10 49.26' POS_EQ_RA_ERROR = '1' POS_EQ_PMRA = '15.52' POS_EQ_PMDEC = '-37.54' POS_EQ_PMRA_ERROR = '1.37' POS_EQ_PMDEC_ERROR = '0.99' SPECT_TYPE_MK = 'F5V+...' CODE_VARIAB_V1 = 'N' VAR_CLASS = 'D' PHOT_JHN_B = '5.328' PHOT_JHN_V = '5.032' }
+sclsvrServer -   vobs - Warn  - FilterDuplicates: separation = 1.782798668 arcsec
+sclsvrServer -   vobs - Test  - FilterDuplicates: done = 106 unique stars / 4 duplicates found : 4 different stars.
+sclsvrServer -   vobs - Test  - FilterDuplicates: 8 duplicated stars
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HIP 80883' (247.728579 +1.984258)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 148857' (247.728438 +1.983906)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 152127' (252.853783 +1.216056)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 152127' (252.853854 +1.215950)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 163624' (269.267988 +0.066664)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 163624' (269.268121 +0.066647)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 164765' (270.770008 -8.180258)
+sclsvrServer -   vobs - Test  - FilterDuplicates: remove star 'HD 164764' (270.770500 -8.180350)
+sclsvrServer -   vobs - Test  - Execute: Step 1 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 1 - Performing CLEAR_MERGE action with 102 stars
+sclsvrServer -   vobs - Test  - Execute: Step 1 - CLEAR outputList [Main]
+sclsvrServer -   vobs - Test  - Merge: list [Main][0 stars] with criteria << input list [Temporary][102 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'NO CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'I/280'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'I/280'
+sclsvrServer -   vobs - Test  - Merge: done = 102 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 1 - after CLEAR_MERGE, 102 stars
+sclsvrServer -   vobs - Test  - Execute: Step 2 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 2 - Consulting I/311/hip2 ...
+sclsvrServer -   vobs - Test  - Execute: Step 2 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'I/280'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'I/311/hip2'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/311/hip2&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=HIP&-out=e_RArad&-out=e_DErad&-out=pmRA&-out=pmDE&-out=e_pmRA&-out=e_pmDE&-out=Plx&-out=e_Plx&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&243.586527-3.693975&+242.460550-3.466730&+244.580169-4.692609&+243.904722-8.368237&+243.030373-8.547579&+245.518501%2b1.028922&+246.931069-7.597556&+247.141574%2b0.665168&+249.088266-2.323836&+246.950945-8.371702&+237.815199-3.090430&+240.198507-8.411325&+237.405272-3.430142&+237.236727-3.818527&+243.000007-10.064184&+242.245421%2b3.454444&+236.523542-1.804115&+241.092403-11.373019&+243.462119-11.837723&+250.427253%2b1.181103&+237.573039%2b2.196625&+243.314199%2b5.021100&+240.213161%2b4.427179&+249.289710-10.567152&+241.901835-12.745342&+236.007693%2b2.515526&+237.703712%2b4.477579&+248.148652%2b5.521222&+250.161195%2b4.219816&+253.648796-6.153930&+233.241450-1.186299&+252.458223-10.782800&+233.610552-9.183349&+236.347781%2b5.447322&+255.265106-4.222455&+233.543833-10.063961&+251.943465%2b5.246841&+232.159526%2b1.842163&+256.384405-0.892067&+230.281836-5.824828&+256.320118%2b0.703374&+230.258422%2b0.715589&+231.049709-10.321896&+229.608888-0.461237&+229.827416%2b1.766655&+228.954751%2b0.372108&+230.967758-12.369413&+229.251966-9.382866&+257.449656-10.523037&+259.152940-0.445143&+259.132161%2b1.210583&+228.797360%2b4.939351&+261.658062-5.086492&+225.332540-2.754871&+225.453812-0.140259&+225.725291%2b2.091271&+260.206817-12.846883&+225.243280-8.518934&+262.207052%2b0.330577&+262.599465-1.062505&+224.296068-4.346086&+224.388403-0.167549&+261.628666%2b4.140342&+263.374459-5.744572&+224.723515-11.143865&+262.838937%2b2.724459&+224.846312%2b4.567773&+224.192114-11.409727&+222.754249-2.298850&+264.461332-8.118720&+263.693122-11.242008&+223.595442-11.898331&+264.539638-10.926246&+221.375954%2b0.717291&+221.562464%2b1.892938&+220.764844-5.657428&+265.353817-12.875173&+265.868237%2b4.566918&+265.384686%2b6.313165&+266.973226%2b2.707459&+268.147763%2b1.305051&+269.198951-4.081802&+269.076681%2b0.670357&+269.903187-4.820911&+270.120500-3.690162&+217.173878-6.900413&+217.460455%2b0.828910&+217.050919-2.227949&+268.309418%2b6.101254&+269.756658-9.773350&+270.438291%2b1.305108&+270.161316%2b2.931587&+270.065824%2b4.368646&+271.562972-4.751177&+271.530839-8.323915&+271.363385%2b2.502439&+214.885622-2.265344&+216.047462%2b5.820116&+214.003686-5.999527&+272.475022%2b3.120295&+272.391100%2b3.993287&+272.667868%2b3.324268&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (105908 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (101 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/311/hip2':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RArad' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DErad' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD = 'POS_EQ_PMRA')
+sclsvrServer -   vobs - Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD = 'POS_EQ_PMDEC')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmRA' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD = 'POS_PARLX_TRIG')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Execute: Step 2 - number of returned stars = 101
+sclsvrServer -   vobs - Test  - Execute: Step 2 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 2 - Performing UPDATE_ONLY action with 101 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][102 stars] with criteria << input list [Temporary][101 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'I/280'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'I/311/hip2'
+sclsvrServer -   vobs - Warn  - Merge: overwrite RA/DEC property: true
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 101 found / 101 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'RAJ2000' [POS_EQ_RA_MAIN] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'DEJ2000' [POS_EQ_DEC_MAIN] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmRa' [POS_EQ_PMRA] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'pmDec' [POS_EQ_PMDEC] updated 101 times
+sclsvrServer -   vobs - Test  - Execute: Step 2 - after UPDATE_ONLY, 102 stars
+sclsvrServer -   vobs - Test  - Execute: Step 3 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 3 - Consulting J/A+A/413/1037/table1 ...
+sclsvrServer -   vobs - Test  - Execute: Step 3 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'J/A+A/413/1037/table1'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/413/1037/table1&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Jmag&-out=Ksmag&-out=Var&Var=%3C4&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&243.586413-3.694322&+242.460488-3.466728&+244.580375-4.692508&+243.905287-8.369442&+243.030483-8.547578&+245.518117%2b1.029042&+246.931075-7.597931&+247.141587%2b0.665003&+249.089375-2.324589&+246.950779-8.371728&+237.814975-3.090497&+240.198471-8.411358&+237.405029-3.430206&+237.236654-3.818511&+242.999954-10.064242&+242.245329%2b3.454472&+236.523483-1.804189&+241.092229-11.373097&+243.462108-11.837747&+250.427008%2b1.181233&+237.573108%2b2.196511&+243.314292%2b5.021089&+240.213058%2b4.427361&+249.289746-10.567092&+241.901729-12.745406&+236.007587%2b2.515175&+237.704025%2b4.477731&+248.148692%2b5.521219&+250.161200%2b4.219786&+253.648721-6.153981&+233.241408-1.186400&+252.458400-10.782994&+233.610479-9.183414&+236.347846%2b5.447314&+255.265013-4.222644&+233.544592-10.064531&+251.943413%2b5.246744&+232.159321%2b1.842081&+256.384412-0.892069&+230.281704-5.824850&+256.320075%2b0.702558&+230.258317%2b0.715339&+231.049546-10.322269&+229.608858-0.461233&+229.828321%2b1.765408&+228.954487%2b0.372139&+230.967667-12.369500&+229.251725-9.382914&+257.449792-10.523303&+259.152862-0.445294&+259.132150%2b1.210544&+228.797300%2b4.939364&+261.657838-5.086597&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+260.206921-12.846875&+225.243125-8.518947&+262.206896%2b0.330625&+262.599154-1.062914&+224.295833-4.346458&+224.388550-0.167608&+261.628667%2b4.140358&+263.374354-5.744803&+224.723254-11.144014&+262.838896%2b2.724508&+224.846312%2b4.567764&+224.192133-11.409706&+222.754471-2.299153&+264.461304-8.118769&+263.693129-11.241997&+223.595304-11.898350&+264.539604-10.926267&+221.375850%2b0.717275&+221.562187%2b1.892883&+220.765096-5.658203&+265.353637-12.875308&+265.868137%2b4.567306&+265.384679%2b6.313158&+266.973167%2b2.707278&+268.147679%2b1.305011&+269.198937-4.081822&+269.076667%2b0.670356&+269.903179-4.821125&+270.120879-3.690269&+217.173842-6.900536&+217.460492%2b0.828933&+217.050579-2.227961&+268.309104%2b6.101422&+269.756633-9.773633&+270.438329%2b1.305078&+270.161317%2b2.931564&+270.065825%2b4.368617&+271.563321-4.751253&+271.530829-8.323956&+271.363688%2b2.500100&+214.885337-2.265517&+216.047267%2b5.820131&+214.003625-6.000544&+272.475058%2b3.119828&+272.391221%2b3.993281&+272.667917%2b3.324258&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (62902 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (5 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'J/A+A/413/1037/table1':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Ksmag' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Extract: Property 'BinFlag' [CODE_BIN_FLAG] found for parameter 'Var' (UCD = 'CODE_VARIAB')
+sclsvrServer -   vobs - Test  - Execute: Step 3 - number of returned stars = 5
+sclsvrServer -   vobs - Test  - Execute: Step 3 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 3 - Performing UPDATE_ONLY action with 5 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][102 stars] with criteria << input list [Temporary][5 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'J/A+A/413/1037/table1'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 5 found / 5 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'BinFlag' [CODE_BIN_FLAG] updated 5 times
+sclsvrServer -   vobs - Test  - Merge: Property 'J' [PHOT_JHN_J] updated 4 times
+sclsvrServer -   vobs - Test  - Merge: Property 'K' [PHOT_JHN_K] updated 5 times
+sclsvrServer -   vobs - Test  - Execute: Step 3 - after UPDATE_ONLY, 102 stars
+sclsvrServer -   vobs - Test  - Execute: Step 4 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 4 - Consulting II/246/out ...
+sclsvrServer -   vobs - Test  - Execute: Step 4 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Search: Box search area = 4.7/6.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=4.7/6.6&-out.add=_1&-file=-c&-out=2MASS&-out=JD&-out=opt&-out=Qflg&-out=Jmag&-out=Hmag&-out=Kmag&opt=%5bTU%5d&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&243.586422-3.694294&+242.460493-3.466728&+244.580358-4.692516&+243.905241-8.369343&+243.030474-8.547578&+245.518148%2b1.029032&+246.931075-7.597900&+247.141586%2b0.665016&+249.089284-2.324527&+246.950793-8.371725&+237.814993-3.090492&+240.198474-8.411356&+237.405049-3.430200&+237.236660-3.818513&+242.999959-10.064237&+242.245337%2b3.454470&+236.523488-1.804183&+241.092243-11.373091&+243.462109-11.837745&+250.427029%2b1.181223&+237.573102%2b2.196521&+243.314284%2b5.021090&+240.213067%2b4.427346&+249.289743-10.567097&+241.901738-12.745400&+236.007596%2b2.515204&+237.703999%2b4.477718&+248.148688%2b5.521220&+250.161200%2b4.219788&+253.648727-6.153976&+233.241412-1.186392&+252.458385-10.782979&+233.610485-9.183408&+236.347841%2b5.447315&+255.265020-4.222629&+233.544529-10.064484&+251.943417%2b5.246752&+232.159338%2b1.842087&+256.384412-0.892069&+230.281715-5.824848&+256.320079%2b0.702625&+230.258325%2b0.715360&+231.049559-10.322239&+229.608861-0.461234&+229.828246%2b1.765511&+228.954509%2b0.372136&+230.967674-12.369493&+229.251745-9.382910&+257.449781-10.523281&+259.152869-0.445282&+259.132151%2b1.210548&+228.797305%2b4.939363&+261.657856-5.086589&+225.332607-2.754918&+225.453832-0.140294&+225.725169%2b2.091300&+260.206912-12.846876&+225.243138-8.518946&+262.206909%2b0.330621&+262.599180-1.062880&+224.295853-4.346428&+224.388538-0.167603&+261.628667%2b4.140357&+263.374363-5.744784&+224.723276-11.144001&+262.838899%2b2.724504&+224.846312%2b4.567765&+224.192132-11.409707&+222.754453-2.299128&+264.461306-8.118765&+263.693128-11.241998&+223.595315-11.898348&+264.539607-10.926265&+221.375858%2b0.717276&+221.562210%2b1.892888&+220.765075-5.658139&+265.353652-12.875297&+265.868146%2b4.567274&+265.384680%2b6.313159&+266.973172%2b2.707293&+268.147686%2b1.305014&+269.198939-4.081821&+269.076668%2b0.670356&+269.903180-4.821107&+270.120848-3.690261&+217.173845-6.900526&+217.460489%2b0.828932&+217.050607-2.227960&+268.309130%2b6.101408&+269.756635-9.773610&+270.438326%2b1.305080&+270.161316%2b2.931566&+270.065825%2b4.368619&+271.563292-4.751247&+271.530830-8.323952&+271.363663%2b2.500293&+214.885361-2.265502&+216.047282%2b5.820129&+214.003630-6.000461&+272.475055%2b3.119866&+272.391211%2b3.993281&+272.667913%2b3.324259&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (100278 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (101 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter '2MASS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'jd' [TIME_DATE] found for parameter 'JD' (UCD = 'TIME_DATE')
+sclsvrServer -   vobs - Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'opt' (UCD = 'ID_CATALOG')
+sclsvrServer -   vobs - Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'Qflg' (UCD = 'CODE_QUALITY')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD = 'PHOT_JHN_H')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Execute: Step 4 - number of returned stars = 101
+sclsvrServer -   vobs - Test  - Execute: Step 4 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 4 - Performing UPDATE_ONLY action with 101 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][102 stars] with criteria << input list [Temporary][101 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/246/out'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: precess candidate stars with reference star
+sclsvrServer -   vobs - Test  - Merge: precess using JD in epoch range [1997.430 2001.130]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 101 found / 101 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'opt' [ID_CATALOG] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property '2MASS' [ID_2MASS] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'Qflag' [CODE_QUALITY] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'J' [PHOT_JHN_J] updated 97 times
+sclsvrServer -   vobs - Test  - Merge: Property 'H' [PHOT_JHN_H] updated 101 times
+sclsvrServer -   vobs - Test  - Merge: Property 'K' [PHOT_JHN_K] updated 96 times
+sclsvrServer -   vobs - Test  - Execute: Step 4 - after UPDATE_ONLY, 102 stars
+sclsvrServer -   vobs - Test  - Execute: Step 4 - apply FILTER 'filter List'
+sclsvrServer -   vobs - Test  - Criteria 1 on property[PHOT_JHN_K] with range = 1.500000000
+sclsvrServer -   vobs - Test  - Execute: Step 4 - after FILTER 'filter List', star list size = 14
+sclsvrServer -   vobs - Test  - Execute: Step 5 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 5 - Consulting J/A+A/393/183/catalog ...
+sclsvrServer -   vobs - Test  - Execute: Step 5 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'J/A+A/393/183/catalog'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/393/183/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Kmag&-out=Lmag&-out=Mmag&-out=UDDK&-out=e_UDDK&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (14401 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (6 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'J/A+A/393/183/catalog':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD = 'PHOT_JHN_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD = 'PHOT_JHN_V')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD = 'PHOT_JHN_H')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Extract: Property 'L' [PHOT_JHN_L] found for parameter 'Lmag' (UCD = 'PHOT_JHN_L')
+sclsvrServer -   vobs - Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'Mmag' (UCD = 'PHOT_JHN_M')
+sclsvrServer -   vobs - Test  - Extract: Property 'UDDK' [UDDK_DIAM] found for parameter 'UDDK' (UCD = 'EXTENSION_DIAM')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_UDDK' [UDDK_DIAM_ERROR] found for parameter 'e_UDDK' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Execute: Step 5 - number of returned stars = 6
+sclsvrServer -   vobs - Test  - Execute: Step 5 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 5 - Performing UPDATE_ONLY action with 6 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][6 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'J/A+A/393/183/catalog'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 6 found / 6 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'UDDK' [UDDK_DIAM] updated 6 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_UDDK' [UDDK_DIAM_ERROR] updated 6 times
+sclsvrServer -   vobs - Test  - Merge: Property 'L' [PHOT_JHN_L] updated 6 times
+sclsvrServer -   vobs - Test  - Merge: Property 'M' [PHOT_JHN_M] updated 6 times
+sclsvrServer -   vobs - Test  - Execute: Step 5 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 6 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 6 - Consulting J/A+A/433/1155 ...
+sclsvrServer -   vobs - Test  - Execute: Step 6 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'J/A+A/433/1155'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=J/A+A/433/1155&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Bmag&-out=Vmag&-out=Jmag&-out=Hmag&-out=Ksmag&-out=UDdiamKs&-out=e_UDdiam&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (11734 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - Execute: Step 6 - number of returned stars = 0
+sclsvrServer -   vobs - Test  - Execute: Step 6 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 6 - Performing UPDATE_ONLY action with 0 stars
+sclsvrServer -   vobs - Test  - Execute: Step 6 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 7 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 7 - Consulting II/7A/catalog ...
+sclsvrServer -   vobs - Test  - Execute: Step 7 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'II/7A/catalog'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=B&-out=V&-out=R&-out=I&-out=J&-out=H&-out=K&-out=L&-out=M&-out=N&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (14226 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (9 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/7A/catalog':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'B' (UCD = 'PHOT_JHN_B')
+sclsvrServer -   vobs - Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'V' (UCD = 'PHOT_JHN_V')
+sclsvrServer -   vobs - Test  - Extract: Property 'R' [PHOT_JHN_R] found for parameter 'R' (UCD = 'PHOT_JHN_R')
+sclsvrServer -   vobs - Test  - Extract: Property 'I' [PHOT_JHN_I] found for parameter 'I' (UCD = 'PHOT_JHN_I')
+sclsvrServer -   vobs - Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'J' (UCD = 'PHOT_JHN_J')
+sclsvrServer -   vobs - Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'H' (UCD = 'PHOT_JHN_H')
+sclsvrServer -   vobs - Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'K' (UCD = 'PHOT_JHN_K')
+sclsvrServer -   vobs - Test  - Extract: Property 'L' [PHOT_JHN_L] found for parameter 'L' (UCD = 'PHOT_JHN_L')
+sclsvrServer -   vobs - Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'M' (UCD = 'PHOT_JHN_M')
+sclsvrServer -   vobs - Test  - Extract: Property 'N' [PHOT_JHN_N] found for parameter 'N' (UCD = 'PHOT_IR_N:10.4')
+sclsvrServer -   vobs - Test  - Execute: Step 7 - number of returned stars = 9
+sclsvrServer -   vobs - Test  - Execute: Step 7 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 7 - Performing UPDATE_ONLY action with 9 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][9 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 3 on property[PHOT_JHN_V] with range = 0.100000000
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/7A/catalog'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: useAllMatchingStars: true
+sclsvrServer -   vobs - Test  - process subList size = 4 (same targetId)
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 8 found / 5 updated / 1 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+sclsvrServer -   vobs - Test  - Merge: Criteria 'PHOT_JHN_V' mismatch 1 times
+sclsvrServer -   vobs - Test  - Merge: Property 'R' [PHOT_JHN_R] updated 5 times
+sclsvrServer -   vobs - Test  - Merge: Property 'I' [PHOT_JHN_I] updated 5 times
+sclsvrServer -   vobs - Test  - Execute: Step 7 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 8 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 8 - Consulting II/225/catalog ...
+sclsvrServer -   vobs - Test  - Execute: Step 8 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'II/225/catalog'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=lambda&-out=F(IR)&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (10906 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (2 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/225/catalog':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Wavelength Property found for parameter 'lambda' (UCD = 'INST_WAVELENGTH_VALUE') in catalog 'II/225/catalog'
+sclsvrServer -   vobs - Test  - Extract: Flux property found for parameter 'F(IR)' (UCD = 'PHOT_FLUX_IR_MISC') in catalog 'II/225/catalog'
+sclsvrServer -   vobs - Test  - Execute: Step 8 - number of returned stars = 2
+sclsvrServer -   vobs - Test  - Execute: Step 8 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 8 - Performing UPDATE_ONLY action with 2 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][2 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/225/catalog'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: useAllMatchingStars: true
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 2 found / 0 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Execute: Step 8 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 9 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 9 - Consulting I/196/main ...
+sclsvrServer -   vobs - Test  - Execute: Step 9 - Optimized ConeSearchRadius = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'I/196/main'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=RV&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (12467 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (14 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'I/196/main':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'RadVel' [VELOC_HC] found for parameter 'RV' (UCD = 'VELOC_HC')
+sclsvrServer -   vobs - Test  - Execute: Step 9 - number of returned stars = 14
+sclsvrServer -   vobs - Test  - Execute: Step 9 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 9 - Performing UPDATE_ONLY action with 14 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][14 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'I/196/main'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 14 found / 14 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'RadVel' [VELOC_HC] updated 14 times
+sclsvrServer -   vobs - Test  - Execute: Step 9 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 10 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 10 - Consulting V/50/catalog ...
+sclsvrServer -   vobs - Test  - Execute: Step 10 - Optimized ConeSearchRadius = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'V/50/catalog'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=RotVel&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (12451 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (14 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'V/50/catalog':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD = 'ID_ALTERNATIVE')
+sclsvrServer -   vobs - Test  - Extract: Property 'RotVel' [VELOC_ROTAT] found for parameter 'RotVel' (UCD = 'VELOC_ROTAT')
+sclsvrServer -   vobs - Test  - Execute: Step 10 - number of returned stars = 14
+sclsvrServer -   vobs - Test  - Execute: Step 10 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 10 - Performing UPDATE_ONLY action with 14 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][14 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'V/50/catalog'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 14 found / 6 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'RotVel' [VELOC_ROTAT] updated 6 times
+sclsvrServer -   vobs - Test  - Execute: Step 10 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 11 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 11 - Consulting V/36B/bsc4s ...
+sclsvrServer -   vobs - Test  - Execute: Step 11 - Optimized ConeSearchRadius = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'V/36B/bsc4s'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=vsini&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (9950 bytes)
+sclsvrServer -   vobs - Test  - No CDATA section in XML document.
+sclsvrServer -   vobs - Test  - Execute: Step 11 - number of returned stars = 0
+sclsvrServer -   vobs - Test  - Execute: Step 11 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 11 - Performing UPDATE_ONLY action with 0 stars
+sclsvrServer -   vobs - Test  - Execute: Step 11 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 12 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 12 - Consulting B/sb9/main ...
+sclsvrServer -   vobs - Test  - Execute: Step 12 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'B/sb9/main'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (9620 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (1 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/sb9/main':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'SBC9' [ID_SB9] found for parameter 'Seq' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Execute: Step 12 - number of returned stars = 1
+sclsvrServer -   vobs - Test  - Execute: Step 12 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 12 - Performing UPDATE_ONLY action with 1 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][1 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'B/sb9/main'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'SBC9' [ID_SB9] updated 1 times
+sclsvrServer -   vobs - Test  - Execute: Step 12 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 13 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 13 - Consulting B/wds/wds ...
+sclsvrServer -   vobs - Test  - Execute: Step 13 - Optimized ConeSearchRadius = 1.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'B/wds/wds'
+sclsvrServer -   vobs - Test  - Search: Cone search area = 1.6 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-c.rs=1.6&-out.add=_1&-file=-c&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460488-3.466728&+244.580375-4.692508&+246.931075-7.597931&+255.265013-4.222644&+225.332612-2.754922&+225.453833-0.140297&+225.725158%2b2.091303&+261.628667%2b4.140358&+224.846312%2b4.567764&+265.868137%2b4.567306&+268.147679%2b1.305011&+269.903179-4.821125&+217.173842-6.900536&+269.756633-9.773633&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (10991 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (5 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'WDS' (UCD = 'ID_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'sep1' (UCD = 'ORBIT_SEPARATION')
+sclsvrServer -   vobs - Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'sep2' (UCD = 'ORBIT_SEPARATION')
+sclsvrServer -   vobs - Test  - Execute: Step 13 - number of returned stars = 5
+sclsvrServer -   vobs - Test  - Execute: Step 13 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 13 - Performing UPDATE_ONLY action with 5 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][5 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'B/wds/wds'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.049132688 arcsec : 'Coordinates-ra=17 01 03.60/dec=-04 13 21.5' (RA = -104.735000, DEC = -4.222639): POS_EQ_RA_MAIN = 17 01 03.60	POS_EQ_DEC_MAIN = -04 13 21.5	ID_TARGET = 255.265013-4.222644	ID_WDS = 17011-0413	ORBIT_SEPARATION_SEP1 = 217.1	ORBIT_SEPARATION_SEP2 = 220.2	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.195496392 arcsec : 'Coordinates-ra=17 01 03.59/dec=-04 13 21.5' (RA = -104.735042, DEC = -4.222639): POS_EQ_RA_MAIN = 17 01 03.59	POS_EQ_DEC_MAIN = -04 13 21.5	ID_TARGET = 255.265013-4.222644	ID_WDS = 17011-0413	ORBIT_SEPARATION_SEP1 = 91.8	ORBIT_SEPARATION_SEP2 = 102.4	
+sclsvrServer -   vobs - Test  - process subList size = 2 (same targetId)
+sclsvrServer -   vobs - Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+sclsvrServer -   vobs - Test  - Star    1: sep = 0.170000000 arcsec : 'Coordinates-ra=15 01 48.92/dec=-00 08 24.9' (RA = -134.546167, DEC = -0.140250): POS_EQ_RA_MAIN = 15 01 48.92	POS_EQ_DEC_MAIN = -00 08 24.9	ID_TARGET = 225.453833-0.140297	ID_WDS = 15018-0008	ORBIT_SEPARATION_SEP1 = 0.5	ORBIT_SEPARATION_SEP2 = 0.5	
+sclsvrServer -   vobs - Test  - Star    2: sep = 0.170000000 arcsec : 'Coordinates-ra=15 01 48.92/dec=-00 08 24.9' (RA = -134.546167, DEC = -0.140250): POS_EQ_RA_MAIN = 15 01 48.92	POS_EQ_DEC_MAIN = -00 08 24.9	ID_TARGET = 225.453833-0.140297	ID_WDS = 15018-0008	ORBIT_SEPARATION_SEP1 = 32.9	ORBIT_SEPARATION_SEP2 = 31.2	
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 3 found / 3 updated / 2 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+sclsvrServer -   vobs - Test  - Merge: Property 'WDS' [ID_WDS] updated 3 times
+sclsvrServer -   vobs - Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 3 times
+sclsvrServer -   vobs - Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] updated 3 times
+sclsvrServer -   vobs - Test  - Execute: Step 13 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: Step 14 - inputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 14 - Consulting II/297/irc ...
+sclsvrServer -   vobs - Test  - Execute: Step 14 - Optimized ConeSearchRadius = 3.5 arcsec
+sclsvrServer -   vobs - Test  - Search: input list [Temporary] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Search: catalog id: 'II/297/irc'
+sclsvrServer -   vobs - Test  - Search: Box search area = 7.2/7.3 arcsec
+sclsvrServer -   vobs - Test  - Get XML document from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data '-source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=7.2/7.3&-out.add=_1&-file=-c&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&242.460438-3.466726&+244.580538-4.692429&+246.931077-7.598230&+255.264936-4.222796&+225.332668-2.754962&+225.453847-0.140328&+225.725052%2b2.091329&+261.628668%2b4.140372&+224.846315%2b4.567756&+265.868057%2b4.567615&+268.147612%2b1.304980&+269.903174-4.821296&+217.173812-6.900634&+269.756615-9.773860&%3D%3D%3D%3DLIST'
+sclsvrServer -   vobs - Test  - Parsing XML document (15437 bytes)
+sclsvrServer -   vobs - Test  - Extracting data from CDATA section (14 rows)
+sclsvrServer -   vobs - Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
+sclsvrServer -   vobs - Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD = 'ID_TARGET')
+sclsvrServer -   vobs - Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD = 'POS_EQ_RA_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD = 'POS_EQ_DEC_MAIN')
+sclsvrServer -   vobs - Test  - Extract: Property 'AKARI' [ID_AKARI] found for parameter 'objID' (UCD = 'ID_NUMBER')
+sclsvrServer -   vobs - Test  - Extract: Property 'S09' [PHOT_FLUX_IR_9] found for parameter 'S09' (UCD = 'PHOT_FLUX_IR_9')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] found for parameter 'e_S09' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'S18' (UCD = 'PHOT_FLUX_IR_25')
+sclsvrServer -   vobs - Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'e_S18' (UCD = 'ERROR')
+sclsvrServer -   vobs - Test  - Execute: Step 14 - number of returned stars = 14
+sclsvrServer -   vobs - Test  - Execute: Step 14 - outputList [Main]
+sclsvrServer -   vobs - Test  - Execute: Step 14 - Performing UPDATE_ONLY action with 14 stars
+sclsvrServer -   vobs - Test  - Merge: list [Main][14 stars] with criteria << input list [Temporary][14 stars]
+sclsvrServer -   vobs - Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: input list [Temporary] catalog id: 'II/297/irc'
+sclsvrServer -   vobs - Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+sclsvrServer -   vobs - Test  - Merge: precess candidate stars with reference star
+sclsvrServer -   vobs - Test  - Merge: precess using JD in epoch range [2006.333 2007.667]
+sclsvrServer -   vobs - Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+sclsvrServer -   vobs - Test  - Merge: done = 0 stars added / 14 found / 14 updated / 0 skipped (0 skipped targetId).
+sclsvrServer -   vobs - Test  - Merge: Property 'AKARI' [ID_AKARI] updated 14 times
+sclsvrServer -   vobs - Test  - Merge: Property 'S09' [PHOT_FLUX_IR_9] updated 14 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] updated 14 times
+sclsvrServer -   vobs - Test  - Merge: Property 'S18' [PHOT_FLUX_IR_18] updated 13 times
+sclsvrServer -   vobs - Test  - Merge: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] updated 13 times
+sclsvrServer -   vobs - Test  - Execute: Step 14 - after UPDATE_ONLY, 14 stars
+sclsvrServer -   vobs - Test  - Execute: resultList [GetCal]
+sclsvrServer -   vobs - Info  - Execute: done = 14 star(s) found.
+sclsvrServer -   vobs - Test  - Property Usage [BRIGHT_K]
+sclsvrServer -   vobs - Test  - Property 'CODE_BIN_FLAG' [BinFlag] (-) used by: J/A+A/413/1037/table1	
+sclsvrServer -   vobs - Test  - Property 'CODE_MULT_FLAG' [MultFlag] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'CODE_QUALITY' [Qflag] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'CODE_VARIAB_V1' [VarFlag1] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'CODE_VARIAB_V2' [VarFlag2] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_2MASS' [2MASS] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'ID_AKARI' [AKARI] (-) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'ID_CATALOG' [opt] (-) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'ID_DM' [DM] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_HD' [HD] (-) used by: I/280	I/196/main	V/50/catalog	
+sclsvrServer -   vobs - Test  - Property 'ID_HIP' [HIP] (-) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'ID_SB9' [SBC9] (-) used by: B/sb9/main	
+sclsvrServer -   vobs - Test  - Property 'ID_TARGET' [TARGET_ID] (deg) used by: I/311/hip2	J/A+A/413/1037/table1	II/246/out	J/A+A/393/183/catalog	II/7A/catalog	II/225/catalog	I/196/main	V/50/catalog	B/sb9/main	B/wds/wds	II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'ID_TYC1' [TYC1] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_TYC2' [TYC2] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_TYC3' [TYC3] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'ID_WDS' [WDS] (-) used by: B/wds/wds	
+sclsvrServer -   vobs - Test  - Property 'ORBIT_SEPARATION_SEP1' [sep1] (arcsec) used by: B/wds/wds	
+sclsvrServer -   vobs - Test  - Property 'ORBIT_SEPARATION_SEP2' [sep2] (arcsec) used by: B/wds/wds	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_18' [S18] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_18_ERROR' [e_S18] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_9' [S09] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_FLUX_IR_9_ERROR' [e_S09] (Jy) used by: II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_B' [B] (mag) used by: I/280	J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_H' [H] (mag) used by: II/246/out	J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_I' [I] (mag) used by: II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_J' [J] (mag) used by: J/A+A/413/1037/table1	II/246/out	J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_K' [K] (mag) used by: J/A+A/413/1037/table1	II/246/out	J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_L' [L] (mag) used by: J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_M' [M] (mag) used by: J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_N' [N] (mag) used by: II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_R' [R] (mag) used by: II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'PHOT_JHN_V' [V] (mag) used by: I/280	J/A+A/393/183/catalog	II/7A/catalog	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_DEC_ERROR' [e_DEJ2000] (mas) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_DEC_MAIN' [DEJ2000] (d:m:s) used by: I/280	I/311/hip2	J/A+A/413/1037/table1	II/246/out	J/A+A/393/183/catalog	II/7A/catalog	II/225/catalog	I/196/main	V/50/catalog	B/sb9/main	B/wds/wds	II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMDEC' [pmDec] (mas/yr) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMDEC_ERROR' [e_pmDec] (mas/yr) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMRA' [pmRa] (mas/yr) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_PMRA_ERROR' [e_pmRA] (mas/yr) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_RA_ERROR' [e_RAJ2000] (mas) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_EQ_RA_MAIN' [RAJ2000] (h:m:s) used by: I/280	I/311/hip2	J/A+A/413/1037/table1	II/246/out	J/A+A/393/183/catalog	II/7A/catalog	II/225/catalog	I/196/main	V/50/catalog	B/sb9/main	B/wds/wds	II/297/irc	
+sclsvrServer -   vobs - Test  - Property 'POS_PARLX_TRIG' [plx] (mas) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'POS_PARLX_TRIG_ERROR' [e_Plx] (-) used by: I/280	I/311/hip2	
+sclsvrServer -   vobs - Test  - Property 'SPECT_TYPE_MK' [SpType] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'TIME_DATE' [jd] (d) used by: II/246/out	
+sclsvrServer -   vobs - Test  - Property 'UDDK_DIAM' [UDDK] (mas) used by: J/A+A/393/183/catalog	
+sclsvrServer -   vobs - Test  - Property 'UDDK_DIAM_ERROR' [e_UDDK] (mas) used by: J/A+A/393/183/catalog	
+sclsvrServer -   vobs - Test  - Property 'VAR_CLASS' [VarFlag3] (-) used by: I/280	
+sclsvrServer -   vobs - Test  - Property 'VELOC_HC' [RadVel] (km/s) used by: I/196/main	
+sclsvrServer -   vobs - Test  - Property 'VELOC_ROTAT' [RotVel] (km/s) used by: V/50/catalog	
+sclsvrServer -   vobs - Test  - Search: done = Number of stars found : 14
+sclsvrServer - sclsvr - Test  - Complete: start [14 stars]
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 145206'
+sclsvrServer - sclsvr - Test  - parallax 6.73(0.91) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K4III' - Our spectral type = 'K4.0III' : Code = 'K', Sub-type Quantity = '4.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.051451 / -0.060506 radians - 33.242 / 8.280 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 11.400000; computed fnu_12 = 5.765701, fnu_18 = 2.659924
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 2.071345
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.835, H = 2.190, K = 1.999
+sclsvrServer -    alx - Test  - GLon/dist/Av = 8.280 / 0.149 / 0.080
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 6.853 (HIGH), V = 5.388 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.835 (HIGH), H = 2.190 (HIGH), K = 1.999 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.748 (HIGH), V = 5.308 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.813 (HIGH), H = 2.176 (HIGH), K = 1.990 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.08
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=6.748 (HIGH), V=5.308 (HIGH), R=4.258 (HIGH), I=3.808 (HIGH), J=2.813 (HIGH), H=2.176 (HIGH), K=1.990 (HIGH), L=1.880 (HIGH), M=1.950 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.853, V = 5.388, R = 4.318, I = 3.849, J = 3.034, H = 2.190, K = 1.999, L = 1.885, M = 1.953
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.845, H = 2.199, K = 1.975
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 6.853 (HIGH), V = 5.388 (HIGH), R = 4.318 (HIGH), I = 3.849 (HIGH), J = 2.835 (HIGH), H = 2.190 (HIGH), K = 1.999 (HIGH), L = 1.885 (HIGH), M = 1.953 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.748 (HIGH), V = 5.308 (HIGH), R = 4.258 (HIGH), I = 3.808 (HIGH), J = 2.813 (HIGH), H = 2.176 (HIGH), K = 1.990 (HIGH), L = 1.880 (HIGH), M = 1.950 (HIGH)  with  av=0.08
+sclsvrServer -    alx - Test  - Compute diameters with B=6.748, V=5.308, R=4.258, I=3.808, J=2.813, H=2.176, K=1.990
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.439327 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.636669 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.823338 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=2.187(0.212), VK=2.187(0.151), IJ=2.068(0.159), IK=2.236(0.134), JH=0.000(0.000), JK=0.000(0.000), HK=2.425(0.322)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 146791'
+sclsvrServer - sclsvr - Test  - parallax 29.95(0.79) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'G8III' - Our spectral type = 'G8.0III' : Code = 'G', Sub-type Quantity = '8.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.014452 / -0.081900 radians - 30.809 / 8.563 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 24.400000; computed fnu_12 = 12.204099, fnu_18 = 5.598233
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.257211
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 1.630, H = 1.172, K = 1.170
+sclsvrServer -    alx - Test  - GLon/dist/Av = 8.563 / 0.033 / 0.025
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 4.201 (HIGH), V = 3.226 (HIGH), R = 2.530 (HIGH), I = 0.000 (NO), J = 1.630 (HIGH), H = 1.172 (HIGH), K = 1.170 (HIGH), L = 0.940 (HIGH), M = 1.040 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.167 (HIGH), V = 3.201 (HIGH), R = 2.511 (HIGH), I = 0.000 (NO), J = 1.623 (HIGH), H = 1.168 (HIGH), K = 1.167 (HIGH), L = 0.938 (HIGH), M = 1.039 (HIGH)  with  av=0.03
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=4.167 (HIGH), V=3.201 (HIGH), R=2.511 (HIGH), I=2.261 (HIGH), J=1.623 (HIGH), H=1.168 (HIGH), K=1.167 (HIGH), L=0.938 (HIGH), M=1.039 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.201, V = 3.226, R = 2.530, I = 2.273, J = 1.694, H = 1.172, K = 1.170, L = 0.940, M = 1.040
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 1.619, H = 1.176, K = 1.146
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 4.201 (HIGH), V = 3.226 (HIGH), R = 2.530 (HIGH), I = 2.273 (HIGH), J = 1.630 (HIGH), H = 1.172 (HIGH), K = 1.170 (HIGH), L = 0.940 (HIGH), M = 1.040 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.167 (HIGH), V = 3.201 (HIGH), R = 2.511 (HIGH), I = 2.261 (HIGH), J = 1.623 (HIGH), H = 1.168 (HIGH), K = 1.167 (HIGH), L = 0.938 (HIGH), M = 1.039 (HIGH)  with  av=0.03
+sclsvrServer -    alx - Test  - Compute diameters with B=4.167, V=3.201, R=2.511, I=2.261, J=1.623, H=1.168, K=1.167
+sclsvrServer -    alx - Test  - Diameters BV=3.160(0.253), VR=3.004(0.291), VK=2.827(0.195), IJ=2.754(0.212), IK=2.708(0.162), JH=2.862(0.275), JK=2.684(0.220), HK=1.997(0.266)
+sclsvrServer -    alx - Test  - Mean diameter = 2.997(0.599) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 2.920 (0.033) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.551577 (0.008327), 0.304237 (0.009186)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '2.827168', Teff = '4800.000000', LogG = '2.228000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 2.547674, B = 2.573878, V = 2.615371, R = 2.655601, I = 2.687017, J = 2.725018, H = 2.745964, K = 2.759312, L = 2.787583, N = 2.808616
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 148349'
+sclsvrServer - sclsvr - Test  - parallax 6.21(0.93) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'M3 III' - Our spectral type = 'M3.0III' : Code = 'M', Sub-type Quantity = '3.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.973425 / -0.132609 radians - 27.216 / 7.426 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 44.200000; computed fnu_12 = 22.680992, fnu_18 = 10.562598
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 0.584320
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 1.616, H = 0.690, K = 0.534
+sclsvrServer -    alx - Test  - GLon/dist/Av = 7.426 / 0.161 / 0.112
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 6.936 (HIGH), V = 5.243 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 1.616 (HIGH), H = 0.690 (HIGH), K = 0.534 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.788 (HIGH), V = 5.131 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 1.585 (HIGH), H = 0.671 (HIGH), K = 0.521 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.11
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.657 / B-V [99.990..99.990]; delta > 0.1
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.936, V = 5.243, R = 0.000, I = 0.000, J = 1.897, H = 0.690, K = 0.534, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 1.640, H = 0.698, K = 0.510
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 6.936 (HIGH), V = 5.243 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 1.616 (HIGH), H = 0.690 (HIGH), K = 0.534 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.788 (HIGH), V = 5.131 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 1.585 (HIGH), H = 0.671 (HIGH), K = 0.521 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.11
+sclsvrServer -    alx - Test  - Compute diameters with B=6.788, V=5.131, R=0.000, I=0.000, J=1.585, H=0.671, K=0.521
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.656823 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.914503 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 1.064298 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=4.958(0.342), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=4.506(0.599)
+sclsvrServer - sclsvr - Test  - B, V, R and/or Kc magitudes are unknown; could not compute diameter (bright case)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (0 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 153687'
+sclsvrServer - sclsvr - Test  - parallax 8.18(1.07) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K4III' - Our spectral type = 'K4.0III' : Code = 'K', Sub-type Quantity = '4.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.827970 / -0.073699 radians - 22.182 / 15.577 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 17.890000; computed fnu_12 = 9.048104, fnu_18 = 4.174215
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.582081
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.106, H = 1.427, K = 1.294
+sclsvrServer -    alx - Test  - GLon/dist/Av = 15.577 / 0.122 / 0.109
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 6.354 (HIGH), V = 4.815 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.106 (HIGH), H = 1.427 (HIGH), K = 1.294 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.209 (HIGH), V = 4.706 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.075 (HIGH), H = 1.408 (HIGH), K = 1.281 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.11
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.504 / B-V [1.380..1.380]; delta > 0.1
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.354, V = 4.815, R = 0.000, I = 0.000, J = 2.379, H = 1.427, K = 1.294, L = 0.000, M = 0.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.114, H = 1.434, K = 1.270
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 6.354 (HIGH), V = 4.815 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.106 (HIGH), H = 1.427 (HIGH), K = 1.294 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.209 (HIGH), V = 4.706 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.075 (HIGH), H = 1.408 (HIGH), K = 1.281 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.11
+sclsvrServer -    alx - Test  - Compute diameters with B=6.209, V=4.706, R=0.000, I=0.000, J=2.075, H=1.408, K=1.281
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.503698 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.667350 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.793902 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=3.064(0.211), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=3.024(0.402)
+sclsvrServer - sclsvr - Test  - B, V, R and/or Kc magitudes are unknown; could not compute diameter (bright case)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (0 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 132833'
+sclsvrServer - sclsvr - Test  - parallax 5.73(0.80) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'M0III' - Our spectral type = 'M0.0III' : Code = 'M', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.350389 / -0.048082 radians - 46.722 / 354.399 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 19.550000; computed fnu_12 = 9.985703, fnu_18 = 4.635457
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.475028
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.436, H = 1.621, K = 1.424
+sclsvrServer -    alx - Test  - GLon/dist/Av = 354.399 / 0.175 / 0.019
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 7.197 (HIGH), V = 5.518 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.436 (HIGH), H = 1.621 (HIGH), K = 1.424 (HIGH), L = 1.190 (HIGH), M = 1.400 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.172 (HIGH), V = 5.499 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.431 (HIGH), H = 1.618 (HIGH), K = 1.422 (HIGH), L = 1.189 (HIGH), M = 1.399 (HIGH)  with  av=0.02
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Could not compute differential magnitudes; mgB-mgV = 1.673 / B-V [1.560..1.560]; delta > 0.1
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.197, V = 5.518, R = 0.000, I = 0.000, J = 2.484, H = 1.621, K = 1.424, L = 1.190, M = 1.400
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.456, H = 1.630, K = 1.400
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 7.197 (HIGH), V = 5.518 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.436 (HIGH), H = 1.621 (HIGH), K = 1.424 (HIGH), L = 1.190 (HIGH), M = 1.400 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.172 (HIGH), V = 5.499 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.431 (HIGH), H = 1.618 (HIGH), K = 1.422 (HIGH), L = 1.189 (HIGH), M = 1.399 (HIGH)  with  av=0.02
+sclsvrServer -    alx - Test  - Compute diameters with B=7.172, V=5.499, R=0.000, I=0.000, J=2.431, H=1.618, K=1.422
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.672793 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.813381 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 1.009207 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=0.000(0.000), VK=3.084(0.213), IJ=0.000(0.000), IK=0.000(0.000), JH=0.000(0.000), JK=0.000(0.000), HK=3.182(0.423)
+sclsvrServer - sclsvr - Test  - B, V, R and/or Kc magitudes are unknown; could not compute diameter (bright case)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (0 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer -    alx - Test  - Diam = 3.060 (0.034) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.516096 (0.008647), 0.266355 (0.008926)
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 132933'
+sclsvrServer - sclsvr - Test  - parallax 3.11(1.21) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'M2III' - Our spectral type = 'M2.0III' : Code = 'M', Sub-type Quantity = '2.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.348274 / -0.002449 radians - 48.477 / 357.280 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 14.070000; computed fnu_12 = 7.212694, fnu_18 = 3.356600
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.828231
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.825, H = 1.969, K = 1.715
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.850, H = 1.980, K = 1.691
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute diameter (bright)
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 133165'
+sclsvrServer - sclsvr - Test  - parallax 17.37(0.88) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' - Our spectral type = 'K0.0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.343538 / 0.036500 radians - 49.789 / 0.070 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 10.020000; computed fnu_12 = 5.022163, fnu_18 = 2.306187
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 2.221248
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.598, H = 0.000, K = 1.952
+sclsvrServer -    alx - Test  - GLon/dist/Av = 0.070 / 0.058 / 0.001
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 5.441 (HIGH), V = 4.394 (HIGH), R = 3.590 (HIGH), I = 0.000 (NO), J = 2.598 (HIGH), H = 0.000 (NO), K = 1.952 (HIGH), L = 1.920 (HIGH), M = 2.020 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.440 (HIGH), V = 4.393 (HIGH), R = 3.590 (HIGH), I = 0.000 (NO), J = 2.598 (HIGH), H = 0.000 (NO), K = 1.952 (HIGH), L = 1.920 (HIGH), M = 2.020 (HIGH)  with  av=0.00
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=5.440 (HIGH), V=4.393 (HIGH), R=3.590 (HIGH), I=3.393 (HIGH), J=2.598 (HIGH), H=2.108 (HIGH), K=1.952 (HIGH), L=1.920 (HIGH), M=2.020 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 5.441, V = 4.394, R = 3.590, I = 3.394, J = 2.600, H = 2.108, K = 1.952, L = 1.920, M = 2.020
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.597, H = 2.116, K = 1.928
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 5.441 (HIGH), V = 4.394 (HIGH), R = 3.590 (HIGH), I = 3.394 (HIGH), J = 2.598 (HIGH), H = 2.108 (HIGH), K = 1.952 (HIGH), L = 1.920 (HIGH), M = 2.020 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 5.440 (HIGH), V = 4.393 (HIGH), R = 3.590 (HIGH), I = 3.393 (HIGH), J = 2.598 (HIGH), H = 2.108 (HIGH), K = 1.952 (HIGH), L = 1.920 (HIGH), M = 2.020 (HIGH)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=5.440, V=4.393, R=3.590, I=3.393, J=2.598, H=2.108, K=1.952
+sclsvrServer -    alx - Test  - Diameters BV=2.057(0.165), VR=2.159(0.209), VK=2.046(0.141), IJ=1.990(0.153), IK=2.071(0.124), JH=1.907(0.183), JK=2.083(0.171), HK=2.358(0.314)
+sclsvrServer -    alx - Test  - Mean diameter = 2.088(0.418) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 1.920 (0.032) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.785445 (0.006599), 0.616923 (0.010367)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '2.046182', Teff = '4660.000000', LogG = '2.078000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 1.843896, B = 1.862861, V = 1.892892, R = 1.922009, I = 1.944746, J = 1.972250, H = 1.987409, K = 1.997070, L = 2.017532, N = 2.032755
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 157999'
+sclsvrServer - sclsvr - Test  - parallax 3.13(0.92) is not valid...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K3IIvar' - Our spectral type = 'K3.0II' : Code = 'K', Sub-type Quantity = '3.00', Luminosity Class = 'II', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'YES'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.716904 / 0.072263 radians - 20.755 / 26.763 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 25.610000; computed fnu_12 = 12.927470, fnu_18 = 5.957824
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.194691
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 1.948, H = 1.224, K = 1.117
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute Av and missing magnitude
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 1.958, H = 1.231, K = 1.093
+sclsvrServer - sclsvr - Test  - parallax is unknown; could not compute diameter (bright)
+sclsvrServer -    alx - Test  - Diam = 3.150 (0.035) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.493171 (0.008926), 0.243218 (0.008804)
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (LD unknown).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 132525'
+sclsvrServer - sclsvr - Test  - parallax 4.61(0.93) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'M1III' - Our spectral type = 'M1.0III' : Code = 'M', Sub-type Quantity = '1.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.358877 / 0.079723 radians - 52.071 / 2.138 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 15.550000; computed fnu_12 = 7.959637, fnu_18 = 3.700401
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.721242
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.429, H = 1.615, K = 1.449
+sclsvrServer -    alx - Test  - GLon/dist/Av = 2.138 / 0.217 / 0.000
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 7.527 (HIGH), V = 5.927 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.429 (HIGH), H = 1.615 (HIGH), K = 1.449 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.527 (HIGH), V = 5.927 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.429 (HIGH), H = 1.615 (HIGH), K = 1.449 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.00
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=7.527 (HIGH), V=5.927 (HIGH), R=4.657 (HIGH), I=4.027 (HIGH), J=2.429 (HIGH), H=1.615 (HIGH), K=1.449 (HIGH), L=1.319 (HIGH), M=1.419 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.527, V = 5.927, R = 4.657, I = 4.027, J = 2.429, H = 1.615, K = 1.449, L = 1.319, M = 1.419
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.447, H = 1.623, K = 1.425
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 7.527 (HIGH), V = 5.927 (HIGH), R = 4.657 (HIGH), I = 4.027 (HIGH), J = 2.429 (HIGH), H = 1.615 (HIGH), K = 1.449 (HIGH), L = 1.319 (HIGH), M = 1.419 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.527 (HIGH), V = 5.927 (HIGH), R = 4.657 (HIGH), I = 4.027 (HIGH), J = 2.429 (HIGH), H = 1.615 (HIGH), K = 1.449 (HIGH), L = 1.319 (HIGH), M = 1.419 (HIGH)  with  av=0.00
+sclsvrServer -    alx - Test  - Compute diameters with B=7.527, V=5.927, R=4.657, I=4.027, J=2.429, H=1.615, K=1.449
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.600000 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.814422 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.980114 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=2.342(0.227), VK=3.186(0.220), IJ=3.349(0.258), IK=3.367(0.202), JH=0.000(0.000), JK=0.000(0.000), HK=3.021(0.402)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 161096'
+sclsvrServer - sclsvr - Test  - parallax 39.86(0.75) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K2III' - Our spectral type = 'K2.0III' : Code = 'K', Sub-type Quantity = '2.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.642911 / 0.079715 radians - 17.192 / 29.211 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 50.870000; computed fnu_12 = 25.611160, fnu_18 = 11.787594
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 0.452402
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 1.181, H = 0.463, K = 0.461
+sclsvrServer -    alx - Test  - GLon/dist/Av = 29.211 / 0.025 / 0.030
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 3.964 (HIGH), V = 2.759 (HIGH), R = 1.950 (HIGH), I = 0.000 (NO), J = 1.181 (HIGH), H = 0.463 (HIGH), K = 0.461 (HIGH), L = 0.100 (HIGH), M = 0.300 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 3.925 (HIGH), V = 2.729 (HIGH), R = 1.928 (HIGH), I = 0.000 (NO), J = 1.173 (HIGH), H = 0.458 (HIGH), K = 0.458 (HIGH), L = 0.098 (HIGH), M = 0.299 (HIGH)  with  av=0.03
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=3.925 (HIGH), V=2.729 (HIGH), R=1.928 (HIGH), I=1.559 (HIGH), J=1.173 (HIGH), H=0.458 (HIGH), K=0.458 (HIGH), L=0.098 (HIGH), M=0.299 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 3.964, V = 2.759, R = 1.950, I = 1.574, J = 1.254, H = 0.463, K = 0.461, L = 0.100, M = 0.300
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 1.184, H = 0.467, K = 0.437
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 3.964 (HIGH), V = 2.759 (HIGH), R = 1.950 (HIGH), I = 1.574 (HIGH), J = 1.181 (HIGH), H = 0.463 (HIGH), K = 0.461 (HIGH), L = 0.100 (HIGH), M = 0.300 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 3.925 (HIGH), V = 2.729 (HIGH), R = 1.928 (HIGH), I = 1.559 (HIGH), J = 1.173 (HIGH), H = 0.458 (HIGH), K = 0.458 (HIGH), L = 0.098 (HIGH), M = 0.299 (HIGH)  with  av=0.03
+sclsvrServer -    alx - Test  - Compute diameters with B=3.925, V=2.729, R=1.928, I=1.559, J=1.173, H=0.458, K=0.458
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.714605 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.714935 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=5.579(0.446), VR=4.627(0.449), VK=4.009(0.277), IJ=2.713(0.209), IK=3.763(0.226), JH=0.000(0.000), JK=0.000(0.000), HK=2.766(0.368)
+sclsvrServer -    alx - Test  - Mean diameter = 4.738(0.948) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 4.510 (0.049) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.163750 (0.010508), 0.026814 (0.003441)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '4.009204', Teff = '4390.000000', LogG = '2.028000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 3.602504, B = 3.635452, V = 3.690894, R = 3.751881, I = 3.800816, J = 3.854234, H = 3.885718, K = 3.906762, L = 3.949955, N = 3.981170
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 162774'
+sclsvrServer - sclsvr - Test  - parallax 9.47(0.87) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K5III' - Our spectral type = 'K5.0III' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.603125 / 0.022777 radians - 13.671 / 27.289 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 9.539000; computed fnu_12 = 4.834170, fnu_18 = 2.232592
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 2.262670
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.851, H = 2.120, K = 1.833
+sclsvrServer -    alx - Test  - GLon/dist/Av = 27.289 / 0.106 / 0.124
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 7.502 (HIGH), V = 5.923 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.851 (HIGH), H = 2.120 (HIGH), K = 1.833 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.338 (HIGH), V = 5.799 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.816 (HIGH), H = 2.098 (HIGH), K = 1.819 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.12
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=7.338 (HIGH), V=5.799 (HIGH), R=4.659 (HIGH), I=4.169 (HIGH), J=2.816 (HIGH), H=2.098 (HIGH), K=1.819 (HIGH), L=1.699 (HIGH), M=1.779 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.502, V = 5.923, R = 4.752, I = 4.232, J = 3.162, H = 2.120, K = 1.833, L = 1.706, M = 1.783
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.871, H = 2.131, K = 1.809
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 7.502 (HIGH), V = 5.923 (HIGH), R = 4.752 (HIGH), I = 4.232 (HIGH), J = 2.851 (HIGH), H = 2.120 (HIGH), K = 1.833 (HIGH), L = 1.706 (HIGH), M = 1.783 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.338 (HIGH), V = 5.799 (HIGH), R = 4.659 (HIGH), I = 4.169 (HIGH), J = 2.816 (HIGH), H = 2.098 (HIGH), K = 1.819 (HIGH), L = 1.699 (HIGH), M = 1.779 (HIGH)  with  av=0.12
+sclsvrServer -    alx - Test  - Compute diameters with B=7.338, V=5.799, R=4.659, I=4.169, J=2.816, H=2.098, K=1.819
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.538879 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.718203 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.997932 < 0.650000
+sclsvrServer -    alx - Test  - Color index HK out of validity domain: -0.100000 < 0.279729 < 0.240000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=2.023(0.196), VK=2.541(0.175), IJ=2.519(0.194), IK=2.719(0.163), JH=0.000(0.000), JK=0.000(0.000), HK=0.000(0.000)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 164064'
+sclsvrServer - sclsvr - Test  - parallax 6.13(0.68) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K5III' - Our spectral type = 'K5.0III' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.572486 / -0.084145 radians - 9.237 / 22.618 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 9.367000; computed fnu_12 = 4.747004, fnu_18 = 2.192336
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 2.282426
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.881, H = 2.138, K = 1.980
+sclsvrServer -    alx - Test  - GLon/dist/Av = 22.618 / 0.163 / 0.154
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 7.418 (HIGH), V = 5.848 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.881 (HIGH), H = 2.138 (HIGH), K = 1.980 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.214 (HIGH), V = 5.694 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.838 (HIGH), H = 2.111 (HIGH), K = 1.962 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.15
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=7.214 (HIGH), V=5.694 (HIGH), R=4.554 (HIGH), I=4.064 (HIGH), J=2.838 (HIGH), H=2.111 (HIGH), K=1.962 (HIGH), L=1.842 (HIGH), M=1.922 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 7.418, V = 5.848, R = 4.669, I = 4.142, J = 3.266, H = 2.138, K = 1.980, L = 1.851, M = 1.928
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.894, H = 2.146, K = 1.956
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 7.418 (HIGH), V = 5.848 (HIGH), R = 4.669 (HIGH), I = 4.142 (HIGH), J = 2.881 (HIGH), H = 2.138 (HIGH), K = 1.980 (HIGH), L = 1.851 (HIGH), M = 1.928 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 7.214 (HIGH), V = 5.694 (HIGH), R = 4.554 (HIGH), I = 4.064 (HIGH), J = 2.838 (HIGH), H = 2.111 (HIGH), K = 1.962 (HIGH), L = 1.842 (HIGH), M = 1.922 (HIGH)  with  av=0.15
+sclsvrServer -    alx - Test  - Compute diameters with B=7.214, V=5.694, R=4.554, I=4.064, J=2.838, H=2.111, K=1.962
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.520196 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.726238 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.875666 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=2.123(0.206), VK=2.314(0.160), IJ=2.340(0.180), IK=2.415(0.145), JH=0.000(0.000), JK=0.000(0.000), HK=2.319(0.308)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer - sclsvr - Test  - Unknown VK diameter; could not compute visibility
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 126927'
+sclsvrServer - sclsvr - Test  - parallax 6.84(0.75) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K5III' - Our spectral type = 'K5.0III' : Code = 'K', Sub-type Quantity = '5.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -2.492787 / -0.120437 radians - 48.623 / 341.127 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 11.000000; computed fnu_12 = 5.574575, fnu_18 = 2.574537
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 2.107946
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 2.712, H = 1.969, K = 1.806
+sclsvrServer -    alx - Test  - GLon/dist/Av = 341.127 / 0.146 / 0.007
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 6.953 (HIGH), V = 5.421 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.712 (HIGH), H = 1.969 (HIGH), K = 1.806 (HIGH), L = 1.800 (HIGH), M = 2.000 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.943 (HIGH), V = 5.414 (HIGH), R = 0.000 (NO), I = 0.000 (NO), J = 2.710 (HIGH), H = 1.967 (HIGH), K = 1.805 (HIGH), L = 1.800 (HIGH), M = 2.000 (HIGH)  with  av=0.01
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=6.943 (HIGH), V=5.414 (HIGH), R=4.274 (HIGH), I=3.784 (HIGH), J=2.710 (HIGH), H=1.967 (HIGH), K=1.805 (HIGH), L=1.800 (HIGH), M=2.000 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 6.953, V = 5.421, R = 4.279, I = 3.787, J = 2.731, H = 1.969, K = 1.806, L = 1.800, M = 2.000
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 2.726, H = 1.977, K = 1.782
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 6.953 (HIGH), V = 5.421 (HIGH), R = 4.279 (HIGH), I = 3.787 (HIGH), J = 2.712 (HIGH), H = 1.969 (HIGH), K = 1.806 (HIGH), L = 1.800 (HIGH), M = 2.000 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 6.943 (HIGH), V = 5.414 (HIGH), R = 4.274 (HIGH), I = 3.784 (HIGH), J = 2.710 (HIGH), H = 1.967 (HIGH), K = 1.805 (HIGH), L = 1.800 (HIGH), M = 2.000 (HIGH)  with  av=0.01
+sclsvrServer -    alx - Test  - Compute diameters with B=6.943, V=5.414, R=4.274, I=3.784, J=2.710, H=1.967, K=1.805
+sclsvrServer -    alx - Test  - Color index BV out of validity domain: -0.400000 < 1.529585 < 1.300000
+sclsvrServer -    alx - Test  - Color index JH out of validity domain: -0.100000 < 0.742685 < 0.500000
+sclsvrServer -    alx - Test  - Color index JK out of validity domain: -0.200000 < 0.905043 < 0.650000
+sclsvrServer -    alx - Test  - Diameters BV=0.000(0.000), VR=2.416(0.234), VK=2.455(0.169), IJ=2.276(0.175), IK=2.526(0.152), JH=0.000(0.000), JK=0.000(0.000), HK=2.550(0.339)
+sclsvrServer -    alx - Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+sclsvrServer - sclsvr - Test  - Computed diameters are not coherent between them; Mean diameter is not kept
+sclsvrServer -    alx - Test  - Diam = 2.240 (0.026) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.715998 (0.005900), 0.512653 (0.008449)
+sclsvrServer - sclsvr - Test  - Compute UD - Skipping (diameters are not OK).
+sclsvrServer - sclsvr - Test  - ----- Complete: star 'HD 163917'
+sclsvrServer - sclsvr - Test  - parallax 21.55(0.79) is OK...
+sclsvrServer -    alx - Test  - Parsed spectral type = 'K0III' - Our spectral type = 'K0.0III' : Code = 'K', Sub-type Quantity = '0.00', Luminosity Class = 'III', Is Double  = 'NO', Is Spectral Binary = 'NO', Is Variable = 'NO'
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - RA/DEC - GLat/GLong = -1.575044 / -0.170582 radians - 6.974 / 18.166 degrees
+sclsvrServer - sclsvr - Test  - IR Fluxes: akari measured fnu_9 = 21.640000; computed fnu_12 = 10.846269, fnu_18 = 4.980627
+sclsvrServer - sclsvr - Test  - IR Fluxes: computed magN = 1.385274
+sclsvrServer - sclsvr - Test  - Cousin magnitudes: I = 0.000, J = 1.741, H = 1.284, K = 1.249
+sclsvrServer -    alx - Test  - GLon/dist/Av = 18.166 / 0.046 / 0.029
+sclsvrServer - sclsvr - Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+sclsvrServer - sclsvr - Test  - Initial magnitudes:   B = 4.322 (HIGH), V = 3.315 (HIGH), R = 2.630 (HIGH), I = 0.000 (NO), J = 1.741 (HIGH), H = 1.284 (HIGH), K = 1.249 (HIGH), L = 0.000 (NO), M = 0.000 (NO)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.283 (HIGH), V = 3.286 (HIGH), R = 2.608 (HIGH), I = 0.000 (NO), J = 1.733 (HIGH), H = 1.279 (HIGH), K = 1.246 (HIGH), L = 0.000 (NO), M = 0.000 (NO)  with  av=0.03
+sclsvrServer -    alx - Test  - Type of star = GIANT
+sclsvrServer -    alx - Test  - Computed magnitudes (bright): B=4.283 (HIGH), V=3.286 (HIGH), R=2.608 (HIGH), I=2.286 (HIGH), J=1.733 (HIGH), H=1.279 (HIGH), K=1.246 (HIGH), L=1.176 (HIGH), M=1.206 (HIGH)
+sclsvrServer -    alx - Test  - Apparent magnitudes: B = 4.322, V = 3.315, R = 2.630, I = 2.301, J = 1.815, H = 1.284, K = 1.249, L = 1.177, M = 1.207
+sclsvrServer - sclsvr - Test  - Johnson magnitudes: I = 0.000, J = 1.732, H = 1.289, K = 1.225
+sclsvrServer - sclsvr - Test  - Extracted magnitudes: B = 4.322 (HIGH), V = 3.315 (HIGH), R = 2.630 (HIGH), I = 2.301 (HIGH), J = 1.741 (HIGH), H = 1.284 (HIGH), K = 1.249 (HIGH), L = 1.177 (HIGH), M = 1.207 (HIGH)
+sclsvrServer -    alx - Test  - Corrected magnitudes: B = 4.283 (HIGH), V = 3.286 (HIGH), R = 2.608 (HIGH), I = 2.286 (HIGH), J = 1.733 (HIGH), H = 1.279 (HIGH), K = 1.246 (HIGH), L = 1.176 (HIGH), M = 1.206 (HIGH)  with  av=0.03
+sclsvrServer -    alx - Test  - Compute diameters with B=4.283, V=3.286, R=2.608, I=2.286, J=1.733, H=1.279, K=1.246
+sclsvrServer -    alx - Test  - Diameters BV=3.181(0.254), VR=2.821(0.274), VK=2.728(0.188), IJ=2.436(0.188), IK=2.574(0.154), JH=2.716(0.261), JK=2.630(0.216), HK=2.263(0.301)
+sclsvrServer -    alx - Test  - Mean diameter = 2.910(0.582) - isValid = 1 - HIGH - from 3 diameters
+sclsvrServer -    alx - Test  - Diam = 2.728 (0.188) - base = 102.5 - wlen= 2.200
+sclsvrServer -    alx - Test  - V(dV), V2(dV2) = 0.599505 (0.046656), 0.359406 (0.055941)
+sclsvrServer - sclsvr - Test  - Computing UDs for LD = '2.728485', Teff = '4660.000000', LogG = '2.078000' ...
+sclsvrServer -    alx - Test  - Computed UD: U = 2.458747, B = 2.484036, V = 2.524081, R = 2.562907, I = 2.593226, J = 2.629901, H = 2.650115, K = 2.662997, L = 2.690282, N = 2.710581
+sclsvrServer -   vobs - Info  - Sort: start
+sclsvrServer -   vobs - Info  - Sort: done.
+sclsvrServer - sclsvr - Test  - Complete(): done [14 stars]
+sclsvrServer -   vobs - Test  - GetVotable: size = 146346 bytes / capacity = 159392 bytes
