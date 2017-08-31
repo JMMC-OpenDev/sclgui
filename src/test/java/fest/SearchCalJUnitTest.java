@@ -5,24 +5,14 @@ package fest;
 
 import fest.common.JmcsFestSwingJUnitTestCase;
 import fr.jmmc.jmcs.Bootstrapper;
-import fr.jmmc.jmcs.util.JVMUtils;
 import fr.jmmc.sclgui.preference.Preferences;
-import java.awt.Frame;
 import javax.swing.JButton;
-import javax.swing.JList;
 import org.fest.assertions.Fail;
 import org.fest.swing.annotation.GUITest;
-import org.fest.swing.core.GenericTypeMatcher;
-import static org.fest.swing.core.matcher.DialogMatcher.*;
-import org.fest.swing.core.matcher.FrameMatcher;
 import static org.fest.swing.core.matcher.JButtonMatcher.*;
-import org.fest.swing.core.matcher.JTextComponentMatcher;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
-import org.fest.swing.fixture.DialogFixture;
-import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.fixture.JButtonFixture;
-import org.fest.swing.fixture.JTextComponentFixture;
 import org.fest.swing.timing.Condition;
 import static org.fest.swing.timing.Pause.*;
 import org.fest.swing.timing.Timeout;
@@ -43,11 +33,11 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
     /** 60s timeout */
     private static final Timeout LONG_TIMEOUT = Timeout.timeout(60 * 1000l);
     /** queries to perform (500) */
-    private static final int QUERY_ITERATIONS = 100;
+    private static final int QUERY_ITERATIONS = 1;
     /** time to wait between queries (ms) */
     private static final long QUERY_PAUSE = 1 * 1000l;
     /** flag indicating to test cancel n queries */
-    private static final boolean TEST_CANCEL = true;
+    private static final boolean TEST_CANCEL = false;
     /** flag to perform big queries on V band */
     private static final boolean TEST_BIG = true;
     /** flag to perform queries on N band */
@@ -263,98 +253,6 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
                 }
             }
         }
-    }
-
-    /**
-     * Test Preferences
-     */
-    @Ignore
-    @Test
-    @GUITest
-    public void shouldOpenPreferences() {
-        window.menuItemWithPath("Edit", "Preferences...").click();
-
-        final Frame prefFrame = robot().finder().find(FrameMatcher.withTitle("Preferences"));
-
-        if (prefFrame != null) {
-            final FrameFixture frame = new FrameFixture(robot(), prefFrame);
-
-            frame.requireVisible();
-            frame.moveToFront();
-
-            saveScreenshot(frame, "SearchCal-prefs.png");
-
-            // close frame :
-            frame.close();
-        }
-    }
-
-    /**
-     * Test Interop menu : Start Aspro2 / topcat ... manually before this test
-     */
-    @Ignore
-    @Test
-    @GUITest
-    public void showInteropMenu() {
-        window.menuItemWithPath("Interop").click();
-        saveScreenshot(window, "SearchCal-interop-menu.png");
-
-        window.menuItemWithPath("Interop", "Show Hub Status").click();
-
-        final Frame hubFrame = robot().finder().find(FrameMatcher.withTitle("SAMP Status"));
-
-        if (hubFrame != null) {
-            final FrameFixture frame = new FrameFixture(robot(), hubFrame);
-
-            frame.requireVisible();
-            frame.moveToFront();
-
-            frame.list(new GenericTypeMatcher<JList>(JList.class) {
-                @Override
-                protected boolean isMatching(JList component) {
-                    return "org.astrogrid.samp.gui.ClientListCellRenderer".equals(component.getCellRenderer().getClass().getName());
-                }
-            }).selectItem("SearchCal");
-
-            saveScreenshot(frame, "SearchCal-interop-hubStatus.png");
-
-            // close frame :
-            frame.close();
-        }
-    }
-
-    /**
-     * Test Feedback report
-     */
-    @Ignore
-    @Test
-    @GUITest
-    public void shouldOpenFeedbackReport() {
-
-        // hack to solve focus trouble in menu items :
-        window.menuItemWithPath("Help").focus();
-
-        window.menuItemWithPath("Help", "Report Feedback to JMMC...").click();
-
-        final DialogFixture dialog = window.dialog(withTitle("JMMC Feedback Report ").andShowing());
-
-        dialog.requireVisible();
-        dialog.moveToFront();
-
-        final String myEmail = "laurent.bourges@obs.ujf-grenoble.fr";
-
-        final JTextComponentFixture emailField = dialog.textBox(JTextComponentMatcher.withText(myEmail));
-
-        // hide my email address :
-        emailField.setText("type your email address here");
-
-        saveScreenshot(dialog, "SearchCal-FeebackReport.png");
-
-        // restore my preferences :
-        emailField.setText(myEmail);
-
-        // close dialog :
-        dialog.close();
     }
 
     /**

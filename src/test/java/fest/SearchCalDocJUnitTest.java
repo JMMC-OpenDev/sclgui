@@ -141,32 +141,31 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
             }
         });
 
-        final Dialog prefFrame = robot().finder().find(DialogMatcher.withTitle("Preferences"));
-        if (prefFrame != null) {
-            final DialogFixture frame = new DialogFixture(robot(), prefFrame);
+        final Dialog prefDialog = robot().finder().find(DialogMatcher.withTitle("Preferences"));
+        if (prefDialog != null) {
+            final DialogFixture dialog = new DialogFixture(robot(), prefDialog);
 
-            frame.requireVisible();
-            frame.moveToFront();
+            dialog.requireVisible();
+            dialog.moveToFront();
 
             // Get the first tab screenshot
-            frame.tabbedPane().selectTab("Columns Order");
-            frame.list().selectItem(4);
-            saveScreenshot(frame, "sc_ihm_pref_win_1.png");
+            dialog.tabbedPane().selectTab("Columns Order");
+            dialog.list().selectItem(4);
+            saveScreenshot(dialog, "sc_ihm_pref_win_1.png");
 
             // Get the second tab screenshot
-            frame.tabbedPane().selectTab("Legend Colors");
-            saveScreenshot(frame, "sc_ihm_pref_win_2.png");
+            dialog.tabbedPane().selectTab("Legend Colors");
+            saveScreenshot(dialog, "sc_ihm_pref_win_2.png");
 
             // Get the third tab screenshot
-            frame.tabbedPane().selectTab("General Settings");
-            saveScreenshot(frame, "sc_ihm_pref_win_3.png");
+            dialog.tabbedPane().selectTab("General Settings");
+            saveScreenshot(dialog, "sc_ihm_pref_win_3.png");
 
             // Get the fourth tab screenshot
-            frame.tabbedPane().selectTab("Misc. settings");
-            saveScreenshot(frame, "sc_ihm_pref_win_4.png");
+            dialog.tabbedPane().selectTab("Misc. settings");
+            saveScreenshot(dialog, "sc_ihm_pref_win_4.png");
             
-            // Close frame
-            frame.close();
+            dialog.close();
         }
     }
 
