@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<jnlp spec="1.0+" codebase="@GENERATED@" href="SearchCal.jnlp">
+<jnlp spec="6.0+" codebase="@GENERATED@" href="SearchCal.jnlp">
     <information>
         <title>SearchCal</title>
         <vendor>JMMC (Jean-Marie MARIOTTI Center)</vendor>
@@ -16,20 +16,22 @@
             <icon href="@GENERATED@/FileIcon.png"/>
             <description>SearchCal reads and writes SCVOT gzipped files</description>
         </association>
-        <shortcut>
+        <shortcut online="true" install="false">
             <desktop/>
+            <menu submenu="JMMC"/>
         </shortcut>
     </information>
     <security>
         <all-permissions/>
     </security>
+    <update check="background" policy="prompt-update"/>
     <resources>
         <j2se version="1.6+" initial-heap-size="256m" max-heap-size="1024m"/>
 
         <!-- MANUALLY EDITED - Should be generated with maven ASAP ! -->
 
         <!-- Application module first (main class) -->
-        <jar href="jar/sclgui-TRUNK.jar" />
+        <jar href="jar/sclgui-TRUNK.jar" main="true"/>
 
 
         <!-- doc module -->
