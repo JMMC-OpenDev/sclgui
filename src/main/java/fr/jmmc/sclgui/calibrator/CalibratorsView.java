@@ -332,7 +332,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
             // If DataTableChanged event:
             if (e.getLastRow() == Integer.MAX_VALUE && _calibratorsTable.getRowCount() != 0) {
                 // use cell values not renderer values (html code):
-                AutofitTableColumns.autoResizeTable(_calibratorsTable, true);
+                AutofitTableColumns.autoResizeTable(_calibratorsTable);
             }
         }
 
