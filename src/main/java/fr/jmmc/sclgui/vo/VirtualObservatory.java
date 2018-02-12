@@ -20,7 +20,6 @@ import fr.jmmc.sclgui.query.QueryModel;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -374,7 +373,7 @@ public final class VirtualObservatory extends Observable {
 
                 // If a file was defined (No cancel in the dialog)
                 if (_currentFile != null) {
-                    StatusBar.show("loading file " + _currentFile.getName()+ " ...");
+                    StatusBar.show("loading file " + _currentFile.getName() + " ...");
 
                     // Loading the file in the calibrators model
                     String errorMsg = null;
@@ -559,15 +558,14 @@ public final class VirtualObservatory extends Observable {
                 _logger.warn("Could not save calibrator list to temp file '{}'.", file);
                 return null;
             }
-
             file.deleteOnExit();
-            URI uri = file.toURI();
 
             // Save the current calibrator selection (or all visible ones if none selected) to file
             _calibratorsModel.saveSelectionAsVOTableFile(file);
 
+            // Store parameters into SAMP message:
             final Map<String, String> parameters = new HashMap<String, String>(4);
-            parameters.put("url", uri.toString());
+            addUrlParameter(parameters, file);
             return parameters;
         }
     }
