@@ -23,6 +23,8 @@
 
         <!-- disable tests (fest fails for now) -->
         <maven.test.skip>true</maven.test.skip>
+        
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
     <dependencies>
@@ -54,7 +56,6 @@
             Get the jar file: JMMC-MAN-2600-0001-latex-tmp/JMMC-MAN-2600-0001-doc.jar
             Push into lib/sclgui-doc.jar
         -->
-
         <dependency>
             <!-- Requires you to install the artifact running mvn process-resources -->
             <groupId>fr.jmmc.sclgui</groupId>
@@ -80,7 +81,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.6</version>
+            <version>${slf4j.version}</version>
             <scope>compile</scope>
         </dependency>
 
