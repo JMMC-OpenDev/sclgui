@@ -677,6 +677,8 @@ public final class VirtualObservatory extends Observable {
                 }); // EDT Task          
 
             } else {
+                _calibratorsModel.resetAndUpdate();
+                
                 _logger.debug("No calibrators found.");
                 StatusBar.show("no calibrators found.");
             }

@@ -145,7 +145,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /** filter non calibrators */
     private final FacelessNonCalibratorsFilter _facelessNonCalibratorsFilter;
     /** Savot VOTable structure without data (rows are removed) */
-    SavotVOTable _parsedVOTable = null;
+    SavotVOTable _parsedVOTable;
     /** Original VOTable as a star list */
     StarList _originalStarList;
     /** Only calibrator star list (non calibrator filtered) */
@@ -198,15 +198,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // add observer to query model (to compute dynamic columns):
         _queryModel.addObserver(new QueryModelObserverForDynamicColumns());
 
-        // create empty star lists:
-        setOriginalStarList(StarList.EMPTY_LIST);
-        _calibratorStarList = StarList.EMPTY_LIST;
-        _currentStarList = StarList.EMPTY_LIST;
-        setFilteredStarList(StarList.EMPTY_LIST);
-
-        _paramSetWrapper = null;
-        _saveMappings = null;
-        _dataHaveChanged = false;
+        reset();
 
         _rowHeadersModel = new RowHeadersModel();
 
@@ -217,6 +209,32 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         // (set once here as no GUI can change it anywhere else)
         // TODO: do not filter GetStar results:
         _facelessNonCalibratorsFilter.setEnabled(Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FILTER_NON_CALIBRATORS));
+    }
+
+    /**
+     * Reset the model
+     */
+    private void reset() {
+        // create empty star lists:
+        setOriginalStarList(StarList.EMPTY_LIST);
+        _calibratorStarList = StarList.EMPTY_LIST;
+        _currentStarList = StarList.EMPTY_LIST;
+        setFilteredStarList(StarList.EMPTY_LIST);
+
+        _parsedVOTable = null;
+        _paramSetWrapper = null;
+        _saveMappings = null;
+        _dataHaveChanged = false;
+    }
+
+    /**
+     * Reset the model and update any attached observer
+     */
+    public void resetAndUpdate() {
+        reset();
+
+        // Update any attached observer:
+        update(null, this);
     }
 
     void resetFilters() {
@@ -675,13 +693,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 throw new IllegalArgumentException("Incorrect VOTable format; expected one SearchCal VOTable");
             }
 
-            // Clear all internal lists before new parsing:
-            _originalStarList.clear();
-            _calibratorStarList.clear();
-            _currentStarList.clear();
-
-            // Update any attached observer TO FREE MEMORY:
-            update(null, this);
+            reset();
 
             // Create parse votable task worker :
             final ParseVoTableSwingWorker loadWorker = new ParseVoTableSwingWorker(file, startQuery, this, parser, savotVoTable, tr, startTime);
@@ -2346,7 +2358,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
 
             // TODO: decide to export all or only filtered:
             final StarList starList = _filteredStarList; // _currentStarList
-            
+
             if (saveVOTableFile(tmpFile, starList)) {
                 final InputStream sourceStream = new BufferedInputStream(new FileInputStream(tmpFile));
                 final OutputStream resultStream = new BufferedOutputStream(new FileOutputStream(outputFile));
