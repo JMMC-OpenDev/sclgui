@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.1"/>
-    <compilation date="07/03/2018" compiler="JDK 1.6"/>
+    <program name="SearchCal" version="5.1.1 beta 1"/>
+    <compilation date="09/03/2018" compiler="JDK 1.6"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -132,6 +132,12 @@
     </menubar>
 
     <releasenotes>
+        <release version="5.1.1">
+            <pubDate>Fri, 09 Mar 2018 14:00:00 GMT</pubDate>
+            <prerelease version="5.1.1 beta 1">
+                <change type="FEATURE">Always reset the calibrator table if the query returned no calibrator</change>
+            </prerelease>
+        </release>
         <release version="5.1">
             <pubDate>Wed, 07 Mar 2018 11:00:00 GMT</pubDate>
             <prerelease version="5.1 beta 1">
