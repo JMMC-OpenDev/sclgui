@@ -650,16 +650,15 @@ public final class VirtualObservatory extends Observable {
          */
         @Override
         protected void parseResults(final String votable) {
-            if (votable != null && votable.length() != 0) {
-
-                // Use invokeLater to avoid concurrency and ensure that
-                // data model is modified and fire events using Swing EDT :
-                SwingUtils.invokeLaterEDT(new Runnable() {
-                    /**
-                     * Update the GUI using SearchCal results (VOTable)
-                     */
-                    @Override
-                    public void run() {
+            // Use invokeLater to avoid concurrency and ensure that
+            // data model is modified and fire events using Swing EDT :
+            SwingUtils.invokeLaterEDT(new Runnable() {
+                /**
+                 * Update the GUI using SearchCal results (VOTable)
+                 */
+                @Override
+                public void run() {
+                    if (votable != null && votable.length() != 0) {
                         // Parse the received VOTable
                         try {
                             StatusBar.show("parsing calibrators... (please wait, this may take a while)");
@@ -673,15 +672,13 @@ public final class VirtualObservatory extends Observable {
                             StatusBar.show("calibrator parsing aborted !");
                             MessagePane.showErrorMessage("Calibrator search failed (invalid VOTable received).", iae);
                         }
-                    }
-                }); // EDT Task          
+                    } else {
+                        _calibratorsModel.resetAndUpdate();
 
-            } else {
-                _calibratorsModel.resetAndUpdate();
-                
-                _logger.debug("No calibrators found.");
-                StatusBar.show("no calibrators found.");
-            }
+                        StatusBar.show("no calibrators found.");
+                    }
+                }
+            }); // EDT Task          
         }
 
         /**
