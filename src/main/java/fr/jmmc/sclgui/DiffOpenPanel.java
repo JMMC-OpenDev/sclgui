@@ -1,12 +1,6 @@
 /*******************************************************************************
- * JMMC project
- *
- * "@(#) $Id: DiffOpenPanel.java,v $"
- *
- * History
- * -------
- * $Log: DiffOpenPanel.java,v $
- */
+ * JMMC project ( http://www.jmmc.fr ) - Copyright (C) CNRS.
+ ******************************************************************************/
 package fr.jmmc.sclgui;
 
 import fr.jmmc.jmcs.App;
