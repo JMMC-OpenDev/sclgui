@@ -9,7 +9,7 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.1.1 beta 1"/>
+    <program name="SearchCal" version="5.1.1 beta 2"/>
     <compilation date="09/03/2018" compiler="JDK 1.6"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
@@ -133,7 +133,11 @@
 
     <releasenotes>
         <release version="5.1.1">
-            <pubDate>Fri, 09 Mar 2018 14:00:00 GMT</pubDate>
+            <pubDate>Sat, 08 Dec 2018 08:00:00 GMT</pubDate>
+            <prerelease version="5.1.1 beta 2">
+                <change type="CHANGE">Change hardcoded IP of SearchCal Server (required only on networks without DNS). If you can't upgrade your installation,
+                    you can set the 'ip.apps.jmmc.fr' preference in .fr.jmmc.jmcs.properties to '129.88.192.8' </change>
+            </prerelease>
             <prerelease version="5.1.1 beta 1">
                 <change type="FEATURE">Always reset the calibrator table if the query returned no calibrator</change>
             </prerelease>
