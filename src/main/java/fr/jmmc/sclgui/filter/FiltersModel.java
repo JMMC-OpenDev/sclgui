@@ -64,13 +64,16 @@ public final class FiltersModel {
 
         // ObjectTypes filter
         addFilter(new ObjectTypeFilter());
-        
+
         // Diameter quality filter
         addFilter(new DiameterQualityFilter());
+
+        // Enable filter list:
+        _filterList.setEnabled(Boolean.TRUE);
     }
 
     private void addFilter(final Filter filter) {
-        // call reset to prepare constraints and enable filters by default:
+        // call reset(bright) to prepare constraints and enable filters by default:
         filter.reset(true);
         _filterList.add(filter);
 

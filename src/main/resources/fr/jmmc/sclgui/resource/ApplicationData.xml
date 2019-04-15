@@ -10,7 +10,7 @@
     </company>
 
     <program name="SearchCal" version="5.1.1 beta 2"/>
-    <compilation date="09/03/2018" compiler="JDK 1.6"/>
+    <compilation date="15/04/2019" compiler="JDK 1.6"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -125,6 +125,8 @@
             <menu label="Show Legend" classpath="fr.jmmc.sclgui.calibrator.CalibratorsView" action="_showLegendAction" checkbox="true" checkboxPreferenceName="view.legend.show" accelerator="L"/>
             <menu/>
             <menu label="Get Calibrators" classpath="fr.jmmc.sclgui.vo.VirtualObservatory" action="_getCalAction" accelerator="R"/>
+            <menu/>
+            <menu label="Reset Filters" classpath="fr.jmmc.sclgui.calibrator.CalibratorsView" action="_resetFiltersAction"/>
         </menu>
         <menu label="Interop">
             <menu label="Send All Calibrators to..." classpath="fr.jmmc.sclgui.vo.VirtualObservatory" action="_shareCalibratorsThroughSAMPAction"/>
@@ -133,7 +135,11 @@
 
     <releasenotes>
         <release version="5.1.1">
-            <pubDate>Sat, 08 Dec 2018 08:00:00 GMT</pubDate>
+            <pubDate>Mon, 15 Apr 2019 14:00:00 GMT</pubDate>
+            <prerelease version="5.1.1 beta 3">
+                <change type="FEATURE">Do not reset calibrator filters when new query results are loaded;
+                    use the new 'Reset Filters' action in the 'Calibrators' menu if needed</change>
+            </prerelease>
             <prerelease version="5.1.1 beta 2">
                 <change type="CHANGE">Change hardcoded IP of SearchCal Server (required only on networks without DNS). If you can't upgrade your installation,
                     you can set the 'ip.apps.jmmc.fr' preference in .fr.jmmc.jmcs.properties to '129.88.192.8' </change>

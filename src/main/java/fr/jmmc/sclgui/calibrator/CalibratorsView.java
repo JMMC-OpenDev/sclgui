@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * application preferences change.
  */
 public final class CalibratorsView extends JPanel implements TableModelListener,
-        ListSelectionListener, Observer, Printable {
+                                                             ListSelectionListener, Observer, Printable {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -76,6 +76,8 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     private static DeleteAction _deleteAction = null;
     /** Undelete action */
     private static UndeleteAction _undeleteAction = null;
+    /** Reset filters action */
+    private static ResetFiltersAction _resetFiltersAction = null;
     /** Show Legend action */
     public static RegisteredPreferencedBooleanAction _showLegendAction = null;
     /** Synthetic Results Verbosity action */
@@ -107,6 +109,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
             // Create actions
             _deleteAction = new DeleteAction(classPath, "_deleteAction");
             _undeleteAction = new UndeleteAction(classPath, "_undeleteAction");
+            _resetFiltersAction = new ResetFiltersAction(classPath, "_resetFiltersAction");
 
             _showLegendAction = new RegisteredPreferencedBooleanAction(classPath, "_showLegendAction", "Show Legend", _preferences, PreferenceKey.SHOW_LEGEND_FLAG);
             _syntheticResultsVerbosityAction = new RegisteredPreferencedBooleanAction(classPath, "_syntheticResultsVerbosityAction", "Synthetic", _preferences, PreferenceKey.VERBOSITY_SYNTHETIC_FLAG);
@@ -194,7 +197,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         rowHeader.setPreferredScrollableViewportSize(d);
         rowHeader.setRowHeight(_calibratorsTable.getRowHeight());
         rowHeader.setRowSelectionAllowed(false);
-        
+
         // Fix row height:
         SwingUtils.adjustRowHeight(_calibratorsTable);
         SwingUtils.adjustRowHeight(rowHeader);
@@ -530,6 +533,13 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     }
 
     /**
+     * Reset filters. 
+     */
+    private void resetFilters() {
+        _calibratorsModel.resetFilters();
+    }
+
+    /**
      * Delete stars action
      */
     protected final static class DeleteAction extends RegisteredAction {
@@ -576,6 +586,29 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         public void actionPerformed(final ActionEvent ae) {
             // use current view to perform undelete action:
             getCurrentView().undeleteStars();
+        }
+    }
+
+    /**
+     * Reset filters
+     */
+    protected final static class ResetFiltersAction extends RegisteredAction {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        /**
+         * Protected constructor
+         * @param classPath
+         * @param fieldName 
+         */
+        ResetFiltersAction(final String classPath, final String fieldName) {
+            super(classPath, fieldName);
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent ae) {
+            getCurrentView().resetFilters();
         }
     }
 }

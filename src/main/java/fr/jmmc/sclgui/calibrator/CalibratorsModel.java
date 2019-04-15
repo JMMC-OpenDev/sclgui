@@ -1515,9 +1515,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             paramSetWrapper.add(param);
         }
 
-        // reset filters:
-        resetFilters();
-
         // Process star list:
         postProcess(starList);
 
