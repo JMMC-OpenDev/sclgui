@@ -57,8 +57,8 @@ public final class DistanceFilter extends Filter {
      */
     @Override
     public void reset(final boolean bright) {
-        setConstraint(_deltaRAConstraintName, new Double(10.0));
-        setConstraint(_deltaDECConstraintName, new Double(10.0));
+        setConstraint(_deltaRAConstraintName, Double.valueOf(10.0));
+        setConstraint(_deltaDECConstraintName, Double.valueOf(10.0));
     }
 
     /**

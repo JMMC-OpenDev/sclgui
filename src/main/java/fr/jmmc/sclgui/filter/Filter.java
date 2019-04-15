@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
+import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -214,7 +215,7 @@ public abstract class Filter extends Observable {
             prepare(starList);
 
             // For each row of the star list
-            List<StarProperty> star;
+            Vector<StarProperty> star;
 
             for (int rowId = 0; rowId < size; rowId++) {
                 star = starList.get(rowId);

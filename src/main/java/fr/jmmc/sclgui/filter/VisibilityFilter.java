@@ -39,7 +39,7 @@ public final class VisibilityFilter extends Filter {
     @Override
     public void reset(final boolean bright) {
         setEnabled(Boolean.TRUE);
-        setConstraint(_visibilityConstraintName, new Double(0.5));
+        setConstraint(_visibilityConstraintName, Double.valueOf(0.5));
     }
 
     /**

@@ -49,8 +49,8 @@ public final class MagnitudeFilter extends Filter {
      */
     @Override
     public void reset(final boolean bright) {
-        setConstraint(_belowMagnitudeConstraintName, new Double(0));
-        setConstraint(_aboveMagnitudeConstraintName, new Double(10));
+        setConstraint(_belowMagnitudeConstraintName, Double.valueOf(0));
+        setConstraint(_aboveMagnitudeConstraintName, Double.valueOf(10));
     }
 
     /**

@@ -618,7 +618,7 @@ public final class QueryModel extends Star implements Observer {
      * @param wavelength the new instrumental wavelength as a double value.
      */
     public void setInstrumentalWavelength(double wavelength) {
-        setInstrumentalWavelength(new Double(wavelength));
+        setInstrumentalWavelength(Double.valueOf(wavelength));
     }
 
     /**
@@ -640,7 +640,7 @@ public final class QueryModel extends Star implements Observer {
      * @return the instrumental maximum base line as a Double value.
      */
     public Double getInstrumentalMaxBaseLine() {
-        return new Double(_instrumentalMaxBaseLine);
+        return Double.valueOf(_instrumentalMaxBaseLine);
     }
 
     /**
@@ -787,7 +787,7 @@ public final class QueryModel extends Star implements Observer {
      * @param magnitude the new magnitude as a Double value.
      */
     public void setScienceObjectMagnitude(double magnitude) {
-        setScienceObjectMagnitude(new Double(magnitude));
+        setScienceObjectMagnitude(Double.valueOf(magnitude));
     }
 
     /**
@@ -807,7 +807,7 @@ public final class QueryModel extends Star implements Observer {
      */
     public void setScienceObjectDetectionDistance(double distance) throws IllegalStateException {
         try {
-            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, new Double(distance));
+            _preferences.setPreference(PreferenceKey.QUERY_SCIENCE_DETECTION, Double.valueOf(distance));
         } catch (PreferencesException pe) {
             throw new IllegalStateException("Can't change the tolerated distance to detect the science object", pe);
         }
@@ -840,7 +840,7 @@ public final class QueryModel extends Star implements Observer {
         }
 
         // Otherwise use default value in preference
-        return new Double(_queryMinMagnitude);
+        return Double.valueOf(_queryMinMagnitude);
     }
 
     /**
@@ -892,7 +892,7 @@ public final class QueryModel extends Star implements Observer {
      * @throws PreferencesException  
      */
     public void setQueryMinMagnitudeDelta(double delta) throws PreferencesException {
-        _preferences.setPreference(PreferenceKey.QUERY_MINIMUM_DELTA, new Double(delta));
+        _preferences.setPreference(PreferenceKey.QUERY_MINIMUM_DELTA, Double.valueOf(delta));
 
         setChanged();
     }
@@ -914,7 +914,7 @@ public final class QueryModel extends Star implements Observer {
         }
 
         // Otherwise use default value in preference
-        return new Double(_queryMaxMagnitude);
+        return Double.valueOf(_queryMaxMagnitude);
     }
 
     /**
@@ -966,7 +966,7 @@ public final class QueryModel extends Star implements Observer {
      * @throws PreferencesException  
      */
     public void setQueryMaxMagnitudeDelta(double delta) throws PreferencesException {
-        _preferences.setPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, new Double(delta));
+        _preferences.setPreference(PreferenceKey.QUERY_MAXIMUM_DELTA, Double.valueOf(delta));
 
         setChanged();
     }
@@ -1007,7 +1007,7 @@ public final class QueryModel extends Star implements Observer {
      * @return the query box differential RA size.
      */
     public Double getQueryDiffRASizeInMinutes() {
-        return new Double(_queryDiffRASize);
+        return Double.valueOf(_queryDiffRASize);
     }
 
     /**
@@ -1040,7 +1040,7 @@ public final class QueryModel extends Star implements Observer {
      * @return the query box differential DEC size.
      */
     public Double getQueryDiffDECSizeInDegrees() {
-        return new Double(_queryDiffDECSize);
+        return Double.valueOf(_queryDiffDECSize);
     }
 
     /**
@@ -1073,7 +1073,7 @@ public final class QueryModel extends Star implements Observer {
      * @return the query box radial size.
      */
     public Double getQueryRadialSize() {
-        return new Double(_queryRadialSize);
+        return Double.valueOf(_queryRadialSize);
     }
 
     /**

@@ -1089,7 +1089,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             if (this.trFirst != null) {
                 SavotTR tr = trFirst; // consume first TR
                 TDSet row;
-                List<StarProperty> star;
+                Vector<StarProperty> star;
                 Object propertyValue;
                 int groupId;
                 String value, originValue, confidenceValue;

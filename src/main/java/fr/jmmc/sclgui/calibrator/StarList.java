@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Vector of star property vector.
  * note: This structure is required / imposed by javax.swing.table.DefaultTableModel
  */
-public final class StarList extends Vector<List<StarProperty>> {
+public final class StarList extends Vector<Vector<StarProperty>> {
 
     /** Logger */
     private static final Logger _logger = LoggerFactory.getLogger(StarList.class.getName());
@@ -160,7 +160,7 @@ public final class StarList extends Vector<List<StarProperty>> {
 
         final int deletedFlagColumnID = getDeletedFlagColumnID();
         if (deletedFlagColumnID != -1) {
-            List<StarProperty> star;
+            Vector<StarProperty> star;
             StarProperty deletedFlag;
 
             for (int rowId = 0; rowId < size; rowId++) {

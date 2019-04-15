@@ -544,8 +544,8 @@ public final class DiffCalibratorsModel {
         Integer rightRowIdx;
         StarPropertyMeta propMeta;
         Class<?> classType;
-        List<StarProperty> starRight;
-        List<StarProperty> star;
+        Vector<StarProperty> starRight;
+        Vector<StarProperty> star;
         StarProperty starPropertyLeft;
         StarProperty starPropertyRight;
         StarProperty starProperty;

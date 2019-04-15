@@ -77,9 +77,9 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
     private JLabel _instrumentalWavelengthLabel = new JLabel("Wavelength [µm] : ",
             JLabel.TRAILING);
     /** Instrument wavelength */
-    private JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _instrumentalWavelengthTextfield = new JFormattedTextField(Double.valueOf(0));
     /** Instrument maximum baseline */
-    private JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _instrumentalMaxBaselineTextField = new JFormattedTextField(Double.valueOf(0));
     /** Science object panel */
     private JPanel _scienceObjectPanel = null;
     /** Science object name resolver widget */
@@ -92,17 +92,17 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
     private JLabel _scienceObjectMagnitudeLabel = new JLabel("Magnitude : ",
             JLabel.TRAILING);
     /** Science object magnitude */
-    private JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _scienceObjectMagnitudeTextfield = new JFormattedTextField(Double.valueOf(0));
     /** SearchCal parameters panel */
     private JPanel _searchCalPanel = null;
     /** Search minimum magnitude label */
     private JLabel _minMagnitudeLabel = new JLabel("Min. Magnitude : ", JLabel.TRAILING);
     /** Search minimum magnitude */
-    private JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _minMagnitudeTextfield = new JFormattedTextField(Double.valueOf(0));
     /** Search maximum magnitude label */
     private JLabel _maxMagnitudeLabel = new JLabel("Max. Magnitude : ", JLabel.TRAILING);
     /** Search maximum magnitude */
-    private JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _maxMagnitudeTextfield = new JFormattedTextField(Double.valueOf(0));
     /** Bright query button */
     private JRadioButton _brightRadioButton = null;
     /** Faint query button */
@@ -110,11 +110,11 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
     /** Search box RA size label */
     private JLabel _diffRASizeLabel = new JLabel("RA Range [mn] : ", JLabel.TRAILING);
     /** Search box RA size */
-    private JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _diffRASizeTextfield = new JFormattedTextField(Double.valueOf(0));
     /** Search box DEC size label */
     private JLabel _diffDECSizeLabel = new JLabel("DEC Range [deg] : ", JLabel.TRAILING);
     /** Search box DEC size */
-    private JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _diffDECSizeTextfield = new JFormattedTextField(Double.valueOf(0));
     /** Search box radial size label */
     private JLabel _radialSizeLabel = new JLabel("Radius [arcmin] : ", JLabel.TRAILING);
     /** Auto/Manual radius radio button group */
@@ -126,7 +126,7 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
     /** Manual radius radio button */
     private JRadioButton _manualRadiusRadioButton = null;
     /** Search box radial size */
-    private JFormattedTextField _radialSizeTextfield = new JFormattedTextField(new Double(0));
+    private JFormattedTextField _radialSizeTextfield = new JFormattedTextField(Double.valueOf(0));
     /** Query action and progression panel */
     private JPanel _actionPanel = new JPanel();
     /** Query launcher/canceler */

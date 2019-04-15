@@ -42,8 +42,8 @@ public final class DiameterQualityFilter extends Filter {
     @Override
     public void reset(final boolean bright) {
         setEnabled(Boolean.TRUE);
-        setConstraint(_chi2ConstraintName, new Double(2.0));
-        setConstraint(_relDiamErrorConstraintName, new Double(10.0));
+        setConstraint(_chi2ConstraintName, Double.valueOf(2.0));
+        setConstraint(_relDiamErrorConstraintName, Double.valueOf(10.0));
     }
 
     /**
