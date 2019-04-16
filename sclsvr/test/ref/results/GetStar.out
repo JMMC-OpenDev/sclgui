@@ -1,0 +1,708 @@
+Info  - 2018-06-18T11:39:12.361853 - alxAngularDiameter.c:111 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxAngDiamPolynomial.cfg ...
+Info  - 2018-06-18T11:39:12.362029 - alxAngularDiameter.c:212 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxAngDiamPolynomialCovariance.cfg ...
+Info  - 2018-06-18T11:39:12.362199 - alxMissingMagnitude.c:413 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxColorTableForSuperGiantStar.cfg ...
+Info  - 2018-06-18T11:39:12.362922 - alxMissingMagnitude.c:413 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxColorTableForGiantStar.cfg ...
+Info  - 2018-06-18T11:39:12.363640 - alxMissingMagnitude.c:413 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxColorTableForDwarfStar.cfg ...
+Info  - 2018-06-18T11:39:12.364375 - alxMissingMagnitude.c:2166 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxAkariBlackBodyCorrectionTable.cfg ...
+Info  - 2018-06-18T11:39:12.364497 - alxMissingMagnitude.c:2433 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxTableTeffLogg.cfg ...
+Info  - 2018-06-18T11:39:12.364657 - alxInterstellarAbsorption.c:200 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxExtinctionRatioTable.cfg ...
+Info  - 2018-06-18T11:39:12.364698 - alxInterstellarAbsorption.c:94 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxIntAbsPolynomial.cfg ...
+Info  - 2018-06-18T11:39:12.364783 - alxResearchArea.c:102 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxStarPopulationInKBand.cfg ...
+Info  - 2018-06-18T11:39:12.365083 - alxLD2UD.c:88 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxTableUDCoefficientCorrection.cfg ...
+Info  - 2018-06-18T11:39:12.366361 - alxLD2UD.c:203 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxNewTableUDCoefficientCorrection.cfg ...
+Info  - 2018-06-18T11:39:12.369162 - alxSedFitting.c:279 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxSedModel.cfg ...
+Info  - 2018-06-18T11:39:12.711301 - vobsSTAR.cpp:1273 - vobsSTAR has defined 51 properties.
+Info  - 2018-06-18T11:39:12.711662 - vobsSTAR.cpp:1347 - Saving property index XML description: /home/users/mellag/MCSTOP/data/tmp/PropertyIndex_vobsSTAR.xml
+Info  - 2018-06-18T11:39:12.711818 - sclsvrCALIBRATOR.cpp:2210 - sclsvrCALIBRATOR has defined 92 properties.
+Info  - 2018-06-18T11:39:12.712274 - sclsvrCALIBRATOR.cpp:2275 - Saving property index XML description: /home/users/mellag/MCSTOP/data/tmp/PropertyIndex_sclsvrCALIBRATOR.xml
+Quiet - 2018-06-18T11:39:12.712405 - vobsREMOTE_CATALOG.cpp:200 - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
+Quiet - 2018-06-18T11:39:12.712417 - vobsREMOTE_CATALOG.cpp:239 - vobsDevFlag: false
+Info  - 2018-06-18T11:39:12.712422 - alxAngularDiameter.c:63 - alxDevFlag: false
+Info  - 2018-06-18T11:39:12.713076 - vobsCATALOG.cpp:439 - Saving catalog meta XML description: /home/users/mellag/MCSTOP/data/tmp/CatalogMeta.xml
+Info  - 2018-06-18T11:39:12.713367 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_SINGLE_STAR.xml
+Info  - 2018-06-18T11:39:12.713513 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_BRIGHT_K.xml
+Info  - 2018-06-18T11:39:12.713632 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_BRIGHT_V.xml
+Info  - 2018-06-18T11:39:12.713748 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_JSDC_BRIGHT.xml
+Info  - 2018-06-18T11:39:12.713829 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_JSDC_FAINT.xml
+Info  - 2018-06-18T11:39:12.713882 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_JSDC_QUERY.xml
+Info  - 2018-06-18T11:39:12.713978 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_FAINT_K.xml
+Info  - objectNames: 'eta tau'
+Info  - diagnose mode enabled.
+Info  - GetStar[eta tau]: RA/DEC='03 47 29.0766 +24 06 18.488' pmRA/pmDEC=19.3 -43.7 spType='B7III' objTypes=',IR,X,Be*,UV,*iC,Em*,*iN,**,*,' IDS='* eta Tau'
+Info  - Scenario[UNDEF] Execute() start
+Test  - Execute: Step 1 - inputList[GetStar] action[UPDATE_ONLY]
+Test  - Execute: Step 1 - Querying I/280 [ASCC] ...
+Test  - Execute: Step 1 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'NO CATALOG'
+Test  - Search: catalog id: 'I/280'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=e_RAJ2000&-out=e_DEJ2000&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=e_pmRA&-out=pmDE&-out=e_pmDE&-out=SpType&-out=Bmag&-out=e_Bmag&-out=Vmag&-out=e_Vmag&-out=v1&-out=v2&-out=v3&-out=d5&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871101%2b24.105242&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (7553 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/280':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RAJ2000' (UCD='ERROR')
+Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DEJ2000' (UCD='ERROR')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'DM' [ID_DM] found for parameter 'DM' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'TYC1' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'TYC2' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'TYC3' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD='POS_EQ_PMRA')
+Test  - Extract: Property 'e_pmRa' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD='ERROR')
+Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD='POS_EQ_PMDEC')
+Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD='ERROR')
+Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SpType' (UCD='SPECT_TYPE_MK')
+Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD='PHOT_JHN_B')
+Test  - Extract: Property 'e_B' [PHOT_JHN_B_ERROR] found for parameter 'e_Bmag' (UCD='ERROR')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'e_V' [PHOT_JHN_V_ERROR] found for parameter 'e_Vmag' (UCD='ERROR')
+Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'v1' (UCD='CODE_VARIAB')
+Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'v2' (UCD='CODE_VARIAB')
+Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'v3' (UCD='VAR_CLASS')
+Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'd5' (UCD='CODE_MULT_FLAG')
+Test  - Execute: Step 1 - number of returned stars=1
+Test  - Execute: Step 1 - outputList[GetStar]
+Test  - Execute: Step 1 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [GetStar][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [GetStar] catalog id: 'NO CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/280'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [GetStar] catalog id: 'I/280'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'HD' [ID_HD] updated 1 times
+Test  - Merge: Property 'HIP' [ID_HIP] updated 1 times
+Test  - Merge: Property 'DM' [ID_DM] updated 1 times
+Test  - Merge: Property 'TYC1' [ID_TYC1] updated 1 times
+Test  - Merge: Property 'TYC2' [ID_TYC2] updated 1 times
+Test  - Merge: Property 'TYC3' [ID_TYC3] updated 1 times
+Test  - Merge: Property 'B' [PHOT_JHN_B] updated 1 times
+Test  - Merge: Property 'V' [PHOT_JHN_V] updated 1 times
+Test  - Execute: Step 1 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: resultList[Main]
+Info  - Scenario[UNDEF] Execute() done: 1 star(s) found.
+Test  - Scenario[UNDEF] Property usage by catalogs
+Test  - Property 'CODE_MULT_FLAG' [MultFlag]: I/280	
+Test  - Property 'CODE_VARIAB_V1' [VarFlag1]: I/280	
+Test  - Property 'CODE_VARIAB_V2' [VarFlag2]: I/280	
+Test  - Property 'ID_DM' [DM]: I/280	
+Test  - Property 'ID_HD' [HD]: I/280	
+Test  - Property 'ID_HIP' [HIP]: I/280	
+Test  - Property 'ID_TARGET' [TARGET_ID]: I/280	
+Test  - Property 'ID_TYC1' [TYC1]: I/280	
+Test  - Property 'ID_TYC2' [TYC2]: I/280	
+Test  - Property 'ID_TYC3' [TYC3]: I/280	
+Test  - Property 'PHOT_JHN_B' [B]: I/280	
+Test  - Property 'PHOT_JHN_B_ERROR' [e_B]: I/280	
+Test  - Property 'PHOT_JHN_V' [V]: I/280	
+Test  - Property 'PHOT_JHN_V_ERROR' [e_V]: I/280	
+Test  - Property 'POS_EQ_DEC_ERROR' [e_DEJ2000]: I/280	
+Test  - Property 'POS_EQ_DEC_MAIN' [DEJ2000]: I/280	
+Test  - Property 'POS_EQ_PMDEC' [pmDec]: I/280	
+Test  - Property 'POS_EQ_PMDEC_ERROR' [e_pmDec]: I/280	
+Test  - Property 'POS_EQ_PMRA' [pmRa]: I/280	
+Test  - Property 'POS_EQ_PMRA_ERROR' [e_pmRa]: I/280	
+Test  - Property 'POS_EQ_RA_ERROR' [e_RAJ2000]: I/280	
+Test  - Property 'POS_EQ_RA_MAIN' [RAJ2000]: I/280	
+Test  - Property 'SPECT_TYPE_MK' [SpType]: I/280	
+Test  - Property 'VAR_CLASS' [VarFlag3]: I/280	
+Test  - Search: start
+Info  - Scenario[SINGLE_STAR] Execute() start
+Test  - Execute: Step 1 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 1 - Querying I/280 [ASCC] ...
+Test  - Execute: Step 1 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'I/280'
+Test  - Search: catalog id: 'I/280'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=e_RAJ2000&-out=e_DEJ2000&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=e_pmRA&-out=pmDE&-out=e_pmDE&-out=SpType&-out=Bmag&-out=e_Bmag&-out=Vmag&-out=e_Vmag&-out=v1&-out=v2&-out=v3&-out=d5&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871101%2b24.105242&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (7553 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/280':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RAJ2000' (UCD='ERROR')
+Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DEJ2000' (UCD='ERROR')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'DM' [ID_DM] found for parameter 'DM' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'TYC1' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'TYC2' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'TYC3' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD='POS_EQ_PMRA')
+Test  - Extract: Property 'e_pmRa' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD='ERROR')
+Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD='POS_EQ_PMDEC')
+Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD='ERROR')
+Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SpType' (UCD='SPECT_TYPE_MK')
+Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD='PHOT_JHN_B')
+Test  - Extract: Property 'e_B' [PHOT_JHN_B_ERROR] found for parameter 'e_Bmag' (UCD='ERROR')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'e_V' [PHOT_JHN_V_ERROR] found for parameter 'e_Vmag' (UCD='ERROR')
+Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'v1' (UCD='CODE_VARIAB')
+Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'v2' (UCD='CODE_VARIAB')
+Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'v3' (UCD='VAR_CLASS')
+Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'd5' (UCD='CODE_MULT_FLAG')
+Test  - Execute: Step 1 - number of returned stars=1
+Test  - Execute: Step 1 - outputList[Main]
+Test  - Execute: Step 1 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'I/280'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/280'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'I/280'
+Test  - Merge: done: 0 stars added / 1 found / 0 updated / 0 skipped (0 skipped targetId).
+Test  - Execute: Step 1 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 2 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 2 - Querying I/311/hip2 [HIP2] ...
+Test  - Execute: Step 2 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'I/280'
+Test  - Search: catalog id: 'I/311/hip2'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/311/hip2&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=HIP&-out=e_RArad&-out=e_DErad&-out=pmRA&-out=e_pmRA&-out=pmDE&-out=e_pmDE&-out=Plx&-out=e_Plx&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871101%2b24.105242&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (4644 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/311/hip2':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_MAIN')
+Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RArad' (UCD='ERROR')
+Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DErad' (UCD='ERROR')
+Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD='POS_EQ_PMRA')
+Test  - Extract: Property 'e_pmRa' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD='ERROR')
+Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD='POS_EQ_PMDEC')
+Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD='ERROR')
+Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD='POS_PARLX_TRIG')
+Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD='ERROR')
+Test  - Execute: Step 2 - number of returned stars=1
+Test  - Execute: Step 2 - outputList[Main]
+Test  - Execute: Step 2 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'I/280'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/311/hip2'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'plx' [POS_PARLX_TRIG] updated 1 times
+Test  - Execute: Step 2 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 3 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 3 - Querying I/239/hip_main [HIP1] ...
+Test  - Execute: Step 3 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'I/239/hip_main'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/239/hip_main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=HIP&-out=Vmag&-out=e_VTmag&-out=B-V&-out=e_B-V&-out=V-I&-out=e_V-I&-out=r_V-I&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871101%2b24.105242&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (4596 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/239/hip_main':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_MAIN')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'e_V' [PHOT_JHN_V_ERROR] found for parameter 'e_VTmag' (UCD='ERROR')
+Test  - Extract: Property 'B-V' [PHOT_JHN_B-V] found for parameter 'B-V' (UCD='PHOT_JHN_B-V')
+Test  - Extract: Property 'e_B-V' [PHOT_JHN_B-V_ERROR] found for parameter 'e_B-V' (UCD='ERROR')
+Test  - Extract: Property 'V-Icous' [PHOT_COUS_V-I] found for parameter 'V-I' (UCD='PHOT_COUS_V-I')
+Test  - Extract: Property 'e_V-Icous' [PHOT_COUS_V-I_ERROR] found for parameter 'e_V-I' (UCD='ERROR')
+Test  - Extract: Property 'ref_V-Icous' [PHOT_COUS_V-I_REFER_CODE] found for parameter 'r_V-I' (UCD='REFER_CODE')
+Info  - ProcessList_HIP1: list Size=1
+Test  - Star 'HIP 17702' V=2.850(0.003)  BV=-0.086(0.012)  B=2.764(0.012)
+Test  - Star 'HIP 17702' V=2.850(0.003) VIc=-0.010(0.030) Ic=2.860(0.030 MEDIUM)
+Test  - Execute: Step 3 - number of returned stars=1
+Test  - Execute: Step 3 - outputList[Main]
+Test  - Execute: Step 3 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/239/hip_main'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'B' [PHOT_JHN_B] updated 1 times
+Test  - Merge: Property 'B-V' [PHOT_JHN_B-V] updated 1 times
+Test  - Merge: Property 'V' [PHOT_JHN_V] updated 1 times
+Test  - Merge: Property 'V-Icous' [PHOT_COUS_V-I] updated 1 times
+Test  - Merge: Property 'ref_V-Icous' [PHOT_COUS_V-I_REFER_CODE] updated 1 times
+Test  - Merge: Property 'Icous' [PHOT_COUS_I] updated 1 times
+Test  - Execute: Step 3 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 4 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 4 - Querying II/246/out [2MASS] ...
+Test  - Execute: Step 4 - optimized cone search radius=2.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/246/out'
+Test  - Search: Box search area=5.1/5.2 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=5.1/5.2&-out.add=_1&-file=-c&-out=2MASS&-out=JD&-out=opt&-out=Qflg&-out=Jmag&-out=e_Jmag&-out=Hmag&-out=e_Hmag&-out=Kmag&-out=e_Kmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871148%2b24.105144&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (5580 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter '2MASS' (UCD='ID_MAIN')
+Test  - Extract: Property 'jd' [TIME_DATE] found for parameter 'JD' (UCD='TIME_DATE')
+Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'opt' (UCD='ID_CATALOG')
+Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'Qflg' (UCD='CODE_QUALITY')
+Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD='PHOT_JHN_J')
+Test  - Extract: Property 'e_J' [PHOT_JHN_J_ERROR] found for parameter 'e_Jmag' (UCD='ERROR')
+Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD='PHOT_JHN_H')
+Test  - Extract: Property 'e_H' [PHOT_JHN_H_ERROR] found for parameter 'e_Hmag' (UCD='ERROR')
+Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD='PHOT_JHN_K')
+Test  - Extract: Property 'e_K' [PHOT_JHN_K_ERROR] found for parameter 'e_Kmag' (UCD='ERROR')
+Info  - ProcessList_MASS: list Size=1
+Test  - Execute: Step 4 - number of returned stars=1
+Test  - Execute: Step 4 - outputList[Main]
+Test  - Execute: Step 4 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000694444
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000694444
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/246/out'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: precess candidate stars with reference star
+Test  - Merge: precess using JD in epoch range [1997.430 2001.130]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'opt' [ID_CATALOG] updated 1 times
+Test  - Merge: Property '2MASS' [ID_2MASS] updated 1 times
+Test  - Merge: Property 'J' [PHOT_JHN_J] updated 1 times
+Test  - Merge: Property 'H' [PHOT_JHN_H] updated 1 times
+Test  - Merge: Property 'K' [PHOT_JHN_K] updated 1 times
+Test  - Merge: Property 'Qflag' [CODE_QUALITY] updated 1 times
+Test  - Execute: Step 4 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 5 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 5 - Querying II/328/allwise [WISE] ...
+Test  - Execute: Step 5 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/328/allwise'
+Test  - Search: Box search area=7.1/7.1 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/328/allwise&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=7.1/7.1&-out.add=_1&-file=-c&-out=AllWISE&-out=qph&-out=W1mag&-out=e_W1mag&-out=W2mag&-out=e_W2mag&-out=W3mag&-out=e_W3mag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871215%2b24.105008&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (5019 bytes)
+Test  - No CDATA section in XML document.
+Test  - Execute: Step 5 - number of returned stars=0
+Test  - Execute: Step 5 - outputList[Main]
+Test  - Execute: Step 5 - Performing action[UPDATE_ONLY] with 0 stars
+Test  - Execute: Step 5 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 6 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 6 - Querying J/A+A/413/1037/table1 [DENIS-JK] ...
+Test  - Execute: Step 6 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'J/A+A/413/1037/table1'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=J/A+A/413/1037/table1&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&Var=%3C4&-out=Jmag&-out=e_Jmag&-out=Ksmag&-out=e_Ksmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3745 bytes)
+Test  - No CDATA section in XML document.
+Test  - Execute: Step 6 - number of returned stars=0
+Test  - Execute: Step 6 - outputList[Main]
+Test  - Execute: Step 6 - Performing action[UPDATE_ONLY] with 0 stars
+Test  - Execute: Step 6 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 7 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 7 - Querying II/7A/catalog [PHOTO] ...
+Test  - Execute: Step 7 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/7A/catalog'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=B&-out=V&-out=R&-out=I&-out=J&-out=H&-out=K&-out=L&-out=M&-out=N&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (5289 bytes)
+Test  - Extracting data from CDATA section (2 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/7A/catalog':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'B' (UCD='PHOT_JHN_B')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'V' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'R' [PHOT_JHN_R] found for parameter 'R' (UCD='PHOT_JHN_R')
+Test  - Extract: Property 'I' [PHOT_JHN_I] found for parameter 'I' (UCD='PHOT_JHN_I')
+Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'J' (UCD='PHOT_JHN_J')
+Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'H' (UCD='PHOT_JHN_H')
+Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'K' (UCD='PHOT_JHN_K')
+Test  - Extract: Property 'L' [PHOT_JHN_L] found for parameter 'L' (UCD='PHOT_JHN_L')
+Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'M' (UCD='PHOT_JHN_M')
+Test  - Extract: Property 'N' [PHOT_JHN_N] found for parameter 'N' (UCD='PHOT_IR_N:10.4')
+Test  - Execute: Step 7 - number of returned stars=2
+Test  - Execute: Step 7 - outputList[Main]
+Test  - Execute: Step 7 - Performing action[UPDATE_ONLY] with 2 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][2 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/7A/catalog'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: useAllMatchingStars: true
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 2 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'R' [PHOT_JHN_R] updated 1 times
+Test  - Merge: Property 'I' [PHOT_JHN_I] updated 1 times
+Test  - Merge: Property 'L' [PHOT_JHN_L] updated 1 times
+Test  - Execute: Step 7 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 8 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 8 - Querying II/225/catalog [CIO] ...
+Test  - Execute: Step 8 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/225/catalog'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-out=HD&-out=lambda&-out=F(IR)&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3420 bytes)
+Test  - No CDATA section in XML document.
+Test  - Execute: Step 8 - number of returned stars=0
+Test  - Execute: Step 8 - outputList[Main]
+Test  - Execute: Step 8 - Performing action[UPDATE_ONLY] with 0 stars
+Test  - Execute: Step 8 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 9 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 9 - Querying I/196/main [HIC] ...
+Test  - Execute: Step 9 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'I/196/main'
+Test  - Search: Cone search area=3.5 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=RV&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3117 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/196/main':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'RadVel' [VELOC_HC] found for parameter 'RV' (UCD='VELOC_HC')
+Test  - Execute: Step 9 - number of returned stars=1
+Test  - Execute: Step 9 - outputList[Main]
+Test  - Execute: Step 9 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/196/main'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'RadVel' [VELOC_HC] updated 1 times
+Test  - Execute: Step 9 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 10 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 10 - Querying V/50/catalog [BSC] ...
+Test  - Execute: Step 10 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'V/50/catalog'
+Test  - Search: Cone search area=3.5 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=RotVel&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3138 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'V/50/catalog':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'RotVel' [VELOC_ROTAT] found for parameter 'RotVel' (UCD='VELOC_ROTAT')
+Test  - Execute: Step 10 - number of returned stars=1
+Test  - Execute: Step 10 - outputList[Main]
+Test  - Execute: Step 10 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'V/50/catalog'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'RotVel' [VELOC_ROTAT] updated 1 times
+Test  - Execute: Step 10 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 11 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 11 - Querying V/36B/bsc4s [SBSC] ...
+Test  - Execute: Step 11 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'V/36B/bsc4s'
+Test  - Search: Cone search area=3.5 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=vsini&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3079 bytes)
+Test  - No CDATA section in XML document.
+Test  - Execute: Step 11 - number of returned stars=0
+Test  - Execute: Step 11 - outputList[Main]
+Test  - Execute: Step 11 - Performing action[UPDATE_ONLY] with 0 stars
+Test  - Execute: Step 11 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 12 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 12 - Querying B/sb9/main [SB9] ...
+Test  - Execute: Step 12 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'B/sb9/main'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3098 bytes)
+Test  - No CDATA section in XML document.
+Test  - Execute: Step 12 - number of returned stars=0
+Test  - Execute: Step 12 - outputList[Main]
+Test  - Execute: Step 12 - Performing action[UPDATE_ONLY] with 0 stars
+Test  - Execute: Step 12 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 13 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 13 - Querying B/wds/wds [WDS] ...
+Test  - Execute: Step 13 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'B/wds/wds'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-c.rs=1.6&-out.add=_1&-file=-c&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871153%2b24.105136&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (3989 bytes)
+Test  - Extracting data from CDATA section (8 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'WDS' (UCD='ID_MAIN')
+Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'sep1' (UCD='ORBIT_SEPARATION')
+Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'sep2' (UCD='ORBIT_SEPARATION')
+Test  - Execute: Step 13 - number of returned stars=8
+Test  - Execute: Step 13 - outputList[Main]
+Test  - Execute: Step 13 - Performing action[UPDATE_ONLY] with 8 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][8 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'B/wds/wds'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - GetStarMatchingCriteria(useDistMap): Star index [8 stars]
+Test  - Star    1: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 0	ORBIT_SEPARATION_SEP2 = -1	
+Test  - Star    2: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 117.1	ORBIT_SEPARATION_SEP2 = 117.6	
+Test  - Star    3: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 180.8	ORBIT_SEPARATION_SEP2 = 182	
+Test  - Star    4: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 190.7	ORBIT_SEPARATION_SEP2 = 191.8	
+Test  - Star    5: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 79.1	ORBIT_SEPARATION_SEP2 = 78.4	
+Test  - Star    6: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 144.6	ORBIT_SEPARATION_SEP2 = 144.5	
+Test  - Star    7: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 199.6	ORBIT_SEPARATION_SEP2 = 200	
+Test  - Star    8: sep=0.386009277 arcsec : '03 47 29.0600 +24 06 18.800' (RA = 56.871083, DEC = 24.105222): POS_EQ_RA_MAIN = 03 47 29.0600	POS_EQ_DEC_MAIN = +24 06 18.800	ID_TARGET = 056.871153+24.105136	ID_WDS = 03475+2406	ORBIT_SEPARATION_SEP1 = 219.8	ORBIT_SEPARATION_SEP2 = 222.8	
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 7 skipped (0 skipped targetId).
+Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+Test  - Merge: Property 'WDS' [ID_WDS] updated 1 times
+Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 1 times
+Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] updated 1 times
+Test  - Execute: Step 13 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: Step 14 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 14 - Querying II/297/irc [AKARI] ...
+Test  - Execute: Step 14 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/297/irc'
+Test  - Search: Box search area=7.1/7.1 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=7.1/7.1&-out.add=_1&-file=-c&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&056.871194%2b24.105051&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (4354 bytes)
+Test  - Extracting data from CDATA section (1 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'AKARI' [ID_AKARI] found for parameter 'objID' (UCD='ID_NUMBER')
+Test  - Extract: Property 'S09' [PHOT_FLUX_IR_9] found for parameter 'S09' (UCD='PHOT_FLUX_IR_9')
+Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] found for parameter 'e_S09' (UCD='ERROR')
+Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'S18' (UCD='PHOT_FLUX_IR_25')
+Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'e_S18' (UCD='ERROR')
+Test  - Execute: Step 14 - number of returned stars=1
+Test  - Execute: Step 14 - outputList[Main]
+Test  - Execute: Step 14 - Performing action[UPDATE_ONLY] with 1 stars
+Test  - Merge: list [Main][1 stars] with criteria << input list [Temporary_1][1 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/297/irc'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: precess candidate stars with reference star
+Test  - Merge: precess using JD in epoch range [2006.333 2007.667]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 1 found / 1 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'AKARI' [ID_AKARI] updated 1 times
+Test  - Merge: Property 'S09' [PHOT_FLUX_IR_9] updated 1 times
+Test  - Merge: Property 'S18' [PHOT_FLUX_IR_18] updated 1 times
+Test  - Execute: Step 14 - after action[UPDATE_ONLY]: 1 stars
+Test  - Execute: resultList[GetStar]
+Info  - Scenario[SINGLE_STAR] Execute() done: 1 star(s) found.
+Test  - Scenario[SINGLE_STAR] Property usage by catalogs
+Test  - Property 'CODE_MULT_FLAG' [MultFlag]: I/280	
+Test  - Property 'CODE_QUALITY' [Qflag]: II/246/out	
+Test  - Property 'CODE_VARIAB_V1' [VarFlag1]: I/280	
+Test  - Property 'CODE_VARIAB_V2' [VarFlag2]: I/280	
+Test  - Property 'ID_2MASS' [2MASS]: II/246/out	
+Test  - Property 'ID_AKARI' [AKARI]: II/297/irc	
+Test  - Property 'ID_CATALOG' [opt]: II/246/out	
+Test  - Property 'ID_DM' [DM]: I/280	
+Test  - Property 'ID_HD' [HD]: I/280	I/196/main	V/50/catalog	
+Test  - Property 'ID_HIP' [HIP]: I/280	I/311/hip2	I/239/hip_main	
+Test  - Property 'ID_TARGET' [TARGET_ID]: I/280	I/311/hip2	I/239/hip_main	II/246/out	II/7A/catalog	I/196/main	V/50/catalog	B/wds/wds	II/297/irc	
+Test  - Property 'ID_TYC1' [TYC1]: I/280	
+Test  - Property 'ID_TYC2' [TYC2]: I/280	
+Test  - Property 'ID_TYC3' [TYC3]: I/280	
+Test  - Property 'ID_WDS' [WDS]: B/wds/wds	
+Test  - Property 'ORBIT_SEPARATION_SEP1' [sep1]: B/wds/wds	
+Test  - Property 'ORBIT_SEPARATION_SEP2' [sep2]: B/wds/wds	
+Test  - Property 'PHOT_COUS_V-I' [V-Icous]: I/239/hip_main	
+Test  - Property 'PHOT_COUS_V-I_ERROR' [e_V-Icous]: I/239/hip_main	
+Test  - Property 'PHOT_COUS_V-I_REFER_CODE' [ref_V-Icous]: I/239/hip_main	
+Test  - Property 'PHOT_FLUX_IR_18' [S18]: II/297/irc	
+Test  - Property 'PHOT_FLUX_IR_18_ERROR' [e_S18]: II/297/irc	
+Test  - Property 'PHOT_FLUX_IR_9' [S09]: II/297/irc	
+Test  - Property 'PHOT_FLUX_IR_9_ERROR' [e_S09]: II/297/irc	
+Test  - Property 'PHOT_JHN_B' [B]: I/280	II/7A/catalog	
+Test  - Property 'PHOT_JHN_B-V' [B-V]: I/239/hip_main	
+Test  - Property 'PHOT_JHN_B-V_ERROR' [e_B-V]: I/239/hip_main	
+Test  - Property 'PHOT_JHN_B_ERROR' [e_B]: I/280	
+Test  - Property 'PHOT_JHN_H' [H]: II/246/out	II/7A/catalog	
+Test  - Property 'PHOT_JHN_H_ERROR' [e_H]: II/246/out	
+Test  - Property 'PHOT_JHN_I' [I]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_J' [J]: II/246/out	II/7A/catalog	
+Test  - Property 'PHOT_JHN_J_ERROR' [e_J]: II/246/out	
+Test  - Property 'PHOT_JHN_K' [K]: II/246/out	II/7A/catalog	
+Test  - Property 'PHOT_JHN_K_ERROR' [e_K]: II/246/out	
+Test  - Property 'PHOT_JHN_L' [L]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_M' [M]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_N' [N]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_R' [R]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_V' [V]: I/280	I/239/hip_main	II/7A/catalog	
+Test  - Property 'PHOT_JHN_V_ERROR' [e_V]: I/280	I/239/hip_main	
+Test  - Property 'POS_EQ_DEC_ERROR' [e_DEJ2000]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_DEC_MAIN' [DEJ2000]: I/280	I/311/hip2	I/239/hip_main	II/246/out	II/7A/catalog	I/196/main	V/50/catalog	B/wds/wds	II/297/irc	
+Test  - Property 'POS_EQ_PMDEC' [pmDec]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_PMDEC_ERROR' [e_pmDec]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_PMRA' [pmRa]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_PMRA_ERROR' [e_pmRa]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_RA_ERROR' [e_RAJ2000]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_RA_MAIN' [RAJ2000]: I/280	I/311/hip2	I/239/hip_main	II/246/out	II/7A/catalog	I/196/main	V/50/catalog	B/wds/wds	II/297/irc	
+Test  - Property 'POS_PARLX_TRIG' [plx]: I/311/hip2	
+Test  - Property 'POS_PARLX_TRIG_ERROR' [e_Plx]: I/311/hip2	
+Test  - Property 'SPECT_TYPE_MK' [SpType]: I/280	
+Test  - Property 'TIME_DATE' [jd]: II/246/out	
+Test  - Property 'VAR_CLASS' [VarFlag3]: I/280	
+Test  - Property 'VELOC_HC' [RadVel]: I/196/main	
+Test  - Property 'VELOC_ROTAT' [RotVel]: V/50/catalog	
+Test  - Search: done [1 stars]
+Test  - Complete: start [1 stars]
+Test  - ----- Complete: star 'HIP 17702'
+Test  - Parsed spectral type='B7III' - our spectral type='B7.00III': code='B' quantity='7.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 68.0 - delta = 0
+Test  - Extracted magnitudes:  B=2.764(0.012 HIGH) V=2.850(0.003 HIGH) R=2.840(nan HIGH) I=2.860(0.030 MEDIUM) J=2.735(0.240 HIGH) H=2.735(0.214 HIGH) K=2.636(0.234 HIGH) L=2.900(nan HIGH) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=2.764(0.012 HIGH) V=2.850(0.010 HIGH) R=2.840(nan HIGH) I=2.860(0.030 MEDIUM) J=2.735(0.240 HIGH) H=2.735(0.240 HIGH) K=2.636(0.240 HIGH) L=2.900(nan HIGH) M=0.000(0.000 NO)
+Test  - Diameter (SP 68) V-J=0.8367(0.1299 6.7%) V-H=0.8326(0.1127 5.9%) V-K=0.8529(0.1084 5.5%) 
+Test  - Diameter weighted=0.8416(0.0676 3.5%) valid=true [HIGH] chi2=0.0093 from 3 diameters: 
+Test  - Corrected LD error=0.0697 (8.3 %)(error=0.0676, chi2=0.0093)
+Test  - Computing UDs for LD=0.8416 at idx=68 lc=3
+Test  - Computed UD: U=0.8096 B=0.8068 V=0.8122 R=0.8184 I=0.8234 J=0.8285 H=0.8314 K=0.8331 L=0.8371 M=0.8382 N=0.8392
+Test  - DefineCalFlag: bit 1 (WDS) - sep = -1.000
+Test  - parallax 8.09(0.42) is valid...
+Test  - Dist(plx)=123.6094 (6.4173)
+Test  - Extracted magnitudes:  B=2.764(0.012 HIGH) V=2.850(0.003 HIGH) R=2.840(nan HIGH) I=2.860(0.030 MEDIUM) J=2.735(0.240 HIGH) H=2.735(0.214 HIGH) K=2.636(0.234 HIGH) L=2.900(nan HIGH) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=2.764(0.012 HIGH) V=2.850(0.010 HIGH) R=2.840(nan HIGH) I=2.860(0.030 MEDIUM) J=2.735(0.240 HIGH) H=2.735(0.240 HIGH) K=2.636(0.240 HIGH) L=2.900(nan HIGH) M=0.000(0.000 NO)
+Test  - Av=0.3745 (0.15887) distance=60.962 (4.73881) chi2=0.0911 chi2Mu=57.1858 [5 bands] [GIANT] from line[B7.00]
+Test  - Fitted Av=0.3745 (0.15887) distance=60.962 (4.739) chi2=0.0911 chi2Mu=57.1858 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.3745 (0.1589) distance=60.9616 (4.7388) chi2=0.0911 chi2Dist=57.1858
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=60.9616 (4.7388) chi2Dist=57.1858
+Test  - Cousin magnitudes: I=2.860(0.030) J=2.766(0.228) H=2.729(0.209) K=2.660(0.234)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=2.764(0.012 HIGH) V=2.850(0.003 HIGH) R=2.840(0.100 HIGH) I=2.860(0.030 MEDIUM) J=2.766(0.228 HIGH) H=2.729(0.209 HIGH) K=2.660(0.234 HIGH) L=2.900(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=2.269(0.012 HIGH) V=2.475(0.003 HIGH) R=2.560(0.100 HIGH) I=2.670(0.030 MEDIUM) J=2.662(0.228 HIGH) H=2.665(0.209 HIGH) K=2.617(0.234 HIGH) L=2.877(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=2.269(0.012 HIGH) V=2.475(0.003 HIGH) R=2.560(0.100 HIGH) I=2.670(0.030 MEDIUM) J=2.662(0.228 HIGH) H=2.665(0.209 HIGH) K=2.617(0.234 HIGH) L=2.877(0.100 HIGH) M=2.637(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=2.269(0.012 HIGH) V=2.475(0.003 HIGH) R=2.560(0.100 HIGH) I=2.670(0.030 MEDIUM) J=2.662(0.228 HIGH) H=2.665(0.209 HIGH) K=2.617(0.234 HIGH) L=2.877(0.100 HIGH) M=2.637(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=2.764(0.012 HIGH) V=2.850(0.003 HIGH) R=2.840(0.100 HIGH) I=2.860(0.030 MEDIUM) J=2.766(0.228 HIGH) H=2.729(0.209 HIGH) K=2.660(0.234 HIGH) L=2.900(0.100 HIGH) M=2.651(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=2.868 J=2.735 H=2.735 K=2.636
+Test  - IR Fluxes: akari measured fnu_09=4.707 computed fnu_12=2.262 fnu_18=1.014
+Test  - IR Fluxes: computed magN=3.087
+Test  - Complete: done [1 stars]
+Info  - Star Property statistics:
+Info  - Property [HD]: values (1) origins (1 [I/280] ) confidences (1 [HIGH] )
+Info  - Property [HIP]: values (1) origins (1 [I/280] ) confidences (1 [HIGH] )
+Info  - Property [DM]: values (1) origins (1 [I/280] ) confidences (1 [HIGH] )
+Info  - Property [TYC1]: values (1) origins (1 [I/280] ) confidences (1 [HIGH] )
+Info  - Property [TYC2]: values (1) origins (1 [I/280] ) confidences (1 [HIGH] )
+Info  - Property [TYC3]: values (1) origins (1 [I/280] ) confidences (1 [HIGH] )
+Info  - Property [opt]: values (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [2MASS]: values (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [AKARI]: values (1) origins (1 [II/297/irc] ) confidences (1 [HIGH] )
+Info  - Property [WISE]: values (0)
+Info  - Property [RAJ2000]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [DEJ2000]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [TARGET_ID]: values (0)
+Info  - Property [GroupSize]: values (0)
+Info  - Property [jd]: values (0)
+Info  - Property [pmRa]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [pmDec]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [plx]: values (1) errors (1) origins (1 [I/311/hip2] ) confidences (1 [HIGH] )
+Info  - Property [SpType]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [ObjTypes]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [SIMBAD]: values (1) origins (1 [SIMBAD] ) confidences (1 [HIGH] )
+Info  - Property [VarFlag1]: values (0)
+Info  - Property [VarFlag2]: values (0)
+Info  - Property [VarFlag3]: values (0)
+Info  - Property [MultFlag]: values (0)
+Info  - Property [BinFlag]: values (0)
+Info  - Property [SBC9]: values (0)
+Info  - Property [WDS]: values (1) origins (1 [B/wds/wds] ) confidences (1 [HIGH] )
+Info  - Property [sep1]: values (1) origins (1 [B/wds/wds] ) confidences (1 [HIGH] )
+Info  - Property [sep2]: values (1) origins (1 [B/wds/wds] ) confidences (1 [HIGH] )
+Info  - Property [RadVel]: values (1) origins (1 [I/196/main] ) confidences (1 [HIGH] )
+Info  - Property [RotVel]: values (1) origins (1 [V/50/catalog] ) confidences (1 [HIGH] )
+Info  - Property [B]: values (1) errors (1) origins (1 [I/239/hip_main] ) confidences (1 [HIGH] )
+Info  - Property [B-V]: values (1) errors (1) origins (1 [I/239/hip_main] ) confidences (1 [HIGH] )
+Info  - Property [V]: values (1) errors (1) origins (1 [I/239/hip_main] ) confidences (1 [HIGH] )
+Info  - Property [V-Icous]: values (1) errors (1) origins (1 [I/239/hip_main] ) confidences (1 [HIGH] )
+Info  - Property [ref_V-Icous]: values (1) origins (1 [I/239/hip_main] ) confidences (1 [HIGH] )
+Info  - Property [R]: values (1) origins (1 [II/7A/catalog] ) confidences (1 [HIGH] )
+Info  - Property [I]: values (1) origins (1 [II/7A/catalog] ) confidences (1 [HIGH] )
+Info  - Property [Icous]: values (1) errors (1) origins (1 [I/239/hip_main] ) confidences (1 [MEDIUM] )
+Info  - Property [J]: values (1) errors (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [H]: values (1) errors (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [K]: values (1) errors (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [Qflag]: values (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [L]: values (1) origins (1 [II/7A/catalog] ) confidences (1 [HIGH] )
+Info  - Property [M]: values (1) origins (1 [computed] ) confidences (1 [MEDIUM] )
+Info  - Property [N]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [Qph_wise]: values (0)
+Info  - Property [S09]: values (1) errors (1) origins (1 [II/297/irc] ) confidences (1 [HIGH] )
+Info  - Property [F12]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [S18]: values (1) errors (1) origins (1 [II/297/irc] ) confidences (1 [HIGH] )
+Info  - Property [Jcous]: values (1) errors (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [Hcous]: values (1) errors (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [Kcous]: values (1) errors (1) origins (1 [II/246/out] ) confidences (1 [HIGH] )
+Info  - Property [diam_vj]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [diam_vh]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [diam_vk]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [diam_count]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [LDD]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [e_LDD_rel]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [diam_chi2]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [CalFlag]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [diamFlag]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [diamFlagInfo]: values (0)
+Info  - Property [Teff_SpType]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [logg_SpType]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_U]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_B]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_V]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_R]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_I]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_J]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_H]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_K]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_L]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_M]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [UD_N]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [Av]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [Av_fit_chi2]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [dist_plx]: values (1) errors (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [dist_fit]: values (1) errors (1) origins (1 [computed] ) confidences (1 [LOW] )
+Info  - Property [dist_fit_chi2]: values (1) origins (1 [computed] ) confidences (1 [LOW] )
+Info  - Property [vis2]: values (0)
+Info  - Property [dist]: values (0)
+Info  - Property [color_table_index]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [color_table_delta]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [color_table_index_fix]: values (0)
+Info  - Property [color_table_delta_fix]: values (0)
+Info  - Property [lum_class]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [lum_class_delta]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [SpType_JMMC]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Info  - Property [Name]: values (1) origins (1 [computed] ) confidences (1 [HIGH] )
+Test  - GetVotable: size=90151 bytes / capacity=94492 bytes
+Info  - Saving Votable: GetStarEtaTau.vot
+Warn  - sclsvrServerExit[0] : 

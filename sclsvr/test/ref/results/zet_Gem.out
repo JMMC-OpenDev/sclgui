@@ -1,0 +1,1851 @@
+Info  - 2018-06-18T10:55:51.804684 - alxAngularDiameter.c:111 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxAngDiamPolynomial.cfg ...
+Info  - 2018-06-18T10:55:51.804882 - alxAngularDiameter.c:212 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxAngDiamPolynomialCovariance.cfg ...
+Info  - 2018-06-18T10:55:51.805055 - alxMissingMagnitude.c:413 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxColorTableForSuperGiantStar.cfg ...
+Info  - 2018-06-18T10:55:51.805764 - alxMissingMagnitude.c:413 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxColorTableForGiantStar.cfg ...
+Info  - 2018-06-18T10:55:51.806504 - alxMissingMagnitude.c:413 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxColorTableForDwarfStar.cfg ...
+Info  - 2018-06-18T10:55:51.807244 - alxMissingMagnitude.c:2166 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxAkariBlackBodyCorrectionTable.cfg ...
+Info  - 2018-06-18T10:55:51.807367 - alxMissingMagnitude.c:2433 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxTableTeffLogg.cfg ...
+Info  - 2018-06-18T10:55:51.807510 - alxInterstellarAbsorption.c:200 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxExtinctionRatioTable.cfg ...
+Info  - 2018-06-18T10:55:51.807549 - alxInterstellarAbsorption.c:94 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxIntAbsPolynomial.cfg ...
+Info  - 2018-06-18T10:55:51.807634 - alxResearchArea.c:102 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxStarPopulationInKBand.cfg ...
+Info  - 2018-06-18T10:55:51.807927 - alxLD2UD.c:88 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxTableUDCoefficientCorrection.cfg ...
+Info  - 2018-06-18T10:55:51.809191 - alxLD2UD.c:203 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxNewTableUDCoefficientCorrection.cfg ...
+Info  - 2018-06-18T10:55:51.811926 - alxSedFitting.c:279 - Loading /home/users/mellag/MCSTOP/DEVELOPMENT/config/alxSedModel.cfg ...
+Info  - 2018-06-18T10:55:52.155660 - vobsSTAR.cpp:1273 - vobsSTAR has defined 51 properties.
+Info  - 2018-06-18T10:55:52.156008 - vobsSTAR.cpp:1347 - Saving property index XML description: /home/users/mellag/MCSTOP/data/tmp/PropertyIndex_vobsSTAR.xml
+Info  - 2018-06-18T10:55:52.156156 - sclsvrCALIBRATOR.cpp:2210 - sclsvrCALIBRATOR has defined 92 properties.
+Info  - 2018-06-18T10:55:52.156605 - sclsvrCALIBRATOR.cpp:2275 - Saving property index XML description: /home/users/mellag/MCSTOP/data/tmp/PropertyIndex_sclsvrCALIBRATOR.xml
+Quiet - 2018-06-18T10:55:52.156739 - vobsREMOTE_CATALOG.cpp:200 - Catalogs will get VIZIER data from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?'
+Quiet - 2018-06-18T10:55:52.156751 - vobsREMOTE_CATALOG.cpp:239 - vobsDevFlag: false
+Info  - 2018-06-18T10:55:52.156756 - alxAngularDiameter.c:63 - alxDevFlag: false
+Info  - 2018-06-18T10:55:52.157412 - vobsCATALOG.cpp:439 - Saving catalog meta XML description: /home/users/mellag/MCSTOP/data/tmp/CatalogMeta.xml
+Info  - 2018-06-18T10:55:52.157689 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_SINGLE_STAR.xml
+Info  - 2018-06-18T10:55:52.157836 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_BRIGHT_K.xml
+Info  - 2018-06-18T10:55:52.157960 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_BRIGHT_V.xml
+Info  - 2018-06-18T10:55:52.158083 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_JSDC_BRIGHT.xml
+Info  - 2018-06-18T10:55:52.158175 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_JSDC_FAINT.xml
+Info  - 2018-06-18T10:55:52.158236 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_JSDC_QUERY.xml
+Info  - 2018-06-18T10:55:52.158351 - vobsSCENARIO.cpp:133 - Saving scenario XML description: /home/users/mellag/MCSTOP/data/tmp/Scenario_FAINT_K.xml
+Test  - Search: start
+Info  - Scenario[BRIGHT_K] Execute() start
+Test  - Execute: Step 1 - inputList[NONE] action[CLEAR_MERGE]
+Test  - Execute: Step 1 - Querying I/280 [ASCC] ...
+Test  - Search area [1733.943 - 600.000] (arcmin)
+Test  - Search: Box search area=1734/600 arcmin
+Test  - Search: Magnitude V range=0.00..7.00
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/280&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c=106.027216%2b20.570297&-c.geom=b&-c.bm=1734/600&Vmag=0.00..7.00&-out=e_RAJ2000&-out=e_DEJ2000&-out=HIP&-out=HD&-out=DM&-out=TYC1&-out=TYC2&-out=TYC3&-out=pmRA&-out=e_pmRA&-out=pmDE&-out=e_pmDE&-out=SpType&-out=Bmag&-out=e_Bmag&-out=Vmag&-out=e_Vmag&-out=v1&-out=v2&-out=v3&-out=d5
+Test  - Parsing XML document (32913 bytes)
+Test  - Extracting data from CDATA section (154 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/280':
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RAJ2000' (UCD='ERROR')
+Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DEJ2000' (UCD='ERROR')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'DM' [ID_DM] found for parameter 'DM' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC1' [ID_TYC1] found for parameter 'TYC1' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC2' [ID_TYC2] found for parameter 'TYC2' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'TYC3' [ID_TYC3] found for parameter 'TYC3' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD='POS_EQ_PMRA')
+Test  - Extract: Property 'e_pmRa' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD='ERROR')
+Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD='POS_EQ_PMDEC')
+Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD='ERROR')
+Test  - Extract: Property 'SpType' [SPECT_TYPE_MK] found for parameter 'SpType' (UCD='SPECT_TYPE_MK')
+Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'Bmag' (UCD='PHOT_JHN_B')
+Test  - Extract: Property 'e_B' [PHOT_JHN_B_ERROR] found for parameter 'e_Bmag' (UCD='ERROR')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'e_V' [PHOT_JHN_V_ERROR] found for parameter 'e_Vmag' (UCD='ERROR')
+Test  - Extract: Property 'VarFlag1' [CODE_VARIAB_V1] found for parameter 'v1' (UCD='CODE_VARIAB')
+Test  - Extract: Property 'VarFlag2' [CODE_VARIAB_V2] found for parameter 'v2' (UCD='CODE_VARIAB')
+Test  - Extract: Property 'VarFlag3' [VAR_CLASS] found for parameter 'v3' (UCD='VAR_CLASS')
+Test  - Extract: Property 'MultFlag' [CODE_MULT_FLAG] found for parameter 'd5' (UCD='CODE_MULT_FLAG')
+Test  - Execute: Step 1 - number of returned stars=154
+Test  - FilterDuplicates: list [0 stars] with criteria - input list [154 stars]
+Test  - FilterDuplicates: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - FilterDuplicates: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - FilterDuplicates: filter search radius=5.0 arcsec
+Warn  - Compare Properties[4]: COMMON(4) {ID_HD = '49059' ID_HIP = '32539' ID_DM = '1801349' CODE_MULT_FLAG = 'C' } - LEFT(11) {ID_TYC1 = '1334' ID_TYC2 = '998' ID_TYC3 = '1' POS_EQ_RA_MAIN = '06 47 23.4597461' POS_EQ_DEC_MAIN = '+18 11 36.444233' POS_EQ_PMRA = '4.23' POS_EQ_PMDEC = '-41.06' SPECT_TYPE_MK = 'A2V' VAR_CLASS = 'D' PHOT_JHN_B = '6.425' PHOT_JHN_V = '6.353' } - RIGHT(7) {POS_EQ_RA_MAIN = '06 47 23.4420679' POS_EQ_DEC_MAIN = '+18 11 36.189212' POS_EQ_PMRA = '5.78' POS_EQ_PMDEC = '-41.36' SPECT_TYPE_MK = 'A2 V' PHOT_JHN_B = '6.563' PHOT_JHN_V = '6.472' }
+Warn  - FilterDuplicates: separation = 0.358465628 arcsec
+Warn  - Compare Properties[-9]: COMMON(3) {ID_HD = '55383' ID_HIP = '34909' CODE_MULT_FLAG = 'C' } - LEFT(5) {POS_EQ_RA_MAIN = '07 13 22.2769733' POS_EQ_DEC_MAIN = '+16 09 32.339468' POS_EQ_PMRA = '14.64' POS_EQ_PMDEC = '-41.77' PHOT_JHN_V = '5.8' } - RIGHT(14) {ID_DM = '1601417' ID_TYC1 = '1346' ID_TYC2 = '1397' ID_TYC3 = '1' POS_EQ_RA_MAIN = '07 13 22.2749238' POS_EQ_DEC_MAIN = '+16 09 32.276050' POS_EQ_PMRA = '13.02' POS_EQ_PMDEC = '-42.04' SPECT_TYPE_MK = 'K3V' CODE_VARIAB_V1 = 'G' CODE_VARIAB_V2 = 'V' VAR_CLASS = 'U' PHOT_JHN_B = '6.675' PHOT_JHN_V = '5.072' }
+Warn  - FilterDuplicates: separation = 0.069955295 arcsec
+Warn  - Compare Properties[3]: COMMON(4) {ID_HIP = '29655' ID_TYC1 = '1877' ID_TYC2 = '1716' CODE_MULT_FLAG = 'C' } - LEFT(12) {ID_HD = '42995' ID_DM = '2201241' ID_TYC3 = '1' POS_EQ_RA_MAIN = '06 14 52.6574341' POS_EQ_DEC_MAIN = '+22 30 24.446186' POS_EQ_PMRA = '-62.16' POS_EQ_PMDEC = '-13.64' SPECT_TYPE_MK = 'M3III' CODE_VARIAB_V1 = 'G' VAR_CLASS = 'P' PHOT_JHN_B = '4.9' PHOT_JHN_V = '3.315' } - RIGHT(9) {ID_HD = '253820' ID_TYC3 = '2' POS_EQ_RA_MAIN = '06 14 52.5672743' POS_EQ_DEC_MAIN = '+22 30 24.514255' POS_EQ_PMRA = '-12.72' POS_EQ_PMDEC = '25.77' SPECT_TYPE_MK = 'A2' PHOT_JHN_B = '7.072' PHOT_JHN_V = '6.034' }
+Warn  - FilterDuplicates: separation = 1.251243362 arcsec
+Warn  - Compare Properties[-8]: COMMON(2) {ID_HIP = '29616' CODE_MULT_FLAG = 'C' } - LEFT(5) {POS_EQ_RA_MAIN = '06 14 28.6042951' POS_EQ_DEC_MAIN = '+17 54 22.500119' POS_EQ_PMRA = '-2.89' POS_EQ_PMDEC = '-10.63' PHOT_JHN_V = '6.69' } - RIGHT(13) {ID_HD = '42954' ID_DM = '1701182' ID_TYC1 = '1318' ID_TYC2 = '1195' ID_TYC3 = '1' POS_EQ_RA_MAIN = '06 14 28.5828504' POS_EQ_DEC_MAIN = '+17 54 22.862387' POS_EQ_PMRA = '-3.5' POS_EQ_PMDEC = '-11.42' SPECT_TYPE_MK = 'AM' VAR_CLASS = 'D' PHOT_JHN_B = '6.144' PHOT_JHN_V = '5.881' }
+Warn  - FilterDuplicates: separation = 0.474266343 arcsec
+Warn  - Compare Properties[5]: COMMON(4) {ID_HD = '41116' ID_HIP = '28734' ID_DM = '2301170' CODE_MULT_FLAG = 'C' } - LEFT(12) {ID_TYC1 = '1864' ID_TYC2 = '2011' ID_TYC3 = '1' POS_EQ_RA_MAIN = '06 04 07.2137930' POS_EQ_DEC_MAIN = '+23 15 48.049427' POS_EQ_PMRA = '-4.32' POS_EQ_PMDEC = '-117.26' SPECT_TYPE_MK = 'G7III' CODE_VARIAB_V2 = 'W' VAR_CLASS = 'D' PHOT_JHN_B = '5.002' PHOT_JHN_V = '4.168' } - RIGHT(7) {POS_EQ_RA_MAIN = '06 04 07.2051107' POS_EQ_DEC_MAIN = '+23 15 48.118842' POS_EQ_PMRA = '-7.76' POS_EQ_PMDEC = '-99.72' SPECT_TYPE_MK = 'G8III-IV' PHOT_JHN_B = '4.942' PHOT_JHN_V = '4.131' }
+Warn  - FilterDuplicates: separation = 0.138324566 arcsec
+Test  - FilterDuplicates: done: 149 unique stars / 5 duplicates found : 5 different stars.
+Test  - FilterDuplicates: 10 duplicated stars
+Test  - FilterDuplicates: remove star 'HIP 32539' (101.847749 +18.193457)
+Test  - FilterDuplicates: remove star 'HIP 32539' (101.847675 +18.193386)
+Test  - FilterDuplicates: remove star 'HIP 34909' (108.342821 +16.158983)
+Test  - FilterDuplicates: remove star 'HIP 34909' (108.342812 +16.158966)
+Test  - FilterDuplicates: remove star 'HIP 29655' (093.719406 +22.506791)
+Test  - FilterDuplicates: remove star 'HIP 29655' (093.719030 +22.506810)
+Test  - FilterDuplicates: remove star 'HIP 29616' (093.619185 +17.906250)
+Test  - FilterDuplicates: remove star 'HIP 29616' (093.619095 +17.906351)
+Test  - FilterDuplicates: remove star 'HIP 28734' (091.030057 +23.263347)
+Test  - FilterDuplicates: remove star 'HIP 28734' (091.030021 +23.263366)
+Test  - Execute: Step 1 - outputList[Main]
+Test  - Execute: Step 1 - Performing action[CLEAR_MERGE] with 144 stars
+Test  - Execute: Step 1 - CLEAR outputList[Main]
+Test  - Merge: list [Main][0 stars] with criteria << input list [Temporary_1][144 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'NO CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/280'
+Test  - Merge: crossmatch [CLOSEST_ALL_STARS]
+Test  - Merge:  work list [Main] catalog id: 'I/280'
+Test  - Merge: done: 144 stars added / 0 found / 0 updated / 0 skipped (0 skipped targetId).
+Test  - Execute: Step 1 - after action[CLEAR_MERGE]: 144 stars
+Test  - Execute: Step 2 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 2 - Querying I/311/hip2 [HIP2] ...
+Test  - Execute: Step 2 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'I/280'
+Test  - Search: catalog id: 'I/311/hip2'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/311/hip2&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=HIP&-out=e_RArad&-out=e_DErad&-out=pmRA&-out=e_pmRA&-out=pmDE&-out=e_pmDE&-out=Plx&-out=e_Plx&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027231%2b20.570299&+107.528284%2b21.248135&+106.326543%2b22.637481&+104.548832%2b22.475648&+103.588776%2b21.161464&+103.736476%2b21.571372&+105.606340%2b17.755455&+102.887707%2b21.761232&+104.068908%2b17.737239&+105.603269%2b24.215447&+106.820505%2b24.168491&+105.638727%2b16.674465&+101.947964%2b21.691573&+110.030789%2b21.982339&+107.945174%2b16.976424&+108.109950%2b24.128703&+103.000049%2b23.601743&+110.487081%2b20.443716&+101.804629%2b22.194705&+103.678538%2b24.245793&+106.548298%2b24.860178&+102.285786%2b23.201937&+104.249144%2b24.642859&+107.090990%2b16.135076&+105.065935%2b16.079005&+107.091843%2b15.930926&+108.610617%2b24.711164&+108.674769%2b24.885202&+101.234829%2b22.837382&+101.543240%2b23.371115&+110.769287%2b18.273514&+110.867307%2b22.945437&+103.827878%2b25.375636&+109.523362%2b16.540475&+103.665767%2b15.837976&+109.185603%2b16.147067&+111.734704%2b20.257582&+111.710204%2b21.535711&+102.457689%2b16.202913&+101.705536%2b16.772491&+111.934977%2b21.445549&+111.475538%2b18.147502&+111.918929%2b22.141471&+110.039899%2b16.140360&+100.601344%2b17.645514&+102.430127%2b25.484455&+101.347942%2b24.672478&+099.772049%2b22.030940&+112.378050%2b19.633181&+110.868975%2b25.050600&+100.983041%2b25.131155&+113.143872%2b21.407846&+099.468607%2b23.604453&+100.341435%2b16.397660&+099.881127%2b24.599943&+111.115204%2b15.517199&+113.211000%2b22.887644&+099.578761%2b24.450515&+099.363713%2b24.590845&+112.951545%2b17.086229&+099.427926%2b16.399415&+099.008829%2b16.797096&+114.272751%2b20.157077&+114.417326%2b22.340161&+098.077179%2b17.784286&+098.074191%2b17.779546&+114.377085%2b18.918017&+097.591142%2b22.544940&+098.723668%2b16.205803&+097.240794%2b20.212167&+113.402079%2b15.826692&+096.986207%2b20.496289&+096.944098%2b20.789619&+113.352659%2b15.639148&+097.895972%2b16.828291&+097.791664%2b16.938747&+114.273889%2b16.904255&+114.559845%2b24.360393&+114.869130%2b17.674516&+114.800031%2b24.222528&+115.243845%2b23.018558&+097.905994%2b15.903534&+096.428053%2b21.645055&+096.543012%2b18.757303&+115.842480%2b22.399432&+096.387260%2b23.327209&+096.385784%2b23.442168&+097.117121%2b16.238504&+116.288906%2b20.316049&+095.739963%2b22.513850&+116.111952%2b24.398129&+116.531224%2b18.510169&+096.182276%2b25.048718&+096.657225%2b15.523702&+096.219815%2b16.057231&+095.357972%2b17.763606&+117.140191%2b23.140984&+117.094159%2b18.336835&+094.843847%2b23.274512&+094.830399%2b23.469409&+117.223772%2b18.190350&+094.726779%2b23.603299&+094.757698%2b17.325271&+117.986679%2b19.325178&+094.244606%2b23.740916&+094.917429%2b16.013284&+094.079394%2b23.970048&+093.922334%2b18.297503&+093.712233%2b19.156889&+118.555434%2b21.105299&+094.099134%2b17.181631&+093.388533%2b18.680385&+118.916267%2b19.884067&+092.964224%2b21.868241&+093.005579%2b19.790572&+093.079579%2b22.908519&+093.841690%2b16.430976&+092.846584%2b20.905421&+093.854696%2b16.143206&+119.026950%2b23.623850&+093.680365%2b16.037043&+092.624738%2b22.997880&+092.884605%2b24.420379&+092.757376%2b18.130471&+092.385173%2b22.190274&+092.433272%2b23.113470&+093.013651%2b16.130447&+119.927574%2b23.182960&+120.200405%2b19.816235&+119.247787%2b15.790382&+119.631148%2b16.518690&+120.253306%2b23.583161&+091.702750%2b23.638606&+120.197140%2b17.308710&+120.960430%2b22.070815&+090.979932%2b20.138459&+091.732639%2b16.366721&+120.376191%2b16.455323&+090.864001%2b19.690610&+090.779130%2b20.586297&+121.188828%2b18.842068&+091.668963%2b15.542357&+121.576665%2b22.635512&+090.423458%2b22.401044&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (150889 bytes)
+Test  - Extracting data from CDATA section (143 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/311/hip2':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_MAIN')
+Test  - Extract: Property 'e_RAJ2000' [POS_EQ_RA_ERROR] found for parameter 'e_RArad' (UCD='ERROR')
+Test  - Extract: Property 'e_DEJ2000' [POS_EQ_DEC_ERROR] found for parameter 'e_DErad' (UCD='ERROR')
+Test  - Extract: Property 'pmRa' [POS_EQ_PMRA] found for parameter 'pmRA' (UCD='POS_EQ_PMRA')
+Test  - Extract: Property 'e_pmRa' [POS_EQ_PMRA_ERROR] found for parameter 'e_pmRA' (UCD='ERROR')
+Test  - Extract: Property 'pmDec' [POS_EQ_PMDEC] found for parameter 'pmDE' (UCD='POS_EQ_PMDEC')
+Test  - Extract: Property 'e_pmDec' [POS_EQ_PMDEC_ERROR] found for parameter 'e_pmDE' (UCD='ERROR')
+Test  - Extract: Property 'plx' [POS_PARLX_TRIG] found for parameter 'Plx' (UCD='POS_PARLX_TRIG')
+Test  - Extract: Property 'e_Plx' [POS_PARLX_TRIG_ERROR] found for parameter 'e_Plx' (UCD='ERROR')
+Test  - Execute: Step 2 - number of returned stars=143
+Test  - Execute: Step 2 - outputList[Main]
+Test  - Execute: Step 2 - Performing action[UPDATE_ONLY] with 143 stars
+Test  - Merge: list [Main][144 stars] with criteria << input list [Temporary_1][143 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'I/280'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/311/hip2'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 143 found / 143 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'plx' [POS_PARLX_TRIG] updated 143 times
+Test  - Execute: Step 2 - after action[UPDATE_ONLY]: 144 stars
+Test  - Execute: Step 3 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 3 - Querying I/239/hip_main [HIP1] ...
+Test  - Execute: Step 3 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'I/239/hip_main'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/239/hip_main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=HIP&-out=Vmag&-out=e_VTmag&-out=B-V&-out=e_B-V&-out=V-I&-out=e_V-I&-out=r_V-I&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027231%2b20.570299&+107.528284%2b21.248135&+106.326543%2b22.637481&+104.548832%2b22.475648&+103.588776%2b21.161464&+103.736476%2b21.571372&+105.606340%2b17.755455&+102.887707%2b21.761232&+104.068908%2b17.737239&+105.603269%2b24.215447&+106.820505%2b24.168491&+105.638727%2b16.674465&+101.947964%2b21.691573&+110.030789%2b21.982339&+107.945174%2b16.976424&+108.109950%2b24.128703&+103.000049%2b23.601743&+110.487081%2b20.443716&+101.804629%2b22.194705&+103.678538%2b24.245793&+106.548298%2b24.860178&+102.285786%2b23.201937&+104.249144%2b24.642859&+107.090990%2b16.135076&+105.065935%2b16.079005&+107.091843%2b15.930926&+108.610617%2b24.711164&+108.674769%2b24.885202&+101.234829%2b22.837382&+101.543240%2b23.371115&+110.769287%2b18.273514&+110.867307%2b22.945437&+103.827878%2b25.375636&+109.523362%2b16.540475&+103.665767%2b15.837976&+109.185603%2b16.147067&+111.734704%2b20.257582&+111.710204%2b21.535711&+102.457689%2b16.202913&+101.705536%2b16.772491&+111.934977%2b21.445549&+111.475538%2b18.147502&+111.918929%2b22.141471&+110.039899%2b16.140360&+100.601344%2b17.645514&+102.430127%2b25.484455&+101.347942%2b24.672478&+099.772049%2b22.030940&+112.378050%2b19.633181&+110.868975%2b25.050600&+100.983041%2b25.131155&+113.143872%2b21.407846&+099.468607%2b23.604453&+100.341435%2b16.397660&+099.881127%2b24.599943&+111.115204%2b15.517199&+113.211000%2b22.887644&+099.578761%2b24.450515&+099.363713%2b24.590845&+112.951545%2b17.086229&+099.427926%2b16.399415&+099.008829%2b16.797096&+114.272751%2b20.157077&+114.417326%2b22.340161&+098.077179%2b17.784286&+098.074191%2b17.779546&+114.377085%2b18.918017&+097.591142%2b22.544940&+098.723668%2b16.205803&+097.240794%2b20.212167&+113.402079%2b15.826692&+096.986207%2b20.496289&+096.944098%2b20.789619&+113.352659%2b15.639148&+097.895972%2b16.828291&+097.791664%2b16.938747&+114.273889%2b16.904255&+114.559845%2b24.360393&+114.869130%2b17.674516&+114.800031%2b24.222528&+115.243845%2b23.018558&+097.905994%2b15.903534&+096.428053%2b21.645055&+096.543012%2b18.757303&+115.842480%2b22.399432&+096.387260%2b23.327209&+096.385784%2b23.442168&+097.117121%2b16.238504&+116.288906%2b20.316049&+095.739963%2b22.513850&+116.111952%2b24.398129&+116.531224%2b18.510169&+096.182276%2b25.048718&+096.657225%2b15.523702&+096.219815%2b16.057231&+095.357972%2b17.763606&+117.140191%2b23.140984&+117.094159%2b18.336835&+094.843847%2b23.274512&+094.830399%2b23.469409&+117.223772%2b18.190350&+094.726779%2b23.603299&+094.757698%2b17.325271&+117.986679%2b19.325178&+094.244606%2b23.740916&+094.917429%2b16.013284&+094.079394%2b23.970048&+093.922334%2b18.297503&+093.712233%2b19.156889&+118.555434%2b21.105299&+094.099134%2b17.181631&+093.388533%2b18.680385&+118.916267%2b19.884067&+092.964224%2b21.868241&+093.005579%2b19.790572&+093.079579%2b22.908519&+093.841690%2b16.430976&+092.846584%2b20.905421&+093.854696%2b16.143206&+119.026950%2b23.623850&+093.680365%2b16.037043&+092.624738%2b22.997880&+092.884605%2b24.420379&+092.757376%2b18.130471&+092.385173%2b22.190274&+092.433272%2b23.113470&+093.013651%2b16.130447&+119.927574%2b23.182960&+120.200405%2b19.816235&+119.247787%2b15.790382&+119.631148%2b16.518690&+120.253306%2b23.583161&+091.702750%2b23.638606&+120.197140%2b17.308710&+120.960430%2b22.070815&+090.979932%2b20.138459&+091.732639%2b16.366721&+120.376191%2b16.455323&+090.864001%2b19.690610&+090.779130%2b20.586297&+121.188828%2b18.842068&+091.668963%2b15.542357&+121.576665%2b22.635512&+090.423458%2b22.401044&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (139757 bytes)
+Test  - Extracting data from CDATA section (143 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/239/hip_main':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HIP' [ID_HIP] found for parameter 'HIP' (UCD='ID_MAIN')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'Vmag' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'e_V' [PHOT_JHN_V_ERROR] found for parameter 'e_VTmag' (UCD='ERROR')
+Test  - Extract: Property 'B-V' [PHOT_JHN_B-V] found for parameter 'B-V' (UCD='PHOT_JHN_B-V')
+Test  - Extract: Property 'e_B-V' [PHOT_JHN_B-V_ERROR] found for parameter 'e_B-V' (UCD='ERROR')
+Test  - Extract: Property 'V-Icous' [PHOT_COUS_V-I] found for parameter 'V-I' (UCD='PHOT_COUS_V-I')
+Test  - Extract: Property 'e_V-Icous' [PHOT_COUS_V-I_ERROR] found for parameter 'e_V-I' (UCD='ERROR')
+Test  - Extract: Property 'ref_V-Icous' [PHOT_COUS_V-I_REFER_CODE] found for parameter 'r_V-I' (UCD='REFER_CODE')
+Info  - ProcessList_HIP1: list Size=143
+Test  - Star 'HIP 34088' V=4.010(0.026)  BV=0.899(0.038)  B=4.909(0.046)
+Test  - Star 'HIP 34088' V=4.010(0.026) VIc=0.900(0.030) Ic=3.110(0.040 HIGH)
+Test  - Star 'HIP 34608' V=6.430(0.004)  BV=0.880(0.003)  B=7.310(0.005)
+Test  - Star 'HIP 34608' V=6.430(0.004) VIc=0.820(0.040) Ic=5.610(0.040 MEDIUM)
+Test  - Star 'HIP 34182' V=6.000(0.004)  BV=-0.027(0.005)  B=5.973(0.006)
+Test  - Star 'HIP 34182' V=6.000(0.004) VIc=-0.010(0.010) Ic=6.010(0.011 HIGH)
+Test  - Star 'HIP 33537' V=6.940(0.007)  BV=0.620(0.020)  B=7.560(0.021)
+Test  - Star 'HIP 33537' V=6.940(0.007) VIc=0.690(0.020) Ic=6.250(0.021 MEDIUM)
+Test  - Star 'HIP 33179' V=6.510(0.007) VIc=1.010(0.020) Ic=5.500(0.021 HIGH)
+Test  - Star 'HIP 33239' V=6.980(0.007)  BV=-0.023(0.008)  B=6.957(0.011)
+Test  - Star 'HIP 33239' V=6.980(0.007) VIc=0.000(0.010) Ic=6.980(0.012 HIGH)
+Test  - Star 'HIP 33929' V=5.960(0.008)  BV=1.518(0.012)  B=7.478(0.014)
+Test  - Star 'HIP 33929' V=5.960(0.008) VIc=2.520(0.040) Ic=3.440(0.041 HIGH)
+Test  - Star 'HIP 32921' V=5.280(0.003)  BV=-0.020(0.000)  B=5.260(0.003)
+Test  - Star 'HIP 32921' V=5.280(0.003) VIc=0.000(0.000) Ic=5.280(0.003 MEDIUM)
+Test  - Star 'HIP 33358' V=6.750(0.005)  BV=1.064(0.009)  B=7.814(0.010)
+Test  - Star 'HIP 33358' V=6.750(0.005) VIc=1.030(0.010) Ic=5.720(0.011 HIGH)
+Test  - Star 'HIP 33927' V=5.200(0.003)  BV=0.953(0.004)  B=6.153(0.005)
+Test  - Star 'HIP 33927' V=5.200(0.003) VIc=0.830(0.040) Ic=4.370(0.040 MEDIUM)
+Test  - Star 'HIP 34351' V=6.730(0.006)  BV=1.643(0.013)  B=8.373(0.014)
+Test  - Star 'HIP 34351' V=6.730(0.006) VIc=2.090(0.040) Ic=4.640(0.040 HIGH)
+Test  - Star 'HIP 33937' V=5.860(0.005)  BV=1.659(0.009)  B=7.519(0.010)
+Test  - Star 'HIP 33937' V=5.860(0.005) VIc=1.970(0.030) Ic=3.890(0.030 HIGH)
+Test  - Star 'HIP 32571' V=6.810(0.007)  BV=1.630(0.014)  B=8.440(0.016)
+Test  - Star 'HIP 32571' V=6.810(0.007) VIc=1.850(0.050) Ic=4.960(0.050 HIGH)
+Test  - Star 'HIP 35550' V=3.500(0.002)  BV=0.374(0.015)  B=3.874(0.015)
+Test  - Star 'HIP 35550' V=3.500(0.002) VIc=0.440(0.030) Ic=3.060(0.030 MEDIUM)
+Test  - Star 'HIP 34763' V=6.500(0.006)  BV=1.423(0.012)  B=7.923(0.013)
+Test  - Star 'HIP 34763' V=6.500(0.006) VIc=1.410(0.020) Ic=5.090(0.021 HIGH)
+Test  - Star 'HIP 34819' V=5.850(0.003)  BV=0.397(0.004)  B=6.247(0.005)
+Test  - Star 'HIP 34819' V=5.850(0.003) VIc=0.460(0.000) Ic=5.390(0.003 HIGH)
+Test  - Star 'HIP 32968' V=5.680(0.005)  BV=1.467(0.007)  B=7.147(0.009)
+Test  - Star 'HIP 32968' V=5.680(0.005) VIc=1.480(0.010) Ic=4.200(0.011 HIGH)
+Test  - Star 'HIP 35699' V=5.090(0.005)  BV=1.528(0.004)  B=6.618(0.006)
+Test  - Star 'HIP 35699' V=5.090(0.005) VIc=1.600(0.050) Ic=3.490(0.050 MEDIUM)
+Test  - Star 'HIP 32523' V=7.000(0.007)  BV=1.150(0.009)  B=8.150(0.011)
+Test  - Star 'HIP 32523' V=7.000(0.007) VIc=1.110(0.010) Ic=5.890(0.012 HIGH)
+Test  - Star 'HIP 33212' V=6.840(0.005)  BV=0.582(0.008)  B=7.422(0.009)
+Test  - Star 'HIP 33212' V=6.840(0.005) VIc=0.650(0.010) Ic=6.190(0.011 HIGH)
+Test  - Star 'HIP 34266' V=6.890(0.006)  BV=1.470(0.011)  B=8.360(0.013)
+Test  - Star 'HIP 34266' V=6.890(0.006) VIc=1.480(0.020) Ic=5.410(0.021 HIGH)
+Test  - Star 'HIP 32688' V=6.800(0.005)  BV=0.013(0.007)  B=6.813(0.009)
+Test  - Star 'HIP 32688' V=6.800(0.005) VIc=0.030(0.010) Ic=6.770(0.011 HIGH)
+Test  - Star 'HIP 33419' V=6.830(0.008)  BV=0.947(0.009)  B=7.777(0.012)
+Test  - Star 'HIP 33419' V=6.830(0.008) VIc=0.940(0.010) Ic=5.890(0.013 HIGH)
+Test  - Star 'HIP 34437' V=6.990(0.006)  BV=0.964(0.010)  B=7.954(0.012)
+Test  - Star 'HIP 34437' V=6.990(0.006) VIc=0.950(0.010) Ic=6.040(0.012 HIGH)
+Test  - Star 'HIP 33715' V=5.730(0.006)  BV=1.641(0.055)  B=7.371(0.055)
+Test  - Star 'HIP 33715' V=5.730(0.006) VIc=1.620(0.030) Ic=4.110(0.031 MEDIUM)
+Test  - Star 'HIP 34440' V=5.470(0.003)  BV=1.020(0.016)  B=6.490(0.016)
+Test  - Star 'HIP 34440' V=5.470(0.003) VIc=1.000(0.040) Ic=4.470(0.040 MEDIUM)
+Test  - Star 'HIP 34995' V=6.880(0.006)  BV=-0.002(0.007)  B=6.878(0.009)
+Test  - Star 'HIP 34995' V=6.880(0.006) VIc=0.020(0.010) Ic=6.860(0.012 HIGH)
+Test  - Star 'HIP 35025' V=5.840(0.005)  BV=1.554(0.005)  B=7.394(0.007)
+Test  - Star 'HIP 35025' V=5.840(0.005) VIc=1.670(0.040) Ic=4.170(0.040 MEDIUM)
+Test  - Star 'HIP 32333' V=6.760(0.006)  BV=0.197(0.007)  B=6.957(0.009)
+Test  - Star 'HIP 32333' V=6.760(0.006) VIc=0.220(0.010) Ic=6.540(0.012 HIGH)
+Test  - Star 'HIP 32431' V=6.510(0.006)  BV=0.839(0.008)  B=7.349(0.010)
+Test  - Star 'HIP 32431' V=6.510(0.006) VIc=0.860(0.010) Ic=5.650(0.012 MEDIUM)
+Test  - Star 'HIP 35803' V=6.780(0.007)  BV=0.455(0.015)  B=7.235(0.017)
+Test  - Star 'HIP 35803' V=6.780(0.007) VIc=0.520(0.020) Ic=6.260(0.021 MEDIUM)
+Test  - Star 'HIP 35842' V=6.170(0.006)  BV=0.006(0.007)  B=6.176(0.009)
+Test  - Star 'HIP 35842' V=6.170(0.006) VIc=0.030(0.010) Ic=6.140(0.012 HIGH)
+Test  - Star 'HIP 33277' V=5.740(0.004)  BV=0.573(0.010)  B=6.313(0.011)
+Test  - Star 'HIP 33277' V=5.740(0.004) VIc=0.700(0.070) Ic=5.040(0.070 MEDIUM)
+Test  - Star 'HIP 35350' V=3.580(0.002)  BV=0.106(0.006)  B=3.686(0.006)
+Test  - Star 'HIP 35350' V=3.580(0.002) VIc=0.120(0.020) Ic=3.460(0.020 MEDIUM)
+Test  - Star 'HIP 33205' V=6.570(0.005)  BV=0.921(0.007)  B=7.491(0.009)
+Test  - Star 'HIP 33205' V=6.570(0.005) VIc=0.920(0.010) Ic=5.650(0.011 HIGH)
+Test  - Star 'HIP 35219' V=6.750(0.005)  BV=0.417(0.007)  B=7.167(0.009)
+Test  - Star 'HIP 35219' V=6.750(0.005) VIc=0.480(0.010) Ic=6.270(0.011 HIGH)
+Test  - Star 'HIP 36156' V=5.940(0.005)  BV=0.336(0.006)  B=6.276(0.008)
+Test  - Star 'HIP 36156' V=5.940(0.005) VIc=0.390(0.010) Ic=5.550(0.011 HIGH)
+Test  - Star 'HIP 36152' V=6.540(0.007)  BV=0.464(0.015)  B=7.004(0.017)
+Test  - Star 'HIP 36152' V=6.540(0.007) VIc=0.530(0.020) Ic=6.010(0.021 MEDIUM)
+Test  - Star 'HIP 32753' V=5.870(nan)  BV=-0.136(0.008)  B=5.734(nan)
+Test  - Star 'HIP 32753' V=5.870(nan) VIc=-0.130(0.010) Ic=6.000(nan MEDIUM)
+Test  - Star 'HIP 32488' V=6.830(0.005)  BV=0.408(0.004)  B=7.238(0.006)
+Test  - Star 'HIP 32488' V=6.830(0.005) VIc=0.470(0.000) Ic=6.360(0.005 MEDIUM)
+Test  - Star 'HIP 36238' V=5.200(0.004)  BV=0.455(0.015)  B=5.655(0.016)
+Test  - Star 'HIP 36238' V=5.200(0.004) VIc=0.510(0.010) Ic=4.690(0.011 HIGH)
+Test  - Star 'HIP 36060' V=6.930(0.006)  BV=0.895(0.007)  B=7.825(0.009)
+Test  - Star 'HIP 36060' V=6.930(0.006) VIc=0.900(0.010) Ic=6.030(0.012 HIGH)
+Test  - Star 'HIP 36232' V=6.780(0.009)  BV=1.680(0.015)  B=8.460(0.017)
+Test  - Star 'HIP 36232' V=6.780(0.009) VIc=1.870(0.030) Ic=4.910(0.031 MEDIUM)
+Test  - Star 'HIP 35551' V=6.880(0.006)  BV=1.032(0.008)  B=7.912(0.010)
+Test  - Star 'HIP 35551' V=6.880(0.006) VIc=1.000(0.010) Ic=5.880(0.012 HIGH)
+Test  - Star 'HIP 32104' V=5.200(0.007)  BV=0.063(0.008)  B=5.263(0.011)
+Test  - Star 'HIP 32104' V=5.200(0.007) VIc=0.060(0.000) Ic=5.140(0.007 HIGH)
+Test  - Star 'HIP 32743' V=6.800(0.007)  BV=1.561(0.012)  B=8.361(0.014)
+Test  - Star 'HIP 32743' V=6.800(0.007) VIc=1.580(0.010) Ic=5.220(0.012 HIGH)
+Test  - Star 'HIP 32369' V=6.950(0.008)  BV=1.650(0.015)  B=8.600(0.017)
+Test  - Star 'HIP 32369' V=6.950(0.008) VIc=1.670(0.010) Ic=5.280(0.013 HIGH)
+Test  - Star 'HIP 31813' V=6.090(0.005)  BV=1.027(0.015)  B=7.117(0.016)
+Test  - Star 'HIP 31813' V=6.090(0.005) VIc=0.920(0.040) Ic=5.170(0.040 MEDIUM)
+Test  - Star 'HIP 36411' V=6.730(0.005)  BV=1.280(0.015)  B=8.010(0.016)
+Test  - Star 'HIP 36411' V=6.730(0.005) VIc=1.240(0.020) Ic=5.490(0.021 MEDIUM)
+Test  - Star 'HIP 35846' V=5.040(0.003)  BV=0.902(0.004)  B=5.942(0.005)
+Test  - Star 'HIP 35846' V=5.040(0.003) VIc=0.820(0.040) Ic=4.220(0.040 MEDIUM)
+Test  - Star 'HIP 32246' V=3.060(0.002)  BV=1.377(0.015)  B=4.437(0.015)
+Test  - Star 'HIP 32246' V=3.060(0.002) VIc=1.220(0.010) Ic=1.840(0.010 MEDIUM)
+Test  - Star 'HIP 36663' V=6.810(0.005)  BV=0.979(0.008)  B=7.789(0.009)
+Test  - Star 'HIP 36663' V=6.810(0.005) VIc=0.960(0.010) Ic=5.850(0.011 HIGH)
+Test  - Star 'HIP 31696' V=6.650(0.010)  BV=0.875(0.013)  B=7.525(0.016)
+Test  - Star 'HIP 31696' V=6.650(0.010) VIc=0.880(0.010) Ic=5.770(0.014 HIGH)
+Test  - Star 'HIP 32020' V=6.280(0.007)  BV=-0.016(0.005)  B=6.264(0.009)
+Test  - Star 'HIP 32020' V=6.280(0.007) VIc=0.010(0.010) Ic=6.270(0.012 MEDIUM)
+Test  - Star 'HIP 31850' V=6.430(0.007)  BV=0.523(0.009)  B=6.953(0.011)
+Test  - Star 'HIP 31850' V=6.430(0.007) VIc=0.600(0.010) Ic=5.830(0.012 MEDIUM)
+Test  - Star 'HIP 35933' V=6.470(0.006)  BV=-0.190(0.007)  B=6.280(0.009)
+Test  - Star 'HIP 35933' V=6.470(0.006) VIc=-0.200(0.010) Ic=6.670(0.012 HIGH)
+Test  - Star 'HIP 36690' V=6.540(0.004)  BV=0.998(0.020)  B=7.538(0.020)
+Test  - Star 'HIP 36690' V=6.540(0.004) VIc=0.940(0.040) Ic=5.600(0.040 MEDIUM)
+Test  - Star 'HIP 31730' V=6.750(0.008)  BV=0.276(0.011)  B=7.026(0.014)
+Test  - Star 'HIP 31730' V=6.750(0.008) VIc=0.310(0.010) Ic=6.440(0.013 HIGH)
+Test  - Star 'HIP 31650' V=6.440(0.008)  BV=0.101(0.005)  B=6.541(0.009)
+Test  - Star 'HIP 31650' V=6.440(0.008) VIc=0.110(0.010) Ic=6.330(0.013 MEDIUM)
+Test  - Star 'HIP 36616' V=5.450(0.003)  BV=1.126(0.006)  B=6.576(0.007)
+Test  - Star 'HIP 36616' V=5.450(0.003) VIc=1.020(0.040) Ic=4.430(0.040 MEDIUM)
+Test  - Star 'HIP 31681' V=1.930(0.009)  BV=0.001(0.005)  B=1.931(0.010)
+Test  - Star 'HIP 31681' V=1.930(0.009) VIc=0.040(0.000) Ic=1.890(0.009 MEDIUM)
+Test  - Star 'HIP 31525' V=6.730(0.008)  BV=0.444(0.011)  B=7.174(0.014)
+Test  - Star 'HIP 31525' V=6.730(0.008) VIc=0.510(0.030) Ic=6.220(0.031 MEDIUM)
+Test  - Star 'HIP 37072' V=6.730(0.007)  BV=1.269(0.011)  B=7.999(0.013)
+Test  - Star 'HIP 37072' V=6.730(0.007) VIc=1.230(0.010) Ic=5.500(0.012 HIGH)
+Test  - Star 'HIP 37121' V=6.960(0.007)  BV=1.052(0.010)  B=8.012(0.012)
+Test  - Star 'HIP 37121' V=6.960(0.007) VIc=1.020(0.010) Ic=5.940(0.012 HIGH)
+Test  - Star 'HIP 31158' V=6.260(0.006)  BV=0.541(0.012)  B=6.801(0.013)
+Test  - Star 'HIP 31158' V=6.260(0.006) VIc=0.610(0.010) Ic=5.650(0.012 MEDIUM)
+Test  - Star 'HIP 31156' V=6.910(0.009)  BV=0.401(0.004)  B=7.311(0.010)
+Test  - Star 'HIP 31156' V=6.910(0.009) VIc=0.470(0.000) Ic=6.440(0.009 MEDIUM)
+Test  - Star 'HIP 37107' V=6.850(0.006)  BV=0.339(0.009)  B=7.189(0.011)
+Test  - Star 'HIP 37107' V=6.850(0.006) VIc=0.400(0.010) Ic=6.450(0.012 HIGH)
+Test  - Star 'HIP 31000' V=6.980(0.007)  BV=0.030(0.010)  B=7.010(0.012)
+Test  - Star 'HIP 31000' V=6.980(0.007) VIc=0.050(0.010) Ic=6.930(0.012 HIGH)
+Test  - Star 'HIP 31396' V=6.610(0.007)  BV=0.895(0.010)  B=7.505(0.012)
+Test  - Star 'HIP 31396' V=6.610(0.007) VIc=0.900(0.010) Ic=5.710(0.012 HIGH)
+Test  - Star 'HIP 30883' V=4.130(0.003)  BV=-0.115(0.004)  B=4.015(0.005)
+Test  - Star 'HIP 30883' V=4.130(0.003) VIc=-0.100(0.010) Ic=4.230(0.010 HIGH)
+Test  - Star 'HIP 36760' V=5.270(0.003)  BV=0.055(0.003)  B=5.325(0.004)
+Test  - Star 'HIP 36760' V=5.270(0.003) VIc=0.070(0.000) Ic=5.200(0.003 HIGH)
+Test  - Star 'HIP 30769' V=6.220(0.007)  BV=0.041(0.008)  B=6.261(0.011)
+Test  - Star 'HIP 30769' V=6.220(0.007) VIc=0.060(0.010) Ic=6.160(0.012 HIGH)
+Test  - Star 'HIP 30757' V=6.540(0.008)  BV=1.246(0.015)  B=7.786(0.017)
+Test  - Star 'HIP 30757' V=6.540(0.008) VIc=1.200(0.010) Ic=5.340(0.013 MEDIUM)
+Test  - Star 'HIP 36739' V=6.640(0.006)  BV=1.071(0.008)  B=7.711(0.010)
+Test  - Star 'HIP 36739' V=6.640(0.006) VIc=1.040(0.010) Ic=5.600(0.012 HIGH)
+Test  - Star 'HIP 31100' V=7.040(0.021)  BV=1.488(0.038)  B=8.528(0.043)
+Test  - Star 'HIP 31100' V=7.040(0.021) VIc=1.510(0.060) Ic=5.530(0.064 HIGH)
+Test  - Star 'HIP 37074' V=6.940(0.005)  BV=-0.214(0.006)  B=6.726(0.008)
+Test  - Star 'HIP 37074' V=6.940(0.005) VIc=-0.230(0.010) Ic=7.170(0.011 HIGH)
+Test  - Star 'HIP 37165' V=6.370(0.005)  BV=0.337(0.007)  B=6.707(0.009)
+Test  - Star 'HIP 37165' V=6.370(0.005) VIc=0.390(0.010) Ic=5.980(0.011 HIGH)
+Test  - Star 'HIP 37300' V=5.040(0.004)  BV=1.616(0.007)  B=6.656(0.008)
+Test  - Star 'HIP 37300' V=5.040(0.004) VIc=1.720(0.030) Ic=3.320(0.030 HIGH)
+Test  - Star 'HIP 37269' V=6.180(0.004)  BV=0.028(0.005)  B=6.208(0.006)
+Test  - Star 'HIP 37269' V=6.180(0.004) VIc=0.040(0.000) Ic=6.140(0.004 HIGH)
+Test  - Star 'HIP 37428' V=5.930(0.005)  BV=1.561(0.016)  B=7.491(0.017)
+Test  - Star 'HIP 37428' V=5.930(0.005) VIc=1.540(0.060) Ic=4.390(0.060 MEDIUM)
+Test  - Star 'HIP 31105' V=6.380(0.007)  BV=0.275(0.010)  B=6.655(0.012)
+Test  - Star 'HIP 31105' V=6.380(0.007) VIc=0.310(0.010) Ic=6.070(0.012 HIGH)
+Test  - Star 'HIP 30588' V=6.530(0.008)  BV=0.930(0.015)  B=7.460(0.017)
+Test  - Star 'HIP 30588' V=6.530(0.008) VIc=0.920(0.010) Ic=5.610(0.013 MEDIUM)
+Test  - Star 'HIP 30630' V=6.780(0.011)  BV=0.938(0.009)  B=7.718(0.014)
+Test  - Star 'HIP 30630' V=6.780(0.011) VIc=0.980(0.010) Ic=5.800(0.015 MEDIUM)
+Test  - Star 'HIP 37636' V=6.250(0.005)  BV=0.930(0.015)  B=7.180(0.016)
+Test  - Star 'HIP 37636' V=6.250(0.005) VIc=0.840(0.040) Ic=5.410(0.040 MEDIUM)
+Test  - Star 'HIP 30570' V=6.050(0.004)  BV=0.020(0.005)  B=6.070(0.006)
+Test  - Star 'HIP 30570' V=6.050(0.004) VIc=0.040(0.010) Ic=6.010(0.011 HIGH)
+Test  - Star 'HIP 30569' V=6.630(0.007)  BV=1.111(0.009)  B=7.741(0.011)
+Test  - Star 'HIP 30569' V=6.630(0.007) VIc=1.070(0.010) Ic=5.560(0.012 HIGH)
+Test  - Star 'HIP 30815' V=6.240(0.005)  BV=0.894(0.012)  B=7.134(0.013)
+Test  - Star 'HIP 30815' V=6.240(0.005) VIc=0.850(0.040) Ic=5.390(0.040 MEDIUM)
+Test  - Star 'HIP 37811' V=6.530(0.006)  BV=0.007(0.006)  B=6.537(0.008)
+Test  - Star 'HIP 37811' V=6.530(0.006) VIc=0.030(0.010) Ic=6.500(0.012 HIGH)
+Test  - Star 'HIP 30343' V=2.870(0.006)  BV=1.621(0.007)  B=4.491(0.009)
+Test  - Star 'HIP 30343' V=2.870(0.006) VIc=2.300(0.050) Ic=0.570(0.050 HIGH)
+Test  - Star 'HIP 37740' V=3.570(0.003)  BV=0.932(0.002)  B=4.502(0.004)
+Test  - Star 'HIP 37740' V=3.570(0.003) VIc=0.900(0.000) Ic=2.670(0.003 MEDIUM)
+Test  - Star 'HIP 37908' V=4.890(0.003)  BV=1.425(0.034)  B=6.315(0.034)
+Test  - Star 'HIP 37908' V=4.890(0.003) VIc=1.540(0.030) Ic=3.350(0.030 MEDIUM)
+Test  - Star 'HIP 30501' V=6.350(0.005)  BV=1.210(0.015)  B=7.560(0.016)
+Test  - Star 'HIP 30501' V=6.350(0.005) VIc=1.170(0.010) Ic=5.180(0.011 MEDIUM)
+Test  - Star 'HIP 30663' V=6.880(0.009)  BV=-0.038(0.008)  B=6.842(0.012)
+Test  - Star 'HIP 30663' V=6.880(0.009) VIc=-0.020(0.010) Ic=6.900(0.013 MEDIUM)
+Test  - Star 'HIP 30517' V=6.350(0.007)  BV=1.063(0.012)  B=7.413(0.014)
+Test  - Star 'HIP 30517' V=6.350(0.007) VIc=0.940(0.040) Ic=5.410(0.041 MEDIUM)
+Test  - Star 'HIP 30218' V=6.320(0.005)  BV=1.100(0.020)  B=7.420(0.021)
+Test  - Star 'HIP 30218' V=6.320(0.005) VIc=0.890(0.040) Ic=5.430(0.040 MEDIUM)
+Test  - Star 'HIP 38106' V=6.180(0.004)  BV=0.571(0.005)  B=6.751(0.006)
+Test  - Star 'HIP 38106' V=6.180(0.004) VIc=0.640(0.010) Ic=5.540(0.011 HIGH)
+Test  - Star 'HIP 38092' V=6.700(0.010)  BV=0.927(0.015)  B=7.627(0.018)
+Test  - Star 'HIP 38092' V=6.700(0.010) VIc=0.920(0.010) Ic=5.780(0.014 HIGH)
+Test  - Star 'HIP 30049' V=6.950(0.008)  BV=0.442(0.010)  B=7.392(0.013)
+Test  - Star 'HIP 30049' V=6.950(0.008) VIc=0.510(0.010) Ic=6.440(0.013 HIGH)
+Test  - Star 'HIP 30046' V=6.910(0.006)  BV=0.252(0.010)  B=7.162(0.012)
+Test  - Star 'HIP 30046' V=6.910(0.006) VIc=0.280(0.010) Ic=6.630(0.012 HIGH)
+Test  - Star 'HIP 38135' V=6.910(0.007)  BV=1.160(0.010)  B=8.070(0.012)
+Test  - Star 'HIP 38135' V=6.910(0.007) VIc=1.120(0.010) Ic=5.790(0.012 HIGH)
+Test  - Star 'HIP 30003' V=6.580(0.007)  BV=0.906(0.009)  B=7.486(0.011)
+Test  - Star 'HIP 30003' V=6.580(0.007) VIc=0.910(0.010) Ic=5.670(0.012 HIGH)
+Test  - Star 'HIP 30019' V=6.270(0.004)  BV=-0.094(0.004)  B=6.176(0.006)
+Test  - Star 'HIP 30019' V=6.270(0.004) VIc=-0.080(0.010) Ic=6.350(0.011 HIGH)
+Test  - Star 'HIP 38394' V=6.030(0.004)  BV=1.125(0.006)  B=7.155(0.007)
+Test  - Star 'HIP 38394' V=6.030(0.004) VIc=1.100(0.040) Ic=4.930(0.040 MEDIUM)
+Test  - Star 'HIP 29840' V=6.240(0.005)  BV=0.446(0.026)  B=6.686(0.026)
+Test  - Star 'HIP 29840' V=6.240(0.005) VIc=0.680(0.030) Ic=5.560(0.030 MEDIUM)
+Test  - Star 'HIP 30067' V=6.610(0.005)  BV=0.562(0.006)  B=7.172(0.008)
+Test  - Star 'HIP 30067' V=6.610(0.005) VIc=0.640(0.010) Ic=5.970(0.011 HIGH)
+Test  - Star 'HIP 29789' V=6.090(0.005)  BV=0.897(0.004)  B=6.987(0.006)
+Test  - Star 'HIP 29789' V=6.090(0.005) VIc=0.850(0.070) Ic=5.240(0.070 MEDIUM)
+Test  - Star 'HIP 29731' V=6.610(0.006)  BV=1.586(0.011)  B=8.196(0.013)
+Test  - Star 'HIP 29731' V=6.610(0.006) VIc=1.610(0.010) Ic=5.000(0.012 HIGH)
+Test  - Star 'HIP 29650' V=5.200(0.004)  BV=0.430(0.000)  B=5.630(0.004)
+Test  - Star 'HIP 29650' V=5.200(0.004) VIc=0.500(0.000) Ic=4.700(0.004 MEDIUM)
+Test  - Star 'HIP 38601' V=6.840(0.006)  BV=1.663(0.013)  B=8.503(0.014)
+Test  - Star 'HIP 38601' V=6.840(0.006) VIc=1.930(0.040) Ic=4.910(0.040 HIGH)
+Test  - Star 'HIP 29798' V=6.390(0.006)  BV=1.565(0.011)  B=7.955(0.013)
+Test  - Star 'HIP 29798' V=6.390(0.006) VIc=1.570(0.030) Ic=4.820(0.031 MEDIUM)
+Test  - Star 'HIP 29545' V=6.580(0.005)  BV=-0.085(0.003)  B=6.495(0.006)
+Test  - Star 'HIP 29545' V=6.580(0.005) VIc=-0.070(0.000) Ic=6.650(0.005 MEDIUM)
+Test  - Star 'HIP 38722' V=5.380(0.003)  BV=-0.035(0.003)  B=5.345(0.004)
+Test  - Star 'HIP 38722' V=5.380(0.003) VIc=-0.010(0.000) Ic=5.390(0.003 HIGH)
+Test  - Star 'HIP 29416' V=6.930(0.007)  BV=2.142(0.019)  B=9.072(0.020)
+Test  - Star 'HIP 29416' V=6.930(0.007) VIc=3.170(0.050) Ic=3.760(0.050 HIGH)
+Test  - Star 'HIP 29433' V=5.760(0.004)  BV=-0.071(0.008)  B=5.689(0.009)
+Test  - Star 'HIP 29433' V=5.760(0.004) VIc=-0.050(0.010) Ic=5.810(0.011 MEDIUM)
+Test  - Star 'HIP 29450' V=6.510(0.006)  BV=2.197(0.016)  B=8.707(0.017)
+Test  - Star 'HIP 29450' V=6.510(0.006) VIc=3.270(0.050) Ic=3.240(0.050 HIGH)
+Test  - Star 'HIP 29694' V=6.980(0.011)  BV=1.554(0.020)  B=8.534(0.023)
+Test  - Star 'HIP 29694' V=6.980(0.011) VIc=1.520(0.030) Ic=5.460(0.032 MEDIUM)
+Test  - Star 'HIP 29367' V=6.840(0.007)  BV=0.155(0.009)  B=6.995(0.011)
+Test  - Star 'HIP 29367' V=6.840(0.007) VIc=0.170(0.010) Ic=6.670(0.012 HIGH)
+Test  - Star 'HIP 29704' V=5.340(0.003)  BV=-0.101(0.004)  B=5.239(0.005)
+Test  - Star 'HIP 29704' V=5.340(0.003) VIc=-0.080(0.010) Ic=5.420(0.010 HIGH)
+Test  - Star 'HIP 38761' V=6.810(0.006)  BV=-0.079(0.007)  B=6.731(0.009)
+Test  - Star 'HIP 38761' V=6.810(0.006) VIc=-0.060(0.010) Ic=6.870(0.012 HIGH)
+Test  - Star 'HIP 29637' V=6.660(0.005)  BV=0.942(0.008)  B=7.602(0.009)
+Test  - Star 'HIP 29637' V=6.660(0.005) VIc=0.930(0.010) Ic=5.730(0.011 HIGH)
+Test  - Star 'HIP 29288' V=6.880(0.007)  BV=-0.076(0.008)  B=6.804(0.011)
+Test  - Star 'HIP 29288' V=6.880(0.007) VIc=-0.060(0.010) Ic=6.940(0.012 HIGH)
+Test  - Star 'HIP 29379' V=5.830(0.005)  BV=1.110(0.015)  B=6.940(0.016)
+Test  - Star 'HIP 29379' V=5.830(0.005) VIc=0.990(0.040) Ic=4.840(0.040 MEDIUM)
+Test  - Star 'HIP 29326' V=6.370(0.005)  BV=1.350(0.015)  B=7.720(0.016)
+Test  - Star 'HIP 29326' V=6.370(0.005) VIc=1.180(0.040) Ic=5.190(0.040 MEDIUM)
+Test  - Star 'HIP 29196' V=5.930(0.005)  BV=1.626(0.015)  B=7.556(0.016)
+Test  - Star 'HIP 29196' V=5.930(0.005) VIc=1.680(0.040) Ic=4.250(0.040 MEDIUM)
+Test  - Star 'HIP 29225' V=5.750(0.005)  BV=0.192(0.005)  B=5.942(0.007)
+Test  - Star 'HIP 29225' V=5.750(0.005) VIc=0.210(0.010) Ic=5.540(0.011 MEDIUM)
+Test  - Star 'HIP 29434' V=4.950(0.003)  BV=-0.149(0.007)  B=4.801(0.008)
+Test  - Star 'HIP 29434' V=4.950(0.003) VIc=-0.120(0.030) Ic=5.070(0.030 MEDIUM)
+Test  - Star 'HIP 39077' V=6.920(0.007)  BV=1.026(0.010)  B=7.946(0.012)
+Test  - Star 'HIP 39077' V=6.920(0.007) VIc=1.000(0.010) Ic=5.920(0.012 HIGH)
+Test  - Star 'HIP 39180' V=6.300(0.004)  BV=1.109(0.015)  B=7.409(0.016)
+Test  - Star 'HIP 39180' V=6.300(0.004) VIc=0.960(0.040) Ic=5.340(0.040 MEDIUM)
+Test  - Star 'HIP 38848' V=5.800(0.005)  BV=1.285(0.007)  B=7.085(0.009)
+Test  - Star 'HIP 38848' V=5.800(0.005) VIc=1.140(0.040) Ic=4.660(0.040 MEDIUM)
+Test  - Star 'HIP 38975' V=6.050(0.006)  BV=1.468(0.015)  B=7.518(0.016)
+Test  - Star 'HIP 38975' V=6.050(0.006) VIc=1.480(0.020) Ic=4.570(0.021 MEDIUM)
+Test  - Star 'HIP 39194' V=6.340(0.005) VIc=1.000(0.010) Ic=5.340(0.011 HIGH)
+Test  - Star 'HIP 28969' V=6.670(0.007)  BV=1.370(0.020)  B=8.040(0.021)
+Test  - Star 'HIP 28969' V=6.670(0.007) VIc=1.340(0.020) Ic=5.330(0.021 MEDIUM)
+Test  - Star 'HIP 39177' V=5.600(0.004)  BV=1.317(0.015)  B=6.917(0.016)
+Test  - Star 'HIP 39177' V=5.600(0.004) VIc=1.110(0.040) Ic=4.490(0.040 MEDIUM)
+Test  - Star 'HIP 39447' V=6.840(0.004)  BV=1.190(0.015)  B=8.030(0.016)
+Test  - Star 'HIP 39447' V=6.840(0.004) VIc=1.150(0.010) Ic=5.690(0.011 MEDIUM)
+Test  - Star 'HIP 28716' V=4.640(0.004)  BV=0.236(0.005)  B=4.876(0.006)
+Test  - Star 'HIP 28716' V=4.640(0.004) VIc=0.410(0.030) Ic=4.230(0.030 MEDIUM)
+Test  - Star 'HIP 28978' V=6.570(0.006)  BV=1.129(0.010)  B=7.699(0.012)
+Test  - Star 'HIP 28978' V=6.570(0.006) VIc=1.090(0.010) Ic=5.480(0.012 HIGH)
+Test  - Star 'HIP 39236' V=5.990(0.004)  BV=-0.024(0.003)  B=5.966(0.005)
+Test  - Star 'HIP 39236' V=5.990(0.004) VIc=0.000(0.000) Ic=5.990(0.004 MEDIUM)
+Test  - Star 'HIP 28691' V=5.140(0.003)  BV=-0.097(0.004)  B=5.043(0.005)
+Test  - Star 'HIP 28691' V=5.140(0.003) VIc=-0.080(0.010) Ic=5.220(0.010 HIGH)
+Test  - Star 'HIP 28659' V=6.880(0.007)  BV=0.969(0.010)  B=7.849(0.012)
+Test  - Star 'HIP 28659' V=6.880(0.007) VIc=0.950(0.010) Ic=5.930(0.012 HIGH)
+Test  - Star 'HIP 39535' V=6.210(0.006)  BV=-0.042(0.004)  B=6.168(0.007)
+Test  - Star 'HIP 39535' V=6.210(0.006) VIc=0.000(0.000) Ic=6.210(0.006 HIGH)
+Test  - Star 'HIP 28954' V=6.760(0.006)  BV=0.814(0.004)  B=7.574(0.007)
+Test  - Star 'HIP 28954' V=6.760(0.006) VIc=0.850(0.000) Ic=5.910(0.006 MEDIUM)
+Test  - Star 'HIP 39659' V=5.960(0.009)  BV=1.652(0.015)  B=7.612(0.017)
+Test  - Star 'HIP 39659' V=5.960(0.009) VIc=2.230(0.050) Ic=3.730(0.051 MEDIUM)
+Test  - Star 'HIP 28561' V=6.360(0.004)  BV=-0.071(0.011)  B=6.289(0.012)
+Test  - Star 'HIP 28561' V=6.360(0.004) VIc=-0.050(0.010) Ic=6.410(0.011 MEDIUM)
+Test  - Execute: Step 3 - number of returned stars=143
+Test  - Execute: Step 3 - outputList[Main]
+Test  - Execute: Step 3 - Performing action[UPDATE_ONLY] with 143 stars
+Test  - Merge: list [Main][144 stars] with criteria << input list [Temporary_1][143 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/239/hip_main'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 143 found / 143 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'B' [PHOT_JHN_B] updated 141 times
+Test  - Merge: Property 'B-V' [PHOT_JHN_B-V] updated 143 times
+Test  - Merge: Property 'V' [PHOT_JHN_V] updated 143 times
+Test  - Merge: Property 'V-Icous' [PHOT_COUS_V-I] updated 143 times
+Test  - Merge: Property 'ref_V-Icous' [PHOT_COUS_V-I_REFER_CODE] updated 143 times
+Test  - Merge: Property 'Icous' [PHOT_COUS_I] updated 143 times
+Test  - Execute: Step 3 - after action[UPDATE_ONLY]: 144 stars
+Test  - Execute: Step 4 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 4 - Querying II/246/out [2MASS] ...
+Test  - Execute: Step 4 - optimized cone search radius=2.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/246/out'
+Test  - Search: Box search area=6.3/6.8 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/246/out&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=6.3/6.8&-out.add=_1&-file=-c&-out=2MASS&-out=JD&-out=opt&-out=Qflg&-out=Jmag&-out=e_Jmag&-out=Hmag&-out=e_Hmag&-out=Kmag&-out=e_Kmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027213%2b20.570297&+107.527869%2b21.247079&+106.326541%2b22.637461&+104.548949%2b22.475863&+103.588838%2b21.161343&+103.736460%2b21.571372&+105.606387%2b17.755516&+102.887694%2b21.761153&+104.068863%2b17.737145&+105.603252%2b24.215445&+106.820523%2b24.168442&+105.638697%2b16.674448&+101.947981%2b21.691542&+110.030728%2b21.982311&+107.945201%2b16.976348&+108.109906%2b24.128605&+102.999954%2b23.601723&+110.486935%2b20.443664&+101.804576%2b22.194494&+103.678449%2b24.245578&+106.548322%2b24.860150&+102.285771%2b23.201929&+104.249083%2b24.642803&+107.091047%2b16.135006&+105.065933%2b16.078996&+107.091833%2b15.930696&+108.610625%2b24.711140&+108.674901%2b24.885001&+101.234788%2b22.837380&+101.543210%2b23.371217&+110.769198%2b18.273418&+110.867241%2b22.945357&+103.827785%2b25.375691&+109.523254%2b16.540392&+103.665738%2b15.837948&+109.185584%2b16.147126&+111.734710%2b20.257557&+111.709451%2b21.535652&+102.457653%2b16.202889&+101.705563%2b16.772456&+111.934839%2b21.445277&+111.475539%2b18.147476&+111.918909%2b22.141462&+110.039882%2b16.140333&+100.601364%2b17.645324&+102.430190%2b25.484377&+101.347943%2b24.672471&+099.772082%2b22.030886&+112.378087%2b19.633174&+110.868812%2b25.050537&+100.983028%2b25.131128&+113.143851%2b21.407761&+099.468608%2b23.604453&+100.341422%2b16.397650&+099.881173%2b24.600146&+111.115200%2b15.517196&+113.210951%2b22.887610&+099.578762%2b24.450429&+099.363700%2b24.590854&+112.951646%2b17.086060&+099.428023%2b16.399319&+099.008866%2b16.797027&+114.272805%2b20.156818&+114.417318%2b22.340068&+098.077262%2b17.784343&+098.074278%2b17.779606&+114.377048%2b18.917823&+097.591114%2b22.544917&+098.723666%2b16.205787&+097.240780%2b20.212136&+113.402020%2b15.826664&+096.986141%2b20.496317&+096.944017%2b20.789525&+113.352621%2b15.639133&+097.895968%2b16.828279&+097.791637%2b16.938643&+114.273880%2b16.904248&+114.559873%2b24.360437&+114.869134%2b17.674515&+114.800025%2b24.222525&+115.243826%2b23.018531&+097.905979%2b15.903502&+096.428036%2b21.645027&+096.542734%2b18.756930&+115.842428%2b22.399467&+096.387248%2b23.327172&+096.385793%2b23.442148&+097.116907%2b16.238399&+116.288894%2b20.316047&+095.740094%2b22.513604&+116.111880%2b24.398008&+116.531047%2b18.510048&+096.182280%2b25.048717&+096.657215%2b15.523696&+096.219872%2b16.057138&+095.358010%2b17.763506&+117.140167%2b23.140981&+117.094209%2b18.336789&+094.843848%2b23.274507&+094.830402%2b23.469409&+117.223747%2b18.190265&+094.726779%2b23.603286&+094.757677%2b17.325260&+117.986563%2b19.325092&+094.244607%2b23.740911&+094.917389%2b16.013254&+094.079361%2b23.970031&+093.922293%2b18.297486&+093.712004%2b19.156484&+118.555433%2b21.105261&+094.099135%2b17.181611&+093.388552%2b18.680346&+118.916231%2b19.883976&+092.964224%2b21.868239&+093.005581%2b19.790547&+093.079577%2b22.908514&+093.841743%2b16.430938&+092.846587%2b20.905414&+093.854701%2b16.143180&+119.026886%2b23.623810&+093.680381%2b16.037107&+092.624726%2b22.997877&+092.884607%2b24.420263&+092.757380%2b18.130463&+092.385156%2b22.190264&+092.433274%2b23.113465&+093.013663%2b16.130407&+119.927527%2b23.182912&+120.200425%2b19.816218&+119.247724%2b15.790290&+119.631130%2b16.518682&+120.253260%2b23.583101&+091.702750%2b23.638603&+120.197115%2b17.308703&+120.960330%2b22.070808&+090.979938%2b20.138450&+091.732645%2b16.366714&+120.376200%2b16.455309&+090.864023%2b19.690565&+090.779097%2b20.586280&+121.188769%2b18.842022&+091.668682%2b15.542126&+121.576647%2b22.635492&+090.423439%2b22.401009&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (162376 bytes)
+Test  - Extracting data from CDATA section (144 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/246/out':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property '2MASS' [ID_2MASS] found for parameter '2MASS' (UCD='ID_MAIN')
+Test  - Extract: Property 'jd' [TIME_DATE] found for parameter 'JD' (UCD='TIME_DATE')
+Test  - Extract: Property 'opt' [ID_CATALOG] found for parameter 'opt' (UCD='ID_CATALOG')
+Test  - Extract: Property 'Qflag' [CODE_QUALITY] found for parameter 'Qflg' (UCD='CODE_QUALITY')
+Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'Jmag' (UCD='PHOT_JHN_J')
+Test  - Extract: Property 'e_J' [PHOT_JHN_J_ERROR] found for parameter 'e_Jmag' (UCD='ERROR')
+Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'Hmag' (UCD='PHOT_JHN_H')
+Test  - Extract: Property 'e_H' [PHOT_JHN_H_ERROR] found for parameter 'e_Hmag' (UCD='ERROR')
+Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'Kmag' (UCD='PHOT_JHN_K')
+Test  - Extract: Property 'e_K' [PHOT_JHN_K_ERROR] found for parameter 'e_Kmag' (UCD='ERROR')
+Info  - ProcessList_MASS: list Size=144
+Test  - Star '2MASS 07200736+2158561' clear property PHOT_JHN_H (bad quality='U')
+Test  - Star '2MASS 06445636+2250145' clear property PHOT_JHN_K (bad quality='X')
+Test  - Star '2MASS 07450934+2018576' clear property PHOT_JHN_K (bad quality='F')
+Test  - Execute: Step 4 - number of returned stars=144
+Test  - Execute: Step 4 - outputList[Main]
+Test  - Execute: Step 4 - Performing action[UPDATE_ONLY] with 144 stars
+Test  - Merge: list [Main][144 stars] with criteria << input list [Temporary_1][144 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000694444
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000694444
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/246/out'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: precess candidate stars with reference star
+Test  - Merge: precess using JD in epoch range [1997.430 2001.130]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 144 found / 144 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'opt' [ID_CATALOG] updated 144 times
+Test  - Merge: Property '2MASS' [ID_2MASS] updated 144 times
+Test  - Merge: Property 'J' [PHOT_JHN_J] updated 144 times
+Test  - Merge: Property 'H' [PHOT_JHN_H] updated 143 times
+Test  - Merge: Property 'K' [PHOT_JHN_K] updated 142 times
+Test  - Merge: Property 'Qflag' [CODE_QUALITY] updated 144 times
+Test  - Execute: Step 4 - after action[UPDATE_ONLY]: 144 stars
+Test  - Execute: Step 4 - apply FILTER[filter List]
+Test  - Criteria 1 on property[PHOT_JHN_K] with range = 1.000000000
+Test  - Execute: Step 4 - after FILTER[filter List]: 25 stars
+Test  - Execute: Step 5 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 5 - Querying II/328/allwise [WISE] ...
+Test  - Execute: Step 5 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/328/allwise'
+Test  - Search: Box search area=7.1/7.2 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/328/allwise&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=7.1/7.2&-out.add=_1&-file=-c&-out=AllWISE&-out=qph&-out=W1mag&-out=e_W1mag&-out=W2mag&-out=e_W2mag&-out=W3mag&-out=e_W3mag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027189%2b20.570294&+106.820547%2b24.168373&+105.638655%2b16.674425&+101.948005%2b21.691499&+110.030642%2b21.982272&+102.999820%2b23.601695&+110.486730%2b20.443591&+105.065930%2b16.078984&+107.091819%2b15.930373&+108.675087%2b24.884719&+111.918882%2b22.141450&+110.868581%2b25.050448&+112.951786%2b17.085823&+099.428159%2b16.399186&+114.869141%2b17.674515&+115.243800%2b23.018492&+116.111779%2b24.397839&+116.530798%2b18.509878&+093.922236%2b18.297461&+118.555432%2b21.105206&+094.099136%2b17.181583&+092.385132%2b22.190250&+119.247635%2b15.790160&+119.631104%2b16.518670&+120.197080%2b17.308695&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (30683 bytes)
+Test  - Extracting data from CDATA section (24 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/328/allwise':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'WISE' [ID_WISE] found for parameter 'AllWISE' (UCD='ID_MAIN')
+Test  - Extract: Property 'Qph_wise' [CODE_QUALITY_WISE] found for parameter 'qph' (UCD='CODE_QUALITY')
+Test  - Extract: Property 'L' [PHOT_JHN_L] found for parameter 'W1mag' (UCD='PHOT_IR_3.4')
+Test  - Extract: Property 'e_L' [PHOT_JHN_L_ERROR] found for parameter 'e_W1mag' (UCD='ERROR')
+Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'W2mag' (UCD='PHOT_IR_4.2')
+Test  - Extract: Property 'e_M' [PHOT_JHN_M_ERROR] found for parameter 'e_W2mag' (UCD='ERROR')
+Test  - Extract: Property 'N' [PHOT_JHN_N] found for parameter 'W3mag' (UCD='PHOT_FLUX_IR_12')
+Test  - Extract: Property 'e_N' [PHOT_JHN_N_ERROR] found for parameter 'e_W3mag' (UCD='ERROR')
+Info  - ProcessList_WISE: list Size=24
+Test  - Star 'WISE J070406.51+203412.9' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J070406.51+203412.9' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J070716.93+241005.6' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J070716.93+241005.6' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J070233.27+164028.3' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J070233.27+164028.3' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J064747.54+214129.6' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J064747.54+214129.6' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J072007.35+215855.8' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J072007.35+215855.8' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J065159.98+233606.2' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J065159.98+233606.2' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J072156.83+202637.1' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J072156.83+202637.1' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J070822.01+155550.0' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J071442.02+245305.0' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J071442.02+245305.0' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J072740.53+220829.4' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J072328.50+250302.4' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J072328.50+250302.4' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J073148.39+170509.6' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J073148.39+170509.6' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J063742.76+162357.5' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J063742.76+162357.5' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J073928.61+174028.2' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J073928.61+174028.2' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J074058.53+230106.6' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J074058.53+230106.6' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J074426.84+242352.4' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J074426.84+242352.4' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J074607.40+183035.9' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J074607.40+183035.9' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J061541.36+181751.3' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J075413.29+210618.5' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J075413.29+210618.5' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J061623.82+171053.6' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J060932.45+221125.1' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J060932.45+221125.1' clear property PHOT_JHN_M (bad quality='U')
+Test  - Star 'WISE J075659.45+154724.5' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J075831.47+163107.2' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J080047.31+171831.5' clear property PHOT_JHN_L (bad quality='U')
+Test  - Star 'WISE J080047.31+171831.5' clear property PHOT_JHN_M (bad quality='U')
+Test  - Execute: Step 5 - number of returned stars=24
+Test  - Execute: Step 5 - outputList[Main]
+Test  - Execute: Step 5 - Performing action[UPDATE_ONLY] with 24 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][24 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/328/allwise'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: precess candidate stars with reference star
+Test  - Merge: precess using JD in epoch range [2010.020 2011.085]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 24 found / 24 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'WISE' [ID_WISE] updated 24 times
+Test  - Merge: Property 'M' [PHOT_JHN_M] updated 6 times
+Test  - Merge: Property 'N' [PHOT_JHN_N] updated 24 times
+Test  - Merge: Property 'Qph_wise' [CODE_QUALITY_WISE] updated 24 times
+Test  - Execute: Step 5 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 6 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 6 - Querying J/A+A/413/1037/table1 [DENIS-JK] ...
+Test  - Execute: Step 6 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'J/A+A/413/1037/table1'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=J/A+A/413/1037/table1&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&Var=%3C4&-out=Jmag&-out=e_Jmag&-out=Ksmag&-out=e_Ksmag&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (18129 bytes)
+Test  - No CDATA section in XML document.
+Test  - Execute: Step 6 - number of returned stars=0
+Test  - Execute: Step 6 - outputList[Main]
+Test  - Execute: Step 6 - Performing action[UPDATE_ONLY] with 0 stars
+Test  - Execute: Step 6 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 7 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 7 - Querying II/7A/catalog [PHOTO] ...
+Test  - Execute: Step 7 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/7A/catalog'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/7A/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=B&-out=V&-out=R&-out=I&-out=J&-out=H&-out=K&-out=L&-out=M&-out=N&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (21259 bytes)
+Test  - Extracting data from CDATA section (8 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/7A/catalog':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'B' [PHOT_JHN_B] found for parameter 'B' (UCD='PHOT_JHN_B')
+Test  - Extract: Property 'V' [PHOT_JHN_V] found for parameter 'V' (UCD='PHOT_JHN_V')
+Test  - Extract: Property 'R' [PHOT_JHN_R] found for parameter 'R' (UCD='PHOT_JHN_R')
+Test  - Extract: Property 'I' [PHOT_JHN_I] found for parameter 'I' (UCD='PHOT_JHN_I')
+Test  - Extract: Property 'J' [PHOT_JHN_J] found for parameter 'J' (UCD='PHOT_JHN_J')
+Test  - Extract: Property 'H' [PHOT_JHN_H] found for parameter 'H' (UCD='PHOT_JHN_H')
+Test  - Extract: Property 'K' [PHOT_JHN_K] found for parameter 'K' (UCD='PHOT_JHN_K')
+Test  - Extract: Property 'L' [PHOT_JHN_L] found for parameter 'L' (UCD='PHOT_JHN_L')
+Test  - Extract: Property 'M' [PHOT_JHN_M] found for parameter 'M' (UCD='PHOT_JHN_M')
+Test  - Extract: Property 'N' [PHOT_JHN_N] found for parameter 'N' (UCD='PHOT_IR_N:10.4')
+Test  - Execute: Step 7 - number of returned stars=8
+Test  - Execute: Step 7 - outputList[Main]
+Test  - Execute: Step 7 - Performing action[UPDATE_ONLY] with 8 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][8 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 3 on property[PHOT_JHN_V] with range = 0.100000000
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/7A/catalog'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: useAllMatchingStars: true
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 7 found / 5 updated / 1 skipped (0 skipped targetId).
+Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+Test  - Merge: Criteria 'PHOT_JHN_V' mismatch 1 times
+Test  - Merge: Property 'R' [PHOT_JHN_R] updated 5 times
+Test  - Merge: Property 'I' [PHOT_JHN_I] updated 5 times
+Test  - Merge: Property 'L' [PHOT_JHN_L] updated 1 times
+Test  - Execute: Step 7 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 8 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 8 - Querying II/225/catalog [CIO] ...
+Test  - Execute: Step 8 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/225/catalog'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/225/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&x_F(IR)=M&lambda=1.25,1.65,2.20,3.5,5.0,10.0&-out=HD&-out=lambda&-out=F(IR)&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (19698 bytes)
+Test  - Extracting data from CDATA section (6 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/225/catalog':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Wavelength Property found for parameter 'lambda' (UCD='INST_WAVELENGTH_VALUE') in catalog 'II/225/catalog'
+Test  - Extract: Flux property found for parameter 'F(IR)' (UCD='PHOT_FLUX_IR_MISC') in catalog 'II/225/catalog'
+Test  - Execute: Step 8 - number of returned stars=6
+Test  - Execute: Step 8 - outputList[Main]
+Test  - Execute: Step 8 - Performing action[UPDATE_ONLY] with 6 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][6 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/225/catalog'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: useAllMatchingStars: true
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 4 found / 0 updated / 2 skipped (1 skipped targetId).
+Test  - Merge: Criteria 'RA/DEC' mismatch 2 times
+Test  - Execute: Step 8 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 9 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 9 - Querying I/196/main [HIC] ...
+Test  - Execute: Step 9 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'I/196/main'
+Test  - Search: Cone search area=3.5 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=I/196/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=RV&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (20825 bytes)
+Test  - Extracting data from CDATA section (25 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'I/196/main':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'RadVel' [VELOC_HC] found for parameter 'RV' (UCD='VELOC_HC')
+Test  - Execute: Step 9 - number of returned stars=25
+Test  - Execute: Step 9 - outputList[Main]
+Test  - Execute: Step 9 - Performing action[UPDATE_ONLY] with 25 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][25 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'I/196/main'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - No star matching all criteria for targetId '111.918907+22.141462':
+Test  - Reference star : 'HIP 36232' (RA = 111.918907, DEC = 22.141462): ID_HIP = 36232	ID_DM = 2201687	ID_TYC1 = 1359	ID_TYC2 = 797	ID_TYC3 = 1	ID_CATALOG = T	ID_2MASS = 07274054+2208291	ID_WISE = J072740.53+220829.4	POS_EQ_RA_MAIN = 07 27 40.5377712	POS_EQ_DEC_MAIN = +22 08 29.261612	POS_EQ_PMRA = -8.1	POS_EQ_PMDEC = -4.09	POS_PARLX_TRIG = 2.72	SPECT_TYPE_MK = K5	VAR_CLASS = U	PHOT_JHN_B = 8.46	PHOT_JHN_B-V = 1.68	PHOT_JHN_V = 6.78	PHOT_COUS_V-I = 1.87	PHOT_COUS_V-I_REFER_CODE = C	PHOT_COUS_I = 4.91	PHOT_JHN_J = 3.515	PHOT_JHN_H = 2.677	PHOT_JHN_K = 2.441	CODE_QUALITY = DDD	PHOT_JHN_M = 1.865	PHOT_JHN_N = 2.459	CODE_QUALITY_WISE = UCAA	
+Test  - Candidates:
+Test  - Star    1: sep=0.987904920 arcsec : 'HD 58712' (RA = 111.919000, DEC = 22.141722): ID_HD = 58712	POS_EQ_RA_MAIN = 07 27 40.56000	POS_EQ_DEC_MAIN = +22 08 30.2000	ID_TARGET = 111.918907+22.141462	
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 24 found / 23 updated / 1 skipped (1 skipped targetId).
+Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+Test  - Merge: Criteria 'ID_HD' mismatch 1 times
+Test  - Merge: Property 'RadVel' [VELOC_HC] updated 23 times
+Test  - Execute: Step 9 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 10 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 10 - Querying V/50/catalog [BSC] ...
+Test  - Execute: Step 10 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'V/50/catalog'
+Test  - Search: Cone search area=3.5 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=V/50/catalog&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=RotVel&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (19813 bytes)
+Test  - Extracting data from CDATA section (20 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'V/50/catalog':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_ALTERNATIVE')
+Test  - Extract: Property 'RotVel' [VELOC_ROTAT] found for parameter 'RotVel' (UCD='VELOC_ROTAT')
+Test  - Execute: Step 10 - number of returned stars=20
+Test  - Execute: Step 10 - outputList[Main]
+Test  - Execute: Step 10 - Performing action[UPDATE_ONLY] with 20 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][20 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'V/50/catalog'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 20 found / 6 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'RotVel' [VELOC_ROTAT] updated 6 times
+Test  - Execute: Step 10 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 11 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 11 - Querying V/36B/bsc4s [SBSC] ...
+Test  - Execute: Step 11 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'V/36B/bsc4s'
+Test  - Search: Cone search area=3.5 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=V/36B/bsc4s&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=3.5&-out.add=_1&-file=-c&-out=HD&-out=vsini&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (16469 bytes)
+Test  - Extracting data from CDATA section (2 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'V/36B/bsc4s':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'HD' [ID_HD] found for parameter 'HD' (UCD='ID_MAIN')
+Test  - Extract: Property 'RotVel' [VELOC_ROTAT] found for parameter 'vsini' (UCD='VELOC_ROTAT')
+Test  - Execute: Step 11 - number of returned stars=2
+Test  - Execute: Step 11 - outputList[Main]
+Test  - Execute: Step 11 - Performing action[UPDATE_ONLY] with 2 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][2 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 3 on property[ID_HD] with range = 0.000000000
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'V/36B/bsc4s'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - No star matching all criteria for targetId '111.918907+22.141462':
+Test  - Reference star : 'HIP 36232' (RA = 111.918907, DEC = 22.141462): ID_HIP = 36232	ID_DM = 2201687	ID_TYC1 = 1359	ID_TYC2 = 797	ID_TYC3 = 1	ID_CATALOG = T	ID_2MASS = 07274054+2208291	ID_WISE = J072740.53+220829.4	POS_EQ_RA_MAIN = 07 27 40.5377712	POS_EQ_DEC_MAIN = +22 08 29.261612	POS_EQ_PMRA = -8.1	POS_EQ_PMDEC = -4.09	POS_PARLX_TRIG = 2.72	SPECT_TYPE_MK = K5	VAR_CLASS = U	PHOT_JHN_B = 8.46	PHOT_JHN_B-V = 1.68	PHOT_JHN_V = 6.78	PHOT_COUS_V-I = 1.87	PHOT_COUS_V-I_REFER_CODE = C	PHOT_COUS_I = 4.91	PHOT_JHN_J = 3.515	PHOT_JHN_H = 2.677	PHOT_JHN_K = 2.441	CODE_QUALITY = DDD	PHOT_JHN_M = 1.865	PHOT_JHN_N = 2.459	CODE_QUALITY_WISE = UCAA	
+Test  - Candidates:
+Test  - Star    1: sep=0.790607771 arcsec : 'HD 58712' (RA = 111.919017, DEC = 22.141267): ID_HD = 58712	POS_EQ_RA_MAIN = 07 27 40.564	POS_EQ_DEC_MAIN = +22 08 28.56	ID_TARGET = 111.918907+22.141462	
+Test  - No star matching all criteria for targetId '093.922289+18.297484':
+Test  - Reference star : 'HIP 29731' (RA = 93.922289, DEC = 18.297484): ID_HD = 43185	ID_HIP = 29731	ID_DM = 1801141	ID_TYC1 = 1318	ID_TYC2 = 1194	ID_TYC3 = 1	ID_CATALOG = T	ID_2MASS = 06154135+1817508	ID_WISE = J061541.36+181751.3	POS_EQ_RA_MAIN = 06 15 41.3494793	POS_EQ_DEC_MAIN = +18 17 50.943188	POS_EQ_PMRA = -17.3	POS_EQ_PMDEC = -7.76	POS_PARLX_TRIG = 1.41	SPECT_TYPE_MK = K2III	VELOC_HC = -14	PHOT_JHN_B = 8.196	PHOT_JHN_B-V = 1.586	PHOT_JHN_V = 6.61	PHOT_COUS_V-I = 1.61	PHOT_COUS_V-I_REFER_CODE = L	PHOT_COUS_I = 5	PHOT_JHN_J = 4.122	PHOT_JHN_H = 3.231	PHOT_JHN_K = 2.865	CODE_QUALITY = DDD	PHOT_JHN_M = 2.191	PHOT_JHN_N = 2.72	CODE_QUALITY_WISE = UCAA	
+Test  - Candidates:
+Test  - Star    1: sep=3.721648924 arcsec : 'HD 43185' (RA = 93.921221, DEC = 18.297286): ID_HD = 43185	POS_EQ_RA_MAIN = 06 15 41.093	POS_EQ_DEC_MAIN = +18 17 50.23	ID_TARGET = 093.922289+18.297484	
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 0 found / 0 updated / 2 skipped (2 skipped targetId).
+Test  - Merge: Criteria 'RA/DEC' mismatch 1 times
+Test  - Merge: Criteria 'ID_HD' mismatch 1 times
+Test  - Execute: Step 11 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 12 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 12 - Querying B/sb9/main [SB9] ...
+Test  - Execute: Step 12 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'B/sb9/main'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=B/sb9/main&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.rs=1.6&-out.add=_1&-file=-c&-out=Seq&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (16339 bytes)
+Test  - Extracting data from CDATA section (3 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'B/sb9/main':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'SBC9' [ID_SB9] found for parameter 'Seq' (UCD='ID_MAIN')
+Test  - Execute: Step 12 - number of returned stars=3
+Test  - Execute: Step 12 - outputList[Main]
+Test  - Execute: Step 12 - Performing action[UPDATE_ONLY] with 3 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][3 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'B/sb9/main'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 3 found / 3 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'SBC9' [ID_SB9] updated 3 times
+Test  - Execute: Step 12 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 13 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 13 - Querying B/wds/wds [WDS] ...
+Test  - Execute: Step 13 - optimized cone search radius=1.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'B/wds/wds'
+Test  - Search: Cone search area=1.6 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=B/wds/wds&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-c.rs=1.6&-out.add=_1&-file=-c&-out=WDS&-out=sep1&-out=sep2&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027212%2b20.570297&+106.820524%2b24.168437&+105.638694%2b16.674447&+101.947982%2b21.691540&+110.030722%2b21.982309&+102.999945%2b23.601721&+110.486922%2b20.443659&+105.065933%2b16.078996&+107.091832%2b15.930675&+108.674913%2b24.884983&+111.918907%2b22.141462&+110.868797%2b25.050531&+112.951655%2b17.086045&+099.428032%2b16.399311&+114.869135%2b17.674515&+115.243825%2b23.018528&+116.111874%2b24.397998&+116.531031%2b18.510037&+093.922289%2b18.297484&+118.555433%2b21.105257&+094.099135%2b17.181609&+092.385154%2b22.190263&+119.247718%2b15.790281&+119.631128%2b16.518681&+120.197113%2b17.308703&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (20698 bytes)
+Test  - Extracting data from CDATA section (23 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'B/wds/wds':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'WDS' [ID_WDS] found for parameter 'WDS' (UCD='ID_MAIN')
+Test  - Extract: Property 'sep1' [ORBIT_SEPARATION_SEP1] found for parameter 'sep1' (UCD='ORBIT_SEPARATION')
+Test  - Extract: Property 'sep2' [ORBIT_SEPARATION_SEP2] found for parameter 'sep2' (UCD='ORBIT_SEPARATION')
+Test  - Execute: Step 13 - number of returned stars=23
+Test  - Execute: Step 13 - outputList[Main]
+Test  - Execute: Step 13 - Performing action[UPDATE_ONLY] with 23 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][23 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000416667
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000416667
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'B/wds/wds'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - GetStarMatchingCriteria(useDistMap): Star index [4 stars]
+Test  - Star    1: sep=0.132275377 arcsec : '07 04 06.5400 +20 34 13.100' (RA = 106.027250, DEC = 20.570306): POS_EQ_RA_MAIN = 07 04 06.5400	POS_EQ_DEC_MAIN = +20 34 13.100	ID_TARGET = 106.027212+20.570297	ID_WDS = 07041+2034	ORBIT_SEPARATION_SEP1 = 0.1	ORBIT_SEPARATION_SEP2 = 0.1	
+Test  - Star    2: sep=0.132275377 arcsec : '07 04 06.5400 +20 34 13.100' (RA = 106.027250, DEC = 20.570306): POS_EQ_RA_MAIN = 07 04 06.5400	POS_EQ_DEC_MAIN = +20 34 13.100	ID_TARGET = 106.027212+20.570297	ID_WDS = 07041+2034	ORBIT_SEPARATION_SEP1 = 65	ORBIT_SEPARATION_SEP2 = 87.4	
+Test  - Star    3: sep=0.132275377 arcsec : '07 04 06.5400 +20 34 13.100' (RA = 106.027250, DEC = 20.570306): POS_EQ_RA_MAIN = 07 04 06.5400	POS_EQ_DEC_MAIN = +20 34 13.100	ID_TARGET = 106.027212+20.570297	ID_WDS = 07041+2034	ORBIT_SEPARATION_SEP1 = 91.9	ORBIT_SEPARATION_SEP2 = 100.2	
+Test  - Star    4: sep=0.132275377 arcsec : '07 04 06.5400 +20 34 13.100' (RA = 106.027250, DEC = 20.570306): POS_EQ_RA_MAIN = 07 04 06.5400	POS_EQ_DEC_MAIN = +20 34 13.100	ID_TARGET = 106.027212+20.570297	ID_WDS = 07041+2034	ORBIT_SEPARATION_SEP1 = 80	ORBIT_SEPARATION_SEP2 = 67.8	
+Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+Test  - Star    1: sep=0.868771472 arcsec : '07 08 22.0400 +15 55 51.300' (RA = 107.091833, DEC = 15.930917): POS_EQ_RA_MAIN = 07 08 22.0400	POS_EQ_DEC_MAIN = +15 55 51.300	ID_TARGET = 107.091832+15.930675	ID_WDS = 07084+1556	ORBIT_SEPARATION_SEP1 = 5	ORBIT_SEPARATION_SEP2 = 16	
+Test  - Star    2: sep=0.868771472 arcsec : '07 08 22.0400 +15 55 51.300' (RA = 107.091833, DEC = 15.930917): POS_EQ_RA_MAIN = 07 08 22.0400	POS_EQ_DEC_MAIN = +15 55 51.300	ID_TARGET = 107.091832+15.930675	ID_WDS = 07084+1556	ORBIT_SEPARATION_SEP1 = 51.2	ORBIT_SEPARATION_SEP2 = 59.7	
+Test  - GetStarMatchingCriteria(useDistMap): Star index [2 stars]
+Test  - Star    1: sep=0.049321075 arcsec : '07 27 40.5400 +22 08 29.300' (RA = 111.918917, DEC = 22.141472): POS_EQ_RA_MAIN = 07 27 40.5400	POS_EQ_DEC_MAIN = +22 08 29.300	ID_TARGET = 111.918907+22.141462	ID_WDS = 07277+2208	ORBIT_SEPARATION_SEP1 = 11.3	ORBIT_SEPARATION_SEP2 = 11.8	
+Test  - Star    2: sep=0.049321075 arcsec : '07 27 40.5400 +22 08 29.300' (RA = 111.918917, DEC = 22.141472): POS_EQ_RA_MAIN = 07 27 40.5400	POS_EQ_DEC_MAIN = +22 08 29.300	ID_TARGET = 111.918907+22.141462	ID_WDS = 07277+2208	ORBIT_SEPARATION_SEP1 = 34.7	ORBIT_SEPARATION_SEP2 = 35.1	
+Test  - GetStarMatchingCriteria(useDistMap): Star index [3 stars]
+Test  - Star    1: sep=0.280096584 arcsec : '06 37 42.7100 +16 23 57.400' (RA = 99.427958, DEC = 16.399278): POS_EQ_RA_MAIN = 06 37 42.7100	POS_EQ_DEC_MAIN = +16 23 57.400	ID_TARGET = 099.428032+16.399311	ID_WDS = 06377+1624	ORBIT_SEPARATION_SEP1 = 0.1	ORBIT_SEPARATION_SEP2 = 0.4	
+Test  - Star    2: sep=0.280096584 arcsec : '06 37 42.7100 +16 23 57.400' (RA = 99.427958, DEC = 16.399278): POS_EQ_RA_MAIN = 06 37 42.7100	POS_EQ_DEC_MAIN = +16 23 57.400	ID_TARGET = 099.428032+16.399311	ID_WDS = 06377+1624	ORBIT_SEPARATION_SEP1 = 133	ORBIT_SEPARATION_SEP2 = 140.5	
+Test  - Star    3: sep=0.280096584 arcsec : '06 37 42.7100 +16 23 57.400' (RA = 99.427958, DEC = 16.399278): POS_EQ_RA_MAIN = 06 37 42.7100	POS_EQ_DEC_MAIN = +16 23 57.400	ID_TARGET = 099.428032+16.399311	ID_WDS = 06377+1624	ORBIT_SEPARATION_SEP1 = 141.7	ORBIT_SEPARATION_SEP2 = 148.1	
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 16 found / 16 updated / 7 skipped (0 skipped targetId).
+Test  - Merge: Criteria 'RA/DEC' mismatch 0 times
+Test  - Merge: Property 'WDS' [ID_WDS] updated 16 times
+Test  - Merge: Property 'sep1' [ORBIT_SEPARATION_SEP1] updated 16 times
+Test  - Merge: Property 'sep2' [ORBIT_SEPARATION_SEP2] updated 16 times
+Test  - Execute: Step 13 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: Step 14 - inputList[Main] action[UPDATE_ONLY]
+Test  - Execute: Step 14 - Querying II/297/irc [AKARI] ...
+Test  - Execute: Step 14 - optimized cone search radius=3.5 arcsec
+Test  - Search: input list [Temporary_1] catalog id: 'MIXED CATALOG'
+Test  - Search: catalog id: 'II/297/irc'
+Test  - Search: Box search area=7.2/7.2 arcsec
+Test  - Get XML document [0] from 'http://vizier.u-strasbg.fr/viz-bin/asu-xml?' with POST data: -source=II/297/irc&-out.meta=hudU1&-oc.form=sexa&-c.eq=J2000&-out.add=_RAJ2000&-out.add=_DEJ2000&-oc=hms&-out.max=1000&-sort=_r&-c.geom=b&-c.bs=7.2/7.2&-out.add=_1&-file=-c&-out=objID&-out=S09&-out=e_S09&-out=S18&-out=e_S18&-out.form=List&-c=%3C%3C%3D%3D%3D%3DLIST&106.027197%2b20.570295&+106.820539%2b24.168394&+105.638668%2b16.674432&+101.947997%2b21.691513&+110.030669%2b21.982284&+102.999862%2b23.601704&+110.486794%2b20.443614&+105.065931%2b16.078988&+107.091823%2b15.930474&+108.675028%2b24.884808&+111.918890%2b22.141454&+110.868654%2b25.050476&+112.951742%2b17.085897&+099.428116%2b16.399228&+114.869139%2b17.674515&+115.243808%2b23.018504&+116.111811%2b24.397892&+116.530876%2b18.509931&+093.922254%2b18.297469&+118.555432%2b21.105223&+094.099136%2b17.181592&+092.385139%2b22.190254&+119.247663%2b15.790201&+119.631112%2b16.518674&+120.197091%2b17.308697&%3D%3D%3D%3DLIST
+Test  - Parsing XML document (26058 bytes)
+Test  - Extracting data from CDATA section (25 rows)
+Test  - Extract: Property / Parameter mapping for catalog 'II/297/irc':
+Test  - Extract: Property 'TARGET_ID' [ID_TARGET] found for parameter '_1' (UCD='ID_TARGET')
+Test  - Extract: Property 'RAJ2000' [POS_EQ_RA_MAIN] found for parameter '_RAJ2000' (UCD='POS_EQ_RA_MAIN')
+Test  - Extract: Property 'DEJ2000' [POS_EQ_DEC_MAIN] found for parameter '_DEJ2000' (UCD='POS_EQ_DEC_MAIN')
+Test  - Extract: Property 'AKARI' [ID_AKARI] found for parameter 'objID' (UCD='ID_NUMBER')
+Test  - Extract: Property 'S09' [PHOT_FLUX_IR_9] found for parameter 'S09' (UCD='PHOT_FLUX_IR_9')
+Test  - Extract: Property 'e_S09' [PHOT_FLUX_IR_9_ERROR] found for parameter 'e_S09' (UCD='ERROR')
+Test  - Extract: Property 'S18' [PHOT_FLUX_IR_18] found for parameter 'S18' (UCD='PHOT_FLUX_IR_25')
+Test  - Extract: Property 'e_S18' [PHOT_FLUX_IR_18_ERROR] found for parameter 'e_S18' (UCD='ERROR')
+Test  - Execute: Step 14 - number of returned stars=25
+Test  - Execute: Step 14 - outputList[Main]
+Test  - Execute: Step 14 - Performing action[UPDATE_ONLY] with 25 stars
+Test  - Merge: list [Main][25 stars] with criteria << input list [Temporary_1][25 stars]
+Test  - Merge: Criteria 1 on property[POS_EQ_RA_MAIN] with range = 0.000972222
+Test  - Merge: Criteria 2 on property[POS_EQ_DEC_MAIN] with range = 0.000972222
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: input list [Temporary_1] catalog id: 'II/297/irc'
+Test  - Merge: crossmatch [CLOSEST_REF_STAR]
+Test  - Merge: precess candidate stars with reference star
+Test  - Merge: precess using JD in epoch range [2006.333 2007.667]
+Test  - Merge:  work list [Main] catalog id: 'MIXED CATALOG'
+Test  - Merge: done: 0 stars added / 25 found / 25 updated / 0 skipped (0 skipped targetId).
+Test  - Merge: Property 'AKARI' [ID_AKARI] updated 25 times
+Test  - Merge: Property 'S09' [PHOT_FLUX_IR_9] updated 25 times
+Test  - Merge: Property 'S18' [PHOT_FLUX_IR_18] updated 25 times
+Test  - Execute: Step 14 - after action[UPDATE_ONLY]: 25 stars
+Test  - Execute: resultList[GetCal]
+Info  - Scenario[BRIGHT_K] Execute() done: 25 star(s) found.
+Test  - Scenario[BRIGHT_K] Property usage by catalogs
+Test  - Property 'CODE_MULT_FLAG' [MultFlag]: I/280	
+Test  - Property 'CODE_QUALITY' [Qflag]: II/246/out	
+Test  - Property 'CODE_QUALITY_WISE' [Qph_wise]: II/328/allwise	
+Test  - Property 'CODE_VARIAB_V1' [VarFlag1]: I/280	
+Test  - Property 'CODE_VARIAB_V2' [VarFlag2]: I/280	
+Test  - Property 'ID_2MASS' [2MASS]: II/246/out	
+Test  - Property 'ID_AKARI' [AKARI]: II/297/irc	
+Test  - Property 'ID_CATALOG' [opt]: II/246/out	
+Test  - Property 'ID_DM' [DM]: I/280	
+Test  - Property 'ID_HD' [HD]: I/280	I/196/main	V/50/catalog	V/36B/bsc4s	
+Test  - Property 'ID_HIP' [HIP]: I/280	I/311/hip2	I/239/hip_main	
+Test  - Property 'ID_SB9' [SBC9]: B/sb9/main	
+Test  - Property 'ID_TARGET' [TARGET_ID]: I/311/hip2	I/239/hip_main	II/246/out	II/328/allwise	II/7A/catalog	II/225/catalog	I/196/main	V/50/catalog	V/36B/bsc4s	B/sb9/main	B/wds/wds	II/297/irc	
+Test  - Property 'ID_TYC1' [TYC1]: I/280	
+Test  - Property 'ID_TYC2' [TYC2]: I/280	
+Test  - Property 'ID_TYC3' [TYC3]: I/280	
+Test  - Property 'ID_WDS' [WDS]: B/wds/wds	
+Test  - Property 'ID_WISE' [WISE]: II/328/allwise	
+Test  - Property 'ORBIT_SEPARATION_SEP1' [sep1]: B/wds/wds	
+Test  - Property 'ORBIT_SEPARATION_SEP2' [sep2]: B/wds/wds	
+Test  - Property 'PHOT_COUS_V-I' [V-Icous]: I/239/hip_main	
+Test  - Property 'PHOT_COUS_V-I_ERROR' [e_V-Icous]: I/239/hip_main	
+Test  - Property 'PHOT_COUS_V-I_REFER_CODE' [ref_V-Icous]: I/239/hip_main	
+Test  - Property 'PHOT_FLUX_IR_18' [S18]: II/297/irc	
+Test  - Property 'PHOT_FLUX_IR_18_ERROR' [e_S18]: II/297/irc	
+Test  - Property 'PHOT_FLUX_IR_9' [S09]: II/297/irc	
+Test  - Property 'PHOT_FLUX_IR_9_ERROR' [e_S09]: II/297/irc	
+Test  - Property 'PHOT_JHN_B' [B]: I/280	II/7A/catalog	
+Test  - Property 'PHOT_JHN_B-V' [B-V]: I/239/hip_main	
+Test  - Property 'PHOT_JHN_B-V_ERROR' [e_B-V]: I/239/hip_main	
+Test  - Property 'PHOT_JHN_B_ERROR' [e_B]: I/280	
+Test  - Property 'PHOT_JHN_H' [H]: II/246/out	II/7A/catalog	
+Test  - Property 'PHOT_JHN_H_ERROR' [e_H]: II/246/out	
+Test  - Property 'PHOT_JHN_I' [I]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_J' [J]: II/246/out	II/7A/catalog	
+Test  - Property 'PHOT_JHN_J_ERROR' [e_J]: II/246/out	
+Test  - Property 'PHOT_JHN_K' [K]: II/246/out	II/7A/catalog	
+Test  - Property 'PHOT_JHN_K_ERROR' [e_K]: II/246/out	
+Test  - Property 'PHOT_JHN_L' [L]: II/328/allwise	II/7A/catalog	
+Test  - Property 'PHOT_JHN_L_ERROR' [e_L]: II/328/allwise	
+Test  - Property 'PHOT_JHN_M' [M]: II/328/allwise	II/7A/catalog	
+Test  - Property 'PHOT_JHN_M_ERROR' [e_M]: II/328/allwise	
+Test  - Property 'PHOT_JHN_N' [N]: II/328/allwise	II/7A/catalog	
+Test  - Property 'PHOT_JHN_N_ERROR' [e_N]: II/328/allwise	
+Test  - Property 'PHOT_JHN_R' [R]: II/7A/catalog	
+Test  - Property 'PHOT_JHN_V' [V]: I/280	I/239/hip_main	II/7A/catalog	
+Test  - Property 'PHOT_JHN_V_ERROR' [e_V]: I/280	I/239/hip_main	
+Test  - Property 'POS_EQ_DEC_ERROR' [e_DEJ2000]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_DEC_MAIN' [DEJ2000]: I/280	I/311/hip2	I/239/hip_main	II/246/out	II/328/allwise	II/7A/catalog	II/225/catalog	I/196/main	V/50/catalog	V/36B/bsc4s	B/sb9/main	B/wds/wds	II/297/irc	
+Test  - Property 'POS_EQ_PMDEC' [pmDec]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_PMDEC_ERROR' [e_pmDec]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_PMRA' [pmRa]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_PMRA_ERROR' [e_pmRa]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_RA_ERROR' [e_RAJ2000]: I/280	I/311/hip2	
+Test  - Property 'POS_EQ_RA_MAIN' [RAJ2000]: I/280	I/311/hip2	I/239/hip_main	II/246/out	II/328/allwise	II/7A/catalog	II/225/catalog	I/196/main	V/50/catalog	V/36B/bsc4s	B/sb9/main	B/wds/wds	II/297/irc	
+Test  - Property 'POS_PARLX_TRIG' [plx]: I/311/hip2	
+Test  - Property 'POS_PARLX_TRIG_ERROR' [e_Plx]: I/311/hip2	
+Test  - Property 'SPECT_TYPE_MK' [SpType]: I/280	
+Test  - Property 'TIME_DATE' [jd]: II/246/out	
+Test  - Property 'VAR_CLASS' [VarFlag3]: I/280	
+Test  - Property 'VELOC_HC' [RadVel]: I/196/main	
+Test  - Property 'VELOC_ROTAT' [RotVel]: V/50/catalog	V/36B/bsc4s	
+Test  - Search: done [25 stars]
+Test  - Complete: start [25 stars]
+Test  - ----- Complete: star 'HIP 34088'
+Test  - Parsed spectral type='G3Ibv SB' - our spectral type='G3.00IB': code='G' quantity='3.00' (0.00) luminosity class='IB' Double='NO' SpectralBinary='YES' Variable='YES'
+Test  - Type of star=SUPER_GIANT
+Test  - Spectral Binarity - 'SB' found in SpType.
+Info  - spectral type index = 172.0 - delta = 0
+Test  - Extracted magnitudes:  B=4.909(0.046 HIGH) V=4.010(0.026 HIGH) R=0.000(0.000 NO) I=3.110(0.040 HIGH) J=2.377(0.258 HIGH) H=2.029(0.250 HIGH) K=2.138(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=4.909(0.046 HIGH) V=4.010(0.026 HIGH) R=0.000(0.000 NO) I=3.110(0.040 HIGH) J=2.377(0.288 HIGH) H=2.029(0.288 HIGH) K=2.138(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 172) V-J=1.9285(0.3549 8.0%) V-H=1.8730(0.3004 7.0%) V-K=1.6753(0.2520 6.5%) 
+Test  - Diameter weighted=1.8065(0.1704 4.1%) valid=true [HIGH] chi2=0.2137 from 3 diameters: 
+Test  - Corrected LD error=0.1742 (9.6 %)(error=0.1704, chi2=0.2137)
+Test  - Computing UDs for LD=1.8065 at idx=172 lc=1
+Test  - Computed UD: U=1.6382 B=1.6382 V=1.6746 R=1.6963 I=1.7174 J=1.7478 H=1.7478 K=1.7563 L=1.7839 M=1.7882 N=1.7959
+Test  - DefineCalFlag: bit 1 (WDS) - sep = 0.100
+Test  - parallax 2.37(0.30) is valid...
+Test  - Dist(plx)=421.9409 (53.4102)
+Test  - Extracted magnitudes:  B=4.909(0.046 HIGH) V=4.010(0.026 HIGH) R=0.000(0.000 NO) I=3.110(0.040 HIGH) J=2.377(0.258 HIGH) H=2.029(0.250 HIGH) K=2.138(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=4.909(0.046 HIGH) V=4.010(0.026 HIGH) R=0.000(0.000 NO) I=3.110(0.040 HIGH) J=2.377(0.288 HIGH) H=2.029(0.288 HIGH) K=2.138(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.1295 (0.15862) distance=1044.453 (73.14508) chi2=0.1303 chi2Mu=39.2559 [5 bands] [SUPER_GIANT] from line[G3.00]
+Test  - Fitted Av=0.1295 (0.15862) distance=1044.453 (73.145) chi2=0.1303 chi2Mu=39.2559 [5 bands] [SUPER_GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.1295 (0.1586) distance=1044.4527 (73.1451) chi2=0.1303 chi2Dist=39.2559
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=1044.4527 (73.1451) chi2Dist=39.2559
+Test  - Cousin magnitudes: I=3.110(0.040) J=2.401(0.245) H=2.028(0.244) K=2.162(0.288)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=4.909(0.046 HIGH) V=4.010(0.026 HIGH) R=0.000(0.000 NO) I=3.110(0.040 HIGH) J=2.401(0.245 HIGH) H=2.028(0.244 HIGH) K=2.162(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=4.738(0.046 HIGH) V=3.881(0.026 HIGH) R=0.000(0.000 NO) I=3.044(0.040 HIGH) J=2.365(0.245 HIGH) H=2.006(0.244 HIGH) K=2.147(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=4.738(0.046 HIGH) V=3.881(0.026 HIGH) R=3.266(0.000 MEDIUM) I=3.044(0.040 HIGH) J=2.365(0.245 HIGH) H=2.006(0.244 HIGH) K=2.147(0.288 HIGH) L=2.097(0.000 MEDIUM) M=0.000(0.000 NO)
+Test  - Computed magnitudes (faint)  B=4.738(0.046 HIGH) V=3.881(0.026 HIGH) R=3.266(0.000 MEDIUM) I=3.044(0.040 HIGH) J=2.365(0.245 HIGH) H=2.006(0.244 HIGH) K=2.147(0.288 HIGH) L=2.097(0.000 MEDIUM) M=0.000(0.000 NO)
+Test  - Apparent magnitudes:  B=4.909(0.046 HIGH) V=4.010(0.026 HIGH) R=3.362(0.000 MEDIUM) I=3.110(0.040 HIGH) J=2.401(0.245 HIGH) H=2.028(0.244 HIGH) K=2.162(0.288 HIGH) L=2.105(0.000 MEDIUM) M=0.000(0.000 NO)
+Test  - Johnson magnitudes: I=2.853 J=2.377 H=2.029 K=2.138
+Test  - IR Fluxes: akari measured fnu_09=8.655 computed fnu_12=4.304 fnu_18=1.968
+Test  - IR Fluxes: computed magN=2.389
+Test  - Diam=1.807 (0.174) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.808368 (0.034426 - 4.26 %), 0.653459 (0.055658 - 8.52 %)
+Test  - ----- Complete: star 'HIP 34351'
+Test  - Parsed spectral type='M1III:' - our spectral type='M1.00III': code='M' quantity='1.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 244.0 - delta = 0
+Test  - Extracted magnitudes:  B=8.373(0.014 HIGH) V=6.730(0.006 HIGH) R=0.000(0.000 NO) I=4.640(0.040 HIGH) J=3.393(0.310 HIGH) H=2.603(0.252 HIGH) K=2.301(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=8.373(0.014 HIGH) V=6.730(0.010 HIGH) R=0.000(0.000 NO) I=4.640(0.040 HIGH) J=3.393(0.310 HIGH) H=2.603(0.310 HIGH) K=2.301(0.310 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 244) V-J=2.0078(0.3971 8.6%) V-H=2.1016(0.3623 7.5%) V-K=2.1887(0.3539 7.0%) 
+Test  - Diameter weighted=2.1099(0.2138 4.4%) valid=true [HIGH] chi2=0.0574 from 3 diameters: 
+Test  - Corrected LD error=0.2180 (10.3 %)(error=0.2138, chi2=0.0574)
+Test  - Computing UDs for LD=2.1099 at idx=244 lc=3
+Test  - Computed UD: U=1.8336 B=1.8336 V=1.8628 R=1.8951 I=1.9370 J=1.9634 H=1.9634 K=1.9838 L=2.0736 M=2.0895 N=2.0935
+Test  - parallax 1.63(0.50) is valid...
+Test  - Dist(plx)=613.4969 (188.1892)
+Test  - Extracted magnitudes:  B=8.373(0.014 HIGH) V=6.730(0.006 HIGH) R=0.000(0.000 NO) I=4.640(0.040 HIGH) J=3.393(0.310 HIGH) H=2.603(0.252 HIGH) K=2.301(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=8.373(0.014 HIGH) V=6.730(0.010 HIGH) R=0.000(0.000 NO) I=4.640(0.040 HIGH) J=3.393(0.310 HIGH) H=2.603(0.310 HIGH) K=2.301(0.310 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.3136 (0.14707) distance=238.508 (15.68996) chi2=0.0228 chi2Mu=9.0691 [6 bands] [GIANT] from line[M1.00]
+Test  - Fitted Av=0.3136 (0.14707) distance=238.508 (15.690) chi2=0.0228 chi2Mu=9.0691 [6 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.3136 (0.1471) distance=238.5079 (15.6900) chi2=0.0228 chi2Dist=9.0691
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=238.5079 (15.6900) chi2Dist=9.0691
+Test  - Cousin magnitudes: I=4.640(0.040) J=3.371(0.294) H=2.592(0.246) K=2.325(0.288)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=8.373(0.014 HIGH) V=6.730(0.006 HIGH) R=0.000(0.000 NO) I=4.640(0.040 HIGH) J=3.371(0.294 HIGH) H=2.592(0.246 HIGH) K=2.325(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=7.958(0.014 HIGH) V=6.416(0.006 HIGH) R=0.000(0.000 NO) I=4.481(0.040 HIGH) J=3.284(0.294 HIGH) H=2.538(0.246 HIGH) K=2.289(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=7.958(0.014 HIGH) V=6.416(0.006 HIGH) R=5.146(0.000 MEDIUM) I=4.481(0.040 HIGH) J=3.284(0.294 HIGH) H=2.538(0.246 HIGH) K=2.289(0.288 HIGH) L=2.159(0.000 MEDIUM) M=2.259(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=7.958(0.014 HIGH) V=6.416(0.006 HIGH) R=5.146(0.000 MEDIUM) I=4.481(0.040 HIGH) J=3.284(0.294 HIGH) H=2.538(0.246 HIGH) K=2.289(0.288 HIGH) L=2.159(0.000 MEDIUM) M=2.259(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=8.373(0.014 HIGH) V=6.730(0.006 HIGH) R=5.381(0.000 MEDIUM) I=4.640(0.040 HIGH) J=3.371(0.294 HIGH) H=2.592(0.246 HIGH) K=2.325(0.288 HIGH) L=2.178(0.000 MEDIUM) M=2.271(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=4.143 J=3.393 H=2.603 K=2.301
+Test  - IR Fluxes: akari measured fnu_09=8.182 computed fnu_12=4.188 fnu_18=1.947
+Test  - IR Fluxes: computed magN=2.418
+Test  - Diam=2.110 (0.218) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.745019 (0.047765 - 6.41 %), 0.555053 (0.071172 - 12.82 %)
+Test  - ----- Complete: star 'HIP 33937'
+Test  - Parsed spectral type='M2III' - our spectral type='M2.00III': code='M' quantity='2.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 248.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=0.000(0.000 NO) I=3.890(0.030 HIGH) J=2.539(0.258 HIGH) H=1.707(0.180 HIGH) K=1.536(0.226 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.519(0.010 HIGH) V=5.860(0.010 HIGH) R=0.000(0.000 NO) I=3.890(0.030 HIGH) J=2.539(0.258 HIGH) H=1.707(0.258 HIGH) K=1.536(0.258 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 248) V-J=2.9381(0.4838 7.2%) V-H=3.2101(0.4608 6.2%) V-K=3.1279(0.4211 5.8%) 
+Test  - Diameter weighted=3.1047(0.2621 3.7%) valid=true [HIGH] chi2=0.0846 from 3 diameters: 
+Test  - Corrected LD error=0.2693 (8.7 %)(error=0.2621, chi2=0.0846)
+Test  - Computing UDs for LD=3.1047 at idx=248 lc=3
+Test  - Computed UD: U=2.6674 B=2.6674 V=2.7034 R=2.7553 I=2.8186 J=2.8486 H=2.8486 K=2.8795 L=3.0507 M=3.0744 N=3.0805
+Test  - DefineCalFlag: bit 1 (WDS) - sep = 0.000
+Test  - parallax 1.30(0.36) is valid...
+Test  - Dist(plx)=769.2308 (213.0178)
+Test  - Extracted magnitudes:  B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=0.000(0.000 NO) I=3.890(0.030 HIGH) J=2.539(0.258 HIGH) H=1.707(0.180 HIGH) K=1.536(0.226 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.519(0.010 HIGH) V=5.860(0.010 HIGH) R=0.000(0.000 NO) I=3.890(0.030 HIGH) J=2.539(0.258 HIGH) H=1.707(0.258 HIGH) K=1.536(0.258 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.0002 (0.13813) distance=198.587 (12.01066) chi2=0.0919 chi2Mu=22.8238 [6 bands] [GIANT] from line[M2.00]
+Test  - Fitted Av=0.0002 (0.13813) distance=198.587 (12.011) chi2=0.0919 chi2Mu=22.8238 [6 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0002 (0.1381) distance=198.5865 (12.0107) chi2=0.0919 chi2Dist=22.8238
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=198.5865 (12.0107) chi2Dist=22.8238
+Test  - Cousin magnitudes: I=3.890(0.030) J=2.522(0.245) H=1.699(0.176) K=1.560(0.226)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=0.000(0.000 NO) I=3.890(0.030 HIGH) J=2.522(0.245 HIGH) H=1.699(0.176 HIGH) K=1.560(0.226 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=0.000(0.000 NO) I=3.890(0.030 HIGH) J=2.522(0.245 HIGH) H=1.699(0.176 HIGH) K=1.560(0.226 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=4.490(0.000 MEDIUM) I=3.890(0.030 HIGH) J=2.522(0.245 HIGH) H=1.699(0.176 HIGH) K=1.560(0.226 HIGH) L=1.410(0.000 MEDIUM) M=1.530(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=4.490(0.000 MEDIUM) I=3.890(0.030 HIGH) J=2.522(0.245 HIGH) H=1.699(0.176 HIGH) K=1.560(0.226 HIGH) L=1.410(0.000 MEDIUM) M=1.530(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=7.519(0.010 HIGH) V=5.860(0.005 HIGH) R=4.490(0.000 MEDIUM) I=3.890(0.030 HIGH) J=2.522(0.245 HIGH) H=1.699(0.176 HIGH) K=1.560(0.226 HIGH) L=1.410(0.000 MEDIUM) M=1.530(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.350 J=2.539 H=1.707 K=1.536
+Test  - IR Fluxes: akari measured fnu_09=15.440 computed fnu_12=7.915 fnu_18=3.683
+Test  - IR Fluxes: computed magN=1.727
+Test  - Diam=3.105 (0.269) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.504728 (0.068611 - 13.59 %), 0.254750 (0.069259 - 27.19 %)
+Test  - ----- Complete: star 'HIP 32571'
+Test  - Parsed spectral type='M1' - our spectral type='M1.00': code='M' quantity='1.00' (0.00) luminosity class='' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=DWARF (by default as no Luminosity Class provided)
+Info  - spectral type index = 244.0 - delta = 0
+Test  - Extracted magnitudes:  B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=0.000(0.000 NO) I=4.960(0.050 HIGH) J=3.914(0.262 HIGH) H=3.072(0.230 HIGH) K=2.860(0.354 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=8.440(0.016 HIGH) V=6.810(0.010 HIGH) R=0.000(0.000 NO) I=4.960(0.050 HIGH) J=3.914(0.350 HIGH) H=3.072(0.350 HIGH) K=2.860(0.350 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 244) V-J=1.4610(0.3262 9.7%) V-H=1.6319(0.3175 8.5%) V-K=1.6436(0.3000 7.9%) 
+Test  - Diameter weighted=1.5897(0.1818 5.0%) valid=true [HIGH] chi2=0.0972 from 3 diameters: 
+Test  - Corrected LD error=0.1846 (11.6 %)(error=0.1818, chi2=0.0972)
+Test  - Computing UDs for LD=1.5897 at idx=244 lc=-1
+Test  - Computed UD: U=1.4754 B=1.4754 V=1.4854 R=1.4995 I=1.5181 J=1.5562 H=1.5562 K=1.5632 L=1.5748 M=1.5761 N=1.5806
+Test  - parallax 2.23(0.41) is valid...
+Test  - Dist(plx)=448.4305 (82.4469)
+Test  - Extracted magnitudes:  B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=0.000(0.000 NO) I=4.960(0.050 HIGH) J=3.914(0.262 HIGH) H=3.072(0.230 HIGH) K=2.860(0.354 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=8.440(0.016 HIGH) V=6.810(0.010 HIGH) R=0.000(0.000 NO) I=4.960(0.050 HIGH) J=3.914(0.350 HIGH) H=3.072(0.350 HIGH) K=2.860(0.350 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - High mean error on magnitudes: 0.1014
+Test  - Av=0.2418 (0.16214) distance=2.951 (0.22016) chi2=0.2114 chi2Mu=641.0237 [5 bands] [DWARF] from line[M1.00]
+Test  - Av=0.0000 (0.16214) distance=294.439 (21.96576) chi2=0.0704 chi2Mu=4.4952 [5 bands] [GIANT] from line[M1.00]
+Test  - Av=0.0221 (0.16214) distance=2995.253 (223.45175) chi2=0.0104 chi2Mu=91.6037 [5 bands] [SUPER_GIANT] from line[M1.00]
+Info  - Spectral type='M1' - Our spectral type='M1.00(III)': updated spectral code / quantity class='M1.00' (0.00)
+Info  - spectral type='M1' - our spectral type='M1.00(III)': updated luminosity class='III'
+Test  - Fitted Av=0.0000 (0.16214) distance=294.439 (21.966) chi2=0.0704 chi2Mu=4.4952 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1621) distance=294.4394 (21.9658) chi2=0.0704 chi2Dist=4.4952
+Test  - Cousin magnitudes: I=4.960(0.050) J=3.894(0.249) H=3.063(0.224) K=2.884(0.354)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=0.000(0.000 NO) I=4.960(0.050 HIGH) J=3.894(0.249 HIGH) H=3.063(0.224 HIGH) K=2.884(0.354 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=0.000(0.000 NO) I=4.960(0.050 HIGH) J=3.894(0.249 HIGH) H=3.063(0.224 HIGH) K=2.884(0.354 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=5.540(0.000 MEDIUM) I=4.960(0.050 HIGH) J=3.894(0.249 HIGH) H=3.063(0.224 HIGH) K=2.884(0.354 HIGH) L=2.754(0.000 MEDIUM) M=2.854(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=5.540(0.000 MEDIUM) I=4.960(0.050 HIGH) J=3.894(0.249 HIGH) H=3.063(0.224 HIGH) K=2.884(0.354 HIGH) L=2.754(0.000 MEDIUM) M=2.854(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=8.440(0.016 HIGH) V=6.810(0.007 HIGH) R=5.540(0.000 MEDIUM) I=4.960(0.050 HIGH) J=3.894(0.249 HIGH) H=3.063(0.224 HIGH) K=2.884(0.354 HIGH) L=2.754(0.000 MEDIUM) M=2.854(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=4.550 J=3.914 H=3.072 K=2.860
+Test  - IR Fluxes: akari measured fnu_09=4.728 computed fnu_12=2.414 fnu_18=1.121
+Test  - IR Fluxes: computed magN=3.016
+Test  - Diam=1.590 (0.185) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.849299 (0.033144 - 3.90 %), 0.721308 (0.056299 - 7.81 %)
+Test  - ----- Complete: star 'HIP 35550'
+Test  - Parsed spectral type='F0IV...' - our spectral type='F0.00IV': code='F' quantity='0.00' (0.00) luminosity class='IV' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=SUB_GIANT
+Info  - spectral type index = 120.0 - delta = 0
+Test  - Extracted magnitudes:  B=3.874(0.015 HIGH) V=3.500(0.002 HIGH) R=3.180(nan HIGH) I=3.060(0.030 MEDIUM) J=2.821(0.294 HIGH) H=0.000(0.000 NO) K=2.555(0.394 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=3.874(0.015 HIGH) V=3.500(0.010 HIGH) R=3.180(nan HIGH) I=3.060(0.030 MEDIUM) J=2.821(0.350 HIGH) H=0.000(0.000 NO) K=2.555(0.350 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 120) V-J=1.1737(0.2631 9.7%) V-H=0.0000(0.0000 0.0%) V-K=1.1992(0.2198 8.0%) 
+Test  - Cannot compute mean diameter (2 < 3 valid diameters)
+Test  - Compute UD - Skipping (diameters are not OK).
+Test  - DefineCalFlag: bit 1 (SB9)
+Test  - parallax 53.94(0.66) is valid...
+Test  - Dist(plx)=18.5391 (0.2268)
+Test  - Extracted magnitudes:  B=3.874(0.015 HIGH) V=3.500(0.002 HIGH) R=3.180(nan HIGH) I=3.060(0.030 MEDIUM) J=2.821(0.294 HIGH) H=0.000(0.000 NO) K=2.555(0.394 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=3.874(0.015 HIGH) V=3.500(0.010 HIGH) R=3.180(nan HIGH) I=3.060(0.030 MEDIUM) J=2.821(0.350 HIGH) H=0.000(0.000 NO) K=2.555(0.350 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - High mean error on magnitudes: 0.1238
+Test  - Av=0.2085 (0.23420) distance=13.156 (1.60393) chi2=0.0045 chi2Mu=7.8360 [4 bands] [DWARF] from line[F0.00]
+Test  - Fitted Av=0.2085 (0.23420) distance=13.156 (1.604) chi2=0.0045 chi2Mu=7.8360 [4 bands] [DWARF]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.2085 (0.2342) distance=13.1562 (1.6039) chi2=0.0045 chi2Dist=7.8360
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=13.1562 (1.6039) chi2Dist=7.8360
+Test  - Cousin magnitudes: I=3.060(0.030) J=2.843(0.279) H=nan(nan) K=2.579(0.394)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=3.874(0.015 HIGH) V=3.500(0.002 HIGH) R=3.180(0.100 HIGH) I=3.060(0.030 MEDIUM) J=2.843(0.279 HIGH) H=0.000(0.000 NO) K=2.579(0.394 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=3.598(0.015 HIGH) V=3.292(0.002 HIGH) R=3.024(0.100 HIGH) I=2.954(0.030 MEDIUM) J=2.785(0.279 HIGH) H=0.000(0.000 NO) K=2.555(0.394 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=3.598(0.015 HIGH) V=3.292(0.002 HIGH) R=3.024(0.100 HIGH) I=2.954(0.030 MEDIUM) J=2.785(0.279 HIGH) H=2.665(0.000 MEDIUM) K=2.555(0.394 HIGH) L=2.525(0.000 MEDIUM) M=2.495(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=3.598(0.015 HIGH) V=3.292(0.002 HIGH) R=3.024(0.100 HIGH) I=2.954(0.030 MEDIUM) J=2.785(0.279 HIGH) H=2.665(0.000 MEDIUM) K=2.555(0.394 HIGH) L=2.525(0.000 MEDIUM) M=2.495(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=3.874(0.015 HIGH) V=3.500(0.002 HIGH) R=3.180(0.100 HIGH) I=3.060(0.030 MEDIUM) J=2.843(0.279 HIGH) H=2.701(0.000 MEDIUM) K=2.579(0.394 HIGH) L=2.538(0.000 MEDIUM) M=2.503(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.015 J=2.821 H=2.708 K=2.555
+Test  - IR Fluxes: akari measured fnu_09=5.353 computed fnu_12=2.615 fnu_18=1.183
+Test  - IR Fluxes: computed magN=2.930
+Test  - Unknown LD diameter or diameters are not OK; could not compute visibility
+Test  - ----- Complete: star 'HIP 32968'
+Test  - Parsed spectral type='K5III' - our spectral type='K5.00III': code='K' quantity='5.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 220.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=0.000(0.000 NO) I=4.200(0.011 HIGH) J=3.076(0.260 HIGH) H=2.378(0.218 HIGH) K=2.217(0.246 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.147(0.010 HIGH) V=5.680(0.010 HIGH) R=0.000(0.000 NO) I=4.200(0.011 HIGH) J=3.076(0.260 HIGH) H=2.378(0.260 HIGH) K=2.217(0.260 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 220) V-J=1.9989(0.3318 7.2%) V-H=2.0211(0.2924 6.3%) V-K=1.9980(0.2711 5.9%) 
+Test  - Diameter weighted=2.0062(0.1706 3.7%) valid=true [HIGH] chi2=0.0020 from 3 diameters: 
+Test  - Corrected LD error=0.1753 (8.7 %)(error=0.1706, chi2=0.0020)
+Test  - Computing UDs for LD=2.0062 at idx=220 lc=3
+Test  - Computed UD: U=1.7656 B=1.7656 V=1.8051 R=1.8348 I=1.8683 J=1.9033 H=1.9033 K=1.9196 L=1.9735 M=1.9849 N=1.9909
+Test  - parallax 7.05(0.43) is valid...
+Test  - Dist(plx)=141.8440 (8.6515)
+Test  - Extracted magnitudes:  B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=0.000(0.000 NO) I=4.200(0.011 HIGH) J=3.076(0.260 HIGH) H=2.378(0.218 HIGH) K=2.217(0.246 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.147(0.010 HIGH) V=5.680(0.010 HIGH) R=0.000(0.000 NO) I=4.200(0.011 HIGH) J=3.076(0.260 HIGH) H=2.378(0.260 HIGH) K=2.217(0.260 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.0000 (0.19350) distance=153.459 (9.15822) chi2=0.3736 chi2Mu=0.8508 [6 bands] [GIANT] from line[K5.00]
+Test  - Fitted Av=0.0000 (0.19350) distance=153.459 (9.158) chi2=0.3736 chi2Mu=0.8508 [6 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1935) distance=153.4594 (9.1582) chi2=0.3736 chi2Dist=0.8508
+Test  - Cousin magnitudes: I=4.200(0.011) J=3.067(0.247) H=2.371(0.213) K=2.241(0.246)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=0.000(0.000 NO) I=4.200(0.011 HIGH) J=3.067(0.247 HIGH) H=2.371(0.213 HIGH) K=2.241(0.246 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=0.000(0.000 NO) I=4.200(0.011 HIGH) J=3.067(0.247 HIGH) H=2.371(0.213 HIGH) K=2.241(0.246 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=4.540(0.000 MEDIUM) I=4.200(0.011 HIGH) J=3.067(0.247 HIGH) H=2.371(0.213 HIGH) K=2.241(0.246 HIGH) L=2.121(0.000 MEDIUM) M=2.201(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=4.540(0.000 MEDIUM) I=4.200(0.011 HIGH) J=3.067(0.247 HIGH) H=2.371(0.213 HIGH) K=2.241(0.246 HIGH) L=2.121(0.000 MEDIUM) M=2.201(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=7.147(0.009 HIGH) V=5.680(0.005 HIGH) R=4.540(0.000 MEDIUM) I=4.200(0.011 HIGH) J=3.067(0.247 HIGH) H=2.371(0.213 HIGH) K=2.241(0.246 HIGH) L=2.121(0.000 MEDIUM) M=2.201(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.761 J=3.076 H=2.378 K=2.217
+Test  - IR Fluxes: akari measured fnu_09=7.560 computed fnu_12=3.831 fnu_18=1.769
+Test  - IR Fluxes: computed magN=2.515
+Test  - Diam=2.006 (0.175) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.767406 (0.037216 - 4.85 %), 0.588912 (0.057120 - 9.70 %)
+Test  - ----- Complete: star 'HIP 35699'
+Test  - Parsed spectral type='M0III' - our spectral type='M0.00III': code='M' quantity='0.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 240.0 - delta = 0
+Test  - Extracted magnitudes:  B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=0.000(0.000 NO) I=3.490(0.050 MEDIUM) J=2.308(0.274 HIGH) H=1.494(0.156 HIGH) K=1.285(0.200 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.618(0.010 HIGH) V=5.090(0.010 HIGH) R=0.000(0.000 NO) I=3.490(0.050 MEDIUM) J=2.308(0.274 HIGH) H=1.494(0.274 HIGH) K=1.285(0.274 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 240) V-J=3.0153(0.5273 7.6%) V-H=3.2987(0.5028 6.6%) V-K=3.3264(0.4756 6.2%) 
+Test  - Diameter weighted=3.2325(0.2897 3.9%) valid=true [HIGH] chi2=0.1079 from 3 diameters: 
+Test  - Corrected LD error=0.2968 (9.2 %)(error=0.2897, chi2=0.1079)
+Test  - Computing UDs for LD=3.2325 at idx=240 lc=3
+Test  - Computed UD: U=2.8208 B=2.8208 V=2.8721 R=2.9190 I=2.9821 J=3.0318 H=3.0318 K=3.0619 L=3.1773 M=3.2009 N=3.2073
+Test  - parallax 7.36(0.19) is valid...
+Test  - Dist(plx)=135.8696 (3.5075)
+Test  - Extracted magnitudes:  B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=0.000(0.000 NO) I=3.490(0.050 MEDIUM) J=2.308(0.274 HIGH) H=1.494(0.156 HIGH) K=1.285(0.200 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.618(0.010 HIGH) V=5.090(0.010 HIGH) R=0.000(0.000 NO) I=3.490(0.050 MEDIUM) J=2.308(0.274 HIGH) H=1.494(0.274 HIGH) K=1.285(0.274 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.0000 (0.17238) distance=125.250 (10.76779) chi2=0.0708 chi2Mu=0.8220 [5 bands] [GIANT] from line[M0.00]
+Test  - Fitted Av=0.0000 (0.17238) distance=125.250 (10.768) chi2=0.0708 chi2Mu=0.8220 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1724) distance=125.2501 (10.7678) chi2=0.0708 chi2Dist=0.8220
+Test  - Cousin magnitudes: I=3.490(0.050) J=2.290(0.260) H=1.485(0.152) K=1.309(0.200)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=0.000(0.000 NO) I=3.490(0.050 MEDIUM) J=2.290(0.260 HIGH) H=1.485(0.152 HIGH) K=1.309(0.200 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=0.000(0.000 NO) I=3.490(0.050 MEDIUM) J=2.290(0.260 HIGH) H=1.485(0.152 HIGH) K=1.309(0.200 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=3.870(0.000 MEDIUM) I=3.490(0.050 MEDIUM) J=2.290(0.260 HIGH) H=1.485(0.152 HIGH) K=1.309(0.200 HIGH) L=1.189(0.000 MEDIUM) M=1.279(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=3.870(0.000 MEDIUM) I=3.490(0.050 MEDIUM) J=2.290(0.260 HIGH) H=1.485(0.152 HIGH) K=1.309(0.200 HIGH) L=1.189(0.000 MEDIUM) M=1.279(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=6.618(0.006 HIGH) V=5.090(0.005 HIGH) R=3.870(0.000 MEDIUM) I=3.490(0.050 MEDIUM) J=2.290(0.260 HIGH) H=1.485(0.152 HIGH) K=1.309(0.200 HIGH) L=1.189(0.000 MEDIUM) M=1.279(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.022 J=2.308 H=1.494 K=1.285
+Test  - IR Fluxes: akari measured fnu_09=17.700 computed fnu_12=9.041 fnu_18=4.197
+Test  - IR Fluxes: computed magN=1.583
+Test  - Diam=3.232 (0.297) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.472122 (0.075768 - 16.05 %), 0.222899 (0.071543 - 32.10 %)
+Test  - ----- Complete: star 'HIP 33715'
+Test  - Parsed spectral type='K3Ib' - our spectral type='K3.00IB': code='K' quantity='3.00' (0.00) luminosity class='IB' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=SUPER_GIANT
+Info  - spectral type index = 212.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.371(0.055 HIGH) V=5.730(0.006 HIGH) R=4.420(nan HIGH) I=4.110(0.031 MEDIUM) J=3.238(0.278 HIGH) H=2.469(0.228 HIGH) K=2.107(0.336 HIGH) L=1.780(nan HIGH) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.371(0.055 HIGH) V=5.730(0.010 HIGH) R=4.420(nan HIGH) I=4.110(0.031 MEDIUM) J=3.238(0.336 HIGH) H=2.469(0.336 HIGH) K=2.107(0.336 HIGH) L=1.780(nan HIGH) M=0.000(0.000 NO)
+Test  - Diameter (SP 212) V-J=1.7716(0.3797 9.3%) V-H=1.8872(0.3525 8.1%) V-K=2.0736(0.3633 7.6%) 
+Test  - Diameter weighted=1.9261(0.2115 4.8%) valid=true [HIGH] chi2=0.1706 from 3 diameters: 
+Test  - Corrected LD error=0.2149 (11.2 %)(error=0.2115, chi2=0.1706)
+Test  - Computing UDs for LD=1.9261 at idx=212 lc=1
+Test  - Computed UD: U=1.7096 B=1.7096 V=1.7482 R=1.7765 I=1.8062 J=1.8409 H=1.8409 K=1.8551 L=1.8959 M=1.9053 N=1.9119
+Test  - parallax 0.75(0.58) less than 1 mas...
+Test  - Extracted magnitudes:  B=7.371(0.055 HIGH) V=5.730(0.006 HIGH) R=4.420(nan HIGH) I=4.110(0.031 MEDIUM) J=3.238(0.278 HIGH) H=2.469(0.228 HIGH) K=2.107(0.336 HIGH) L=1.780(nan HIGH) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.371(0.055 HIGH) V=5.730(0.010 HIGH) R=4.420(nan HIGH) I=4.110(0.031 MEDIUM) J=3.238(0.336 HIGH) H=2.469(0.336 HIGH) K=2.107(0.336 HIGH) L=1.780(nan HIGH) M=0.000(0.000 NO)
+Test  - High mean error on magnitudes: 0.1169
+Test  - Av=0.7403 (0.23657) distance=1452.675 (174.66425) chi2=0.1297 chi2Mu=nan [4 bands] [SUPER_GIANT] from line[K3.00]
+Test  - Fitted Av=0.7403 (0.23657) distance=1452.675 (174.664) chi2=0.1297 chi2Mu=nan [4 bands] [SUPER_GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.7403 (0.2366) distance=1452.6748 (174.6643) chi2=0.1297 chi2Dist=nan
+Test  - Cousin magnitudes: I=4.110(0.031) J=3.214(0.264) H=2.457(0.222) K=2.131(0.336)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.371(0.055 HIGH) V=5.730(0.006 HIGH) R=4.420(0.100 HIGH) I=4.110(0.031 MEDIUM) J=3.214(0.264 HIGH) H=2.457(0.222 HIGH) K=2.131(0.336 HIGH) L=1.780(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.392(0.055 HIGH) V=4.990(0.006 HIGH) R=3.866(0.100 HIGH) I=3.735(0.031 MEDIUM) J=3.009(0.264 HIGH) H=2.330(0.222 HIGH) K=2.045(0.336 HIGH) L=1.735(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.392(0.055 HIGH) V=4.990(0.006 HIGH) R=3.866(0.100 HIGH) I=3.735(0.031 MEDIUM) J=3.009(0.264 HIGH) H=2.330(0.222 HIGH) K=2.045(0.336 HIGH) L=1.735(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Computed magnitudes (faint)  B=6.392(0.055 HIGH) V=4.990(0.006 HIGH) R=3.866(0.100 HIGH) I=3.735(0.031 MEDIUM) J=3.009(0.264 HIGH) H=2.330(0.222 HIGH) K=2.045(0.336 HIGH) L=1.735(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Apparent magnitudes:  B=7.371(0.055 HIGH) V=5.730(0.006 HIGH) R=4.420(0.100 HIGH) I=4.110(0.031 MEDIUM) J=3.214(0.264 HIGH) H=2.457(0.222 HIGH) K=2.131(0.336 HIGH) L=1.780(0.100 HIGH) M=0.000(0.000 NO)
+Test  - Johnson magnitudes: I=3.773 J=3.238 H=2.469 K=2.107
+Test  - IR Fluxes: akari measured fnu_09=10.470 computed fnu_12=5.285 fnu_18=2.436
+Test  - IR Fluxes: computed magN=2.166
+Test  - Diam=1.926 (0.215) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.784194 (0.044424 - 5.66 %), 0.614960 (0.069674 - 11.33 %)
+Test  - ----- Complete: star 'HIP 34440'
+Test  - Parsed spectral type='G8III' - our spectral type='G8.00III': code='G' quantity='8.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 192.0 - delta = 0
+Test  - Extracted magnitudes:  B=6.490(0.016 HIGH) V=5.470(0.003 HIGH) R=0.000(0.000 NO) I=4.470(0.040 MEDIUM) J=3.364(0.282 HIGH) H=2.960(0.262 HIGH) K=2.801(0.326 HIGH) L=0.000(0.000 NO) M=2.859(0.445 HIGH)
+Test  - Fixed magnitudes: (fix error) B=6.490(0.016 HIGH) V=5.470(0.010 HIGH) R=0.000(0.000 NO) I=4.470(0.040 MEDIUM) J=3.364(0.326 HIGH) H=2.960(0.326 HIGH) K=2.801(0.326 HIGH) L=0.000(0.000 NO) M=2.859(0.350 HIGH)
+Test  - Diameter (SP 192) V-J=1.4399(0.2994 9.0%) V-H=1.3319(0.2414 7.9%) V-K=1.3498(0.2295 7.4%) 
+Test  - Diameter weighted=1.3665(0.1456 4.6%) valid=true [HIGH] chi2=0.0443 from 3 diameters: 
+Test  - Corrected LD error=0.1481 (10.8 %)(error=0.1456, chi2=0.0443)
+Test  - Computing UDs for LD=1.3665 at idx=192 lc=3
+Test  - Computed UD: U=1.2278 B=1.2278 V=1.2551 R=1.2728 I=1.2906 J=1.3143 H=1.3143 K=1.3225 L=1.3476 M=1.3517 N=1.3576
+Test  - parallax 10.11(0.35) is valid...
+Test  - Dist(plx)=98.9120 (3.4243)
+Test  - Extracted magnitudes:  B=6.490(0.016 HIGH) V=5.470(0.003 HIGH) R=0.000(0.000 NO) I=4.470(0.040 MEDIUM) J=3.364(0.282 HIGH) H=2.960(0.262 HIGH) K=2.801(0.326 HIGH) L=0.000(0.000 NO) M=2.859(0.445 HIGH)
+Test  - Fixed magnitudes: (fix error) B=6.490(0.016 HIGH) V=5.470(0.010 HIGH) R=0.000(0.000 NO) I=4.470(0.040 MEDIUM) J=3.364(0.326 HIGH) H=2.960(0.326 HIGH) K=2.801(0.326 HIGH) L=0.000(0.000 NO) M=2.859(0.350 HIGH)
+Test  - High mean error on magnitudes: 0.1130
+Test  - Av=0.4633 (0.19330) distance=69.699 (6.84458) chi2=0.0702 chi2Mu=11.3011 [5 bands] [GIANT] from line[G8.00]
+Test  - Fitted Av=0.4633 (0.19330) distance=69.699 (6.845) chi2=0.0702 chi2Mu=11.3011 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.4633 (0.1933) distance=69.6994 (6.8446) chi2=0.0702 chi2Dist=11.3011
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=69.6994 (6.8446) chi2Dist=11.3011
+Test  - Cousin magnitudes: I=4.470(0.040) J=3.370(0.268) H=2.953(0.255) K=2.825(0.326)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=6.490(0.016 HIGH) V=5.470(0.003 HIGH) R=0.000(0.000 NO) I=4.470(0.040 MEDIUM) J=3.370(0.268 HIGH) H=2.953(0.255 HIGH) K=2.825(0.326 HIGH) L=0.000(0.000 NO) M=2.859(0.445 HIGH)
+Test  - Corrected magnitudes: (Av) B=5.877(0.016 HIGH) V=5.007(0.003 HIGH) R=0.000(0.000 NO) I=4.235(0.040 MEDIUM) J=3.242(0.268 HIGH) H=2.873(0.255 HIGH) K=2.771(0.326 HIGH) L=0.000(0.000 NO) M=2.841(0.445 HIGH)
+Test  - Computed magnitudes (bright)  B=5.877(0.016 HIGH) V=5.007(0.003 HIGH) R=4.247(0.000 MEDIUM) I=4.235(0.040 MEDIUM) J=3.242(0.268 HIGH) H=2.873(0.255 HIGH) K=2.771(0.326 HIGH) L=2.711(0.000 MEDIUM) M=2.841(0.445 HIGH)
+Test  - Computed magnitudes (faint)  B=5.877(0.016 HIGH) V=5.007(0.003 HIGH) R=4.247(0.000 MEDIUM) I=4.235(0.040 MEDIUM) J=3.242(0.268 HIGH) H=2.873(0.255 HIGH) K=2.771(0.326 HIGH) L=2.711(0.000 MEDIUM) M=2.841(0.445 HIGH)
+Test  - Apparent magnitudes:  B=6.490(0.016 HIGH) V=5.470(0.003 HIGH) R=4.593(0.000 MEDIUM) I=4.470(0.040 MEDIUM) J=3.370(0.268 HIGH) H=2.953(0.255 HIGH) K=2.825(0.326 HIGH) L=2.740(0.000 MEDIUM) M=2.859(0.445 HIGH)
+Test  - Johnson magnitudes: I=4.045 J=3.364 H=2.960 K=2.801
+Test  - IR Fluxes: akari measured fnu_09=3.422 computed fnu_12=1.712 fnu_18=0.785
+Test  - IR Fluxes: computed magN=3.390
+Test  - Diam=1.367 (0.148) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.887091 (0.023522 - 2.65 %), 0.786931 (0.041733 - 5.30 %)
+Test  - ----- Complete: star 'HIP 35025'
+Test  - Parsed spectral type='M1IIIvar' - our spectral type='M1.00III': code='M' quantity='1.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='YES'
+Test  - Type of star=GIANT
+Info  - spectral type index = 244.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=0.000(0.000 NO) I=4.170(0.040 MEDIUM) J=3.064(0.266 HIGH) H=2.340(0.180 HIGH) K=1.957(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.394(0.010 HIGH) V=5.840(0.010 HIGH) R=0.000(0.000 NO) I=4.170(0.040 MEDIUM) J=3.064(0.288 HIGH) H=2.340(0.288 HIGH) K=1.957(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 244) V-J=2.1157(0.3888 8.0%) V-H=2.2351(0.3580 7.0%) V-K=2.4810(0.3728 6.5%) 
+Test  - Diameter weighted=2.2953(0.2162 4.1%) valid=true [HIGH] chi2=0.2460 from 3 diameters: 
+Test  - Corrected LD error=0.2210 (9.6 %)(error=0.2162, chi2=0.2460)
+Test  - Computing UDs for LD=2.2953 at idx=244 lc=3
+Test  - Computed UD: U=1.9947 B=1.9947 V=2.0264 R=2.0616 I=2.1071 J=2.1359 H=2.1359 K=2.1580 L=2.2557 M=2.2730 N=2.2774
+Test  - parallax 10.86(0.48) is valid...
+Test  - Dist(plx)=92.0810 (4.0699)
+Test  - Extracted magnitudes:  B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=0.000(0.000 NO) I=4.170(0.040 MEDIUM) J=3.064(0.266 HIGH) H=2.340(0.180 HIGH) K=1.957(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.394(0.010 HIGH) V=5.840(0.010 HIGH) R=0.000(0.000 NO) I=4.170(0.040 MEDIUM) J=3.064(0.288 HIGH) H=2.340(0.288 HIGH) K=1.957(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.0000 (0.27138) distance=187.388 (16.73485) chi2=0.5242 chi2Mu=50.8434 [5 bands] [GIANT] from line[M1.00]
+Test  - Fitted Av=0.0000 (0.27138) distance=187.388 (16.735) chi2=0.5242 chi2Mu=50.8434 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.2714) distance=187.3880 (16.7349) chi2=0.5242 chi2Dist=50.8434
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=187.3880 (16.7349) chi2Dist=50.8434
+Test  - Cousin magnitudes: I=4.170(0.040) J=3.042(0.252) H=2.327(0.176) K=1.981(0.288)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=0.000(0.000 NO) I=4.170(0.040 MEDIUM) J=3.042(0.252 HIGH) H=2.327(0.176 HIGH) K=1.981(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=0.000(0.000 NO) I=4.170(0.040 MEDIUM) J=3.042(0.252 HIGH) H=2.327(0.176 HIGH) K=1.981(0.288 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=4.570(0.000 MEDIUM) I=4.170(0.040 MEDIUM) J=3.042(0.252 HIGH) H=2.327(0.176 HIGH) K=1.981(0.288 HIGH) L=1.851(0.000 MEDIUM) M=1.951(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=4.570(0.000 MEDIUM) I=4.170(0.040 MEDIUM) J=3.042(0.252 HIGH) H=2.327(0.176 HIGH) K=1.981(0.288 HIGH) L=1.851(0.000 MEDIUM) M=1.951(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=7.394(0.007 HIGH) V=5.840(0.005 HIGH) R=4.570(0.000 MEDIUM) I=4.170(0.040 MEDIUM) J=3.042(0.252 HIGH) H=2.327(0.176 HIGH) K=1.981(0.288 HIGH) L=1.851(0.000 MEDIUM) M=1.951(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.733 J=3.064 H=2.340 K=1.957
+Test  - IR Fluxes: akari measured fnu_09=9.150 computed fnu_12=4.684 fnu_18=2.177
+Test  - IR Fluxes: computed magN=2.297
+Test  - Diam=2.295 (0.221) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.703375 (0.050813 - 7.22 %), 0.494737 (0.071481 - 14.45 %)
+Test  - ----- Complete: star 'HIP 36232'
+Test  - Parsed spectral type='K5' - our spectral type='K5.00': code='K' quantity='5.00' (0.00) luminosity class='' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=DWARF (by default as no Luminosity Class provided)
+Info  - spectral type index = 220.0 - delta = 0
+Test  - Extracted magnitudes:  B=8.460(0.017 HIGH) V=6.780(0.009 HIGH) R=0.000(0.000 NO) I=4.910(0.031 MEDIUM) J=3.515(0.226 HIGH) H=2.677(0.254 HIGH) K=2.441(0.222 HIGH) L=0.000(0.000 NO) M=1.865(0.493 HIGH)
+Test  - Fixed magnitudes: (fix error) B=8.460(0.017 HIGH) V=6.780(0.010 HIGH) R=0.000(0.000 NO) I=4.910(0.031 MEDIUM) J=3.515(0.254 HIGH) H=2.677(0.254 HIGH) K=2.441(0.254 HIGH) L=0.000(0.000 NO) M=1.865(0.350 HIGH)
+Test  - Diameter (SP 220) V-J=1.8355(0.2976 7.0%) V-H=1.9003(0.2686 6.1%) V-K=1.9003(0.2519 5.8%) 
+Test  - Diameter weighted=1.8831(0.1565 3.6%) valid=true [HIGH] chi2=0.0169 from 3 diameters: 
+Test  - Corrected LD error=0.1609 (8.5 %)(error=0.1565, chi2=0.0169)
+Test  - Computing UDs for LD=1.8831 at idx=220 lc=-1
+Test  - Computed UD: U=1.6991 B=1.6991 V=1.7367 R=1.7610 I=1.7878 J=1.8264 H=1.8264 K=1.8365 L=1.8546 M=1.8620 N=1.8700
+Test  - parallax 2.72(0.67) is valid...
+Test  - Dist(plx)=367.6471 (90.5601)
+Test  - Extracted magnitudes:  B=8.460(0.017 HIGH) V=6.780(0.009 HIGH) R=0.000(0.000 NO) I=4.910(0.031 MEDIUM) J=3.515(0.226 HIGH) H=2.677(0.254 HIGH) K=2.441(0.222 HIGH) L=0.000(0.000 NO) M=1.865(0.493 HIGH)
+Test  - Fixed magnitudes: (fix error) B=8.460(0.017 HIGH) V=6.780(0.010 HIGH) R=0.000(0.000 NO) I=4.910(0.031 MEDIUM) J=3.515(0.254 HIGH) H=2.677(0.254 HIGH) K=2.441(0.254 HIGH) L=0.000(0.000 NO) M=1.865(0.350 HIGH)
+Test  - Av=1.7164 (0.19188) distance=3.468 (0.33725) chi2=0.0207 chi2Mu=310.1091 [4 bands] [DWARF] from line[K5.00]
+Test  - Av=0.7108 (0.19188) distance=177.070 (17.21940) chi2=0.0369 chi2Mu=7.6105 [4 bands] [GIANT] from line[K5.00]
+Test  - Av=0.5646 (0.19188) distance=2461.860 (239.40632) chi2=0.1574 chi2Mu=51.5583 [4 bands] [SUPER_GIANT] from line[K5.00]
+Info  - Spectral type='K5' - Our spectral type='K5.00(III)': updated spectral code / quantity class='K5.00' (0.00)
+Info  - spectral type='K5' - our spectral type='K5.00(III)': updated luminosity class='III'
+Test  - Fitted Av=0.7108 (0.19188) distance=177.070 (17.219) chi2=0.0369 chi2Mu=7.6105 [4 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.7108 (0.1919) distance=177.0703 (17.2194) chi2=0.0369 chi2Dist=7.6105
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=177.0703 (17.2194) chi2Dist=7.6105
+Test  - Cousin magnitudes: I=4.910(0.031) J=3.494(0.214) H=2.668(0.248) K=2.465(0.222)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=8.460(0.017 HIGH) V=6.780(0.009 HIGH) R=0.000(0.000 NO) I=4.910(0.031 MEDIUM) J=3.494(0.214 HIGH) H=2.668(0.248 HIGH) K=2.465(0.222 HIGH) L=0.000(0.000 NO) M=1.865(0.493 HIGH)
+Test  - Corrected magnitudes: (Av) B=7.520(0.017 HIGH) V=6.069(0.009 HIGH) R=0.000(0.000 NO) I=4.550(0.031 MEDIUM) J=3.297(0.214 HIGH) H=2.546(0.248 HIGH) K=2.382(0.222 HIGH) L=0.000(0.000 NO) M=1.837(0.493 HIGH)
+Test  - Computed magnitudes (bright)  B=7.520(0.017 HIGH) V=6.069(0.009 HIGH) R=4.929(0.000 MEDIUM) I=4.550(0.031 MEDIUM) J=3.297(0.214 HIGH) H=2.546(0.248 HIGH) K=2.382(0.222 HIGH) L=2.262(0.000 MEDIUM) M=1.837(0.493 HIGH)
+Test  - Computed magnitudes (faint)  B=7.520(0.017 HIGH) V=6.069(0.009 HIGH) R=4.929(0.000 MEDIUM) I=4.550(0.031 MEDIUM) J=3.297(0.214 HIGH) H=2.546(0.248 HIGH) K=2.382(0.222 HIGH) L=2.262(0.000 MEDIUM) M=1.837(0.493 HIGH)
+Test  - Apparent magnitudes:  B=8.460(0.017 HIGH) V=6.780(0.009 HIGH) R=5.461(0.000 MEDIUM) I=4.910(0.031 MEDIUM) J=3.494(0.214 HIGH) H=2.668(0.248 HIGH) K=2.465(0.222 HIGH) L=2.306(0.000 MEDIUM) M=1.865(0.493 HIGH)
+Test  - Johnson magnitudes: I=4.349 J=3.515 H=2.677 K=2.441
+Test  - IR Fluxes: akari measured fnu_09=6.204 computed fnu_12=3.122 fnu_18=1.437
+Test  - IR Fluxes: computed magN=2.737
+Test  - Diam=1.883 (0.161) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.793011 (0.032754 - 4.13 %), 0.628866 (0.051948 - 8.26 %)
+Test  - ----- Complete: star 'HIP 35846'
+Test  - Parsed spectral type='G8III' - our spectral type='G8.00III': code='G' quantity='8.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 192.0 - delta = 0
+Test  - Extracted magnitudes:  B=5.942(0.005 HIGH) V=5.040(0.003 HIGH) R=0.000(0.000 NO) I=4.220(0.040 MEDIUM) J=2.981(0.222 HIGH) H=2.606(0.188 HIGH) K=2.400(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=5.942(0.010 HIGH) V=5.040(0.010 HIGH) R=0.000(0.000 NO) I=4.220(0.040 MEDIUM) J=2.981(0.224 HIGH) H=2.606(0.224 HIGH) K=2.400(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 192) V-J=1.7034(0.2436 6.2%) V-H=1.5564(0.1940 5.4%) V-K=1.6207(0.1895 5.1%) 
+Test  - Diameter weighted=1.6192(0.1187 3.2%) valid=true [HIGH] chi2=0.1131 from 3 diameters: 
+Test  - Corrected LD error=0.1231 (7.6 %)(error=0.1187, chi2=0.1131)
+Test  - Computing UDs for LD=1.6192 at idx=192 lc=3
+Test  - Computed UD: U=1.4548 B=1.4548 V=1.4872 R=1.5082 I=1.5292 J=1.5573 H=1.5573 K=1.5670 L=1.5968 M=1.6017 N=1.6087
+Test  - parallax 20.52(0.37) is valid...
+Test  - Dist(plx)=48.7329 (0.8787)
+Test  - Extracted magnitudes:  B=5.942(0.005 HIGH) V=5.040(0.003 HIGH) R=0.000(0.000 NO) I=4.220(0.040 MEDIUM) J=2.981(0.222 HIGH) H=2.606(0.188 HIGH) K=2.400(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=5.942(0.010 HIGH) V=5.040(0.010 HIGH) R=0.000(0.000 NO) I=4.220(0.040 MEDIUM) J=2.981(0.224 HIGH) H=2.606(0.224 HIGH) K=2.400(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.3396 (0.15234) distance=59.264 (4.37279) chi2=0.2672 chi2Mu=6.6341 [5 bands] [GIANT] from line[G8.00]
+Test  - Fitted Av=0.3396 (0.15234) distance=59.264 (4.373) chi2=0.2672 chi2Mu=6.6341 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.3396 (0.1523) distance=59.2636 (4.3728) chi2=0.2672 chi2Dist=6.6341
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=59.2636 (4.3728) chi2Dist=6.6341
+Test  - Cousin magnitudes: I=4.220(0.040) J=2.986(0.211) H=2.597(0.183) K=2.424(0.224)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=5.942(0.005 HIGH) V=5.040(0.003 HIGH) R=0.000(0.000 NO) I=4.220(0.040 MEDIUM) J=2.986(0.211 HIGH) H=2.597(0.183 HIGH) K=2.424(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=5.493(0.005 HIGH) V=4.700(0.003 HIGH) R=0.000(0.000 NO) I=4.048(0.040 MEDIUM) J=2.892(0.211 HIGH) H=2.539(0.183 HIGH) K=2.385(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Could not compute differential magnitudes; mgB-mgV=0.792 / B-V [0.940..0.940]; delta > 0.1
+Test  - Computed magnitudes (faint)  B=5.493(0.005 HIGH) V=4.700(0.003 HIGH) R=3.944(0.000 MEDIUM) I=4.048(0.040 MEDIUM) J=2.892(0.211 HIGH) H=2.539(0.183 HIGH) K=2.385(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Apparent magnitudes:  B=5.942(0.005 HIGH) V=5.040(0.003 HIGH) R=4.199(0.000 MEDIUM) I=4.220(0.040 MEDIUM) J=2.986(0.211 HIGH) H=2.597(0.183 HIGH) K=2.424(0.224 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Johnson magnitudes: I=3.738 J=2.981 H=2.606 K=2.400
+Test  - IR Fluxes: akari measured fnu_09=4.025 computed fnu_12=2.013 fnu_18=0.923
+Test  - IR Fluxes: computed magN=3.214
+Test  - Diam=1.619 (0.123) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.843964 (0.022413 - 2.66 %), 0.712275 (0.037832 - 5.31 %)
+Test  - ----- Complete: star 'HIP 36616'
+Test  - Parsed spectral type='K2III' - our spectral type='K2.00III': code='K' quantity='2.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 208.0 - delta = 0
+Test  - Extracted magnitudes:  B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=0.000(0.000 NO) I=4.430(0.040 MEDIUM) J=3.630(0.252 HIGH) H=3.065(0.206 HIGH) K=2.922(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.576(0.010 HIGH) V=5.450(0.010 HIGH) R=0.000(0.000 NO) I=4.430(0.040 MEDIUM) J=3.630(0.300 HIGH) H=3.065(0.300 HIGH) K=2.922(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 208) V-J=1.2937(0.2476 8.3%) V-H=1.3053(0.2177 7.2%) V-K=1.3185(0.2063 6.8%) 
+Test  - Diameter weighted=1.3074(0.1282 4.3%) valid=true [HIGH] chi2=0.0030 from 3 diameters: 
+Test  - Corrected LD error=0.1308 (10.0 %)(error=0.1282, chi2=0.0030)
+Test  - Computing UDs for LD=1.3074 at idx=208 lc=3
+Test  - Computed UD: U=1.1646 B=1.1646 V=1.1904 R=1.2091 I=1.2284 J=1.2518 H=1.2518 K=1.2609 L=1.2876 M=1.2931 N=1.2980
+Test  - parallax 10.32(0.28) is valid...
+Test  - Dist(plx)=96.8992 (2.6290)
+Test  - Extracted magnitudes:  B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=0.000(0.000 NO) I=4.430(0.040 MEDIUM) J=3.630(0.252 HIGH) H=3.065(0.206 HIGH) K=2.922(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.576(0.010 HIGH) V=5.450(0.010 HIGH) R=0.000(0.000 NO) I=4.430(0.040 MEDIUM) J=3.630(0.300 HIGH) H=3.065(0.300 HIGH) K=2.922(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - High mean error on magnitudes: 0.1040
+Test  - Av=0.0000 (0.19767) distance=98.212 (9.04838) chi2=0.2449 chi2Mu=0.0196 [5 bands] [GIANT] from line[K2.00]
+Test  - Fitted Av=0.0000 (0.19767) distance=98.212 (9.048) chi2=0.2449 chi2Mu=0.0196 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1977) distance=98.2119 (9.0484) chi2=0.2449 chi2Dist=0.0196
+Test  - Cousin magnitudes: I=4.430(0.040) J=3.629(0.239) H=3.058(0.201) K=2.946(0.300)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=0.000(0.000 NO) I=4.430(0.040 MEDIUM) J=3.629(0.239 HIGH) H=3.058(0.201 HIGH) K=2.946(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=0.000(0.000 NO) I=4.430(0.040 MEDIUM) J=3.629(0.239 HIGH) H=3.058(0.201 HIGH) K=2.946(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=4.580(0.000 MEDIUM) I=4.430(0.040 MEDIUM) J=3.629(0.239 HIGH) H=3.058(0.201 HIGH) K=2.946(0.300 HIGH) L=2.856(0.000 MEDIUM) M=2.906(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=4.580(0.000 MEDIUM) I=4.430(0.040 MEDIUM) J=3.629(0.239 HIGH) H=3.058(0.201 HIGH) K=2.946(0.300 HIGH) L=2.856(0.000 MEDIUM) M=2.906(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=6.576(0.007 HIGH) V=5.450(0.003 HIGH) R=4.580(0.000 MEDIUM) I=4.430(0.040 MEDIUM) J=3.629(0.239 HIGH) H=3.058(0.201 HIGH) K=2.946(0.300 HIGH) L=2.856(0.000 MEDIUM) M=2.906(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=4.133 J=3.630 H=3.065 K=2.922
+Test  - IR Fluxes: akari measured fnu_09=3.999 computed fnu_12=2.013 fnu_18=0.927
+Test  - IR Fluxes: computed magN=3.214
+Test  - Diam=1.307 (0.131) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.896310 (0.020009 - 2.23 %), 0.803372 (0.035868 - 4.46 %)
+Test  - ----- Complete: star 'HIP 31681'
+Test  - Parsed spectral type='A0IV' - our spectral type='A0.00IV': code='A' quantity='0.00' (0.00) luminosity class='IV' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=SUB_GIANT
+Info  - spectral type index = 80.0 - delta = 0
+Test  - Extracted magnitudes:  B=1.931(0.010 HIGH) V=1.930(0.009 HIGH) R=1.860(nan HIGH) I=1.890(0.009 MEDIUM) J=1.729(0.244 HIGH) H=1.836(0.202 HIGH) K=1.917(0.220 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=1.931(0.010 HIGH) V=1.930(0.010 HIGH) R=1.860(nan HIGH) I=1.890(0.009 MEDIUM) J=1.729(0.244 HIGH) H=1.836(0.244 HIGH) K=1.917(0.244 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 80) V-J=1.5174(0.2402 6.9%) V-H=1.3916(0.1921 6.0%) V-K=1.2914(0.1672 5.6%) 
+Test  - Diameter weighted=1.3824(0.1126 3.5%) valid=true [HIGH] chi2=0.3112 from 3 diameters: 
+Test  - Corrected LD error=0.1159 (8.4 %)(error=0.1126, chi2=0.3112)
+Test  - Computing UDs for LD=1.3824 at idx=80 lc=4
+Test  - Computed UD: U=1.3259 B=1.3154 V=1.3251 R=1.3385 I=1.3488 J=1.3589 H=1.3646 K=1.3672 L=1.3742 M=1.3762 N=1.3784
+Test  - DefineCalFlag: bit 1 (SB9)
+Test  - parallax 29.84(2.23) is valid...
+Test  - Dist(plx)=33.5121 (2.5044)
+Test  - Extracted magnitudes:  B=1.931(0.010 HIGH) V=1.930(0.009 HIGH) R=1.860(nan HIGH) I=1.890(0.009 MEDIUM) J=1.729(0.244 HIGH) H=1.836(0.202 HIGH) K=1.917(0.220 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=1.931(0.010 HIGH) V=1.930(0.010 HIGH) R=1.860(nan HIGH) I=1.890(0.009 MEDIUM) J=1.729(0.244 HIGH) H=1.836(0.244 HIGH) K=1.917(0.244 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.1454 (0.16037) distance=16.735 (1.31711) chi2=0.0830 chi2Mu=40.9347 [5 bands] [DWARF] from line[A0.00]
+Test  - Fitted Av=0.1454 (0.16037) distance=16.735 (1.317) chi2=0.0830 chi2Mu=40.9347 [5 bands] [DWARF]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.1454 (0.1604) distance=16.7353 (1.3171) chi2=0.0830 chi2Dist=40.9347
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=16.7353 (1.3171) chi2Dist=40.9347
+Test  - Cousin magnitudes: I=1.890(0.009) J=1.775(0.231) H=1.835(0.197) K=1.941(0.220)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=1.931(0.010 HIGH) V=1.930(0.009 HIGH) R=1.860(0.100 HIGH) I=1.890(0.009 MEDIUM) J=1.775(0.231 HIGH) H=1.835(0.197 HIGH) K=1.941(0.220 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=1.739(0.010 HIGH) V=1.785(0.009 HIGH) R=1.751(0.100 HIGH) I=1.816(0.009 MEDIUM) J=1.735(0.231 HIGH) H=1.810(0.197 HIGH) K=1.924(0.220 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=1.739(0.010 HIGH) V=1.785(0.009 HIGH) R=1.751(0.100 HIGH) I=1.816(0.009 MEDIUM) J=1.735(0.231 HIGH) H=1.810(0.197 HIGH) K=1.924(0.220 HIGH) L=1.924(0.000 MEDIUM) M=1.924(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=1.739(0.010 HIGH) V=1.785(0.009 HIGH) R=1.751(0.100 HIGH) I=1.816(0.009 MEDIUM) J=1.735(0.231 HIGH) H=1.810(0.197 HIGH) K=1.924(0.220 HIGH) L=1.924(0.000 MEDIUM) M=1.924(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=1.931(0.010 HIGH) V=1.930(0.009 HIGH) R=1.860(0.100 HIGH) I=1.890(0.009 MEDIUM) J=1.775(0.231 HIGH) H=1.835(0.197 HIGH) K=1.941(0.220 HIGH) L=1.933(0.000 MEDIUM) M=1.930(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=1.889 J=1.729 H=1.836 K=1.917
+Test  - IR Fluxes: akari measured fnu_09=10.380 computed fnu_12=5.015 fnu_18=2.255
+Test  - IR Fluxes: computed magN=2.223
+Test  - Diam=1.382 (0.116) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.884556 (0.018588 - 2.10 %), 0.782440 (0.032885 - 4.20 %)
+Test  - ----- Complete: star 'HIP 37300'
+Test  - Parsed spectral type='M0III' - our spectral type='M0.00III': code='M' quantity='0.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 240.0 - delta = 0
+Test  - Extracted magnitudes:  B=6.656(0.008 HIGH) V=5.040(0.004 HIGH) R=0.000(0.000 NO) I=3.320(0.030 HIGH) J=2.019(0.292 HIGH) H=1.201(0.218 HIGH) K=1.147(0.186 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.656(0.010 HIGH) V=5.040(0.010 HIGH) R=0.000(0.000 NO) I=3.320(0.030 HIGH) J=2.019(0.292 HIGH) H=1.201(0.292 HIGH) K=1.147(0.292 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 240) V-J=3.5932(0.6696 8.1%) V-H=3.8634(0.6275 7.1%) V-K=3.5635(0.5429 6.6%) 
+Test  - Diameter weighted=3.6723(0.3506 4.1%) valid=true [HIGH] chi2=0.0750 from 3 diameters: 
+Test  - Corrected LD error=0.3583 (9.8 %)(error=0.3506, chi2=0.0750)
+Test  - Computing UDs for LD=3.6723 at idx=240 lc=3
+Test  - Computed UD: U=3.2046 B=3.2046 V=3.2629 R=3.3162 I=3.3879 J=3.4443 H=3.4443 K=3.4785 L=3.6096 M=3.6364 N=3.6437
+Test  - DefineCalFlag: bit 1 (WDS) - sep = 0.000
+Test  - parallax 6.21(0.29) is valid...
+Test  - Dist(plx)=161.0306 (7.5199)
+Test  - Extracted magnitudes:  B=6.656(0.008 HIGH) V=5.040(0.004 HIGH) R=0.000(0.000 NO) I=3.320(0.030 HIGH) J=2.019(0.292 HIGH) H=1.201(0.218 HIGH) K=1.147(0.186 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.656(0.010 HIGH) V=5.040(0.010 HIGH) R=0.000(0.000 NO) I=3.320(0.030 HIGH) J=2.019(0.292 HIGH) H=1.201(0.292 HIGH) K=1.147(0.292 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.0546 (0.14313) distance=121.106 (7.67610) chi2=0.1404 chi2Mu=13.0980 [6 bands] [GIANT] from line[M0.00]
+Test  - Fitted Av=0.0546 (0.14313) distance=121.106 (7.676) chi2=0.1404 chi2Mu=13.0980 [6 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0546 (0.1431) distance=121.1059 (7.6761) chi2=0.1404 chi2Dist=13.0980
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=121.1059 (7.6761) chi2Dist=13.0980
+Test  - Cousin magnitudes: I=3.320(0.030) J=2.009(0.277) H=1.196(0.213) K=1.171(0.186)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=6.656(0.008 HIGH) V=5.040(0.004 HIGH) R=0.000(0.000 NO) I=3.320(0.030 HIGH) J=2.009(0.277 HIGH) H=1.196(0.213 HIGH) K=1.171(0.186 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.584(0.008 HIGH) V=4.985(0.004 HIGH) R=0.000(0.000 NO) I=3.292(0.030 HIGH) J=1.994(0.277 HIGH) H=1.187(0.213 HIGH) K=1.165(0.186 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.584(0.008 HIGH) V=4.985(0.004 HIGH) R=3.765(0.000 MEDIUM) I=3.292(0.030 HIGH) J=1.994(0.277 HIGH) H=1.187(0.213 HIGH) K=1.165(0.186 HIGH) L=1.045(0.000 MEDIUM) M=1.135(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=6.584(0.008 HIGH) V=4.985(0.004 HIGH) R=3.765(0.000 MEDIUM) I=3.292(0.030 HIGH) J=1.994(0.277 HIGH) H=1.187(0.213 HIGH) K=1.165(0.186 HIGH) L=1.045(0.000 MEDIUM) M=1.135(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=6.656(0.008 HIGH) V=5.040(0.004 HIGH) R=3.806(0.000 MEDIUM) I=3.320(0.030 HIGH) J=2.009(0.277 HIGH) H=1.196(0.213 HIGH) K=1.171(0.186 HIGH) L=1.048(0.000 MEDIUM) M=1.137(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=2.804 J=2.019 H=1.201 K=1.147
+Test  - IR Fluxes: akari measured fnu_09=22.310 computed fnu_12=11.395 fnu_18=5.290
+Test  - IR Fluxes: computed magN=1.332
+Test  - Diam=3.672 (0.358) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.360567 (0.089653 - 24.86 %), 0.130008 (0.064652 - 49.73 %)
+Test  - ----- Complete: star 'HIP 37428'
+Test  - Parsed spectral type='K5' - our spectral type='K5.00': code='K' quantity='5.00' (0.00) luminosity class='' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=DWARF (by default as no Luminosity Class provided)
+Info  - spectral type index = 220.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.491(0.017 HIGH) V=5.930(0.005 HIGH) R=0.000(0.000 NO) I=4.390(0.060 MEDIUM) J=3.135(0.268 HIGH) H=2.418(0.224 HIGH) K=2.179(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.491(0.017 HIGH) V=5.930(0.010 HIGH) R=0.000(0.000 NO) I=4.390(0.060 MEDIUM) J=3.135(0.278 HIGH) H=2.418(0.278 HIGH) K=2.179(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 220) V-J=2.0122(0.3570 7.7%) V-H=2.0241(0.3130 6.7%) V-K=2.0690(0.3001 6.3%) 
+Test  - Diameter weighted=2.0385(0.1853 3.9%) valid=true [HIGH] chi2=0.0090 from 3 diameters: 
+Test  - Corrected LD error=0.1898 (9.3 %)(error=0.1853, chi2=0.0090)
+Test  - Computing UDs for LD=2.0385 at idx=220 lc=-1
+Test  - Computed UD: U=1.8393 B=1.8393 V=1.8800 R=1.9063 I=1.9354 J=1.9771 H=1.9771 K=1.9880 L=2.0077 M=2.0157 N=2.0244
+Test  - parallax 2.14(0.45) is valid...
+Test  - Dist(plx)=467.2897 (98.2619)
+Test  - Extracted magnitudes:  B=7.491(0.017 HIGH) V=5.930(0.005 HIGH) R=0.000(0.000 NO) I=4.390(0.060 MEDIUM) J=3.135(0.268 HIGH) H=2.418(0.224 HIGH) K=2.179(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.491(0.017 HIGH) V=5.930(0.010 HIGH) R=0.000(0.000 NO) I=4.390(0.060 MEDIUM) J=3.135(0.278 HIGH) H=2.418(0.278 HIGH) K=2.179(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=1.1538 (0.20292) distance=3.089 (0.32046) chi2=0.0296 chi2Mu=458.1882 [4 bands] [DWARF] from line[K5.00]
+Test  - Av=0.1461 (0.20292) distance=157.897 (16.38188) chi2=0.0031 chi2Mu=21.4113 [4 bands] [GIANT] from line[K5.00]
+Test  - Av=0.0000 (0.20292) distance=2195.757 (227.81004) chi2=0.0226 chi2Mu=43.5459 [4 bands] [SUPER_GIANT] from line[K5.00]
+Info  - Spectral type='K5' - Our spectral type='K5.00(III)': updated spectral code / quantity class='K5.00' (0.00)
+Info  - spectral type='K5' - our spectral type='K5.00(III)': updated luminosity class='III'
+Test  - Fitted Av=0.1461 (0.20292) distance=157.897 (16.382) chi2=0.0031 chi2Mu=21.4113 [4 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.1461 (0.2029) distance=157.8975 (16.3819) chi2=0.0031 chi2Dist=21.4113
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=157.8975 (16.3819) chi2Dist=21.4113
+Test  - Cousin magnitudes: I=4.390(0.060) J=3.121(0.254) H=2.409(0.218) K=2.203(0.278)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.491(0.017 HIGH) V=5.930(0.005 HIGH) R=0.000(0.000 NO) I=4.390(0.060 MEDIUM) J=3.121(0.254 HIGH) H=2.409(0.218 HIGH) K=2.203(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=7.298(0.017 HIGH) V=5.784(0.005 HIGH) R=0.000(0.000 NO) I=4.316(0.060 MEDIUM) J=3.080(0.254 HIGH) H=2.384(0.218 HIGH) K=2.186(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=7.298(0.017 HIGH) V=5.784(0.005 HIGH) R=4.644(0.000 MEDIUM) I=4.316(0.060 MEDIUM) J=3.080(0.254 HIGH) H=2.384(0.218 HIGH) K=2.186(0.278 HIGH) L=2.066(0.000 MEDIUM) M=2.146(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=7.298(0.017 HIGH) V=5.784(0.005 HIGH) R=4.644(0.000 MEDIUM) I=4.316(0.060 MEDIUM) J=3.080(0.254 HIGH) H=2.384(0.218 HIGH) K=2.186(0.278 HIGH) L=2.066(0.000 MEDIUM) M=2.146(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=7.491(0.017 HIGH) V=5.930(0.005 HIGH) R=4.753(0.000 MEDIUM) I=4.390(0.060 MEDIUM) J=3.121(0.254 HIGH) H=2.409(0.218 HIGH) K=2.203(0.278 HIGH) L=2.075(0.000 MEDIUM) M=2.152(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.892 J=3.135 H=2.418 K=2.179
+Test  - IR Fluxes: akari measured fnu_09=7.581 computed fnu_12=3.815 fnu_18=1.756
+Test  - IR Fluxes: computed magN=2.520
+Test  - Diam=2.038 (0.190) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.760516 (0.040704 - 5.35 %), 0.578384 (0.061912 - 10.70 %)
+Test  - ----- Complete: star 'HIP 37740'
+Test  - Parsed spectral type='G8III' - our spectral type='G8.00III': code='G' quantity='8.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 192.0 - delta = 0
+Test  - Extracted magnitudes:  B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(nan HIGH) I=2.670(0.003 MEDIUM) J=2.051(0.318 HIGH) H=1.642(0.206 HIGH) K=1.527(0.262 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=4.502(0.010 HIGH) V=3.570(0.010 HIGH) R=2.860(nan HIGH) I=2.670(0.003 MEDIUM) J=2.051(0.318 HIGH) H=1.642(0.318 HIGH) K=1.527(0.318 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 192) V-J=2.3760(0.4820 8.8%) V-H=2.3124(0.4088 7.7%) V-K=2.3368(0.3875 7.2%) 
+Test  - Diameter weighted=2.3385(0.2431 4.5%) valid=true [HIGH] chi2=0.0051 from 3 diameters: 
+Test  - Corrected LD error=0.2475 (10.6 %)(error=0.2431, chi2=0.0051)
+Test  - Computing UDs for LD=2.3385 at idx=192 lc=3
+Test  - Computed UD: U=2.1010 B=2.1010 V=2.1478 R=2.1782 I=2.2086 J=2.2492 H=2.2492 K=2.2631 L=2.3061 M=2.3132 N=2.3233
+Test  - parallax 23.07(0.22) is valid...
+Test  - Dist(plx)=43.3463 (0.4134)
+Test  - Extracted magnitudes:  B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(nan HIGH) I=2.670(0.003 MEDIUM) J=2.051(0.318 HIGH) H=1.642(0.206 HIGH) K=1.527(0.262 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=4.502(0.010 HIGH) V=3.570(0.010 HIGH) R=2.860(nan HIGH) I=2.670(0.003 MEDIUM) J=2.051(0.318 HIGH) H=1.642(0.318 HIGH) K=1.527(0.318 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - High mean error on magnitudes: 0.1102
+Test  - Av=0.0000 (0.18976) distance=36.858 (3.54963) chi2=0.0955 chi2Mu=2.8072 [5 bands] [GIANT] from line[G8.00]
+Test  - Fitted Av=0.0000 (0.18976) distance=36.858 (3.550) chi2=0.0955 chi2Mu=2.8072 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1898) distance=36.8581 (3.5496) chi2=0.0955 chi2Dist=2.8072
+Test  - Cousin magnitudes: I=2.670(0.003) J=2.060(0.301) H=1.636(0.201) K=1.551(0.262)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(0.100 HIGH) I=2.670(0.003 MEDIUM) J=2.060(0.301 HIGH) H=1.636(0.201 HIGH) K=1.551(0.262 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(0.100 HIGH) I=2.670(0.003 MEDIUM) J=2.060(0.301 HIGH) H=1.636(0.201 HIGH) K=1.551(0.262 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(0.100 HIGH) I=2.670(0.003 MEDIUM) J=2.060(0.301 HIGH) H=1.636(0.201 HIGH) K=1.551(0.262 HIGH) L=1.491(0.000 MEDIUM) M=1.501(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(0.100 HIGH) I=2.670(0.003 MEDIUM) J=2.060(0.301 HIGH) H=1.636(0.201 HIGH) K=1.551(0.262 HIGH) L=1.491(0.000 MEDIUM) M=1.501(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=4.502(0.004 HIGH) V=3.570(0.003 HIGH) R=2.860(0.100 HIGH) I=2.670(0.003 MEDIUM) J=2.060(0.301 HIGH) H=1.636(0.201 HIGH) K=1.551(0.262 HIGH) L=1.491(0.000 MEDIUM) M=1.501(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=2.455 J=2.051 H=1.642 K=1.527
+Test  - IR Fluxes: akari measured fnu_09=15.990 computed fnu_12=7.998 fnu_18=3.669
+Test  - IR Fluxes: computed magN=1.716
+Test  - Diam=2.338 (0.248) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.693383 (0.057474 - 8.29 %), 0.480779 (0.079702 - 16.58 %)
+Test  - ----- Complete: star 'HIP 37908'
+Test  - Parsed spectral type='K5III' - our spectral type='K5.00III': code='K' quantity='5.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 220.0 - delta = 0
+Test  - Extracted magnitudes:  B=6.315(0.034 HIGH) V=4.890(0.003 HIGH) R=3.720(nan HIGH) I=3.350(0.030 MEDIUM) J=2.065(0.278 HIGH) H=1.277(0.190 HIGH) K=1.238(0.182 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.315(0.034 HIGH) V=4.890(0.010 HIGH) R=3.720(nan HIGH) I=3.350(0.030 MEDIUM) J=2.065(0.278 HIGH) H=1.277(0.278 HIGH) K=1.238(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 220) V-J=3.3111(0.5875 7.7%) V-H=3.4563(0.5345 6.7%) V-K=3.1722(0.4602 6.3%) 
+Test  - Diameter weighted=3.3045(0.3004 3.9%) valid=true [HIGH] chi2=0.0818 from 3 diameters: 
+Test  - Corrected LD error=0.3076 (9.3 %)(error=0.3004, chi2=0.0818)
+Test  - Computing UDs for LD=3.3045 at idx=220 lc=3
+Test  - Computed UD: U=2.9082 B=2.9082 V=2.9732 R=3.0222 I=3.0773 J=3.1351 H=3.1351 K=3.1619 L=3.2507 M=3.2693 N=3.2793
+Test  - DefineCalFlag: bit 1 (SB9)
+Test  - parallax 9.61(0.30) is valid...
+Test  - Dist(plx)=104.0583 (3.2484)
+Test  - Extracted magnitudes:  B=6.315(0.034 HIGH) V=4.890(0.003 HIGH) R=3.720(nan HIGH) I=3.350(0.030 MEDIUM) J=2.065(0.278 HIGH) H=1.277(0.190 HIGH) K=1.238(0.182 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.315(0.034 HIGH) V=4.890(0.010 HIGH) R=3.720(nan HIGH) I=3.350(0.030 MEDIUM) J=2.065(0.278 HIGH) H=1.277(0.278 HIGH) K=1.238(0.278 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.0230 (0.17644) distance=100.948 (8.80742) chi2=0.1151 chi2Mu=0.1073 [5 bands] [GIANT] from line[K5.00]
+Test  - Fitted Av=0.0230 (0.17644) distance=100.948 (8.807) chi2=0.1151 chi2Mu=0.1073 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0230 (0.1764) distance=100.9476 (8.8074) chi2=0.1151 chi2Dist=0.1073
+Test  - Cousin magnitudes: I=3.350(0.030) J=2.057(0.263) H=1.273(0.185) K=1.262(0.182)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=6.315(0.034 HIGH) V=4.890(0.003 HIGH) R=3.720(0.100 HIGH) I=3.350(0.030 MEDIUM) J=2.057(0.263 HIGH) H=1.273(0.185 HIGH) K=1.262(0.182 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.285(0.034 HIGH) V=4.867(0.003 HIGH) R=3.703(0.100 HIGH) I=3.338(0.030 MEDIUM) J=2.051(0.263 HIGH) H=1.269(0.185 HIGH) K=1.259(0.182 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.285(0.034 HIGH) V=4.867(0.003 HIGH) R=3.703(0.100 HIGH) I=3.338(0.030 MEDIUM) J=2.051(0.263 HIGH) H=1.269(0.185 HIGH) K=1.259(0.182 HIGH) L=1.139(0.000 MEDIUM) M=1.219(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=6.285(0.034 HIGH) V=4.867(0.003 HIGH) R=3.703(0.100 HIGH) I=3.338(0.030 MEDIUM) J=2.051(0.263 HIGH) H=1.269(0.185 HIGH) K=1.259(0.182 HIGH) L=1.139(0.000 MEDIUM) M=1.219(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=6.315(0.034 HIGH) V=4.890(0.003 HIGH) R=3.720(0.100 HIGH) I=3.350(0.030 MEDIUM) J=2.057(0.263 HIGH) H=1.273(0.185 HIGH) K=1.262(0.182 HIGH) L=1.141(0.000 MEDIUM) M=1.220(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=2.842 J=2.065 H=1.277 K=1.238
+Test  - IR Fluxes: akari measured fnu_09=18.640 computed fnu_12=9.446 fnu_18=4.363
+Test  - IR Fluxes: computed magN=1.535
+Test  - Diam=3.304 (0.308) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.453749 (0.078490 - 17.30 %), 0.205888 (0.071230 - 34.60 %)
+Test  - ----- Complete: star 'HIP 29731'
+Test  - Parsed spectral type='K2III' - our spectral type='K2.00III': code='K' quantity='2.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 208.0 - delta = 0
+Test  - Extracted magnitudes:  B=8.196(0.013 HIGH) V=6.610(0.006 HIGH) R=0.000(0.000 NO) I=5.000(0.012 HIGH) J=4.122(0.282 HIGH) H=3.231(0.230 HIGH) K=2.865(0.300 HIGH) L=0.000(0.000 NO) M=2.191(0.443 HIGH)
+Test  - Fixed magnitudes: (fix error) B=8.196(0.013 HIGH) V=6.610(0.010 HIGH) R=0.000(0.000 NO) I=5.000(0.012 HIGH) J=4.122(0.300 HIGH) H=3.231(0.300 HIGH) K=2.865(0.300 HIGH) L=0.000(0.000 NO) M=2.191(0.350 HIGH)
+Test  - Diameter (SP 208) V-J=1.1607(0.2221 8.3%) V-H=1.3289(0.2217 7.2%) V-K=1.4570(0.2280 6.8%) 
+Test  - Diameter weighted=1.3297(0.1304 4.3%) valid=true [HIGH] chi2=0.4230 from 3 diameters: 
+Test  - Corrected LD error=0.1331 (10.0 %)(error=0.1304, chi2=0.4230)
+Test  - Computing UDs for LD=1.3297 at idx=208 lc=3
+Test  - Computed UD: U=1.1845 B=1.1845 V=1.2107 R=1.2298 I=1.2494 J=1.2732 H=1.2732 K=1.2824 L=1.3096 M=1.3152 N=1.3202
+Test  - DefineCalFlag: bit 1 (WDS) - sep = -1.000
+Test  - parallax 1.41(0.70) is valid...
+Test  - Dist(plx)=709.2199 (352.0950)
+Test  - Extracted magnitudes:  B=8.196(0.013 HIGH) V=6.610(0.006 HIGH) R=0.000(0.000 NO) I=5.000(0.012 HIGH) J=4.122(0.282 HIGH) H=3.231(0.230 HIGH) K=2.865(0.300 HIGH) L=0.000(0.000 NO) M=2.191(0.443 HIGH)
+Test  - Fixed magnitudes: (fix error) B=8.196(0.013 HIGH) V=6.610(0.010 HIGH) R=0.000(0.000 NO) I=5.000(0.012 HIGH) J=4.122(0.300 HIGH) H=3.231(0.300 HIGH) K=2.865(0.300 HIGH) L=0.000(0.000 NO) M=2.191(0.350 HIGH)
+Test  - Av=1.0404 (0.14292) distance=105.996 (6.66581) chi2=0.1869 chi2Mu=14.4272 [6 bands] [GIANT] from line[K2.00]
+Test  - Fitted Av=1.0404 (0.14292) distance=105.996 (6.666) chi2=0.1869 chi2Mu=14.4272 [6 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=1.0404 (0.1429) distance=105.9964 (6.6658) chi2=0.1869 chi2Dist=14.4272
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=105.9964 (6.6658) chi2Dist=14.4272
+Test  - Cousin magnitudes: I=5.000(0.012) J=4.092(0.268) H=3.218(0.224) K=2.889(0.300)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=8.196(0.013 HIGH) V=6.610(0.006 HIGH) R=0.000(0.000 NO) I=5.000(0.012 HIGH) J=4.092(0.268 HIGH) H=3.218(0.224 HIGH) K=2.889(0.300 HIGH) L=0.000(0.000 NO) M=2.191(0.443 HIGH)
+Test  - Corrected magnitudes: (Av) B=6.820(0.013 HIGH) V=5.570(0.006 HIGH) R=0.000(0.000 NO) I=4.473(0.012 HIGH) J=3.803(0.268 HIGH) H=3.041(0.224 HIGH) K=2.768(0.300 HIGH) L=0.000(0.000 NO) M=2.151(0.443 HIGH)
+Test  - Computed magnitudes (bright)  B=6.820(0.013 HIGH) V=5.570(0.006 HIGH) R=4.700(0.000 MEDIUM) I=4.473(0.012 HIGH) J=3.803(0.268 HIGH) H=3.041(0.224 HIGH) K=2.768(0.300 HIGH) L=2.678(0.000 MEDIUM) M=2.151(0.443 HIGH)
+Test  - Computed magnitudes (faint)  B=6.820(0.013 HIGH) V=5.570(0.006 HIGH) R=4.700(0.000 MEDIUM) I=4.473(0.012 HIGH) J=3.803(0.268 HIGH) H=3.041(0.224 HIGH) K=2.768(0.300 HIGH) L=2.678(0.000 MEDIUM) M=2.151(0.443 HIGH)
+Test  - Apparent magnitudes:  B=8.196(0.013 HIGH) V=6.610(0.006 HIGH) R=5.478(0.000 MEDIUM) I=5.000(0.012 HIGH) J=4.092(0.268 HIGH) H=3.218(0.224 HIGH) K=2.889(0.300 HIGH) L=2.742(0.000 MEDIUM) M=2.191(0.443 HIGH)
+Test  - Johnson magnitudes: I=4.657 J=4.122 H=3.231 K=2.865
+Test  - IR Fluxes: akari measured fnu_09=4.716 computed fnu_12=2.374 fnu_18=1.093
+Test  - IR Fluxes: computed magN=3.035
+Test  - Diam=1.330 (0.133) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.892866 (0.020647 - 2.31 %), 0.797210 (0.036870 - 4.62 %)
+Test  - ----- Complete: star 'HIP 38601'
+Test  - Parsed spectral type='M1III:' - our spectral type='M1.00III': code='M' quantity='1.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 244.0 - delta = 0
+Test  - Extracted magnitudes:  B=8.503(0.014 HIGH) V=6.840(0.006 HIGH) R=0.000(0.000 NO) I=4.910(0.040 HIGH) J=3.857(0.254 HIGH) H=2.930(0.188 HIGH) K=2.627(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=8.503(0.014 HIGH) V=6.840(0.010 HIGH) R=0.000(0.000 NO) I=4.910(0.040 HIGH) J=3.857(0.296 HIGH) H=2.930(0.296 HIGH) K=2.627(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 244) V-J=1.5231(0.2877 8.2%) V-H=1.7709(0.2915 7.1%) V-K=1.8591(0.2871 6.7%) 
+Test  - Diameter weighted=1.7351(0.1679 4.2%) valid=true [HIGH] chi2=0.3454 from 3 diameters: 
+Test  - Corrected LD error=0.1715 (9.9 %)(error=0.1679, chi2=0.3454)
+Test  - Computing UDs for LD=1.7351 at idx=244 lc=3
+Test  - Computed UD: U=1.5079 B=1.5079 V=1.5318 R=1.5584 I=1.5928 J=1.6146 H=1.6146 K=1.6313 L=1.7052 M=1.7182 N=1.7216
+Test  - parallax 1.59(0.75) is valid...
+Test  - Dist(plx)=628.9308 (296.6655)
+Test  - Extracted magnitudes:  B=8.503(0.014 HIGH) V=6.840(0.006 HIGH) R=0.000(0.000 NO) I=4.910(0.040 HIGH) J=3.857(0.254 HIGH) H=2.930(0.188 HIGH) K=2.627(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=8.503(0.014 HIGH) V=6.840(0.010 HIGH) R=0.000(0.000 NO) I=4.910(0.040 HIGH) J=3.857(0.296 HIGH) H=2.930(0.296 HIGH) K=2.627(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.1063 (0.14517) distance=282.735 (18.29025) chi2=0.0447 chi2Mu=2.8199 [6 bands] [GIANT] from line[M1.00]
+Test  - Fitted Av=0.1063 (0.14517) distance=282.735 (18.290) chi2=0.0447 chi2Mu=2.8199 [6 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.1063 (0.1452) distance=282.7348 (18.2902) chi2=0.0447 chi2Dist=2.8199
+Test  - Cousin magnitudes: I=4.910(0.040) J=3.828(0.241) H=2.919(0.183) K=2.651(0.296)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=8.503(0.014 HIGH) V=6.840(0.006 HIGH) R=0.000(0.000 NO) I=4.910(0.040 HIGH) J=3.828(0.241 HIGH) H=2.919(0.183 HIGH) K=2.651(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=8.362(0.014 HIGH) V=6.734(0.006 HIGH) R=0.000(0.000 NO) I=4.856(0.040 HIGH) J=3.799(0.241 HIGH) H=2.901(0.183 HIGH) K=2.639(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=8.362(0.014 HIGH) V=6.734(0.006 HIGH) R=5.464(0.000 MEDIUM) I=4.856(0.040 HIGH) J=3.799(0.241 HIGH) H=2.901(0.183 HIGH) K=2.639(0.296 HIGH) L=2.509(0.000 MEDIUM) M=2.609(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=8.362(0.014 HIGH) V=6.734(0.006 HIGH) R=5.464(0.000 MEDIUM) I=4.856(0.040 HIGH) J=3.799(0.241 HIGH) H=2.901(0.183 HIGH) K=2.639(0.296 HIGH) L=2.509(0.000 MEDIUM) M=2.609(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=8.503(0.014 HIGH) V=6.840(0.006 HIGH) R=5.543(0.000 MEDIUM) I=4.910(0.040 HIGH) J=3.828(0.241 HIGH) H=2.919(0.183 HIGH) K=2.651(0.296 HIGH) L=2.515(0.000 MEDIUM) M=2.613(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=4.493 J=3.857 H=2.930 K=2.627
+Test  - IR Fluxes: akari measured fnu_09=6.071 computed fnu_12=3.108 fnu_18=1.445
+Test  - IR Fluxes: computed magN=2.742
+Test  - Diam=1.735 (0.171) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.822288 (0.032909 - 4.00 %), 0.676158 (0.054122 - 8.00 %)
+Test  - ----- Complete: star 'HIP 29798'
+Test  - Parsed spectral type='K5II' - our spectral type='K5.00II': code='K' quantity='5.00' (0.00) luminosity class='II' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=SUB_SUPER_GIANT
+Info  - spectral type index = 220.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.955(0.013 HIGH) V=6.390(0.006 HIGH) R=0.000(0.000 NO) I=4.820(0.031 MEDIUM) J=3.857(0.262 HIGH) H=2.985(0.186 HIGH) K=2.787(0.314 HIGH) L=0.000(0.000 NO) M=2.555(0.493 HIGH)
+Test  - Fixed magnitudes: (fix error) B=7.955(0.013 HIGH) V=6.390(0.010 HIGH) R=0.000(0.000 NO) I=4.820(0.031 MEDIUM) J=3.857(0.314 HIGH) H=2.985(0.314 HIGH) K=2.787(0.314 HIGH) L=0.000(0.000 NO) M=2.555(0.350 HIGH)
+Test  - Diameter (SP 220) V-J=1.3777(0.2760 8.7%) V-H=1.5432(0.2695 7.6%) V-K=1.5498(0.2538 7.1%) 
+Test  - Diameter weighted=1.5005(0.1540 4.5%) valid=true [HIGH] chi2=0.1232 from 3 diameters: 
+Test  - Corrected LD error=0.1569 (10.5 %)(error=0.1540, chi2=0.1232)
+Test  - Computing UDs for LD=1.5005 at idx=220 lc=2
+Test  - Computed UD: U=1.3205 B=1.3205 V=1.3501 R=1.3723 I=1.3973 J=1.4236 H=1.4236 K=1.4357 L=1.4761 M=1.4845 N=1.4890
+Test  - parallax 3.40(0.57) is valid...
+Test  - Dist(plx)=294.1176 (49.3080)
+Test  - Extracted magnitudes:  B=7.955(0.013 HIGH) V=6.390(0.006 HIGH) R=0.000(0.000 NO) I=4.820(0.031 MEDIUM) J=3.857(0.262 HIGH) H=2.985(0.186 HIGH) K=2.787(0.314 HIGH) L=0.000(0.000 NO) M=2.555(0.493 HIGH)
+Test  - Fixed magnitudes: (fix error) B=7.955(0.013 HIGH) V=6.390(0.010 HIGH) R=0.000(0.000 NO) I=4.820(0.031 MEDIUM) J=3.857(0.314 HIGH) H=2.985(0.314 HIGH) K=2.787(0.314 HIGH) L=0.000(0.000 NO) M=2.555(0.350 HIGH)
+Test  - High mean error on magnitudes: 0.1088
+Test  - Av=0.0028 (0.18835) distance=211.348 (20.16398) chi2=0.0752 chi2Mu=2.9352 [5 bands] [GIANT] from line[K5.00]
+Test  - Fitted Av=0.0028 (0.18835) distance=211.348 (20.164) chi2=0.0752 chi2Mu=2.9352 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0028 (0.1883) distance=211.3483 (20.1640) chi2=0.0752 chi2Dist=2.9352
+Test  - Cousin magnitudes: I=4.820(0.031) J=3.837(0.249) H=2.977(0.181) K=2.811(0.314)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.955(0.013 HIGH) V=6.390(0.006 HIGH) R=0.000(0.000 NO) I=4.820(0.031 MEDIUM) J=3.837(0.249 HIGH) H=2.977(0.181 HIGH) K=2.811(0.314 HIGH) L=0.000(0.000 NO) M=2.555(0.493 HIGH)
+Test  - Corrected magnitudes: (Av) B=7.951(0.013 HIGH) V=6.387(0.006 HIGH) R=0.000(0.000 NO) I=4.819(0.031 MEDIUM) J=3.836(0.249 HIGH) H=2.976(0.181 HIGH) K=2.811(0.314 HIGH) L=0.000(0.000 NO) M=2.555(0.493 HIGH)
+Test  - Computed magnitudes (bright)  B=7.951(0.013 HIGH) V=6.387(0.006 HIGH) R=5.247(0.000 MEDIUM) I=4.819(0.031 MEDIUM) J=3.836(0.249 HIGH) H=2.976(0.181 HIGH) K=2.811(0.314 HIGH) L=2.691(0.000 MEDIUM) M=2.555(0.493 HIGH)
+Test  - Computed magnitudes (faint)  B=7.951(0.013 HIGH) V=6.387(0.006 HIGH) R=5.247(0.000 MEDIUM) I=4.819(0.031 MEDIUM) J=3.836(0.249 HIGH) H=2.976(0.181 HIGH) K=2.811(0.314 HIGH) L=2.691(0.000 MEDIUM) M=2.555(0.493 HIGH)
+Test  - Apparent magnitudes:  B=7.955(0.013 HIGH) V=6.390(0.006 HIGH) R=5.249(0.000 MEDIUM) I=4.820(0.031 MEDIUM) J=3.837(0.249 HIGH) H=2.977(0.181 HIGH) K=2.811(0.314 HIGH) L=2.691(0.000 MEDIUM) M=2.555(0.493 HIGH)
+Test  - Johnson magnitudes: I=4.445 J=3.857 H=2.985 K=2.787
+Test  - IR Fluxes: akari measured fnu_09=5.019 computed fnu_12=2.544 fnu_18=1.175
+Test  - IR Fluxes: computed magN=2.960
+Test  - Diam=1.500 (0.157) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.864963 (0.026910 - 3.11 %), 0.748161 (0.046553 - 6.22 %)
+Test  - ----- Complete: star 'HIP 29196'
+Test  - Parsed spectral type='K4III' - our spectral type='K4.00III': code='K' quantity='4.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 216.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.556(0.016 HIGH) V=5.930(0.005 HIGH) R=0.000(0.000 NO) I=4.250(0.040 MEDIUM) J=3.143(0.268 HIGH) H=2.287(0.220 HIGH) K=2.129(0.256 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.556(0.016 HIGH) V=5.930(0.010 HIGH) R=0.000(0.000 NO) I=4.250(0.040 MEDIUM) J=3.143(0.268 HIGH) H=2.287(0.268 HIGH) K=2.129(0.268 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 216) V-J=1.9772(0.3382 7.4%) V-H=2.1522(0.3208 6.5%) V-K=2.0989(0.2935 6.1%) 
+Test  - Diameter weighted=2.0842(0.1827 3.8%) valid=true [HIGH] chi2=0.0718 from 3 diameters: 
+Test  - Corrected LD error=0.1874 (9.0 %)(error=0.1827, chi2=0.0718)
+Test  - Computing UDs for LD=2.0842 at idx=216 lc=3
+Test  - Computed UD: U=1.8438 B=1.8438 V=1.8855 R=1.9165 I=1.9499 J=1.9872 H=1.9872 K=2.0033 L=2.0510 M=2.0620 N=2.0686
+Test  - parallax 1.58(0.48) is valid...
+Test  - Dist(plx)=632.9114 (192.2769)
+Test  - Extracted magnitudes:  B=7.556(0.016 HIGH) V=5.930(0.005 HIGH) R=0.000(0.000 NO) I=4.250(0.040 MEDIUM) J=3.143(0.268 HIGH) H=2.287(0.220 HIGH) K=2.129(0.256 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=7.556(0.016 HIGH) V=5.930(0.010 HIGH) R=0.000(0.000 NO) I=4.250(0.040 MEDIUM) J=3.143(0.268 HIGH) H=2.287(0.268 HIGH) K=2.129(0.268 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Av=0.6348 (0.17033) distance=115.848 (9.79756) chi2=0.0373 chi2Mu=28.9945 [5 bands] [GIANT] from line[K4.00]
+Test  - Fitted Av=0.6348 (0.17033) distance=115.848 (9.798) chi2=0.0373 chi2Mu=28.9945 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.6348 (0.1703) distance=115.8482 (9.7976) chi2=0.0373 chi2Dist=28.9945
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=115.8482 (9.7976) chi2Dist=28.9945
+Test  - Cousin magnitudes: I=4.250(0.040) J=3.126(0.254) H=2.280(0.215) K=2.153(0.256)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.556(0.016 HIGH) V=5.930(0.005 HIGH) R=0.000(0.000 NO) I=4.250(0.040 MEDIUM) J=3.126(0.254 HIGH) H=2.280(0.215 HIGH) K=2.153(0.256 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.716(0.016 HIGH) V=5.295(0.005 HIGH) R=0.000(0.000 NO) I=3.929(0.040 MEDIUM) J=2.949(0.254 HIGH) H=2.171(0.215 HIGH) K=2.079(0.256 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.716(0.016 HIGH) V=5.295(0.005 HIGH) R=4.245(0.000 MEDIUM) I=3.929(0.040 MEDIUM) J=2.949(0.254 HIGH) H=2.171(0.215 HIGH) K=2.079(0.256 HIGH) L=1.969(0.000 MEDIUM) M=2.039(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=6.716(0.016 HIGH) V=5.295(0.005 HIGH) R=4.245(0.000 MEDIUM) I=3.929(0.040 MEDIUM) J=2.949(0.254 HIGH) H=2.171(0.215 HIGH) K=2.079(0.256 HIGH) L=1.969(0.000 MEDIUM) M=2.039(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=7.556(0.016 HIGH) V=5.930(0.005 HIGH) R=4.720(0.000 MEDIUM) I=4.250(0.040 MEDIUM) J=3.126(0.254 HIGH) H=2.280(0.215 HIGH) K=2.153(0.256 HIGH) L=2.008(0.000 MEDIUM) M=2.064(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=3.814 J=3.143 H=2.287 K=2.129
+Test  - IR Fluxes: akari measured fnu_09=9.342 computed fnu_12=4.725 fnu_18=2.180
+Test  - IR Fluxes: computed magN=2.288
+Test  - Diam=2.084 (0.187) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.750630 (0.040754 - 5.43 %), 0.563446 (0.061182 - 10.86 %)
+Test  - ----- Complete: star 'HIP 38848'
+Test  - Parsed spectral type='K3III' - our spectral type='K3.00III': code='K' quantity='3.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 212.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=0.000(0.000 NO) I=4.660(0.040 MEDIUM) J=3.720(0.256 HIGH) H=3.090(0.248 HIGH) K=3.000(0.326 HIGH) L=0.000(0.000 NO) M=2.690(0.527 HIGH)
+Test  - Fixed magnitudes: (fix error) B=7.085(0.010 HIGH) V=5.800(0.010 HIGH) R=0.000(0.000 NO) I=4.660(0.040 MEDIUM) J=3.720(0.326 HIGH) H=3.090(0.326 HIGH) K=3.000(0.326 HIGH) L=0.000(0.000 NO) M=2.690(0.350 HIGH)
+Test  - Diameter (SP 212) V-J=1.3193(0.2743 9.0%) V-H=1.3455(0.2439 7.9%) V-K=1.3076(0.2223 7.4%) 
+Test  - Diameter weighted=1.3237(0.1410 4.6%) valid=true [HIGH] chi2=0.0068 from 3 diameters: 
+Test  - Corrected LD error=0.1435 (10.8 %)(error=0.1410, chi2=0.0068)
+Test  - Computing UDs for LD=1.3237 at idx=212 lc=3
+Test  - Computed UD: U=1.1749 B=1.1749 V=1.2014 R=1.2209 I=1.2413 J=1.2652 H=1.2652 K=1.2749 L=1.3030 M=1.3094 N=1.3139
+Test  - parallax 7.00(0.40) is valid...
+Test  - Dist(plx)=142.8571 (8.1633)
+Test  - Extracted magnitudes:  B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=0.000(0.000 NO) I=4.660(0.040 MEDIUM) J=3.720(0.256 HIGH) H=3.090(0.248 HIGH) K=3.000(0.326 HIGH) L=0.000(0.000 NO) M=2.690(0.527 HIGH)
+Test  - Fixed magnitudes: (fix error) B=7.085(0.010 HIGH) V=5.800(0.010 HIGH) R=0.000(0.000 NO) I=4.660(0.040 MEDIUM) J=3.720(0.326 HIGH) H=3.090(0.326 HIGH) K=3.000(0.326 HIGH) L=0.000(0.000 NO) M=2.690(0.350 HIGH)
+Test  - High mean error on magnitudes: 0.1130
+Test  - Av=0.0000 (0.19287) distance=130.439 (12.80053) chi2=0.1450 chi2Mu=0.6413 [5 bands] [GIANT] from line[K3.00]
+Test  - Fitted Av=0.0000 (0.19287) distance=130.439 (12.801) chi2=0.1450 chi2Mu=0.6413 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1929) distance=130.4387 (12.8005) chi2=0.1450 chi2Dist=0.6413
+Test  - Cousin magnitudes: I=4.660(0.040) J=3.718(0.243) H=3.084(0.242) K=3.024(0.326)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=0.000(0.000 NO) I=4.660(0.040 MEDIUM) J=3.718(0.243 HIGH) H=3.084(0.242 HIGH) K=3.024(0.326 HIGH) L=0.000(0.000 NO) M=2.690(0.527 HIGH)
+Test  - Corrected magnitudes: (Av) B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=0.000(0.000 NO) I=4.660(0.040 MEDIUM) J=3.718(0.243 HIGH) H=3.084(0.242 HIGH) K=3.024(0.326 HIGH) L=0.000(0.000 NO) M=2.690(0.527 HIGH)
+Test  - Computed magnitudes (bright)  B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=4.820(0.000 MEDIUM) I=4.660(0.040 MEDIUM) J=3.718(0.243 HIGH) H=3.084(0.242 HIGH) K=3.024(0.326 HIGH) L=2.924(0.000 MEDIUM) M=2.690(0.527 HIGH)
+Test  - Computed magnitudes (faint)  B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=4.820(0.000 MEDIUM) I=4.660(0.040 MEDIUM) J=3.718(0.243 HIGH) H=3.084(0.242 HIGH) K=3.024(0.326 HIGH) L=2.924(0.000 MEDIUM) M=2.690(0.527 HIGH)
+Test  - Apparent magnitudes:  B=7.085(0.009 HIGH) V=5.800(0.005 HIGH) R=4.820(0.000 MEDIUM) I=4.660(0.040 MEDIUM) J=3.718(0.243 HIGH) H=3.084(0.242 HIGH) K=3.024(0.326 HIGH) L=2.924(0.000 MEDIUM) M=2.690(0.527 HIGH)
+Test  - Johnson magnitudes: I=4.303 J=3.720 H=3.090 K=3.000
+Test  - IR Fluxes: akari measured fnu_09=4.186 computed fnu_12=2.113 fnu_18=0.974
+Test  - IR Fluxes: computed magN=3.161
+Test  - Diam=1.324 (0.143) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.893806 (0.022176 - 2.48 %), 0.798889 (0.039642 - 4.96 %)
+Test  - ----- Complete: star 'HIP 38975'
+Test  - Parsed spectral type='K0' - our spectral type='K0.00': code='K' quantity='0.00' (0.00) luminosity class='' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=DWARF (by default as no Luminosity Class provided)
+Info  - spectral type index = 200.0 - delta = 0
+Test  - Extracted magnitudes:  B=7.518(0.016 HIGH) V=6.050(0.006 HIGH) R=0.000(0.000 NO) I=4.570(0.021 MEDIUM) J=3.608(0.270 HIGH) H=2.962(0.232 HIGH) K=2.736(0.312 HIGH) L=0.000(0.000 NO) M=2.396(0.506 HIGH)
+Test  - Fixed magnitudes: (fix error) B=7.518(0.016 HIGH) V=6.050(0.010 HIGH) R=0.000(0.000 NO) I=4.570(0.021 MEDIUM) J=3.608(0.312 HIGH) H=2.962(0.312 HIGH) K=2.736(0.312 HIGH) L=0.000(0.000 NO) M=2.396(0.350 HIGH)
+Test  - Diameter (SP 200) V-J=1.4123(0.2810 8.6%) V-H=1.4328(0.2485 7.5%) V-K=1.4747(0.2399 7.1%) 
+Test  - Diameter weighted=1.4436(0.1472 4.4%) valid=true [HIGH] chi2=0.0156 from 3 diameters: 
+Test  - Corrected LD error=0.1500 (10.4 %)(error=0.1472, chi2=0.0156)
+Test  - Computing UDs for LD=1.4436 at idx=200 lc=-1
+Test  - Computed UD: U=1.3198 B=1.3198 V=1.3457 R=1.3624 I=1.3792 J=1.4056 H=1.4056 K=1.4119 L=1.4244 M=1.4290 N=1.4350
+Test  - DefineCalFlag: bit 1 (WDS) - sep = 0.200
+Test  - parallax 2.72(0.55) is valid...
+Test  - Dist(plx)=367.6471 (74.3404)
+Test  - Extracted magnitudes:  B=7.518(0.016 HIGH) V=6.050(0.006 HIGH) R=0.000(0.000 NO) I=4.570(0.021 MEDIUM) J=3.608(0.270 HIGH) H=2.962(0.232 HIGH) K=2.736(0.312 HIGH) L=0.000(0.000 NO) M=2.396(0.506 HIGH)
+Test  - Fixed magnitudes: (fix error) B=7.518(0.016 HIGH) V=6.050(0.010 HIGH) R=0.000(0.000 NO) I=4.570(0.021 MEDIUM) J=3.608(0.312 HIGH) H=2.962(0.312 HIGH) K=2.736(0.312 HIGH) L=0.000(0.000 NO) M=2.396(0.350 HIGH)
+Test  - High mean error on magnitudes: 0.1081
+Test  - Av=1.6585 (0.21811) distance=5.160 (0.58096) chi2=0.2558 chi2Mu=339.7887 [4 bands] [DWARF] from line[K0.00]
+Test  - Av=1.1948 (0.21811) distance=69.288 (7.80187) chi2=0.1160 chi2Mu=51.9929 [4 bands] [GIANT] from line[K0.00]
+Test  - Av=1.0309 (0.21811) distance=1555.242 (175.12037) chi2=0.1906 chi2Mu=38.8329 [4 bands] [SUPER_GIANT] from line[K0.00]
+Info  - Spectral type='K0' - Our spectral type='K0.00(I)': updated spectral code / quantity class='K0.00' (0.00)
+Info  - spectral type='K0' - our spectral type='K0.00(I)': updated luminosity class='I'
+Test  - Fitted Av=1.0309 (0.21811) distance=1555.242 (175.120) chi2=0.1906 chi2Mu=38.8329 [4 bands] [SUPER_GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=1.0309 (0.2181) distance=1555.2425 (175.1204) chi2=0.1906 chi2Dist=38.8329
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=1555.2425 (175.1204) chi2Dist=38.8329
+Test  - Cousin magnitudes: I=4.570(0.021) J=3.598(0.256) H=2.953(0.226) K=2.760(0.312)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=7.518(0.016 HIGH) V=6.050(0.006 HIGH) R=0.000(0.000 NO) I=4.570(0.021 MEDIUM) J=3.598(0.256 HIGH) H=2.953(0.226 HIGH) K=2.760(0.312 HIGH) L=0.000(0.000 NO) M=2.396(0.506 HIGH)
+Test  - Corrected magnitudes: (Av) B=6.155(0.016 HIGH) V=5.019(0.006 HIGH) R=0.000(0.000 NO) I=4.048(0.021 MEDIUM) J=3.312(0.256 HIGH) H=2.777(0.226 HIGH) K=2.640(0.312 HIGH) L=0.000(0.000 NO) M=2.356(0.506 HIGH)
+Test  - Could not compute differential magnitudes; mgB-mgV=1.135 / B-V [1.240..1.240]; delta > 0.1
+Test  - Computed magnitudes (faint)  B=6.155(0.016 HIGH) V=5.019(0.006 HIGH) R=4.022(0.000 LOW) I=4.048(0.021 MEDIUM) J=3.312(0.256 HIGH) H=2.777(0.226 HIGH) K=2.640(0.312 HIGH) L=0.000(0.000 NO) M=2.356(0.506 HIGH)
+Test  - Apparent magnitudes:  B=7.518(0.016 HIGH) V=6.050(0.006 HIGH) R=4.793(0.000 LOW) I=4.570(0.021 MEDIUM) J=3.598(0.256 HIGH) H=2.953(0.226 HIGH) K=2.760(0.312 HIGH) L=0.000(0.000 NO) M=2.396(0.506 HIGH)
+Test  - Johnson magnitudes: I=4.200 J=3.608 H=2.962 K=2.736
+Test  - IR Fluxes: akari measured fnu_09=4.921 computed fnu_12=2.450 fnu_18=1.121
+Test  - IR Fluxes: computed magN=3.001
+Test  - Diam=1.444 (0.150) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.874562 (0.024928 - 2.85 %), 0.764858 (0.043603 - 5.70 %)
+Test  - ----- Complete: star 'HIP 39177'
+Test  - Parsed spectral type='K3III' - our spectral type='K3.00III': code='K' quantity='3.00' (0.00) luminosity class='III' Double='NO' SpectralBinary='NO' Variable='NO'
+Test  - Type of star=GIANT
+Info  - spectral type index = 212.0 - delta = 0
+Test  - Extracted magnitudes:  B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=0.000(0.000 NO) I=4.490(0.040 MEDIUM) J=3.468(0.300 HIGH) H=2.907(0.230 HIGH) K=2.700(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.917(0.016 HIGH) V=5.600(0.010 HIGH) R=0.000(0.000 NO) I=4.490(0.040 MEDIUM) J=3.468(0.300 HIGH) H=2.907(0.300 HIGH) K=2.700(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Diameter (SP 212) V-J=1.4953(0.2862 8.3%) V-H=1.4615(0.2438 7.2%) V-K=1.5105(0.2363 6.8%) 
+Test  - Diameter weighted=1.4894(0.1460 4.3%) valid=true [HIGH] chi2=0.0107 from 3 diameters: 
+Test  - Corrected LD error=0.1491 (10.0 %)(error=0.1460, chi2=0.0107)
+Test  - Computing UDs for LD=1.4894 at idx=212 lc=3
+Test  - Computed UD: U=1.3221 B=1.3221 V=1.3519 R=1.3738 I=1.3968 J=1.4236 H=1.4236 K=1.4346 L=1.4661 M=1.4733 N=1.4785
+Test  - DefineCalFlag: bit 1 (WDS) - sep = -1.000
+Test  - parallax 4.11(0.51) is valid...
+Test  - Dist(plx)=243.3090 (30.1916)
+Test  - Extracted magnitudes:  B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=0.000(0.000 NO) I=4.490(0.040 MEDIUM) J=3.468(0.300 HIGH) H=2.907(0.230 HIGH) K=2.700(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Fixed magnitudes: (fix error) B=6.917(0.016 HIGH) V=5.600(0.010 HIGH) R=0.000(0.000 NO) I=4.490(0.040 MEDIUM) J=3.468(0.300 HIGH) H=2.907(0.300 HIGH) K=2.700(0.300 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - High mean error on magnitudes: 0.1040
+Test  - Av=0.0000 (0.18306) distance=119.548 (11.02003) chi2=0.0869 chi2Mu=21.1329 [5 bands] [GIANT] from line[K3.00]
+Test  - Fitted Av=0.0000 (0.18306) distance=119.548 (11.020) chi2=0.0869 chi2Mu=21.1329 [5 bands] [GIANT]
+Test  - ComputeExtinctionCoefficient: (fit) Av=0.0000 (0.1831) distance=119.5480 (11.0200) chi2=0.0869 chi2Dist=21.1329
+Info  - ComputeExtinctionCoefficient: bad chi2 for distance=119.5480 (11.0200) chi2Dist=21.1329
+Test  - Cousin magnitudes: I=4.490(0.040) J=3.464(0.285) H=2.898(0.224) K=2.724(0.296)
+Test  - sclsvrCALIBRATOR::ComputeMissingMagnitude()
+Test  - Initial magnitudes:  B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=0.000(0.000 NO) I=4.490(0.040 MEDIUM) J=3.464(0.285 HIGH) H=2.898(0.224 HIGH) K=2.724(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Corrected magnitudes: (Av) B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=0.000(0.000 NO) I=4.490(0.040 MEDIUM) J=3.464(0.285 HIGH) H=2.898(0.224 HIGH) K=2.724(0.296 HIGH) L=0.000(0.000 NO) M=0.000(0.000 NO)
+Test  - Computed magnitudes (bright)  B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=4.620(0.000 MEDIUM) I=4.490(0.040 MEDIUM) J=3.464(0.285 HIGH) H=2.898(0.224 HIGH) K=2.724(0.296 HIGH) L=2.624(0.000 MEDIUM) M=2.684(0.000 MEDIUM)
+Test  - Computed magnitudes (faint)  B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=4.620(0.000 MEDIUM) I=4.490(0.040 MEDIUM) J=3.464(0.285 HIGH) H=2.898(0.224 HIGH) K=2.724(0.296 HIGH) L=2.624(0.000 MEDIUM) M=2.684(0.000 MEDIUM)
+Test  - Apparent magnitudes:  B=6.917(0.016 HIGH) V=5.600(0.004 HIGH) R=4.620(0.000 MEDIUM) I=4.490(0.040 MEDIUM) J=3.464(0.285 HIGH) H=2.898(0.224 HIGH) K=2.724(0.296 HIGH) L=2.624(0.000 MEDIUM) M=2.684(0.000 MEDIUM)
+Test  - Johnson magnitudes: I=4.097 J=3.468 H=2.907 K=2.700
+Test  - IR Fluxes: akari measured fnu_09=5.172 computed fnu_12=2.611 fnu_18=1.203
+Test  - IR Fluxes: computed magN=2.932
+Test  - Diam=1.489 (0.149) - base=102.5 - wlen=2.200
+Test  - V(dV), V2(dV2)= 0.866852 (0.025411 - 2.93 %), 0.751433 (0.044055 - 5.86 %)
+Info  - Sort: start
+Info  - Sort: done.
+Test  - Complete: done [25 stars]
+Test  - (What should be) Science star 'HIP 34088' has been removed.
+Info  - Star Property statistics:
+Info  - Property [HD]: values (23) origins (23 [I/280] ) confidences (23 [HIGH] )
+Info  - Property [HIP]: values (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [DM]: values (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [TYC1]: values (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [TYC2]: values (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [TYC3]: values (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [opt]: values (0)
+Info  - Property [2MASS]: values (24) origins (24 [II/246/out] ) confidences (24 [HIGH] )
+Info  - Property [AKARI]: values (0)
+Info  - Property [WISE]: values (23) origins (23 [II/328/allwise] ) confidences (23 [HIGH] )
+Info  - Property [RAJ2000]: values (24) errors (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [DEJ2000]: values (24) errors (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [TARGET_ID]: values (0)
+Info  - Property [GroupSize]: values (0)
+Info  - Property [jd]: values (0)
+Info  - Property [pmRa]: values (24) errors (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [pmDec]: values (24) errors (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [plx]: values (24) errors (24) origins (24 [I/311/hip2] ) confidences (24 [HIGH] )
+Info  - Property [SpType]: values (24) origins (24 [I/280] ) confidences (24 [HIGH] )
+Info  - Property [ObjTypes]: values (0)
+Info  - Property [SIMBAD]: values (0)
+Info  - Property [VarFlag1]: values (3) origins (3 [I/280] ) confidences (3 [HIGH] )
+Info  - Property [VarFlag2]: values (7) origins (7 [I/280] ) confidences (7 [HIGH] )
+Info  - Property [VarFlag3]: values (17) origins (17 [I/280] ) confidences (17 [HIGH] )
+Info  - Property [MultFlag]: values (2) origins (2 [I/280] ) confidences (2 [HIGH] )
+Info  - Property [BinFlag]: values (0)
+Info  - Property [SBC9]: values (3) origins (3 [B/sb9/main] ) confidences (3 [HIGH] )
+Info  - Property [WDS]: values (15) origins (15 [B/wds/wds] ) confidences (15 [HIGH] )
+Info  - Property [sep1]: values (15) origins (15 [B/wds/wds] ) confidences (15 [HIGH] )
+Info  - Property [sep2]: values (15) origins (15 [B/wds/wds] ) confidences (15 [HIGH] )
+Info  - Property [RadVel]: values (22) origins (22 [I/196/main] ) confidences (22 [HIGH] )
+Info  - Property [RotVel]: values (5) origins (5 [V/50/catalog] ) confidences (5 [HIGH] )
+Info  - Property [B]: values (24) errors (24) origins (24 [I/239/hip_main] ) confidences (24 [HIGH] )
+Info  - Property [B-V]: values (0)
+Info  - Property [V]: values (24) errors (24) origins (24 [I/239/hip_main] ) confidences (24 [HIGH] )
+Info  - Property [V-Icous]: values (0)
+Info  - Property [ref_V-Icous]: values (0)
+Info  - Property [R]: values (24) origins (19 [computed] 5 [II/7A/catalog] ) confidences (1 [LOW] 18 [MEDIUM] 5 [HIGH] )
+Info  - Property [I]: values (24) origins (19 [computed] 5 [II/7A/catalog] ) confidences (12 [MEDIUM] 12 [HIGH] )
+Info  - Property [Icous]: values (0)
+Info  - Property [J]: values (24) errors (24) origins (24 [II/246/out] ) confidences (24 [HIGH] )
+Info  - Property [H]: values (24) errors (23) origins (1 [computed] 23 [II/246/out] ) confidences (1 [MEDIUM] 23 [HIGH] )
+Info  - Property [K]: values (24) errors (24) origins (24 [II/246/out] ) confidences (24 [HIGH] )
+Info  - Property [Qflag]: values (0)
+Info  - Property [L]: values (22) origins (21 [computed] 1 [II/7A/catalog] ) confidences (21 [MEDIUM] 1 [HIGH] )
+Info  - Property [M]: values (22) errors (6) origins (16 [computed] 6 [II/328/allwise] ) confidences (16 [MEDIUM] 6 [HIGH] )
+Info  - Property [N]: values (24) errors (23) origins (1 [computed] 23 [II/328/allwise] ) confidences (24 [HIGH] )
+Info  - Property [Qph_wise]: values (0)
+Info  - Property [S09]: values (0)
+Info  - Property [F12]: values (0)
+Info  - Property [S18]: values (0)
+Info  - Property [Jcous]: values (0)
+Info  - Property [Hcous]: values (0)
+Info  - Property [Kcous]: values (0)
+Info  - Property [diam_vj]: values (0)
+Info  - Property [diam_vh]: values (0)
+Info  - Property [diam_vk]: values (0)
+Info  - Property [diam_count]: values (0)
+Info  - Property [LDD]: values (23) errors (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [e_LDD_rel]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [diam_chi2]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [CalFlag]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Info  - Property [diamFlag]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Info  - Property [diamFlagInfo]: values (0)
+Info  - Property [Teff_SpType]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Info  - Property [logg_SpType]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Info  - Property [UD_U]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_B]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_V]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_R]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_I]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_J]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_H]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_K]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_L]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_M]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [UD_N]: values (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [Av]: values (0)
+Info  - Property [Av_fit_chi2]: values (0)
+Info  - Property [dist_plx]: values (0)
+Info  - Property [dist_fit]: values (0)
+Info  - Property [dist_fit_chi2]: values (0)
+Info  - Property [vis2]: values (23) errors (23) origins (23 [computed] ) confidences (23 [HIGH] )
+Info  - Property [dist]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Info  - Property [color_table_index]: values (0)
+Info  - Property [color_table_delta]: values (0)
+Info  - Property [color_table_index_fix]: values (0)
+Info  - Property [color_table_delta_fix]: values (0)
+Info  - Property [lum_class]: values (0)
+Info  - Property [lum_class_delta]: values (0)
+Info  - Property [SpType_JMMC]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Info  - Property [Name]: values (24) origins (24 [computed] ) confidences (24 [HIGH] )
+Test  - GetVotable: size=81835 bytes / capacity=142592 bytes
+Info  - Saving Votable: zet_Gem.vot
+Warn  - sclsvrServerExit[0] : 

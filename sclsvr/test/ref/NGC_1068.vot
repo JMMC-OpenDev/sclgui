@@ -1,0 +1,943 @@
+<?xml version="1.0"?>
+
+<VOTABLE version="1.1"
+         xmlns="http://www.ivoa.net/xml/VOTable/v1.1"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.1 http://www.ivoa.net/xml/VOTable/VOTable-1.1.xsd">
+
+ <DESCRIPTION>
+  SearchCal software: http://www.jmmc.fr/searchcal (In case of problem, please report to jmmc-user-support@jmmc.fr)
+  Request parameters: -outputFormat 2013.7 -minMagRange 5 -mag 1.8 -objectName NGC_1068 -wlen 2.2 -band K -bright false -baseMax 102.45 -ra 02:42:40.83 -file NGC_1068.vot -dec -00:00:48.40 -maxMagRange 8  
+  Generated on (UTC): SearchCal Regression Test Mode
+ </DESCRIPTION>
+
+ <COOSYS ID="J2000" equinox="J2000." epoch="J2000." system="eq_FK5"/>
+
+ <RESOURCE name="SearchCal Regression Test Mode">
+  <TABLE name="NGC_1068.vot" nrows="28">
+<PARAM name="ServerCommand" datatype="char" arraysize="*" value="SearchCal"/>
+<PARAM name="SearchCalServerVersion" datatype="char" arraysize="*" value="SearchCal Regression Test Mode"/>
+<PARAM name="objectName" datatype="char" arraysize="*" value="NGC_1068"/>
+<PARAM name="mag" datatype="double" value="1.8"/>
+<PARAM name="diffRa" datatype="double" value="1800" unit="arcmin"/>
+<PARAM name="diffDec" datatype="double" value="600" unit="arcmin"/>
+<PARAM name="radius" datatype="double" value="" unit="arcmin"/>
+<PARAM name="band" datatype="char" arraysize="*" value="K"/>
+<PARAM name="minMagRange" datatype="double" value="5"/>
+<PARAM name="maxMagRange" datatype="double" value="8"/>
+<PARAM name="ra" datatype="char" arraysize="*" value="02:42:40.83" unit="HH:MM:SS.TT"/>
+<PARAM name="dec" datatype="char" arraysize="*" value="-00:00:48.40" unit="DD:MM:SS.TT"/>
+<PARAM name="baseMax" datatype="double" value="102.45" unit="m"/>
+<PARAM name="wlen" datatype="double" value="2.2" unit="um"/>
+<PARAM name="file" datatype="char" arraysize="*" value="NGC_1068.vot"/>
+<PARAM name="bright" datatype="boolean" value="false"/>
+<PARAM name="noScienceStar" datatype="boolean" value="true"/>
+<PARAM name="outputFormat" datatype="double" value="2013.7"/>
+<PARAM name="diagnose" datatype="boolean" value="false"/>
+
+<PARAM name="ConfidenceIndexes" datatype="int" value="0">
+ <VALUES>
+  <OPTION name="0" value="NO"/>
+  <OPTION name="1" value="LOW"/>
+  <OPTION name="2" value="MEDIUM"/>
+  <OPTION name="3" value="HIGH"/>
+ </VALUES>
+</PARAM>
+<PARAM name="OriginIndexes" datatype="int" value="0">
+ <VALUES>
+  <OPTION name="0" value="NO CATALOG"/>
+  <OPTION name="1" value="MIXED CATALOG"/>
+  <OPTION name="2" value="computed"/>
+  <OPTION name="3" value="II/297/irc"/>
+  <OPTION name="4" value="I/280"/>
+  <OPTION name="5" value="I/280B"/>
+  <OPTION name="6" value="V/50/catalog"/>
+  <OPTION name="7" value="II/225/catalog"/>
+  <OPTION name="8" value="B/denis"/>
+  <OPTION name="9" value="J/A+A/413/1037/table1"/>
+  <OPTION name="10" value="I/196/main"/>
+  <OPTION name="11" value="I/239/hip_main"/>
+  <OPTION name="12" value="I/311/hip2"/>
+  <OPTION name="13" value="J/A+A/393/183/catalog"/>
+  <OPTION name="14" value="II/246/out"/>
+  <OPTION name="15" value="J/A+A/433/1155"/>
+  <OPTION name="16" value="MIDI"/>
+  <OPTION name="17" value="II/7A/catalog"/>
+  <OPTION name="18" value="V/36B/bsc4s"/>
+  <OPTION name="19" value="B/sb9/main"/>
+  <OPTION name="20" value="I/284"/>
+  <OPTION name="21" value="B/wds/wds"/>
+  <OPTION name="22" value="I/280B"/>
+  <OPTION name="23" value="SIMBAD"/>
+  <OPTION name="24" value="II/328/allwise"/>
+ </VALUES>
+</PARAM>
+   <FIELD name="HD" ID="col0" ucd="ID_HD" datatype="char" arraysize="*">
+    <DESCRIPTION>HD identifier, click to call Simbad on this object</DESCRIPTION>
+    <!-- values (6) origins (6 [I/280] ) confidences (6 [HIGH] ) -->
+    <LINK href="http://simbad.u-strasbg.fr/simbad/sim-id?protocol=html&amp;Ident=HD${HD}"/>
+   </FIELD>
+   <PARAM name="HD.origin" ID="col1" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property HD (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="HD.confidence" ID="col2" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property HD (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="HIP" ID="col3" ucd="ID_HIP" datatype="char" arraysize="*">
+    <DESCRIPTION>HIP identifier, click to call Simbad on this object</DESCRIPTION>
+    <!-- values (9) origins (9 [I/280] ) confidences (9 [HIGH] ) -->
+    <LINK href="http://simbad.u-strasbg.fr/simbad/sim-id?protocol=html&amp;Ident=HIP${HIP}"/>
+   </FIELD>
+   <PARAM name="HIP.origin" ID="col4" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property HIP (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="HIP.confidence" ID="col5" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property HIP (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="DM" ID="col6" ucd="ID_DM" datatype="char" arraysize="*">
+    <DESCRIPTION>DM number</DESCRIPTION>
+    <!-- values (19) origins (19 [I/280] ) confidences (19 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="DM.origin" ID="col7" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property DM (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="DM.confidence" ID="col8" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property DM (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="TYC1" ID="col9" ucd="ID_TYC1" datatype="char" arraysize="*">
+    <DESCRIPTION>TYC1 number from Tycho-2</DESCRIPTION>
+    <!-- values (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="TYC1.origin" ID="col10" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property TYC1 (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="TYC1.confidence" ID="col11" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property TYC1 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="TYC2" ID="col12" ucd="ID_TYC2" datatype="char" arraysize="*">
+    <DESCRIPTION>TYC2 number from Tycho-2</DESCRIPTION>
+    <!-- values (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="TYC2.origin" ID="col13" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property TYC2 (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="TYC2.confidence" ID="col14" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property TYC2 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="TYC3" ID="col15" ucd="ID_TYC3" datatype="char" arraysize="*">
+    <DESCRIPTION>TYC3 number from Tycho-2</DESCRIPTION>
+    <!-- values (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="TYC3.origin" ID="col16" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property TYC3 (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="TYC3.confidence" ID="col17" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property TYC3 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="2MASS" ID="col18" ucd="ID_2MASS" datatype="char" arraysize="*">
+    <DESCRIPTION>2MASS identifier, click to call VizieR on this object</DESCRIPTION>
+    <!-- values (28) origins (28 [II/246/out] ) confidences (28 [HIGH] ) -->
+    <LINK href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=II/246/out&amp;-out=2MASS&amp;2MASS=${2MASS}"/>
+   </FIELD>
+   <PARAM name="2MASS.origin" ID="col19" ucd="REFER_CODE" datatype="int" value="14">
+    <DESCRIPTION>Origin index of property 2MASS (II/246/out)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="2MASS.confidence" ID="col20" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property 2MASS (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="WISE" ID="col21" ucd="ID_WISE" datatype="char" arraysize="*">
+    <DESCRIPTION>WISE All-Sky Release Catalog name, click to call VizieR on this object</DESCRIPTION>
+    <!-- values (28) origins (28 [II/328/allwise] ) confidences (28 [HIGH] ) -->
+    <LINK href="http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=II%2F328&amp;AllWISE=${WISE}"/>
+   </FIELD>
+   <PARAM name="WISE.origin" ID="col22" ucd="REFER_CODE" datatype="int" value="24">
+    <DESCRIPTION>Origin index of property WISE (II/328/allwise)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="WISE.confidence" ID="col23" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property WISE (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="RAJ2000" ID="col24" ucd="POS_EQ_RA_MAIN" ref="J2000" datatype="char" arraysize="*" unit="h:m:s">
+    <DESCRIPTION>Right Ascension - J2000</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+    <LINK href="http://simbad.u-strasbg.fr/simbad/sim-coo?CooDefinedFrames=none&amp;Coord=${RAJ2000}%20${DEJ2000}&amp;CooEpoch=2000&amp;CooFrame=FK5&amp;CooEqui=2000&amp;Radius.unit=arcsec&amp;Radius=1"/>
+   </FIELD>
+   <PARAM name="RAJ2000.origin" ID="col25" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property RAJ2000 (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="RAJ2000.confidence" ID="col26" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property RAJ2000 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_RAJ2000" ID="col27" ucd="POS_EQ_RA_ERROR" datatype="double" unit="mas">
+    <DESCRIPTION>Standard error in Right Ascension * cos(Declination) - J2000</DESCRIPTION>
+   </FIELD>
+   <FIELD name="DEJ2000" ID="col28" ucd="POS_EQ_DEC_MAIN" ref="J2000" datatype="char" arraysize="*" unit="d:m:s">
+    <DESCRIPTION>Declination - J2000</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+    <LINK href="http://simbad.u-strasbg.fr/simbad/sim-coo?CooDefinedFrames=none&amp;Coord=${RAJ2000}%20${DEJ2000}&amp;CooEpoch=2000&amp;CooFrame=FK5&amp;CooEqui=2000&amp;Radius.unit=arcsec&amp;Radius=1"/>
+   </FIELD>
+   <PARAM name="DEJ2000.origin" ID="col29" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property DEJ2000 (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="DEJ2000.confidence" ID="col30" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property DEJ2000 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_DEJ2000" ID="col31" ucd="POS_EQ_DEC_ERROR" datatype="double" unit="mas">
+    <DESCRIPTION>Standard error in Declination - J2000</DESCRIPTION>
+   </FIELD>
+   <FIELD name="pmRa" ID="col32" ucd="POS_EQ_PMRA" datatype="double" unit="mas/yr">
+    <DESCRIPTION>Proper Motion in Right Ascension * cos(Declination)</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="pmRa.origin" ID="col33" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property pmRa (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="pmRa.confidence" ID="col34" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property pmRa (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_pmRa" ID="col35" ucd="POS_EQ_PMRA_ERROR" datatype="double" unit="mas/yr">
+    <DESCRIPTION>Standard error in Proper Motion in Right Ascension * cos(Declination)</DESCRIPTION>
+   </FIELD>
+   <FIELD name="pmDec" ID="col36" ucd="POS_EQ_PMDEC" datatype="double" unit="mas/yr">
+    <DESCRIPTION>Proper Motion in Declination</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [I/280] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="pmDec.origin" ID="col37" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property pmDec (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="pmDec.confidence" ID="col38" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property pmDec (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_pmDec" ID="col39" ucd="POS_EQ_PMDEC_ERROR" datatype="double" unit="mas/yr">
+    <DESCRIPTION>Standard error in Proper Motion in Declination</DESCRIPTION>
+   </FIELD>
+   <FIELD name="plx" ID="col40" ucd="POS_PARLX_TRIG" datatype="double" unit="mas">
+    <DESCRIPTION>Trigonometric Parallax</DESCRIPTION>
+    <!-- values (9) errors (9) origins (9 [I/311/hip2] ) confidences (9 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="plx.origin" ID="col41" ucd="REFER_CODE" datatype="int" value="12">
+    <DESCRIPTION>Origin index of property plx (I/311/hip2)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="plx.confidence" ID="col42" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property plx (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_Plx" ID="col43" ucd="POS_PARLX_TRIG_ERROR" datatype="double">
+    <DESCRIPTION>Standard error in Parallax</DESCRIPTION>
+   </FIELD>
+   <FIELD name="SpType" ID="col44" ucd="SPECT_TYPE_MK" datatype="char" arraysize="*">
+    <DESCRIPTION>MK Spectral Type</DESCRIPTION>
+    <!-- values (18) origins (18 [I/280] ) confidences (18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="SpType.origin" ID="col45" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property SpType (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="SpType.confidence" ID="col46" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property SpType (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="VarFlag3" ID="col47" ucd="VAR_CLASS" datatype="char" arraysize="*">
+    <DESCRIPTION>Variability type among C,D,M,P,R and U</DESCRIPTION>
+    <!-- values (5) origins (5 [I/280] ) confidences (5 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="VarFlag3.origin" ID="col48" ucd="REFER_CODE" datatype="int" value="4">
+    <DESCRIPTION>Origin index of property VarFlag3 (I/280)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="VarFlag3.confidence" ID="col49" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property VarFlag3 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="B" ID="col50" ucd="PHOT_JHN_B" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in B-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (19 [I/280] 9 [I/239/hip_main] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <FIELD name="B.origin" ID="col51" ucd="REFER_CODE" datatype="int" type="hidden">
+    <DESCRIPTION>Origin index of property B</DESCRIPTION>
+   </FIELD>
+   <PARAM name="B.confidence" ID="col52" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property B (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_B" ID="col53" ucd="PHOT_JHN_B_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in B-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="V" ID="col54" ucd="PHOT_JHN_V" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in V-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (19 [I/280] 9 [I/239/hip_main] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <FIELD name="V.origin" ID="col55" ucd="REFER_CODE" datatype="int" type="hidden">
+    <DESCRIPTION>Origin index of property V</DESCRIPTION>
+   </FIELD>
+   <PARAM name="V.confidence" ID="col56" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property V (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_V" ID="col57" ucd="PHOT_JHN_V_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in V-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="R" ID="col58" ucd="PHOT_JHN_R" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in R-band</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (4 [LOW] 24 [MEDIUM] ) -->
+   </FIELD>
+   <PARAM name="R.origin" ID="col59" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property R (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="R.confidence" ID="col60" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property R</DESCRIPTION>
+   </FIELD>
+   <FIELD name="I" ID="col61" ucd="PHOT_JHN_I" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in I-band</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (3 [LOW] 22 [MEDIUM] 3 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="I.origin" ID="col62" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property I (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="I.confidence" ID="col63" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property I</DESCRIPTION>
+   </FIELD>
+   <FIELD name="J" ID="col64" ucd="PHOT_JHN_J" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in J-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [II/246/out] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="J.origin" ID="col65" ucd="REFER_CODE" datatype="int" value="14">
+    <DESCRIPTION>Origin index of property J (II/246/out)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="J.confidence" ID="col66" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property J (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_J" ID="col67" ucd="PHOT_JHN_J_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in J-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="H" ID="col68" ucd="PHOT_JHN_H" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in H-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [II/246/out] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="H.origin" ID="col69" ucd="REFER_CODE" datatype="int" value="14">
+    <DESCRIPTION>Origin index of property H (II/246/out)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="H.confidence" ID="col70" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property H (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_H" ID="col71" ucd="PHOT_JHN_H_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in H-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="K" ID="col72" ucd="PHOT_JHN_K" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in K-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [II/246/out] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="K.origin" ID="col73" ucd="REFER_CODE" datatype="int" value="14">
+    <DESCRIPTION>Origin index of property K (II/246/out)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="K.confidence" ID="col74" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property K (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_K" ID="col75" ucd="PHOT_JHN_K_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in K-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="L" ID="col76" ucd="PHOT_JHN_L" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in L-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [II/328/allwise] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="L.origin" ID="col77" ucd="REFER_CODE" datatype="int" value="24">
+    <DESCRIPTION>Origin index of property L (II/328/allwise)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="L.confidence" ID="col78" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property L (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_L" ID="col79" ucd="PHOT_JHN_L_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in L-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="M" ID="col80" ucd="PHOT_JHN_M" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in M-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [II/328/allwise] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="M.origin" ID="col81" ucd="REFER_CODE" datatype="int" value="24">
+    <DESCRIPTION>Origin index of property M (II/328/allwise)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="M.confidence" ID="col82" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property M (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_M" ID="col83" ucd="PHOT_JHN_M_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in M-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="N" ID="col84" ucd="PHOT_JHN_N" datatype="double" unit="mag">
+    <DESCRIPTION>Johnson's Magnitude in N-band</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [II/328/allwise] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="N.origin" ID="col85" ucd="REFER_CODE" datatype="int" value="24">
+    <DESCRIPTION>Origin index of property N (II/328/allwise)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="N.confidence" ID="col86" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property N (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_N" ID="col87" ucd="PHOT_JHN_N_ERROR" datatype="double" unit="mag">
+    <DESCRIPTION>Error on Johnson's Magnitude in N-band</DESCRIPTION>
+   </FIELD>
+   <FIELD name="LDD" ID="col88" ucd="LD_DIAM" datatype="double" unit="mas">
+    <DESCRIPTION>Limb-darkened diameter</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="LDD.origin" ID="col89" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property LDD (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="LDD.confidence" ID="col90" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property LDD</DESCRIPTION>
+   </FIELD>
+   <FIELD name="e_LDD" ID="col91" ucd="LD_DIAM_ERROR" datatype="double" unit="mas">
+    <DESCRIPTION>Error on limb-darkened diameter</DESCRIPTION>
+   </FIELD>
+   <FIELD name="e_LDD_rel" ID="col92" ucd="LD_DIAM_ERROR_REL" datatype="double" unit="%">
+    <DESCRIPTION>Relative error on limb-darkened diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="e_LDD_rel.origin" ID="col93" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property e_LDD_rel (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="e_LDD_rel.confidence" ID="col94" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property e_LDD_rel</DESCRIPTION>
+   </FIELD>
+   <FIELD name="diam_chi2" ID="col95" ucd="DIAM_CHI2" datatype="double">
+    <DESCRIPTION>Reduced chi-square of the LDD diameter estimation</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="diam_chi2.origin" ID="col96" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property diam_chi2 (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="diam_chi2.confidence" ID="col97" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property diam_chi2 (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="CalFlag" ID="col98" ucd="CAL_FLAG" datatype="int">
+    <DESCRIPTION>Calibrator Flag (bit field):  bit 0 is set if LDD_CHI is above 5; bit 1 is set if the star is a known double in WDS (Cat. B/wds/wds) with separation inferior to 1 arcsec; bit 2 is set if the star is, according to Simbad's OTYPEs, one of the codes which signals a possible binarity or pulsating stars.</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="CalFlag.origin" ID="col99" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property CalFlag (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="CalFlag.confidence" ID="col100" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property CalFlag (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="diamFlag" ID="col101" ucd="DIAM_FLAG" datatype="boolean">
+    <DESCRIPTION>Diameter Flag (true means the LDD diameter is computed)</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="diamFlag.origin" ID="col102" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property diamFlag (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="diamFlag.confidence" ID="col103" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property diamFlag (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="Teff_SpType" ID="col104" ucd="TEFF_SPTYP" datatype="double" unit="K">
+    <DESCRIPTION>Effective Temperature adopted from Spectral Type</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="Teff_SpType.origin" ID="col105" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property Teff_SpType (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="Teff_SpType.confidence" ID="col106" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property Teff_SpType (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="logg_SpType" ID="col107" ucd="LOGG_SPTYP" datatype="double" unit="[cm/s2]">
+    <DESCRIPTION>Gravity adopted from Spectral Type</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="logg_SpType.origin" ID="col108" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property logg_SpType (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="logg_SpType.confidence" ID="col109" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property logg_SpType (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_U" ID="col110" ucd="UD_U" datatype="double" unit="mas">
+    <DESCRIPTION>U-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_U.origin" ID="col111" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_U (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_U.confidence" ID="col112" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_U</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_B" ID="col113" ucd="UD_B" datatype="double" unit="mas">
+    <DESCRIPTION>B-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_B.origin" ID="col114" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_B (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_B.confidence" ID="col115" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_B</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_V" ID="col116" ucd="UD_V" datatype="double" unit="mas">
+    <DESCRIPTION>V-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_V.origin" ID="col117" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_V (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_V.confidence" ID="col118" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_V</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_R" ID="col119" ucd="UD_R" datatype="double" unit="mas">
+    <DESCRIPTION>R-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_R.origin" ID="col120" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_R (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_R.confidence" ID="col121" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_R</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_I" ID="col122" ucd="UD_I" datatype="double" unit="mas">
+    <DESCRIPTION>I-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_I.origin" ID="col123" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_I (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_I.confidence" ID="col124" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_I</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_J" ID="col125" ucd="UD_J" datatype="double" unit="mas">
+    <DESCRIPTION>J-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_J.origin" ID="col126" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_J (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_J.confidence" ID="col127" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_J</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_H" ID="col128" ucd="UD_H" datatype="double" unit="mas">
+    <DESCRIPTION>H-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_H.origin" ID="col129" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_H (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_H.confidence" ID="col130" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_H</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_K" ID="col131" ucd="UD_K" datatype="double" unit="mas">
+    <DESCRIPTION>K-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_K.origin" ID="col132" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_K (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_K.confidence" ID="col133" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_K</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_L" ID="col134" ucd="UD_L" datatype="double" unit="mas">
+    <DESCRIPTION>L-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_L.origin" ID="col135" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_L (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_L.confidence" ID="col136" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_L</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_M" ID="col137" ucd="UD_M" datatype="double" unit="mas">
+    <DESCRIPTION>M-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_M.origin" ID="col138" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_M (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_M.confidence" ID="col139" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_M</DESCRIPTION>
+   </FIELD>
+   <FIELD name="UD_N" ID="col140" ucd="UD_N" datatype="double" unit="mas">
+    <DESCRIPTION>N-band Uniform-Disk Diameter</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="UD_N.origin" ID="col141" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property UD_N (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="UD_N.confidence" ID="col142" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property UD_N</DESCRIPTION>
+   </FIELD>
+   <FIELD name="vis2" ID="col143" ucd="VIS2" datatype="double">
+    <DESCRIPTION>Squared Visibility</DESCRIPTION>
+    <!-- values (28) errors (28) origins (28 [computed] ) confidences (10 [MEDIUM] 18 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="vis2.origin" ID="col144" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property vis2 (computed)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="vis2.confidence" ID="col145" ucd="CODE_QUALITY" datatype="int" type="hidden">
+    <DESCRIPTION>Confidence index of property vis2</DESCRIPTION>
+   </FIELD>
+   <FIELD name="vis2Err" ID="col146" ucd="VIS2_ERROR" datatype="double">
+    <DESCRIPTION>Error on Squared Visibility</DESCRIPTION>
+   </FIELD>
+   <FIELD name="dist" ID="col147" ucd="DIST" datatype="double" unit="deg">
+    <DESCRIPTION>Calibrator to Science object Angular Distance</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="dist.origin" ID="col148" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property dist (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="dist.confidence" ID="col149" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property dist (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="SpType_JMMC" ID="col150" ucd="SPECTRAL_TYPE" datatype="char" arraysize="*">
+    <DESCRIPTION>Corrected spectral type by the JMMC</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+   </FIELD>
+   <PARAM name="SpType_JMMC.origin" ID="col151" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property SpType_JMMC (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="SpType_JMMC.confidence" ID="col152" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property SpType_JMMC (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="Name" ID="col153" ucd="NAME" datatype="char" arraysize="*">
+    <DESCRIPTION>Star name (identifier from HIP, HD, TYC, 2MASS, DM or coordinates 'RA DE'), click to call Simbad on this object</DESCRIPTION>
+    <!-- values (28) origins (28 [computed] ) confidences (28 [HIGH] ) -->
+    <LINK href="http://simbad.u-strasbg.fr/simbad/sim-id?protocol=html&amp;Ident=${Name}"/>
+   </FIELD>
+   <PARAM name="Name.origin" ID="col154" ucd="REFER_CODE" datatype="int" value="2">
+    <DESCRIPTION>Origin index of property Name (computed)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="Name.confidence" ID="col155" ucd="CODE_QUALITY" datatype="int" value="3">
+    <DESCRIPTION>Confidence index of property Name (HIGH)</DESCRIPTION>
+   </PARAM>
+   <FIELD name="deletedFlag" ID="col156" ucd="DELETED_FLAG" datatype="boolean" type="hidden">
+    <DESCRIPTION>Used by SearchCal GUI to flag deleted stars</DESCRIPTION>
+   </FIELD>
+   <PARAM name="deletedFlag.origin" ID="col157" ucd="DELETED_FLAG.origin" datatype="int" value="0">
+    <DESCRIPTION>Origin of property deletedFlag (NO)</DESCRIPTION>
+   </PARAM>
+   <PARAM name="deletedFlag.confidence" ID="col158" ucd="DELETED_FLAG.confidence" datatype="int" value="0">
+    <DESCRIPTION>Confidence index of property deletedFlag (NO)</DESCRIPTION>
+   </PARAM>
+   <GROUP name="HD" ucd="ID_HD">
+    <DESCRIPTION>HD with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col0"/>
+    <PARAMref ref="col1"/>
+    <PARAMref ref="col2"/>
+   </GROUP>
+   <GROUP name="HIP" ucd="ID_HIP">
+    <DESCRIPTION>HIP with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col3"/>
+    <PARAMref ref="col4"/>
+    <PARAMref ref="col5"/>
+   </GROUP>
+   <GROUP name="DM" ucd="ID_DM">
+    <DESCRIPTION>DM with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col6"/>
+    <PARAMref ref="col7"/>
+    <PARAMref ref="col8"/>
+   </GROUP>
+   <GROUP name="TYC1" ucd="ID_TYC1">
+    <DESCRIPTION>TYC1 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col9"/>
+    <PARAMref ref="col10"/>
+    <PARAMref ref="col11"/>
+   </GROUP>
+   <GROUP name="TYC2" ucd="ID_TYC2">
+    <DESCRIPTION>TYC2 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col12"/>
+    <PARAMref ref="col13"/>
+    <PARAMref ref="col14"/>
+   </GROUP>
+   <GROUP name="TYC3" ucd="ID_TYC3">
+    <DESCRIPTION>TYC3 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col15"/>
+    <PARAMref ref="col16"/>
+    <PARAMref ref="col17"/>
+   </GROUP>
+   <GROUP name="2MASS" ucd="ID_2MASS">
+    <DESCRIPTION>2MASS with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col18"/>
+    <PARAMref ref="col19"/>
+    <PARAMref ref="col20"/>
+   </GROUP>
+   <GROUP name="WISE" ucd="ID_WISE">
+    <DESCRIPTION>WISE with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col21"/>
+    <PARAMref ref="col22"/>
+    <PARAMref ref="col23"/>
+   </GROUP>
+   <GROUP name="RAJ2000" ucd="POS_EQ_RA_MAIN">
+    <DESCRIPTION>RAJ2000 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col24"/>
+    <PARAMref ref="col25"/>
+    <PARAMref ref="col26"/>
+    <FIELDref ref="col27"/>
+   </GROUP>
+   <GROUP name="DEJ2000" ucd="POS_EQ_DEC_MAIN">
+    <DESCRIPTION>DEJ2000 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col28"/>
+    <PARAMref ref="col29"/>
+    <PARAMref ref="col30"/>
+    <FIELDref ref="col31"/>
+   </GROUP>
+   <GROUP name="pmRa" ucd="POS_EQ_PMRA">
+    <DESCRIPTION>pmRa with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col32"/>
+    <PARAMref ref="col33"/>
+    <PARAMref ref="col34"/>
+    <FIELDref ref="col35"/>
+   </GROUP>
+   <GROUP name="pmDec" ucd="POS_EQ_PMDEC">
+    <DESCRIPTION>pmDec with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col36"/>
+    <PARAMref ref="col37"/>
+    <PARAMref ref="col38"/>
+    <FIELDref ref="col39"/>
+   </GROUP>
+   <GROUP name="plx" ucd="POS_PARLX_TRIG">
+    <DESCRIPTION>plx with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col40"/>
+    <PARAMref ref="col41"/>
+    <PARAMref ref="col42"/>
+    <FIELDref ref="col43"/>
+   </GROUP>
+   <GROUP name="SpType" ucd="SPECT_TYPE_MK">
+    <DESCRIPTION>SpType with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col44"/>
+    <PARAMref ref="col45"/>
+    <PARAMref ref="col46"/>
+   </GROUP>
+   <GROUP name="VarFlag3" ucd="VAR_CLASS">
+    <DESCRIPTION>VarFlag3 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col47"/>
+    <PARAMref ref="col48"/>
+    <PARAMref ref="col49"/>
+   </GROUP>
+   <GROUP name="B" ucd="PHOT_JHN_B">
+    <DESCRIPTION>B with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col50"/>
+    <FIELDref ref="col51"/>
+    <PARAMref ref="col52"/>
+    <FIELDref ref="col53"/>
+   </GROUP>
+   <GROUP name="V" ucd="PHOT_JHN_V">
+    <DESCRIPTION>V with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col54"/>
+    <FIELDref ref="col55"/>
+    <PARAMref ref="col56"/>
+    <FIELDref ref="col57"/>
+   </GROUP>
+   <GROUP name="R" ucd="PHOT_JHN_R">
+    <DESCRIPTION>R with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col58"/>
+    <PARAMref ref="col59"/>
+    <FIELDref ref="col60"/>
+   </GROUP>
+   <GROUP name="I" ucd="PHOT_JHN_I">
+    <DESCRIPTION>I with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col61"/>
+    <PARAMref ref="col62"/>
+    <FIELDref ref="col63"/>
+   </GROUP>
+   <GROUP name="J" ucd="PHOT_JHN_J">
+    <DESCRIPTION>J with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col64"/>
+    <PARAMref ref="col65"/>
+    <PARAMref ref="col66"/>
+    <FIELDref ref="col67"/>
+   </GROUP>
+   <GROUP name="H" ucd="PHOT_JHN_H">
+    <DESCRIPTION>H with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col68"/>
+    <PARAMref ref="col69"/>
+    <PARAMref ref="col70"/>
+    <FIELDref ref="col71"/>
+   </GROUP>
+   <GROUP name="K" ucd="PHOT_JHN_K">
+    <DESCRIPTION>K with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col72"/>
+    <PARAMref ref="col73"/>
+    <PARAMref ref="col74"/>
+    <FIELDref ref="col75"/>
+   </GROUP>
+   <GROUP name="L" ucd="PHOT_JHN_L">
+    <DESCRIPTION>L with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col76"/>
+    <PARAMref ref="col77"/>
+    <PARAMref ref="col78"/>
+    <FIELDref ref="col79"/>
+   </GROUP>
+   <GROUP name="M" ucd="PHOT_JHN_M">
+    <DESCRIPTION>M with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col80"/>
+    <PARAMref ref="col81"/>
+    <PARAMref ref="col82"/>
+    <FIELDref ref="col83"/>
+   </GROUP>
+   <GROUP name="N" ucd="PHOT_JHN_N">
+    <DESCRIPTION>N with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col84"/>
+    <PARAMref ref="col85"/>
+    <PARAMref ref="col86"/>
+    <FIELDref ref="col87"/>
+   </GROUP>
+   <GROUP name="LDD" ucd="LD_DIAM">
+    <DESCRIPTION>LDD with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col88"/>
+    <PARAMref ref="col89"/>
+    <FIELDref ref="col90"/>
+    <FIELDref ref="col91"/>
+   </GROUP>
+   <GROUP name="e_LDD_rel" ucd="LD_DIAM_ERROR_REL">
+    <DESCRIPTION>e_LDD_rel with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col92"/>
+    <PARAMref ref="col93"/>
+    <FIELDref ref="col94"/>
+   </GROUP>
+   <GROUP name="diam_chi2" ucd="DIAM_CHI2">
+    <DESCRIPTION>diam_chi2 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col95"/>
+    <PARAMref ref="col96"/>
+    <PARAMref ref="col97"/>
+   </GROUP>
+   <GROUP name="CalFlag" ucd="CAL_FLAG">
+    <DESCRIPTION>CalFlag with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col98"/>
+    <PARAMref ref="col99"/>
+    <PARAMref ref="col100"/>
+   </GROUP>
+   <GROUP name="diamFlag" ucd="DIAM_FLAG">
+    <DESCRIPTION>diamFlag with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col101"/>
+    <PARAMref ref="col102"/>
+    <PARAMref ref="col103"/>
+   </GROUP>
+   <GROUP name="Teff_SpType" ucd="TEFF_SPTYP">
+    <DESCRIPTION>Teff_SpType with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col104"/>
+    <PARAMref ref="col105"/>
+    <PARAMref ref="col106"/>
+   </GROUP>
+   <GROUP name="logg_SpType" ucd="LOGG_SPTYP">
+    <DESCRIPTION>logg_SpType with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col107"/>
+    <PARAMref ref="col108"/>
+    <PARAMref ref="col109"/>
+   </GROUP>
+   <GROUP name="UD_U" ucd="UD_U">
+    <DESCRIPTION>UD_U with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col110"/>
+    <PARAMref ref="col111"/>
+    <FIELDref ref="col112"/>
+   </GROUP>
+   <GROUP name="UD_B" ucd="UD_B">
+    <DESCRIPTION>UD_B with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col113"/>
+    <PARAMref ref="col114"/>
+    <FIELDref ref="col115"/>
+   </GROUP>
+   <GROUP name="UD_V" ucd="UD_V">
+    <DESCRIPTION>UD_V with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col116"/>
+    <PARAMref ref="col117"/>
+    <FIELDref ref="col118"/>
+   </GROUP>
+   <GROUP name="UD_R" ucd="UD_R">
+    <DESCRIPTION>UD_R with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col119"/>
+    <PARAMref ref="col120"/>
+    <FIELDref ref="col121"/>
+   </GROUP>
+   <GROUP name="UD_I" ucd="UD_I">
+    <DESCRIPTION>UD_I with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col122"/>
+    <PARAMref ref="col123"/>
+    <FIELDref ref="col124"/>
+   </GROUP>
+   <GROUP name="UD_J" ucd="UD_J">
+    <DESCRIPTION>UD_J with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col125"/>
+    <PARAMref ref="col126"/>
+    <FIELDref ref="col127"/>
+   </GROUP>
+   <GROUP name="UD_H" ucd="UD_H">
+    <DESCRIPTION>UD_H with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col128"/>
+    <PARAMref ref="col129"/>
+    <FIELDref ref="col130"/>
+   </GROUP>
+   <GROUP name="UD_K" ucd="UD_K">
+    <DESCRIPTION>UD_K with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col131"/>
+    <PARAMref ref="col132"/>
+    <FIELDref ref="col133"/>
+   </GROUP>
+   <GROUP name="UD_L" ucd="UD_L">
+    <DESCRIPTION>UD_L with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col134"/>
+    <PARAMref ref="col135"/>
+    <FIELDref ref="col136"/>
+   </GROUP>
+   <GROUP name="UD_M" ucd="UD_M">
+    <DESCRIPTION>UD_M with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col137"/>
+    <PARAMref ref="col138"/>
+    <FIELDref ref="col139"/>
+   </GROUP>
+   <GROUP name="UD_N" ucd="UD_N">
+    <DESCRIPTION>UD_N with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col140"/>
+    <PARAMref ref="col141"/>
+    <FIELDref ref="col142"/>
+   </GROUP>
+   <GROUP name="vis2" ucd="VIS2">
+    <DESCRIPTION>vis2 with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col143"/>
+    <PARAMref ref="col144"/>
+    <FIELDref ref="col145"/>
+    <FIELDref ref="col146"/>
+   </GROUP>
+   <GROUP name="dist" ucd="DIST">
+    <DESCRIPTION>dist with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col147"/>
+    <PARAMref ref="col148"/>
+    <PARAMref ref="col149"/>
+   </GROUP>
+   <GROUP name="SpType_JMMC" ucd="SPECTRAL_TYPE">
+    <DESCRIPTION>SpType_JMMC with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col150"/>
+    <PARAMref ref="col151"/>
+    <PARAMref ref="col152"/>
+   </GROUP>
+   <GROUP name="Name" ucd="NAME">
+    <DESCRIPTION>Name with its origin and confidence indexes and its error when available</DESCRIPTION>
+    <FIELDref ref="col153"/>
+    <PARAMref ref="col154"/>
+    <PARAMref ref="col155"/>
+   </GROUP>
+   <GROUP name="deletedFlag" ucd="DELETED_FLAG">
+    <DESCRIPTION>DELETED_FLAG with its origin and confidence indexes</DESCRIPTION>
+    <FIELDref ref="col156"/>
+    <PARAMref ref="col157"/>
+    <PARAMref ref="col158"/>
+   </GROUP>
+   <DATA>
+    <TABLEDATA>
+<TR><TD/><TD>12705</TD><TD>-414</TD><TD>47</TD><TD>70</TD><TD>1</TD><TD>02431714+0005141</TD><TD>J024317.16+000513.9</TD><TD>02 43 17.1580216</TD><TD>1.2</TD><TD>+00 05 14.086561</TD><TD>0.1</TD><TD>14.52</TD><TD>1.07</TD><TD>-5.86</TD><TD>1.19</TD><TD>3.55</TD><TD>1.64</TD><TD>M0</TD><TD/><TD>10.574</TD><TD>11</TD><TD>0.02158703</TD><TD>9.02</TD><TD>11</TD><TD>0.021</TD><TD>7.8</TD><TD>2</TD><TD>6.888829</TD><TD>2</TD><TD>6.194</TD><TD>0.027</TD><TD>5.457</TD><TD>0.04</TD><TD>5.229</TD><TD>0.02</TD><TD>5.123</TD><TD>0.211</TD><TD>5.136</TD><TD>0.077</TD><TD>5.193</TD><TD>0.014</TD><TD>0.528286</TD><TD>3</TD><TD>0.01301781</TD><TD>2.46416</TD><TD>3</TD><TD>1.5519</TD><TD>0</TD><TD>1</TD><TD>3840</TD><TD>4.56</TD><TD>0.4952316</TD><TD>3</TD><TD>0.4952316</TD><TD>3</TD><TD>0.4983443</TD><TD>3</TD><TD>0.5013817</TD><TD>3</TD><TD>0.5072716</TD><TD>3</TD><TD>0.5166997</TD><TD>3</TD><TD>0.5166997</TD><TD>3</TD><TD>0.5193053</TD><TD>3</TD><TD>0.5225122</TD><TD>3</TD><TD>0.5234332</TD><TD>3</TD><TD>0.5250547</TD><TD>3</TD><TD>0.9654132</TD><TD>3</TD><TD>0.001679669</TD><TD>0.181798</TD><TD>M0.00(III)</TD><TD>HIP 12705</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-418</TD><TD>47</TD><TD>1128</TD><TD>1</TD><TD>02434507+0012373</TD><TD>J024345.06+001237.1</TD><TD>02 43 45.0810201</TD><TD>16.2</TD><TD>+00 12 37.401459</TD><TD>23.1</TD><TD>-25.19</TD><TD>1.09</TD><TD>-17.34</TD><TD>1.65</TD><TD/><TD/><TD>K5</TD><TD/><TD>10.449</TD><TD>4</TD><TD>0.063</TD><TD>9.237</TD><TD>4</TD><TD>0.029</TD><TD>8.262133</TD><TD>2</TD><TD>7.666947</TD><TD>2</TD><TD>7.16</TD><TD>0.019</TD><TD>6.568</TD><TD>0.04</TD><TD>6.399</TD><TD>0.02</TD><TD>6.312</TD><TD>0.083</TD><TD>6.364</TD><TD>0.024</TD><TD>6.374</TD><TD>0.016</TD><TD>0.2783014</TD><TD>3</TD><TD>0.006872813</TD><TD>2.469558</TD><TD>3</TD><TD>0.0987</TD><TD>0</TD><TD>1</TD><TD>4410</TD><TD>4.51</TD><TD>0.2511163</TD><TD>3</TD><TD>0.2511163</TD><TD>3</TD><TD>0.2566736</TD><TD>3</TD><TD>0.2602577</TD><TD>3</TD><TD>0.2642255</TD><TD>3</TD><TD>0.2699216</TD><TD>3</TD><TD>0.2699216</TD><TD>3</TD><TD>0.2714177</TD><TD>3</TD><TD>0.2740971</TD><TD>3</TD><TD>0.2751933</TD><TD>3</TD><TD>0.2763753</TD><TD>3</TD><TD>0.9902997</TD><TD>3</TD><TD>0.0004771677</TD><TD>0.3489574</TD><TD>K5.00(V)</TD><TD>TYC 47-1128-1</TD><TD>0</TD></TR>
+<TR><TD>17000</TD><TD>12728</TD><TD>-415</TD><TD>4699</TD><TD>305</TD><TD>1</TD><TD>02433697-0020403</TD><TD>J024336.96-002040.5</TD><TD>02 43 36.9841437</TD><TD>1.2</TD><TD>-00 20 40.275255</TD><TD>0.1</TD><TD>-28.37</TD><TD>1.25</TD><TD>-24.42</TD><TD>1.19</TD><TD>12.66</TD><TD>1.66</TD><TD>G1 V</TD><TD>C</TD><TD>9.48</TD><TD>11</TD><TD>0.02420744</TD><TD>8.97</TD><TD>11</TD><TD>0.019</TD><TD>8.47</TD><TD>2</TD><TD>8.266606</TD><TD>2</TD><TD>7.97</TD><TD>0.024</TD><TD>7.79</TD><TD>0.042</TD><TD>7.689</TD><TD>0.02</TD><TD>7.621</TD><TD>0.03</TD><TD>7.661</TD><TD>0.019</TD><TD>7.678</TD><TD>0.018</TD><TD>0.1237786</TD><TD>3</TD><TD>0.003165451</TD><TD>2.55735</TD><TD>3</TD><TD>0.9160</TD><TD>0</TD><TD>1</TD><TD>5900</TD><TD>4.41</TD><TD>0.1143405</TD><TD>3</TD><TD>0.1143405</TD><TD>3</TD><TD>0.1164299</TD><TD>3</TD><TD>0.1176969</TD><TD>3</TD><TD>0.1189342</TD><TD>3</TD><TD>0.1209072</TD><TD>3</TD><TD>0.1209072</TD><TD>3</TD><TD>0.1213682</TD><TD>3</TD><TD>0.1223681</TD><TD>3</TD><TD>0.1226466</TD><TD>3</TD><TD>0.1231352</TD><TD>3</TD><TD>0.9980749</TD><TD>3</TD><TD>9.83857e-05</TD><TD>0.4054078</TD><TD>G1.00V</TD><TD>HIP 12728</TD><TD>0</TD></TR>
+<TR><TD>17130</TD><TD/><TD>-422</TD><TD>4699</TD><TD>778</TD><TD>1</TD><TD>02445646-0000130</TD><TD>J024456.46-000013.2</TD><TD>02 44 56.4561815</TD><TD>15.3</TD><TD>-00 00 13.135407</TD><TD>18.7</TD><TD>5.98</TD><TD>1.1</TD><TD>-12.25</TD><TD>1.53</TD><TD/><TD/><TD>K0 III</TD><TD/><TD>9.961</TD><TD>4</TD><TD>0.048</TD><TD>8.828</TD><TD>4</TD><TD>0.025</TD><TD>7.987025</TD><TD>2</TD><TD>7.474505</TD><TD>2</TD><TD>7.026</TD><TD>0.018</TD><TD>6.443</TD><TD>0.027</TD><TD>6.357</TD><TD>0.021</TD><TD>6.268</TD><TD>0.077</TD><TD>6.304</TD><TD>0.025</TD><TD>6.322</TD><TD>0.015</TD><TD>0.2655013</TD><TD>3</TD><TD>0.005986134</TD><TD>2.254654</TD><TD>3</TD><TD>0.7540</TD><TD>0</TD><TD>1</TD><TD>4660</TD><TD>2.12</TD><TD>0.2376566</TD><TD>3</TD><TD>0.2376566</TD><TD>3</TD><TD>0.242929</TD><TD>3</TD><TD>0.2464728</TD><TD>3</TD><TD>0.2500804</TD><TD>3</TD><TD>0.2547423</TD><TD>3</TD><TD>0.2547423</TD><TD>3</TD><TD>0.2564309</TD><TD>3</TD><TD>0.2617012</TD><TD>3</TD><TD>0.2625775</TD><TD>3</TD><TD>0.2637213</TD><TD>3</TD><TD>0.9911683</TD><TD>3</TD><TD>0.0003967814</TD><TD>0.565194</TD><TD>K0.00III</TD><TD>HD 17130</TD><TD>0</TD></TR>
+<TR><TD>16835</TD><TD>12598</TD><TD>-411</TD><TD>47</TD><TD>690</TD><TD>1</TD><TD>02415897+0033013</TD><TD>J024158.98+003301.3</TD><TD>02 41 58.9764504</TD><TD>0.8</TD><TD>+00 33 01.282961</TD><TD>0.1</TD><TD>9.81</TD><TD>1.2</TD><TD>10.61</TD><TD>1.1</TD><TD>6.2</TD><TD>0.81</TD><TD>F0 IV/V</TD><TD>C</TD><TD>7.957</TD><TD>11</TD><TD>0.008062258</TD><TD>7.59</TD><TD>11</TD><TD>0.008</TD><TD>7.294215</TD><TD>2</TD><TD>7.104924</TD><TD>2</TD><TD>6.894</TD><TD>0.019</TD><TD>6.765</TD><TD>0.034</TD><TD>6.705</TD><TD>0.027</TD><TD>6.652</TD><TD>0.036</TD><TD>6.645</TD><TD>0.021</TD><TD>6.689</TD><TD>0.015</TD><TD>0.1784144</TD><TD>3</TD><TD>0.004610883</TD><TD>2.584368</TD><TD>3</TD><TD>0.1312</TD><TD>0</TD><TD>1</TD><TD>7300</TD><TD>4.31</TD><TD>0.1669181</TD><TD>3</TD><TD>0.1669181</TD><TD>3</TD><TD>0.1691354</TD><TD>3</TD><TD>0.1708396</TD><TD>3</TD><TD>0.1726423</TD><TD>3</TD><TD>0.1750866</TD><TD>3</TD><TD>0.1750866</TD><TD>3</TD><TD>0.1755505</TD><TD>3</TD><TD>0.1768428</TD><TD>3</TD><TD>0.1771049</TD><TD>3</TD><TD>0.1776523</TD><TD>3</TD><TD>0.9960036</TD><TD>3</TD><TD>0.0002062117</TD><TD>0.5901544</TD><TD>F0.00IV-V</TD><TD>HIP 12598</TD><TD>0</TD></TR>
+<TR><TD>16658</TD><TD>12443</TD><TD>-408</TD><TD>4699</TD><TD>18</TD><TD>1</TD><TD>02401189-0016001</TD><TD>J024011.89-001600.1</TD><TD>02 40 11.8983845</TD><TD>1.2</TD><TD>-00 16 00.131622</TD><TD>0.1</TD><TD>2.78</TD><TD>1.32</TD><TD>2.93</TD><TD>1.17</TD><TD>0.9</TD><TD>1.22</TD><TD>K0 III</TD><TD>C</TD><TD>9.534</TD><TD>11</TD><TD>0.02662705</TD><TD>8.52</TD><TD>11</TD><TD>0.015</TD><TD>7.714885</TD><TD>2</TD><TD>7.237196</TD><TD>3</TD><TD>6.734</TD><TD>0.029</TD><TD>6.253</TD><TD>0.026</TD><TD>6.114</TD><TD>0.02</TD><TD>6.104</TD><TD>0.09</TD><TD>6.09</TD><TD>0.035</TD><TD>6.093</TD><TD>0.015</TD><TD>0.2942982</TD><TD>3</TD><TD>0.006686025</TD><TD>2.271854</TD><TD>3</TD><TD>0.3717</TD><TD>0</TD><TD>1</TD><TD>4660</TD><TD>2.12</TD><TD>0.2634334</TD><TD>3</TD><TD>0.2634334</TD><TD>3</TD><TD>0.2692777</TD><TD>3</TD><TD>0.2732059</TD><TD>3</TD><TD>0.2772048</TD><TD>3</TD><TD>0.2823724</TD><TD>3</TD><TD>0.2823724</TD><TD>3</TD><TD>0.2842441</TD><TD>3</TD><TD>0.2900861</TD><TD>3</TD><TD>0.2910573</TD><TD>3</TD><TD>0.2923252</TD><TD>3</TD><TD>0.9891577</TD><TD>3</TD><TD>0.00049041</TD><TD>0.6702368</TD><TD>K0.00III</TD><TD>HIP 12443</TD><TD>0</TD></TR>
+<TR><TD>16619</TD><TD>12421</TD><TD>-407</TD><TD>46</TD><TD>1377</TD><TD>1</TD><TD>02395175+0008465</TD><TD>J023951.80+000844.8</TD><TD>02 39 51.7618338</TD><TD>1</TD><TD>+00 08 46.592045</TD><TD>0.1</TD><TD>58.58</TD><TD>1.24</TD><TD>-172.99</TD><TD>1.08</TD><TD>14.24</TD><TD>0.92</TD><TD>G6 V</TD><TD/><TD>8.486</TD><TD>11</TD><TD>0.01769181</TD><TD>7.83</TD><TD>11</TD><TD>0.013</TD><TD>7.24</TD><TD>2</TD><TD>6.959516</TD><TD>2</TD><TD>6.634</TD><TD>0.03</TD><TD>6.31</TD><TD>0.038</TD><TD>6.221</TD><TD>0.016</TD><TD>6.212</TD><TD>0.081</TD><TD>6.133</TD><TD>0.027</TD><TD>6.236</TD><TD>0.015</TD><TD>0.258007</TD><TD>3</TD><TD>0.006281828</TD><TD>2.434751</TD><TD>3</TD><TD>0.4077</TD><TD>0</TD><TD>1</TD><TD>5500</TD><TD>4.46</TD><TD>0.2371306</TD><TD>3</TD><TD>0.2371306</TD><TD>3</TD><TD>0.2416484</TD><TD>3</TD><TD>0.244439</TD><TD>3</TD><TD>0.2471919</TD><TD>3</TD><TD>0.2516332</TD><TD>3</TD><TD>0.2516332</TD><TD>3</TD><TD>0.2526575</TD><TD>3</TD><TD>0.2547936</TD><TD>3</TD><TD>0.2555259</TD><TD>3</TD><TD>0.2565711</TD><TD>3</TD><TD>0.991658</TD><TD>3</TD><TD>0.0004047945</TD><TD>0.7223298</TD><TD>G6.00V</TD><TD>HIP 12421</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>4699</TD><TD>194</TD><TD>1</TD><TD>02443272-0040416</TD><TD>J024432.72-004041.7</TD><TD>02 44 32.7211325</TD><TD>30.6</TD><TD>-00 40 41.753134</TD><TD>57.5</TD><TD>3.22</TD><TD>1.28</TD><TD>-5.48</TD><TD>1.5</TD><TD/><TD/><TD/><TD/><TD>11.744</TD><TD>4</TD><TD>0.136</TD><TD>10.512</TD><TD>4</TD><TD>0.057</TD><TD>9.446391</TD><TD>2</TD><TD>8.70054</TD><TD>2</TD><TD>8.146</TD><TD>0.029</TD><TD>7.428</TD><TD>0.033</TD><TD>7.253</TD><TD>0.021</TD><TD>7.109</TD><TD>0.037</TD><TD>7.31</TD><TD>0.02</TD><TD>7.207</TD><TD>0.018</TD><TD>0.1913553</TD><TD>2</TD><TD>0.006113609</TD><TD>3.194899</TD><TD>2</TD><TD>1.5297</TD><TD>0</TD><TD>1</TD><TD>4449.62</TD><TD>4.51</TD><TD>0.1727559</TD><TD>2</TD><TD>0.1727559</TD><TD>2</TD><TD>0.1765712</TD><TD>2</TD><TD>0.1790373</TD><TD>2</TD><TD>0.1817419</TD><TD>2</TD><TD>0.1856315</TD><TD>2</TD><TD>0.1856315</TD><TD>2</TD><TD>0.1866449</TD><TD>2</TD><TD>0.1884604</TD><TD>2</TD><TD>0.1892172</TD><TD>2</TD><TD>0.1900372</TD><TD>2</TD><TD>0.9954042</TD><TD>2</TD><TD>0.0002931026</TD><TD>0.8119916</TD><TD>K1.75/K7.75(V)</TD><TD>TYC 4699-194-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-100385</TD><TD>4699</TD><TD>976</TD><TD>1</TD><TD>02432054-0051291</TD><TD>J024320.54-005129.0</TD><TD>02 43 20.5350055</TD><TD>14.3</TD><TD>-00 51 29.054411</TD><TD>20.2</TD><TD>9.86</TD><TD>1.26</TD><TD>6.55</TD><TD>1.66</TD><TD/><TD/><TD>K0</TD><TD/><TD>10.673</TD><TD>4</TD><TD>0.05</TD><TD>9.567</TD><TD>4</TD><TD>0.026</TD><TD>8.719083</TD><TD>2</TD><TD>8.174489</TD><TD>2</TD><TD>7.692</TD><TD>0.02</TD><TD>7.13</TD><TD>0.034</TD><TD>7.029</TD><TD>0.024</TD><TD>6.911</TD><TD>0.055</TD><TD>7.022</TD><TD>0.02</TD><TD>6.96</TD><TD>0.016</TD><TD>0.1957797</TD><TD>3</TD><TD>0.004609771</TD><TD>2.35457</TD><TD>3</TD><TD>0.1450</TD><TD>0</TD><TD>1</TD><TD>5150</TD><TD>4.46</TD><TD>0.1789843</TD><TD>3</TD><TD>0.1789843</TD><TD>3</TD><TD>0.182495</TD><TD>3</TD><TD>0.1847656</TD><TD>3</TD><TD>0.1870402</TD><TD>3</TD><TD>0.190626</TD><TD>3</TD><TD>0.190626</TD><TD>3</TD><TD>0.1914808</TD><TD>3</TD><TD>0.1931664</TD><TD>3</TD><TD>0.1937966</TD><TD>3</TD><TD>0.1946123</TD><TD>3</TD><TD>0.9951898</TD><TD>3</TD><TD>0.0002260739</TD><TD>0.8606747</TD><TD>K0.00(III)</TD><TD>TYC 4699-976-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>4699</TD><TD>250</TD><TD>1</TD><TD>02455218-0031098</TD><TD>J024552.19-003110.0</TD><TD>02 45 52.1848508</TD><TD>85.8</TD><TD>-00 31 09.916045</TD><TD>116</TD><TD>6.01</TD><TD>1.5</TD><TD>-9.09</TD><TD>1.7</TD><TD/><TD/><TD/><TD/><TD>12.192</TD><TD>4</TD><TD>0.386</TD><TD>10.774</TD><TD>4</TD><TD>0.123</TD><TD>9.627496</TD><TD>2</TD><TD>8.706553</TD><TD>2</TD><TD>8.079</TD><TD>0.024</TD><TD>7.297</TD><TD>0.049</TD><TD>7.089</TD><TD>0.017</TD><TD>6.959</TD><TD>0.053</TD><TD>7.162</TD><TD>0.019</TD><TD>7.021</TD><TD>0.016</TD><TD>0.2109361</TD><TD>2</TD><TD>0.008427934</TD><TD>3.995492</TD><TD>2</TD><TD>1.2064</TD><TD>0</TD><TD>1</TD><TD>4484.5</TD><TD>4.51</TD><TD>0.190529</TD><TD>2</TD><TD>0.190529</TD><TD>2</TD><TD>0.1947273</TD><TD>2</TD><TD>0.1974459</TD><TD>2</TD><TD>0.2003983</TD><TD>2</TD><TD>0.2046634</TD><TD>2</TD><TD>0.2046634</TD><TD>2</TD><TD>0.2057653</TD><TD>2</TD><TD>0.2077409</TD><TD>2</TD><TD>0.2085783</TD><TD>2</TD><TD>0.2094891</TD><TD>2</TD><TD>0.9944178</TD><TD>2</TD><TD>0.0004450355</TD><TD>0.9442991</TD><TD>K0.50/K8.50(III)</TD><TD>TYC 4699-250-1</TD><TD>0</TD></TR>
+<TR><TD>17122</TD><TD>12814</TD><TD>-100388</TD><TD>4699</TD><TD>150</TD><TD>1</TD><TD>02444278-0050461</TD><TD>J024442.81-005046.0</TD><TD>02 44 42.7891019</TD><TD>1.2</TD><TD>-00 50 46.116429</TD><TD>0.1</TD><TD>3.4</TD><TD>1.17</TD><TD>-9.97</TD><TD>1.07</TD><TD>2.77</TD><TD>1.37</TD><TD>K0 III</TD><TD/><TD>8.951</TD><TD>11</TD><TD>0.01920937</TD><TD>7.86</TD><TD>11</TD><TD>0.012</TD><TD>7.033733</TD><TD>2</TD><TD>6.54439</TD><TD>2</TD><TD>6.08</TD><TD>0.034</TD><TD>5.54</TD><TD>0.033</TD><TD>5.408</TD><TD>0.026</TD><TD>5.333</TD><TD>0.158</TD><TD>5.246</TD><TD>0.06</TD><TD>5.357</TD><TD>0.014</TD><TD>0.4063441</TD><TD>3</TD><TD>0.009519571</TD><TD>2.342737</TD><TD>3</TD><TD>0.1411</TD><TD>0</TD><TD>1</TD><TD>4660</TD><TD>2.12</TD><TD>0.3637283</TD><TD>3</TD><TD>0.3637283</TD><TD>3</TD><TD>0.3717977</TD><TD>3</TD><TD>0.3772214</TD><TD>3</TD><TD>0.3827427</TD><TD>3</TD><TD>0.3898778</TD><TD>3</TD><TD>0.3898778</TD><TD>3</TD><TD>0.392462</TD><TD>3</TD><TD>0.4005282</TD><TD>3</TD><TD>0.4018693</TD><TD>3</TD><TD>0.4036198</TD><TD>3</TD><TD>0.9794151</TD><TD>3</TD><TD>0.0009561688</TD><TD>0.9754989</TD><TD>K0.00III</TD><TD>HIP 12814</TD><TD>0</TD></TR>
+<TR><TD/><TD>12508</TD><TD>445</TD><TD>47</TD><TD>726</TD><TD>1</TD><TD>02405832+0055554</TD><TD>J024058.32+005555.7</TD><TD>02 40 58.3293144</TD><TD>1.2</TD><TD>+00 55 55.450683</TD><TD>0.1</TD><TD>-13.89</TD><TD>1.25</TD><TD>32.41</TD><TD>1.17</TD><TD>8.19</TD><TD>1.2</TD><TD>F8</TD><TD/><TD>9.896</TD><TD>11</TD><TD>0.0234094</TD><TD>9.34</TD><TD>11</TD><TD>0.022</TD><TD>8.88947</TD><TD>2</TD><TD>8.599451</TD><TD>2</TD><TD>8.323</TD><TD>0.02</TD><TD>8.116</TD><TD>0.059</TD><TD>7.983</TD><TD>0.027</TD><TD>7.983</TD><TD>0.023</TD><TD>8.017</TD><TD>0.02</TD><TD>7.99</TD><TD>0.019</TD><TD>0.1050567</TD><TD>3</TD><TD>0.00306412</TD><TD>2.916633</TD><TD>3</TD><TD>0.2224</TD><TD>0</TD><TD>1</TD><TD>6250</TD><TD>4.36</TD><TD>0.0974028</TD><TD>3</TD><TD>0.0974028</TD><TD>3</TD><TD>0.09910157</TD><TD>3</TD><TD>0.1001402</TD><TD>3</TD><TD>0.1011689</TD><TD>3</TD><TD>0.1027502</TD><TD>3</TD><TD>0.1027502</TD><TD>3</TD><TD>0.1031229</TD><TD>3</TD><TD>0.1039459</TD><TD>3</TD><TD>0.1041414</TD><TD>3</TD><TD>0.1045441</TD><TD>3</TD><TD>0.998613</TD><TD>3</TD><TD>8.086783e-05</TD><TD>1.037489</TD><TD>F8.00(V)</TD><TD>HIP 12508</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-100384</TD><TD>4699</TD><TD>828</TD><TD>1</TD><TD>02431745-0108040</TD><TD>J024317.45-010803.7</TD><TD>02 43 17.4494759</TD><TD>15.5</TD><TD>-01 08 03.830006</TD><TD>19.5</TD><TD>7.11</TD><TD>1.04</TD><TD>6.61</TD><TD>1.5</TD><TD/><TD/><TD>K0</TD><TD/><TD>10.576</TD><TD>4</TD><TD>0.046</TD><TD>9.6</TD><TD>4</TD><TD>0.027</TD><TD>8.81</TD><TD>2</TD><TD>8.339941</TD><TD>2</TD><TD>7.881</TD><TD>0.02</TD><TD>7.345</TD><TD>0.038</TD><TD>7.245</TD><TD>0.026</TD><TD>7.145</TD><TD>0.045</TD><TD>7.265</TD><TD>0.02</TD><TD>7.191</TD><TD>0.016</TD><TD>0.1747606</TD><TD>3</TD><TD>0.004229237</TD><TD>2.420017</TD><TD>3</TD><TD>0.0681</TD><TD>0</TD><TD>1</TD><TD>5150</TD><TD>4.46</TD><TD>0.1597684</TD><TD>3</TD><TD>0.1597684</TD><TD>3</TD><TD>0.1629022</TD><TD>3</TD><TD>0.164929</TD><TD>3</TD><TD>0.1669594</TD><TD>3</TD><TD>0.1701602</TD><TD>3</TD><TD>0.1701602</TD><TD>3</TD><TD>0.1709232</TD><TD>3</TD><TD>0.1724279</TD><TD>3</TD><TD>0.1729904</TD><TD>3</TD><TD>0.1737186</TD><TD>3</TD><TD>0.9961654</TD><TD>3</TD><TD>0.000185295</TD><TD>1.131288</TD><TD>K0.00(III)</TD><TD>TYC 4699-828-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>4699</TD><TD>567</TD><TD>1</TD><TD>02410935-0105439</TD><TD>J024109.36-010544.1</TD><TD>02 41 09.3623600</TD><TD>35.4</TD><TD>-01 05 43.944218</TD><TD>47.2</TD><TD>16.4</TD><TD>1.12</TD><TD>-24.04</TD><TD>1.12</TD><TD/><TD/><TD/><TD/><TD>11.503</TD><TD>4</TD><TD>0.101</TD><TD>10.411</TD><TD>4</TD><TD>0.052</TD><TD>9.581</TD><TD>2</TD><TD>9.049887</TD><TD>2</TD><TD>8.565</TD><TD>0.023</TD><TD>8.08</TD><TD>0.065</TD><TD>7.892</TD><TD>0.018</TD><TD>7.837</TD><TD>0.026</TD><TD>7.946</TD><TD>0.021</TD><TD>7.842</TD><TD>0.018</TD><TD>0.1306635</TD><TD>2</TD><TD>0.009821481</TD><TD>7.51662</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4800</TD><TD>4.51</TD><TD>0.1187177</TD><TD>2</TD><TD>0.1187177</TD><TD>2</TD><TD>0.1211624</TD><TD>2</TD><TD>0.1227838</TD><TD>2</TD><TD>0.1244671</TD><TD>2</TD><TD>0.127003</TD><TD>2</TD><TD>0.127003</TD><TD>2</TD><TD>0.1276274</TD><TD>2</TD><TD>0.1287914</TD><TD>2</TD><TD>0.1292707</TD><TD>2</TD><TD>0.1298322</TD><TD>2</TD><TD>0.997855</TD><TD>2</TD><TD>0.000322183</TD><TD>1.147241</TD><TD>F9.50/M2.50(III)</TD><TD>TYC 4699-567-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-100379</TD><TD>4699</TD><TD>237</TD><TD>1</TD><TD>02412481-0108080</TD><TD>J024124.82-010808.2</TD><TD>02 41 24.8137867</TD><TD>23.2</TD><TD>-01 08 08.133925</TD><TD>32.9</TD><TD>12.5</TD><TD>1.25</TD><TD>-14.3</TD><TD>1.42</TD><TD/><TD/><TD>K0</TD><TD/><TD>11.192</TD><TD>4</TD><TD>0.094</TD><TD>9.899</TD><TD>4</TD><TD>0.039</TD><TD>8.9164</TD><TD>1</TD><TD>8.436172</TD><TD>1</TD><TD>7.899</TD><TD>0.02</TD><TD>7.308</TD><TD>0.033</TD><TD>7.2</TD><TD>0.023</TD><TD>7.096</TD><TD>0.046</TD><TD>7.236</TD><TD>0.019</TD><TD>7.161</TD><TD>0.017</TD><TD>0.1826522</TD><TD>3</TD><TD>0.004306413</TD><TD>2.357712</TD><TD>3</TD><TD>0.2300</TD><TD>0</TD><TD>1</TD><TD>5150</TD><TD>4.46</TD><TD>0.1669829</TD><TD>3</TD><TD>0.1669829</TD><TD>3</TD><TD>0.1702583</TD><TD>3</TD><TD>0.1723766</TD><TD>3</TD><TD>0.1744987</TD><TD>3</TD><TD>0.177844</TD><TD>3</TD><TD>0.177844</TD><TD>3</TD><TD>0.1786415</TD><TD>3</TD><TD>0.1802141</TD><TD>3</TD><TD>0.180802</TD><TD>3</TD><TD>0.1815631</TD><TD>3</TD><TD>0.995812</TD><TD>3</TD><TD>0.0001971378</TD><TD>1.165986</TD><TD>K0.00(I)</TD><TD>TYC 4699-237-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-431</TD><TD>4699</TD><TD>241</TD><TD>1</TD><TD>02472690-0012224</TD><TD>J024726.93-001222.0</TD><TD>02 47 26.9118140</TD><TD>30.2</TD><TD>-00 12 22.456235</TD><TD>36.4</TD><TD>32.29</TD><TD>1.75</TD><TD>46.7</TD><TD>1.47</TD><TD/><TD/><TD>G5</TD><TD/><TD>10.371</TD><TD>4</TD><TD>0.078</TD><TD>9.612</TD><TD>4</TD><TD>0.05</TD><TD>8.826975</TD><TD>1</TD><TD>8.52548</TD><TD>1</TD><TD>8.026</TD><TD>0.026</TD><TD>7.509</TD><TD>0.024</TD><TD>7.417</TD><TD>0.02</TD><TD>7.224</TD><TD>0.034</TD><TD>7.308</TD><TD>0.02</TD><TD>7.262</TD><TD>0.017</TD><TD>0.1516258</TD><TD>3</TD><TD>0.003521177</TD><TD>2.32228</TD><TD>3</TD><TD>1.6379</TD><TD>0</TD><TD>1</TD><TD>5560</TD><TD>4.46</TD><TD>0.1394763</TD><TD>3</TD><TD>0.1394763</TD><TD>3</TD><TD>0.1421178</TD><TD>3</TD><TD>0.1437396</TD><TD>3</TD><TD>0.145342</TD><TD>3</TD><TD>0.1479195</TD><TD>3</TD><TD>0.1479195</TD><TD>3</TD><TD>0.1485166</TD><TD>3</TD><TD>0.1497618</TD><TD>3</TD><TD>0.1501785</TD><TD>3</TD><TD>0.1507923</TD><TD>3</TD><TD>0.9971124</TD><TD>3</TD><TD>0.0001339562</TD><TD>1.207495</TD><TD>G5.00(III)</TD><TD>TYC 4699-241-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>47</TD><TD>492</TD><TD>1</TD><TD>02402953+0104264</TD><TD>J024029.54+010426.3</TD><TD>02 40 29.5340189</TD><TD>48.7</TD><TD>+01 04 26.294590</TD><TD>66.5</TD><TD>2.72</TD><TD>2</TD><TD>-7.48</TD><TD>2</TD><TD/><TD/><TD/><TD/><TD>12.552</TD><TD>4</TD><TD>0.216</TD><TD>11.277</TD><TD>4</TD><TD>0.079</TD><TD>10.13739</TD><TD>1</TD><TD>9.38954</TD><TD>1</TD><TD>8.725</TD><TD>0.03</TD><TD>8.002</TD><TD>0.042</TD><TD>7.807</TD><TD>0.033</TD><TD>7.657</TD><TD>0.028</TD><TD>7.854</TD><TD>0.02</TD><TD>7.695</TD><TD>0.018</TD><TD>0.1496064</TD><TD>2</TD><TD>0.005975416</TD><TD>3.99409</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4517.12</TD><TD>4.51</TD><TD>0.1352041</TD><TD>2</TD><TD>0.1352041</TD><TD>2</TD><TD>0.1381695</TD><TD>2</TD><TD>0.1400977</TD><TD>2</TD><TD>0.1421702</TD><TD>2</TD><TD>0.1451828</TD><TD>2</TD><TD>0.1451828</TD><TD>2</TD><TD>0.1459571</TD><TD>2</TD><TD>0.1473459</TD><TD>2</TD><TD>0.1479384</TD><TD>2</TD><TD>0.1485864</TD><TD>2</TD><TD>0.9971888</TD><TD>2</TD><TD>0.0002243097</TD><TD>1.217259</TD><TD>K0.00/K8.50(III)</TD><TD>TYC 47-492-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>4699</TD><TD>399</TD><TD>1</TD><TD>02452900-0100541</TD><TD>J024529.00-010054.0</TD><TD>02 45 28.9970677</TD><TD>41</TD><TD>-01 00 54.039081</TD><TD>69.4</TD><TD>-0.37</TD><TD>1.5</TD><TD>-7.98</TD><TD>1.6</TD><TD/><TD/><TD/><TD/><TD>11.739</TD><TD>4</TD><TD>0.178</TD><TD>10.46</TD><TD>4</TD><TD>0.071</TD><TD>9.363681</TD><TD>2</TD><TD>8.592683</TD><TD>2</TD><TD>8.013</TD><TD>0.024</TD><TD>7.254</TD><TD>0.024</TD><TD>7.148</TD><TD>0.026</TD><TD>7.003</TD><TD>0.054</TD><TD>7.044</TD><TD>0.02</TD><TD>6.962</TD><TD>0.017</TD><TD>0.2066193</TD><TD>2</TD><TD>0.006377343</TD><TD>3.086519</TD><TD>2</TD><TD>2.1840</TD><TD>0</TD><TD>1</TD><TD>4410</TD><TD>4.51</TD><TD>0.1864363</TD><TD>2</TD><TD>0.1864363</TD><TD>2</TD><TD>0.1905622</TD><TD>2</TD><TD>0.1932231</TD><TD>2</TD><TD>0.1961689</TD><TD>2</TD><TD>0.2003979</TD><TD>2</TD><TD>0.2003979</TD><TD>2</TD><TD>0.2015087</TD><TD>2</TD><TD>0.2034979</TD><TD>2</TD><TD>0.2043117</TD><TD>2</TD><TD>0.2051893</TD><TD>2</TD><TD>0.9946435</TD><TD>2</TD><TD>0.0003299251</TD><TD>1.222317</TD><TD>K2.25/K7.75(V)</TD><TD>TYC 4699-399-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>450</TD><TD>47</TD><TD>913</TD><TD>1</TD><TD>02433923+0112569</TD><TD>J024339.24+011256.9</TD><TD>02 43 39.2351352</TD><TD>73.8</TD><TD>+01 12 56.919052</TD><TD>88.4</TD><TD>7.4</TD><TD>1.89</TD><TD>-7.53</TD><TD>2.14</TD><TD/><TD/><TD/><TD/><TD>12.163</TD><TD>4</TD><TD>0.37</TD><TD>10.751</TD><TD>4</TD><TD>0.108</TD><TD>9.672126</TD><TD>2</TD><TD>8.839452</TD><TD>2</TD><TD>8.255</TD><TD>0.027</TD><TD>7.565</TD><TD>0.044</TD><TD>7.336</TD><TD>0.018</TD><TD>7.181</TD><TD>0.037</TD><TD>7.379</TD><TD>0.02</TD><TD>7.264</TD><TD>0.018</TD><TD>0.1839041</TD><TD>2</TD><TD>0.007709162</TD><TD>4.191946</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4517.12</TD><TD>4.51</TD><TD>0.1662001</TD><TD>2</TD><TD>0.1662001</TD><TD>2</TD><TD>0.1698453</TD><TD>2</TD><TD>0.1722155</TD><TD>2</TD><TD>0.1747632</TD><TD>2</TD><TD>0.1784664</TD><TD>2</TD><TD>0.1784664</TD><TD>2</TD><TD>0.1794181</TD><TD>2</TD><TD>0.1811254</TD><TD>2</TD><TD>0.1818537</TD><TD>2</TD><TD>0.1826502</TD><TD>2</TD><TD>0.9957545</TD><TD>2</TD><TD>0.0003553099</TD><TD>1.253109</TD><TD>G9.75/K8.75(III)</TD><TD>TYC 47-913-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-433</TD><TD>47</TD><TD>1022</TD><TD>1</TD><TD>02474080+0018064</TD><TD>J024740.80+001806.4</TD><TD>02 47 40.7967686</TD><TD>39.7</TD><TD>+00 18 06.487885</TD><TD>39.9</TD><TD>5.03</TD><TD>1.11</TD><TD>-9.94</TD><TD>1.16</TD><TD/><TD/><TD>K0</TD><TD/><TD>10.852</TD><TD>4</TD><TD>0.101</TD><TD>9.916</TD><TD>4</TD><TD>0.063</TD><TD>9.136052</TD><TD>2</TD><TD>8.632421</TD><TD>2</TD><TD>8.216</TD><TD>0.027</TD><TD>7.706</TD><TD>0.036</TD><TD>7.601</TD><TD>0.042</TD><TD>7.465</TD><TD>0.03</TD><TD>7.586</TD><TD>0.019</TD><TD>7.519</TD><TD>0.019</TD><TD>0.1480745</TD><TD>3</TD><TD>0.003782104</TD><TD>2.55419</TD><TD>3</TD><TD>0.0082</TD><TD>0</TD><TD>1</TD><TD>5150</TD><TD>4.46</TD><TD>0.1353716</TD><TD>3</TD><TD>0.1353716</TD><TD>3</TD><TD>0.1380269</TD><TD>3</TD><TD>0.1397442</TD><TD>3</TD><TD>0.1414646</TD><TD>3</TD><TD>0.1441766</TD><TD>3</TD><TD>0.1441766</TD><TD>3</TD><TD>0.1448231</TD><TD>3</TD><TD>0.146098</TD><TD>3</TD><TD>0.1465746</TD><TD>3</TD><TD>0.1471916</TD><TD>3</TD><TD>0.9972459</TD><TD>3</TD><TD>0.0001405284</TD><TD>1.289</TD><TD>K0.00(V)</TD><TD>TYC 47-1022-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>4699</TD><TD>230</TD><TD>1</TD><TD>02445008-0111470</TD><TD>J024450.06-011147.2</TD><TD>02 44 50.0733733</TD><TD>19.1</TD><TD>-01 11 46.989753</TD><TD>39.2</TD><TD>-7.19</TD><TD>1.35</TD><TD>-30.06</TD><TD>1.47</TD><TD/><TD/><TD/><TD/><TD>11.088</TD><TD>4</TD><TD>0.063</TD><TD>10.185</TD><TD>4</TD><TD>0.041</TD><TD>9.359015</TD><TD>2</TD><TD>8.886363</TD><TD>2</TD><TD>8.406</TD><TD>0.032</TD><TD>7.86</TD><TD>0.036</TD><TD>7.791</TD><TD>0.023</TD><TD>7.672</TD><TD>0.028</TD><TD>7.78</TD><TD>0.02</TD><TD>7.702</TD><TD>0.019</TD><TD>0.1433267</TD><TD>2</TD><TD>0.008732634</TD><TD>6.092816</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4625.75</TD><TD>4.51</TD><TD>0.1297856</TD><TD>2</TD><TD>0.1297856</TD><TD>2</TD><TD>0.1325616</TD><TD>2</TD><TD>0.1344016</TD><TD>2</TD><TD>0.1363252</TD><TD>2</TD><TD>0.1391695</TD><TD>2</TD><TD>0.1391695</TD><TD>2</TD><TD>0.1398943</TD><TD>2</TD><TD>0.1412033</TD><TD>2</TD><TD>0.1417562</TD><TD>2</TD><TD>0.1423759</TD><TD>2</TD><TD>0.9974195</TD><TD>2</TD><TD>0.0003141129</TD><TD>1.299733</TD><TD>G5.50/M1.50(V)</TD><TD>TYC 4699-230-1</TD><TD>0</TD></TR>
+<TR><TD/><TD>12493</TD><TD>444</TD><TD>47</TD><TD>611</TD><TD>1</TD><TD>02404288+0111554</TD><TD>J024043.06+011157.6</TD><TD>02 40 42.8735365</TD><TD>1.2</TD><TD>+01 11 55.245222</TD><TD>0.1</TD><TD>284.85</TD><TD>1.57</TD><TD>232.44</TD><TD>1.35</TD><TD>42.91</TD><TD>1.47</TD><TD>M0p</TD><TD>C</TD><TD>10.695</TD><TD>11</TD><TD>0.02596151</TD><TD>9.51</TD><TD>11</TD><TD>0.025</TD><TD>8.106554</TD><TD>1</TD><TD>7.796483</TD><TD>3</TD><TD>7.26</TD><TD>0.021</TD><TD>6.692</TD><TD>0.046</TD><TD>6.5</TD><TD>0.018</TD><TD>6.443</TD><TD>0.072</TD><TD>6.422</TD><TD>0.026</TD><TD>6.453</TD><TD>0.016</TD><TD>0.2828519</TD><TD>3</TD><TD>0.007289221</TD><TD>2.577045</TD><TD>3</TD><TD>0.2853</TD><TD>0</TD><TD>1</TD><TD>3840</TD><TD>4.56</TD><TD>0.2651541</TD><TD>3</TD><TD>0.2651541</TD><TD>3</TD><TD>0.2668207</TD><TD>3</TD><TD>0.2684469</TD><TD>3</TD><TD>0.2716005</TD><TD>3</TD><TD>0.2766484</TD><TD>3</TD><TD>0.2766484</TD><TD>3</TD><TD>0.2780435</TD><TD>3</TD><TD>0.2797605</TD><TD>3</TD><TD>0.2802536</TD><TD>3</TD><TD>0.2811218</TD><TD>3</TD><TD>0.9899813</TD><TD>3</TD><TD>0.0005142153</TD><TD>1.307963</TD><TD>M0.00(V)</TD><TD>HIP 12493</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-401</TD><TD>4698</TD><TD>714</TD><TD>1</TD><TD>02371547-0012005</TD><TD>J023715.43-001201.4</TD><TD>02 37 15.4707797</TD><TD>14.8</TD><TD>-00 12 00.563722</TD><TD>18.5</TD><TD>-55.7</TD><TD>0.95</TD><TD>-78.27</TD><TD>1.16</TD><TD/><TD/><TD>K0</TD><TD/><TD>10.173</TD><TD>4</TD><TD>0.043</TD><TD>9.237</TD><TD>4</TD><TD>0.027</TD><TD>8.466931</TD><TD>2</TD><TD>7.974656</TD><TD>2</TD><TD>7.559</TD><TD>0.023</TD><TD>7.053</TD><TD>0.038</TD><TD>6.976</TD><TD>0.038</TD><TD>6.874</TD><TD>0.06</TD><TD>6.945</TD><TD>0.02</TD><TD>6.924</TD><TD>0.016</TD><TD>0.198483</TD><TD>3</TD><TD>0.004803322</TD><TD>2.420017</TD><TD>3</TD><TD>0.2100</TD><TD>0</TD><TD>1</TD><TD>5150</TD><TD>4.46</TD><TD>0.1814557</TD><TD>3</TD><TD>0.1814557</TD><TD>3</TD><TD>0.1850149</TD><TD>3</TD><TD>0.1873168</TD><TD>3</TD><TD>0.1896229</TD><TD>3</TD><TD>0.1932581</TD><TD>3</TD><TD>0.1932581</TD><TD>3</TD><TD>0.1941247</TD><TD>3</TD><TD>0.1958336</TD><TD>3</TD><TD>0.1964725</TD><TD>3</TD><TD>0.1972995</TD><TD>3</TD><TD>0.9950563</TD><TD>3</TD><TD>0.0002387921</TD><TD>1.368458</TD><TD>K0.00(V)</TD><TD>TYC 4698-714-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD>-100390</TD><TD>4699</TD><TD>730</TD><TD>1</TD><TD>02463232-0100564</TD><TD>J024632.33-010056.4</TD><TD>02 46 32.3344987</TD><TD>33.4</TD><TD>-01 00 56.509768</TD><TD>50</TD><TD>10.6</TD><TD>1.49</TD><TD>-1.83</TD><TD>1.59</TD><TD/><TD/><TD>K0</TD><TD/><TD>10.769</TD><TD>4</TD><TD>0.122</TD><TD>9.76</TD><TD>4</TD><TD>0.064</TD><TD>8.928205</TD><TD>2</TD><TD>8.396125</TD><TD>2</TD><TD>7.911</TD><TD>0.02</TD><TD>7.367</TD><TD>0.04</TD><TD>7.223</TD><TD>0.018</TD><TD>7.07</TD><TD>0.05</TD><TD>7.235</TD><TD>0.02</TD><TD>7.155</TD><TD>0.018</TD><TD>0.1769271</TD><TD>3</TD><TD>0.004461872</TD><TD>2.52187</TD><TD>3</TD><TD>0.0969</TD><TD>0</TD><TD>1</TD><TD>5150</TD><TD>4.46</TD><TD>0.161749</TD><TD>3</TD><TD>0.161749</TD><TD>3</TD><TD>0.1649217</TD><TD>3</TD><TD>0.1669737</TD><TD>3</TD><TD>0.1690292</TD><TD>3</TD><TD>0.1722697</TD><TD>3</TD><TD>0.1722697</TD><TD>3</TD><TD>0.1730422</TD><TD>3</TD><TD>0.1745655</TD><TD>3</TD><TD>0.175135</TD><TD>3</TD><TD>0.1758722</TD><TD>3</TD><TD>0.9960699</TD><TD>3</TD><TD>0.000197895</TD><TD>1.390996</TD><TD>K0.00(III)</TD><TD>TYC 4699-730-1</TD><TD>0</TD></TR>
+<TR><TD/><TD>13045</TD><TD>460</TD><TD>47</TD><TD>1068</TD><TD>1</TD><TD>02473769+0039592</TD><TD>J024737.69+003959.2</TD><TD>02 47 37.6897095</TD><TD>1.2</TD><TD>+00 39 59.384934</TD><TD>0.1</TD><TD>2.58</TD><TD>1.24</TD><TD>-9.72</TD><TD>1.27</TD><TD>3.04</TD><TD>1.85</TD><TD>K2</TD><TD>C</TD><TD>10.297</TD><TD>11</TD><TD>0.065</TD><TD>9.17</TD><TD>11</TD><TD>0.033</TD><TD>8.3</TD><TD>2</TD><TD>7.789118</TD><TD>3</TD><TD>7.289</TD><TD>0.019</TD><TD>6.876</TD><TD>0.055</TD><TD>6.659</TD><TD>0.02</TD><TD>6.582</TD><TD>0.067</TD><TD>6.653</TD><TD>0.021</TD><TD>6.631</TD><TD>0.016</TD><TD>0.2331526</TD><TD>3</TD><TD>0.006419177</TD><TD>2.753209</TD><TD>3</TD><TD>1.4519</TD><TD>0</TD><TD>1</TD><TD>4830</TD><TD>4.51</TD><TD>0.2119513</TD><TD>3</TD><TD>0.2119513</TD><TD>3</TD><TD>0.2162937</TD><TD>3</TD><TD>0.2191745</TD><TD>3</TD><TD>0.2221488</TD><TD>3</TD><TD>0.2266528</TD><TD>3</TD><TD>0.2266528</TD><TD>3</TD><TD>0.2277586</TD><TD>3</TD><TD>0.2298315</TD><TD>3</TD><TD>0.2306779</TD><TD>3</TD><TD>0.2316772</TD><TD>3</TD><TD>0.9931835</TD><TD>3</TD><TD>0.0003742768</TD><TD>1.411457</TD><TD>K2.00(III)</TD><TD>HIP 13045</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>47</TD><TD>879</TD><TD>1</TD><TD>02443802+0119179</TD><TD>J024438.03+011917.9</TD><TD>02 44 38.0275451</TD><TD>44.5</TD><TD>+01 19 17.893238</TD><TD>49.2</TD><TD>3.42</TD><TD>1.6</TD><TD>-5.48</TD><TD>1.5</TD><TD/><TD/><TD/><TD/><TD>11.614</TD><TD>4</TD><TD>0.162</TD><TD>10.107</TD><TD>4</TD><TD>0.052</TD><TD>9.092</TD><TD>2</TD><TD>8.52401</TD><TD>2</TD><TD>8.086</TD><TD>0.03</TD><TD>7.462</TD><TD>0.053</TD><TD>7.307</TD><TD>0.023</TD><TD>7.132</TD><TD>0.036</TD><TD>7.327</TD><TD>0.021</TD><TD>7.241</TD><TD>0.017</TD><TD>0.1797903</TD><TD>2</TD><TD>0.009235541</TD><TD>5.13684</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4587.59</TD><TD>4.51</TD><TD>0.1626842</TD><TD>2</TD><TD>0.1626842</TD><TD>2</TD><TD>0.1661982</TD><TD>2</TD><TD>0.1685154</TD><TD>2</TD><TD>0.1709515</TD><TD>2</TD><TD>0.1745383</TD><TD>2</TD><TD>0.1745383</TD><TD>2</TD><TD>0.175456</TD><TD>2</TD><TD>0.1771081</TD><TD>2</TD><TD>0.1778081</TD><TD>2</TD><TD>0.178586</TD><TD>2</TD><TD>0.9959421</TD><TD>2</TD><TD>0.0004162033</TD><TD>1.42157</TD><TD>G7.50/M0.00(I)</TD><TD>TYC 47-879-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>4699</TD><TD>888</TD><TD>1</TD><TD>02484643-0018304</TD><TD>J024846.44-001830.3</TD><TD>02 48 46.4338225</TD><TD>53.2</TD><TD>-00 18 30.314313</TD><TD>55.7</TD><TD>19.23</TD><TD>1.61</TD><TD>-12.85</TD><TD>1.03</TD><TD/><TD/><TD/><TD/><TD>11.352</TD><TD>4</TD><TD>0.155</TD><TD>9.998</TD><TD>4</TD><TD>0.068</TD><TD>9.080832</TD><TD>2</TD><TD>8.491801</TD><TD>2</TD><TD>7.984</TD><TD>0.029</TD><TD>7.481</TD><TD>0.047</TD><TD>7.28</TD><TD>0.023</TD><TD>7.156</TD><TD>0.044</TD><TD>7.308</TD><TD>0.021</TD><TD>7.245</TD><TD>0.018</TD><TD>0.1770473</TD><TD>2</TD><TD>0.01158699</TD><TD>6.544576</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4818.56</TD><TD>4.52</TD><TD>0.1609162</TD><TD>2</TD><TD>0.1609162</TD><TD>2</TD><TD>0.164219</TD><TD>2</TD><TD>0.1664099</TD><TD>2</TD><TD>0.1686759</TD><TD>2</TD><TD>0.1721035</TD><TD>2</TD><TD>0.1721035</TD><TD>2</TD><TD>0.1729439</TD><TD>2</TD><TD>0.1745195</TD><TD>2</TD><TD>0.1751646</TD><TD>2</TD><TD>0.1759244</TD><TD>2</TD><TD>0.9960647</TD><TD>2</TD><TD>0.0005142582</TD><TD>1.551638</TD><TD>G2.00/M1.50(I)</TD><TD>TYC 4699-888-1</TD><TD>0</TD></TR>
+<TR><TD/><TD/><TD/><TD>46</TD><TD>854</TD><TD>1</TD><TD>02380053+0102163</TD><TD>J023800.55+010216.1</TD><TD>02 38 00.5312730</TD><TD>35.9</TD><TD>+01 02 16.287043</TD><TD>52.5</TD><TD>18.21</TD><TD>1.5</TD><TD>-7.59</TD><TD>1.6</TD><TD/><TD/><TD/><TD/><TD>11.6</TD><TD>4</TD><TD>0.101</TD><TD>10.553</TD><TD>4</TD><TD>0.057</TD><TD>9.713276</TD><TD>2</TD><TD>9.098236</TD><TD>2</TD><TD>8.625</TD><TD>0.024</TD><TD>8.086</TD><TD>0.04</TD><TD>7.964</TD><TD>0.021</TD><TD>7.853</TD><TD>0.026</TD><TD>7.972</TD><TD>0.019</TD><TD>7.879</TD><TD>0.019</TD><TD>0.131021</TD><TD>2</TD><TD>0.009331313</TD><TD>7.122</TD><TD>2</TD><TD>1.0000</TD><TD>0</TD><TD>1</TD><TD>4809.81</TD><TD>4.51</TD><TD>0.1190618</TD><TD>2</TD><TD>0.1190618</TD><TD>2</TD><TD>0.12151</TD><TD>2</TD><TD>0.1231342</TD><TD>2</TD><TD>0.1248162</TD><TD>2</TD><TD>0.1273551</TD><TD>2</TD><TD>0.1273551</TD><TD>2</TD><TD>0.1279791</TD><TD>2</TD><TD>0.1291473</TD><TD>2</TD><TD>0.1296263</TD><TD>2</TD><TD>0.1301888</TD><TD>2</TD><TD>0.9978432</TD><TD>2</TD><TD>0.0003069379</TD><TD>1.571339</TD><TD>G2.75/M1.75(V)</TD><TD>TYC 46-854-1</TD><TD>0</TD></TR>
+    </TABLEDATA>
+   </DATA>
+  </TABLE>
+ </RESOURCE>
+</VOTABLE>
