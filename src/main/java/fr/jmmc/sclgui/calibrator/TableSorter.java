@@ -583,6 +583,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         _calibratorsModel.update(null, this);
     }
+
     // Helper classes
     private final class Row implements Comparable<Row> {
 
@@ -1099,6 +1100,63 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         }
     }
 
+    final class TableCellColorsEditor extends AbstractCellEditor implements TableCellEditor {
+
+        /** default serial UID for Serializable interface */
+        private static final long serialVersionUID = 1;
+
+        // This method is called when a cell value is edited by the user.
+        @Override
+        public Component getTableCellEditorComponent(final JTable table, final Object value, final boolean isSelected,
+                                                     final int row, final int column) {
+
+            // Retrieve clicked cell informations
+            final int modelRow = modelIndex(row);
+
+            final int colIndex = table.convertColumnIndexToModel(column);
+
+            if (colIndex == -1) {
+                return null;
+            }
+
+            final int modelColumn = _viewIndex[colIndex];
+            final CalibratorsModel calModel = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
+
+            final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
+
+            final String cellValue = (starProperty != null) ? starProperty.getString() : null;
+
+            // If the cell is empty
+            if (cellValue == null) {
+                return null; // Exit
+            }
+
+            if (calModel.hasURL(modelColumn)) {
+                final String url = calModel.getURL(modelColumn, cellValue);
+
+                if (_logger.isDebugEnabled()) {
+                    _logger.debug("User clicked on column '{}' in the CalibratorView, will open '{}' in default browser.", calModel.getColumnNameById(modelColumn), url);
+                }
+
+                // Open web browser with the computed URL
+                BrowserLauncher.openURL(url);
+            }
+
+            // Return null to "cancel" editing
+            return null;
+        }
+
+        // This method is called when editing is completed.
+        // It must return the new value to be stored in the cell.
+        @Override
+        public Object getCellEditorValue() {
+            // Should not be called
+            _logger.error("TableCellColorsEditor.getCellEditorValue() should have not been called.");
+
+            return null;
+        }
+    }
+
     /**
      * Preference listener for the TableCellColors renderer instances
      */
@@ -1175,60 +1233,4 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         }
     }
 
-    final class TableCellColorsEditor extends AbstractCellEditor implements TableCellEditor {
-
-        /** default serial UID for Serializable interface */
-        private static final long serialVersionUID = 1;
-
-        // This method is called when a cell value is edited by the user.
-        @Override
-        public Component getTableCellEditorComponent(final JTable table, final Object value, final boolean isSelected,
-                                                     final int row, final int column) {
-
-            // Retrieve clicked cell informations
-            final int modelRow = modelIndex(row);
-
-            final int colIndex = table.convertColumnIndexToModel(column);
-
-            if (colIndex == -1) {
-                return null;
-            }
-
-            final int modelColumn = _viewIndex[colIndex];
-            final CalibratorsModel calModel = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
-
-            final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
-
-            final String cellValue = (starProperty != null) ? starProperty.getString() : null;
-
-            // If the cell is empty
-            if (cellValue == null) {
-                return null; // Exit
-            }
-
-            if (calModel.hasURL(modelColumn)) {
-                final String url = calModel.getURL(modelColumn, cellValue);
-
-                if (_logger.isDebugEnabled()) {
-                    _logger.debug("User clicked on column '{}' in the CalibratorView, will open '{}' in default browser.", calModel.getColumnNameById(modelColumn), url);
-                }
-
-                // Open web browser with the computed URL
-                BrowserLauncher.openURL(url);
-            }
-
-            // Return null to "cancel" editing
-            return null;
-        }
-
-        // This method is called when editing is completed.
-        // It must return the new value to be stored in the cell.
-        @Override
-        public Object getCellEditorValue() {
-            // Should not be called
-            _logger.error("TableCellColorsEditor.getCellEditorValue() should have not been called.");
-
-            return null;
-        }
-    }
 }
