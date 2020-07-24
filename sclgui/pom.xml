@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--  please install first parent pom from jMCS/parent-pom directory -->
+    <parent>
+        <groupId>fr.jmmc</groupId>
+        <artifactId>jmmc</artifactId>
+        <version>TRUNK</version>
+        <relativePath />
+    </parent>
+
+    <groupId>fr.jmmc.sclgui</groupId>
+    <artifactId>sclgui</artifactId>
+
+    <packaging>jar</packaging>
+    <name>SearchCal</name>
+
+    <properties>
+        <!-- do make assembly and copy dependencies (JNLP) -->
+        <assembly.skipAssembly>false</assembly.skipAssembly>
+        <mdep.skip>false</mdep.skip>
+
+        <!-- disable tests (fest fails for now) -->
+        <maven.test.skip>true</maven.test.skip>
+
+        <slf4j.version>1.7.25</slf4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>fr.jmmc.jmcs</groupId>
+            <artifactId>jmcs</artifactId>
+            <version>TRUNK</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.jmmc.jmal</groupId>
+            <artifactId>jmal</artifactId>
+            <version>TRUNK</version>
+        </dependency>
+
+        <dependency>
+            <!-- Requires you to install the artifact running mvn process-resources -->
+            <groupId>cds.savot</groupId>
+            <artifactId>savot</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!-- use JMCS Latex2Helpset for the SearchCal documentation -->
+        <!--
+            Get the jmcs module:
+            cd jmcs/tools/helpset/
+            ./jmcsHTML2HelpSet.sh JMMC-MAN-2600-0001
+
+            Get the jar file: JMMC-MAN-2600-0001-latex-tmp/JMMC-MAN-2600-0001-doc.jar
+            Push into lib/sclgui-doc.jar
+        -->
+        <dependency>
+            <!-- Requires you to install the artifact running mvn process-resources -->
+            <groupId>fr.jmmc.sclgui</groupId>
+            <artifactId>sclgui-doc</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <!-- axis 1.4 -->
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.4</version>
+            <exclusions>
+                <!-- Commons Logging is implemented by jcl-over-slf4j module -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- SLF4J JCL (scope=compile) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.jmmc.testgui</groupId>
+            <artifactId>testgui</artifactId>
+            <version>TRUNK</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <artifactId>junit</artifactId>
+            <groupId>junit</groupId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>savot</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <phase>process-resources</phase> <!-- just before compilation -->
+                        <configuration>
+                            <file>lib/savot-4.0.0.jar</file>
+                            <groupId>cds.savot</groupId>
+                            <artifactId>savot</artifactId>
+                            <version>4.0.0</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>sclgui-doc</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <phase>process-resources</phase> <!-- just before compilation -->
+                        <configuration>
+                            <file>lib/sclgui-doc.jar</file>
+                            <groupId>fr.jmmc.sclgui</groupId>
+                            <artifactId>sclgui-doc</artifactId>
+                            <version>5.0.0</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
