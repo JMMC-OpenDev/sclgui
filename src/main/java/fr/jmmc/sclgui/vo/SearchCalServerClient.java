@@ -36,9 +36,10 @@ public final class SearchCalServerClient {
     private final static String JMMC_APPS_SERVER_HOST = "apps.jmmc.fr";
     /** JMMC application server IP (hard-coded).
     was 152.77.114.210 until 27 april 2017,
-    on dec 2018 also responds on the main frontend 129.88.192.8,
-    early 2019 old apps server will have to leave 152.77.135.209 */
-    private final static String JMMC_APPS_SERVER_IP = "129.88.192.8";
+    on dec 2018 also responds on the beta frontend 129.88.192.8,    
+    on july 21, 2020 old apps server leaved 152.77.135.209 and set as backend 
+    behind main frontend 129.88.192.7 */
+    private final static String JMMC_APPS_SERVER_IP = "129.88.192.7";
 
     /** Official release path */
     private static final String OFFICIAL_SERVER_PATH = "/~sclws/";
