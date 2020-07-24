@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.1.1"/>
-    <compilation date="16/04/2019" compiler="JDK 1.6"/>
+    <program name="SearchCal" version="5.1.2"/>
+    <compilation date="24/07/2020" compiler="JDK 1.8"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -134,6 +134,12 @@
     </menubar>
 
     <releasenotes>
+        <release version="5.1.2">
+            <prerelease version="5.1.2 beta 1">
+                <change type="CHANGE">Updage hardcoded IP of SearchCal Server (required only on networks without DNS). If you can't upgrade your installation,
+                    you can set the 'ip.apps.jmmc.fr' preference in .fr.jmmc.jmcs.properties to '129.88.192.7' </change>
+            </prerelease>
+        </release>
         <release version="5.1.1">
             <pubDate>Tue, 16 Apr 2019 14:00:00 GMT</pubDate>
             <prerelease version="5.1.1 beta 3">
@@ -141,8 +147,7 @@
                     use the new 'Reset Filters' action in the 'Calibrators' menu if needed</change>
             </prerelease>
             <prerelease version="5.1.1 beta 2">
-                <change type="CHANGE">Change hardcoded IP of SearchCal Server (required only on networks without DNS). If you can't upgrade your installation,
-                    you can set the 'ip.apps.jmmc.fr' preference in .fr.jmmc.jmcs.properties to '129.88.192.8' </change>
+                <change type="CHANGE">Change hardcoded IP of SearchCal Server.</change>
             </prerelease>
             <prerelease version="5.1.1 beta 1">
                 <change type="FEATURE">Always reset the calibrator table if the query returned no calibrator</change>
