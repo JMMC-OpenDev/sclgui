@@ -73,6 +73,10 @@ public final class Origin {
     public final static int KEY_ORIGIN_SIMBAD = 23;
     /** Origin - WISE */
     public final static int KEY_ORIGIN_WISE = 24;
+    /** Origin - WISE */
+    public final static int KEY_ORIGIN_GAIA = 25;
+    /** Origin - WISE */
+    public final static int KEY_ORIGIN_GAIA_DIST = 26;
     /** custom origin negative integer values (starts at -1) */
     private static int customInt = -1;
     /* Origin instances */
@@ -124,8 +128,12 @@ public final class Origin {
     public final static Origin ORIGIN_ASCC_FAINT_LOCAL = new Origin(KEY_ORIGIN_JSDC_FAINT_LOCAL, "I/280B", Catalog.ASCC_2_5);
     /** Origin - SIMBAD */
     public final static Origin ORIGIN_SIMBAD = new Origin(KEY_ORIGIN_SIMBAD, Catalog.SIMBAD);
-    /** Origin - SIMBAD */
+    /** Origin - WISE */
     public final static Origin ORIGIN_WISE = new Origin(KEY_ORIGIN_WISE, Catalog.WISE);
+    /** Origin - GAIA */
+    public final static Origin ORIGIN_GAIA = new Origin(KEY_ORIGIN_GAIA, Catalog.GAIA);
+    /** Origin - GAIA DIST */
+    public final static Origin ORIGIN_GAIA_DIST = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_DIST);
 
     static {
         /* initialize alternate string representations used */
