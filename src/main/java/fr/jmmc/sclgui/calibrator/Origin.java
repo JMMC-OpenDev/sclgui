@@ -77,6 +77,8 @@ public final class Origin {
     public final static int KEY_ORIGIN_GAIA = 25;
     /** Origin - WISE */
     public final static int KEY_ORIGIN_GAIA_DIST = 26;
+    /** Origin - MDFC */
+    public final static int KEY_ORIGIN_MDFC = 27;
     /** custom origin negative integer values (starts at -1) */
     private static int customInt = -1;
     /* Origin instances */
@@ -134,6 +136,8 @@ public final class Origin {
     public final static Origin ORIGIN_GAIA = new Origin(KEY_ORIGIN_GAIA, Catalog.GAIA);
     /** Origin - GAIA DIST */
     public final static Origin ORIGIN_GAIA_DIST = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_DIST);
+    /** Origin - MDFC */
+    public final static Origin ORIGIN_MDFC = new Origin(KEY_ORIGIN_MDFC, Catalog.MDFC);
 
     static {
         /* initialize alternate string representations used */
@@ -212,17 +216,7 @@ public final class Origin {
     /* members */
     /** enum key as integer */
     private final int key;
-    /** key as string ("0", "1", "2",
-     "3", "4", "5", "6", "7",
-     "8", "9", "10", "11",
-     "12", "13", "14", "15",
-     "16", "17", "18", "19", "20", "21") */
     private final String keyString;
-    /** string value ("NO CATALOG", "MIXED CATALOG", "computed",
-     "II/297/irc", "I/280", "I/280B", "V/50/catalog" , "II/225/catalog",
-     "B/denis", "J/A+A/413/1037/table1", "I/196/main", "I/239/hip_main",
-     "I/311/hip2", "J/A+A/393/183/catalog", "II/246/out", "J/A+A/433/1155",
-     "MIDI", "II/7A/catalog", "V/36B/bsc4s", "B/sb9/main", "I/284", "B/wds/wds") */
     private final String value;
     /** optional catalog reference */
     private final Catalog catalog;
@@ -272,11 +266,7 @@ public final class Origin {
     }
 
     /**
-     * Return the key as string ("0", "1", "2",
-     "3", "4", "5", "6", "7",
-     "8", "9", "10", "11",
-     "12", "13", "14", "15",
-     "16", "17", "18", "19", "20", "21")
+     * Return the key as string
      * @return key as string
      */
     public String getKeyString() {
@@ -284,11 +274,7 @@ public final class Origin {
     }
 
     /**
-     * Return the string value ("NO CATALOG", "MIXED CATALOG", "computed",
-     "II/297/irc", "I/280", "I/280B", "V/50/catalog" , "II/225/catalog",
-     "B/denis", "J/A+A/413/1037/table1", "I/196/main", "I/239/hip_main",
-     "I/311/hip2", "J/A+A/393/183/catalog", "II/246/out", "J/A+A/433/1155",
-     "MIDI", "II/7A/catalog", "V/36B/bsc4s", "B/sb9/main", "I/284", "B/wds/wds")
+     * Return the string value
      * @return string value
      */
     public String getValue() {
