@@ -26,6 +26,7 @@ import cds.savot.stax.SavotStaxParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
 import fr.jmmc.jmal.CoordUtils;
+import static fr.jmmc.jmal.star.StarResolver.USE_CACHE_DEV;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.MessagePane;
@@ -90,7 +91,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     /** Logger */
     private final static Logger _logger = LoggerFactory.getLogger(CalibratorsModel.class.getName());
     /** Enable CrossIds checker (development only) */
-    public final static boolean DO_CROSS_ID_CHECKER = false;
+    public final static boolean DO_CROSS_ID_CHECKER = USE_CACHE_DEV;
     /** Enable Vis2 computation comparison vs original column (development only) */
     public final static boolean DO_COMPARE_VIS2 = false;
     /** Enable Distance computation comparison vs original column (development only) */
@@ -1205,11 +1206,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                     break;
                                 case StarPropertyMeta.TYPE_INTEGER:
                                     try {
-                                        propertyValue = NumberUtils.valueOf(value);
-                                    } catch (NumberFormatException nfe) {
-                                        _logger.warn("invalid Integer value [{}] at column index={}", value, loadMapping.valuePos);
-                                    }
-                                    break;
+                                    propertyValue = NumberUtils.valueOf(value);
+                                } catch (NumberFormatException nfe) {
+                                    _logger.warn("invalid Integer value [{}] at column index={}", value, loadMapping.valuePos);
+                                }
+                                break;
                                 default:
                                     _logger.warn("unsupported data type [{}]: {}", type, value);
                             }
