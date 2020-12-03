@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="6.0.0 alpha 1"/>
-    <compilation date="02/10/2020" compiler="JDK 1.8"/>
+    <program name="SearchCal" version="6.0.0 alpha 2"/>
+    <compilation date="03/12/2020" compiler="JDK 1.8"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -135,11 +135,12 @@
 
     <releasenotes>
         <release version="6.0">
-            <pubDate>Thu, 01 Jun 2017 14:00:00 GMT</pubDate>
-            <prerelease version="6.0.0 alpha 1">
-                <change type="FEATURE">Added MDFC IRFlag and median fluxes (Jy)</change>
-                <change type="FEATURE">Updated SIMBAD information (2020.09)</change>
-                <change type="FEATURE">Added GAIA DR2 information: position, proper motion, parallax, distance</change>
+            <pubDate>Thu, 03 Dec 2020 14:00:00 GMT</pubDate>
+            <prerelease version="6.0.0 alpha 2">
+                <change type="FEATURE">Improved crossmatch algorithm to determine the best match among (n x m) sources: added xmatch columns (main flag, log, separation ...)</change>
+                <change type="FEATURE">Added MDFC catalog: IRFlag and median fluxes (Jy)</change>
+                <change type="FEATURE">Added GAIA DR2 catalog: position, proper motion, parallax, distance, effective temperature</change>
+                <change type="FEATURE">Updated SIMBAD information (2020.11.26)</change>
             </prerelease>
         </release>
         <release version="5.1.3">
@@ -149,8 +150,8 @@
         </release>
         <release version="5.1.2">
             <prerelease version="5.1.2 beta 1">
-                <change type="CHANGE">Updage hardcoded IP of SearchCal Server (required only on networks without DNS). If you can't upgrade your installation,
-                    you can set the 'ip.apps.jmmc.fr' preference in .fr.jmmc.jmcs.properties to '129.88.192.7' </change>
+                <change type="CHANGE">Updated hard-coded IP address of the JMMC SearchCal Server (required only on networks without DNS). If you can't upgrade your installation,
+                    you can set the preference 'ip.apps.jmmc.fr' in the file '.fr.jmmc.jmcs.properties' to '129.88.192.7'.</change>
             </prerelease>
         </release>
         <release version="5.1.1">
