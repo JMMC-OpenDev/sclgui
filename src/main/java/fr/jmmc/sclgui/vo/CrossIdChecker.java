@@ -11,6 +11,7 @@ import fr.jmmc.jmal.star.StarResolver;
 import fr.jmmc.jmal.star.StarResolverResult;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.NumberUtils;
+import fr.jmmc.jmcs.util.StringUtils;
 import fr.jmmc.sclgui.calibrator.StarList;
 import fr.jmmc.sclgui.calibrator.StarProperty;
 import java.io.File;
@@ -108,43 +109,53 @@ public class CrossIdChecker {
     private static final int COORDS_COLS_len = COORDS_ColumnNames.length;
 
     private static final String[] IDS_ColumnNames = new String[]{
+        "SIMBAD",
         "HD",
         "HIP",
-        //        "DM",
+        "DM",
         "TYC1",
         "TYC2",
         "TYC3",
+        "GAIA",
         "2MASS",
-        //        "AKARI",
+        "WISE",
+        "AKARI",
         "SBC9",
         "WDS"
     };
     private static final int IDS_COLS_len = IDS_ColumnNames.length;
 
     private final static String SIMBAD_TYC = "TYC ";
+    private final static String SIMBAD_MAIN = "MAIN_ID";
 
     private static final String[] SIMBAD_Prefixes = new String[]{
+        SIMBAD_MAIN,
         "HD ",
         "HIP ",
-        //        "DM ",
+        "DM ",
         "TYC ",
         "TYC ",
         "TYC ",
+        "Gaia DR2 ",
         "2MASS J",
-        //        "AKARI",
+        "WISE J",
+        "AKARI-IRC-V1 J",
         "SBC9 ",
         "WDS J"
     };
     private static final boolean[] IDS_CHECK = new boolean[]{
-        true, // HD: ASCC issue (bad crossmatch on ASCC side)
-        true, // HIP: missing few HIP stars from ASCC / HIP / HIP2 catalogs
-        //        "DM ",
+        true, // Main SIMBAD ID
+        false, // HD: ASCC issue (bad crossmatch on ASCC side)
+        false, // HIP: missing few HIP stars from ASCC / HIP / HIP2 catalogs
+        false, // ignore DM
         true, // checked: pb simbad with TYCHO2 supplementary catalogs
         true, // checked: pb simbad with TYCHO2 supplementary catalogs
         true, // checked: pb simbad with TYCHO2 supplementary catalogs
-        true,
-        //        "AKARI",
-        false, // ignore SBC for now 
+        true, // GAIA
+        true, // 2MASS
+        false, // WISE
+        false, // ignore AKARI
+        false, // ignore SBC
         false // ignore WDS (or remove component part)
     };
 
@@ -196,8 +207,10 @@ public class CrossIdChecker {
             final int step = 20 * CHUNK_SIZE;
 
             // Open writer file:
+            Writer dumpWriter = null;
             Writer reportWriter = null;
             try {
+                dumpWriter = prepareDump();
                 reportWriter = prepareReport();
 
                 for (List<StarProperty> star : starList) {
@@ -231,13 +244,13 @@ public class CrossIdChecker {
                         final String val = (idxColIds[i] != -1)
                                 ? star.get(idxColIds[i]).getString()
                                 : null;
-                        ids[i] = (val != null) ? val : NULL_ID;
+                        ids[i] = (val != null) ? StringUtils.cleanWhiteSpaces(val) : NULL_ID;
                     }
 
                     nc++;
                     if (nc == CHUNK_SIZE) {
                         // if failure: exit:
-                        if (!checkTargets(reportWriter, nameList, dataCoords, dataIds,
+                        if (!checkTargets(dumpWriter, reportWriter, nameList, dataCoords, dataIds,
                                 globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS,
                                 countError, countOK, countKO, countBadDist)) {
                             return;
@@ -272,7 +285,7 @@ public class CrossIdChecker {
                 }
                 // last chunk:
                 if (nc != 0) {
-                    checkTargets(reportWriter, nameList, dataCoords, dataIds,
+                    checkTargets(dumpWriter, reportWriter, nameList, dataCoords, dataIds,
                             globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS,
                             countError, countOK, countKO, countBadDist);
                 }
@@ -280,6 +293,7 @@ public class CrossIdChecker {
                 _logger.error("IO failure:", ioe);
             } finally {
                 FileUtils.closeFile(reportWriter);
+                FileUtils.closeFile(dumpWriter);
 
                 _logger.info("check done: {} stars\nIDS: {}"
                         + "\nGlobal Match count: {}"
@@ -305,7 +319,7 @@ public class CrossIdChecker {
         }
     }
 
-    private static boolean checkTargets(final Writer reportWriter,
+    private static boolean checkTargets(final Writer dumpWriter, final Writer reportWriter,
                                         final List<String> nameList, double[][] dataCoords, final String[][] dataIds,
                                         final int[] globalMismatchs_NULL_1, final int[] globalMismatchs_NULL_2,
                                         final int[] globalMismatchs_VALS, final AtomicInteger countError,
@@ -330,8 +344,9 @@ public class CrossIdChecker {
 
                 case ERROR_SERVER:
                     _logger.error("Simbad error: {}", result.getServerErrorMessage());
-                // continue
+                    break;
                 default:
+                    break;
             }
 
             String name, rawIds;
@@ -369,9 +384,9 @@ public class CrossIdChecker {
 
                         // extract simbad identifiers:
                         rawIds = star.getPropertyAsString(Star.Property.IDS);
-                        extractIds(rawIds, simbadIds);
+                        extractIds(star.getMainId(), rawIds, simbadIds);
 
-                        compare(reportWriter, name, sep, dataCoords[i], dataIds[i], j, simbadCoords, rawIds, simbadIds, mismatchs,
+                        compare(dumpWriter, reportWriter, name, sep, dataCoords[i], dataIds[i], j, simbadCoords, rawIds, simbadIds, mismatchs,
                                 globalMismatchs_NULL_1, globalMismatchs_NULL_2, globalMismatchs_VALS,
                                 countOK, countKO, countBadDist);
                     }
@@ -381,7 +396,7 @@ public class CrossIdChecker {
         return true;
     }
 
-    private static void compare(Writer reportWriter, String name, double sep, double[] sclCoords, String[] sclIds,
+    private static void compare(final Writer dumpWriter, final Writer reportWriter, String name, double sep, double[] sclCoords, String[] sclIds,
                                 int ns, double[] simbadCoords,
                                 final String rawIds, String[] simbadIds,
                                 final int[] mismatchs,
@@ -390,7 +405,11 @@ public class CrossIdChecker {
                                 final AtomicInteger countOK, final AtomicInteger countKO,
                                 final AtomicInteger countBadDist) throws IOException {
 
-        if (sep >= 1.5) {
+        boolean dump = false;
+
+        if (sep >= 1.0) {
+            dump = true;
+
             countBadDist.incrementAndGet();
             _logger.info("name[{}]: bad sep={} as:\nSearchCal: {}\nSimbad[{}]: {}",
                     name,
@@ -408,14 +427,22 @@ public class CrossIdChecker {
             s1 = sclIds[i];
             s2 = simbadIds[i];
 
-            if (!IDS_CHECK[i] || (s1 == s2) || (s1.equals(s2))) {
+            if ((s1 == s2) || (s1.equals(s2))) {
                 // reset:
                 mismatchs[i + 1] = 0;
             } else {
-                mismatchs[0] = 1;
+                // mismatch:
+                if (IDS_CHECK[i]) {
+                    mismatchs[0] = 1;
+                    dump = true;
+                }
                 // mismatch count per column ID:
                 mismatchs[i + 1] = (s1 == NULL_ID) ? 1 : ((s2 == NULL_ID) ? 2 : 4);
             }
+        }
+
+        if (dump) {
+            dump(dumpWriter, name, sep, sclCoords, sclIds, simbadCoords, simbadIds);
         }
 
         if (mismatchs[0] == 0) {
@@ -432,7 +459,7 @@ public class CrossIdChecker {
 
             _logger.info("name[{}]: sep={} as: IDS MISMATCH:"
                     + "\nSearchCal: [{} {}] [{} {}] {}"
-                    + "\nSimbad[{}]: [{} {}] [{} {}] {}\nMismatchs:{}\nraw Ids:{}",
+                    + "\nSimbad[{}]: [{} {}] [{} {}] {}\nMismatchs:{}\nraw Ids: [{}]",
                     name,
                     NumberUtils.trimTo3Digits(sep),
                     roundCoord(sclCoords[0]),
@@ -524,7 +551,81 @@ public class CrossIdChecker {
         w.write('\n');
     }
 
-    private static void extractIds(final String ids, final String[] simbadIds) {
+    static Writer prepareDump() throws IOException {
+        final File file = new File("CrossIdChecker-" + new Date() + "-dump.tst");
+        final Writer w = FileUtils.openFile(file);
+
+        if (w == null) {
+            throw new IllegalStateException("Unable to write file: " + file.getAbsolutePath());
+        }
+        _logger.info("Writing dump into: {}", file.getAbsolutePath());
+
+        w.write("#File generated by SearchCal CrossIdChecker (tst format for topcat / stilts)\n");
+        w.write("Name\t");
+        w.write("sep_as\t");
+
+        for (int i = 0; i < COORDS_COLS_len; i++) {
+            w.write("SearchCal_");
+            w.write(COORDS_ColumnNames[i]);
+            w.write('\t');
+            w.write("Simbad_");
+            w.write(COORDS_ColumnNames[i]);
+            w.write('\t');
+        }
+
+        for (int i = 0; i < IDS_COLS_len; i++) {
+            w.write("SearchCal_");
+            w.write(IDS_ColumnNames[i]);
+            w.write('\t');
+            w.write("Simbad_");
+            w.write(IDS_ColumnNames[i]);
+            w.write('\t');
+        }
+        w.write('\n');
+
+        for (int i = 0; i < IDS_COLS_len + COORDS_COLS_len + 2; i++) {
+            w.write("--");
+            w.write('\t');
+        }
+        w.write('\n');
+        return w;
+    }
+
+    static void dump(final Writer w, final String name, final double sep,
+                     double[] sclCoords, String[] sclIds,
+                     double[] simbadCoords, String[] simbadIds) throws IOException {
+
+        w.write(name);
+        w.write('\t');
+        w.write(Double.toString(sep));
+        w.write('\t');
+
+        for (int i = 0; i < COORDS_COLS_len; i++) {
+            // SearchCal:
+            w.write(Double.toString(sclCoords[i]));
+            w.write('\t');
+            // Simbad:
+            w.write(Double.toString(simbadCoords[i]));
+            w.write('\t');
+        }
+
+        for (int i = 0; i < IDS_COLS_len; i++) {
+            // SearchCal:
+            if (sclIds[i] != NULL_ID) {
+                w.write(sclIds[i]);
+            }
+            w.write('\t');
+            // Simbad:
+            if (simbadIds[i] != NULL_ID) {
+                w.write(simbadIds[i]);
+            }
+            w.write('\t');
+        }
+
+        w.write('\n');
+    }
+
+    private static void extractIds(final String mainId, final String ids, final String[] simbadIds) {
         int tycN = 0;
         String id, prefix;
         int from;
@@ -535,63 +636,67 @@ public class CrossIdChecker {
             simbadIds[i] = NULL_ID;
 
             prefix = SIMBAD_Prefixes[i];
-            from = 0;
 
-            do {
-                // System.out.println("Parsing: "+ids + " from: "+from);
-                pos = ids.indexOf(prefix, from);
-                // reset:
-                from = -1;
+            if (prefix == SIMBAD_MAIN) {
+                simbadIds[i] = mainId;
+            } else {
+                from = 0;
+                do {
+                    // System.out.println("Parsing: "+ids + " from: "+from);
+                    pos = ids.indexOf(prefix, from);
+                    // reset:
+                    from = -1;
 
-                if (pos != -1) {
-                    // Check if previous char is ',' or pos=0
-                    if (pos > 0) {
-                        // check previous character:
-                        if (ids.charAt(pos - 1) != ',') {
-                            // search next token:
-                            from = pos + prefix.length();
-                            // System.out.println("invalid position: " + ids.substring(0, from));
+                    if (pos != -1) {
+                        // Check if previous char is ',' or pos=0
+                        if (pos > 0) {
+                            // check previous character:
+                            if (ids.charAt(pos - 1) != ',') {
+                                // search next token:
+                                from = pos + prefix.length();
+                                // System.out.println("invalid position: " + ids.substring(0, from));
+                            }
                         }
                     }
-                }
 
-            } while (from != -1);
+                } while (from != -1);
 
-            if (pos != -1) {
-                pos += prefix.length();
+                if (pos != -1) {
+                    pos += prefix.length();
 
-                end = ids.indexOf(',', pos);
+                    end = ids.indexOf(',', pos);
 
-                if (end == -1) {
-                    end = ids.length();
-                }
-
-                id = ids.substring(pos, end);
-
-                // remove any invalid character:
-                id = replaceNonNumericChars(id);
-
-                // System.out.println("ID[" + prefix + "]: " + id);
-                if (SIMBAD_TYC == prefix) {
-                    switch (tycN) {
-                        case 0:
-                            pos = id.indexOf('-');
-                            simbadIds[i] = id.substring(0, pos);
-                            break;
-                        case 1:
-                            pos = id.indexOf('-');
-                            end = id.indexOf('-', pos + 1);
-                            simbadIds[i] = id.substring(pos + 1, end);
-                            break;
-                        case 2:
-                            pos = id.lastIndexOf('-');
-                            simbadIds[i] = id.substring(pos + 1);
-                            break;
-                        default:
+                    if (end == -1) {
+                        end = ids.length();
                     }
-                    tycN++;
-                } else {
-                    simbadIds[i] = id;
+
+                    id = ids.substring(pos, end);
+
+                    // remove any invalid character:
+                    id = replaceNonNumericChars(id);
+
+                    // System.out.println("ID[" + prefix + "]: " + id);
+                    if (SIMBAD_TYC == prefix) {
+                        switch (tycN) {
+                            case 0:
+                                pos = id.indexOf('-');
+                                simbadIds[i] = id.substring(0, pos);
+                                break;
+                            case 1:
+                                pos = id.indexOf('-');
+                                end = id.indexOf('-', pos + 1);
+                                simbadIds[i] = id.substring(pos + 1, end);
+                                break;
+                            case 2:
+                                pos = id.lastIndexOf('-');
+                                simbadIds[i] = id.substring(pos + 1);
+                                break;
+                            default:
+                        }
+                        tycN++;
+                    } else {
+                        simbadIds[i] = StringUtils.cleanWhiteSpaces(id);
+                    }
                 }
             }
         }
