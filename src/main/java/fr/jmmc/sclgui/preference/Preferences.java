@@ -257,12 +257,12 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         i = 0;
 
         if (defaultFlag) {
-            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_HIGH, i++, "#ECECEC");
-            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_MEDIUM, i++, "#CCCCCC");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_HIGH, i++, "#E0E0E0");
+            setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_MEDIUM, i++, "#B0B0B0");
             setDefaultPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_LOW, i++, "#6F6F6F");
         } else {
-            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_HIGH, i++, "#ECECEC");
-            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_MEDIUM, i++, "#CCCCCC");
+            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_HIGH, i++, "#E0E0E0");
+            setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_MEDIUM, i++, "#B0B0B0");
             setPreference(PREFIX_CONFIDENCE_COLOR + Confidence.CONFIDENCE_LOW, i++, "#6F6F6F");
         }
     }
