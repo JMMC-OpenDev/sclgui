@@ -7,6 +7,7 @@ import fest.common.JmcsFestSwingJUnitTestCase;
 import fr.jmmc.jmcs.Bootstrapper;
 import fr.jmmc.jmcs.data.preference.CommonPreferences;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
+import fr.jmmc.jmcs.data.preference.SessionSettingsPreferences;
 import fr.jmmc.jmcs.gui.action.ActionRegistrar;
 import fr.jmmc.jmcs.util.timer.TimerFactory;
 import fr.jmmc.sclgui.preference.Preferences;
@@ -60,6 +61,7 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
 
         // reset Preferences:
         Preferences.getInstance().resetToDefaultPreferences();
+        SessionSettingsPreferences.getInstance().resetToDefaultPreferences();
         try {
             CommonPreferences.getInstance().setPreference(CommonPreferences.SHOW_STARTUP_SPLASHSCREEN, false);
         } catch (PreferencesException pe) {

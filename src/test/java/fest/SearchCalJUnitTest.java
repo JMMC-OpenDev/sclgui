@@ -5,6 +5,7 @@ package fest;
 
 import fest.common.JmcsFestSwingJUnitTestCase;
 import fr.jmmc.jmcs.Bootstrapper;
+import fr.jmmc.jmcs.data.preference.SessionSettingsPreferences;
 import fr.jmmc.sclgui.preference.Preferences;
 import javax.swing.JButton;
 import org.fest.assertions.Fail;
@@ -54,6 +55,7 @@ public final class SearchCalJUnitTest extends JmcsFestSwingJUnitTestCase {
 
         // reset Preferences:
         Preferences.getInstance().resetToDefaultPreferences();
+        SessionSettingsPreferences.getInstance().resetToDefaultPreferences();
 
         final String fileName;
         if (TEST_BIG) {
