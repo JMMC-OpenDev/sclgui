@@ -704,23 +704,26 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JTableHeader h = (JTableHeader) e.getSource();
-            TableColumnModel columnModel = h.getColumnModel();
-            int viewColumn = columnModel.getColumnIndexAtX(e.getX());
-            int column = columnModel.getColumn(viewColumn).getModelIndex();
+            final JTableHeader h = (JTableHeader) e.getSource();
+            final TableColumnModel columnModel = h.getColumnModel();
+            final int viewColumn = columnModel.getColumnIndexAtX(e.getX());
+            
+            if (viewColumn != -1) {
+                final int column = columnModel.getColumn(viewColumn).getModelIndex();
 
-            if (column != -1) {
-                int status = getSortingStatus(column);
+                if (column != -1) {
+                    int status = getSortingStatus(column);
 
-                if (!e.isControlDown()) {
-                    cancelSorting();
+                    if (!e.isControlDown()) {
+                        cancelSorting();
+                    }
+
+                    // Cycle the sorting states through {NOT_SORTED, ASCENDING, DESCENDING} or
+                    // {NOT_SORTED, DESCENDING, ASCENDING} depending on whether shift is pressed.
+                    status += (e.isShiftDown() ? (-1) : 1);
+                    status = ((status + 4) % 3) - 1; // signed mod, returning {-1, 0, 1}
+                    setSortingStatus(column, status);
                 }
-
-                // Cycle the sorting states through {NOT_SORTED, ASCENDING, DESCENDING} or
-                // {NOT_SORTED, DESCENDING, ASCENDING} depending on whether shift is pressed.
-                status += (e.isShiftDown() ? (-1) : 1);
-                status = ((status + 4) % 3) - 1; // signed mod, returning {-1, 0, 1}
-                setSortingStatus(column, status);
             }
         }
     }
