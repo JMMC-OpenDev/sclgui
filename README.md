@@ -6,6 +6,7 @@ This module contains the SearchCal java application developed by the JMMC techni
 
 
 See [SearchCal](https://www.jmmc.fr/searchcal)
+See [JMMC releases](https://www.jmmc.fr/releases/)
 See [JMMC OpenDev @ github](https://github.com/JMMC-OpenDev/)
 
 See [CI nightly builds](https://github.com/JMMC-OpenDev/jmmc-java-build/actions/workflows/build.yml)
