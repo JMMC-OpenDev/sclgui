@@ -84,7 +84,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     /** Detailed faint K columns order list, as of default in preference version 20 */
     private static final String _detailedFaintK_v21 = "dist vis2 vis2Err diam_chi2 LDD e_LDD_rel 2MASS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GroupSize SIMBAD SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B V J H K";
     /** Detailed faint K columns order list, as of default in current preference version */
-    private static final String _detailedFaintK = "dist vis2 vis2Err diam_chi2 LDD e_LDD_rel UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K 2MASS GAIA TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GroupSize SIMBAD SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B V G J H K";
+    private static final String _detailedFaintK = "dist vis2 vis2Err diam_chi2 LDD e_LDD_rel UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K 2MASS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GroupSize SIMBAD SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B V J H K";
 
     /** Simple bright N columns order list, as of default in preference version 20 */
     private static final String _simpleBrightN_v20 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType ObjTypes N";
@@ -968,14 +968,6 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
              */
             if (!before.contains("UD_")) {
                 status &= replaceTokenInPreference(view, " e_LDD_rel ", " e_LDD_rel UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K ");
-            }
-
-            if (!before.contains("GAIA")) {
-                status &= replaceTokenInPreference(view, " 2MASS ", " 2MASS GAIA ");
-            }
-
-            if (!before.contains(" G ")) {
-                status &= replaceTokenInPreference(view, " V ", " V G ");
             }
             // System.out.println("After Pref: " + getPreference(view));      
         }
