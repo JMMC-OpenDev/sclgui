@@ -81,8 +81,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
     private static final String _detailedFaintK_v15 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B Bphg V Vphg Rphg I Icous Iphg J Jcous H Hcous K Kcous Av";
     /** Detailed faint K columns order list, as of default in preference version 20 */
     private static final String _detailedFaintK_v20 = "dist vis2 vis2Err diam_ij diam_ik diam_jh diam_jk diam_hk diam_mean e_diam_mean 2MASS DENIS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GLAT GLON SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B Bphg V Rphg Icous Iphg J Jcous H Hcous K Kcous Av";
+    /** Detailed faint K columns order list, as of default in preference version 20 */
+    private static final String _detailedFaintK_v21 = "dist vis2 vis2Err diam_chi2 LDD e_LDD_rel 2MASS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GroupSize SIMBAD SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B V J H K";
     /** Detailed faint K columns order list, as of default in current preference version */
-    private static final String _detailedFaintK = "dist vis2 vis2Err diam_chi2 LDD e_LDD_rel 2MASS TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GroupSize SIMBAD SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B V J H K";
+    private static final String _detailedFaintK = "dist vis2 vis2Err diam_chi2 LDD e_LDD_rel UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K 2MASS GAIA TYC1 TYC2 TYC3 HIP HD DM RAJ2000 DEJ2000 pmRa pmDec plx GroupSize SIMBAD SpType ObjTypes VarFlag1 VarFlag2 VarFlag3 MultFlag SBC9 WDS sep1 sep2 B V G J H K";
 
     /** Simple bright N columns order list, as of default in preference version 20 */
     private static final String _simpleBrightN_v20 = "dist HD RAJ2000 DEJ2000 vis2 vis2Err Dia12 e_dia12 F12 SpType ObjTypes N";
@@ -105,8 +107,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
 
     /** Simple faint K columns order list, as of default in preference version 20 */
     private static final String _simpleFaintK_v20 = "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_mean e_diam_mean SpType ObjTypes V Icous J H K";
+    /** Simple faint K columns order list, as of default in preference version 21 */
+    private static final String _simpleFaintK_v21 = "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_chi2 LDD e_LDD_rel GroupSize SIMBAD SpType ObjTypes V J H K";
     /** Simple faint K columns order list, as of default in current preference version */
-    private static final String _simpleFaintK = "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_chi2 LDD e_LDD_rel GroupSize SIMBAD SpType ObjTypes V J H K";
+    private static final String _simpleFaintK = "dist 2MASS RAJ2000 DEJ2000 vis2 vis2Err diam_chi2 LDD e_LDD_rel UD_V UD_J UD_H UD_K GroupSize SIMBAD SpType ObjTypes V J H K";
 
     /** Hidden constructor */
     protected Preferences() {
@@ -126,7 +130,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        return 21;
+        return 22;
     }
 
     /**
@@ -226,6 +230,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             // SearchCal v5
             case 20:
                 return updateFromVersion20ToVersion21();
+
+            // SearchCal v6
+            case 21:
+                return updateFromVersion21ToVersion22();
 
             // By default, triggers default values load.
             default:
@@ -926,10 +934,10 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
             String before = getPreference(view);
 
             String after = StringUtils.replaceWhiteSpaces(before, " ");
-/*            
+            /*            
             System.out.println("Updating view: " + view);
             System.out.println("Pref: " + before);
-*/
+             */
             try {
                 setPreference(view, after);
             } catch (PreferencesException pe) {
@@ -937,6 +945,66 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
                 return false;
             }
         }
+        // Commit all changes if and only if everything went fine.
+        return status;
+    }
+
+    /**
+     * Correction : fix Faint columns and update legend colors
+     *
+     * @return always true to force Preference file write to disk with the new empty value as default.
+     */
+    private boolean updateFromVersion21ToVersion22() {
+        boolean status = true;
+
+        Object[] viewNames = new Object[]{PreferenceKey.VIEW_DETAILED_FAINT_K};
+
+        // For each views
+        for (Object view : viewNames) {
+            String before = getPreference(view);
+            /*
+            System.out.println("Updating view: " + view);
+            System.out.println("Pref: " + before);      
+             */
+            if (!before.contains("UD_")) {
+                status &= replaceTokenInPreference(view, " e_LDD_rel ", " e_LDD_rel UD_U UD_B UD_V UD_R UD_I UD_J UD_H UD_K ");
+            }
+
+            if (!before.contains("GAIA")) {
+                status &= replaceTokenInPreference(view, " 2MASS ", " 2MASS GAIA ");
+            }
+
+            if (!before.contains(" G ")) {
+                status &= replaceTokenInPreference(view, " V ", " V G ");
+            }
+            // System.out.println("After Pref: " + getPreference(view));      
+        }
+
+        viewNames = new Object[]{PreferenceKey.VIEW_SIMPLE_FAINT_K};
+
+        // For each views
+        for (Object view : viewNames) {
+            String before = getPreference(view);
+            /*
+            System.out.println("Updating view: " + view);
+            System.out.println("Pref: " + before);      
+             */
+            if (!before.contains("UD_")) {
+                status &= replaceTokenInPreference(view, " e_LDD_rel ", " e_LDD_rel UD_V UD_J UD_H UD_K ");
+            }
+            // System.out.println("After Pref: " + getPreference(view));      
+        }
+
+        // Update legend colors and order
+        try {
+            setLegendColorsAndOrders(false);
+            _logger.debug("Updated legend colors and order.");
+        } catch (PreferencesException pe) {
+            _logger.warn("Could updated legend colors and order:", pe);
+
+            return false;
+        }
+
         // Commit all changes if and only if everything went fine.
         return status;
     }
