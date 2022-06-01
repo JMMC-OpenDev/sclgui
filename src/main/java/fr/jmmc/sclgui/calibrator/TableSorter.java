@@ -2,14 +2,17 @@ package fr.jmmc.sclgui.calibrator;
 
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
+import fr.jmmc.jmcs.gui.component.ArrowIcon;
+import fr.jmmc.jmcs.gui.component.Directive;
+import fr.jmmc.jmcs.gui.component.Row;
 import fr.jmmc.jmcs.service.BrowserLauncher;
 import fr.jmmc.jmcs.util.NumberUtils;
+import fr.jmmc.jmcs.util.StringUtils;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -129,9 +132,13 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     };
 
     /* members */
+    /** source data model */
     private TableModel tableModel;
+    /** sorted rows mapping the view to the source model */
     private Row[] viewToModel;
+    /** mapping from the source model index to the view index */
     private int[] modelToView;
+    /** table header */
     private JTableHeader tableHeader;
     private MouseListener mouseListener;
     TableModelListener tableModelListener;
@@ -207,10 +214,17 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         modelToView = null;
     }
 
+    /**
+     * @return the source table model
+     */
     public TableModel getTableModel() {
         return tableModel;
     }
 
+    /**
+     * Defines the source data model
+     * @param tableModel source data model
+     */
     public void setTableModel(TableModel tableModel) {
         this.tableModel = tableModel;
 
@@ -219,10 +233,17 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         fireTableStructureChanged();
     }
 
+    /**
+     * @return table header
+     */
     public JTableHeader getTableHeader() {
         return tableHeader;
     }
 
+    /**
+     * Define the table header (to customize)
+     * @param tableHeader table header
+     */
     public void setTableHeader(JTableHeader tableHeader) {
         if (this.tableHeader != null) {
             this.tableHeader.removeMouseListener(mouseListener);
@@ -256,8 +277,35 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         return EMPTY_DIRECTIVE;
     }
 
+    /**
+     * @param column column index
+     * @return integer value in (ASCENDING = 1, NOT_SORTED = 0, DESCENDING = -1)
+     */
     public int getSortingStatus(int column) {
-        return getDirective(_viewIndex[column]).direction;
+        return getDirective(columnModelIndex(column)).direction;
+    }
+
+    /**
+     * Defines the column sorting
+    @param column column index
+    @param status integer value in (ASCENDING = 1, NOT_SORTED = 0, DESCENDING = -1)
+     */
+    public void setSortingStatus(final int column, final int status) {
+        final int modelColumn = columnModelIndex(column);
+
+        final Directive directive = getDirective(modelColumn);
+
+        if (directive != EMPTY_DIRECTIVE) {
+            sortingColumns.remove(directive);
+        }
+
+        if (status != NOT_SORTED) {
+            sortingColumns.add(createDirective(modelColumn, status));
+        }
+
+        _logger.debug("setSortingStatus: {}", sortingColumns);
+
+        sortingStatusChanged();
     }
 
     private void sortingStatusChanged() {
@@ -269,30 +317,14 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         }
     }
 
-    public void setSortingStatus(final int column, final int status) {
-        final int realColumn = _viewIndex[column];
-
-        final Directive directive = getDirective(realColumn);
-
-        if (directive != EMPTY_DIRECTIVE) {
-            sortingColumns.remove(directive);
-        }
-
-        if (status != NOT_SORTED) {
-            sortingColumns.add(createDirective(realColumn, status));
-        }
-
-        sortingStatusChanged();
-    }
-
     Icon getHeaderRendererIcon(final int column, final int size) {
-        final Directive directive = getDirective(_viewIndex[column]);
+        final Directive directive = getDirective(columnModelIndex(column));
 
         if (directive == EMPTY_DIRECTIVE) {
             return null;
         }
 
-        return new Arrow(directive.direction == DESCENDING, size, sortingColumns.indexOf(directive));
+        return new ArrowIcon(directive.direction == DESCENDING, size, sortingColumns.indexOf(directive));
     }
 
     private void cancelSorting() {
@@ -335,6 +367,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     private Comparator<Object> getComparator(final int realColumn) {
         final Class<?> columnType = tableModel.getColumnClass(realColumn);
 
+        if (_logger.isDebugEnabled()) {
+            _logger.debug("getComparator({}): {}", tableModel.getColumnName(realColumn), columnType);
+        }
+
         if (String.class == columnType) {
             return LEXICAL_COMPARATOR;
         }
@@ -352,8 +388,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             final int tableModelRowCount = tableModel.getRowCount();
             final Row[] newModel = new Row[tableModelRowCount];
 
+            final Row.RowState state = new Row.RowState(tableModel, sortingColumns);
+
             for (int row = 0; row < tableModelRowCount; row++) {
-                newModel[row] = new Row(row);
+                newModel[row] = new Row(state, row);
             }
 
             if (isSorting()) {
@@ -362,7 +400,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 Arrays.sort(newModel);
 
                 if (_logger.isDebugEnabled()) {
-                    _logger.debug("sort ({} stars) processed in {} ms.", tableModelRowCount, 1e-6d * (System.nanoTime() - start));
+                    _logger.debug("sort ({} rows) processed in {} ms.", tableModelRowCount, 1e-6d * (System.nanoTime() - start));
                 }
             }
 
@@ -373,6 +411,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         return viewToModel;
     }
 
+    /**
+     * @param viewIndex row index in the view
+     * @return row index in the source model
+     */
     public int modelIndex(final int viewIndex) {
         return getViewToModel()[viewIndex].modelIndex;
     }
@@ -392,8 +434,20 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         return modelToView;
     }
 
+    /**
+     * @param modelIndex row index in the source model
+     * @return row index in the view
+     */
     public int viewIndex(final int modelIndex) {
         return getModelToView()[modelIndex];
+    }
+
+    /**
+     * @param column column index in the view
+     * @return model column index in the source model
+     */
+    public int columnModelIndex(final int column) {
+        return _viewIndex[column];
     }
 
     /**
@@ -432,27 +486,27 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
     @Override
     public String getColumnName(final int column) {
-        return tableModel.getColumnName(_viewIndex[column]);
+        return tableModel.getColumnName(columnModelIndex(column));
     }
 
     @Override
     public Class<?> getColumnClass(final int column) {
-        return tableModel.getColumnClass(_viewIndex[column]);
+        return tableModel.getColumnClass(columnModelIndex(column));
     }
 
     @Override
     public boolean isCellEditable(final int row, final int column) {
-        return tableModel.isCellEditable(modelIndex(row), _viewIndex[column]);
+        return tableModel.isCellEditable(modelIndex(row), columnModelIndex(column));
     }
 
     @Override
     public Object getValueAt(final int row, final int column) {
-        return tableModel.getValueAt(modelIndex(row), _viewIndex[column]);
+        return tableModel.getValueAt(modelIndex(row), columnModelIndex(column));
     }
 
     @Override
     public void setValueAt(final Object aValue, final int row, final int column) {
-        tableModel.setValueAt(aValue, modelIndex(row), _viewIndex[column]);
+        tableModel.setValueAt(aValue, modelIndex(row), columnModelIndex(column));
     }
 
     /**
@@ -528,15 +582,12 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             // Use list to keep only valid columns:
             final List<Integer> viewIndex = new ArrayList<Integer>(nbOfColumns);
 
-            String columnName;
-            int columnId;
-
             for (int i = 0; i < nbOfColumns; i++) {
-                columnName = columnStrings[i];
+                final String columnName = columnStrings[i];
 
-                if (columnName != null) {
-                    // Get each column index from its name:
-                    columnId = _calibratorsModel.getColumnIdByName(columnName);
+                if (!StringUtils.isEmpty(columnName)) {
+                    // Get the current column index given its name:
+                    final int columnId = _calibratorsModel.getColumnIdByName(columnName);
 
                     // If no column Id was found for the given column name
                     if (columnId == -1) {
@@ -545,7 +596,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                         }
                     } else {
                         viewIndex.add(NumberUtils.valueOf(columnId));
-
                         if (_logger.isDebugEnabled()) {
                             _logger.debug("viewIndex[{}] = '{}' -> '{}'.", (viewIndex.size() - 1), columnId, columnName);
                         }
@@ -585,50 +635,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
     }
 
     // Helper classes
-    private final class Row implements Comparable<Row> {
-
-        final int modelIndex;
-
-        Row(final int index) {
-            this.modelIndex = index;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public int compareTo(final Row other) {
-            final int row1 = modelIndex;
-            final int row2 = other.modelIndex;
-
-            int column, comparison;
-            Object o1, o2;
-            Directive directive;
-
-            for (int i = 0, len = sortingColumns.size(); i < len; i++) {
-                directive = sortingColumns.get(i);
-                column = directive.column;
-                o1 = tableModel.getValueAt(row1, column);
-                o2 = tableModel.getValueAt(row2, column);
-
-                // Define null less than everything, except null.
-                if ((o1 == null) && (o2 == null)) {
-                    comparison = 0;
-                } else if (o1 == null) {
-                    comparison = -1;
-                } else if (o2 == null) {
-                    comparison = 1;
-                } else {
-                    comparison = directive.comparator.compare(o1, o2);
-                }
-
-                if (comparison != 0) {
-                    return (directive.direction == DESCENDING) ? -comparison : comparison;
-                }
-            }
-
-            return 0;
-        }
-    }
-
     private final class TableModelHandler implements TableModelListener {
 
         @Override
@@ -707,7 +713,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             final JTableHeader h = (JTableHeader) e.getSource();
             final TableColumnModel columnModel = h.getColumnModel();
             final int viewColumn = columnModel.getColumnIndexAtX(e.getX());
-            
+
             if (viewColumn != -1) {
                 final int column = columnModel.getColumn(viewColumn).getModelIndex();
 
@@ -725,67 +731,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                     setSortingStatus(column, status);
                 }
             }
-        }
-    }
-
-    private final static class Arrow implements Icon {
-
-        private final boolean descending;
-        private final int size;
-        private final int priority;
-
-        Arrow(final boolean descending, final int size, final int priority) {
-            this.descending = descending;
-            this.size = size;
-            this.priority = priority;
-        }
-
-        @Override
-        public void paintIcon(final Component c, final Graphics g, final int x, int y) {
-            final Color color = (c == null) ? Color.red : c.getBackground();
-
-            // In a compound sort, make each succesive triangle 20%
-            // smaller than the previous one.
-            final int dx = (int) (size / 2d * Math.pow(0.8d, priority));
-            final int dy = descending ? dx : (-dx);
-
-            // Align icon (roughly) with font baseline.
-            final int bl = y + ((5 * size) / 6) + (descending ? (-dy) : 0);
-
-            final int shift = descending ? 1 : (-1);
-            g.translate(x, bl);
-
-            // Right diagonal.
-            g.setColor(color.darker());
-            g.drawLine(dx / 2, dy, 0, 0);
-            g.drawLine(dx / 2, dy + shift, 0, shift);
-
-            // Left diagonal.
-            g.setColor(color.brighter());
-            g.drawLine(dx / 2, dy, dx, 0);
-            g.drawLine(dx / 2, dy + shift, dx, shift);
-
-            // Horizontal line.
-            if (descending) {
-                g.setColor(color.darker().darker());
-            } else {
-                g.setColor(color.brighter().brighter());
-            }
-
-            g.drawLine(dx, 0, 0, 0);
-
-            g.setColor(color);
-            g.translate(-x, -bl);
-        }
-
-        @Override
-        public int getIconWidth() {
-            return size;
-        }
-
-        @Override
-        public int getIconHeight() {
-            return size;
         }
     }
 
@@ -813,19 +758,19 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             final Component c = tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
             if (c instanceof JLabel) {
-                final JLabel label = (JLabel) c;
-                label.setHorizontalTextPosition(JLabel.LEFT);
+                final JLabel jLabel = (JLabel) c;
+                jLabel.setHorizontalTextPosition(JLabel.LEFT);
 
                 final int colIndex = table.convertColumnIndexToModel(column);
 
                 if (colIndex != -1) {
-                    label.setIcon(getHeaderRendererIcon(colIndex, label.getFont().getSize()));
+                    jLabel.setIcon(getHeaderRendererIcon(colIndex, jLabel.getFont().getSize()));
 
                     // Set the column header tooltip (with unit if any)
-                    final int viewColumn = _viewIndex[colIndex];
+                    final int modelColumn = columnModelIndex(colIndex);
 
-                    String tooltip = _calibratorsModel.getHeaderTooltipForColumn(viewColumn);
-                    final String unit = _calibratorsModel.getHeaderUnitForColumn(viewColumn);
+                    String tooltip = _calibratorsModel.getHeaderTooltipForColumn(modelColumn);
+                    final String unit = _calibratorsModel.getHeaderUnitForColumn(modelColumn);
 
                     // If a unit was found
                     if (unit.length() != 0) {
@@ -842,33 +787,12 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
                         sb.setLength(0); // recycle buffer
                     }
-                    label.setToolTipText(tooltip);
+                    jLabel.setToolTipText(tooltip);
                 }
             }
 
             // Return the component
             return c;
-        }
-    }
-
-    private final static class Directive {
-
-        final int column;
-        /* column name used to ensure consistency */
-        final String colName;
-        final int direction;
-        final Comparator<Object> comparator;
-
-        Directive(final int column, final int direction, final Comparator<Object> comparator, final String colName) {
-            this.column = column;
-            this.colName = colName;
-            this.direction = direction;
-            this.comparator = comparator;
-        }
-
-        @Override
-        public String toString() {
-            return "Directive{" + "column=" + column + ", colName=" + colName + ", direction=" + direction + '}';
         }
     }
 
@@ -951,7 +875,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 return this;
             }
 
-            final int modelColumn = _viewIndex[colIndex];
+            final int modelColumn = columnModelIndex(colIndex);
 
             final CalibratorsModel calModel = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
 
@@ -1122,7 +1046,7 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                 return null;
             }
 
-            final int modelColumn = _viewIndex[colIndex];
+            final int modelColumn = columnModelIndex(colIndex);
             final CalibratorsModel calModel = ((CalibratorsModel) ((TableSorter) table.getModel()).getTableModel());
 
             final StarProperty starProperty = calModel.getStarProperty(modelRow, modelColumn);
