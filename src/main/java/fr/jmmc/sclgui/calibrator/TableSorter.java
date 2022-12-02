@@ -5,6 +5,7 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.ArrowIcon;
 import fr.jmmc.jmcs.gui.component.Directive;
 import fr.jmmc.jmcs.gui.component.Row;
+import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.service.BrowserLauncher;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.jmcs.util.StringUtils;
@@ -323,7 +324,6 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         if (directive == EMPTY_DIRECTIVE) {
             return null;
         }
-
         return new ArrowIcon(directive.direction == DESCENDING, size, sortingColumns.indexOf(directive));
     }
 
@@ -741,6 +741,8 @@ public final class TableSorter extends AbstractTableModel implements Observer {
         final TableCellRenderer tableCellRenderer;
         /** internal string buffer */
         final StringBuilder _buffer = new StringBuilder(128);
+        /** text icon gap scaled */
+        private final int textSpacing = SwingUtils.adjustUISizeCeil(4);
 
         /**
          * Protected constructor
@@ -760,11 +762,13 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             if (c instanceof JLabel) {
                 final JLabel jLabel = (JLabel) c;
                 jLabel.setHorizontalTextPosition(JLabel.LEFT);
+                jLabel.setHorizontalAlignment(JLabel.CENTER);
+                jLabel.setIconTextGap(textSpacing);
 
                 final int colIndex = table.convertColumnIndexToModel(column);
 
                 if (colIndex != -1) {
-                    jLabel.setIcon(getHeaderRendererIcon(colIndex, jLabel.getFont().getSize()));
+                    jLabel.setIcon(getHeaderRendererIcon(colIndex, table.getRowHeight()));
 
                     // Set the column header tooltip (with unit if any)
                     final int modelColumn = columnModelIndex(colIndex);

@@ -93,6 +93,8 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
     private final CalibratorsModel _calibratorsModel;
     /** The calibrators table */
     final JTable _calibratorsTable;
+    /** The row header table */
+    final JTable _rowHeader;
     /** The calibrator table sorter */
     final TableSorter _tableSorter;
     /** Calibrators table and Legend container */
@@ -189,21 +191,17 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         scrollPane.setPreferredSize(new Dimension(570, 100));
 
         // Fixed Row Table Headers
-        final JTable rowHeader = new JTable(_calibratorsModel._rowHeadersModel);
-        rowHeader.setIntercellSpacing(new Dimension(0, 0));
-
-        final Dimension d = rowHeader.getPreferredScrollableViewportSize();
-        d.width = 50;
-        rowHeader.setPreferredScrollableViewportSize(d);
-        rowHeader.setRowHeight(_calibratorsTable.getRowHeight());
-        rowHeader.setRowSelectionAllowed(false);
+        _rowHeader = new JTable(_calibratorsModel._rowHeadersModel);
+        _rowHeader.setIntercellSpacing(new Dimension(0, 0));
+        _rowHeader.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _rowHeader.setRowSelectionAllowed(false);
 
         // Fix row height:
         SwingUtils.adjustRowHeight(_calibratorsTable);
-        SwingUtils.adjustRowHeight(rowHeader);
-        scrollPane.setRowHeaderView(rowHeader);
+        SwingUtils.adjustRowHeight(_rowHeader);
+        scrollPane.setRowHeaderView(_rowHeader);
 
-        final JTableHeader corner = rowHeader.getTableHeader();
+        final JTableHeader corner = _rowHeader.getTableHeader();
         corner.setReorderingAllowed(false);
         corner.setResizingAllowed(false);
         scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, corner);
@@ -253,7 +251,7 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
             // Add this mouse adapter to panel and its child components (JTables)
             // to get properly mouse events:
             addMouseListener(mouseOver);
-            rowHeader.addMouseListener(mouseOver);
+            _rowHeader.addMouseListener(mouseOver);
             _calibratorsTable.addMouseListener(mouseOver);
         }
 
@@ -334,6 +332,11 @@ public final class CalibratorsView extends JPanel implements TableModelListener,
         if (_autoFitsColumns) {
             // If DataTableChanged event:
             if (e.getLastRow() == Integer.MAX_VALUE && _calibratorsTable.getRowCount() != 0) {
+                // Fix row header width:
+                final Dimension d = _rowHeader.getPreferredScrollableViewportSize();
+                d.width = AutofitTableColumns.autoResizeTable(_rowHeader, false, false);
+                _rowHeader.setPreferredScrollableViewportSize(d);
+
                 // use cell values not renderer values (html code):
                 AutofitTableColumns.autoResizeTable(_calibratorsTable);
             }
