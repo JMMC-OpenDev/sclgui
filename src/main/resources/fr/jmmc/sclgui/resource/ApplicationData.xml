@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="6.0.0 alpha 4"/>
-    <compilation date="24/05/2022" compiler="JDK 1.8"/>
+    <program name="SearchCal" version="5.1.6 beta 1"/>
+    <compilation date="03/03/2023" compiler="JDK 1.8"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -135,6 +135,7 @@
 
     <releasenotes>
         <!-- 6.0 alpha (dev) -->
+        <!--
         <release version="6.0">
             <pubDate>Tue, 24 May 2022 11:00:00 GMT</pubDate>
             <prerelease version="6.0.0 alpha 4">
@@ -144,7 +145,15 @@
                 <change type="FEATURE">Updated SIMBAD information (2020.11.26)</change>
             </prerelease>
         </release>
+        -->
 
+        <!-- public releases -->
+        <release version="5.1.6">
+            <pubDate>Fri, 03 Mar 2023 10:00:00 GMT</pubDate>
+            <prerelease version="5.1.6 beta 1">
+                <change type="CHANGE">Improved table sorter: larger icons and leave empty values at the end</change>
+            </prerelease>
+        </release>
         <release version="5.1.5">
             <pubDate>Tue, 24 May 2022 11:00:00 GMT</pubDate>
             <prerelease version="5.1.5 beta 1">
