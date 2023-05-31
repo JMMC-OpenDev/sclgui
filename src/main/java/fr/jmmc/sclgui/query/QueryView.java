@@ -3,6 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.query;
 
+import fr.jmmc.jmal.Band;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverListener;
 import fr.jmmc.jmal.star.StarResolverResult;
@@ -11,6 +12,9 @@ import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.ResourcedAction;
 import fr.jmmc.jmcs.gui.component.MessagePane;
 import fr.jmmc.jmcs.gui.component.StatusBar;
+import fr.jmmc.jmcs.util.NumberUtils;
+import fr.jmmc.sclgui.preference.PreferenceKey;
+import fr.jmmc.sclgui.preference.Preferences;
 import fr.jmmc.sclgui.query.QueryModel.Notification;
 import fr.jmmc.sclgui.vo.VirtualObservatory;
 import java.awt.AWTEvent;
@@ -170,13 +174,13 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         JLabel label;
 
         // JFormattedTextField formatter creation
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setNaN("???"); // Set the symbol for a Double.NaN to an empty String
 
-        DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0####", symbols));
+        final DefaultFormatter doubleFormater = new NumberFormatter(new DecimalFormat("0.0###", symbols));
         doubleFormater.setValueClass(Double.class);
 
-        DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
+        final DefaultFormatterFactory doubleFormaterFactory = new DefaultFormatterFactory(doubleFormater,
                 doubleFormater, doubleFormater);
 
         // Form panel global attributes and common objects
@@ -486,17 +490,28 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
             _queryModel.setInstrumentalMagnitudeBand(instrumentalMagnitudeBand);
         }
 
+        final Band insBand;
+
+        if (isEditIRFluxesInJy()) {
+            insBand = Band.findBand(instrumentalMagnitudeBand);
+            _logger.debug("instrumentalMagnitudeBand: '{}' <=> band: '{}'", instrumentalMagnitudeBand, insBand);
+        } else {
+            insBand = null;
+        }
+        final boolean isJy = shouldConvertJy(insBand);
+
         // This flag is true for bands present in bright and faint scenarii
         final boolean brightOrFaintBand = QueryModel.isBrightOrFaint(instrumentalMagnitudeBand);
 
         // Instrumental parameters
         _instrumentalMagnitudeBandCombo.setModel(_queryModel.getInstrumentalMagnitudeBands());
-        _instrumentalWavelengthLabel.setText("Wavelength (" + instrumentalMagnitudeBand + ") [µm] : ");
+        _instrumentalWavelengthLabel.setText("Wavelength (" + instrumentalMagnitudeBand + ") [µm] :");
         _instrumentalWavelengthTextfield.setValue(_queryModel.getInstrumentalWavelength());
         _instrumentalMaxBaselineTextField.setValue(_queryModel.getInstrumentalMaxBaseLine());
 
         // Compute all the magnitude labels from the current magnitude band
-        String magnitudeWithBand = "Magnitude (" + instrumentalMagnitudeBand + ") : ";
+        final String magnitudeWithBand = (isJy) ? ("Flux [" + instrumentalMagnitudeBand + "] (Jy) :")
+                : ("Magnitude [" + instrumentalMagnitudeBand + "] :");
 
         // Science object parameters
         String scienceObjectName = _queryModel.getScienceObjectName();
@@ -504,13 +519,22 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _scienceObjectDECTextfield.setText(_queryModel.getScienceObjectDEC());
         _scienceObjectRATextfield.setText(_queryModel.getScienceObjectRA());
         _scienceObjectMagnitudeLabel.setText(magnitudeWithBand);
-        _scienceObjectMagnitudeTextfield.setValue(_queryModel.getScienceObjectMagnitude());
+
+        // convert magnitude to Jy for LMN bands:
+        Double value = _queryModel.getScienceObjectMagnitude();
+        _scienceObjectMagnitudeTextfield.setValue((isJy) ? convertMagToFlux(insBand, value) : value);
+        _scienceObjectMagnitudeTextfield.setToolTipText((isJy) ? ("Magnitude: " + NumberUtils.trimTo3Digits(value)) : null);
 
         // SearchCal parameters (N band does not support bounds on magnitude)
-        _minMagnitudeLabel.setText("Min. " + magnitudeWithBand);
-        _minMagnitudeTextfield.setValue(_queryModel.getQueryMinMagnitude());
-        _maxMagnitudeLabel.setText("Max. " + magnitudeWithBand);
-        _maxMagnitudeTextfield.setValue(_queryModel.getQueryMaxMagnitude());
+        _minMagnitudeLabel.setText((isJy) ? ("Max. " + magnitudeWithBand) : ("Min. " + magnitudeWithBand));
+        value = _queryModel.getQueryMinMagnitude();
+        _minMagnitudeTextfield.setValue((isJy) ? convertMagToFlux(insBand, value) : value);
+        _minMagnitudeTextfield.setToolTipText((isJy) ? ("Magnitude: " + NumberUtils.trimTo3Digits(value)) : null);
+
+        _maxMagnitudeLabel.setText((isJy) ? ("Min. " + magnitudeWithBand) : ("Max. " + magnitudeWithBand));
+        value = _queryModel.getQueryMaxMagnitude();
+        _maxMagnitudeTextfield.setValue((isJy) ? convertMagToFlux(insBand, value) : value);
+        _maxMagnitudeTextfield.setToolTipText((isJy) ? ("Magnitude: " + NumberUtils.trimTo3Digits(value)) : null);
 
         // Search box size handling
         _diffRASizeTextfield.setValue(_queryModel.getQueryDiffRASizeInMinutes());
@@ -621,11 +645,11 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
 
         // Check origin to mutualy exclude min and max magnitude as they depend on each other values
         if (source == _minMagnitudeTextfield) {
-            _queryModel.setQueryMinMagnitude((Double) _minMagnitudeTextfield.getValue());
+            _queryModel.setQueryMinMagnitude(convertFieldToMag(_minMagnitudeTextfield.getValue()));
         }
 
         if (source == _maxMagnitudeTextfield) {
-            _queryModel.setQueryMaxMagnitude((Double) _maxMagnitudeTextfield.getValue());
+            _queryModel.setQueryMaxMagnitude(convertFieldToMag(_maxMagnitudeTextfield.getValue()));
         }
 
         // Update instrumental wavelength only if the textfield was used
@@ -664,7 +688,7 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
 
         // Update science object magnitude only if the textfield was used
         if (source == _scienceObjectMagnitudeTextfield) {
-            _queryModel.setScienceObjectMagnitude((Double) _scienceObjectMagnitudeTextfield.getValue());
+            _queryModel.setScienceObjectMagnitude(convertFieldToMag(_scienceObjectMagnitudeTextfield.getValue()));
         }
 
         _queryModel.setQueryDiffRASizeInMinutes((Double) _diffRASizeTextfield.getValue());
@@ -677,6 +701,36 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         if (_logger.isDebugEnabled()) {
             _logger.debug("query = {}", _queryModel.getQueryAsMCSString());
         }
+    }
+
+    private boolean isEditIRFluxesInJy() {
+        return Preferences.getInstance().getPreferenceAsBoolean(PreferenceKey.FLUX_EDITOR_JY);
+    }
+
+    private boolean shouldConvertJy(final Band insBand) {
+        return ((insBand != null)
+                && (insBand.ordinal() >= Band.L.ordinal()) && (insBand.ordinal() <= Band.N.ordinal()));
+    }
+
+    private Double convertFieldToMag(final Object val) {
+        if ((val == null)) {
+            return Double.NaN;
+        }
+        final Double value = (Double) val;
+        if (Double.isNaN(value)) {
+            return Double.NaN;
+        }
+        if (isEditIRFluxesInJy()) {
+            final String instrumentalMagnitudeBand = _queryModel.getInstrumentalMagnitudeBand();
+            // convert magnitude to Jy for LMN bands:
+            final Band insBand = Band.findBand(instrumentalMagnitudeBand);
+            _logger.debug("instrumentalMagnitudeBand: '{}' <=> band: '{}'", instrumentalMagnitudeBand, insBand);
+
+            if (shouldConvertJy(insBand)) {
+                return convertFluxToMag(insBand, value);
+            }
+        }
+        return value;
     }
 
     /**
@@ -769,6 +823,22 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         paint(g2d);
 
         return (Printable.PAGE_EXISTS);
+    }
+
+    private Double convertMagToFlux(final Band band, final Double value) {
+        if (value != null) {
+            // convert to Jansky:
+            return band.magToJy(value);
+        }
+        return value;
+    }
+
+    private Double convertFluxToMag(final Band band, final Double value) {
+        if (value != null) {
+            // convert from Jansky:
+            return band.jyToMag(value);
+        }
+        return value;
     }
 
     protected class BrightQueryAction extends ResourcedAction {

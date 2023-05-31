@@ -9,48 +9,51 @@ package fr.jmmc.sclgui.preference;
  */
 public enum PreferenceKey {
 
-        SHOW_TOOLTIPS_FLAG("help.tooltips.show"),
-        SHOW_LEGEND_FLAG("view.legend.show"),
-        SERVER_URL_ADDRESS("server.url.address"),
+    SHOW_TOOLTIPS_FLAG("help.tooltips.show"),
+    SHOW_LEGEND_FLAG("view.legend.show"),
+    SERVER_URL_ADDRESS("server.url.address"),
 
-        VERBOSITY_SYNTHETIC_FLAG("view.result.verbosity.synthetic"),
-        VERBOSITY_DETAILED_FLAG("view.result.verbosity.detailed"),
-        VERBOSITY_FULL_FLAG("view.result.verbosity.full"),
+    VERBOSITY_SYNTHETIC_FLAG("view.result.verbosity.synthetic"),
+    VERBOSITY_DETAILED_FLAG("view.result.verbosity.detailed"),
+    VERBOSITY_FULL_FLAG("view.result.verbosity.full"),
 
-        VIEW_SIMPLE_BRIGHT_N("view.columns.simple.bright.N"),
-        VIEW_DETAILED_BRIGHT_N("view.columns.detailed.bright.N"),
-        VIEW_SIMPLE_BRIGHT_V("view.columns.simple.bright.V"),
-        VIEW_DETAILED_BRIGHT_V("view.columns.detailed.bright.V"),
-        VIEW_SIMPLE_BRIGHT_K("view.columns.simple.bright.K"),
-        VIEW_DETAILED_BRIGHT_K("view.columns.detailed.bright.K"),
-        VIEW_SIMPLE_FAINT_K("view.columns.simple.faint.K"),
-        VIEW_DETAILED_FAINT_K("view.columns.detailed.faint.K"),
+    VIEW_SIMPLE_BRIGHT_N("view.columns.simple.bright.N"),
+    VIEW_DETAILED_BRIGHT_N("view.columns.detailed.bright.N"),
+    VIEW_SIMPLE_BRIGHT_V("view.columns.simple.bright.V"),
+    VIEW_DETAILED_BRIGHT_V("view.columns.detailed.bright.V"),
+    VIEW_SIMPLE_BRIGHT_K("view.columns.simple.bright.K"),
+    VIEW_DETAILED_BRIGHT_K("view.columns.detailed.bright.K"),
+    VIEW_SIMPLE_FAINT_K("view.columns.simple.faint.K"),
+    VIEW_DETAILED_FAINT_K("view.columns.detailed.faint.K"),
 
-        QUERY_MAGNITUDE_BAND("query.magnitudeBand"),
-        QUERY_INSTRUMENTAL_WAVELENGTH("query.instrumentalWavelength"),
-        QUERY_INSTRUMENTAL_BASELINE("query.instrumentalMaxBaseLine"),
+    QUERY_MAGNITUDE_BAND("query.magnitudeBand"),
+    QUERY_INSTRUMENTAL_WAVELENGTH("query.instrumentalWavelength"),
+    QUERY_INSTRUMENTAL_BASELINE("query.instrumentalMaxBaseLine"),
 
-        QUERY_SCIENCE_NAME("query.scienceObjectName"),
-        QUERY_SCIENCE_RA("query.scienceObjectRA"),
-        QUERY_SCIENCE_DEC("query.scienceObjectDEC"),
-        QUERY_SCIENCE_DETECTION("query.scienceObjectDetectionDistance"),
-        QUERY_SCIENCE_MAGNITUDE("query.scienceObjectMagnitude"),
+    QUERY_SCIENCE_NAME("query.scienceObjectName"),
+    QUERY_SCIENCE_RA("query.scienceObjectRA"),
+    QUERY_SCIENCE_DEC("query.scienceObjectDEC"),
+    QUERY_SCIENCE_DETECTION("query.scienceObjectDetectionDistance"),
+    QUERY_SCIENCE_MAGNITUDE("query.scienceObjectMagnitude"),
 
-        QUERY_MINIMUM_MAGNITUDE("query.queryMinMagnitude"),
-        QUERY_MINIMUM_DELTA("query.queryMinMagnitudeDelta"),
-        QUERY_MAXIMUM_MAGNITUDE("query.queryMaxMagnitude"),
-        QUERY_MAXIMUM_DELTA("query.queryMaxMagnitudeDelta"),
+    QUERY_MINIMUM_MAGNITUDE("query.queryMinMagnitude"),
+    QUERY_MINIMUM_DELTA("query.queryMinMagnitudeDelta"),
+    QUERY_MAXIMUM_MAGNITUDE("query.queryMaxMagnitude"),
+    QUERY_MAXIMUM_DELTA("query.queryMaxMagnitudeDelta"),
 
-        QUERY_BRIGHT_FLAG("query.queryBrightScenarioFlag"),
-        QUERY_DIFF_RA("query.queryDiffRASize"),
-        QUERY_DIFF_DEC("query.queryDiffDECSize"),
-        QUERY_RADIAL_SIZE("query.queryRadialSize"),
-        QUERY_RADIAL_FLAG("query.queryAutoRadius"),
-        
-        FILTER_NON_CALIBRATORS("filter.nonCalibrators"),
-        
-        SERVER_DIAGNOSE("server.diagnose");
+    QUERY_BRIGHT_FLAG("query.queryBrightScenarioFlag"),
+    QUERY_DIFF_RA("query.queryDiffRASize"),
+    QUERY_DIFF_DEC("query.queryDiffDECSize"),
+    QUERY_RADIAL_SIZE("query.queryRadialSize"),
+    QUERY_RADIAL_FLAG("query.queryAutoRadius"),
+
+    FILTER_NON_CALIBRATORS("filter.nonCalibrators"),
+
     
+    FLUX_EDITOR_JY("flux.edit.jy"),
+
+    SERVER_DIAGNOSE("server.diagnose");
+        
     /** the preferenced value identifying token */
     private final String _key;
 

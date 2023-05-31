@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.1.6 beta 1"/>
-    <compilation date="03/03/2023" compiler="JDK 1.8"/>
+    <program name="SearchCal" version="5.1.6 beta 2"/>
+    <compilation date="31/05/2023" compiler="JDK 1.8"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -149,7 +149,11 @@
 
         <!-- public releases -->
         <release version="5.1.6">
-            <pubDate>Fri, 03 Mar 2023 10:00:00 GMT</pubDate>
+            <pubDate>Wed, 31 May 2023 18:00:00 GMT</pubDate>
+            <prerelease version="5.1.6 beta 2">
+                <change type="FEATURE">Improved both query form and calibrator view Editor to edit and display L / M / N fluxes in Jansky by default (automatic conversion from LMN magnitudes to Jansky)</change>
+                <change type="FEATURE">Added a new preference in 'General Settings' to select the 'Jy' or 'Mag' convention for L / M / N fluxes</change>
+            </prerelease>
             <prerelease version="5.1.6 beta 1">
                 <change type="CHANGE">Improved table sorter: larger icons and leave empty values at the end</change>
             </prerelease>

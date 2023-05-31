@@ -7,6 +7,8 @@ import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.sclgui.calibrator.CalibratorsView;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ButtonGroup;
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This Panel is dedicated to manage general behavior configuration.
  */
-public final class GeneralPreferencesView extends JPanel implements Observer, ChangeListener {
+public final class GeneralPreferencesView extends JPanel implements Observer, ChangeListener, ActionListener {
 
     /** default serial UID for Serializable interface */
     private static final long serialVersionUID = 1;
@@ -35,6 +37,10 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
     private final JCheckBox _enableToolTipCheckBox;
     /** Tooltip manager */
     private final ToolTipManager _sharedToolTipManager;
+    /** radio button Jy */
+    private final JRadioButton _jRadioButtonFluxJy;
+    /** radio button Mag */
+    private final JRadioButton _jRadioButtonFluxMag;
     /** Diagnose mode checkbox */
     private final JCheckBox _diagnoseMode;
 
@@ -61,6 +67,8 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
         // Handle "Result Verbosity" radio buttons
         JPanel radioPanel = new JPanel();
         radioPanel.setLayout(new GridBagLayout());
+        topPanel.add(radioPanel, c);
+        c.gridy++;
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -90,8 +98,6 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
         CalibratorsView._fullResultsVerbosityAction.addBoundButton(fullRadioButton);
         radioGroup.add(fullRadioButton);
         radioPanel.add(fullRadioButton, gbc);
-        topPanel.add(radioPanel, c);
-        c.gridy++;
 
         // Handle "Show Legend" checkbox
         JCheckBox showLegendCheckBox = new JCheckBox(CalibratorsView._showLegendAction);
@@ -105,9 +111,11 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
         topPanel.add(_enableToolTipCheckBox, c);
         c.gridy++;
 
-        // Server settings:
-        JPanel serverPanel = new JPanel();
-        serverPanel.setLayout(new GridBagLayout());
+        // IR Flux conversion:
+        final JPanel convPanel = new JPanel();
+        convPanel.setLayout(new GridBagLayout());
+        topPanel.add(convPanel, c);
+        c.gridy++;
 
         gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -115,21 +123,53 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
         gbc.weightx = 1;
         gbc.gridy = 0;
         gbc.gridx = 0;
-        
+
+        label = new JLabel("Flux unit:", JLabel.LEADING);
+        convPanel.add(label, gbc);
+        gbc.gridx++;
+
+        final ButtonGroup buttonGroupFluxUnit = new javax.swing.ButtonGroup();
+
+        _jRadioButtonFluxMag = new JRadioButton();
+        buttonGroupFluxUnit.add(_jRadioButtonFluxMag);
+        _jRadioButtonFluxMag.setText("mag");
+        convPanel.add(_jRadioButtonFluxMag, gbc);
+        gbc.gridy++;
+
+        _jRadioButtonFluxJy = new JRadioButton();
+        buttonGroupFluxUnit.add(_jRadioButtonFluxJy);
+        _jRadioButtonFluxJy.setText("jy");
+        convPanel.add(_jRadioButtonFluxJy, gbc);
+
+        // Server settings:
+        final JPanel serverPanel = new JPanel();
+        serverPanel.setLayout(new GridBagLayout());
+        topPanel.add(serverPanel, c);
+        c.gridy++;
+
+        gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.weightx = 1;
+        gbc.gridy = 0;
+        gbc.gridx = 0;
+
         label = new JLabel("Server: ", JLabel.LEADING);
         serverPanel.add(label, gbc);
         gbc.gridy++;
 
         // Handle "Diagnose mode" checkbox
         _diagnoseMode = new JCheckBox("Diagnose mode");
-        serverPanel.add(_diagnoseMode, gbc);        
-        
-        topPanel.add(serverPanel, c);
+        serverPanel.add(_diagnoseMode, gbc);
     }
 
     public void init() {
         _preferences.addObserver(this);
         _enableToolTipCheckBox.addChangeListener(this);
+
+        _jRadioButtonFluxJy.addActionListener(this);
+        _jRadioButtonFluxMag.addActionListener(this);
+
         _diagnoseMode.addChangeListener(this);
     }
 
@@ -145,7 +185,11 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
         boolean b = _preferences.getPreferenceAsBoolean(PreferenceKey.SHOW_TOOLTIPS_FLAG);
         _enableToolTipCheckBox.setSelected(b);
         _sharedToolTipManager.setEnabled(b);
-        
+
+        b = _preferences.getPreferenceAsBoolean(PreferenceKey.FLUX_EDITOR_JY);
+        _jRadioButtonFluxJy.setSelected(b);
+        _jRadioButtonFluxMag.setSelected(!b);
+
         _diagnoseMode.setSelected(_preferences.getPreferenceAsBoolean(PreferenceKey.SERVER_DIAGNOSE));
     }
 
@@ -168,4 +212,22 @@ public final class GeneralPreferencesView extends JPanel implements Observer, Ch
             _logger.warn("Could not set preference : ", pe);
         }
     }
+
+    /**
+     * Process any radio change event
+     * @param e action event
+     */
+    @Override
+    public void actionPerformed(final ActionEvent e) {
+        try {
+            if (e.getSource() == _jRadioButtonFluxMag) {
+                _preferences.setPreference(PreferenceKey.FLUX_EDITOR_JY, Boolean.FALSE);
+            } else if (e.getSource() == _jRadioButtonFluxJy) {
+                _preferences.setPreference(PreferenceKey.FLUX_EDITOR_JY, Boolean.TRUE);
+            }
+        } catch (PreferencesException pe) {
+            _logger.warn("Could not set preference : ", pe);
+        }
+    }
+
 }

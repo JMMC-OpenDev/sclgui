@@ -57,6 +57,13 @@ public final class StarList extends Vector<Vector<StarProperty>> {
     public static final String RowIdxColumnName = "rowIdx";
     /** Store the rowIdx column name */
     public static final String OtherRowIdxColumnName = "otherRowIdx";
+    /* LMN fluxes (Jy) */
+    /** Store the flux_L column name */
+    public static final String fluxLColumnName = "flux_L";
+    /** Store the flux_M column name */
+    public static final String fluxMColumnName = "flux_M";
+    /** Store the flux_N column name */
+    public static final String fluxNColumnName = "flux_N";
     /* diff only */
     /** Store the left column name */
     public static final String LeftColumnName = "left";

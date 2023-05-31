@@ -1,5 +1,6 @@
 package fr.jmmc.sclgui.calibrator;
 
+import fr.jmmc.jmal.Band;
 import fr.jmmc.jmal.Catalog;
 import fr.jmmc.jmcs.data.preference.PreferencesException;
 import fr.jmmc.jmcs.gui.component.ArrowIcon;
@@ -579,11 +580,24 @@ public final class TableSorter extends AbstractTableModel implements Observer {
 
             final Set<String> missingCols = _calibratorsModel.getIgnoreMissingColumns();
 
+            final boolean isJy = _preferences.getPreferenceAsBoolean(PreferenceKey.FLUX_EDITOR_JY);
+
             // Use list to keep only valid columns:
             final List<Integer> viewIndex = new ArrayList<Integer>(nbOfColumns);
 
             for (int i = 0; i < nbOfColumns; i++) {
-                final String columnName = columnStrings[i];
+                String columnName = columnStrings[i];
+
+                // use the converted flux in Jy for LMN bands instead of magnitude:
+                if (isJy && (columnName.length() == 1)) {
+                    if (Band.L.name().equals(columnName)) {
+                        columnName = StarList.fluxLColumnName;
+                    } else if (Band.M.name().equals(columnName)) {
+                        columnName = StarList.fluxMColumnName;
+                    } else if (Band.N.name().equals(columnName)) {
+                        columnName = StarList.fluxNColumnName;
+                    }
+                }
 
                 if (!StringUtils.isEmpty(columnName)) {
                     // Get the current column index given its name:

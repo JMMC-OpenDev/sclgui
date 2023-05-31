@@ -25,6 +25,7 @@ import cds.savot.model.TDSet;
 import cds.savot.stax.SavotStaxParser;
 import cds.savot.writer.SavotWriter;
 import fr.jmmc.jmal.ALX;
+import fr.jmmc.jmal.Band;
 import fr.jmmc.jmal.CoordUtils;
 import static fr.jmmc.jmal.star.StarResolver.USE_CACHE_DEV;
 import fr.jmmc.jmcs.data.app.ApplicationDescription;
@@ -108,8 +109,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
     public static final String GUI_OUTPUT_FORMAT = "2013.7";
     /** table size threshold to load them asynchronously */
     private final static int LOAD_TABLE_ASYNC_THRESHOLD = 5000;
-    /** number of extra properties (dynamically added and computed in the GUI): RA/DEC (deg), rowIdx, otherRowIdx */
-    private final static int N_EXTRA_PROPERTIES = 4;
+    /** number of extra properties (dynamically added and computed in the GUI): RA/DEC (deg), rowIdx, otherRowIdx, LMN fluxes (Jy) */
+    private final static int N_EXTRA_PROPERTIES = 2 + 2 + 3;
     /** parameter 'band' */
     public final static String PARAMETER_BAND = "band";
     /** parameter SearchCalServerVersion (string) */
@@ -1556,10 +1557,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final int raId = starList.getColumnIdByName(StarList.RAJ2000ColumnName);
                 if (raId != -1) {
                     for (List<StarProperty> star : starList) {
-
                         // Get the current star RA value
                         final StarProperty cell = star.get(raId);
-
                         final double raDeg = cell.hasValue() ? ALX.parseRA(cell.getString()) : Double.NaN;
 
                         // add RADeg value:
@@ -1578,10 +1577,8 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 final int decId = starList.getColumnIdByName(StarList.DEJ2000ColumnName);
                 if (decId != -1) {
                     for (List<StarProperty> star : starList) {
-
                         // Get the current star DEC value
                         final StarProperty cell = star.get(decId);
-
                         final double deDeg = cell.hasValue() ? ALX.parseDEC(cell.getString()) : Double.NaN;
 
                         // add DEDeg value:
@@ -1601,6 +1598,23 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                     // add rowIdx value:
                     star.add(new ObjectStarProperty(NumberUtils.valueOf(++i)));
                 }
+            }
+
+            // Add LMN flux properties anyway:
+            if (starListMeta.getPropertyIndexByName(StarList.fluxLColumnName) == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.fluxLColumnName, StarPropertyMeta.TYPE_DOUBLE,
+                        "Flux in L band", "PHOT_JHN_L", "Jy", ""));
+                computeFlux(starList, Band.L);
+            }
+            if (starListMeta.getPropertyIndexByName(StarList.fluxMColumnName) == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.fluxMColumnName, StarPropertyMeta.TYPE_DOUBLE,
+                        "Flux in M band", "PHOT_JHN_M", "Jy", ""));
+                computeFlux(starList, Band.M);
+            }
+            if (starListMeta.getPropertyIndexByName(StarList.fluxNColumnName) == -1) {
+                starListMeta.addPropertyMeta(new StarPropertyMeta(StarList.fluxNColumnName, StarPropertyMeta.TYPE_DOUBLE,
+                        "Flux in N band", "PHOT_JHN_N", "Jy", ""));
+                computeFlux(starList, Band.N);
             }
 
             // Update distance:
@@ -1636,6 +1650,30 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             }
 
         }
+    }
+
+    private boolean computeFlux(final StarList starList, final Band band) {
+        // Get the ID of the column containing the magnitudes:
+        final int magId = starList.getColumnIdByName(band.getName());
+        if (magId == -1) {
+            return false;
+        }
+
+        final long start = System.nanoTime();
+
+        for (List<StarProperty> star : starList) {
+            // Get the current star magnitude value
+            final StarProperty cell = star.get(magId);
+            // convert magnitude to flux (Jy):
+            final double flux = cell.hasValue() ? band.magToJy(cell.getDoubleValue()) : Double.NaN;
+
+            // add converted value:
+            star.add(new DoubleStarProperty(flux,
+                    cell.getOriginIndex(), cell.getConfidenceIndex()));
+        }
+        _logger.debug("CalibratorsModel.computeFlux: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
+
+        return true;
     }
 
     /**
@@ -1779,7 +1817,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             setStarProperty(star, pVis2, vis2Id, visRes.vis2, originIndex, confidenceIndex);
             setStarProperty(star, pErrVis2, e_vis2Id, visRes.vis2Err, originIndex, confidenceIndex);
         }
-        _logger.info("CalibratorsModel.computeVisibility: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
+        _logger.debug("CalibratorsModel.computeVisibility: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
 
         return true;
     }
@@ -1862,7 +1900,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // Update values:
             setStarProperty(star, pDist, distId, separation, originIndex, confidenceIndex);
         }
-        _logger.info("CalibratorsModel.computeDistance: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
+        _logger.debug("CalibratorsModel.computeDistance: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
 
         return true;
     }
