@@ -505,11 +505,12 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * Called when a column header tooltip is needed by the attached view.
      *
      * @param column
+     * @param sb temporary buffer
      *
      * @return the specified column header tooltip.
      */
-    public String getHeaderTooltipForColumn(final int column) {
-        return _starListMeta.getPropertyDescription(column);
+    public String getHeaderTooltipForColumn(final int column, final StringBuilder sb) {
+        return _starListMeta.getPropertyDescriptionAsHTML(column, sb);
     }
 
     /**
@@ -1561,9 +1562,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         final StarProperty cell = star.get(raId);
                         final double raDeg = cell.hasValue() ? ALX.parseRA(cell.getString()) : Double.NaN;
 
-                        // add RADeg value:
-                        star.add(new DoubleStarProperty(raDeg,
-                                cell.getOriginIndex(), cell.getConfidenceIndex()));
+                        if (!Double.isNaN(raDeg)) {
+                            // add RADeg value:
+                            star.add(new DoubleStarProperty(raDeg,
+                                    cell.getOriginIndex(), cell.getConfidenceIndex()));
+                        } else {
+                            star.add(StarProperty.EMPTY_STAR_PROPERTY);
+                        }
                     }
                 }
             }
@@ -1581,9 +1586,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                         final StarProperty cell = star.get(decId);
                         final double deDeg = cell.hasValue() ? ALX.parseDEC(cell.getString()) : Double.NaN;
 
-                        // add DEDeg value:
-                        star.add(new DoubleStarProperty(deDeg,
-                                cell.getOriginIndex(), cell.getConfidenceIndex()));
+                        if (!Double.isNaN(deDeg)) {
+                            // add DEDeg value:
+                            star.add(new DoubleStarProperty(deDeg,
+                                    cell.getOriginIndex(), cell.getConfidenceIndex()));
+                        } else {
+                            star.add(StarProperty.EMPTY_STAR_PROPERTY);
+                        }
                     }
                 }
             }
@@ -1667,9 +1676,13 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
             // convert magnitude to flux (Jy):
             final double flux = cell.hasValue() ? band.magToJy(cell.getDoubleValue()) : Double.NaN;
 
-            // add converted value:
-            star.add(new DoubleStarProperty(flux,
-                    cell.getOriginIndex(), cell.getConfidenceIndex()));
+            if (!Double.isNaN(flux)) {
+                // add converted value:
+                star.add(new DoubleStarProperty(flux,
+                        cell.getOriginIndex(), cell.getConfidenceIndex()));
+            } else {
+                star.add(StarProperty.EMPTY_STAR_PROPERTY);
+            }
         }
         _logger.debug("CalibratorsModel.computeFlux: {} rows done in {} ms.", starList.size(), 1e-6d * (System.nanoTime() - start));
 
@@ -1830,7 +1843,6 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
      * @return true if computation done; false otherwise
      */
     private boolean computeDistance(final StarList starList, final String scienceRA, final String scienceDE) {
-
         // Compare with current state:
         if (!distState.setIfModified(scienceRA, scienceDE)) {
             return false;

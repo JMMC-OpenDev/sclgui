@@ -81,7 +81,7 @@ public final class StarListMeta {
         for (StarPropertyMeta propertyMeta : _propertyMetaList) {
             colNames.add(propertyMeta.getName());
         }
-        
+
         return colNames;
     }
 
@@ -169,6 +169,23 @@ public final class StarListMeta {
         final StarPropertyMeta propertyMeta = getPropertyMeta(index);
         if (propertyMeta != null) {
             return propertyMeta.getDescription();
+        }
+        return "";
+    }
+
+    /**
+     * Return the property description of the property at the given index
+     * as HTML content (<br> for long description)
+     *
+     * @param index property index
+     * @param sb temporary buffer
+     *
+     * @return property description or "" if index is out of bounds
+     */
+    public String getPropertyDescriptionAsHTML(final int index, final StringBuilder sb) {
+        final StarPropertyMeta propertyMeta = getPropertyMeta(index);
+        if (propertyMeta != null) {
+            return propertyMeta.getDescriptionAsHTML(sb);
         }
         return "";
     }
