@@ -8,13 +8,13 @@
         <homepage_url>http://www.jmmc.fr/</homepage_url>
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
-
+<!--
     <program name="SearchCal" version="6.0.0 alpha 5"/>
     <compilation date="01/06/2023" compiler="JDK 1.8"/>
-<!--
-    <program name="SearchCal" version="5.1.6 beta 2"/>
-    <compilation date="31/05/2023" compiler="JDK 1.8"/>
 -->
+    <program name="SearchCal" version="5.1.6 beta 3"/>
+    <compilation date="01/06/2023" compiler="JDK 1.8"/>
+
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://www.jmmc.fr/apps/public/SearchCal/SearchCal.jnlp</jnlp>
@@ -138,20 +138,23 @@
 
     <releasenotes>
         <!-- alpha releases: 6.0 alpha (dev) -->
+<!--
         <release version="6.0">
             <pubDate>Thu, 01 June 2023 12:00:00 GMT</pubDate>
             <prerelease version="6.0.0 alpha 5">
-                <change type="FEATURE">Added more columns in calibrator views: CalFlag, G (for V band) &amp; MDFC columns IRFlag, Lflux_med, Mflux_med, Nflux_med (for LMN bands)</change>
                 <change type="FEATURE">Improved crossmatch algorithm to determine the best match among (n x m) sources: added xmatch columns (main flag, log, separation ...)</change>
                 <change type="FEATURE">Added MDFC catalog: IRFlag and median fluxes (Jy)</change>
                 <change type="FEATURE">Added GAIA DR2 catalog: position, proper motion, parallax, distance, effective temperature</change>
                 <change type="FEATURE">Updated SIMBAD information (2020.11.26)</change>
             </prerelease>
         </release>
-
+-->
         <!-- public releases -->
         <release version="5.1.6">
-            <pubDate>Wed, 31 May 2023 18:00:00 GMT</pubDate>
+            <pubDate>Thu, 01 June 2023 12:00:00 GMT</pubDate>
+            <prerelease version="5.1.6 beta 3">
+                <change type="FEATURE">Added more columns in calibrator views: CalFlag, G (for V band) &amp; MDFC columns IRFlag, Lflux_med, Mflux_med, Nflux_med (for LMN bands)</change>
+            </prerelease>
             <prerelease version="5.1.6 beta 2">
                 <change type="FEATURE">Improved both query form and calibrator view Editor to edit and display L / M / N fluxes in Jansky by default (automatic conversion from LMN magnitudes to Jansky)</change>
                 <change type="FEATURE">Added a new preference in 'General Settings' to select the 'Jy' or 'Mag' convention for L / M / N fluxes</change>
