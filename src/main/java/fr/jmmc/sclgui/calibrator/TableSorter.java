@@ -10,6 +10,7 @@ import fr.jmmc.jmcs.gui.util.SwingUtils;
 import fr.jmmc.jmcs.service.BrowserLauncher;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.jmcs.util.StringUtils;
+import static fr.jmmc.sclgui.calibrator.CalibratorsModel.PARAMETER_SCL_SERVER_VERSION;
 import fr.jmmc.sclgui.preference.PreferenceKey;
 import fr.jmmc.sclgui.preference.Preferences;
 import java.awt.Color;
@@ -574,8 +575,27 @@ public final class TableSorter extends AbstractTableModel implements Observer {
             if (_logger.isDebugEnabled()) {
                 _logger.debug("Columns (preferences) = {}", prefColumns);
             }
+
+            final String serverVersion = _calibratorsModel.getParameters().getValue(PARAMETER_SCL_SERVER_VERSION, "");
+            final boolean isSearchCal5 = (serverVersion.contains("v5"));
+            final String altColumns;
+
+            if (isSearchCal5) {
+                altColumns = prefColumns;
+            } else {
+                // add supplementary columns (6.0+):
+                altColumns = prefColumns
+                        + (("V".equals(band)) ? " G" : "")
+                        + " CalFlag"
+                        + (("N".equals(band)) ? " IRFlag Lflux_med Mflux_med Nflux_med" : "");
+            }
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("serverVersion = '{}'", serverVersion);
+                _logger.debug("Used Columns = {}", altColumns);
+            }
+
             // Get the selected ordered column name table
-            final String[] columnStrings = prefColumns.trim().split(" ");
+            final String[] columnStrings = altColumns.trim().split(" ");
             final int nbOfColumns = columnStrings.length;
 
             final Set<String> missingCols = _calibratorsModel.getIgnoreMissingColumns();
@@ -787,28 +807,10 @@ public final class TableSorter extends AbstractTableModel implements Observer {
                     // Set the column header tooltip (with unit if any)
                     final int modelColumn = columnModelIndex(colIndex);
 
-                    String tooltip = _calibratorsModel.getHeaderTooltipForColumn(modelColumn);
-                    final String unit = _calibratorsModel.getHeaderUnitForColumn(modelColumn);
-
-                    // If a unit was found
-                    if (unit.length() != 0) {
-                        final StringBuilder sb = _buffer;
-
-                        // If a description was found
-                        if (tooltip.length() != 0) {
-                            // Add a space separator between description and unit
-                            sb.append(tooltip).append(' ');
-                        }
-
-                        // Append the unit
-                        tooltip = sb.append('(').append(unit).append(')').toString();
-
-                        sb.setLength(0); // recycle buffer
-                    }
+                    final String tooltip = _calibratorsModel.getHeaderTooltipForColumn(modelColumn, _buffer);
                     jLabel.setToolTipText(tooltip);
                 }
             }
-
             // Return the component
             return c;
         }
