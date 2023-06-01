@@ -3,12 +3,14 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
+import fr.jmmc.jmcs.util.StringUtils;
+
 /**
  * Meta data of a star property.
  */
 public final class StarPropertyMeta {
-    /* constants */
 
+    /* constants */
     /** undefined type */
     public static final int TYPE_ANY = 0;
     /** String type */
@@ -45,6 +47,8 @@ public final class StarPropertyMeta {
     private final String _unit;
     /** optional link URL */
     private final String _url;
+    /** property description as HTML (cached) */
+    private String _descriptionHTML = null;
 
     /**
      * Protected constructor
@@ -129,6 +133,36 @@ public final class StarPropertyMeta {
     @Override
     public String toString() {
         return _name + "[" + _classType.getSimpleName() + "][" + _unit + "][" + _description + ']';
+    }
+
+    /**
+     * Return the property description
+     * @param sb temporary buffer
+     * @return property description
+     */
+    public String getDescriptionAsHTML(final StringBuilder sb) {
+        if (_descriptionHTML == null) {
+            String tooltip = StringUtils.formatTooltip(getDescription(), sb);
+
+            final String unit = getUnit();
+
+            // If a unit was found
+            if (unit.length() != 0) {
+                sb.setLength(0); // recycle buffer
+
+                // If a description was found
+                if (tooltip.length() != 0) {
+                    // Add a space separator between description and unit
+                    sb.append(tooltip).append(' ');
+                }
+
+                // Append the unit
+                tooltip = sb.append('(').append(unit).append(')').toString();
+            }
+
+            _descriptionHTML = tooltip;
+        }
+        return _descriptionHTML;
     }
 }
 /*___oOo___*/
