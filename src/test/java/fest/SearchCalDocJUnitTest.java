@@ -63,7 +63,8 @@ public final class SearchCalDocJUnitTest extends JmcsFestSwingJUnitTestCase {
         Preferences.getInstance().resetToDefaultPreferences();
         SessionSettingsPreferences.getInstance().resetToDefaultPreferences();
         try {
-            CommonPreferences.getInstance().setPreference(CommonPreferences.SHOW_STARTUP_SPLASHSCREEN, false);
+            CommonPreferences.getInstance().setPreference(CommonPreferences.SHOW_STARTUP_SPLASHSCREEN, Boolean.FALSE);
+            CommonPreferences.getInstance().setPreference(CommonPreferences.FILECHOOSER_NATIVE, Boolean.FALSE);
         } catch (PreferencesException pe) {
             logger.error("setPreference failed", pe);
         }
