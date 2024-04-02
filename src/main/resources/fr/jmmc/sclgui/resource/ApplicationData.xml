@@ -12,8 +12,8 @@
     <program name="SearchCal" version="6.0.0 alpha 5"/>
     <compilation date="01/06/2023" compiler="JDK 1.8"/>
 -->
-    <program name="SearchCal" version="5.1.6"/>
-    <compilation date="07/06/2023" compiler="JDK 1.8"/>
+    <program name="SearchCal" version="5.1.7 beta 1"/>
+    <compilation date="02/04/2024" compiler="JDK 1.8"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -150,8 +150,14 @@
         </release>
 -->
         <!-- public releases -->
+        <release version="5.1.7">
+            <pubDate>Tue, 02 Apr 2024 16:00:00 GMT</pubDate>
+            <prerelease version="5.1.7 beta 1">
+                <change type="BUGFIX">Fixed GUI hanging when parsing results on Java 21+</change>
+            </prerelease>
+        </release>
         <release version="5.1.6">
-            <pubDate>Wed, 07 June 2023 21:00:00 GMT</pubDate>
+            <pubDate>Wed, 07 Jun 2023 21:00:00 GMT</pubDate>
             <prerelease version="5.1.6 beta 3">
                 <change type="FEATURE">Added more columns in calibrator views: CalFlag, G (for V band) &amp; MDFC columns IRFlag, Lflux_med, Mflux_med, Nflux_med (for LMN bands)</change>
             </prerelease>
