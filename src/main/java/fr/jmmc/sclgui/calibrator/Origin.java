@@ -134,8 +134,8 @@ public final class Origin {
     public final static Origin ORIGIN_WISE = new Origin(KEY_ORIGIN_WISE, Catalog.WISE);
     /** Origin - GAIA */
     public final static Origin ORIGIN_GAIA = new Origin(KEY_ORIGIN_GAIA, Catalog.GAIA);
-    /** Origin - GAIA DIST */
-    public final static Origin ORIGIN_GAIA_DIST = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_DIST);
+    /** Origin - GAIA AP */
+    public final static Origin ORIGIN_GAIA_AP = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_DIST);
     /** Origin - MDFC */
     public final static Origin ORIGIN_MDFC = new Origin(KEY_ORIGIN_MDFC, Catalog.MDFC);
 
@@ -344,7 +344,6 @@ public final class Origin {
                 System.out.println("</title>");
                 System.out.print("<description>");
                 System.out.print(catalog.description());
-                System.out.print(" confidence index");
                 System.out.println("</description>");
 
                 System.out.print("<color>");

@@ -130,7 +130,7 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
      */
     @Override
     protected int getPreferencesVersionNumber() {
-        return 22;
+        return 23;
     }
 
     /**
@@ -1004,6 +1004,28 @@ public final class Preferences extends fr.jmmc.jmcs.data.preference.Preferences 
         return status;
     }
 
+    /**
+     * Correction : update legend colors
+     *
+     * @return always true to force Preference file write to disk with the new empty value as default.
+     */
+    private boolean updateFromVersion22ToVersion23() {
+        boolean status = true;
+
+        // Update legend colors and order
+        try {
+            setLegendColorsAndOrders(false);
+            _logger.debug("Updated legend colors and order.");
+        } catch (PreferencesException pe) {
+            _logger.warn("Could updated legend colors and order:", pe);
+
+            return false;
+        }
+
+        // Commit all changes if and only if everything went fine.
+        return status;
+    }
+    
     public static void main(String[] args) {
         final Preferences prefs = Preferences.getInstance();
 
