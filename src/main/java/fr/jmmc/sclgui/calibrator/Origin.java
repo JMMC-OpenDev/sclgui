@@ -135,7 +135,7 @@ public final class Origin {
     /** Origin - GAIA */
     public final static Origin ORIGIN_GAIA = new Origin(KEY_ORIGIN_GAIA, Catalog.GAIA);
     /** Origin - GAIA AP */
-    public final static Origin ORIGIN_GAIA_AP = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_DIST);
+    public final static Origin ORIGIN_GAIA_AP = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_AP);
     /** Origin - MDFC */
     public final static Origin ORIGIN_MDFC = new Origin(KEY_ORIGIN_MDFC, Catalog.MDFC);
 
