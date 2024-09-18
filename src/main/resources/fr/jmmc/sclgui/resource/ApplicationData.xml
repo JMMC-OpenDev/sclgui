@@ -9,7 +9,7 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="6.0.0 alpha 6"/>
+    <program name="SearchCal" version="5.1.8 beta 1"/>
     <compilation date="29/08/2024" compiler="JDK 1.8"/>
 <!--
     <program name="SearchCal" version="5.1.7"/>
@@ -139,6 +139,7 @@
 
     <releasenotes>
         <!-- alpha releases: 6.0 alpha (dev) -->
+<!--
         <release version="6.0">
             <pubDate>Thu, 29 Aug 2024 12:00:00 GMT</pubDate>
             <prerelease version="6.0.0 alpha 6">
@@ -148,9 +149,14 @@
                 <change type="FEATURE">Improved the crossmatch algorithm to determine the best match among sources (n x m): added xmatch columns (xmatch flags, log, separation ...)</change>
             </prerelease>
         </release>
-<!--
 -->
         <!-- public releases -->
+        <release version="5.1.8">
+            <pubDate>Wed, 18 Sep 2024 20:00:00 GMT</pubDate>
+            <prerelease version="5.1.8 beta 1">
+                <change type="BUGFIX">Updated catalog's colors in legend</change>
+            </prerelease>
+        </release>
         <release version="5.1.7">
             <pubDate>Tue, 09 Apr 2024 10:00:00 GMT</pubDate>
             <prerelease version="5.1.7 beta 1">
