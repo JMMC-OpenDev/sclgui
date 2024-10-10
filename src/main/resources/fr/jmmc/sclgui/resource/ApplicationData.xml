@@ -9,12 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="5.1.8 beta 1"/>
-    <compilation date="29/08/2024" compiler="JDK 1.8"/>
-<!--
-    <program name="SearchCal" version="5.1.7"/>
-    <compilation date="09/04/2024" compiler="JDK 1.8"/>
--->
+    <program name="SearchCal" version="6.0.0 beta 1"/>
+    <compilation date="10/10/2024" compiler="JDK 1.8"/>
 
     <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -138,10 +134,15 @@
     </menubar>
 
     <releasenotes>
-        <!-- alpha releases: 6.0 alpha (dev) -->
-<!--
         <release version="6.0">
-            <pubDate>Thu, 29 Aug 2024 12:00:00 GMT</pubDate>
+            <pubDate>Thu, 10 Oct 2024 12:00:00 GMT</pubDate>
+            <prerelease version="6.0.0 beta 1">
+                <change type="FEATURE">Fixed chi2 estimation (now multiplied by 5.0) according to the mean scale between JMDC chi2 and estimated CHI2 on a single star</change>
+                <change type="FEATURE">Fixed missing error to 0.35 mag for all used fluxes [VJHK]</change>
+                <change type="FEATURE">Fixed confidence on individual angular diameters and final weighted diameter as the lower confidence on all used fluxes [VJHK]</change>
+                <change type="FEATURE">Fixed post-processing of CDS catalog queries on 2MASS and allWise to set confidence to Medium for flagged magnitudes (U or X quality) to avoid loosing IR fluxes</change>
+                <change type="BUGFIX">Fixed magnitude validity range (now [-10 to 20], was -2 limiting IR fluxes)</change>
+            </prerelease>
             <prerelease version="6.0.0 alpha 6">
                 <change type="FEATURE">Added the GAIA DR3 catalog: position, proper motion, parallax, effective temperature, metallicty and stellar radius estimations</change>
                 <change type="FEATURE">Added the MDFC catalog: IRFlag and median fluxes (Jy)</change>
@@ -149,7 +150,7 @@
                 <change type="FEATURE">Improved the crossmatch algorithm to determine the best match among sources (n x m): added xmatch columns (xmatch flags, log, separation ...)</change>
             </prerelease>
         </release>
--->
+
         <!-- public releases -->
         <release version="5.1.8">
             <pubDate>Wed, 18 Sep 2024 20:00:00 GMT</pubDate>
