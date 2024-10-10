@@ -79,6 +79,8 @@ public final class Origin {
     public final static int KEY_ORIGIN_GAIA_DIST = 26;
     /** Origin - MDFC */
     public final static int KEY_ORIGIN_MDFC = 27;
+    /** Origin - USER */
+    public final static int KEY_ORIGIN_USER = 28;
     /** custom origin negative integer values (starts at -1) */
     private static int customInt = -1;
     /* Origin instances */
@@ -138,6 +140,8 @@ public final class Origin {
     public final static Origin ORIGIN_GAIA_AP = new Origin(KEY_ORIGIN_GAIA_DIST, Catalog.GAIA_AP);
     /** Origin - MDFC */
     public final static Origin ORIGIN_MDFC = new Origin(KEY_ORIGIN_MDFC, Catalog.MDFC);
+    /** Origin - USER */
+    public final static Origin ORIGIN_USER = new Origin(KEY_ORIGIN_USER, "USER");
 
     static {
         /* initialize alternate string representations used */
@@ -360,7 +364,11 @@ public final class Origin {
                 System.out.println("<description/>");
 
                 // CSS background-color: none if missing
-                System.out.println("<color>none</color>");
+                if ("USER".equals(origin.getValue())) {
+                    System.out.println("<color>MidnightBlue</color>");
+                } else {
+                    System.out.println("<color>none</color>");
+                }
             }
             System.out.println("</set>");
         }
