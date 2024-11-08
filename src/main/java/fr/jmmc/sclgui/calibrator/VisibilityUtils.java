@@ -3,7 +3,7 @@
  ******************************************************************************/
 package fr.jmmc.sclgui.calibrator;
 
-import fr.jmmc.jmal.model.function.math.Functions;
+import fr.jmmc.jmal.model.function.math.FourierFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,17 +32,17 @@ public final class VisibilityUtils {
      * @param wlen wavelength (m)
      * @param visibilities the computed visibilities (vis, visErr, vis2, vis2Err)
      */
-    static void computeVisibility(final double angDiam, final double angDiamError, 
-                                  final double baseMax, final double wlen, 
+    static void computeVisibility(final double angDiam, final double angDiamError,
+                                  final double baseMax, final double wlen,
                                   final VisibilityResult visibilities) {
-        
+
         final double freq = baseMax / wlen;
 
         // Compute V 
-        final double vis = Math.abs(Functions.computeDisk(freq, angDiam));
+        final double vis = Math.abs(FourierFunctions.computeDisk(freq, angDiam));
 
         // and its associated error for Diameter Uniform Disc 
-        final double err = Math.abs(Functions.computeDiskError(freq, angDiam, angDiamError));
+        final double err = Math.abs(FourierFunctions.computeDiskError(freq, angDiam, angDiamError));
 
         visibilities.vis = vis;
         visibilities.visErr = err;
