@@ -365,7 +365,7 @@ public final class Origin {
 
                 // CSS background-color: none if missing
                 if ("USER".equals(origin.getValue())) {
-                    System.out.println("<color>MidnightBlue</color>");
+                    System.out.println("<color>#9acd32</color>");
                 } else {
                     System.out.println("<color>none</color>");
                 }

@@ -259,7 +259,7 @@ TODO: remove deletedFlag
             <value/>
             <title>USER</title>
             <description/>
-            <color>MidnightBlue</color>
+            <color>#9acd32</color>
         </set>
     </originIndexes>
     </xsl:variable>
