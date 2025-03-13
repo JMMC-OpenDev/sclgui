@@ -261,7 +261,6 @@ TODO: remove deletedFlag
             <description/>
             <color>#9acd32</color>
         </set>
-    </originIndexes>
     </xsl:variable>
     <!-- convert colorSet into node-set -->
     <xsl:variable name="colorNodeSet" select="exslt:node-set($colorSets)" />
@@ -359,7 +358,7 @@ TODO: remove deletedFlag
     <xsl:template match="VOT:TR">
         <xsl:param name="mappingNodeSet" />
         <xsl:text disable-output-escaping="yes">&lt;tr&gt;</xsl:text>
-        <xsl:apply-templates select="$mappingNodeSet/*">
+        <xsl:apply-templates select="$mappingNodeSet/*[@name != 'XMATCH_LOG']">
             <xsl:with-param name="trNode" select="."/>
         </xsl:apply-templates>
         <xsl:text disable-output-escaping="yes">&lt;/tr&gt;&#10;</xsl:text>
