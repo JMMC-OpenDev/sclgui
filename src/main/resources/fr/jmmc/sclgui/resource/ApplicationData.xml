@@ -9,10 +9,14 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
+<!--
     <program name="SearchCal" version="6.0.0 beta 1"/>
     <compilation date="10/10/2024" compiler="JDK 1.8"/>
+-->
+    <program name="SearchCal" version="5.1.8 beta 2"/>
+    <compilation date="13/03/2025" compiler="JDK 1.8"/>
 
-    <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
+<text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
     <jnlp>http://www.jmmc.fr/apps/public/SearchCal/SearchCal.jnlp</jnlp>
     <sampdescription>Find Interferometric Calibrators for Optical Observations</sampdescription>
@@ -134,6 +138,8 @@
     </menubar>
 
     <releasenotes>
+        <!-- alpha releases: 6.0 alpha (dev) -->
+<!--
         <release version="6.0">
             <pubDate>Thu, 10 Oct 2024 12:00:00 GMT</pubDate>
             <prerelease version="6.0.0 beta 1">
@@ -150,10 +156,13 @@
                 <change type="FEATURE">Improved the crossmatch algorithm to determine the best match among sources (n x m): added xmatch columns (xmatch flags, log, separation ...)</change>
             </prerelease>
         </release>
-
+-->
         <!-- public releases -->
         <release version="5.1.8">
-            <pubDate>Wed, 18 Sep 2024 20:00:00 GMT</pubDate>
+            <pubDate>Thu, 13 Mar 2025 14:00:00 GMT</pubDate>
+            <prerelease version="5.1.8 beta 2">
+                <change type="BUGFIX">Fixed CSV (encoding commas) and HTML exports</change>
+            </prerelease>
             <prerelease version="5.1.8 beta 1">
                 <change type="BUGFIX">Updated catalog's colors in legend</change>
             </prerelease>
