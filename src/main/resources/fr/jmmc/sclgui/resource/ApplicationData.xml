@@ -9,12 +9,12 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
+    <program name="SearchCal" version="6.0.0 beta 2"/>
+    <compilation date="13/03/2025" compiler="JDK 1.8"/>
 <!--
-    <program name="SearchCal" version="6.0.0 beta 1"/>
-    <compilation date="10/10/2024" compiler="JDK 1.8"/>
--->
     <program name="SearchCal" version="5.1.8"/>
     <compilation date="13/03/2025" compiler="JDK 1.8"/>
+-->
 
 <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
     <authors>LAGRANGE and IPAG laboratories, and the JMMC Technical Group</authors>
@@ -139,9 +139,11 @@
 
     <releasenotes>
         <!-- dev releases: 6.0 beta (dev) -->
-<!--
         <release version="6.0">
-            <pubDate>Thu, 10 Oct 2024 12:00:00 GMT</pubDate>
+            <pubDate>Thu, 13 Mar 2025 17:00:00 GMT</pubDate>
+            <prerelease version="6.0.0 beta 2">
+                <change type="BUGFIX">Added support for fieldType = 'long' to store GAIA SourceID</change>
+            </prerelease>
             <prerelease version="6.0.0 beta 1">
                 <change type="FEATURE">Fixed chi2 estimation (now multiplied by 5.0) according to the mean scale between JMDC chi2 and estimated CHI2 on a single star</change>
                 <change type="FEATURE">Fixed missing error to 0.35 mag for all used fluxes [VJHK]</change>
@@ -156,6 +158,7 @@
                 <change type="FEATURE">Improved the crossmatch algorithm to determine the best match among sources (n x m): added xmatch columns (xmatch flags, log, separation ...)</change>
             </prerelease>
         </release>
+<!--
 -->
         <!-- public releases -->
         <release version="5.1.8">
