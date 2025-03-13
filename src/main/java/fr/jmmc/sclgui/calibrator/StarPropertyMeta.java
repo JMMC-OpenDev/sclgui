@@ -19,10 +19,12 @@ public final class StarPropertyMeta {
     public static final int TYPE_BOOLEAN = 2;
     /** integer type */
     public static final int TYPE_INTEGER = 3;
+    /** long type */
+    public static final int TYPE_LONG = 4;
     /** double type */
-    public static final int TYPE_DOUBLE = 4;
+    public static final int TYPE_DOUBLE = 5;
     /** type to Class mapping */
-    private static final Class<?>[] TYPE_TO_CLASS = new Class<?>[]{Object.class, String.class, Boolean.class, Integer.class, Double.class};
+    private static final Class<?>[] TYPE_TO_CLASS = new Class<?>[]{Object.class, String.class, Boolean.class, Integer.class, Long.class, Double.class};
 
     /**
      * Return the data type as Class corresponding to the given data type as integer

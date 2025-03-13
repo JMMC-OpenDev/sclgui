@@ -964,6 +964,11 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                         type = StarPropertyMeta.TYPE_BOOLEAN;
                                     } else if (fieldDataType.equals("int")) {
                                         type = StarPropertyMeta.TYPE_INTEGER;
+                                    } else if (fieldDataType.equals("long")) {
+                                        type = StarPropertyMeta.TYPE_LONG;
+                                    } else {
+                                        _logger.warn("Unsupported field data type: '{}' for column '{}'", 
+                                                fieldDataType, name);
                                     }
                                     // set parsed field type
                                     loadMapping.valueType = type;
@@ -1208,10 +1213,17 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                     break;
                                 case StarPropertyMeta.TYPE_INTEGER:
                                     try {
-                                    propertyValue = NumberUtils.valueOf(value);
-                                } catch (NumberFormatException nfe) {
-                                    _logger.warn("invalid Integer value [{}] at column index={}", value, loadMapping.valuePos);
-                                }
+                                        propertyValue = NumberUtils.valueOf(value);
+                                    } catch (NumberFormatException nfe) {
+                                        _logger.warn("invalid Integer value [{}] at column index={}", value, loadMapping.valuePos);
+                                    }
+                                break;
+                                case StarPropertyMeta.TYPE_LONG:
+                                    try {
+                                        propertyValue = Long.valueOf(value);
+                                    } catch (NumberFormatException nfe) {
+                                        _logger.warn("invalid Long value [{}] at column index={}", value, loadMapping.valuePos);
+                                    }
                                 break;
                                 default:
                                     _logger.warn("unsupported data type [{}]: {}", type, value);
@@ -2210,6 +2222,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                                 td = emptyTD;
                                                 break;
                                             case StarPropertyMeta.TYPE_INTEGER:
+                                            case StarPropertyMeta.TYPE_LONG:
                                             case StarPropertyMeta.TYPE_BOOLEAN:
                                                 td.setContent("0"); // 0 or false as defaults
                                         }
