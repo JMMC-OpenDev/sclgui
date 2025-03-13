@@ -14,7 +14,7 @@ DESCRIPTION
     <xsl:output method="text" encoding="UTF-8" />
 
     <xsl:param name="fieldSeparator">,</xsl:param>
-    <xsl:param name="fieldSeparatorAlt"> </xsl:param>
+    <xsl:param name="fieldSeparatorAlt">|</xsl:param>
 
     <xsl:template match="/">
         <xsl:apply-templates select="VOT:VOTABLE" />
