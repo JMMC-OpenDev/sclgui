@@ -14,7 +14,8 @@ DESCRIPTION
     <xsl:output method="text" encoding="UTF-8" />
 
     <xsl:param name="fieldSeparator">,</xsl:param>
-   		
+    <xsl:param name="fieldSeparatorAlt"> </xsl:param>
+
     <xsl:template match="/">
         <xsl:apply-templates select="VOT:VOTABLE" />
     </xsl:template>
@@ -40,6 +41,8 @@ DESCRIPTION
             </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="mappingNodeSet" select="exslt:node-set($mappings)" />
+
+        <!-- TODO: use quotes escaping for string fields (may contain ',') -->
 
         <!--
         <xsl:message>
@@ -78,12 +81,16 @@ DESCRIPTION
     <xsl:template match="mapping">
         <xsl:param name="trNode" />
         <xsl:variable name="iPos" select="number(@pos)"/>
-        <xsl:value-of disable-output-escaping="yes" select="$trNode/VOT:TD[$iPos]/text()"/>
+        <xsl:call-template name="SubstringReplace">
+            <xsl:with-param name="stringIn" select="$trNode/VOT:TD[$iPos]/text()"/>
+            <xsl:with-param name="substringIn" select="$fieldSeparator"/>
+            <xsl:with-param name="substringOut" select="$fieldSeparatorAlt"/>
+        </xsl:call-template>
         <xsl:value-of disable-output-escaping="yes" select="$fieldSeparator"/>
     </xsl:template>
 
 
-    <!-- Read line separated description and output them prefixed with dash --> 
+    <!-- Read line separated description and output them prefixed with dash -->
     <xsl:template match="VOT:DESCRIPTION"><xsl:text>#  </xsl:text>
         <xsl:call-template name="SubstringReplace">
             <xsl:with-param name="stringIn" select="."/>
@@ -100,7 +107,7 @@ DESCRIPTION
         <xsl:choose>
             <xsl:when
                 test="contains($stringIn,$substringIn)">
-                <xsl:value-of select="concat(substring-before($stringIn,$substringIn),$substringOut)"/>
+                <xsl:value-of disable-output-escaping="yes" select="concat(substring-before($stringIn,$substringIn),$substringOut)"/>
                 <xsl:call-template name="SubstringReplace">
                     <xsl:with-param name="stringIn" select="substring-after($stringIn,$substringIn)"/>
                     <xsl:with-param name="substringIn" select="$substringIn"/>
@@ -108,7 +115,7 @@ DESCRIPTION
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$stringIn"/>
+                <xsl:value-of disable-output-escaping="yes" select="$stringIn"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
