@@ -13,7 +13,7 @@
     <program name="SearchCal" version="6.0.0 beta 1"/>
     <compilation date="10/10/2024" compiler="JDK 1.8"/>
 -->
-    <program name="SearchCal" version="5.1.8 beta 2"/>
+    <program name="SearchCal" version="5.1.8"/>
     <compilation date="13/03/2025" compiler="JDK 1.8"/>
 
 <text><![CDATA[SearchCal is the JMMC software to find interferometric calibrators for optical observations. Most data returned by SearchCal were collected thanks to <A HREF='http://cdsweb.u-strasbg.fr/'>CDS</A> (Centre de Donnees astronomiques de Strasbourg, France).]]></text>
@@ -138,7 +138,7 @@
     </menubar>
 
     <releasenotes>
-        <!-- alpha releases: 6.0 alpha (dev) -->
+        <!-- dev releases: 6.0 beta (dev) -->
 <!--
         <release version="6.0">
             <pubDate>Thu, 10 Oct 2024 12:00:00 GMT</pubDate>
@@ -152,14 +152,14 @@
             <prerelease version="6.0.0 alpha 6">
                 <change type="FEATURE">Added the GAIA DR3 catalog: position, proper motion, parallax, effective temperature, metallicty and stellar radius estimations</change>
                 <change type="FEATURE">Added the MDFC catalog: IRFlag and median fluxes (Jy)</change>
-                <change type="FEATURE">Updated the SIMBAD catalog (2024.06.20)</change>
+                <change type="FEATURE">Updated the SIMBAD catalog (2024.11.29)</change>
                 <change type="FEATURE">Improved the crossmatch algorithm to determine the best match among sources (n x m): added xmatch columns (xmatch flags, log, separation ...)</change>
             </prerelease>
         </release>
 -->
         <!-- public releases -->
         <release version="5.1.8">
-            <pubDate>Thu, 13 Mar 2025 14:00:00 GMT</pubDate>
+            <pubDate>Thu, 13 Mar 2025 16:00:00 GMT</pubDate>
             <prerelease version="5.1.8 beta 2">
                 <change type="BUGFIX">Fixed CSV (encoding commas) and HTML exports</change>
             </prerelease>
