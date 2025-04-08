@@ -26,6 +26,8 @@ public final class StarList extends Vector<Vector<StarProperty>> {
     public static final String[] MultiplicityColumnNames = {"MultFlag", "BinFlag", "SBC9"};
     /** Store column names of each orbit separation column to consider */
     public static final String[] OrbitSeparationColumnNames = {"sep1", "sep2"};
+    /** Store Badcal column name */
+    public static final String BadcalColumnName = "badcal";    
     /** Store the RAJ2000 column name */
     public static final String RAJ2000ColumnName = "RAJ2000";
     /** Store the RAJ2000 column name */
