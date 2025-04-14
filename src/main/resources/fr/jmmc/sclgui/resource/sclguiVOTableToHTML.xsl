@@ -84,175 +84,175 @@ TODO: remove deletedFlag
             <value>II/297/irc</value>
             <title>AKARI</title>
             <description>AKARI/IRC mid-IR all-sky Survey (ISAS/JAXA, 2010)</description>
-            <color>#999EFF</color>
+            <color>#6EAAFF</color>
         </set>
         <set>
             <key>o4</key>
             <value>I/280</value>
             <title>ASCC-2.5</title>
             <description>All-sky Compiled Catalogue of 2.5 million stars</description>
-            <color>#FF6600</color>
+            <color>#FF6500</color>
         </set>
         <set>
             <key>o5</key>
             <value>I/280B</value>
             <title>ASCC-2.5</title>
             <description>All-sky Compiled Catalogue of 2.5 million stars</description>
-            <color>#FF6600</color>
+            <color>#FF6500</color>
         </set>
         <set>
             <key>o6</key>
             <value>V/50/catalog</value>
             <title>BSC</title>
             <description>Bright Star Catalogue, 5th Revised Ed.</description>
-            <color>#A9D300</color>
+            <color>#B6CF00</color>
         </set>
         <set>
             <key>o7</key>
             <value>II/225/catalog</value>
             <title>CIO</title>
             <description>Catalog of Infrared Observations, Edition 5</description>
-            <color>#FF9400</color>
+            <color>#FF9100</color>
         </set>
         <set>
             <key>o8</key>
             <value>B/denis</value>
             <title>DENIS</title>
             <description>The DENIS database</description>
-            <color>#00EB55</color>
+            <color>#00E937</color>
         </set>
         <set>
             <key>o9</key>
             <value>J/A+A/413/1037/table1</value>
             <title>J-K DENIS</title>
             <description>J-K DENIS photometry of bright southern stars</description>
-            <color>#00F098</color>
+            <color>#00EF83</color>
         </set>
         <set>
             <key>o10</key>
             <value>I/196/main</value>
             <title>HIC</title>
             <description>Hipparcos Input Catalogue, Version 2</description>
-            <color>#00F0CF</color>
+            <color>#00F1BA</color>
         </set>
         <set>
             <key>o11</key>
             <value>I/239/hip_main</value>
             <title>HIP1</title>
             <description>Hipparcos and Tycho Catalogues (ESA 1997)</description>
-            <color>#EF7CFF</color>
+            <color>#D488FF</color>
         </set>
         <set>
             <key>o12</key>
             <value>I/311/hip2</value>
             <title>HIP2</title>
             <description>Hipparcos, the New Reduction (van Leeuwen, 2007)</description>
-            <color>#C98DFF</color>
+            <color>#A999FF</color>
         </set>
         <set>
             <key>o13</key>
             <value>J/A+A/393/183/catalog</value>
             <title>LBSI</title>
             <description>Catalogue of calibrator stars for LBSI</description>
-            <color>#00EBFF</color>
+            <color>#00EEEA</color>
         </set>
         <set>
             <key>o14</key>
             <value>II/246/out</value>
             <title>2MASS</title>
             <description>2MASS All-Sky Catalog of Point Sources</description>
-            <color>#DCC100</color>
+            <color>#E4BD00</color>
         </set>
         <set>
             <key>o15</key>
             <value>J/A+A/433/1155</value>
             <title>Merand</title>
             <description>Calibrator stars for 200m baseline interferometry</description>
-            <color>#5AE100</color>
+            <color>#75DE00</color>
         </set>
         <set>
             <key>o16</key>
             <value>MIDI</value>
             <title>MIDI</title>
             <description>Photometric observations and angular size estimates of mid infrared interferometric calibration sources</description>
-            <color>#00E2FF</color>
+            <color>#00E7FF</color>
         </set>
         <set>
             <key>o17</key>
             <value>II/7A/catalog</value>
             <title>JP11</title>
             <description>UBVRIJKLMNH Photoelectric Catalogue</description>
-            <color>#FFAB00</color>
+            <color>#FFA800</color>
         </set>
         <set>
             <key>o18</key>
             <value>V/36B/bsc4s</value>
             <title>SBSC</title>
             <description>The Supplement to the Bright Star Catalogue</description>
-            <color>#00D4FF</color>
+            <color>#00DBFF</color>
         </set>
         <set>
             <key>o19</key>
             <value>B/sb9/main</value>
             <title>SB9</title>
             <description>SB9: 9th Catalogue of Spectroscopic Binary Orbits</description>
-            <color>#00C3FF</color>
+            <color>#00CDFF</color>
         </set>
         <set>
             <key>o20</key>
             <value>I/284</value>
             <title>USNO-B</title>
             <description>The USNO-B1.0 Catalog</description>
-            <color>#FF7C00</color>
+            <color>#FF7A00</color>
         </set>
         <set>
             <key>o21</key>
             <value>B/wds/wds</value>
             <title>WDS</title>
             <description>The Washington Visual Double Star Catalog</description>
-            <color>#4DB1FF</color>
+            <color>#00BCFF</color>
         </set>
         <set>
             <key>o22</key>
             <value>I/280B</value>
             <title>ASCC-2.5</title>
             <description>All-sky Compiled Catalogue of 2.5 million stars</description>
-            <color>#FF6600</color>
+            <color>#FF6500</color>
         </set>
         <set>
             <key>o23</key>
             <value>SIMBAD</value>
             <title>SIMBAD</title>
             <description>SIMBAD Astronomical Database</description>
-            <color>#FF6DFF</color>
+            <color>#F779FF</color>
         </set>
         <set>
             <key>o24</key>
             <value>II/328/allwise</value>
             <title>WISE</title>
             <description>The AllWISE data Release (Cutri+ 2013)</description>
-            <color>#FF5FF5</color>
+            <color>#FF6AFF</color>
         </set>
         <set>
             <key>o25</key>
             <value>I/355/gaiadr3</value>
             <title>GAIA DR3</title>
             <description>Gaia DR3: Main source (Gaia Collaboration, 2022)</description>
-            <color>#FF54C6</color>
+            <color>#FF5DEE</color>
         </set>
         <set>
             <key>o26</key>
             <value>I/355/paramp</value>
             <title>GAIA DR3 A.P</title>
             <description>Gaia DR3: 1D astrophysical parameters produced by the Apsis processing chain developed in Gaia DPAC CU8 (Gaia Collaboration, 2022)</description>
-            <color>#FF5092</color>
+            <color>#FF53C1</color>
         </set>
         <set>
             <key>o27</key>
             <value>II/361</value>
             <title>MDFC</title>
             <description>Mid-infrared stellar Diameters and Fluxes compilation Catalogue (2019)</description>
-            <color>#FF5653</color>
+            <color>#FF508E</color>
         </set>
         <set>
             <key>o28</key>
@@ -260,6 +260,13 @@ TODO: remove deletedFlag
             <title>USER</title>
             <description/>
             <color>#9acd32</color>
+        </set>
+        <set>
+            <key>o29</key>
+            <value>BADCAL</value>
+            <title>BADCAL</title>
+            <description>Bad Calibrators Catalogue for optical interferometry</description>
+            <color>#FF5651</color>
         </set>
     </xsl:variable>
     <!-- convert colorSet into node-set -->
@@ -569,9 +576,17 @@ TODO: remove deletedFlag
                             <xsl:value-of select="xhtml:description/text()"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <xsl:if test="xhtml:value/text()">
-                        <xsl:attribute name="href">http://cdsarc.u-strasbg.fr/cgi-bin/VizieR?-source=<xsl:value-of select="xhtml:value/text()"/></xsl:attribute>
-                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="xhtml:value/text() = 'SIMBAD'">
+                            <xsl:attribute name="href">http://simbad.u-strasbg.fr/simbad/</xsl:attribute>
+                        </xsl:when>
+                        <xsl:when test="xhtml:value/text() = 'BADCAL'">
+                            <xsl:attribute name="href">http://www.jmmc.fr/badcal</xsl:attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="href">http://cdsarc.u-strasbg.fr/cgi-bin/VizieR?-source=<xsl:value-of select="xhtml:value/text()"/></xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:value-of select="xhtml:title"/>
                 </a>
             </td>

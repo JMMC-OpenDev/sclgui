@@ -81,6 +81,8 @@ public final class Origin {
     public final static int KEY_ORIGIN_MDFC = 27;
     /** Origin - USER */
     public final static int KEY_ORIGIN_USER = 28;
+    /** Origin - BADCAL */
+    public final static int KEY_ORIGIN_BADCAL = 29;
     /** custom origin negative integer values (starts at -1) */
     private static int customInt = -1;
     /* Origin instances */
@@ -142,6 +144,8 @@ public final class Origin {
     public final static Origin ORIGIN_MDFC = new Origin(KEY_ORIGIN_MDFC, Catalog.MDFC);
     /** Origin - USER */
     public final static Origin ORIGIN_USER = new Origin(KEY_ORIGIN_USER, "USER");
+    /** Origin - MDFC */
+    public final static Origin ORIGIN_BADCAL = new Origin(KEY_ORIGIN_BADCAL, Catalog.BADCAL);
 
     static {
         /* initialize alternate string representations used */

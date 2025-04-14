@@ -585,6 +585,18 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
         return _brightScenarioFlag;
     }
 
+    public boolean isSearchCalServerVersion5() {
+        boolean isSearchCal5 = false;
+        if (hasParameters()) {
+            final String serverVersion = getParameters().getValue(PARAMETER_SCL_SERVER_VERSION, "");
+            if (_logger.isDebugEnabled()) {
+                _logger.debug("serverVersion = '{}'", serverVersion);
+            }
+            isSearchCal5 = (serverVersion.contains("v5"));
+        }
+        return isSearchCal5;
+    }
+
     /**
      * Parse the given file as VOTable and update any attached JTable to show its content.
      *
@@ -967,7 +979,7 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                     } else if (fieldDataType.equals("long")) {
                                         type = StarPropertyMeta.TYPE_LONG;
                                     } else {
-                                        _logger.warn("Unsupported field data type: '{}' for column '{}'", 
+                                        _logger.warn("Unsupported field data type: '{}' for column '{}'",
                                                 fieldDataType, name);
                                     }
                                     // set parsed field type
@@ -1217,14 +1229,14 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                                     } catch (NumberFormatException nfe) {
                                         _logger.warn("invalid Integer value [{}] at column index={}", value, loadMapping.valuePos);
                                     }
-                                break;
+                                    break;
                                 case StarPropertyMeta.TYPE_LONG:
                                     try {
                                         propertyValue = Long.valueOf(value);
                                     } catch (NumberFormatException nfe) {
                                         _logger.warn("invalid Long value [{}] at column index={}", value, loadMapping.valuePos);
                                     }
-                                break;
+                                    break;
                                 default:
                                     _logger.warn("unsupported data type [{}]: {}", type, value);
                             }
@@ -1945,6 +1957,10 @@ public final class CalibratorsModel extends DefaultTableModel implements Observe
                 prop.set(value, originIndex, confidenceIndex);
             }
         }
+    }
+
+    public boolean hasParameters() {
+        return (_paramSetWrapper != null);
     }
 
     /**
