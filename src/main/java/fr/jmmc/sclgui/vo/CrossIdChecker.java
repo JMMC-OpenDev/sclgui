@@ -329,12 +329,12 @@ public class CrossIdChecker {
         final int len = nameList.size();
         if (len != 0) {
             // Wait for StarResolver task done:
-            final StarResolverResult result = StarResolver.waitFor(new StarResolver().multipleResolve(nameList));
-            if (result == null) {
+            final Object rawResult = StarResolver.waitFor(new StarResolver().multipleResolve(nameList));
+            if ((rawResult == null) || !(rawResult instanceof StarResolverResult)) {
                 _logger.error("Unable to resolve target identifiers: " + nameList, "Star resolver problem");
                 return false;
             }
-
+            final StarResolverResult result = (StarResolverResult) rawResult;
             // Report errors:
             switch (result.getStatus()) {
                 case ERROR_IO:

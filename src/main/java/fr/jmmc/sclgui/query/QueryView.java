@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Query view.
  */
-public final class QueryView extends JPanel implements StarResolverListener, Observer,
+public final class QueryView extends JPanel implements StarResolverListener<StarResolverResult>, Observer,
                                                        PropertyChangeListener, ActionListener, FocusListener, Printable {
 
     /** default serial UID for Serializable interface */
@@ -400,8 +400,8 @@ public final class QueryView extends JPanel implements StarResolverListener, Obs
         _instrumentalMaxBaselineTextField.addActionListener(this);
         _instrumentalMaxBaselineTextField.addFocusListener(this);
 
-        // register the StarResolverListener:
-        _scienceObjectNameTextfield.setListener(this);
+        // register the StarResolverListener for Simbad:
+        _scienceObjectNameTextfield.setListener(StarResolverResult.class, this);
         _scienceObjectNameTextfield.addActionListener(this);
         _scienceObjectNameTextfield.addFocusListener(this);
 
