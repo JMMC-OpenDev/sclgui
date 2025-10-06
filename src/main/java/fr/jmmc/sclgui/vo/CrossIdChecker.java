@@ -8,7 +8,7 @@ import fr.jmmc.jmal.CoordUtils;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.Star.Property;
 import fr.jmmc.jmal.star.StarResolver;
-import fr.jmmc.jmal.star.StarResolverResult;
+import fr.jmmc.jmal.star.StarListResolverResult;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.NumberUtils;
 import fr.jmmc.jmcs.util.StringUtils;
@@ -330,11 +330,11 @@ public class CrossIdChecker {
         if (len != 0) {
             // Wait for StarResolver task done:
             final Object rawResult = StarResolver.waitFor(new StarResolver().multipleResolve(nameList));
-            if ((rawResult == null) || !(rawResult instanceof StarResolverResult)) {
+            if ((rawResult == null) || !(rawResult instanceof StarListResolverResult)) {
                 _logger.error("Unable to resolve target identifiers: " + nameList, "Star resolver problem");
                 return false;
             }
-            final StarResolverResult result = (StarResolverResult) rawResult;
+            final StarListResolverResult result = (StarListResolverResult) rawResult;
             // Report errors:
             switch (result.getStatus()) {
                 case ERROR_IO:

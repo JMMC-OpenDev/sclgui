@@ -6,7 +6,7 @@ package fr.jmmc.sclgui.query;
 import fr.jmmc.jmal.Band;
 import fr.jmmc.jmal.star.Star;
 import fr.jmmc.jmal.star.StarResolverListener;
-import fr.jmmc.jmal.star.StarResolverResult;
+import fr.jmmc.jmal.star.StarListResolverResult;
 import fr.jmmc.jmal.star.StarResolverWidget;
 import fr.jmmc.jmcs.gui.action.RegisteredAction;
 import fr.jmmc.jmcs.gui.action.ResourcedAction;
@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Query view.
  */
-public final class QueryView extends JPanel implements StarResolverListener<StarResolverResult>, Observer,
+public final class QueryView extends JPanel implements StarResolverListener<StarListResolverResult>, Observer,
                                                        PropertyChangeListener, ActionListener, FocusListener, Printable {
 
     /** default serial UID for Serializable interface */
@@ -401,7 +401,7 @@ public final class QueryView extends JPanel implements StarResolverListener<Star
         _instrumentalMaxBaselineTextField.addFocusListener(this);
 
         // register the StarResolverListener for Simbad:
-        _scienceObjectNameTextfield.setListener(StarResolverResult.class, this);
+        _scienceObjectNameTextfield.setListener(StarListResolverResult.class, this);
         _scienceObjectNameTextfield.addActionListener(this);
         _scienceObjectNameTextfield.addFocusListener(this);
 
@@ -450,7 +450,7 @@ public final class QueryView extends JPanel implements StarResolverListener<Star
      * @param result star resolver result
      */
     @Override
-    public void handleResult(final StarResolverResult result) {
+    public void handleResult(final StarListResolverResult result) {
         _logger.debug("star resolver result:\n{}", result);
         if (!result.isEmpty()) {
             final Star starModel = result.getSingleStar();
