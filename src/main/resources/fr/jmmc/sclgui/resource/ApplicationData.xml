@@ -9,8 +9,8 @@
         <feedback_form_url>http://jmmc.fr/feedback/feedback.php</feedback_form_url>
     </company>
 
-    <program name="SearchCal" version="6.0.0 beta 3"/>
-    <compilation date="17/04/2025" compiler="JDK 1.8"/>
+    <program name="SearchCal" version="6.0.0 beta 4"/>
+    <compilation date="02/11/2025" compiler="JDK 1.8"/>
 <!--
     <program name="SearchCal" version="5.1.8"/>
     <compilation date="13/03/2025" compiler="JDK 1.8"/>
@@ -140,7 +140,10 @@
     <releasenotes>
         <!-- dev releases: 6.0 beta (dev) -->
         <release version="6.0">
-            <pubDate>Thu, 17 Apr 2025 17:00:00 GMT</pubDate>
+            <pubDate>Mon, 02 Nov 2026 16:00:00 GMT</pubDate>
+            <prerelease version="6.0.0 beta 4">
+                <change type="FEATURE">Updated Simbad mirrors (IDIA + CFA) in the star resolver as a CDS shutdown workaround</change>
+            </prerelease>
             <prerelease version="6.0.0 beta 3">
                 <change type="BUGFIX">Added the BADCAL catalog and associated checkbox filter (multiplicity)</change>
             </prerelease>
@@ -148,7 +151,6 @@
                 <change type="BUGFIX">Added support for fieldType = 'long' to store GAIA SourceID</change>
             </prerelease>
             <prerelease version="6.0.0 beta 1">
-                <change type="FEATURE">Fixed chi2 estimation (now multiplied by 5.0) according to the mean scale between JMDC chi2 and estimated CHI2 on a single star</change>
                 <change type="FEATURE">Fixed missing error to 0.35 mag for all used fluxes [VJHK]</change>
                 <change type="FEATURE">Fixed confidence on individual angular diameters and final weighted diameter as the lower confidence on all used fluxes [VJHK]</change>
                 <change type="FEATURE">Fixed post-processing of CDS catalog queries on 2MASS and allWise to set confidence to Medium for flagged magnitudes (U or X quality) to avoid loosing IR fluxes</change>
